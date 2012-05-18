@@ -8,14 +8,14 @@
 
 	
 	<target name="clean_compile_lib" description="clean compile libraries">
-		<delete includeemptydirs="true">
+		<delete includeemptydirs="true" failonerror="false">
             <fileset dir="${lib.compile.dir}">
             	<exclude name=".*" />
         	</fileset>
     	</delete>
     </target>
 	<target name="clean_runtime_lib" description="clean runtime libraries">
-		<delete includeemptydirs="true">
+		<delete includeemptydirs="true" failonerror="false">
             <fileset dir="${lib.runtime.dir}">
             	<exclude name=".*" />
             	<exclude name="gwt-servlet.jar" />
