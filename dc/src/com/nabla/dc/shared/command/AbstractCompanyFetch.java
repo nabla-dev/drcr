@@ -22,7 +22,6 @@ import com.nabla.wapp.shared.command.AbstractFetch;
  * @author nabla
  *
  */
-@SuppressWarnings("serial")
 public abstract class AbstractCompanyFetch extends AbstractFetch {
 
 	private Integer		companyId;

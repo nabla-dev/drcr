@@ -3,18 +3,9 @@
 	<property name="resource.dir" value="resource" />
 	<property name="war.dir" value="war" />
 	<property name="web-inf.dir" value="${war.dir}/WEB-INF" />
-	<property name="lib.compile.dir" value="libraries/compile" />
 	<property name="lib.runtime.dir" value="${web-inf.dir}/lib" />
 
-	
-	<target name="clean_compile_lib" description="clean compile libraries">
-		<delete includeemptydirs="true" failonerror="false">
-            <fileset dir="${lib.compile.dir}">
-            	<exclude name=".*" />
-        	</fileset>
-    	</delete>
-    </target>
-	<target name="clean_runtime_lib" description="clean runtime libraries">
+    <target name="clean_lib" description="clean libraries" >
 		<delete includeemptydirs="true" failonerror="false">
             <fileset dir="${lib.runtime.dir}">
             	<exclude name=".*" />
@@ -22,11 +13,9 @@
         	</fileset>
     	</delete>
     </target>
-    <target name="clean" depends="clean_compile_lib,clean_runtime_lib" description="clean libraries" />
 
-	<target name="resolve_lib" depends="clean" description="resolve libraries">
-		<ivy:retrieve conf="compile" pattern="${lib.compile.dir}/[artifact].[ext]" symlink="true" />
-		<ivy:retrieve conf="runtime" pattern="${lib.runtime.dir}/[artifact]-[revision].[ext]" symlink="true" />
+	<target name="resolve_lib" depends="clean_lib" description="resolve libraries">
+		<ivy:retrieve conf="compile,runtime" pattern="${lib.runtime.dir}/[artifact]-[revision].[ext]" symlink="true" />
 	</target>
 
 	<target name="build" >
