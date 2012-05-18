@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+	<display-name>Dr | (Cr)</display-name>
+	
+	<!-- GUICE -->
+	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>com.nabla.dc.server.ServiceConfig</listener-class>
+	</listener>
+	
+	<!--  global parameters -->
+	<context-param>
+		<param-name>rw_database_name</param-name>
+		<param-value>dcrw</param-value>
+	</context-param>
+	<context-param>
+		<param-name>ro_database_name</param-name>
+		<param-value>dcro</param-value>
+	</context-param>
+	<context-param>
+		<param-name>root_password</param-name>
+		<param-value>allaccess</param-value>
+	</context-param>
+	
+</web-app>

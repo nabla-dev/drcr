@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<project name="wapp_common" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<property name="project.organisation" value="com.nabla.wapp" />
+	<property name="project.version" value="1.0.0" />
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="bin" />
+	<property name="dist.dir" location="jars" />
+
+	<target name="resolve_cache_dir" description="resolve ivy.cache.dir">
+		<ivy:settings file="${basedir}/../wapp_common/ivysettings.xml" />
+		<ivy:cachepath pathid="ivy.cachepath" />
+		<echo message="ivy cache: ${ivy.cache.dir}" />
+	</target>
+
+	<target name="clean" depends="resolve_cache_dir" description="clean the project">
+		<delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${dist.dir}">
+            	<exclude name=".*" />
+        	</fileset>
+    	</delete>
+		<ivy:cachepath pathid="ivy.cachepath" />
+    	<delete failonerror="false" >
+            <fileset dir="${ivy.cache.dir}/${project.organisation}/${project.name}/jars">
+            	<exclude name=".*" />
+        	</fileset>
+    	</delete>
+    </target>
+
+	<target name="build" depends="clean" description="build this project">
+		<jar destfile="${dist.dir}/${project.name}-${project.version}.jar" >
+			<fileset dir="${build.dir}" />
+    		<fileset dir="${src.dir}" />
+    	</jar>
+		<copy file="${dist.dir}/${project.name}-${project.version}.jar" todir="${ivy.cache.dir}/${project.organisation}/${project.name}/jars" />
+	</target>
+
+</project>

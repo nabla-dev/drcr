@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<project name="wapp_client" default="build" basedir=".">
+	<property name="project.name" value="${ant.project.name}" />
+
+	<import file="../wapp_common/build.xml"/>
+</project>

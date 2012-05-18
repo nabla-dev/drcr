@@ -1,0 +1,24 @@
+<ivy-module version="2.0">
+	<info organisation="com.nabla.dc" module="dc" revision="1.0.0">
+		<extends organisation="com.nabla.wapp" module="wapp_common" revision="1.0.0" />
+	</info>
+    <dependencies>
+    	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="compile;runtime" />
+    	<dependency org="com.nabla.wapp" name="wapp_client" rev="${wapp.version}" conf="compile;runtime" />
+    	<dependency org="com.nabla.wapp" name="wapp_server" rev="${wapp.version}" conf="compile;runtime" />
+    	<dependency org="com.nabla.wapp" name="wapp_basicserver" rev="${wapp.version}" conf="compile;runtime" />
+
+      	<dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime"/>
+      	<dependency org="com.google.inject.extensions" name="guice-servlet" rev="${guice.version}" conf="compile->default;runtime->default"/>
+      
+      	<dependency org="commons-logging" name="commons-logging" rev="${commons-logging.version}" conf="runtime->default" />
+      	<dependency org="log4j" name="log4j" rev="${log4j.version}" conf="runtime->default" />
+      
+      	<dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default;runtime->default"/>
+      	<dependency org="com.smartgwt" name="smartgwt-skins" rev="${smartgwt.version}" conf="compile->default;runtime->default"/>
+        
+        <dependency org="com.googlecode.gwtupload" name="gwtupload" rev="${gwtupload.version}" conf="compile->default;runtime->default" />
+        
+        <dependency org="mysql" name="mysql-connector-java" rev="${mysql.version}" conf="runtime->default"/>
+    </dependencies>
+</ivy-module>

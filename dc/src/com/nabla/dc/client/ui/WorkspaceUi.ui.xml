@@ -1,0 +1,38 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	>
+
+	<ui:style src="application.css">
+		.user-name,
+		.logout-button
+		{
+			font-weight: bold;
+			font-size: 11px;
+			text-align: right;
+			color: MAIN_WINDOW_CAPTION_FONT_COLOR;
+			white-space: nowrap;
+		}
+		.user-name {
+			padding-right: DIALOG_SPACING;
+		}
+		.logout-button {
+			text-decoration: underline;
+			cursor: pointer;
+			padding-left: DIALOG_SPACING;
+			border-left: MAIN_WINDOW_CAPTION_FONT_COLOR solid 1px;
+		}
+	</ui:style>
+	
+	<wnd:VLayout>
+		<wnd:TabSet ui:field="tabs" width="100%" height="100%">
+			<wnd:HLayout ui:field="loggedUserPanel" height="10px">
+				<wnd:Label ui:field="userName" styleName="{style.user-name}" height="10px" width="100%"/>
+				<wnd:Label ui:field="logoutButton" styleName="{style.logout-button}" height="10px" autoFit="true"><ui:msg description="Logout button">LOG OUT</ui:msg></wnd:Label>
+			</wnd:HLayout>
+		</wnd:TabSet>
+	</wnd:VLayout>
+</ui:UiBinder> 

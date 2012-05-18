@@ -1,0 +1,15 @@
+/** main window caption */
+@def MAIN_WINDOW_CAPTION_FONT_COLOR			#444444;
+
+/** forms */
+@def DIALOG_MARGIN				10px;
+@def DIALOG_SPACING				8px;
+@def DIALOG_BUTTONS_TOP_MARGIN	DIALOG_SPACING;
+
+/** Login dialog box */
+
+.login-message {
+	padding-left: 40px;
+	background: transparent url("public/images/password_normal.png") no-repeat center left;
+	min-height: 32px;
+}

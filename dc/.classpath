@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=dc&amp;ivyXmlPath=ivy.xml&amp;confs=compile&amp;ivySettingsPath=%24%7Bworkspace_loc%3Adc%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;propertyFiles="/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_basicserver"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_client"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_shared"/>
+	<classpathentry kind="lib" path="libraries/compile/aopalliance.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/asm.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/cglib.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/commons-io.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/commons-pool.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/guice-servlet.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/guice.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/gwtupload.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/jasypt.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/javax.inject.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/json-smart.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/smartgwt-skins.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/smartgwt.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/wapp_basicserver.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/wapp_server.jar"/>
+	<classpathentry kind="lib" path="libraries/compile/wapp_shared.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

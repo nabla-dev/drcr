@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="dc" xmlns:ivy="antlib:org.apache.ivy.ant" default="resolve_lib" basedir=".">
+	<property name="resource.dir" value="resource" />
+	<property name="war.dir" value="war" />
+	<property name="web-inf.dir" value="${war.dir}/WEB-INF" />
+	<property name="lib.compile.dir" value="libraries/compile" />
+	<property name="lib.runtime.dir" value="${web-inf.dir}/lib" />
+
+	
+	<target name="clean_compile_lib" description="clean compile libraries">
+		<delete includeemptydirs="true">
+            <fileset dir="${lib.compile.dir}">
+            	<exclude name=".*" />
+        	</fileset>
+    	</delete>
+    </target>
+	<target name="clean_runtime_lib" description="clean runtime libraries">
+		<delete includeemptydirs="true">
+            <fileset dir="${lib.runtime.dir}">
+            	<exclude name=".*" />
+            	<exclude name="gwt-servlet.jar" />
+        	</fileset>
+    	</delete>
+    </target>
+    <target name="clean" depends="clean_compile_lib,clean_runtime_lib" description="clean libraries" />
+
+	<target name="resolve_lib" depends="clean" description="resolve libraries">
+		<ivy:retrieve conf="compile" pattern="${lib.compile.dir}/[artifact].[ext]" symlink="true" />
+		<ivy:retrieve conf="runtime" pattern="${lib.runtime.dir}/[artifact]-[revision].[ext]" symlink="true" />
+	</target>
+
+	<target name="build" >
+		<copy file="${resource.dir}/index.html" todir="${war.dir}" />
+		<copy file="${resource.dir}/web.xml" todir="${web-inf.dir}" />
+		<copy todir="${war.dir}/public">
+			<fileset dir="${resource.dir}/public" includes="**"/> 
+		</copy>
+	</target>
+	
+</project>

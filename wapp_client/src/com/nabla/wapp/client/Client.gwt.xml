@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+* Copyright 2012 nabla
+* 
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy of
+* the License at
+* 
+* http://www.apache.org/licenses/LICENSE-2.0
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations under
+* the License.
+-->
+<module>
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.logging.Logging"/>
+	<inherits name="com.google.gwt.uibinder.UiBinder"/>
+	<inherits name="com.smartgwt.SmartGwtNoTheme"/>
+	<inherits name="gwtupload.GWTUpload"/>
+	
+	<inherits name="com.nabla.wapp.shared.Shared" />
+	
+	<source path="general"/>
+	<source path="auth"/>
+	<source path="model"/>
+	<source path="mvp"/>
+	<source path="command"/>
+	<source path="ui"/>
+	<source path="print"/>
+	<source path="server"/>
+
+	<generate-with class="com.nabla.wapp.client.rebind.GenericCommandSetGenerator">
+		<when-type-assignable class="com.nabla.wapp.client.command.IBasicCommandSet" />
+	</generate-with>
+
+	<define-property name="nabla.wapp.client.auto_login" values="true,false"/>
+	<replace-with class="com.nabla.wapp.client.general.AutoLoginImpl">
+		<when-type-is class="com.nabla.wapp.client.general.NoAutoLoginImpl"/>
+		<when-property-is name="nabla.wapp.client.auto_login" value="true"/>
+	</replace-with>
+	
+	<define-property name="nabla.wapp.client.dev_mode" values="true,false"/>
+	<set-property name="gwt.logging.enabled" value="TRUE">
+		<when-property-is name="nabla.wapp.client.dev_mode" value="true" />
+	</set-property> 
+	<set-property name="gwt.logging.enabled" value="FALSE">   
+		<when-property-is name="nabla.wapp.client.dev_mode" value="false" />
+	</set-property> 
+	<set-property name="gwt.logging.systemHandler" value="DISABLED">   
+		<when-property-is name="nabla.wapp.client.dev_mode" value="false" />
+	</set-property> 
+	<set-property name="gwt.logging.systemHandler" value="ENABLED">   
+		<when-property-is name="nabla.wapp.client.dev_mode" value="true" />
+	</set-property> 
+	
+	<set-property name="gwt.logging.logLevel" value="ALL"/>
+	<set-property name="gwt.logging.consoleHandler" value="DISABLED" />
+	<set-property name="gwt.logging.developmentModeHandler" value="DISABLED" />
+	<set-property name="gwt.logging.popupHandler" value="DISABLED" />
+	<set-property name="gwt.logging.firebugHandler" value="DISABLED" />
+	<set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED" />
+
+	<set-property name="user.agent" value="gecko1_8,safari">   
+		<when-property-is name="nabla.wapp.client.dev_mode" value="true" />
+	</set-property>
+	 
+</module>

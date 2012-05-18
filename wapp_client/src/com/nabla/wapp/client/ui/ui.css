@@ -1,0 +1,26 @@
+/** forms */
+@def DIALOG_DEFAULT_SPACING		8px;
+@def REQUIRED_INFO_MSG_COLOR	blue;
+@def REQUIRED_INFO_MSG_ALIGN	right;
+@def REQUIRED_INFO_TAG_COLOR	REQUIRED_INFO_MSG_COLOR;
+
+.form-required-info-message {
+	color: REQUIRED_INFO_MSG_COLOR;
+	text-align: REQUIRED_INFO_MSG_ALIGN;
+}
+
+.form-required-info-tag {
+	color: REQUIRED_INFO_MSG_COLOR;
+	padding-left: DIALOG_DEFAULT_SPACING;
+}
+
+/** wizards */
+/**
+.wizard-background {
+	background-color: #FFFFCC;
+}*/
+
+.wizard-navigation-bar {
+	border-top: 2px groove;
+	padding-top: DIALOG_DEFAULT_SPACING;
+}

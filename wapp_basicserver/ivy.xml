@@ -1,0 +1,19 @@
+<ivy-module version="2.0">
+	<info organisation="com.nabla.wapp" module="wapp_basicserver" revision="1.0.0">
+		<extends organisation="com.nabla.wapp" module="wapp_common" revision="1.0.0" />
+	</info>
+	<publications>
+      <artifact name="wapp_basicserver" type="jar" ext="jar"/>      
+    </publications>
+    <dependencies>
+    	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="compile;runtime" />
+    	<dependency org="com.nabla.wapp" name="wapp_server" rev="${wapp.version}" conf="compile;runtime" />
+    
+        <dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime->default" />     
+        
+		<dependency org="net.minidev" name="json-smart" rev="${json-smart.version}" conf="compile->default;runtime->default" />
+
+		<dependency org="com.googlecode.gwtupload" name="gwtupload" rev="${gwtupload.version}" conf="compile->default;runtime->default" />
+		
+    </dependencies>
+</ivy-module>

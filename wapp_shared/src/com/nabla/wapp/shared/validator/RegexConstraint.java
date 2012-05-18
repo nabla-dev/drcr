@@ -1,0 +1,47 @@
+/**
+* Copyright 2012 nabla
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy of
+* the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations under
+* the License.
+*
+*/
+package com.nabla.wapp.shared.validator;
+
+import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.ValidationException;
+
+/**
+ * @author nabla
+ *
+ */
+public class RegexConstraint extends TextLengthConstraint {
+
+	private final String	expression;
+
+	public RegexConstraint(int minLength, int maxLength, String expression) {
+		super(minLength, maxLength);
+		assert expression != null;
+		this.expression = expression;
+	}
+
+	public String getExpression() {
+		return expression;
+	}
+
+	@Override
+	public void validate(final String field, final String value) throws ValidationException {
+		super.validate(field, value);
+		if (value != null && !value.matches(expression))
+			throw new ValidationException(field, CommonServerErrors.INVALID_CHARACTER);
+	}
+
+}

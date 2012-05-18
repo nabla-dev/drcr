@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='dc'>
+	<!-- Inherit the core Web Toolkit stuff.                        -->
+	<inherits name='com.google.gwt.user.User'/>
+	<inherits name="com.google.gwt.uibinder.UiBinder"/>
+	<inherits name="com.google.gwt.logging.Logging"/>
+	<inherits name="com.google.gwt.i18n.CldrLocales"/>
+	<!-- GZip the output files by default -->
+	<inherits name='com.google.gwt.precompress.Precompress'/>
+	
+	<extend-property name="locale" values="en_GB"/>
+	<set-property-fallback name="locale" value="en_GB"/>
+	
+	<!-- Other module inherits                                   -->
+<!--		<inherits name="com.smartgwt.SmartGwt"/> -->
+	<inherits name="com.smartgwt.SmartGwtNoTheme"/>
+	<inherits name="com.smartclient.theme.simplicity.Simplicity"/>
+<!-- 	<inherits name="com.smartgwt.tools.SmartGwtTools"/> -->	<!-- to get console -->
+
+	<inherits name="gwtupload.GWTUpload"/>
+  	<stylesheet src="Upload.css"/>
+  	
+  	<inherits name="com.nabla.wapp.client.Client" />
+	<inherits name="com.nabla.wapp.shared.Shared" />
+<!--	<inherits name="com.nabla.wapp.report.Report" /> -->
+  
+	<source path='client'/>
+	<source path='shared'/>
+	
+  	<set-property name="nabla.wapp.client.auto_login" value="true" />
+	<set-property name="nabla.wapp.client.dev_mode" value="true" />	
+
+	<!-- Specify the app entry point class.                         -->
+	<entry-point class='com.nabla.dc.client.MyEntryPoint'/>
+  	
+</module>

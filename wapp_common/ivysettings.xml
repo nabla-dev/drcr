@@ -1,0 +1,23 @@
+<ivysettings>
+	<property name="wapp.version" value="1.0.0" />
+	<property name="GWT.version" value="2.4.0" />
+    <property name="guice.version" value="3.0" />
+    <property name="smartgwt.version" value="3.0" />
+    <property name="jasypt.version" value="latest.release" />
+    <property name="json-smart.version" value="latest.release" />
+    <property name="commons-dbcp.version" value="1.4" />
+    <property name="commons-logging.version" value="latest.release" />
+    <property name="gwtupload.version" value="latest.release" />
+    
+    <settings defaultResolver="chain"/>
+    <resolvers>
+        <chain name="chain">
+	    	<filesystem name="local">
+				<ivy pattern="${basedir}/../[module]/ivy.xml" />
+				<artifact pattern="${basedir}/../[module]/jars/[artifact]-[revision].[ext]" />
+	        </filesystem>
+            <ibiblio name="smartgwt" m2compatible="true" root="http://www.smartclient.com/maven2" />
+            <ibiblio name="central" m2compatible="true" />
+        </chain>
+    </resolvers>
+</ivysettings>

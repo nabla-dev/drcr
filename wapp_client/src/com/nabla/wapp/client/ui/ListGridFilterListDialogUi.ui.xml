@@ -1,0 +1,24 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+
+	<ui:with field="model" type="com.nabla.wapp.client.model.Model"/>
+	<!-- 
+	<ui:with field="fields" type="com.nabla.wapp.client.model.ListGridFilterListModel.Fields"/>
+	-->
+	<wnd:ModalDialog caption="Saved Filter List" icon="[SKIN]actions/filter.png" autoClose="true">
+		<ui:attribute name="caption" description="Edit saved filter list dialog caption"/>
+		<wnd:VLayout layoutMargin="10" membersMargin="4">
+			<wnd:ListGrid model="{model}" width="350" height="350" canRemoveRecords="true" editByCell="true">
+				<wnd:ListGridField name="name" canSort="false" canEdit="true"><ui:msg>Name</ui:msg></wnd:ListGridField>
+			</wnd:ListGrid>
+			<wnd:HLayout width="350">
+				<wnd:HLayoutSpacer/>
+				<wnd:CancelButton><ui:msg description="Cancel button">*Close</ui:msg></wnd:CancelButton>
+			</wnd:HLayout>
+		</wnd:VLayout>		
+	</wnd:ModalDialog>
+</ui:UiBinder> 

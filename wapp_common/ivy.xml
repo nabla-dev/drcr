@@ -1,0 +1,9 @@
+<ivy-module version="2.0">
+	<info organisation="com.nabla.wapp" module="wapp_common" revision="1.0.0" />
+	<configurations>
+		<conf name="api" description="only provide framework API"/>
+		<conf name="compile" description="needed for compilation"/>
+		<conf name="runtime" description="needed at runtime"/>
+		<conf name="dummy" description="NOP" />
+	</configurations>
+</ivy-module>

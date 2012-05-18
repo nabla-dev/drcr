@@ -1,0 +1,41 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+    xmlns:my="urn:import:com.nabla.dc.client.ui.options"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.options.RoleList.ICommandSet"/>
+	<ui:with field="model" type="com.nabla.dc.client.model.options.RoleListModel"/>
+	
+	<wnd:Tab title="User permissions" icon="privilege_small.png" canClose="true">
+		<ui:attribute name="title" description="Tab title"/>
+		<wnd:VLayout>
+			<wnd:Toolbar width="100%">
+				<wnd:ToolbarButton command="{cmd.addRecord}" tooltip="Add role" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.removeRecord}" tooltip="Remove role" icon="remove.png"><ui:msg>Remove</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
+				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
+			</wnd:Toolbar>
+			<wnd:ListGrid ui:field="list" viewStateReference="role_list" model="{model}" editByCell="true" showCheckbox="true" canGroupBy="false" editCommand="{cmd.edit}" addCommand="{cmd.add}">
+				<wnd:ListGridField name="{model.fields.name}" width="300"><ui:msg>Name</ui:msg></wnd:ListGridField>
+				<wnd:ListGridToolbar>
+					<wnd:ListGridToolbarButton icon="edit_small.png" command="{cmd.editDefinition}"><ui:msg>Edit definition</ui:msg></wnd:ListGridToolbarButton>
+				</wnd:ListGridToolbar>				
+				<wnd:Menu>
+					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>				
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg>Export as CSV</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.print}" icon="print.png"><ui:msg>Print</ui:msg></wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:MenuItem>					
+				</wnd:Menu>
+			</wnd:ListGrid>
+		</wnd:VLayout>
+	</wnd:Tab>
+</ui:UiBinder> 
