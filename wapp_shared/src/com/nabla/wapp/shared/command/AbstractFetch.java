@@ -23,7 +23,6 @@ import com.nabla.wapp.shared.dispatch.IAction;
  * @author nabla
  *
  */
-@SuppressWarnings("serial")
 public abstract class AbstractFetch implements IAction<FetchResult> {
 
 	private Integer		startRow;
