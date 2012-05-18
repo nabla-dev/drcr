@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_client-1.0.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_server-1.0.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_shared-1.0.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

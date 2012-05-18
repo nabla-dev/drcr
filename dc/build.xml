@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="dc" xmlns:ivy="antlib:org.apache.ivy.ant" default="resolve_lib" basedir=".">
+<project name="dc" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
 	<property name="resource.dir" value="resource" />
 	<property name="war.dir" value="war" />
 	<property name="web-inf.dir" value="${war.dir}/WEB-INF" />
 	<property name="lib.runtime.dir" value="${web-inf.dir}/lib" />
-
-    <target name="clean_lib" description="clean libraries" >
-		<delete includeemptydirs="true" failonerror="false">
-            <fileset dir="${lib.runtime.dir}">
-            	<exclude name=".*" />
-            	<exclude name="gwt-servlet.jar" />
-        	</fileset>
-    	</delete>
-    </target>
-
-	<target name="resolve_lib" depends="clean_lib" description="resolve libraries">
-		<ivy:retrieve conf="compile,runtime" pattern="${lib.runtime.dir}/[artifact]-[revision].[ext]" symlink="true" />
-	</target>
 
 	<target name="build" >
 		<copy file="${resource.dir}/index.html" todir="${war.dir}" />
