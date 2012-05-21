@@ -14,7 +14,7 @@
     </target>
 
 	<target name="resolve_lib" depends="clean_lib" description="resolve libraries">
-		<ivy:retrieve conf="compile,runtime" pattern="${lib.runtime.dir}/[artifact]-[revision].[ext]" symlink="true" />
+		<ivy:retrieve type="jar,bundle" conf="compile,runtime" pattern="${lib.runtime.dir}/[artifact]-[revision].[ext]" symlink="true" />
 	</target>
 
 </project>
