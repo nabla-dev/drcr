@@ -17,6 +17,8 @@
 package com.nabla.dc.client.presenter.options;
 
 import com.nabla.dc.client.model.options.UserDefinitionModel;
+import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.settings.UserCompanyList;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.UserListUi;
 import com.nabla.wapp.client.command.Command;
@@ -53,6 +55,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		Command savePreferences();
 		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand changePassword();
 		@IRequiredRole(IRolePrivileges.ROLE_EDIT) UserRecordCommand editRoles();
+		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand editCompanies();
 		@IRequiredRole(IRolePrivileges.USER_EDIT) CommandUiManager edit();
 	}
 
@@ -65,16 +68,18 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		ICommandSet getCommands();
 	}
 
+	private final ITabManager 		tabs;
 /*
 	@Inject private PrintManager						printerManager;
 */
 
-	public UserList(final IDisplay display) {
+	public UserList(final IDisplay display, final ITabManager tabs) {
 		super(display);
+		this.tabs = tabs;
 	}
 
-	public UserList() {
-		this(new UserListUi());
+	public UserList(final ITabManager tabs) {
+		this(new UserListUi(), tabs);
 	}
 
 	@Override
@@ -87,6 +92,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.changePassword(), onChangeUserPassword);
 		registerSlot(cmd.editRoles(), onEditUserRoles);
+		registerSlot(cmd.editCompanies(), onEditUserCompanies);
 		cmd.updateUi();
 
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
@@ -161,4 +167,10 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		}
 	};
 
+	private final ISlot1<UserRecord> onEditUserCompanies = new ISlot1<UserRecord>() {
+		@Override
+		public void invoke(final UserRecord record) {
+			tabs.addTab(new UserCompanyList(record.getId()));
+		}
+	};
 }

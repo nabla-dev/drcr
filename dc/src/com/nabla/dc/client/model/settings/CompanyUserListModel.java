@@ -28,7 +28,6 @@ import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.IUser;
 import com.smartgwt.client.data.DSRequest;
 
 /**
@@ -38,8 +37,8 @@ import com.smartgwt.client.data.DSRequest;
 public class CompanyUserListModel extends CModel<UserRecord> {
 
 	static public class Fields {
-		public String name() { return IUser.NAME; }
-		public String active() { return IUser.ACTIVE; }
+		public String name() { return "name"; }
+		public String active() { return "active"; }
 	}
 
 	private static final Fields	fields = new Fields();
@@ -51,8 +50,8 @@ public class CompanyUserListModel extends CModel<UserRecord> {
 		this.companyId = companyId;
 		setFields(
 			new IdField(),
-			new TextField(IUser.NAME, FieldAttributes.READ_ONLY),
-			new BooleanField(IUser.ACTIVE)
+			new TextField(fields.name(), FieldAttributes.READ_ONLY),
+			new BooleanField(fields.active())
 				);
 	}
 

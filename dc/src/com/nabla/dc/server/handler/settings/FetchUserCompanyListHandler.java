@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.settings;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.settings.FetchCompanyList;
+import com.nabla.dc.shared.command.settings.FetchUserCompanyList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -32,29 +32,26 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchCompanyListHandler extends AbstractFetchHandler<FetchCompanyList> {
+public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserCompanyList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcBooleanToJson("deleted"),
 		new OdbcIdToJson(),
 		new OdbcStringToJson("name"),
 		new OdbcBooleanToJson("active")
 	);
 
-	public FetchCompanyListHandler() {
+	public FetchUserCompanyListHandler() {
 		super();
 	}
 
 	@Override
-	public FetchResult execute(final FetchCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
-" FROM company" +
-"{WHERE} {ORDER BY}"
-	:
-"SELECT FALSE AS 'deleted', id, name, active" +
-" FROM company" +
-" WHERE uname IS NOT NULL {AND WHERE} {ORDER BY}");
+	public FetchResult execute(final FetchUserCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return fetcher.serialize(cmd, ctx.getConnection(),
+"SELECT * FROM (" +
+"SELECT c.id, c.name, (l.company_id IS NOT NULL) AS 'active'" +
+" FROM company AS c LEFT JOIN company_user AS l ON c.id=l.company_id AND l.user_id=?" +
+" WHERE c.active=TRUE AND c.uname IS NOT NULL" +
+") AS dt {WHERE} {ORDER BY}",
+			cmd.getUserId());			
 	}
-
 }

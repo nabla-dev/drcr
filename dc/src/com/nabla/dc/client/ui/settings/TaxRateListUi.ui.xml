@@ -24,7 +24,7 @@
 				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
 			</wnd:Toolbar>
-			<wnd:ListGrid ui:field="list" viewStateReference="tax_code_list" model="{model}" selectionType="SINGLE" editByCell="true" canSort="true" editCommand="{cmd.edit}">
+			<wnd:ListGrid ui:field="list" viewStateReference="tax_code_list" model="{model}" selectionType="SINGLE" editByCell="false" canSort="true" editCommand="{cmd.edit}">
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.rate}" width="80" canGroupBy="false"><ui:msg>Rate %</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>

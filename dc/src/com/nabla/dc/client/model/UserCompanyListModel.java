@@ -17,6 +17,7 @@
 package com.nabla.dc.client.model;
 
 import com.nabla.dc.shared.command.FetchUserCompanyList;
+import com.nabla.dc.shared.model.IUserCompany;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.ImageField;
@@ -32,8 +33,8 @@ import com.smartgwt.client.data.Record;
 public class UserCompanyListModel extends CModel<Record> {
 
 	static public class Fields {
-		public String name() { return "name"; }
-		public String image() { return "image"; }
+		public String name() { return IUserCompany.NAME; }
+		public String logo() { return IUserCompany.LOGO; }
 	}
 
 	private static final Fields	fields = new Fields();
@@ -43,8 +44,8 @@ public class UserCompanyListModel extends CModel<Record> {
 
 		setFields(
 			new IdField(),
-			new TextField("name"),
-			new ImageField("image")
+			new TextField(fields.name()),
+			new ImageField(fields.logo())
 				);
 	}
 

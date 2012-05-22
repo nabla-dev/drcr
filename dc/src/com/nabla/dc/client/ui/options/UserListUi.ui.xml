@@ -31,7 +31,8 @@
 				<wnd:ListGridField name="{model.fields.created}" width="120" align="RIGHT" canGroupBy="false"><ui:msg>Created</ui:msg></wnd:ListGridField>
 				<wnd:ListGridToolbar field="{model.fields.name}">
 					<wnd:ListGridToolbarButton icon="password_small.png" command="{cmd.changePassword}"><ui:msg>Reset password</ui:msg></wnd:ListGridToolbarButton>
-					<wnd:ListGridToolbarButton icon="privilege_small.png" command="{cmd.editRoles}"><ui:msg>Edit roles</ui:msg></wnd:ListGridToolbarButton>					
+					<wnd:ListGridToolbarButton icon="privilege_small.png" command="{cmd.editRoles}"><ui:msg>Edit roles</ui:msg></wnd:ListGridToolbarButton>
+					<wnd:ListGridToolbarButton icon="company_small.png" command="{cmd.editCompanies}"><ui:msg>Edit companies</ui:msg></wnd:ListGridToolbarButton>
 				</wnd:ListGridToolbar>				
 				<wnd:Menu>
 					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>				

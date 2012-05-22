@@ -24,6 +24,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +54,7 @@ public class ImageService extends HttpServlet {
 	private final IDatabase		db;
 
 	@Inject
-	public ImageService(@IReadOnlyDatabase IDatabase db) {
+	public ImageService(@IReadOnlyDatabase final IDatabase db) {
 		this.db = db;
 	}
 
@@ -85,7 +87,7 @@ public class ImageService extends HttpServlet {
 		final Connection conn = db.getConnection();
 		try {
 			final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT * FROM logo WHERE id=?;", imageId);
+"SELECT * FROM image WHERE id=?;", imageId);
 			try {
 				final ResultSet rs = stmt.executeQuery();
 				if (!rs.next()) {
@@ -101,6 +103,11 @@ public class ImageService extends HttpServlet {
 				response.setHeader("Content-Length", String.valueOf(rs.getInt("length")));
 				response.setHeader("Content-Disposition", MessageFormat.format(
 						"inline; filename=\"{0}\"", rs.getString("name")));
+				// to prevent images to be downloaded every time user hovers one image
+				final Calendar cal = Calendar.getInstance();
+				cal.setTime(new Date());
+				cal.add(Calendar.MONTH, 2);
+				response.setDateHeader( "Expires", cal.getTime().getTime() );
 				final BufferedInputStream input = new BufferedInputStream(rs.getBinaryStream("content"), DEFAULT_BUFFER_SIZE);
 				try {
 					final BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);

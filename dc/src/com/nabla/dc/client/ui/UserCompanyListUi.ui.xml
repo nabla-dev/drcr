@@ -6,6 +6,7 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
 
 	<ui:with field="cmd" type="com.nabla.dc.client.presenter.UserCompanyList.ICommandSet"/>
+	<ui:with field="model" type="com.nabla.dc.client.model.UserCompanyListModel"/>
 
 	<wnd:Tab title="HOME" icon="home_small.png" canClose="false">
 		<ui:attribute name="title" description="HOME tab title"/>
@@ -31,6 +32,13 @@
 					<wnd:MenuItem icon="report_small.png"><ui:msg description="Edit reports command">Reports</ui:msg></wnd:MenuItem>
 				</wnd:ToolbarMenu>
 			</wnd:Toolbar>
+			<wnd:TileGrid ui:field="list" model="{model}" selectionType="NONE" tileWidth="150" tileHeight="165" >
+				<wnd:TileGridImageField name="{model.fields.logo}" />
+				<wnd:TileGridInfoField name="{model.fields.name}"/>
+				<wnd:Menu>
+					<wnd:MenuItem command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:MenuItem>					
+				</wnd:Menu>
+			</wnd:TileGrid>
 		</wnd:VLayout>
 	</wnd:Tab>
 </ui:UiBinder> 

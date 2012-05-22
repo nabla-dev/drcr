@@ -14,27 +14,13 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.ui;
+package com.nabla.wapp.server.json;
 
 
-/**
- * @author nabla
- *
- */
-public class TiteGridImageField extends TileGridField {
+public class OdbcIdToJson extends OdbcIntToJson {
 
-	public TiteGridImageField() {
-		impl.setType("image");
-	}
-	
-	@Override
-	public void setWidth(String fieldName) {
-		impl.setAttribute("imageWidth", fieldName);
-	}
-	
-	@Override
-	public void setHeight(String fieldName) {
-		impl.setAttribute("imageHeight", fieldName);
+	public OdbcIdToJson() {
+		super("id");
 	}
 
 }

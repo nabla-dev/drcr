@@ -14,11 +14,13 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.ui;
-
+package com.nabla.dc.shared.model;
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public class TiteGridInfoField extends TileGridField {}
+public interface IUserCompany {
+	static final String		NAME = "name";
+	static final String		LOGO = "image";
+}

@@ -14,23 +14,27 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.json;
+package com.nabla.dc.shared.command.settings;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
-import net.minidev.json.JSONObject;
+/**
+ * @author nabla
+ *
+ */
+public class FetchUserCompanyList extends AbstractFetch {
 
-public class OdbcStringToJson extends AbstractOdbcToJsonEncoder {
+	private static final long serialVersionUID = 1L;
 
-	public OdbcStringToJson(final String label) {
-		super(label);
+	private Integer		userId;
+	
+	protected FetchUserCompanyList() {}
+
+	public FetchUserCompanyList(final Integer userId) {
+		this.userId = userId;
 	}
 
-	@Override
-	public void encode(final ResultSet rs, final int column, final JSONObject record) throws SQLException {
-		record.put(label, rs.getString(column));
-		super.encode(rs, column, record);
+	public Integer getUserId() {
+		return userId;
 	}
-
 }

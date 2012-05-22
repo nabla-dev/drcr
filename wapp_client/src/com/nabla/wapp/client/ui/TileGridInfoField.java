@@ -14,23 +14,11 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.json;
+package com.nabla.wapp.client.ui;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import net.minidev.json.JSONObject;
-
-public class OdbcStringToJson extends AbstractOdbcToJsonEncoder {
-
-	public OdbcStringToJson(final String label) {
-		super(label);
-	}
-
-	@Override
-	public void encode(final ResultSet rs, final int column, final JSONObject record) throws SQLException {
-		record.put(label, rs.getString(column));
-		super.encode(rs, column, record);
-	}
-
-}
+/**
+ * @author nabla
+ *
+ */
+public class TileGridInfoField extends TileGridField {}

@@ -130,7 +130,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					tabs.addTab(new UserList());
+					tabs.addTab(new UserList(tabs));
 				}
 			});
 		}

@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
+	
+	<ui:with field="model" type="com.nabla.dc.client.model.settings.UserCompanyListModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.settings.UserCompanyList.ICommandSet"/>
+
+	<wnd:Tab title="User companies" icon="company_small.png" canClose="true">
+		<ui:attribute name="title" description="Tab title"/>
+		<wnd:VLayout>
+			<wnd:Toolbar width="100%">
+				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
+				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg description="Reload user list command">Reload</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
+			</wnd:Toolbar>
+			<wnd:ListGrid ui:field="list" viewStateReference="user_company_list" model="{model}" editByCell="true" canSort="true" editCommand="{cmd.edit}">
+				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50" canEdit="true"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridToolbar field="{model.fields.name}">
+					<wnd:ListGridToolbarButton icon="privilege_small.png" command="{cmd.editRoles}"><ui:msg>Edit roles</ui:msg></wnd:ListGridToolbarButton>
+				</wnd:ListGridToolbar>				
+				<wnd:Menu>
+					<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg>Export as CSV</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.print}" icon="print.png"><ui:msg>Print</ui:msg></wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:MenuItem>					
+				</wnd:Menu>
+			</wnd:ListGrid>
+		</wnd:VLayout>
+	</wnd:Tab>
+</ui:UiBinder> 

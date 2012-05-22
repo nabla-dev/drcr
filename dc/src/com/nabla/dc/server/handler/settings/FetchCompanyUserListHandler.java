@@ -22,7 +22,7 @@ import com.nabla.dc.shared.command.settings.FetchCompanyUserList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
+import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.auth.IRootUser;
@@ -36,7 +36,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchCompanyUserListHandler extends AbstractFetchHandler<FetchCompanyUserList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcIntToJson("id"),
+		new OdbcIdToJson(),
 		new OdbcStringToJson("name"),
 		new OdbcBooleanToJson("active")
 	);

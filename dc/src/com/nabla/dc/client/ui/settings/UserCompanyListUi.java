@@ -14,16 +14,17 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui;
+package com.nabla.dc.client.ui.settings;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.presenter.UserCompanyList;
-import com.nabla.dc.client.presenter.UserCompanyList.ICommandSet;
+import com.nabla.dc.client.model.settings.UserCompanyListModel;
+import com.nabla.dc.client.presenter.settings.UserCompanyList;
+import com.nabla.dc.client.presenter.settings.UserCompanyList.ICommandSet;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
+import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;
-import com.nabla.wapp.client.ui.TileGrid;
 
 /**
  * @author nabla
@@ -32,14 +33,17 @@ import com.nabla.wapp.client.ui.TileGrid;
 public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserCompanyList.IDisplay {
 
 	interface Binder extends UiBinder<Tab, UserCompanyListUi> {}
-	private static Binder	uiBinder = GWT.create(Binder.class);
+	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField
-	ICommandSet			cmd;
+	ICommandSet				cmd;
+	@UiField(provided=true)
+	UserCompanyListModel	model;
 	@UiField
-	TileGrid			list;
-	
-	public UserCompanyListUi() {
+	ListGrid				list;
+
+	public UserCompanyListUi(final Integer userId) {
+		this.model = new UserCompanyListModel(userId);
 		this.create(uiBinder, this);
 	}
 
@@ -55,7 +59,7 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 
 	@Override
 	public void savePreferences() {
-//		list.saveViewState();
+		list.saveViewState();
 	}
 
 }

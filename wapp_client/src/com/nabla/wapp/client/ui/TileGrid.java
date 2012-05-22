@@ -47,6 +47,7 @@ public class TileGrid extends com.smartgwt.client.widgets.tile.TileGrid implemen
 
 	public TileGrid() {
 		setSelectionType(SelectionStyle.SINGLE);
+		setWrapValues(true);
 /*		addDrawHandler(new DrawHandler() {
 			@Override
 			public void onDraw(@SuppressWarnings("unused") DrawEvent event) {
@@ -66,9 +67,9 @@ public class TileGrid extends com.smartgwt.client.widgets.tile.TileGrid implemen
 		Assert.argumentNotNull(w);
 		Assert.notNull(children);
 
-		if (w instanceof TileGridField)
+		if (w instanceof TileGridField) {
 			children.add((TileGridField)w);
-		else if (w instanceof Menu)
+		} else if (w instanceof Menu)
 			this.setContextMenu((Menu)w);
 		else {
 			logger.log(Level.SEVERE, "adding a widget of type '" + w.getClass().toString() + "' to a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
@@ -125,7 +126,7 @@ public class TileGrid extends com.smartgwt.client.widgets.tile.TileGrid implemen
 		return viewStateReference;
 	}
 
-	public void setViewStateReference(String reference) {
+	public void setViewStateReference(final String reference) {
 		this.viewStateReference = reference;
 	}
 

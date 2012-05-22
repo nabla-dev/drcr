@@ -17,19 +17,14 @@
 package com.nabla.dc.client.model.settings;
 
 
-import com.nabla.dc.shared.command.settings.AddCompany;
-import com.nabla.dc.shared.command.settings.FetchCompanyList;
-import com.nabla.dc.shared.command.settings.RemoveCompany;
-import com.nabla.dc.shared.command.settings.UpdateCompany;
-import com.nabla.dc.shared.model.ICompany;
+import com.nabla.dc.shared.command.settings.FetchUserCompanyList;
+import com.nabla.dc.shared.command.settings.UpdateCompanyUser;
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.DeletedRecordField;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.command.AbstractRemove;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
@@ -38,22 +33,23 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class CompanyListModel extends CModel<CompanyRecord> {
+public class UserCompanyListModel extends CModel<CompanyRecord> {
 
 	static public class Fields {
-		public String name() { return ICompany.NAME; }
-		public String active() { return ICompany.ACTIVE; }
+		public String name() { return "name"; }
+		public String active() { return "active"; }
 	}
 
 	private static final Fields	fields = new Fields();
+	private final Integer		userId;
 
-	public CompanyListModel() {
+	public UserCompanyListModel(final Integer userId) {
 		super(CompanyRecord.factory);
 
+		this.userId = userId;
 		setFields(
-			new DeletedRecordField(),
 			new IdField(),
-			new TextField(fields.name(), ICompany.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new TextField(fields.name(), FieldAttributes.READ_ONLY),
 			new BooleanField(fields.active())
 				);
 	}
@@ -63,23 +59,13 @@ public class CompanyListModel extends CModel<CompanyRecord> {
 	}
 
 	@Override
-	public AbstractRemove getRemoveCommand() {
-		return new RemoveCompany();
-	}
-
-	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchCompanyList();
+		return new FetchUserCompanyList(userId);
 	}
 
 	@Override
 	public IAction<StringResult> getUpdateCommand(final CompanyRecord record) {
-		return new UpdateCompany(record.getId(), record.getName(), record.getActive());
-	}
-
-	@Override
-	public IAction<StringResult> getAddCommand(final CompanyRecord record) {
-		return new AddCompany(record.getName(), record.getActive());
+		return new UpdateCompanyUser(record.getId(), userId, record.getActive());
 	}
 
 }

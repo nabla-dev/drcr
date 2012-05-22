@@ -17,7 +17,6 @@
 package com.nabla.dc.server;
 
 import com.google.inject.Singleton;
-import com.nabla.dc.server.handler.FetchUserCompanyListHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -129,7 +128,8 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(FetchCompanyUserListHandler.class);
 		bindHandler(UpdateCompanyUserHandler.class);
 		
-		bindHandler(FetchUserCompanyListHandler.class);
+		bindHandler(com.nabla.dc.server.handler.FetchUserCompanyListHandler.class);
+		bindHandler(com.nabla.dc.server.handler.settings.FetchUserCompanyListHandler.class);
 		/*
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);
