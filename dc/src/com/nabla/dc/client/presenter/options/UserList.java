@@ -163,7 +163,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 	private final ISlot1<UserRecord> onEditUserRoles = new ISlot1<UserRecord>() {
 		@Override
 		public void invoke(final UserRecord record) {
-			new RoleDefinitionDialog(new UserDefinitionModel(record.getId()), record.getName()).revealDisplay();
+			new RoleDefinitionDialog(new UserDefinitionModel(record.getId())).revealDisplay();
 		}
 	};
 

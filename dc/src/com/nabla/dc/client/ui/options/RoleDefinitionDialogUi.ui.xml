@@ -8,7 +8,6 @@
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
 	<ui:with field="model" type="com.nabla.wapp.client.model.Model"/>
-	<ui:with field="recordName" type="java.lang.String"/>
 	<ui:with field="fields" type="com.nabla.dc.client.model.options.RoleDefinitionModel.Fields"/>
 	<ui:with field="treeModel" type="com.nabla.wapp.client.model.Model"/>
 	<ui:with field="treeFields" type="com.nabla.dc.client.model.options.RoleDefinitionTreeModel.Fields"/>
@@ -16,7 +15,7 @@
 	<wnd:ModalDialog caption="Role Definition" icon="role_small.png" autoClose="true">
 		<ui:attribute name="caption" description="Edit role definition dialog caption"/>
 		<form:Form ui:field="form" model="{model}" autoFetchData="false" columnWidths="35,*" width="350" height="350">
-			<form:StaticText value="{recordName}" width="*"><ui:msg>Name</ui:msg></form:StaticText>
+			<form:StaticText name="recordName" width="*"><ui:msg>Name</ui:msg></form:StaticText>
 			<wnd:TreeGrid name="{fields.roles}" ui:field="tree" model="{treeModel}" title="Select from list of roles below" colSpan="2" width="*" height="200" loadDataOnDemand="true" nodeIcon="privilege_small.png" folderIcon="role_small.png">
 				<ui:attribute name="title" description="Edit role definition message"/>
 				<wnd:TreeGridField name="{treeFields.name}" canSort="false"><ui:msg>Role</ui:msg></wnd:TreeGridField>

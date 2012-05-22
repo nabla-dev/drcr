@@ -17,6 +17,8 @@
 package com.nabla.dc.server;
 
 import com.google.inject.Singleton;
+import com.nabla.dc.server.handler.RoleNameHandler;
+import com.nabla.dc.server.handler.UserNameHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -82,7 +84,9 @@ public class HandlerModule extends AbstractHandlerModule {
 		bind(IUserSessionContextProvider.class).to(UserSessionContextProvider.class).in(Singleton.class);
 
 		bindHandler(IsUserInRoleHandler.class);
-
+		bindHandler(UserNameHandler.class);
+		bindHandler(RoleNameHandler.class);
+		
 		bindHandler(LoadListGridStateHandler.class);
 		bindHandler(SaveListGridStateHandler.class);
 

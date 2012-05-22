@@ -17,6 +17,7 @@
 package com.nabla.dc.client.model.options;
 
 
+import com.nabla.dc.shared.command.UserName;
 import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.shared.command.UpdateUserDefinition;
 import com.nabla.wapp.shared.dispatch.IAction;
@@ -57,4 +58,8 @@ public class UserDefinitionModel extends RoleDefinitionModel {
 		return new UpdateUserDefinition(objectId, roleId, delta);
 	}
 
+	@Override
+	public IAction<StringResult> getRoleName() {
+		return new UserName(roleId);
+	}
 }

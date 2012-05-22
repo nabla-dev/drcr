@@ -406,7 +406,9 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 					ids = new HashSet<Integer>();
 					m.put(id, ids);
 				}
-				ids.addAll(roles.get(rs.getInt("role_id")).getDefinition());
+				final Role role = roles.get(rs.getInt("role_id"));
+				if (role != null)
+					ids.addAll(role.getDefinition());
 			}
 
 		} finally {

@@ -121,7 +121,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 	private final ISlot1<RoleRecord> onEditDefinition = new ISlot1<RoleRecord>() {
 		@Override
 		public void invoke(final RoleRecord role) {
-			new RoleDefinitionDialog(new RoleDefinitionModel(role.getId()), role.getName()).revealDisplay();
+			new RoleDefinitionDialog(new RoleDefinitionModel(role.getId())).revealDisplay();
 		}
 	};
 

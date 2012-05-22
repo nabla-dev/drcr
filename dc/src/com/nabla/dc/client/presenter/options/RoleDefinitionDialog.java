@@ -33,8 +33,8 @@ public class RoleDefinitionDialog extends AbstractTopPresenter<RoleDefinitionDia
 		super(ui);
 	}
 
-	public RoleDefinitionDialog(final RoleDefinitionModel formModel, final String roleName) {
-		super(new RoleDefinitionDialogUi(formModel, roleName));
+	public RoleDefinitionDialog(final RoleDefinitionModel formModel) {
+		super(new RoleDefinitionDialogUi(formModel));
 	}
 
 }

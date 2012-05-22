@@ -88,7 +88,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	private final ISlot1<CompanyRecord> onEditUserRoles = new ISlot1<CompanyRecord>() {
 		@Override
 		public void invoke(final CompanyRecord record) {
-			new RoleDefinitionDialog(new UserDefinitionModel(record.getId(), userId), "user name").revealDisplay();
+			new RoleDefinitionDialog(new UserDefinitionModel(record.getId(), userId)).revealDisplay();
 		}
 	};
 

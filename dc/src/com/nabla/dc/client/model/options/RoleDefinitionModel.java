@@ -17,6 +17,7 @@
 package com.nabla.dc.client.model.options;
 
 
+import com.nabla.dc.shared.command.RoleName;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.shared.command.UpdateRoleDefinition;
@@ -53,4 +54,7 @@ public class RoleDefinitionModel extends CModel<RoleDefinitionRecord> {
 		return new UpdateRoleDefinition(roleId, delta);
 	}
 
+	public IAction<StringResult> getRoleName() {
+		return new RoleName(roleId);
+	}
 }
