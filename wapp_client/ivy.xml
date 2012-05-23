@@ -6,8 +6,9 @@
       <artifact name="wapp_client" type="jar" ext="jar"/>      
     </publications>
     <dependencies>
+    <!--
     	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="compile" />
-    
+    -->
       	<dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default" />
       
       	<dependency org="com.googlecode.gwtupload" name="gwtupload" rev="${gwtupload.version}" conf="compile->default" />

@@ -4,6 +4,6 @@
 		<conf name="api" description="only provide framework API"/>
 		<conf name="compile" description="needed for compilation"/>
 		<conf name="runtime" description="needed at runtime"/>
-		<conf name="dummy" description="NOP" />
+		<conf name="core" description="core" />
 	</configurations>
 </ivy-module>

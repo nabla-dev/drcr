@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=wapp_basicserver&amp;ivyXmlPath=ivy.xml&amp;confs=compile&amp;ivySettingsPath=%24%7Bworkspace_loc%3Awapp_common%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;propertyFiles="/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_server"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_shared"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

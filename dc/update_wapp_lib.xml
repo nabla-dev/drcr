@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="dc" xmlns:ivy="antlib:org.apache.ivy.ant" default="build" basedir=".">
+	<property name="war.dir" value="war" />
+	<property name="web-inf.dir" value="${war.dir}/WEB-INF" />
+	<property name="lib.runtime.dir" value="${web-inf.dir}/lib" />
+	<property name="project.version" value="1.0.0" />
+	
+	<target name="build" >
+		<copy file="../wapp_basicserver/jars/wapp_basicserver-${project.version}.jar" todir="${lib.runtime.dir}" />
+		<copy file="../wapp_server/jars/wapp_server-${project.version}.jar" todir="${lib.runtime.dir}" />
+		<copy file="../wapp_shared/jars/wapp_shared-${project.version}.jar" todir="${lib.runtime.dir}" />
+	</target>
+	
+</project>

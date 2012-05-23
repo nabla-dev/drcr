@@ -6,8 +6,9 @@
       <artifact name="wapp_server" type="jar" ext="jar"/>      
     </publications>
     <dependencies>
-    	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="compile;runtime" />
-    	
+    <!--
+    	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="core" />
+    -->	
       	<dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime->default" />
       
       	<dependency org="commons-dbcp" name="commons-dbcp" rev="${commons-dbcp.version}" conf="compile->default;runtime->default" />

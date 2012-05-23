@@ -2,7 +2,7 @@
 	<info organisation="com.nabla.dc" module="dc" revision="1.0.0">
 		<extends organisation="com.nabla.wapp" module="wapp_common" revision="1.0.0" />
 	</info>
-    <dependencies>
+    <dependencies>   
     	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="compile;runtime" />
     	<dependency org="com.nabla.wapp" name="wapp_client" rev="${wapp.version}" conf="compile;runtime" />
     	<dependency org="com.nabla.wapp" name="wapp_server" rev="${wapp.version}" conf="compile;runtime" />
