@@ -66,4 +66,9 @@ public interface IRoles extends IPrivileges {
 	static String TAX_RATE_RW = "tax_rate_rw";
 	@IRole(TAX_RATE_VIEW)
 	static String TAX_RATE_RO = "tax_rate_ro";
+
+	@IRole({ACCOUNT_ADD, ACCOUNT_REMOVE, ACCOUNT_EDIT, ACCOUNT_VIEW})
+	static String ACCOUNT_RW = "account_rw";
+	@IRole(ACCOUNT_VIEW)
+	static String ACCOUNT_RO = "account_ro";
 }

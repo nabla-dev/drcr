@@ -19,13 +19,20 @@ package com.nabla.dc.server;
 import com.google.inject.Singleton;
 import com.nabla.dc.server.handler.RoleNameHandler;
 import com.nabla.dc.server.handler.UserNameHandler;
+import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
+import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
+import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
+import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
+import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
+import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
+import com.nabla.dc.server.handler.company.settings.RestoreAccountHandler;
+import com.nabla.dc.server.handler.company.settings.UpdateAccountHandler;
+import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
+import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
-import com.nabla.dc.server.handler.settings.ChangeCompanyLogoHandler;
 import com.nabla.dc.server.handler.settings.FetchCompanyListHandler;
-import com.nabla.dc.server.handler.settings.FetchCompanyTaxRateListHandler;
-import com.nabla.dc.server.handler.settings.FetchCompanyUserListHandler;
 import com.nabla.dc.server.handler.settings.FetchECTermListHandler;
 import com.nabla.dc.server.handler.settings.FetchTaxRateListHandler;
 import com.nabla.dc.server.handler.settings.RemoveCompanyHandler;
@@ -35,8 +42,6 @@ import com.nabla.dc.server.handler.settings.RestoreCompanyHandler;
 import com.nabla.dc.server.handler.settings.RestoreECTermHandler;
 import com.nabla.dc.server.handler.settings.RestoreTaxRateHandler;
 import com.nabla.dc.server.handler.settings.UpdateCompanyHandler;
-import com.nabla.dc.server.handler.settings.UpdateCompanyTaxRateHandler;
-import com.nabla.dc.server.handler.settings.UpdateCompanyUserHandler;
 import com.nabla.dc.server.handler.settings.UpdateECTermHandler;
 import com.nabla.dc.server.handler.settings.UpdateTaxRateHandler;
 import com.nabla.wapp.server.auth.IUserSessionContextProvider;
@@ -133,8 +138,14 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdateCompanyUserHandler.class);
 		
 		bindHandler(com.nabla.dc.server.handler.FetchUserCompanyListHandler.class);
-		bindHandler(com.nabla.dc.server.handler.settings.FetchUserCompanyListHandler.class);
-		/*
+		bindHandler(com.nabla.dc.server.handler.company.settings.FetchUserCompanyListHandler.class);
+
+		bindHandler(FetchAccountListHandler.class);
+		bindHandler(AddAccountHandler.class);
+		bindHandler(UpdateAccountHandler.class);
+		bindHandler(RemoveAccountHandler.class);
+		bindHandler(RestoreAccountHandler.class);
+/*
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);
 		bindHandler(UpdateListGridFilterHandler.class);

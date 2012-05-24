@@ -18,6 +18,9 @@ package com.nabla.dc.client.presenter.settings;
 
 import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
+import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.settings.CompanyListUi;
 import com.nabla.dc.shared.IPrivileges;

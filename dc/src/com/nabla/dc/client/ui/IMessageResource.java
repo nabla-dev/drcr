@@ -48,4 +48,8 @@ public interface IMessageResource extends Messages {
 	@DefaultMessage("Are you sure you want to delete these {0} tax codes?")
 	@AlternateMessage({"one", "Are you sure you want to delete tax code ''{1}''?"})
 	String confirmRemoveTaxRates(@PluralCount @Optional int count, @Optional String name);
+
+	@DefaultMessage("Are you sure you want to delete these {0} accounts?")
+	@AlternateMessage({"one", "Are you sure you want to delete account ''{1}''?"})
+	String confirmRemoveAccounts(@PluralCount @Optional int count, @Optional String name);
 }

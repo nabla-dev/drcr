@@ -39,4 +39,7 @@ public interface ITextResource extends Constants {
 
 	@DefaultStringValue("You need to select a deleted tax code to run this command")
 	String noDeletedTaxRateSelected();
+
+	@DefaultStringValue("You need to select a deleted acount to run this command")
+	String noDeletedAccountSelected();
 }

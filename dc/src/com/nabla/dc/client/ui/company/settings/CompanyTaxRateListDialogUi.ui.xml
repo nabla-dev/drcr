@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
+	
+	<ui:with field="companyName" type="java.lang.String"/>
+	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.CompanyTaxRateListModel"/>
+
+	<wnd:ModalDialog caption="Company Tax Rates" icon="vat_small.png" autoClose="true">
+		<ui:attribute name="caption" description="change company tax rates caption"/>
+		<form:Form height="350" columnWidths="35,*" width="270">
+			<form:StaticText value="{companyName}" width="*"><ui:msg>Company</ui:msg></form:StaticText>
+ 			<wnd:ListGrid ui:field="list" model="{model}" title="Select tax rates supported by company below" colSpan="2" width="250" height="300" editByCell="true" selectionType="SINGLE" editEvent="CLICK" viewStateReference="company_tax_rate">
+				<ui:attribute name="title" description="Select tax rates message"/>
+				<wnd:ListGridField name="{model.fields.name}" width="150" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="80" canEdit="true"><ui:msg>Active</ui:msg></wnd:ListGridField>
+			</wnd:ListGrid>
+			<form:ButtonBar>
+				<wnd:CancelButton><ui:msg>*Close</ui:msg></wnd:CancelButton>
+			</form:ButtonBar>
+		</form:Form>
+	</wnd:ModalDialog>
+</ui:UiBinder> 

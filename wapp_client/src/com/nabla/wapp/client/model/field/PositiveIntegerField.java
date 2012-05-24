@@ -16,7 +16,9 @@
 */
 package com.nabla.wapp.client.model.field;
 
+import com.nabla.wapp.client.model.validator.IntegerRangeValidator;
 import com.nabla.wapp.client.model.validator.ValidatorList;
+import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
 
@@ -36,6 +38,10 @@ public class PositiveIntegerField extends IntegerField {
 
 	public PositiveIntegerField(final String name, final ValidatorList validators,  final FieldAttributes... attributes) {
 		super(name, validators, attributes);
+	}
+
+	public PositiveIntegerField(final String name, final IntegerRangeConstraint constraint,  final FieldAttributes... attributes) {
+		this(name, new IntegerRangeValidator(constraint), attributes);
 	}
 
 	public PositiveIntegerField(final String name, final Integer defaultValue, final FieldAttributes... attributes) {

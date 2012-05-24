@@ -14,13 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.client.presenter.options;
+package com.nabla.dc.client.presenter.company.settings;
 
-import com.nabla.dc.client.model.options.UserDefinitionModel;
-import com.nabla.dc.client.presenter.ITabManager;
-import com.nabla.dc.client.presenter.company.settings.UserCompanyList;
+import com.nabla.dc.client.model.company.settings.AccountRecord;
 import com.nabla.dc.client.ui.Resource;
-import com.nabla.dc.client.ui.options.UserListUi;
+import com.nabla.dc.client.ui.company.settings.AccountListUi;
+import com.nabla.dc.shared.IPrivileges;
+import com.nabla.dc.shared.command.company.settings.RestoreAccount;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -28,58 +28,44 @@ import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
-import com.nabla.wapp.shared.auth.IRolePrivileges;
 import com.nabla.wapp.shared.command.AbstractRestore;
-import com.nabla.wapp.shared.command.RestoreUser;
 import com.nabla.wapp.shared.slot.ISlot;
-import com.nabla.wapp.shared.slot.ISlot1;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
  * @author nabla
  *
  */
-public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
+public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {
-		@IRequiredRole(IRolePrivileges.USER_ADD) HideableCommand addRecord();
-		@IRequiredRole(IRolePrivileges.USER_REMOVE) HideableCommand removeRecord();
+		@IRequiredRole(IPrivileges.ACCOUNT_ADD) HideableCommand addRecord();
+		@IRequiredRole(IPrivileges.ACCOUNT_REMOVE) HideableCommand removeRecord();
 		@IRequireRootRole HideableCommand restoreRecord();
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand changePassword();
-		@IRequiredRole(IRolePrivileges.ROLE_EDIT) UserRecordCommand editRoles();
-		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand editCompanies();
-		@IRequiredRole(IRolePrivileges.USER_EDIT) CommandUiManager edit();
+		@IRequiredRole(IPrivileges.ACCOUNT_EDIT) CommandUiManager edit();
 	}
 
 	public interface IDisplay extends ITabDisplay {
-		void addRecord(final Record record);
-		void removeSelectedRecords(IListGridConfirmAction confirmUi);
-		boolean restoreSelectedRecords(final AbstractRestore cmd);
+		void addRecord();
+		void removeRecord(IListGridConfirmAction confirmUi);
+		boolean restoreRecord(final AbstractRestore cmd);
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
 	}
 
-	private final ITabManager 		tabs;
-/*
-	@Inject private PrintManager						printerManager;
-*/
-
-	public UserList(final IDisplay display, final ITabManager tabs) {
+	public AccountList(final IDisplay display) {
 		super(display);
-		this.tabs = tabs;
 	}
 
-	public UserList(final ITabManager tabs) {
-		this(new UserListUi(), tabs);
+	public AccountList(final Integer companyId) {
+		this(new AccountListUi(companyId));
 	}
 
 	@Override
@@ -90,43 +76,30 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		registerSlot(cmd.restoreRecord(), onRestoreRecord);
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
-		registerSlot(cmd.changePassword(), onChangeUserPassword);
-		registerSlot(cmd.editRoles(), onEditUserRoles);
-		registerSlot(cmd.editCompanies(), onEditUserCompanies);
 		cmd.updateUi();
-
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
 	}
 
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			final AddUserDialog dlg = new AddUserDialog();
-			dlg.getSuccessSlots().connect(onRecordAdded);
-			dlg.revealDisplay();
-		}
-	};
-
-	private final ISlot1<UserRecord> onRecordAdded = new ISlot1<UserRecord>() {
-		@Override
-		public void invoke(final UserRecord user) {
-			display.addRecord(user);
+			display.addRecord();
 		}
 	};
 
 	private final ISlot onRemoveRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			display.removeSelectedRecords(onConfirmRemoveRecord);
+			display.removeRecord(onConfirmRemoveRecord);
 		}
 	};
 
 	private final IListGridConfirmAction onConfirmRemoveRecord = new IListGridConfirmAction() {
 		@Override
 		public void confirmRemoveRecords(final ListGridRecord[] records, final com.google.gwt.user.client.Command onSuccess) {
-			final UserRecord user = new UserRecord(records[0]);
+			final AccountRecord record = new AccountRecord(records[0]);
 			Application.getInstance().getMessageBox().ask(
-					Resource.messages.confirmRemoveUsers(records.length, user.getName()),
+					Resource.messages.confirmRemoveAccounts(records.length, record.getName()),
 					onSuccess);
 		}
 	};
@@ -134,8 +107,8 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 	private final ISlot onRestoreRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			if (!display.restoreSelectedRecords(new RestoreUser()))
-				Application.getInstance().getMessageBox().error(Resource.strings.noDeletedUserSelected());
+			if (!display.restoreRecord(new RestoreAccount()))
+				Application.getInstance().getMessageBox().error(Resource.strings.noDeletedAccountSelected());
 		}
 	};
 
@@ -153,24 +126,4 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<UserRecord> onChangeUserPassword = new ISlot1<UserRecord>() {
-		@Override
-		public void invoke(final UserRecord record) {
-			new ChangeUserPasswordDialog(record.getName()).revealDisplay();
-		}
-	};
-
-	private final ISlot1<UserRecord> onEditUserRoles = new ISlot1<UserRecord>() {
-		@Override
-		public void invoke(final UserRecord record) {
-			new RoleDefinitionDialog(new UserDefinitionModel(record.getId())).revealDisplay();
-		}
-	};
-
-	private final ISlot1<UserRecord> onEditUserCompanies = new ISlot1<UserRecord>() {
-		@Override
-		public void invoke(final UserRecord record) {
-			tabs.addTab(new UserCompanyList(record.getId()));
-		}
-	};
 }
