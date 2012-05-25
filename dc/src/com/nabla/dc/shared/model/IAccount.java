@@ -25,7 +25,7 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  */
 public interface IAccount {
 	static final String					CODE = "code";
-	static final RegexConstraint		CODE_CONSTRAINT = new RegexConstraint(1, 6, "[0-9]");
+	static final RegexConstraint		CODE_CONSTRAINT = new RegexConstraint(1, 6, "[0-9]*");
 	static final String					NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
 	static final String					ACTIVE = "active";

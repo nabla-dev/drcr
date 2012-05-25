@@ -16,18 +16,18 @@
 */
 package com.nabla.dc.server.handler.company.settings;
 
-import com.nabla.dc.shared.command.settings.RemoveCompany;
-import com.nabla.dc.shared.model.ICompany;
+import com.nabla.dc.shared.command.company.settings.RemoveAccount;
+import com.nabla.dc.shared.model.IAccount;
 import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
 /**
  * @author nabla
  *
  */
-public class RemoveAccountHandler extends AbstractSoftRemoveHandler<RemoveCompany> {
+public class RemoveAccountHandler extends AbstractSoftRemoveHandler<RemoveAccount> {
 
 	public RemoveAccountHandler() {
-		super(ICompany.TABLE);
+		super(IAccount.TABLE);
 	}
 
 }

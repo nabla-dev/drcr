@@ -35,6 +35,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchAccountListHandler extends AbstractFetchHandler<FetchAccountList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
+		new OdbcBooleanToJson("deleted"),
 		new OdbcIdToJson(),
 		new OdbcStringToJson("code"),
 		new OdbcStringToJson("name"),
@@ -48,15 +49,15 @@ public class FetchAccountListHandler extends AbstractFetchHandler<FetchAccountLi
 	public FetchResult execute(final FetchAccountList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT * FROM (" +
-"SELECT id, code, name, cost_centre, department, balance_sheet, active" +
+"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, code, name, cost_centre, department, balance_sheet, active" +
 " FROM account" +
-" WHERE company_id=? AND uname IS NOT NULL" +
+" WHERE company_id=?" +
 ") AS dt {WHERE} {ORDER BY}"
 			:
 "SELECT * FROM (" +
-"SELECT id, code, name, cost_centre, department, balance_sheet, active" +
+"SELECT FALSE AS 'deleted', id, code, name, cost_centre, department, balance_sheet, active" +
 " FROM account" +
-" WHERE company_id=?" +
+" WHERE company_id=? AND uname IS NOT NULL" +
 ") AS dt {WHERE} {ORDER BY}"
 			, cmd.getCompanyId());
 	}

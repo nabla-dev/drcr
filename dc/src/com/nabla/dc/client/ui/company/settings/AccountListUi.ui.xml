@@ -26,10 +26,10 @@
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="account_list" model="{model}" editByCell="false" canSort="true" editCommand="{cmd.edit}">
 				<wnd:ListGridField name="{model.fields.code}" width="50" canGroupBy="false"><ui:msg>Code</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.cc}" width="300"><ui:msg>CC</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.dep}" width="300"><ui:msg>DEP</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.bs}" width="50" canEdit="true"><ui:msg>BalanceSheet</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.name}" width="250" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.cc}" width="150"><ui:msg>CC</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.dep}" width="150"><ui:msg>DEP</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.bs}" width="50" canEdit="true"><ui:msg>BS</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.active}" width="50" canEdit="true"><ui:msg>Active</ui:msg></wnd:ListGridField>
 				<wnd:Menu>
 					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>				

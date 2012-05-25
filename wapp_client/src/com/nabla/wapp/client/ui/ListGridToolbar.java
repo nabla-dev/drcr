@@ -37,10 +37,13 @@ public class ListGridToolbar extends HLayout {
 	}
 
 	@Override
-	public void add(Widget w){
+	public void add(final Widget w){
 		super.add(w);
 		if (w instanceof ListGridToolbarButton) {
 			final ListGridToolbarButton button = (ListGridToolbarButton)w;
+			button.setParent(this);
+		} else if (w instanceof ListGridToolbarMenu) {
+			final ListGridToolbarMenu button = (ListGridToolbarMenu)w;
 			button.setParent(this);
 		}
 	}

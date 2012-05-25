@@ -18,6 +18,7 @@ package com.nabla.dc.client.presenter.settings;
 
 import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.company.settings.AccountList;
 import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
@@ -56,6 +57,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand changeLogo();
 		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) CompanyRecordCommand editUsers();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand editTaxRates();
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand editAccounts();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CommandUiManager edit();
 	}
 
@@ -93,6 +95,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		registerSlot(cmd.changeLogo(), onChangeLogo);
 		registerSlot(cmd.editUsers(), onEditUsers);
 		registerSlot(cmd.editTaxRates(), onEditTaxRates);
+		registerSlot(cmd.editAccounts(), onEditAccounts);
 		cmd.updateUi();
 
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
@@ -162,6 +165,13 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		@Override
 		public void invoke(final CompanyRecord record) {
 			new CompanyTaxRateListDialog(record.getId(), record.getName()).revealDisplay();
+		}
+	};
+
+	private final ISlot1<CompanyRecord> onEditAccounts = new ISlot1<CompanyRecord>() {
+		@Override
+		public void invoke(final CompanyRecord record) {
+			tabs.addTab(new AccountList(record.getId()));
 		}
 	};
 

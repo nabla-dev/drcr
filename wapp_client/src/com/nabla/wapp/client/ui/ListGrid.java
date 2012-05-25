@@ -103,7 +103,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 	// support for listgrid toolbar
 	private final Map<String, ListGridToolbar>	toolbars = new HashMap<String, ListGridToolbar>();
 	private ListGridRecord						currentRecord;
-	private Canvas								defaultToolbar = new ListGridToolbar();
+	private final Canvas								defaultToolbar = new ListGridToolbar();
 
 	public ListGrid() {
 		setAlternateRecordStyles(true);
@@ -116,14 +116,14 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 
 		addDrawHandler(new DrawHandler() {
 			@Override
-			public void onDraw(@SuppressWarnings("unused") DrawEvent event) {
+			public void onDraw(@SuppressWarnings("unused") final DrawEvent event) {
 				if (viewStateReference != null)
 					loadViewState();
 			}
 		});
 		addGroupByHandler(new GroupByHandler() {
 			@Override
-			public void onGroupBy(GroupByEvent event) {
+			public void onGroupBy(final GroupByEvent event) {
 				groupByFields = event.getFields();
 			}
 		});
@@ -139,12 +139,12 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		this.setSummaryRowDataSource(model);
 	}
 
-	public void setShowCheckbox(boolean show) {
+	public void setShowCheckbox(final boolean show) {
 		setSelectionAppearance(show ? SelectionAppearance.CHECKBOX : SelectionAppearance.ROW_STYLE);
 		if (show) {
 			addRecordClickHandler(new RecordClickHandler() {
 				@Override
-				public void onRecordClick(RecordClickEvent event) {
+				public void onRecordClick(final RecordClickEvent event) {
 					int row = event.getRecordNum();
 					if (event.getFieldNum() > 0) {
 						final com.smartgwt.client.widgets.grid.ListGrid list = event.getViewer();
@@ -379,7 +379,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		return viewStateReference;
 	}
 
-	public void setViewStateReference(String reference) {
+	public void setViewStateReference(final String reference) {
 		this.viewStateReference = reference;
 	}
 
@@ -394,7 +394,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 
 		dispatcher.execute(new LoadListGridState(getViewStateReference()), new AsyncCallback<StringResult>() {
 			@Override
-			public void onFailure(@SuppressWarnings("unused") Throwable caught) {
+			public void onFailure(@SuppressWarnings("unused") final Throwable caught) {
 				logger.warning("fail to load view preferences for ListGrid '" + getViewStateReference() + "'");
 			}
 
@@ -434,12 +434,12 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		state.setAttribute("groupBy", groupByFields);
 		dispatcher.execute(new SaveListGridState(getViewStateReference(), JSON.encode(state.getJsObj())), new AsyncCallback<VoidResult>() {
 			@Override
-			public void onFailure(@SuppressWarnings("unused") Throwable caught) {
+			public void onFailure(@SuppressWarnings("unused") final Throwable caught) {
 				logger.warning("fail to save view preferences for ListGrid '" + getViewStateReference() + "'");
 			}
 
 			@Override
-			public void onSuccess(@SuppressWarnings("unused") VoidResult __) {
+			public void onSuccess(@SuppressWarnings("unused") final VoidResult __) {
 				logger.fine("view preferences saved for ListGrid '" + getViewStateReference() + "'");
 			}
 
@@ -456,7 +456,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 			return super.getExpansionComponent(record);
 		drawFormHandler = editForm.addDrawHandler(new DrawHandler() {
 			@Override
-			public void onDraw(@SuppressWarnings("unused") DrawEvent event) {
+			public void onDraw(@SuppressWarnings("unused") final DrawEvent event) {
 				editForm.editRecord(record);
 			}
 		});
@@ -464,7 +464,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		if (cancelButton != null) {
 			cancelFormHandler = cancelButton.addClickHandler(new ClickHandler() {
 				@Override
-				public void onClick(@SuppressWarnings("unused") ClickEvent event) {
+				public void onClick(@SuppressWarnings("unused") final ClickEvent event) {
 					collapseRecord(record);
 				}
 			});
@@ -472,7 +472,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		return editForm;
 	}
 
-	public void setColSpan(int colSpan) {
+	public void setColSpan(final int colSpan) {
 		this.colSpan = colSpan;
 	}
 
@@ -484,7 +484,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		return recordDeletedProperty;
 	}
 
-	public void setRecordDeletedProperty(String value) {
+	public void setRecordDeletedProperty(final String value) {
 		recordDeletedProperty = value;
 	}
 
@@ -512,7 +512,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 	}
 
 	@Override
-    protected Canvas getRollOverCanvas(Integer rowNum, Integer colNum) {
+    protected Canvas getRollOverCanvas(final Integer rowNum, final Integer colNum) {
 		if (!toolbars.isEmpty()) {
 			final ListGridRecord record = this.getRecord(rowNum);
 			if (ListGridColumn.isDataRecord(record)) {
@@ -520,7 +520,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 				if (getUseCellRollOvers()) {
 					final ListGridToolbar rslt = toolbars.get(getFieldName(colNum));
 					if (rslt != null) {
-						logger.finest("showing listgrid toolbar for field '" + getFieldName(colNum) + "'");
+					//	logger.finest("showing listgrid toolbar for field '" + getFieldName(colNum) + "'");
 						return rslt;
 					}
 				} else {

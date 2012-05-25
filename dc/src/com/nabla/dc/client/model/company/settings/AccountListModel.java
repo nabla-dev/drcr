@@ -22,6 +22,7 @@ import com.nabla.dc.shared.command.company.settings.RemoveAccount;
 import com.nabla.dc.shared.command.company.settings.UpdateAccount;
 import com.nabla.dc.shared.model.IAccount;
 import com.nabla.wapp.client.model.CModel;
+import com.nabla.wapp.client.model.DeletedRecordField;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
@@ -55,6 +56,7 @@ public class AccountListModel extends CModel<AccountRecord> {
 
 		this.companyId = companyId;
 		setFields(
+			new DeletedRecordField(),
 			new IdField(),
 			new TextField(fields.code(), IAccount.CODE_CONSTRAINT, FieldAttributes.REQUIRED),
 			new TextField(fields.name(), IAccount.NAME_CONSTRAINT, FieldAttributes.REQUIRED),

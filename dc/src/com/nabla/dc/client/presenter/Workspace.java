@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.ui.WorkspaceUi;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.Assert;
@@ -76,7 +77,8 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
-				addTab(new UserCompanyList(Workspace.this));
+			//	addTab(new UserCompanyList(Workspace.this));
+				addTab(new CompanyList(Workspace.this));
 			}
 		});
 /*
@@ -104,7 +106,7 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 
 	private final ISlot2<UserSession, UserSession> onUserSessionChanged = new ISlot2<UserSession, UserSession>() {
 		@Override
-		public void invoke(UserSession oldSession, UserSession newSession) {
+		public void invoke(final UserSession oldSession, final UserSession newSession) {
 			if (newSession != null && (oldSession == null || oldSession.getName().equals(newSession.getName())))
 				getDisplay().setUserName(newSession.getName());
 		}

@@ -16,8 +16,8 @@
 */
 package com.nabla.dc.server.handler.company.settings;
 
-import com.nabla.dc.shared.command.settings.RestoreCompany;
-import com.nabla.dc.shared.model.ICompany;
+import com.nabla.dc.shared.command.company.settings.RestoreAccount;
+import com.nabla.dc.shared.model.IAccount;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 import com.nabla.wapp.shared.auth.IRootUser;
 
@@ -25,10 +25,10 @@ import com.nabla.wapp.shared.auth.IRootUser;
  * @author nabla
  *
  */
-public class RestoreAccountHandler extends AbstractRestoreHandler<RestoreCompany> {
+public class RestoreAccountHandler extends AbstractRestoreHandler<RestoreAccount> {
 
 	public RestoreAccountHandler() {
-		super(ICompany.TABLE, IRootUser.NAME);
+		super(IAccount.TABLE, IRootUser.NAME);
 	}
 
 }

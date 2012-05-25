@@ -27,9 +27,13 @@
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>
 				<wnd:ListGridToolbar field="{model.fields.name}">
-					<wnd:ListGridToolbarButton icon="logo_small.png" command="{cmd.changeLogo}" tooltip="Change logo"/>
-					<wnd:ListGridToolbarButton icon="user_small.png" command="{cmd.editUsers}" tooltip="Edit users"/>
-					<wnd:ListGridToolbarButton icon="vat_small.png" command="{cmd.editTaxRates}" tooltip="Edit tax rates"/>							
+					<wnd:ListGridToolbarMenu>
+						<wnd:ListGridToolbarMenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:ListGridToolbarMenuItem>
+						<wnd:ListGridToolbarMenuItemSeparator/>
+						<wnd:ListGridToolbarMenuItem command="{cmd.editAccounts}">Accounts</wnd:ListGridToolbarMenuItem>
+						<wnd:ListGridToolbarMenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:ListGridToolbarMenuItem>
+						<wnd:ListGridToolbarMenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:ListGridToolbarMenuItem>						
+					</wnd:ListGridToolbarMenu>							
 				</wnd:ListGridToolbar>				
 				<wnd:Menu>
 					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>				
