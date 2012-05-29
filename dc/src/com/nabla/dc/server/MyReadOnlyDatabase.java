@@ -30,8 +30,8 @@ import com.nabla.wapp.server.database.Database;
 public class MyReadOnlyDatabase extends Database {
 
 	@Inject
-	public MyReadOnlyDatabase(final ServletContext serverContext) {
-		super(serverContext.getInitParameter("ro_database_name"));
+	public MyReadOnlyDatabase(final ServletContext serverContext) throws ClassNotFoundException {
+		super(serverContext.getInitParameter("ro_database_name"), serverContext.getInitParameter("database_driver_name"));
 	}
 
 }

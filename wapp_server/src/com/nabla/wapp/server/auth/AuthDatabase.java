@@ -35,8 +35,8 @@ public class AuthDatabase extends Database {
 
 	private static final Log	log = LogFactory.getLog(AuthDatabase.class);
 
-	public AuthDatabase(final String name, final Class<?> roles, final String rootPassword) throws SQLException {
-		super(name);
+	public AuthDatabase(final String dbName, final String driverName, final Class<?> roles, final String rootPassword) throws SQLException, ClassNotFoundException {
+		super(dbName, driverName);
 		final Connection conn = this.getConnection();
 		try {
 			new UserManager(conn).initializeDatabase(new UserManager.IRoleListProvider() {

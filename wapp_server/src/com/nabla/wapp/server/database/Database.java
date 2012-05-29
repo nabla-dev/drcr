@@ -37,7 +37,7 @@ import com.nabla.wapp.server.general.Assert;
  */
 public class Database implements IDatabase {
 
-	private static final Log			log = LogFactory.getLog(Database.class);
+	private static final Log				log = LogFactory.getLog(Database.class);
 	private static final PoolingDriver	driver = new PoolingDriver();
 
 	private final String	url;
@@ -45,11 +45,14 @@ public class Database implements IDatabase {
 	/**
 	 * Constructor
 	 * @param name - database name as defined in pool
+	 * @throws ClassNotFoundException 
 	 */
-	public Database(final String name) {
-		url = "jdbc:apache:commons:dbcp:/" + name;
-		if (!isLoaded(name))
-			load(name);
+	public Database(final String dbName, final String driverName) throws ClassNotFoundException {
+		url = "jdbc:apache:commons:dbcp:/" + dbName;
+		if (!isLoaded(dbName)) {
+			load(dbName);
+			Class.forName(driverName);
+		}
 	}
 
 	@Override

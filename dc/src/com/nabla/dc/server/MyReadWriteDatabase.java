@@ -37,8 +37,8 @@ public class MyReadWriteDatabase extends AuthDatabase {
 	private static final Log	log = LogFactory.getLog(MyReadWriteDatabase.class);
 
 	@Inject
-	public MyReadWriteDatabase(final ServletContext serverContext/*, @IReportFolder final String reportFolder, @IReCompileReports boolean reCompileReports*/) throws SQLException {
-		super(serverContext.getInitParameter("rw_database_name"), IRoles.class, serverContext.getInitParameter("root_password"));
+	public MyReadWriteDatabase(final ServletContext serverContext/*, @IReportFolder final String reportFolder, @IReCompileReports boolean reCompileReports*/) throws SQLException, ClassNotFoundException {
+		super(serverContext.getInitParameter("rw_database_name"), serverContext.getInitParameter("database_driver_name"), IRoles.class, serverContext.getInitParameter("root_password"));
 
 	//	ReportDatabase.initialize(getConnection(), reportFolder, BuiltInReports.class, DefaultReports.class, reCompileReports);
 	}
