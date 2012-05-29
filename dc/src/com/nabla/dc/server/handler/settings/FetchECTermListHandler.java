@@ -41,10 +41,6 @@ public class FetchECTermListHandler extends AbstractFetchHandler<FetchECTermList
 		new OdbcBooleanToJson("active")
 		);
 
-	public FetchECTermListHandler() {
-		super();
-	}
-
 	@Override
 	public FetchResult execute(final FetchECTermList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?

@@ -37,7 +37,9 @@ public abstract class AbstractGetDefaultValuesHandler<A extends IAction<StringRe
 
 	protected StringResult getDefaultValues(final String group, final IUserSessionContext ctx) throws SQLException {
 		return executeQuery(StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT name AS 'field', state AS 'default' FROM user_preference WHERE role_id=? AND category=?;",
+"SELECT name AS 'field', state AS 'default'" +
+" FROM user_preference" +
+" WHERE user_id=? AND category=?;",
 ctx.getUserId(), group));
 	}
 

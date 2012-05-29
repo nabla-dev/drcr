@@ -14,20 +14,27 @@
 * the License.
 * 
 */
-package com.nabla.wapp.client.ui.form;
+package com.nabla.dc.shared.command;
 
-import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public class CheckBox extends UiBinderFormTextItemSpeudoWidget<CheckboxItem> {
+public class FetchImportErrorList extends AbstractFetch {
 
-	public CheckBox() {
-		super(new CheckboxItem(), true);
-		impl.setShowTitle(false);
-		impl.setColSpan(2);
+	private static final long serialVersionUID = 1L;
+
+	private Integer		batchId;
+	
+	FetchImportErrorList() {}
+	
+	public FetchImportErrorList(final Integer batchId) {
+		this.batchId = batchId;
 	}
-
+	
+	public Integer getBatchId() {
+		return batchId;
+	}
 }

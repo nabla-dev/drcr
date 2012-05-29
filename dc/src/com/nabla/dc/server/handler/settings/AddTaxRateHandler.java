@@ -34,10 +34,6 @@ public class AddTaxRateHandler extends AbstractAddHandler<AddTaxRate> {
 
 	public static final InsertStatement<AddTaxRate>	sql = new InsertStatement<AddTaxRate>(AddTaxRate.class);
 
-	public AddTaxRateHandler() {
-		super();
-	}
-
 	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddTaxRate record, final IUserSessionContext ctx) throws DispatchException, SQLException {

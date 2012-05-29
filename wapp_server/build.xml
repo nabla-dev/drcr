@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="wapp_server" default="build" basedir=".">
+<project name="wapp_server" default="build" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	<property name="project.name" value="${ant.project.name}" />
 
 	<import file="../wapp_common/build.xml"/>

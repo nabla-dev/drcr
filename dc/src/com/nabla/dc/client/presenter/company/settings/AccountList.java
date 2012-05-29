@@ -49,6 +49,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 		Command reload();
 		Command savePreferences();
 		@IRequiredRole(IPrivileges.ACCOUNT_EDIT) CommandUiManager edit();
+		@IRequiredRole(IPrivileges.ACCOUNT_ADD) HideableCommand importRecords();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -60,12 +61,15 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 		ICommandSet getCommands();
 	}
 
-	public AccountList(final IDisplay display) {
+	private final Integer	companyId;
+	
+	public AccountList(final Integer companyId, final IDisplay display) {
 		super(display);
+		this.companyId = companyId;
 	}
 
 	public AccountList(final Integer companyId) {
-		this(new AccountListUi(companyId));
+		this(companyId, new AccountListUi(companyId));
 	}
 
 	@Override
@@ -76,6 +80,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 		registerSlot(cmd.restoreRecord(), onRestoreRecord);
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
+		registerSlot(cmd.importRecords(), onImport);
 		cmd.updateUi();
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
 	}
@@ -126,4 +131,10 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 		}
 	};
 
+	private final ISlot onImport = new ISlot() {
+		@Override
+		public void invoke() {
+			new ImportAccountWizard(companyId).revealDisplay();
+		}
+	};
 }

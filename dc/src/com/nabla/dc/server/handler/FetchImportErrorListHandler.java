@@ -14,14 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.handler;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.settings.FetchTaxRateList;
+import com.nabla.dc.shared.command.FetchImportErrorList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
@@ -32,26 +31,20 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchTaxRateListHandler extends AbstractFetchHandler<FetchTaxRateList> {
+public class FetchImportErrorListHandler extends AbstractFetchHandler<FetchImportErrorList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcBooleanToJson("deleted"),
-		new OdbcIntToJson("id"),
-		new OdbcStringToJson("name"),
-		new OdbcIntToJson("rate"),
-		new OdbcBooleanToJson("active")
-		);
+			new OdbcIntToJson("line_no"),
+			new OdbcStringToJson("error")
+	);
 
 	@Override
-	public FetchResult execute(final FetchTaxRateList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, rate, active" +
-" FROM tax_rate" +
-"{WHERE} {ORDER BY}"
-			:
-"SELECT FALSE AS 'deleted', id, name, rate, active" +
-" FROM tax_rate" +
-" WHERE uname IS NOT NULL {AND WHERE} {ORDER BY}");
+	public FetchResult execute(final FetchImportErrorList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return fetcher.serialize(cmd, ctx.getConnection(),
+"SELECT line_no, error" +
+" FROM import_error" +
+" WHERE import_data_id=? {AND WHERE} {ORDER BY}",
+				cmd.getBatchId());
 	}
 
 }

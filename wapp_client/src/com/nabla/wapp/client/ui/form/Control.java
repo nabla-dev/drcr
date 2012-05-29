@@ -50,8 +50,7 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 	private Boolean				shouldSaveValue;
 	private Boolean				redrawOnChange;
 
-	public Control() {
-	}
+	public Control() {}
 
 	@Override
 	public FormItem getItem(final Model model) {
@@ -143,20 +142,20 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 		this.showTitle = showTitle;
 	}
 
-	public void setValidateOnChange(boolean validate) {
+	public void setValidateOnChange(final boolean validate) {
 		validateOnChange = validate;
 	}
 
-	public void setShouldSaveValue(boolean save) {
+	public void setShouldSaveValue(final boolean save) {
 		shouldSaveValue = save;
 	}
 
-	public void setRedrawOnChange(boolean redraw) {
+	public void setRedrawOnChange(final boolean redraw) {
 		redrawOnChange = redraw;
 	}
 
 	@Override
-	public void setVisible(boolean visible) {
+	public void setVisible(final boolean visible) {
 		this.visible = visible;
 	}
 
@@ -166,7 +165,7 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 	}
 
 	@Override
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 

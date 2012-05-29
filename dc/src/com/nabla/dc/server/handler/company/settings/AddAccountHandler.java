@@ -34,10 +34,6 @@ public class AddAccountHandler extends AbstractAddHandler<AddAccount> {
 
 	public static final InsertStatement<AddAccount>	sql = new InsertStatement<AddAccount>(AddAccount.class);
 
-	public AddAccountHandler() {
-		super();
-	}
-
 	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddAccount record, final IUserSessionContext ctx) throws DispatchException, SQLException {

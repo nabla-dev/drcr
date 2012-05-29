@@ -40,12 +40,12 @@ import com.smartgwt.client.data.DSRequest;
 public class AccountListModel extends CModel<AccountRecord> {
 
 	static public class Fields {
-		public String code() { return "code"; }
-		public String name() { return "name"; }
-		public String cc() { return "cost_centre"; }
-		public String dep() { return "department"; }
-		public String active() { return "active"; }
-		public String bs() { return "balance_sheet"; }
+		public String code() { return IAccount.CODE; }
+		public String name() { return IAccount.NAME; }
+		public String cc() { return IAccount.COST_CENTRE; }
+		public String dep() { return IAccount.DEPARTMENT; }
+		public String active() { return IAccount.ACTIVE; }
+		public String bs() { return IAccount.BALANCE_SHEET; }
 	}
 
 	private static final Fields	fields = new Fields();

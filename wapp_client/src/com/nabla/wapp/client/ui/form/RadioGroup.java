@@ -25,7 +25,6 @@ import com.nabla.wapp.client.ui.TitleDecoder;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 
-
 /**
  * @author nabla
  *
@@ -37,21 +36,24 @@ public class RadioGroup extends UiBinderFormItemSpeudoWidgetList<RadioGroupItem>
 	public RadioGroup() {
 		super(new RadioGroupItem(), true);
 		impl.setShowTitle(false);
+		impl.setColSpan(2);
 		impl.setWrapTitle(false);
 		impl.setWrap(false);
 	}
 
-	public void setVertical(Boolean vertical) {
+	public void setVertical(final Boolean vertical) {
 		impl.setVertical(vertical);
 	}
 
-	public void setDefaultValue(String value) {
+	public void setDefaultValue(final String value) {
 		impl.setDefaultValue(value);
 	}
 
 	@Override
 	public void setTitle(final String title) {
 		new TitleDecoder(title).apply(impl);
+		impl.setShowTitle(true);
+		impl.setColSpan(1);
 	}
 
 	@Override
@@ -69,6 +71,7 @@ public class RadioGroup extends UiBinderFormItemSpeudoWidgetList<RadioGroupItem>
 	public FormItem getItem(final Model model) {
 		if (!values.isEmpty()) {
 			impl.setValueMap(values);
+			values.clear();
 		}
 		return super.getItem(model);
 	}

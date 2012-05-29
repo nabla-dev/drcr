@@ -34,10 +34,6 @@ public class AddECTermHandler extends AbstractAddHandler<AddECTerm> {
 
 	public static final InsertStatement<AddECTerm>	sql = new InsertStatement<AddECTerm>(AddECTerm.class);
 
-	public AddECTermHandler() {
-		super();
-	}
-
 	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddECTerm record, final IUserSessionContext ctx) throws DispatchException, SQLException {

@@ -33,7 +33,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 public class ChangeCompanyLogoModel extends CModel<CompanyLogoRecord> {
 
 	static public class Fields {
-		public String companyName() { return "name"; }
+		public String companyName() { return ICompany.NAME; }
 		public String logoFile() { return ICompany.LOGO_FILE; }
 	}
 
@@ -50,8 +50,8 @@ public class ChangeCompanyLogoModel extends CModel<CompanyLogoRecord> {
 		this.companyId = companyId;
 
 		setFields(
-			new TextField("name", FieldAttributes.READ_ONLY),
-			new UploadFileField(ICompany.LOGO_FILE, FieldAttributes.REQUIRED)
+			new TextField(fields.companyName(), FieldAttributes.READ_ONLY),
+			new UploadFileField(fields.logoFile(), FieldAttributes.REQUIRED)
 				);
 	}
 

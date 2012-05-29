@@ -16,58 +16,53 @@
 */
 package com.nabla.dc.client.model.company.settings;
 
-
-import com.nabla.dc.client.model.settings.TaxRateRecord;
-import com.nabla.dc.shared.command.company.settings.FetchCompanyTaxRateList;
-import com.nabla.dc.shared.command.company.settings.UpdateCompanyTaxRate;
-import com.nabla.dc.shared.model.ITaxRate;
+import com.nabla.dc.shared.command.company.settings.ImportAccountList;
+import com.nabla.dc.shared.model.company.settings.IImportAccount;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.client.model.field.UploadFileField;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-public class CompanyTaxRateListModel extends CModel<TaxRateRecord> {
+public class ImportAccountUploadFileModel extends CModel<ImportAccountRecord> {
 
 	static public class Fields {
-		public String name() { return ITaxRate.NAME; }
-		public String active() { return ITaxRate.ACTIVE; }
+		public String file() { return IImportAccount.FILE; }
+		public String rowHeader() { return IImportAccount.ROW_HEADER; }
+		public String overwrite() { return IImportAccount.OVERWRITE; }
 	}
 
 	private static final Fields	fields = new Fields();
 	private final Integer		companyId;
-
-	public CompanyTaxRateListModel(final Integer companyId) {
-		super(TaxRateRecord.factory);
-
+	
+	public ImportAccountUploadFileModel(final Integer companyId) {
+		super(ImportAccountRecord.factory);
+		
 		this.companyId = companyId;
 		setFields(
-			new IdField(),
-			new TextField(fields.name(), FieldAttributes.READ_ONLY),
-			new BooleanField(fields.active())
+			new UploadFileField(fields.file(), FieldAttributes.REQUIRED),
+			new BooleanField(fields.rowHeader(), FieldAttributes.REQUIRED),
+			new TextField(fields.overwrite(), FieldAttributes.REQUIRED)
 				);
 	}
 
 	public Fields fields() {
 		return fields;
 	}
-
+	
 	@Override
-	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchCompanyTaxRateList(companyId);
+	public IAction<StringResult> getAddCommand(final ImportAccountRecord record) {
+		return new ImportAccountList(companyId, record.isRowHeader(), record.getOverwrite());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final TaxRateRecord record) {
-		return new UpdateCompanyTaxRate(companyId, record.getId(), record.getActive());
+	public IAction<StringResult> getUpdateCommand(final ImportAccountRecord record) {
+		return getAddCommand(record);
 	}
-
 }

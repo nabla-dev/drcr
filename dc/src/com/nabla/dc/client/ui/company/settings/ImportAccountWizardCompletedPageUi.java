@@ -14,22 +14,26 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.mvp.binder;
+package com.nabla.dc.client.ui.company.settings;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.wapp.client.ui.IPostCreateProcessing;
+import com.nabla.dc.client.presenter.company.settings.ImportAccountWizard;
+import com.nabla.dc.client.ui.StaticWizardPageUi;
+import com.nabla.wapp.client.ui.Html;
+import com.nabla.wapp.client.ui.WizardPageNavigations;
 
 /**
  * @author nabla
  *
  */
-public class BindedDisplay<U extends IPostCreateProcessing> {
+public class ImportAccountWizardCompletedPageUi extends StaticWizardPageUi implements ImportAccountWizard.ICompletedPage {
 
-	protected U		impl;
+	interface Binder extends UiBinder<Html, StaticWizardPageUi> {}
+	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	protected <O> void create(final UiBinder<U, O> uiBinder, final O instance) {
-		impl = uiBinder.createAndBindUi(instance);
-		impl.onCreate();
+	public ImportAccountWizardCompletedPageUi() {
+		super(uiBinder, WizardPageNavigations.FINISH);
 	}
 
 }

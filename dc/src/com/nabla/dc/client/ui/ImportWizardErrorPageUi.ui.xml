@@ -1,0 +1,17 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+	
+	<ui:with field="model" type="com.nabla.dc.client.model.ImportErrorListModel" />
+
+	<wnd:WizardPage title="Below are the errors that were found. Click 'Previous' button to select another file.">	
+		<ui:attribute name="title" description="Import wizard error page caption"/>
+		<wnd:ListGrid model="{model}" height="200" wrapCells="true" fixedRecordHeights="false">
+			<wnd:ListGridField name="{model.fields.lineNo}" canGroupBy="false" canFreeze="false" width="70"><ui:msg>Line no</ui:msg></wnd:ListGridField>
+			<wnd:ListGridField name="{model.fields.error}"><ui:msg>Error</ui:msg></wnd:ListGridField>
+		</wnd:ListGrid>
+	</wnd:WizardPage>
+</ui:UiBinder> 

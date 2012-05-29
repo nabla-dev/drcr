@@ -35,10 +35,6 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
  */
 public class UserNameHandler extends AbstractHandler<UserName, StringResult> {
 
-	public UserNameHandler() {
-		super();
-	}
-
 	@Override
 	public StringResult execute(final UserName cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),

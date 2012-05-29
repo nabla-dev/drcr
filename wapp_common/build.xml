@@ -8,7 +8,7 @@
 
 	<target name="resolve_cache_dir" description="resolve ivy.cache.dir">
 		<ivy:settings file="${basedir}/../wapp_common/ivysettings.xml" />
-		<ivy:cachepath pathid="ivy.cachepath" />
+		<property name="ivy.cache.dir" value="${user.home}/.ivy2/cache"/>
 		<echo message="ivy cache: ${ivy.cache.dir}" />
 	</target>
 

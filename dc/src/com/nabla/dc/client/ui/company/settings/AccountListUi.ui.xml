@@ -18,11 +18,14 @@
 				<wnd:ToolbarButton command="{cmd.removeRecord}" tooltip="Remove account" icon="remove.png"><ui:msg>Remove</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.restoreRecord}" tooltip="Restore account" icon="restore_small.png"><ui:msg>Restore</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.importRecords}" tooltip="Import accounts" icon="import_account_small.png"><ui:msg>Import</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarSeparator />
 				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
 				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
 				<wnd:ToolbarSeparator />
 				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
+				
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="account_list" model="{model}" editByCell="false" canSort="true" editCommand="{cmd.edit}">
 				<wnd:ListGridField name="{model.fields.code}" width="50" canGroupBy="false"><ui:msg>Code</ui:msg></wnd:ListGridField>

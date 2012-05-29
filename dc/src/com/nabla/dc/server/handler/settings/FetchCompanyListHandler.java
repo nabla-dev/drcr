@@ -41,10 +41,6 @@ public class FetchCompanyListHandler extends AbstractFetchHandler<FetchCompanyLi
 		new OdbcBooleanToJson("active")
 	);
 
-	public FetchCompanyListHandler() {
-		super();
-	}
-
 	@Override
 	public FetchResult execute(final FetchCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?

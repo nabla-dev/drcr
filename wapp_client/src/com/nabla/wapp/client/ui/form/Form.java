@@ -29,12 +29,15 @@ import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
+import com.nabla.wapp.client.model.AsyncGetDefaultValuesCallback;
 import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.ui.IHasWidgets;
 import com.nabla.wapp.client.ui.IPostCreateProcessing;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.SubmitButton;
 import com.nabla.wapp.client.ui.TreeGrid;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.IHasValue;
 import com.nabla.wapp.shared.signal.Signal;
 import com.nabla.wapp.shared.slot.ISlotManager;
@@ -94,7 +97,7 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 		setMargin(defaultMargin);
 	}
 
-	public static void setDefaultMargin(int defaultMargin) {
+	public static void setDefaultMargin(final int defaultMargin) {
 		Form.defaultMargin = defaultMargin;
 	}
 
@@ -150,7 +153,7 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 		this.setColWidths(args);
 	}
 
-	public void setUseAllModelFields(Boolean value) {
+	public void setUseAllModelFields(final Boolean value) {
 		super.setUseAllDataSourceFields(value);
 	}
 
@@ -336,19 +339,19 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 
 		children = null;
 	}
-/*
+
 	public <A extends IAction<StringResult>> void editNewRecordWithDefault(final A getDefaultValuesCommand) {
 		Assert.notNull(model.getDispatcher());
 
-		model.getDispatcher().execute(getDefaultValuesCommand, new AsyncGetDefaultValuesCallback(model) {
+		model.getDispatcher().execute(getDefaultValuesCommand, new AsyncGetDefaultValuesCallback() {
 			@Override
-			public void onFailure(Throwable caught) {
+			public void onFailure(final Throwable caught) {
 				logger.log(Level.WARNING, "fail to load parameter default values", caught);
 				editNewRecord();
 			}
 
 			@Override
-			public void onDefaultValues(Map values) {
+			public void onDefaultValues(final Map values) {
 				if (values != null)
 					editNewRecord(values);
 				else
@@ -356,7 +359,7 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 			}
 		});
 	}
-*/
+
 	private static boolean hasRequiredField(final List<FormItem> fields) {
 		Assert.argumentNotNull(fields);
 

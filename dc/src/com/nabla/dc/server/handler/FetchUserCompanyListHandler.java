@@ -41,10 +41,6 @@ public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserC
 		new OdbcStringToJson(IUserCompany.LOGO)
 	);
 
-	public FetchUserCompanyListHandler() {
-		super();
-	}
-
 	@Override
 	public FetchResult execute(final FetchUserCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (ctx.isRoot())

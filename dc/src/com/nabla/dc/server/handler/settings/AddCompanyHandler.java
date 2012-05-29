@@ -34,10 +34,6 @@ public class AddCompanyHandler extends AbstractAddHandler<AddCompany> {
 
 	public static final InsertStatement<AddCompany>	sql = new InsertStatement<AddCompany>(AddCompany.class);
 
-	public AddCompanyHandler() {
-		super();
-	}
-
 	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddCompany record, final IUserSessionContext ctx) throws DispatchException, SQLException {

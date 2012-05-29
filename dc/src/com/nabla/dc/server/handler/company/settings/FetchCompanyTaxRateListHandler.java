@@ -40,10 +40,6 @@ public class FetchCompanyTaxRateListHandler extends AbstractFetchHandler<FetchCo
 		new OdbcBooleanToJson("active")
 	);
 
-	public FetchCompanyTaxRateListHandler() {
-		super();
-	}
-
 	@Override
 	public FetchResult execute(final FetchCompanyTaxRateList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(),

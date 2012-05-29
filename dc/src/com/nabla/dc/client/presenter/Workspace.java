@@ -77,7 +77,7 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
-			//	addTab(new UserCompanyList(Workspace.this));
+				addTab(new UserCompanyList(Workspace.this));
 				addTab(new CompanyList(Workspace.this));
 			}
 		});

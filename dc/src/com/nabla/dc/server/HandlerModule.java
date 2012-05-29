@@ -17,6 +17,7 @@
 package com.nabla.dc.server;
 
 import com.google.inject.Singleton;
+import com.nabla.dc.server.handler.FetchImportErrorListHandler;
 import com.nabla.dc.server.handler.RoleNameHandler;
 import com.nabla.dc.server.handler.UserNameHandler;
 import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
@@ -24,6 +25,7 @@ import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
 import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
+import com.nabla.dc.server.handler.company.settings.ImportAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
 import com.nabla.dc.server.handler.company.settings.RestoreAccountHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateAccountHandler;
@@ -54,6 +56,7 @@ import com.nabla.wapp.server.basic.handler.FetchRoleDefinitionHandler;
 import com.nabla.wapp.server.basic.handler.FetchRoleListHandler;
 import com.nabla.wapp.server.basic.handler.FetchUserDefinitionHandler;
 import com.nabla.wapp.server.basic.handler.FetchUserListHandler;
+import com.nabla.wapp.server.basic.handler.GetFormDefaultValuesHandler;
 import com.nabla.wapp.server.basic.handler.IsUserInRoleHandler;
 import com.nabla.wapp.server.basic.handler.LoadListGridStateHandler;
 import com.nabla.wapp.server.basic.handler.RemoveRoleHandler;
@@ -94,7 +97,9 @@ public class HandlerModule extends AbstractHandlerModule {
 		
 		bindHandler(LoadListGridStateHandler.class);
 		bindHandler(SaveListGridStateHandler.class);
-
+		bindHandler(GetFormDefaultValuesHandler.class);
+		bindHandler(FetchImportErrorListHandler.class);
+		
 		bindHandler(FetchRoleListHandler.class);
 		bindHandler(AddRoleHandler.class);
 		bindHandler(UpdateRoleHandler.class);
@@ -145,6 +150,10 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdateAccountHandler.class);
 		bindHandler(RemoveAccountHandler.class);
 		bindHandler(RestoreAccountHandler.class);
+		bindHandler(ImportAccountListHandler.class);
+		
+
+
 /*
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);

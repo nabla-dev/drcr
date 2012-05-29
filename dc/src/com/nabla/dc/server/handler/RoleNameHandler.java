@@ -35,10 +35,6 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
  */
 public class RoleNameHandler extends AbstractHandler<RoleName, StringResult> {
 
-	public RoleNameHandler() {
-		super();
-	}
-
 	@Override
 	public StringResult execute(final RoleName cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
