@@ -30,7 +30,7 @@ import com.smartgwt.client.widgets.Canvas;
  */
 public class Tab extends Canvas implements IHasWidgets, IPostCreateProcessing {
 
-	private static final Logger							logger = LoggerFactory.getLog(Tab.class);
+	private static final Logger						logger = LoggerFactory.getLog(Tab.class);
 	private final com.smartgwt.client.widgets.tab.Tab	impl = new com.smartgwt.client.widgets.tab.Tab();
 	private String										title = null;
 	private String										icon = null;

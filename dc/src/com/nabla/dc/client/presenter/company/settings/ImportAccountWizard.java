@@ -75,10 +75,10 @@ public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizar
 		completedPage.getButton(WizardPageNavigations.FINISH).connect(new ISlot() {
 			@Override
 			public void invoke() {
-				display.hide();
+				getDisplay().hide();
 			}
 		});
-		display.displayNextPage(uploadFilePage);
+		getDisplay().displayNextPage(uploadFilePage);
 	}
 
 	@Override
@@ -91,10 +91,10 @@ public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizar
 		@Override
 		public void invoke() {
 			if(uploadFilePage.isSuccess()) {
-				display.displayNextPage(completedPage);
+				getDisplay().displayNextPage(completedPage);
 				sigSuccess.fire(uploadFilePage.getBatchId());
 			} else {
-				display.displayNextPage(new ImportWizardErrorPageUi(uploadFilePage.getBatchId()));
+				getDisplay().displayNextPage(new ImportWizardErrorPageUi(uploadFilePage.getBatchId()));
 			}
 		}
 	};

@@ -47,17 +47,17 @@ public class AddUserDialog extends AbstractTopPresenter<AddUserDialog.IDisplay> 
 	@Override
 	protected void onBind() {
 		super.onBind();
-		registerSlot(display.getFailureSlots(), onFailure);
+		registerSlot(getDisplay().getFailureSlots(), onFailure);
 	}
 
 	public ISlotManager1<UserRecord> getSuccessSlots() {
-		return display.getSuccessSlots();
+		return getDisplay().getSuccessSlots();
 	}
 
 	private final ISlot onFailure = new ISlot() {
 		@Override
 		public void invoke() {
-			display.clearConfirmPassword();
+			getDisplay().clearConfirmPassword();
 		}
 	};
 

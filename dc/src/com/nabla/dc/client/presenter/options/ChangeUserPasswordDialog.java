@@ -44,13 +44,13 @@ public class ChangeUserPasswordDialog extends AbstractTopPresenter<ChangeUserPas
 	@Override
 	protected void onBind() {
 		super.onBind();
-		registerSlot(display.getFailureSlots(), onFailure);
+		registerSlot(getDisplay().getFailureSlots(), onFailure);
 	}
 
 	private final ISlot onFailure = new ISlot() {
 		@Override
 		public void invoke() {
-			display.clearConfirmPassword();
+			getDisplay().clearConfirmPassword();
 		}
 	};
 

@@ -45,7 +45,7 @@ public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 
 	private static final Logger		logger = LoggerFactory.getLog(LoginWindow.class);
 	private static final AutoLogin	autoLogin = new AutoLogin();
-	private final Signal			sigLogin = new Signal();
+	private final Signal				sigLogin = new Signal();
 
 	public LoginWindow(final IDisplay display) {
 		super(display);
@@ -62,7 +62,7 @@ public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 
 	@Override
 	protected void onBind() {
-		registerHandler(display.getSubmitSlots().connect(new ISlot() {
+		registerHandler(getDisplay().getSubmitSlots().connect(new ISlot() {
 			@Override
 			public void invoke() {
 				onLogin();
@@ -72,8 +72,8 @@ public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 				@Override
 				public void execute() {
-					display.getUserName().setValue("root");
-					display.getPassword().setValue("allaccess");
+					getDisplay().getUserName().setValue("root");
+					getDisplay().getPassword().setValue("allaccess");
 					onLogin();
 				}
 			});
@@ -81,13 +81,13 @@ public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 	}
 
 	private void onLogin() {
-		Application.getInstance().getUserSessionManager().createSession(display.getUserName().getValue(), display.getPassword().getValue(), new AsyncCallback<UserSession>() {
+		Application.getInstance().getUserSessionManager().createSession(getDisplay().getUserName().getValue(), getDisplay().getPassword().getValue(), new AsyncCallback<UserSession>() {
 
 			@Override
 			public void onFailure(final Throwable caught) {
 				logger.log(Level.WARNING, "login failed", caught);
-				display.showError(CommonServerErrors.INVALID_USER_PASSWORD);
-				display.setSaving(false);
+				getDisplay().showError(CommonServerErrors.INVALID_USER_PASSWORD);
+				getDisplay().setSaving(false);
 			}
 
 			@Override

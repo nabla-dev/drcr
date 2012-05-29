@@ -16,22 +16,17 @@
 */
 package com.nabla.dc.client.presenter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.ui.WorkspaceUi;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.mvp.AbstractCanvasPresenter;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ICanvasDisplay;
-import com.nabla.wapp.client.mvp.IPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
+import com.nabla.wapp.client.mvp.TabManager;
 import com.nabla.wapp.client.server.UserSession;
-import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlot2;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
@@ -49,7 +44,7 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 		void addTab(final ITabDisplay tab);
 	}
 
-	private final Map<ITabDisplay, IPresenter>		tabs = new HashMap<ITabDisplay, IPresenter>();
+	private final TabManager	tabs = new TabManager();
 
 	public Workspace(final IDisplay ui) {
 		super(ui);
@@ -60,19 +55,13 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 	}
 
 	ISlotManager getLogoutSlots() {
-		return display.getLogoutSlots();
+		return getDisplay().getLogoutSlots();
 	}
 
 	@Override
 	protected void onBind() {
 		Application.getInstance().getUserSessionManager().getUserSessionChangedSlots().connect(onUserSessionChanged);
-		registerHandler(display.getTabClosedSlots().connect(new ISlot1<ITabDisplay>() {
-			@Override
-			public void invoke(final ITabDisplay tab) {
-				tabs.get(tab).unbind();
-				tabs.remove(tab);
-			}
-		}));
+		registerHandler(getDisplay().getTabClosedSlots().connect(tabs.getTabClosedSlot()));
 
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
@@ -82,26 +71,19 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 			}
 		});
 /*
-		printManager.bind(display.getPrintCommands(), this, this);*/
+		printManager.bind(getDisplay().getPrintCommands(), this, this);*/
 
 	}
 
 	@Override
 	protected void onUnbind() {
-		for (final Map.Entry<ITabDisplay, IPresenter> tab : tabs.entrySet())
-			tab.getValue().unbind();
 		tabs.clear();
 		super.onUnbind();
 	}
 
 	@Override
 	public <D extends ITabDisplay> void addTab(final AbstractTabPresenter<D> tab) {
-		Assert.argumentNotNull(tab);
-
-		tab.bind();
-		final ITabDisplay tabDisplay = tab.getDisplay();
-		getDisplay().addTab(tabDisplay);
-		tabs.put(tabDisplay, tab);
+		getDisplay().addTab(tabs.add(tab));
 	}
 
 	private final ISlot2<UserSession, UserSession> onUserSessionChanged = new ISlot2<UserSession, UserSession>() {

@@ -34,7 +34,7 @@ import com.nabla.wapp.shared.slot.IBasicSlotManager;
 public abstract class AbstractPresenter<D extends IDisplay> implements IPresenter {
 
 	private static final Logger				logger = LoggerFactory.getLog(AbstractPresenter.class);
-	protected final D						display;
+	private final D							display;
 	private final List<HandlerRegistration>	handlers = new ArrayList<HandlerRegistration>();
 
 	protected AbstractPresenter(D display) {
@@ -75,8 +75,6 @@ public abstract class AbstractPresenter<D extends IDisplay> implements IPresente
 
 	protected abstract void onBind();
 
-	protected void onUnbind() {
-
-	}
+	protected void onUnbind() {}
 
 }

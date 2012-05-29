@@ -41,10 +41,10 @@ public class CompanyTaxRateListDialog extends AbstractTopPresenter<CompanyTaxRat
 
 	@Override
 	protected void onBind() {
-		display.getHideSlots().connect(new ISlot() {
+		getDisplay().getHideSlots().connect(new ISlot() {
 			@Override
 			public void invoke() {
-				display.savePreferences();
+				getDisplay().savePreferences();
 			}
 		});
 	}

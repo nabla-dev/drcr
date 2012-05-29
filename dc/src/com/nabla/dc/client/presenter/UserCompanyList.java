@@ -73,7 +73,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 
 	@Override
 	protected void onBind() {
-		final ICommandSet cmd = display.getCommands();
+		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.changePassword(), onChangePassword);
@@ -89,14 +89,14 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	private final ISlot onReload = new ISlot() {
 		@Override
 		public void invoke() {
-			display.reload();
+			getDisplay().reload();
 		}
 	};
 
 	private final ISlot onSavePreferences = new ISlot() {
 		@Override
 		public void invoke() {
-			display.savePreferences();
+			getDisplay().savePreferences();
 		}
 	};
 

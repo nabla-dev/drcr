@@ -41,10 +41,10 @@ import com.smartgwt.client.widgets.tab.events.TabCloseClickEvent;
  */
 public class TabSet extends com.smartgwt.client.widgets.tab.TabSet implements IHasWidgets, IPostCreateProcessing {
 
-	private static final Logger								logger = LoggerFactory.getLog(TabSet.class);
-	final List<Object>										tabBarControls = new LinkedList<Object>();
-	final Map<com.smartgwt.client.widgets.tab.Tab, Tab>		tabs = new HashMap<com.smartgwt.client.widgets.tab.Tab, Tab>();
-	final Signal1<Tab>										sigTabClosed = new Signal1<Tab>();
+	private static final Logger									logger = LoggerFactory.getLog(TabSet.class);
+	private final List<Object>										tabBarControls = new LinkedList<Object>();
+	private final Map<com.smartgwt.client.widgets.tab.Tab, Tab>	tabs = new HashMap<com.smartgwt.client.widgets.tab.Tab, Tab>();
+	private final Signal1<Tab>										sigTabClosed = new Signal1<Tab>();
 
 	public TabSet() {
 		tabBarControls.add(TabBarControls.TAB_SCROLLER);

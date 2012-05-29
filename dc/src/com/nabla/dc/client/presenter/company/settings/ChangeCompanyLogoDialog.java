@@ -40,7 +40,7 @@ public class ChangeCompanyLogoDialog extends AbstractTopPresenter<ChangeCompanyL
 
 	@Override
 	protected void onUnbind() {
-		display.cleanup();
+		getDisplay().cleanup();
 		super.onUnbind();
 	}
 

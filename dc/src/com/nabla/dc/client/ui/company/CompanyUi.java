@@ -14,47 +14,32 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui;
+package com.nabla.dc.client.ui.company;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.presenter.Workspace;
+import com.nabla.dc.client.presenter.company.Company;
 import com.nabla.wapp.client.mvp.ITabDisplay;
-import com.nabla.wapp.client.mvp.binder.BindedCanvasDisplay;
-import com.nabla.wapp.client.ui.Label;
+import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
+import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.client.ui.TabDisplaySet;
-import com.nabla.wapp.client.ui.VLayout;
-import com.nabla.wapp.shared.signal.Signal;
-import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
 
 /**
  * @author nabla
  *
  */
-public class WorkspaceUi extends BindedCanvasDisplay<VLayout> implements Workspace.IDisplay {
+public class CompanyUi extends BindedTabDisplay<Tab> implements Company.IDisplay {
 
-	interface Binder extends UiBinder<VLayout, WorkspaceUi> {}
+	interface Binder extends UiBinder<Tab, CompanyUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
-	@UiField TabDisplaySet	tabs;
-	@UiField Label			userName;
-	@UiField Label			logoutButton;
+	@UiField TabDisplaySet		tabs;
 
-	private final Signal	sigLogout = new Signal();
-
-	public WorkspaceUi(final String userName) {
+	public CompanyUi(final String companyName) {
+		
 		this.create(uiBinder, this);
-		setUserName(userName);
-		logoutButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(@SuppressWarnings("unused") ClickEvent event) {
-				sigLogout.fire();
-			}
-		});
 	}
 
 	@Override
@@ -65,16 +50,6 @@ public class WorkspaceUi extends BindedCanvasDisplay<VLayout> implements Workspa
 	@Override
 	public ISlotManager1<ITabDisplay> getTabClosedSlots() {
 		return tabs.getTabClosedSlots();
-	}
-
-	@Override
-	public ISlotManager getLogoutSlots() {
-		return sigLogout;
-	}
-
-	@Override
-	public void setUserName(String userName) {
-		this.userName.setContents(Resource.messages.userloggedInAs(userName));
 	}
 
 }

@@ -56,7 +56,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	public UserCompanyList(final Integer userId, final IDisplay ui) {
 		super(ui);
 		this.userId = userId;
-		display.getCommands().setObjectId(userId);
+		getDisplay().getCommands().setObjectId(userId);
 	}
 
 	public UserCompanyList(final Integer userId) {
@@ -65,7 +65,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 
 	@Override
 	protected void onBind() {
-		final ICommandSet cmd = display.getCommands();
+		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.editRoles(), onEditUserRoles);
@@ -75,14 +75,14 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	private final ISlot onReload = new ISlot() {
 		@Override
 		public void invoke() {
-			display.reload();
+			getDisplay().reload();
 		}
 	};
 
 	private final ISlot onSavePreferences = new ISlot() {
 		@Override
 		public void invoke() {
-			display.savePreferences();
+			getDisplay().savePreferences();
 		}
 	};
 

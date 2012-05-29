@@ -74,7 +74,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 
 	@Override
 	protected void onBind() {
-		final ICommandSet cmd = display.getCommands();
+		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveRecord);
 		registerSlot(cmd.restoreRecord(), onRestoreRecord);
@@ -88,14 +88,14 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			display.addRecord();
+			getDisplay().addRecord();
 		}
 	};
 
 	private final ISlot onRemoveRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			display.removeRecord(onConfirmRemoveRecord);
+			getDisplay().removeRecord(onConfirmRemoveRecord);
 		}
 	};
 
@@ -112,7 +112,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	private final ISlot onRestoreRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			if (!display.restoreRecord(new RestoreAccount()))
+			if (!getDisplay().restoreRecord(new RestoreAccount()))
 				Application.getInstance().getMessageBox().error(Resource.strings.noDeletedAccountSelected());
 		}
 	};
@@ -120,14 +120,14 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	private final ISlot onReload = new ISlot() {
 		@Override
 		public void invoke() {
-			display.reload();
+			getDisplay().reload();
 		}
 	};
 
 	private final ISlot onSavePreferences = new ISlot() {
 		@Override
 		public void invoke() {
-			display.savePreferences();
+			getDisplay().savePreferences();
 		}
 	};
 

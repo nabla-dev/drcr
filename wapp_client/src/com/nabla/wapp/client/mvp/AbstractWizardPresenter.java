@@ -48,7 +48,7 @@ public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends 
 		Assert.argumentNotNull(ui);
 
 		ui.getButton(page).connect(nextHandler);
-		display.displayNextPage(ui);
+		getDisplay().displayNextPage(ui);
 	}
 
 	public void displayNextPage(final IWizardPageDisplay ui, final ISlot nextHandler) {
@@ -63,16 +63,16 @@ public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends 
 		Assert.argumentNotNull(ui);
 
 		ui.getButton(page).connect(nextHandler);
-		display.displayNextPage(ui);
+		getDisplay().displayNextPage(ui);
 	}
 
 	public final DSCallback onSave = new DSCallback() {
 		@Override
 		public void execute(DSResponse response, @SuppressWarnings("unused") Object rawData, @SuppressWarnings("unused") DSRequest request) {
 			if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-				display.hide();
+				getDisplay().hide();
 			else
-				display.displayErroneousPage();
+				getDisplay().displayErroneousPage();
 		}
 	};
 

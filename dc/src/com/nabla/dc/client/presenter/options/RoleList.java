@@ -71,7 +71,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 
 	@Override
 	protected void onBind() {
-		final ICommandSet cmd = display.getCommands();
+		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveSelectedRecords);
 		registerSlot(cmd.reload(), onReload);
@@ -85,7 +85,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 	private final ISlot onRemoveSelectedRecords = new ISlot() {
 		@Override
 		public void invoke() {
-			display.removeSelectedRecords(onConfirmRemoveRecord);
+			getDisplay().removeSelectedRecords(onConfirmRemoveRecord);
 		}
 	};
 
@@ -100,21 +100,21 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			display.addRecord();
+			getDisplay().addRecord();
 		}
 	};
 
 	private final ISlot onReload = new ISlot() {
 		@Override
 		public void invoke() {
-			display.reload();
+			getDisplay().reload();
 		}
 	};
 
 	private final ISlot onSavePreferences = new ISlot() {
 		@Override
 		public void invoke() {
-			display.savePreferences();
+			getDisplay().savePreferences();
 		}
 	};
 
