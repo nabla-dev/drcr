@@ -58,7 +58,7 @@ public class ImportAccountUploadFileModel extends CModel<ImportAccountRecord> {
 	
 	@Override
 	public IAction<StringResult> getAddCommand(final ImportAccountRecord record) {
-		return new ImportAccountList(companyId, record.isRowHeader(), record.getOverwrite());
+		return new ImportAccountList(companyId, record.getFileId(), record.isRowHeader(), record.getOverwrite());
 	}
 
 	@Override

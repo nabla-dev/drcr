@@ -17,6 +17,8 @@
 package com.nabla.dc.client.model;
 
 import com.nabla.dc.shared.command.FetchImportErrorList;
+import com.nabla.wapp.client.general.Application;
+import com.nabla.wapp.client.general.IApplication;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.TextField;
@@ -32,6 +34,7 @@ public class ImportErrorListModel extends CModel<Record> {
 
 	static public class Fields {
 		public String lineNo() { return "line_no"; }
+		public String field() { return "field"; }
 		public String error() { return "error"; }
 	}
 
@@ -43,6 +46,7 @@ public class ImportErrorListModel extends CModel<Record> {
 		this.batchId = batchId;
 		setFields(
 			new IntegerField(fields.lineNo()),
+			new TextField(fields.field()),
 			new TextField(fields.error())
 				);
 	}
@@ -54,5 +58,19 @@ public class ImportErrorListModel extends CModel<Record> {
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
 		return new FetchImportErrorList(batchId);
+	}
+	
+	@Override
+	protected Record[] recordsFromJson(final String jsonRecords) {
+		// convert error code to human readable error message
+		final Record[] records = super.recordsFromJson(jsonRecords);
+		if (records != null) {
+			final IApplication app = Application.getInstance();
+			for (Record record : records) {
+				final String message = app.getLocalizedError(record.getAttribute(fields.error()));
+				record.setAttribute(fields.error(), message);
+			}
+		}
+		return records;
 	}
 }

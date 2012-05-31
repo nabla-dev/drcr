@@ -17,7 +17,6 @@
 package com.nabla.dc.client.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.nabla.dc.shared.IServerErrorStrings;
 import com.nabla.wapp.client.ui.form.Form;
 
 /**

@@ -14,8 +14,7 @@
 * the License.
 *
 */
-
-package com.nabla.dc.shared;
+package com.nabla.dc.client.ui;
 
 import com.nabla.wapp.shared.general.ICommonServerErrorStrings;
 
@@ -26,9 +25,15 @@ import com.nabla.wapp.shared.general.ICommonServerErrorStrings;
  */
 public interface IServerErrorStrings extends ICommonServerErrorStrings {
 
-	@DefaultStringValue("Invalid report parameter model")
-	String INVALID_REPORT_PARAMETER_MODEL();
+	@DefaultStringValue("*** too many errors ***")
+	String TOO_MANY_ERRORS();
 
-	@DefaultStringValue("tax code must be between 0% and 99%")
+	@DefaultStringValue("no data found")
+	String NO_DATA_TO_IMPORT();
+	
+	@DefaultStringValue("unsupported column")
+	String UNSUPPORTED_IMPORT_COLUMN();
+	
+	@DefaultStringValue("invalid tax code rate")
 	String INVALID_TAX_CODE_RATE();
 }

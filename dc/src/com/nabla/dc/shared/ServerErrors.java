@@ -22,6 +22,9 @@ package com.nabla.dc.shared;
  */
 public enum ServerErrors {
 
+	TOO_MANY_ERRORS,
+	NO_DATA_TO_IMPORT,
+	UNSUPPORTED_IMPORT_COLUMN,
 	INVALID_REPORT_PARAMETER_MODEL,
 	INVALID_TAX_CODE_RATE
 

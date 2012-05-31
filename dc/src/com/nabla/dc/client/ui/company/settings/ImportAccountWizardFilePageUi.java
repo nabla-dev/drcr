@@ -76,7 +76,7 @@ public class ImportAccountWizardFilePageUi extends bindedWizardPageDisplay<Wizar
 
 	@Override
 	public boolean isSuccess() {
-		return getBatchId() != -1;
+		return (Boolean)form.getValue(IImportAccount.SUCCESS);
 	}
 
 	@Override

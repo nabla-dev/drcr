@@ -21,9 +21,13 @@ package com.nabla.dc.shared.model.company.settings;
  *
  */
 public interface IImportAccount {
+	enum EOverwrite { REPLACE, OVERWRITE, APPEND };
+	
 	static final String	FILE = "file_id";
 	static final String ROW_HEADER = "row_header";
 	static final String OVERWRITE = "overwrite";
+	
+	static final String SUCCESS = "success";
 	
 	static final String PREFERENCE_GROUP = "import_account";
 }

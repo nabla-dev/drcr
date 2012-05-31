@@ -35,13 +35,14 @@ public class FetchImportErrorListHandler extends AbstractFetchHandler<FetchImpor
 
 	private static final JsonFetch	fetcher = new JsonFetch(
 			new OdbcIntToJson("line_no"),
+			new OdbcStringToJson("field"),
 			new OdbcStringToJson("error")
 	);
 
 	@Override
 	public FetchResult execute(final FetchImportErrorList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT line_no, error" +
+"SELECT line_no, field, error" +
 " FROM import_error" +
 " WHERE import_data_id=? {AND WHERE} {ORDER BY}",
 				cmd.getBatchId());

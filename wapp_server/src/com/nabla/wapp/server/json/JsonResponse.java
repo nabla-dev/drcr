@@ -62,7 +62,7 @@ public class JsonResponse extends JSONArray {
 		return putNext(rs, getEncoderList(rs));
 	}
 */
-	public void put(final Integer value) {
+	public void putId(final Integer value) {
 		put("id", value);
 	}
 
@@ -72,6 +72,12 @@ public class JsonResponse extends JSONArray {
 		add(record);
 	}
 
+	public void put(final String field, final Boolean value) {
+		final JSONObject record = new JSONObject();
+		record.put(field, value);
+		add(record);
+	}
+	
 	public static List<IOdbcToJsonEncoder> getEncoderList(final ResultSet rs) throws SQLException {
 		final List<IOdbcToJsonEncoder> encoders = new LinkedList<IOdbcToJsonEncoder>();
 		final ResultSetMetaData header = rs.getMetaData();

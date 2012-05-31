@@ -142,7 +142,7 @@ public abstract class CModel<R extends Record> extends Model {
 				public void onSuccess(final FetchResult result) {
 					Assert.argumentNotNull(result);
 logger.fine(request.getRequestId() + " response = \n" + result.getRecords());
-					final Record[] records = jsonToRecords(result.getRecords());
+					final Record[] records = recordsFromJson(result.getRecords());
 					final Response response = new Response(request, records);
 					if (result.isRange()) {
 						response.setStartRow(result.getStartRow());
@@ -256,7 +256,11 @@ logger.fine(request.getRequestId() + " response = \n" + result.get());
 	protected Record[] recordsFromJsonResponse(final DSRequest request, final String jsonRecords) {
 		if (jsonRecords == null)
 			return getEditedRecords(request);
-		return combineRecords(getEditedRecords(request), jsonToRecords(jsonRecords));
+		return combineRecords(getEditedRecords(request), recordsFromJson(jsonRecords));
+	}
+
+	protected Record[] recordsFromJson(final String jsonRecords) {
+		return jsonToRecords(jsonRecords);
 	}
 
 }

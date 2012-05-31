@@ -48,6 +48,9 @@ public class Database implements IDatabase {
 	 * @throws ClassNotFoundException 
 	 */
 	public Database(final String dbName, final String driverName) throws ClassNotFoundException {
+		Assert.argumentNotNull(dbName, "Have you set the database name in your web.xml file?");
+		Assert.argumentNotNull(driverName, "Have you set the database driver name in your web.xml file?");
+
 		url = "jdbc:apache:commons:dbcp:/" + dbName;
 		if (!isLoaded(dbName)) {
 			load(dbName);
@@ -110,7 +113,7 @@ public class Database implements IDatabase {
 		return true;
 	}
 
-	public static boolean executeUpdate(final Connection conn, final String sql, Object... parameters) throws SQLException {
+	public static boolean executeUpdate(final Connection conn, final String sql, final Object... parameters) throws SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn, sql, parameters);
 		try {
 			return stmt.executeUpdate() == 1;
@@ -119,7 +122,7 @@ public class Database implements IDatabase {
 		}
 	}
 
-	public static Integer addRecord(final Connection conn, final String sql, Object... parameters) throws SQLException {
+	public static Integer addRecord(final Connection conn, final String sql, final Object... parameters) throws SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn, Statement.RETURN_GENERATED_KEYS, sql, parameters);
 		try {
 			if (stmt.executeUpdate() != 1) {
@@ -135,7 +138,7 @@ public class Database implements IDatabase {
 		}
 	}
 
-	public static Integer addUniqueRecord(final Connection conn, final String sql, Object... parameters) throws SQLException {
+	public static Integer addUniqueRecord(final Connection conn, final String sql, final Object... parameters) throws SQLException {
 		try {
 			return addRecord(conn, sql, parameters);
 		} catch (final SQLException e) {

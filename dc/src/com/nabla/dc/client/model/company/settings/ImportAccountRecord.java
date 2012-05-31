@@ -51,8 +51,8 @@ public class ImportAccountRecord extends BasicRecord implements IImportAccount {
 		return getAttributeAsBoolean(IImportAccount.ROW_HEADER);
 	}
 	
-	public String getOverwrite() {
-		return getAttributeAsString(IImportAccount.OVERWRITE);
+	public IImportAccount.EOverwrite getOverwrite() {
+		return IImportAccount.EOverwrite.valueOf(getAttributeAsString(IImportAccount.OVERWRITE));
 	}
 
 }

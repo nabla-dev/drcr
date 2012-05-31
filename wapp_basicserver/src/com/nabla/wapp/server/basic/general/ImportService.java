@@ -49,31 +49,22 @@ import com.nabla.wapp.server.general.Assert;
 @Singleton
 public class ImportService extends UploadAction {
 
-	private static final long					serialVersionUID = 1L;
-	private static final Log					log = LogFactory.getLog(ImportService.class);
-
-	private final IDatabase						db;
-	private final IUploadFileExtensionFilter	extensionFilter;
+	private static final long	serialVersionUID = 1L;
+	private static final Log	log = LogFactory.getLog(ImportService.class);
+	private final IDatabase		db;
 
 	@Inject
-	public ImportService(@IReadWriteDatabase IDatabase db, IUploadFileExtensionFilter extensionFilter) {
+	public ImportService(@IReadWriteDatabase final IDatabase db) {
 		this.db = db;
-		this.extensionFilter = extensionFilter;
 	}
 
 	@Override
-	public String executeAction(HttpServletRequest request, List<FileItem> sessionFiles) throws UploadActionException {
+	public String executeAction(final HttpServletRequest request, final List<FileItem> sessionFiles) throws UploadActionException {
 		Assert.state(sessionFiles.size() == 1);
 		try {
 			for (FileItem file : sessionFiles) {
 				if (file.isFormField())
 					continue;
-				final String ext = extractFileExtension(file.getName());
-				if (!extensionFilter.isValidExtension(file.getName(), ext)) {
-					if (log.isTraceEnabled())
-						log.trace("unsupported file type: " + file.getName());
-					throw new UploadActionException("unsupported file type");
-				}
 				if (log.isDebugEnabled())
 					log.debug("field '" + file.getFieldName() + "': uploading " + file.getName());
 				log.debug("field: " + file.getFieldName());
@@ -128,7 +119,7 @@ public class ImportService extends UploadAction {
 	}
 
 	@Override
-	public void removeItem(@SuppressWarnings("unused") HttpServletRequest request, String fieldName)  throws UploadActionException {
+	public void removeItem(@SuppressWarnings("unused") final HttpServletRequest request, final String fieldName)  throws UploadActionException {
 		try {
 	    	final Connection conn = db.getConnection();
 			try {

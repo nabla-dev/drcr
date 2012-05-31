@@ -47,7 +47,6 @@ import com.nabla.dc.server.handler.settings.UpdateCompanyHandler;
 import com.nabla.dc.server.handler.settings.UpdateECTermHandler;
 import com.nabla.dc.server.handler.settings.UpdateTaxRateHandler;
 import com.nabla.wapp.server.auth.IUserSessionContextProvider;
-import com.nabla.wapp.server.basic.general.IUploadFileExtensionFilter;
 import com.nabla.wapp.server.basic.general.UserSessionContextProvider;
 import com.nabla.wapp.server.basic.handler.AddRoleHandler;
 import com.nabla.wapp.server.basic.handler.AddUserHandler;
@@ -85,7 +84,6 @@ public class HandlerModule extends AbstractHandlerModule {
 		super.configure();
 
 //		bindConstant().annotatedWith(IReCompileReports.class).to(RECOMPILE_REPORTS);
-		bind(IUploadFileExtensionFilter.class).to(MyUploadFileExtensionFilter.class).in(Singleton.class);
 
 		bind(IDatabase.class).annotatedWith(IReadWriteDatabase.class).to(MyReadWriteDatabase.class).in(Singleton.class);
 		bind(IDatabase.class).annotatedWith(IReadOnlyDatabase.class).to(MyReadOnlyDatabase.class).in(Singleton.class);

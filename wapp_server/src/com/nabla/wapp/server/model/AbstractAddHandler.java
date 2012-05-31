@@ -38,7 +38,7 @@ public abstract class AbstractAddHandler<A extends IAction<StringResult>> extend
 	@Override
 	public StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final JsonResponse json = new JsonResponse();
-		json.put(add(record, ctx));
+		json.putId(add(record, ctx));
 		return json.toStringResult();
 	}
 
