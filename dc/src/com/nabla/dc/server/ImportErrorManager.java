@@ -48,7 +48,7 @@ public class ImportErrorManager {
 	private final Connection		conn;
 	private PreparedStatement		stmt;
 	private final Integer			batchId;
-	private int						counter;
+	private int					counter;
 
 	/**
 	 * Constructor
@@ -81,10 +81,10 @@ public class ImportErrorManager {
 	 */
 	public void close() {
 		if (stmt != null) {
-			try { stmt.close(); } catch (final SQLException e) {}
+			Database.close(stmt);
 			stmt = null;
 		}
-		try { conn.close(); } catch (final SQLException e) {}
+		Database.close(conn);
 	}
 
 	/**

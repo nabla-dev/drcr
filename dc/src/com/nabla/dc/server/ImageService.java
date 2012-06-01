@@ -48,9 +48,9 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
 @Singleton
 public class ImageService extends HttpServlet {
 
-	private static final long	serialVersionUID = 1L;
-	private static final Log	log = LogFactory.getLog(ImageService.class);
-	private static final int	DEFAULT_BUFFER_SIZE = 10240;	// 10KB
+	private static final int		DEFAULT_BUFFER_SIZE = 10240;	// 10KB
+	private static final long		serialVersionUID = 1L;
+	private static final Log		log = LogFactory.getLog(ImageService.class);
 	private final IDatabase		db;
 
 	@Inject
@@ -90,43 +90,47 @@ public class ImageService extends HttpServlet {
 "SELECT * FROM image WHERE id=?;", imageId);
 			try {
 				final ResultSet rs = stmt.executeQuery();
-				if (!rs.next()) {
-					if (log.isDebugEnabled())
-						log.debug("failed to find report ID= " + imageId);
-					return false;
-				}
-				if (log.isTraceEnabled())
-					log.trace("exporting image " + imageId);
-				response.reset();
-				response.setBufferSize(DEFAULT_BUFFER_SIZE);
-				response.setContentType(rs.getString("content_type"));
-				response.setHeader("Content-Length", String.valueOf(rs.getInt("length")));
-				response.setHeader("Content-Disposition", MessageFormat.format(
-						"inline; filename=\"{0}\"", rs.getString("name")));
-				// to prevent images to be downloaded every time user hovers one image
-				final Calendar cal = Calendar.getInstance();
-				cal.setTime(new Date());
-				cal.add(Calendar.MONTH, 2);
-				response.setDateHeader( "Expires", cal.getTime().getTime() );
-				final BufferedInputStream input = new BufferedInputStream(rs.getBinaryStream("content"), DEFAULT_BUFFER_SIZE);
 				try {
-					final BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+					if (!rs.next()) {
+						if (log.isDebugEnabled())
+							log.debug("failed to find report ID= " + imageId);
+						return false;
+					}
+					if (log.isTraceEnabled())
+						log.trace("exporting image " + imageId);
+					response.reset();
+					response.setBufferSize(DEFAULT_BUFFER_SIZE);
+					response.setContentType(rs.getString("content_type"));
+					response.setHeader("Content-Length", String.valueOf(rs.getInt("length")));
+					response.setHeader("Content-Disposition", MessageFormat.format(
+							"inline; filename=\"{0}\"", rs.getString("name")));
+					// to prevent images to be downloaded every time user hovers one image
+					final Calendar cal = Calendar.getInstance();
+					cal.setTime(new Date());
+					cal.add(Calendar.MONTH, 2);
+					response.setDateHeader( "Expires", cal.getTime().getTime() );
+					final BufferedInputStream input = new BufferedInputStream(rs.getBinaryStream("content"), DEFAULT_BUFFER_SIZE);
 					try {
-						final byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-						int length;
-						while ((length = input.read(buffer)) > 0)
-							output.write(buffer, 0, length);
+						final BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+						try {
+							final byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+							int length;
+							while ((length = input.read(buffer)) > 0)
+								output.write(buffer, 0, length);
+						} finally {
+							output.close();	
+						}
 					} finally {
-						output.close();	
+						input.close();
 					}
 				} finally {
-					input.close();
+					rs.close();
 				}
 			} finally {
-				try { stmt.close(); } catch (final SQLException e) {}
+				stmt.close();
 			}
 		} finally {
-			try { conn.close(); } catch (final SQLException e) {}
+			conn.close();
 		}
 		return true;
 	}

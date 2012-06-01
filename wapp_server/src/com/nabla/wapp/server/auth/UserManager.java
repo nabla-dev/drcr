@@ -51,8 +51,8 @@ public class UserManager {
 
 	private static final String	LOCK_USER_TABLES = "LOCK TABLES role WRITE, user WRITE, user_role WRITE, role_definition WRITE, user_definition WRITE;";
 
-	private static final Log	log = LogFactory.getLog(UserManager.class);
-	private final Connection	conn;
+	private static final Log		log = LogFactory.getLog(UserManager.class);
+	private final Connection		conn;
 
 	public UserManager(final Connection conn) {
 		Assert.argumentNotNull(conn);
@@ -71,7 +71,7 @@ public class UserManager {
 					if (rs.next() && rs.getInt(1) > 0)
 						return true;
 				} finally {
-					try { rs.close(); } catch (final SQLException e) {}
+					Database.close(rs);
 				}
 				if (log.isDebugEnabled())
 					log.debug("initializing role tables");
@@ -94,13 +94,16 @@ public class UserManager {
 						if (!Database.isBatchCompleted(stmtRole.executeBatch()))
 							return false;
 						final ResultSet rsKey = stmtRole.getGeneratedKeys();
-						for (final Map.Entry<String, String[]> role : roles.entrySet()) {
-							rsKey.next();
-							roleIds.put(role.getKey(), rsKey.getInt(1));
+						try {
+							for (final Map.Entry<String, String[]> role : roles.entrySet()) {
+								rsKey.next();
+								roleIds.put(role.getKey(), rsKey.getInt(1));
+							}
+						} finally {
+							rsKey.close();
 						}
-						rsKey.close();
 					} finally {
-						try { stmtRole.close(); } catch (final SQLException e) {}
+						stmtRole.close();
 					}
 					final PreparedStatement stmtDefinition = conn.prepareStatement(
 "INSERT INTO role_definition (role_id,child_role_id) VALUES(?,?);");
@@ -125,7 +128,7 @@ public class UserManager {
 						if (!Database.isBatchCompleted(stmtDefinition.executeBatch()))
 							return false;
 					} finally {
-						try { stmtDefinition.close(); } catch (final SQLException e) {}
+						stmtDefinition.close();
 					}
 					// add 'root' user
 					Database.executeUpdate(conn,
@@ -139,7 +142,7 @@ IRootUser.NAME, IRootUser.NAME.toUpperCase(), getPasswordEncryptor().encryptPass
 				lockStmt.execute("UNLOCK TABLES;");
 			}
 		} finally {
-			try { lockStmt.close(); } catch (final SQLException e) {}
+			Database.close(lockStmt);
 		}
 	}
 
@@ -152,17 +155,21 @@ IRootUser.NAME, IRootUser.NAME.toUpperCase(), getPasswordEncryptor().encryptPass
 		try {
 			stmt.setString(1, userName);
 			final ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				try {
-					if (getPasswordEncryptor().checkPassword(password, rs.getString("password")))
-						return rs.getInt("id");
-				} catch (Throwable x) {
-					log.error("failed to check password", x);
-					return null;
+			try {
+				if (rs.next()) {
+					try {
+						if (getPasswordEncryptor().checkPassword(password, rs.getString("password")))
+							return rs.getInt("id");
+					} catch (Throwable x) {
+						log.error("failed to check password", x);
+						return null;
+					}
 				}
+			} finally {
+				rs.close();
 			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 		return null;
 	}
@@ -220,7 +227,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 				lockStmt.execute("UNLOCK TABLES;");
 			}
 		} finally {
-			try { lockStmt.close(); } catch (final SQLException e) {}
+			Database.close(lockStmt);
 		}
 	}
 
@@ -250,7 +257,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 							if (!Database.isBatchCompleted(stmt.executeBatch()))
 								return false;
 						} finally {
-							try { stmt.close(); } catch (final SQLException e) {}
+							stmt.close();
 						}
 					}
 					return guard.setSuccess(updateUserRoleTable());
@@ -261,7 +268,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 				lockStmt.execute("UNLOCK TABLES;");
 			}
 		} finally {
-			try { lockStmt.close(); } catch (final SQLException e) {}
+			Database.close(lockStmt);
 		}
 	}
 
@@ -300,7 +307,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 							if (!Database.isBatchCompleted(stmt.executeBatch()))
 								return false;
 						} finally {
-							try { stmt.close(); } catch (final SQLException e) {}
+							stmt.close();
 						}
 					}
 					return guard.setSuccess(updateUserRoleTable());
@@ -311,7 +318,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 				lockStmt.execute("UNLOCK TABLES;");
 			}
 		} finally {
-			try { lockStmt.close(); } catch (final SQLException e) {}
+			Database.close(lockStmt);
 		}
 	}
 
@@ -353,7 +360,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 			}
 			return Database.isBatchCompleted(stmt.executeBatch());
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			Database.close(stmt);
 		}
 	}
 
@@ -365,54 +372,55 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 			// load all roles and privileges
 			final Map<Integer, Role> roles = new HashMap<Integer, Role>();
 			ResultSet rs = stmt.executeQuery("SELECT id, name FROM role;");
-			while (rs.next())
-				roles.put(rs.getInt("id"), new Role(rs.getInt("id"), rs.getString("name")));
-
-			// read first level of role tree
-			rs = stmt.executeQuery(
+			try {
+				while (rs.next())
+					roles.put(rs.getInt("id"), new Role(rs.getInt("id"), rs.getString("name")));
+				// read first level of role tree
+				rs = stmt.executeQuery(
 "SELECT role_definition.role_id, role_definition.child_role_id" +
 " FROM role_definition INNER JOIN role ON role_definition.role_id=role.id" +
 " WHERE role.privilege=FALSE;");
-			while (rs.next()) {
-				final Integer parentId = rs.getInt("role_id");
-				final Integer childId = rs.getInt("child_role_id");
-				if (childId == parentId) {
-					if (log.isErrorEnabled())
-						log.error("'role_definition' table contains a recursive branch in role '" + roles.get(parentId).getName() + "'. Skipping branch");
-					continue;
+				while (rs.next()) {
+					final Integer parentId = rs.getInt("role_id");
+					final Integer childId = rs.getInt("child_role_id");
+					if (childId == parentId) {
+						if (log.isErrorEnabled())
+							log.error("'role_definition' table contains a recursive branch in role '" + roles.get(parentId).getName() + "'. Skipping branch");
+						continue;
+					}
+					roles.get(parentId).put(childId, roles.get(childId));
 				}
-				roles.get(parentId).put(childId, roles.get(childId));
-			}
-
-			// load user definition
-			rs = stmt.executeQuery(
+				// load user definition
+				rs = stmt.executeQuery(
 "SELECT user_definition.object_id, user_definition.user_id, user_definition.role_id" +
 " FROM user_definition INNER JOIN user ON user_definition.user_id=user.id" +
 " WHERE user.uname IS NOT NULL;");
-			while (rs.next()) {
-				Map<Integer,Set<Integer>> m;
-				Integer id = Database.getInteger(rs, "object_id");
-				if (userRoles.containsKey(id))
-					m = userRoles.get(id);
-				else {
-					m = new HashMap<Integer,Set<Integer>>();
-					userRoles.put(id, m);
+				while (rs.next()) {
+					Map<Integer,Set<Integer>> m;
+					Integer id = Database.getInteger(rs, "object_id");
+					if (userRoles.containsKey(id))
+						m = userRoles.get(id);
+					else {
+						m = new HashMap<Integer,Set<Integer>>();
+						userRoles.put(id, m);
+					}
+					Set<Integer> ids;
+					id = rs.getInt("user_id");
+					if (m.containsKey(id))
+						ids = m.get(id);
+					else {
+						ids = new HashSet<Integer>();
+						m.put(id, ids);
+					}
+					final Role role = roles.get(rs.getInt("role_id"));
+					if (role != null)
+						ids.addAll(role.getDefinition());
 				}
-				Set<Integer> ids;
-				id = rs.getInt("user_id");
-				if (m.containsKey(id))
-					ids = m.get(id);
-				else {
-					ids = new HashSet<Integer>();
-					m.put(id, ids);
-				}
-				final Role role = roles.get(rs.getInt("role_id"));
-				if (role != null)
-					ids.addAll(role.getDefinition());
+			} finally {
+				rs.close();
 			}
-
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 		return userRoles;
 	}

@@ -17,19 +17,17 @@
 package com.nabla.wapp.server.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.commons.dbcp.PoolingDriver;
+import javax.servlet.ServletContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.pool.impl.GenericObjectPool;
 
 import com.nabla.wapp.server.general.Assert;
-
 
 /**
  * @author nabla
@@ -37,70 +35,42 @@ import com.nabla.wapp.server.general.Assert;
  */
 public class Database implements IDatabase {
 
-	private static final Log				log = LogFactory.getLog(Database.class);
-	private static final PoolingDriver	driver = new PoolingDriver();
-
-	private final String	url;
-
+	public static final String		PRODUCTION_MODE = "production_mode";
+	private static final Log			log = LogFactory.getLog(Database.class);
+	private final IConnectionPool		pool;
+	
 	/**
 	 * Constructor
-	 * @param name - database name as defined in pool
-	 * @throws ClassNotFoundException 
+	 * @param dbName			- database name as defined in pool
+	 * @param serverContext		- web app context
+	 * @throws SQLException 
 	 */
-	public Database(final String dbName, final String driverName) throws ClassNotFoundException {
-		Assert.argumentNotNull(dbName, "Have you set the database name in your web.xml file?");
-		Assert.argumentNotNull(driverName, "Have you set the database driver name in your web.xml file?");
-
-		url = "jdbc:apache:commons:dbcp:/" + dbName;
-		if (!isLoaded(dbName)) {
-			load(dbName);
-			Class.forName(driverName);
-		}
+	public Database(final String dbName, final ServletContext serverContext) throws SQLException {
+		Assert.argumentNotNull(serverContext);
+		
+		pool = ("1".equals(serverContext.getInitParameter(PRODUCTION_MODE))) ?
+				new TomcatConnectionPool(dbName)
+			:
+				new CommonConnectionPool(dbName, serverContext)	;
 	}
 
 	@Override
 	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(url);
+		return pool.get();
 	}
 
-	/**
-	 * Load database pool
-	 * @param name - database name as defined in pool
-	 */
-	public static void load(final String name) {
-		if (log.isDebugEnabled())
-			log.debug("loading pool for database '" + name + "'");
-		driver.registerPool(name, new GenericObjectPool(null));
+	
+	public static void close(final Connection conn) {
+		try { conn.close(); } catch (final SQLException e) {}
+	}
+	
+	public static void close(final Statement stmt) {
+		try { stmt.close(); } catch (final SQLException e) {}
 	}
 
-	public static void unload(final String name) {
-		if (log.isDebugEnabled())
-			log.debug("unloading pool for database '" + name + "'");
-		try {
-			driver.closePool(name);
-		} catch (final SQLException e) {
-		}
+	public static void close(final ResultSet rs) {
+		try { rs.close(); } catch (final SQLException e) {}
 	}
-
-	public static void unloadAll() {
-		final String[] names = driver.getPoolNames();
-		if (names != null) {
-			for (final String name : names)
-				unload(name);
-		}
-	}
-
-	public static boolean isLoaded(final String name) {
-		final String[] names = driver.getPoolNames();
-		if (names == null)
-			return false;
-		for (final String n : names) {
-			if (n.compareTo(name) == 0)
-				return true;
-		}
-		return false;
-	}
-
 
 	public static boolean isBatchCompleted(final int[] results) {
 		if (results == null)
@@ -118,7 +88,7 @@ public class Database implements IDatabase {
 		try {
 			return stmt.executeUpdate() == 1;
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			close(stmt);
 		}
 	}
 
@@ -131,10 +101,14 @@ public class Database implements IDatabase {
 				return null;
 			}
 			final ResultSet rsKey = stmt.getGeneratedKeys();
-			rsKey.next();
-			return rsKey.getInt(1);
+			try {
+				rsKey.next();
+				return rsKey.getInt(1);
+			} finally {
+				close(rsKey);
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			close(stmt);
 		}
 	}
 
@@ -162,13 +136,24 @@ public class Database implements IDatabase {
 		return rs.wasNull() ? null : value;
 	}
 
+	/**
+	 * Test if a table has any data
+	 * @param conn		- database connection
+	 * @param tableName	- table name
+	 * @return success
+	 * @throws SQLException
+	 */
 	public static boolean isTableEmpty(final Connection conn, final String tableName) throws SQLException {
 		final Statement stmt = conn.createStatement();
 		try {
 			final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + tableName + ";");
-			return rs.next() && rs.getInt(1) == 0;
+			try {
+				return rs.next() && rs.getInt(1) == 0;
+			} finally {
+				close(rs);
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			close(stmt);
 		}
 	}
 

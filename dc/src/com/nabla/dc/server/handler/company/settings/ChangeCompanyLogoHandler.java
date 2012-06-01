@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.nabla.dc.shared.command.company.settings.ChangeCompanyLogo;
 import com.nabla.wapp.server.auth.IUserSessionContext;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
@@ -56,10 +57,14 @@ public class ChangeCompanyLogoHandler extends AbstractHandler<ChangeCompanyLogo,
 			if (stmt.executeUpdate() != 1)
 				Util.throwInternalErrorException("failed to copy image from imported data to logo table");
 			final ResultSet rsKey = stmt.getGeneratedKeys();
-			rsKey.next();
-			record.setLogoId(rsKey.getInt(1));
+			try {
+				rsKey.next();
+				record.setLogoId(rsKey.getInt(1));
+			} finally {
+				Database.close(rsKey);
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			Database.close(stmt);
 		}
 		sql.execute(ctx.getWriteConnection(), record);
 		return null;

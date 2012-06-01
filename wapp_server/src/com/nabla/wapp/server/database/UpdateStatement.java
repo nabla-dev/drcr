@@ -117,7 +117,7 @@ public class UpdateStatement<T> extends SqlStatement {
 			}
 			throw e;
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			Database.close(stmt);
 		}
 	}
 

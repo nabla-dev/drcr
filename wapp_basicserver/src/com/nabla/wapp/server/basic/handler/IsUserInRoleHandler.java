@@ -60,10 +60,14 @@ public class IsUserInRoleHandler extends AbstractHandler<IsUserInRole, RoleSetRe
 				StatementFormat.prepare(ctx.getReadConnection(), objectUserSql, ctx.getUserId(), cmd.getObjectId(), cmd.getRoles());
 			try {
 				final ResultSet rs = stmt.executeQuery();
-				while (rs.next())
-					rslt.add(rs.getString(1));
+				try {
+					while (rs.next())
+						rslt.add(rs.getString(1));
+				} finally {
+					rs.close();
+				}
 			} finally {
-				try { stmt.close(); } catch (final SQLException e) {}
+				stmt.close();
 			}
 		}
 		return new RoleSetResult(rslt);

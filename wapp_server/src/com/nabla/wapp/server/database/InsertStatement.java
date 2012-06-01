@@ -110,8 +110,12 @@ public class InsertStatement<T> extends SqlStatement {
 				Util.throwInternalErrorException("failed to execute SQL statement");
 			}
 			final ResultSet rsKey = stmt.getGeneratedKeys();
-			rsKey.next();
-			return rsKey.getInt(1);
+			try {
+				rsKey.next();
+				return rsKey.getInt(1);
+			} finally {
+				Database.close(rsKey);
+			}
 		} catch (final SQLException e) {
 			if (uniqueFieldName != null && SQLState.valueOf(e) == SQLState.INTEGRITY_CONSTRAINT_VIOLATION) {
 				if (log.isErrorEnabled())
@@ -120,7 +124,7 @@ public class InsertStatement<T> extends SqlStatement {
 			}
 			throw e;
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			Database.close(stmt);
 		}
 	}
 

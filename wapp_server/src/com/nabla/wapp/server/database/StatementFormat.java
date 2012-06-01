@@ -86,7 +86,7 @@ public class StatementFormat {
 		try {
 			return format(stmt, parameters);
 		} catch (SQLException e) {
-			try { stmt.close(); } catch (final SQLException __) {}
+			Database.close(stmt);
 			throw e;
 		}
 	}

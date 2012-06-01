@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.json.IOdbcToJsonEncoder;
@@ -69,7 +70,7 @@ public class AddUserHandler extends AbstractHandler<AddUser, StringResult> {
 			json.putNext(stmt.executeQuery(), columns);
 			return json.toStringResult();
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			Database.close(stmt);
 		}
 	}
 

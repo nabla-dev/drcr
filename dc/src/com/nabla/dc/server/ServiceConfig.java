@@ -21,7 +21,6 @@ import javax.servlet.ServletContextEvent;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import com.nabla.wapp.server.database.Database;
 
 /**
  * @author nabla
@@ -37,7 +36,6 @@ public class ServiceConfig extends GuiceServletContextListener {
 	@Override
 	public void contextDestroyed(final ServletContextEvent servletContextEvent) {
 		super.contextDestroyed(servletContextEvent);
-		Database.unloadAll();
 	}
 
 }

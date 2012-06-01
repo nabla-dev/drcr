@@ -22,7 +22,7 @@
 	<object class="org.apache.commons.pool.impl.StackKeyedObjectPoolFactory">
 		<int value="5"/> <!-- max idle -->
 	</object>
-	<string value="SELECT COUNT(*) FROM role"/> <!-- validation query -->
+	<string value="SELECT 1"/> <!-- validation query -->
 	<boolean value="false"/> <!-- default read only -->
 	<boolean value="true"/> <!-- default auto commit -->
 </object>

@@ -27,16 +27,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
 	<!--  global parameters -->
 	<context-param>
+		<param-name>production_mode</param-name>
+		<param-value>0</param-value>
+	</context-param>
+	<context-param>
 		<param-name>database_driver_name</param-name>
 		<param-value>com.mysql.jdbc.Driver</param-value>
-	</context-param>
-	<context-param>
-		<param-name>rw_database_name</param-name>
-		<param-value>dcrw</param-value>
-	</context-param>
-	<context-param>
-		<param-name>ro_database_name</param-name>
-		<param-value>dcro</param-value>
 	</context-param>
 	<context-param>
 		<param-name>root_password</param-name>

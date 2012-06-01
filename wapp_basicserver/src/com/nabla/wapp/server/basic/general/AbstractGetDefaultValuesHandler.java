@@ -45,18 +45,22 @@ ctx.getUserId(), group));
 
 	protected static StringResult executeQuery(final PreparedStatement stmt) throws SQLException {
 		try {
-			final ResultSet rs = stmt.executeQuery();
-			if (!rs.next())
-				return null;
-			final JSONObject record = new JSONObject();
-			do {
-				record.put(rs.getString("field"), rs.getString("default"));
-			} while (rs.next());
 			final JsonResponse json = new JsonResponse();
+			final JSONObject record = new JSONObject();
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (!rs.next())
+					return null;
+				do {
+					record.put(rs.getString("field"), rs.getString("default"));
+				} while (rs.next());
+			} finally {
+				rs.close();
+			}
 			json.add(record);
 			return json.toStringResult();
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 	}
 

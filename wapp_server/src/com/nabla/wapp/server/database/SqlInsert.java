@@ -55,8 +55,6 @@ public class SqlInsert<T> {
 			if (count > 0)
 				buffer.append(',');
 			buffer.append(name);
-
-
 			++count;
 		}
 		Assert.state(count > 0);
@@ -75,7 +73,6 @@ public class SqlInsert<T> {
 		for (Field field : recordClass.getFields()) {
 			if (field.getAnnotation(IRecordField.class) == null)
 				continue;
-
 		}
 		return stmt;
 	}

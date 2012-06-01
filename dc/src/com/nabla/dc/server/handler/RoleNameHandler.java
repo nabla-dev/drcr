@@ -42,10 +42,14 @@ public class RoleNameHandler extends AbstractHandler<RoleName, StringResult> {
 				cmd.getRoleId());
 		try {
 			final ResultSet rs = stmt.executeQuery();
-			if (rs.next())
-				return new StringResult(rs.getString(1));
+			try {
+				if (rs.next())
+					return new StringResult(rs.getString(1));
+			} finally {
+				rs.close();
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 		throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
 	}

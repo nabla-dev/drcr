@@ -17,11 +17,11 @@
 package com.nabla.wapp.server.auth;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.general.UserSession;
 
 /**
@@ -44,11 +44,9 @@ public class UserSessionContext implements IUserSessionContext {
 
 	@Override
 	public void close() {
-		try { readConn.close(); } catch (final SQLException e) {}
-		try {
-			if (writeConn != null)
-				writeConn.close();
-		} catch (final SQLException e) {}
+		Database.close(readConn);
+		if (writeConn != null)
+			Database.close(writeConn);
 	}
 
 	@Override

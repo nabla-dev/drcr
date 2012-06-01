@@ -14,26 +14,15 @@
 * the License.
 *
 */
-package com.nabla.dc.server;
+package com.nabla.wapp.server.database;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.nabla.wapp.server.database.Database;
-
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-@Singleton
-public class MyReadOnlyDatabase extends Database {
-
-	@Inject
-	public MyReadOnlyDatabase(final ServletContext serverContext) throws SQLException {
-		super("dcro", serverContext);
-	}
-
+public interface IConnectionPool {
+	Connection get() throws SQLException;
 }

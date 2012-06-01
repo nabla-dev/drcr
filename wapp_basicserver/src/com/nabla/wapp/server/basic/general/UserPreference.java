@@ -40,9 +40,13 @@ public class UserPreference {
 "SELECT state FROM user_preference WHERE user_id=? AND category=? AND name=?;", ctx.getUserId(), group, name);
 		try {
 			final ResultSet rs = stmt.executeQuery();
-			return rs.next() ? new StringResult(rs.getString("state")) : null;
+			try {
+				return rs.next() ? new StringResult(rs.getString("state")) : null;
+			} finally {
+				rs.close();
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 	}
 

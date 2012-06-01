@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -35,8 +37,8 @@ public class AuthDatabase extends Database {
 
 	private static final Log	log = LogFactory.getLog(AuthDatabase.class);
 
-	public AuthDatabase(final String dbName, final String driverName, final Class<?> roles, final String rootPassword) throws SQLException, ClassNotFoundException {
-		super(dbName, driverName);
+	public AuthDatabase(final String dbName, final ServletContext serverContext, final Class<?> roles, final String rootPassword) throws SQLException {
+		super(dbName, serverContext);
 		final Connection conn = this.getConnection();
 		try {
 			new UserManager(conn).initializeDatabase(new UserManager.IRoleListProvider() {
@@ -68,7 +70,7 @@ public class AuthDatabase extends Database {
 				}
 			}, rootPassword);
 		} finally {
-			try { conn.close(); } catch (final SQLException e) {}
+			close(conn);
 		}
 	}
 

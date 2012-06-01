@@ -92,12 +92,15 @@ public class JsonFetch extends LinkedList<IOdbcToJsonEncoder> {
 		if (options.isRange()) {
 			int lastRow = options.getStartRow() + total - 1;
 			endRow = (options.getEndRow() < lastRow) ? options.getEndRow() : lastRow;
-
 			final ResultSet rs = stmt.executeQuery("SELECT FOUND_ROWS();");
-			rs.next();
-			total = rs.getInt(1);
-			if (log.isTraceEnabled())
-				log.trace("total rows = " + total);
+			try {
+				rs.next();
+				total = rs.getInt(1);
+				if (log.isTraceEnabled())
+					log.trace("total rows = " + total);
+			} finally {
+				rs.close();
+			}
 		}
 		return new FetchResult(options.getStartRow(), endRow, total, response.toJSONString());
 	}
@@ -112,7 +115,7 @@ public class JsonFetch extends LinkedList<IOdbcToJsonEncoder> {
 			}
 			return serialize(options, stmt);
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 	}
 

@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.general.UserSession;
@@ -40,8 +41,8 @@ import com.nabla.wapp.shared.model.ValidationException;
 @Singleton
 public class LoginUserService extends RemoteServiceServlet implements ILoginUserRemoteService {
 
-	private static final long	serialVersionUID = 1L;
-	private static final Log	log = LogFactory.getLog(LoginUserService.class);
+	private static final long		serialVersionUID = 1L;
+	private static final Log		log = LogFactory.getLog(LoginUserService.class);
 
 	private final IDatabase		db;
 
@@ -64,7 +65,7 @@ public class LoginUserService extends RemoteServiceServlet implements ILoginUser
 				userManager.onUserLogged(userId);
 				return UserSession.save(this.getThreadLocalRequest(), userId, userName);
 			}  finally {
-				try { conn.close(); } catch (final SQLException e) {}
+				Database.close(conn);
 			}
 		} catch (final SQLException e) {
 			if (log.isErrorEnabled())

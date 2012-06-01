@@ -28,7 +28,7 @@ import com.nabla.wapp.shared.database.IRecordField;
  */
 public class StatementParameter implements IStatementParameter {
 
-	private final Field				field;
+	private final Field			field;
 	private final String			name;
 	private final boolean			includeNull;
 	private final IStatementSetter	writer;

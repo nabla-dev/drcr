@@ -49,8 +49,8 @@ import com.nabla.wapp.server.general.Assert;
 @Singleton
 public class ImportService extends UploadAction {
 
-	private static final long	serialVersionUID = 1L;
-	private static final Log	log = LogFactory.getLog(ImportService.class);
+	private static final long		serialVersionUID = 1L;
+	private static final Log		log = LogFactory.getLog(ImportService.class);
 	private final IDatabase		db;
 
 	@Inject
@@ -65,12 +65,13 @@ public class ImportService extends UploadAction {
 			for (FileItem file : sessionFiles) {
 				if (file.isFormField())
 					continue;
-				if (log.isDebugEnabled())
+				if (log.isDebugEnabled()) {
 					log.debug("field '" + file.getFieldName() + "': uploading " + file.getName());
-				log.debug("field: " + file.getFieldName());
-				log.debug("filename: " + file.getName());
-				log.debug("content_type: " + file.getContentType());
-				log.debug("size: " + file.getSize());
+					log.debug("field: " + file.getFieldName());
+					log.debug("filename: " + file.getName());
+					log.debug("content_type: " + file.getContentType());
+					log.debug("size: " + file.getSize());
+				}
 				final Connection conn = db.getConnection();
 				try {
 					final PreparedStatement stmt = conn.prepareStatement(
@@ -89,11 +90,15 @@ public class ImportService extends UploadAction {
 		   						throw new UploadActionException("internal error");
 		   					}
 		   					final ResultSet rsKey = stmt.getGeneratedKeys();
-		   					rsKey.next();
-		   					final Integer id = rsKey.getInt(1);
-		   					if (log.isDebugEnabled())
-		   						log.debug("uploading " + file.getName() + " successfully completed. id = " + id);
-		   					return id.toString();
+		   					try {
+		   						rsKey.next();
+		   						final Integer id = rsKey.getInt(1);
+			   					if (log.isDebugEnabled())
+			   						log.debug("uploading " + file.getName() + " successfully completed. id = " + id);
+			   					return id.toString();
+		   					} finally {
+		   						rsKey.close();
+		   					}
 					    } finally {
 					    	fs.close();
 						}
@@ -102,10 +107,10 @@ public class ImportService extends UploadAction {
 							log.error("error reading file " + file.getName(), e);
 						throw new UploadActionException("internal error");
 			   		} finally {
-			   			try { stmt.close(); } catch (final SQLException e) {}
+			   			Database.close(stmt);
 			   		}
 				} finally {
-					try { conn.close(); } catch (final SQLException e) {}
+					Database.close(conn);
 				}
 			}
 		} catch (SQLException e) {
@@ -128,7 +133,7 @@ public class ImportService extends UploadAction {
 				if (log.isTraceEnabled())
 					log.trace("imported data '" + fieldName + "' has been removed");
 			} finally {
-				try { conn.close(); } catch (final SQLException e) {}
+				Database.close(conn);
 			}
 		} catch (Throwable x) {
 			if (log.isTraceEnabled())
