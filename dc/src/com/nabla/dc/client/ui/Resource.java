@@ -28,7 +28,7 @@ public class Resource {
 	public static final IResource					bundle = GWT.create(IResource.class);
 	public static final ITextResource				strings = GWT.create(ITextResource.class);
 	public static final IMessageResource			messages = GWT.create(IMessageResource.class);
-	public static final IServerErrorStrings			serverErrors = GWT.create(IServerErrorStrings.class);
+	public static final IServerErrorStrings		serverErrors = GWT.create(IServerErrorStrings.class);
 
 	public static final Resource					instance = new Resource();
 

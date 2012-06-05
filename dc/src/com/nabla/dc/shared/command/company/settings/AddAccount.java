@@ -17,6 +17,7 @@
 package com.nabla.dc.shared.command.company.settings;
 
 import com.nabla.dc.shared.model.IAccount;
+import com.nabla.wapp.shared.csv.ICsvField;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IAction;
@@ -35,21 +36,26 @@ public class AddAccount implements IAction<StringResult>, IAccount {
 	@IRecordField
 	Integer				company_id;
 	@IRecordField(unique=true)
+	@ICsvField
 	String				code;
+	@IRecordField
+	@ICsvField(name="cc")
+	String				cost_centre;
+	@IRecordField
+	@ICsvField(name="dep")
+	String				department;
 	@IRecordField(unique=true)
+	@ICsvField
 	String				name;
 	@IRecordField
 	transient String	uname;
 	@IRecordField
-	String				cost_centre;
-	@IRecordField
-	String				department;
-	@IRecordField
+	@ICsvField(name="bs")
 	Boolean				balance_sheet;
 	@IRecordField
 	Boolean				active;
 
-	protected AddAccount() {}	// for serialization only
+	public AddAccount() {}	// for serialization only
 
 	public AddAccount(final Integer companyId, final String code, final String name, final String cc, final String dep, final Boolean bs, final Boolean active) {
 		this.company_id = companyId;
@@ -85,4 +91,21 @@ public class AddAccount implements IAction<StringResult>, IAccount {
 				DEP_CONSTRAINT.validate(DEPARTMENT, department);
 		}
 	}
+
+	public Integer getCompanyId() {
+		return company_id;
+	}
+
+	public void setCompanyId(Integer company_id) {
+		this.company_id = company_id;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 }

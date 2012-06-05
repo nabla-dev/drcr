@@ -22,7 +22,6 @@ import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
 import com.nabla.wapp.server.database.SQLState;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
-import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.command.RestoreUser;
 import com.nabla.wapp.shared.dispatch.ActionException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -36,7 +35,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 public class RestoreUserHandler extends AbstractHandler<RestoreUser, VoidResult> {
 
 	public RestoreUserHandler() {
-		super(true, IRootUser.NAME);
+		super(true);
 	}
 
 	@Override

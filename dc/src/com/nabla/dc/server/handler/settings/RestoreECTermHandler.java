@@ -19,7 +19,6 @@ package com.nabla.dc.server.handler.settings;
 import com.nabla.dc.shared.command.settings.RestoreECTerm;
 import com.nabla.dc.shared.model.IECTerm;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
-import com.nabla.wapp.shared.auth.IRootUser;
 
 /**
  * @author nabla
@@ -28,7 +27,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 public class RestoreECTermHandler extends AbstractRestoreHandler<RestoreECTerm> {
 
 	public RestoreECTermHandler() {
-		super(IECTerm.TABLE, IRootUser.NAME);
+		super(IECTerm.TABLE);
 	}
 
 }

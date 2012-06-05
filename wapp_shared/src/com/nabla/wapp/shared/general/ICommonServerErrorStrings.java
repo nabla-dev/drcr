@@ -65,4 +65,13 @@ public interface ICommonServerErrorStrings extends ConstantsWithLookup {
 
 	@DefaultStringValue("Invalid pound value")
 	String INVALID_POUND_VALUE();
+	
+	@DefaultStringValue("no data found")
+	String NO_DATA();
+	
+	@DefaultStringValue("unsupported column")
+	String UNSUPPORTED_FIELD();
+	
+	@DefaultStringValue("wrong number of columns")
+	String INVALID_FIELD_COUNT();
 }

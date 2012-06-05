@@ -18,7 +18,7 @@
       	<dependency org="com.smartgwt" name="smartgwt-skins" rev="${smartgwt.version}" conf="compile->default;runtime->default"/>
         
         <dependency org="com.googlecode.gwtupload" name="gwtupload" rev="${gwtupload.version}" conf="compile->default;runtime->default" />
-        
+       
         <dependency org="mysql" name="mysql-connector-java" rev="${mysql.version}" conf="runtime->default"/>
     </dependencies>
 </ivy-module>

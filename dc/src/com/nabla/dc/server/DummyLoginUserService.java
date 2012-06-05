@@ -35,8 +35,8 @@ import com.nabla.wapp.shared.model.ValidationException;
 @Singleton
 public class DummyLoginUserService extends RemoteServiceServlet implements ILoginUserRemoteService {
 
-	private static final long	serialVersionUID = 1L;
-	private static final Log	log = LogFactory.getLog(DummyLoginUserService.class);
+	private static final long		serialVersionUID = 1L;
+	private static final Log		log = LogFactory.getLog(DummyLoginUserService.class);
 
 	public DummyLoginUserService() {
 	}

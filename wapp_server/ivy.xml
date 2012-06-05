@@ -17,5 +17,7 @@
         <dependency org="com.ibm.icu" name="icu4j" rev="${icu4j.version}" conf="runtime->rutime(*)"/>
         
       	<dependency org="net.minidev" name="json-smart" rev="${json-smart.version}" conf="compile->default;runtime->default" />      
+
+      	<dependency org="net.sourceforge.supercsv" name="supercsv" rev="latest.release" conf="compile->default;runtime->default" />
     </dependencies>
 </ivy-module>

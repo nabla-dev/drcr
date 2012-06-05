@@ -31,7 +31,7 @@ public abstract class AbstractHandler<A extends IAction<R>, R extends IResult> i
 		writeContext = false;
 	}
 
-	protected AbstractHandler(boolean writeContext, @SuppressWarnings("unused") final String... authorizedUsers) {
+	protected AbstractHandler(boolean writeContext) {
 		this.writeContext = writeContext;
 	}
 

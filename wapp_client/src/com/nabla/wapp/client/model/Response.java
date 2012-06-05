@@ -33,8 +33,8 @@ import com.smartgwt.client.data.Record;
  */
 class Response extends DSResponse {
 
-	private static final Logger		logger = LoggerFactory.getLog(Response.class);
-	public static final String		CLIENT_CONTEXT = "clientContext";
+	private static final Logger	logger = LoggerFactory.getLog(Response.class);
+	public static final String	CLIENT_CONTEXT = "clientContext";
 
 	public Response(final DSRequest request) {
 		Assert.argumentNotNull(request);
@@ -47,17 +47,15 @@ class Response extends DSResponse {
 		this.setStatus(status);
 	}
 
-	public Response(final DSRequest request, final Map<Integer, Map<String, String>> fieldErrors) {
+	public Response(final DSRequest request, final Map<String, String> errors) {
 		this(request, STATUS_VALIDATION_ERROR);
-		Assert.argumentNotNull(fieldErrors);
+		Assert.argumentNotNull(errors);
 
 		final Map<String, JavaScriptObject> dsErrors = new HashMap<String, JavaScriptObject>();
-		for (final Map.Entry<Integer, Map<String, String>> rowError : fieldErrors.entrySet()) {
-			for (final Map.Entry<String, String> error : rowError.getValue().entrySet()) {
-				logger.fine("field error: '" + error.getKey() + "' = '" + error.getValue() + "' at row " + rowError.getKey());
-				final ValidationErrorRecord msg = new ValidationErrorRecord(rowError.getKey(), error.getValue());
-				dsErrors.put(error.getKey(), msg.getJsObj());
-			}
+		for (final Map.Entry<String, String> error : errors.entrySet()) {
+			logger.fine("field error: '" + error.getKey() + "' = '" + error.getValue());
+			final ValidationErrorRecord msg = new ValidationErrorRecord(0, error.getValue());
+			dsErrors.put(error.getKey(), msg.getJsObj());
 		}
 		this.setErrors(dsErrors);
 	}

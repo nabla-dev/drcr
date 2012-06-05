@@ -26,7 +26,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
-import com.nabla.wapp.shared.model.InvalidRequestException;
 
 /**
  * @author nabla
@@ -90,14 +89,6 @@ public abstract class Util {
 
 	public static void throwInternalErrorException(final String cause) throws InternalErrorException {
 		throw new InternalErrorException(Thread.currentThread().getStackTrace()[2].toString() + ": " + cause);
-	}
-
-	public static void throwInvalidRequestException(final Throwable cause) throws InvalidRequestException {
-		throw new InvalidRequestException(extractExceptionDetails(cause));
-	}
-
-	public static void throwInvalidRequestException(final String cause) throws InvalidRequestException {
-		throw new InvalidRequestException(Thread.currentThread().getStackTrace()[2].toString() + ": " + cause);
 	}
 
 }

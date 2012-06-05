@@ -11,7 +11,7 @@
 		<ui:attribute name="title" description="Import wizard error page caption"/>
 		<wnd:ListGrid model="{model}" height="200" wrapCells="true" fixedRecordHeights="false">
 			<wnd:ListGridField name="{model.fields.lineNo}" canGroupBy="false" canFreeze="false" width="70"><ui:msg>Line no</ui:msg></wnd:ListGridField>
-			<wnd:ListGridField name="{model.fields.field}"><ui:msg>Field</ui:msg></wnd:ListGridField>
+			<wnd:ListGridField name="{model.fields.field}" width="100"><ui:msg>Field</ui:msg></wnd:ListGridField>
 			<wnd:ListGridField name="{model.fields.error}"><ui:msg>Error</ui:msg></wnd:ListGridField>
 		</wnd:ListGrid>
 	</wnd:WizardPage>

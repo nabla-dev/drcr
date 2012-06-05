@@ -27,8 +27,8 @@
 	<source path='client'/>
 	<source path='shared'/>
 	
-  	<set-property name="nabla.wapp.client.auto_login" value="false" />
-	<set-property name="nabla.wapp.client.dev_mode" value="false" />	
+  	<set-property name="nabla.wapp.client.auto_login" value="true" />
+	<set-property name="nabla.wapp.client.dev_mode" value="true" />	
 
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='com.nabla.dc.client.MyEntryPoint'/>

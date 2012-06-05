@@ -29,12 +29,10 @@ import com.nabla.wapp.shared.dispatch.ActionException;
  */
 public class ValidationException extends ActionException {
 
+	private static final long			serialVersionUID = 1L;
 	public static final String		ERROR_CODE = "VALIDATION_ERROR";
-
-	private static final long		serialVersionUID = 1L;
-
-	// row, field, errorNo
-	private Map<Integer, Map<String, String>>	errors = new HashMap<Integer, Map<String, String>>();
+	// field, errorNo
+	private final Map<String, String>	errors = new HashMap<String, String>();
 
 	public ValidationException() {
 		super(ERROR_CODE);
@@ -50,70 +48,38 @@ public class ValidationException extends ActionException {
 		add(field, error);
 	}
 
-	public void add(int row, final String field, final String error) {
-		Map<String, String> rowErrors = errors.get(row);
-		if (rowErrors == null) {
-			rowErrors = new HashMap<String, String>();
-			rowErrors.put(field, error);
-			errors.put(row, rowErrors);
-		} else
-			rowErrors.put(field, error);
+	public boolean isEmpty() {
+		return errors.isEmpty();
 	}
-
-	public <E extends Enum<E>> void add(int row, final String field, final E error) {
-		Map<String, String> rowErrors = errors.get(row);
-		if (rowErrors == null) {
-			rowErrors = new HashMap<String, String>();
-			rowErrors.put(field, error.toString());
-			errors.put(row, rowErrors);
-		} else
-			rowErrors.put(field, error.toString());
-	}
-
+	
 	public void add(final String field, final String error) {
-		add(0, field, error);
+		errors.put(field, error);
 	}
 
 	public <E extends Enum<E>> void add(final String field, final E error) {
-		add(0, field, error);
+		add(field, error.toString());
 	}
 
-	public Map<Integer, Map<String, String>> getErrors() {
+	public Map<String, String> getErrors() {
 		return errors;
 	}
 
-	public Map<String, String> getErrors(int row) {
-		return errors.get(row);
-	}
-
-	public Map.Entry<String, String> getError(int row) {
-		final Map<String, String> rowErrors = getErrors(row);
-		return (rowErrors == null) ? null : rowErrors.entrySet().iterator().next();
+	public String getError(final String field) {
+		return errors.get(field);
 	}
 
 	public Map.Entry<String, String> getError() {
-		return getError(0);
+		if (errors.isEmpty())
+			return null;
+		return errors.entrySet().iterator().next();
 	}
-
-	public String getError(int row, final String field) {
-		final Map<String, String> rowErrors = getErrors(row);
-		return (rowErrors == null) ? null : rowErrors.get(field);
-	}
-
-	public String getError(final String field) {
-		return getError(0, field);
-	}
-
-	public Map<Integer, Map<String, String>> getErrorMessages(final ConstantsWithLookup resource) {
+	
+	public Map<String, String> getErrorMessages(final ConstantsWithLookup resource) {
 		if (resource == null)
 			throw new IllegalArgumentException("resource");
-		final Map<Integer, Map<String, String>> ret = new HashMap<Integer, Map<String, String>>();
-		for (final Map.Entry<Integer, Map<String, String>> e : errors.entrySet()) {
-			final Map<String, String> rowErrors = new HashMap<String, String>();
-			for (final Map.Entry<String, String> ee : e.getValue().entrySet())
-				rowErrors.put(ee.getKey(), resource.getString(ee.getValue()));
-			ret.put(e.getKey(), rowErrors);
-		}
+		final Map<String, String> ret = new HashMap<String, String>();
+		for (final Map.Entry<String, String> e : errors.entrySet())
+				ret.put(e.getKey(), resource.getString(e.getValue()));
 		return ret;
 	}
 

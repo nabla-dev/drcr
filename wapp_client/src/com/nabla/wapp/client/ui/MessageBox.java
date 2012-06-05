@@ -40,7 +40,7 @@ public class MessageBox implements IMessageBox {
 
 	public interface IDetailedMessageBoxProvider extends AsyncProvider<IDetailedMessageBox, Throwable> {}
 
-	private static final Logger					logger = LoggerFactory.getLog(MessageBox.class);
+	private static final Logger				logger = LoggerFactory.getLog(MessageBox.class);
 	private String								defaultTitle;
 	private final IDetailedMessageBoxProvider	detailedDialogFactory;
 
@@ -162,7 +162,7 @@ public class MessageBox implements IMessageBox {
 		else {
 			if (caught instanceof ValidationException) {
 				final ValidationException e = (ValidationException) caught;
-				final Map<String, String> errors = e.getErrors(0);
+				final Map<String, String> errors = e.getErrors();
 				String message = null;
 				for (Map.Entry<String, String> error : errors.entrySet()) {
 					final String msg = error.getKey() + ": " +  Application.getInstance().getLocalizedError(error.getValue());

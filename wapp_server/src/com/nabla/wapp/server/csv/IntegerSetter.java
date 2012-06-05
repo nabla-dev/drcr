@@ -14,20 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.company.settings;
+package com.nabla.wapp.server.csv;
 
-import com.nabla.dc.shared.command.company.settings.RestoreAccount;
-import com.nabla.dc.shared.model.IAccount;
-import com.nabla.wapp.server.model.AbstractRestoreHandler;
+import java.lang.reflect.Field;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class RestoreAccountHandler extends AbstractRestoreHandler<RestoreAccount> {
-
-	public RestoreAccountHandler() {
-		super(IAccount.TABLE);
+public class IntegerSetter implements ICsvSetter {
+	
+	@Override
+	public void setValue(final Object record, final Field field, final String value) throws Exception {
+		field.set(record, Integer.parseInt(value));
 	}
-
 }

@@ -22,7 +22,6 @@ package com.nabla.wapp.shared.general;
  */
 public enum CommonServerErrors {
 	INTERNAL_ERROR,
-	INVALID_XML_REQUEST,
 	ACCESS_DENIED,
 	INVALID_USER_PASSWORD,
 
@@ -35,5 +34,9 @@ public enum CommonServerErrors {
 	TEXT_TOO_LONG,
 	INVALID_VALUE,
 	INVALID_CURRENCY_VALUE,
-	INVALID_POUND_VALUE
+	INVALID_POUND_VALUE,
+	
+	NO_DATA,
+	UNSUPPORTED_FIELD,
+	INVALID_FIELD_COUNT
 }

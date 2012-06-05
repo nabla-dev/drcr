@@ -34,8 +34,8 @@ public abstract class AbstractSoftRemoveHandler<A extends AbstractRemove> extend
 
 	private final String	sql;
 
-	protected AbstractSoftRemoveHandler(final String table, final String... authorizedUsers) {
-		super(true, authorizedUsers);
+	protected AbstractSoftRemoveHandler(final String table) {
+		super(true);
 		sql = MessageFormat.format("UPDATE {0} SET uname=NULL WHERE id IN(?);", table);
 	}
 

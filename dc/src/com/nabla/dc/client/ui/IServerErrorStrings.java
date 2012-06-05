@@ -27,12 +27,6 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 
 	@DefaultStringValue("*** too many errors ***")
 	String TOO_MANY_ERRORS();
-
-	@DefaultStringValue("no data found")
-	String NO_DATA_TO_IMPORT();
-	
-	@DefaultStringValue("unsupported column")
-	String UNSUPPORTED_IMPORT_COLUMN();
 	
 	@DefaultStringValue("invalid tax code rate")
 	String INVALID_TAX_CODE_RATE();

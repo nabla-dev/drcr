@@ -19,6 +19,10 @@
 	        </filesystem>
             <ibiblio name="smartgwt" m2compatible="true" root="http://www.smartclient.com/maven2" />
             <ibiblio name="central" m2compatible="true" />
+		    <packager name="roundup" buildRoot="${user.home}/.ivy2/packager/build" resourceCache="${user.home}/.ivy2/packager/cache">
+		        <ivy pattern="http://ivyroundup.googlecode.com/svn/trunk/repo/modules/[organisation]/[module]/[revision]/ivy.xml"/>
+		        <artifact pattern="http://ivyroundup.googlecode.com/svn/trunk/repo/modules/[organisation]/[module]/[revision]/packager.xml"/>
+		    </packager>
         </chain>
     </resolvers>
 </ivysettings>

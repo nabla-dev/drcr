@@ -37,8 +37,8 @@ public abstract class AbstractRestoreHandler<A extends AbstractRestore> extends 
 
 	private final String	sql;
 
-	protected AbstractRestoreHandler(final String table, final String... authorizedUsers) {
-		super(true, authorizedUsers);
+	protected AbstractRestoreHandler(final String table) {
+		super(true);
 		sql = MessageFormat.format("UPDATE {0} SET uname=UPPER(name) WHERE id IN (?);", table);
 	}
 

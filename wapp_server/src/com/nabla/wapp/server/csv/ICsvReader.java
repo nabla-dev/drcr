@@ -14,20 +14,14 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.company.settings;
-
-import com.nabla.dc.shared.command.company.settings.RestoreAccount;
-import com.nabla.dc.shared.model.IAccount;
-import com.nabla.wapp.server.model.AbstractRestoreHandler;
+package com.nabla.wapp.server.csv;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class RestoreAccountHandler extends AbstractRestoreHandler<RestoreAccount> {
-
-	public RestoreAccountHandler() {
-		super(IAccount.TABLE);
-	}
-
+public interface ICsvReader<T> {
+	void readHeader() throws CsvException;
+	boolean next(T instance) throws CsvException;
+	void close();
 }

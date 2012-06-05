@@ -20,11 +20,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nabla.dc.shared.ServerErrors;
+import com.nabla.wapp.server.csv.CsvException;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.general.Assert;
@@ -155,4 +157,10 @@ public class ImportErrorManager {
 	public <E extends Enum> boolean add(final int lineNo, final E error) throws SQLException {
 		return add(lineNo, null, error);
 	}
+	
+	public boolean add(final CsvException x) throws SQLException {
+		final Map.Entry<String, String> error = x.getError();
+		return add(x.getLine(), error.getKey(), error.getValue());
+	}
+	
 }

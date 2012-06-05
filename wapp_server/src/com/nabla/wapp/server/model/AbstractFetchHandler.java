@@ -26,8 +26,8 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public abstract class AbstractFetchHandler<A extends AbstractFetch> extends AbstractHandler<A, FetchResult> {
 
-	protected AbstractFetchHandler(final String... authorizedUsers) {
-		super(false, authorizedUsers);
+	protected AbstractFetchHandler() {
+		super(false);
 	}
 
 }

@@ -24,7 +24,7 @@ import java.lang.reflect.Field;
  */
 public class SqlStatement extends StatementFormat {
 
-	protected static IStatementParameter createParameter(final Field field) {
+	public static IStatementParameter createParameter(final Field field) {
 		if (!field.isAccessible())
 			field.setAccessible(true);	// in order to lift restriction on 'private' fields
 		return new StatementParameter(field, getSetter(field.getType()));

@@ -19,7 +19,6 @@ package com.nabla.dc.server.handler.settings;
 import com.nabla.dc.shared.command.settings.RestoreTaxRate;
 import com.nabla.dc.shared.model.ITaxRate;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
-import com.nabla.wapp.shared.auth.IRootUser;
 
 /**
  * @author nabla
@@ -28,7 +27,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 public class RestoreTaxRateHandler extends AbstractRestoreHandler<RestoreTaxRate> {
 
 	public RestoreTaxRateHandler() {
-		super(ITaxRate.TABLE, IRootUser.NAME);
+		super(ITaxRate.TABLE);
 	}
 
 }

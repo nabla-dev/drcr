@@ -18,7 +18,6 @@
             	<exclude name=".*" />
         	</fileset>
     	</delete>
-		<ivy:cachepath pathid="ivy.cachepath" />
     	<delete failonerror="false" >
             <fileset dir="${ivy.cache.dir}/${project.organisation}/${project.name}/jars">
             	<exclude name=".*" />

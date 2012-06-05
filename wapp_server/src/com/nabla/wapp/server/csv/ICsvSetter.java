@@ -14,25 +14,14 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.model;
+package com.nabla.wapp.server.csv;
 
-import com.nabla.wapp.shared.dispatch.ActionException;
-import com.nabla.wapp.shared.general.CommonServerErrors;
+import java.lang.reflect.Field;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class InvalidRequestException extends ActionException {
-
-	private static final long		serialVersionUID = 1L;
-
-	public InvalidRequestException() {
-		super(CommonServerErrors.INVALID_XML_REQUEST);
-	}
-
-	public InvalidRequestException(final String details) {
-		super(CommonServerErrors.INVALID_XML_REQUEST, details);
-	}
-
+public interface ICsvSetter {
+	void setValue(final Object record, final Field field, final String value) throws Exception;
 }
