@@ -16,6 +16,7 @@
 */
 package com.nabla.wapp.server.model;
 
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
@@ -24,6 +25,8 @@ import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * The <code></code> object is used to
@@ -31,17 +34,32 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public abstract class AbstractAddHandler<A extends IAction<StringResult>> extends AbstractHandler<A, StringResult> {
 
+	private Method		validate;
+	
 	protected AbstractAddHandler() {
 		super(true);
+		try {
+			validate = recordClass.getMethod("validate", IErrorList.class);
+		} catch (Throwable __) {
+			validate = null;
+		}
 	}
 
 	@Override
 	public StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		final ValidationException x = new ValidationException();
+		validate(record, ctx, x);
+		if (!x.isEmpty())
+			throw x;
 		final JsonResponse json = new JsonResponse();
 		json.putId(add(record, ctx));
 		return json.toStringResult();
 	}
 
+	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx, final IErrorList errors) {
+		
+	}
+	
 	abstract protected int add(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;
 
 }

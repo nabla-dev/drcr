@@ -188,12 +188,13 @@ public class ListGridFilter extends VLayout {
 			@Override
 			public void execute(String name) {
 				if (name != null && !name.isEmpty()) {
-					try {
-						IListGridFilter.NAME_CONSTRAINT.validate(IListGridFilter.NAME, name);
-						final String value = JSON.encode(criteria.getJsObj());
-						IListGridFilter.VALUE_CONSTRAINT.validate(IListGridFilter.VALUE, value);
+					final String value = JSON.encode(criteria.getJsObj());
+					final ValidationException x = new ValidationException();
+					IListGridFilter.NAME_CONSTRAINT.validate(IListGridFilter.NAME, name, x);
+					IListGridFilter.VALUE_CONSTRAINT.validate(IListGridFilter.VALUE, value, x);
+					if (x.isEmpty()) {
 						saveFilter(name, value);
-					} catch (ValidationException x) {
+					} else {
 						logger.log(Level.WARNING, "fail to save filter ListGrid '" + getSavedFilterReference() + "'", x);
 						Application.getInstance().getMessageBox().error(x);
 					}

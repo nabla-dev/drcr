@@ -20,13 +20,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.wapp.server.csv.CsvException;
+import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.general.Assert;
@@ -36,7 +35,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
  * @author nabla
  *
  */
-public class ImportErrorManager {
+public class ImportErrorManager implements ICsvErrorList {
 
 	private static final int		MAX_ERROR_MESSAGE = 255;
 	private static final int		DEFAULT_MAX_ERRORS = 100;
@@ -50,8 +49,9 @@ public class ImportErrorManager {
 	private final Connection		conn;
 	private PreparedStatement		stmt;
 	private final Integer			batchId;
+	private int					line;
 	private int					counter;
-
+	
 	/**
 	 * Constructor
 	 * @param writeDb - database
@@ -65,6 +65,7 @@ public class ImportErrorManager {
 
 		this.conn = writeDb.getConnection();
 		this.batchId = batchId;
+		line = 1;
 		this.counter = maxErrors + 1;
 	}
 
@@ -93,6 +94,7 @@ public class ImportErrorManager {
 	 * Check if any errors have been logged
 	 * @return true if no errors have been logged, false otherwise
 	 */
+	@Override
 	public boolean isEmpty() {
 		return stmt == null;
 	}
@@ -101,66 +103,84 @@ public class ImportErrorManager {
 	 * Check if maximum number of errors has been reached
 	 * @return true if maximum number of errors has been reached, false otherwise
 	 */
+	@Override
 	public boolean isFull() {
 		return counter <= 0;
 	}
 
 	/**
-	 * Add error
+	 * Set current line number
 	 * @param lineNo - line number of error
+	 * */
+	@Override
+	public void setLine(int line) {
+		this.line = line;
+	}
+	
+	/**
+	 * Get current line number
+	 * @return line number of error
+	 * */
+	@Override
+	public int getLine() {
+		return line;
+	}
+	
+	/**
+	 * Add error
 	 * @param fieldName - field name
 	 * @param error - error message
-	 * @return true if error was logged successfully, false if the maximum number of errors was reached
 	 * @throws SQLException
 	 */
-	public boolean add(final int lineNo, final String fieldName, String error) throws SQLException {
+	@Override
+	public void add(final String fieldName, String error) {
 		Assert.state(counter > 0);
 		Assert.state(fieldName == null || fieldName.length() < 32);
 		
-		if (error == null || error.isEmpty())
-			error = CommonServerErrors.INTERNAL_ERROR.toString();
-		if (error.length() > MAX_ERROR_MESSAGE)
-			error = error.substring(0, MAX_ERROR_MESSAGE);
-		if (log.isTraceEnabled())
-			log.trace("[" + lineNo + "] " + fieldName + ":" + error);
-		if (stmt == null) {
-			Database.executeUpdate(conn,
+		if (!isFull()) {
+			if (error == null || error.isEmpty())
+				error = CommonServerErrors.INTERNAL_ERROR.toString();
+			if (error.length() > MAX_ERROR_MESSAGE)
+				error = error.substring(0, MAX_ERROR_MESSAGE);
+			if (log.isTraceEnabled())
+				log.trace("[" + getLine() + "] " + fieldName + ":" + error);
+			try {
+				if (stmt == null) {
+					Database.executeUpdate(conn,
 "DELETE FROM import_error WHERE import_data_id=?;", batchId);
-			stmt = conn.prepareStatement(
+					stmt = conn.prepareStatement(
 "INSERT INTO import_error(import_data_id,line_no,field,error) VALUES(?,?,?,?);");
-			stmt.setInt(COL_ID, batchId);
+					stmt.setInt(COL_ID, batchId);
+				}
+				stmt.setInt(COL_LINE_NO, getLine());
+				if (fieldName == null)
+					stmt.setNull(COL_FIELD, Types.VARCHAR);
+				else
+					stmt.setString(COL_FIELD, fieldName);
+				--counter;
+				stmt.setString(COL_ERROR, (counter > 0) ? error : ServerErrors.TOO_MANY_ERRORS.toString());
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				if (log.isErrorEnabled())
+					log.error("failed to save import error to database", e);
+				counter = 0;
+			}
 		}
-		stmt.setInt(COL_LINE_NO, lineNo);
-		--counter;
-		if (fieldName == null)
-			stmt.setNull(COL_FIELD, Types.VARCHAR);
-		else
-			stmt.setString(COL_FIELD, fieldName);
-		if (counter > 0) {
-			stmt.setString(COL_ERROR, error);
-			stmt.executeUpdate();
-			return true;
-		}
-		stmt.setString(COL_ERROR, ServerErrors.TOO_MANY_ERRORS.toString());
-		stmt.executeUpdate();
-		return false;
 	}
 
-	public boolean add(final int lineNo, final String error) throws SQLException {
-		return add(lineNo, null, error);
+	@Override
+	public void add(final String error) {
+		add(null, error);
 	}
 	
-	public <E extends Enum> boolean add(final int lineNo, final String columnName, final E error) throws SQLException {
-		return add(lineNo, columnName, error.toString());
+	@Override
+	public <E extends Enum<E>> void add(final String columnName, final E error) {
+		add(columnName, error.toString());
 	}
 
-	public <E extends Enum> boolean add(final int lineNo, final E error) throws SQLException {
-		return add(lineNo, null, error);
+	@Override
+	public <E extends Enum<E>> void add(final E error) {
+		add(null, error);
 	}
-	
-	public boolean add(final CsvException x) throws SQLException {
-		final Map.Entry<String, String> error = x.getError();
-		return add(x.getLine(), error.getKey(), error.getValue());
-	}
-	
+
 }

@@ -17,13 +17,13 @@
 package com.nabla.wapp.shared.validator;
 
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class IntegerRangeConstraint implements IValueConstraint {
+public class IntegerRangeConstraint implements IValueConstraint<Integer> {
 
 	private final Integer	minValue;
 	private final Integer	maxValue;
@@ -46,17 +46,25 @@ public class IntegerRangeConstraint implements IValueConstraint {
 		return maxValue;
 	}
 
-	public void validate(final String field, final Integer value) throws ValidationException {
-		validate(field, value, CommonServerErrors.INVALID_VALUE);
+	@Override
+	public boolean validate(final String field, final Integer value, final IErrorList errors) {
+		return validate(field, value, CommonServerErrors.INVALID_VALUE, errors);
 	}
 
-	public <E extends Enum<E>> void validate(final String field, final Integer value, final E error) throws ValidationException {
-		if (value == null)
-			throw new ValidationException(field, CommonServerErrors.REQUIRED_VALUE);
-		if (minValue != null && value < minValue)
-			throw new ValidationException(field, error);
-		if (maxValue != null && value > maxValue)
-			throw new ValidationException(field, error);
+	public <E extends Enum<E>> boolean validate(final String field, final Integer value, final E error, final IErrorList errors) {
+		if (value == null) {
+			errors.add(field, CommonServerErrors.REQUIRED_VALUE);
+			return false;
+		}
+		if (minValue != null && value < minValue) {
+			errors.add(field, error);
+			return false;
+		}
+		if (maxValue != null && value > maxValue) {
+			errors.add(field, error);
+			return false;
+		}
+		return true;
 	}
 
 }

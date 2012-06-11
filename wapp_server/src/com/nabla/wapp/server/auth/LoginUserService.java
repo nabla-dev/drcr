@@ -18,7 +18,6 @@ package com.nabla.wapp.server.auth;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,27 +52,25 @@ public class LoginUserService extends RemoteServiceServlet implements ILoginUser
 
 	@Override
 	public String execute(String userName, String password) {
-		try {
-			IUser.NAME_CONSTRAINT.validate("user name", userName);
-			IUser.PASSWORD_CONSTRAINT.validate("password", password);
-			final Connection conn = db.getConnection();
+		final ValidationException x = new ValidationException();
+		IUser.NAME_CONSTRAINT.validate("user name", userName, x);
+		IUser.PASSWORD_CONSTRAINT.validate("password", password, x);
+		if (x.isEmpty()) {
 			try {
-				final UserManager userManager = new UserManager(conn);
-				final Integer userId = userManager.isValidSession(userName, password);
-				if (userId == null)
-					return null;
-				userManager.onUserLogged(userId);
-				return UserSession.save(this.getThreadLocalRequest(), userId, userName);
-			}  finally {
-				Database.close(conn);
-			}
-		} catch (final SQLException e) {
-			if (log.isErrorEnabled())
-				log.error("SQL error " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
-		} catch (final ValidationException e) {
-			if (log.isDebugEnabled()) {
-				final Map.Entry<String, String> error = e.getError();
-				log.debug("invalid " + error.getKey() + " '" + userName + "-'" + password + "' " + error.getValue());
+				final Connection conn = db.getConnection();
+				try {
+					final UserManager userManager = new UserManager(conn);
+					final Integer userId = userManager.isValidSession(userName, password);
+					if (userId != null) {
+						userManager.onUserLogged(userId);
+						return UserSession.save(this.getThreadLocalRequest(), userId, userName);
+					}
+				} finally {
+					Database.close(conn);
+				}
+			} catch (final SQLException e) {
+				if (log.isErrorEnabled())
+					log.error("SQL error " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
 			}
 		}
 		return null;

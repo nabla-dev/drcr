@@ -27,12 +27,11 @@ import com.nabla.wapp.shared.dispatch.ActionException;
  * @author nabla
  *
  */
-public class ValidationException extends ActionException {
+public class ValidationException extends ActionException implements IErrorList {
 
 	private static final long			serialVersionUID = 1L;
 	public static final String		ERROR_CODE = "VALIDATION_ERROR";
-	// field, errorNo
-	private final Map<String, String>	errors = new HashMap<String, String>();
+	private final Map<String, String>	errors = new HashMap<String, String>();	// field, errorNo
 
 	public ValidationException() {
 		super(ERROR_CODE);
@@ -48,18 +47,36 @@ public class ValidationException extends ActionException {
 		add(field, error);
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return errors.isEmpty();
 	}
 	
+	@Override
+	public int size() {
+		return errors.size();
+	}
+	
+	@Override
 	public void add(final String field, final String error) {
 		errors.put(field, error);
 	}
 
+	@Override
+	public void add(final String error) {
+		add("n/a", error);
+	}
+	
+	@Override
 	public <E extends Enum<E>> void add(final String field, final E error) {
 		add(field, error.toString());
 	}
 
+	@Override
+	public <E extends Enum<E>> void add(final E error) {
+		add(error.toString());
+	}
+	
 	public Map<String, String> getErrors() {
 		return errors;
 	}

@@ -17,7 +17,7 @@
 package com.nabla.wapp.shared.validator;
 
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -38,10 +38,14 @@ public class RegexConstraint extends TextLengthConstraint {
 	}
 
 	@Override
-	public void validate(final String field, final String value) throws ValidationException {
-		super.validate(field, value);
-		if (value != null && !value.matches(expression))
-			throw new ValidationException(field, CommonServerErrors.INVALID_CHARACTER);
+	public boolean validate(final String field, final String value, final IErrorList errors) {
+		if (!super.validate(field, value, errors))
+			return false;
+		if (value != null && !value.matches(expression)) {
+			errors.add(field, CommonServerErrors.INVALID_CHARACTER);
+			return false;
+		}
+		return true;
 	}
 
 }

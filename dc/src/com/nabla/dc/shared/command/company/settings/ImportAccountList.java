@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.shared.command.company.settings;
 
-import com.nabla.dc.shared.model.company.settings.IImportAccount;
+import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
@@ -28,15 +28,15 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class ImportAccountList implements IAction<StringResult> {
 
-	private static final long			serialVersionUID = 1L;
-	private Integer						companyId;
-	private Integer						batchId;
-	private Boolean						rowHeader;
-	private IImportAccount.EOverwrite	overwrite;
+	private static final long		serialVersionUID = 1L;
+	private Integer					companyId;
+	private Integer					batchId;
+	private Boolean					rowHeader;
+	private SqlInsertOptions		overwrite;
 	
 	ImportAccountList() {}
 		
-	public ImportAccountList(final Integer companyId, final Integer batchId, final Boolean rowHeader, final IImportAccount.EOverwrite overwrite) {
+	public ImportAccountList(final Integer companyId, final Integer batchId, final Boolean rowHeader, final SqlInsertOptions overwrite) {
 		this.companyId = companyId;
 		this.batchId = batchId;
 		this.rowHeader = rowHeader;
@@ -55,7 +55,7 @@ public class ImportAccountList implements IAction<StringResult> {
 		return rowHeader;
 	}
 	
-	public IImportAccount.EOverwrite getOverwrite() {
+	public SqlInsertOptions getOverwrite() {
 		return overwrite;
 	}
 }

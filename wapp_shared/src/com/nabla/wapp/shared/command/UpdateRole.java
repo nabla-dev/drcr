@@ -18,7 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -42,9 +42,11 @@ public class UpdateRole extends AddRole {
 	}
 
 	@Override
-	public void validate() throws ValidationException {
-		super.validate();
+	public boolean validate(final IErrorList errors) {
+		if (!super.validate(errors))
+			return false;
 		uname = name.toUpperCase();
+		return true;
 	}
 
 }

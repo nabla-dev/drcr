@@ -14,16 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.csv;
+package com.nabla.wapp.shared.database;
 
 /**
  * @author nabla64
  *
  */
-public interface ICsvReader<T> {
-	enum Status { SUCCESS, ERROR, EOF };
-	
-	boolean readHeader();
-	Status next(T instance);
-	void close();
+public enum SqlInsertOptions {
+	INSERT, REPLACE, OVERWRITE, APPEND;
 }

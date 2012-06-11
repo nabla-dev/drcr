@@ -22,6 +22,7 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
@@ -71,6 +72,10 @@ public class AddAccount implements IAction<StringResult>, IAccount {
 		doValidate(true);
 	}
 
+	public void validate(final IErrorList errors) {
+		
+	}
+	
 	protected void doValidate(final boolean add) throws ValidationException {
 		if (add || code != null)
 			CODE_CONSTRAINT.validate(CODE, code);

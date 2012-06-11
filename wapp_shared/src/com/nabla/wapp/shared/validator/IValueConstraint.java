@@ -16,10 +16,12 @@
 */
 package com.nabla.wapp.shared.validator;
 
+import com.nabla.wapp.shared.model.IErrorList;
+
 /**
  * @author nabla
  *
  */
-public interface IValueConstraint {
-
+public interface IValueConstraint<ValueType> {
+	boolean validate(final String field, final ValueType value, final IErrorList errors);
 }

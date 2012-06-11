@@ -18,8 +18,8 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -46,11 +46,13 @@ public class UpdateUser extends AddUser {
 	}
 
 	@Override
-	public void validate() throws ValidationException {
+	public boolean validate(final IErrorList errors) {
 		if (name != null) {
-			IUser.NAME_CONSTRAINT.validate(NAME, name);
+			if (!IUser.NAME_CONSTRAINT.validate(NAME, name, errors))
+				return false;
 			uname = name.toUpperCase();
 		}
+		return true;
 	}
 
 }

@@ -17,13 +17,13 @@
 package com.nabla.wapp.shared.validator;
 
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class TextLengthConstraint implements IValueConstraint {
+public class TextLengthConstraint implements IValueConstraint<String> {
 
 	private final int	minLength;
 	private final int	maxLength;
@@ -43,17 +43,25 @@ public class TextLengthConstraint implements IValueConstraint {
 		return maxLength;
 	}
 
-	public void validate(final String field, final String value) throws ValidationException {
+	@Override
+	public boolean validate(final String field, final String value, final IErrorList errors) {
 		if (value == null || value.isEmpty()) {
-			if (getMinLength() > 0)
-				throw new ValidationException(field, CommonServerErrors.REQUIRED_VALUE);
+			if (getMinLength() > 0) {
+				errors.add(field, CommonServerErrors.REQUIRED_VALUE);
+				return false;
+			}
 		} else {
 			int length = value.length();
-			if (length < getMinLength())
-				throw new ValidationException(field, CommonServerErrors.TEXT_TOO_SHORT);
-			if (length > getMaxLength())
-				throw new ValidationException(field, CommonServerErrors.TEXT_TOO_LONG);
+			if (length < getMinLength()) {
+				errors.add(field, CommonServerErrors.TEXT_TOO_SHORT);
+				return false;
+			}
+			if (length > getMaxLength()) {
+				errors.add(field, CommonServerErrors.TEXT_TOO_LONG);
+				return false;
+			}
 		}
+		return true;
 	}
 
 }

@@ -16,7 +16,6 @@
 */
 package com.nabla.dc.server.handler.company.settings;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,14 +26,12 @@ import org.apache.commons.logging.LogFactory;
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
 import com.nabla.dc.shared.ServerErrors;
+import com.nabla.dc.shared.command.company.settings.AccountCsvReader;
 import com.nabla.dc.shared.command.company.settings.AddAccount;
 import com.nabla.dc.shared.command.company.settings.ImportAccountList;
 import com.nabla.dc.shared.model.company.settings.IImportAccount;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
-import com.nabla.wapp.server.csv.CsvException;
-import com.nabla.wapp.server.csv.CsvReader;
-import com.nabla.wapp.server.csv.ICsvReader;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.IDatabase;
@@ -53,9 +50,8 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class ImportAccountListHandler extends AbstractHandler<ImportAccountList, StringResult> {
 
-	private static final Log				log = LogFactory.getLog(ImportAccountListHandler.class);
-	private final IDatabase				writeDb;
-	private final SqlInsert<AddAccount>	sql = new SqlInsert<AddAccount>(AddAccount.class);
+	private static final Log		log = LogFactory.getLog(ImportAccountListHandler.class);
+	private final IDatabase		writeDb;
 	
 	@Inject
 	public ImportAccountListHandler(@IReadWriteDatabase final IDatabase writeDb) {
@@ -80,48 +76,24 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 		return null;
 	}
 	
-	private boolean add(final ImportAccountList cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException, IOException {
+	private boolean add(final ImportAccountList cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmtFile = StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT content FROM import_data WHERE id=?;", cmd.getBatchId());
 		try {
 			final ResultSet rs = stmtFile.executeQuery();
 			try {
 				if (!rs.next()) {
-					errors.add(0, ServerErrors.NO_DATA_TO_IMPORT);
+					errors.add(ServerErrors.NO_DATA_TO_IMPORT);
 					return false;
 				}
 				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 				try {
+					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, cmd.getOverwrite());
 					final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
 					try {
-						final ICsvReader<AddAccount> csv = new CsvReader<AddAccount>(rs.getCharacterStream("content"), AddAccount.class);
+						final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), errors);
 						try {
-							if (cmd.isRowHeader()) {
-								try {
-									csv.readHeader();
-								} catch (CsvException e) {
-									errors.add(e);
-									return false;
-								}
-							}
-							final AddAccount record = new AddAccount();
-							record.setCompanyId(cmd.getCompanyId());
-							record.setActive(true);
-							boolean loop = true;
-							do {
-								boolean add = true;
-								try {
-									loop = csv.next(record);
-								} catch (CsvException e) {
-									if (!errors.add(e))
-										return false;
-									add = false;
-									loop = true;
-								}
-								if (add)
-									stmt.add(record);
-							} while (loop);
-							if (!errors.isEmpty())
+							if (!csv.read(cmd, stmt))
 								return false;
 						} finally {
 							csv.close();

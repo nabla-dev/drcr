@@ -20,6 +20,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.company.settings.IImportAccount;
 import com.nabla.wapp.client.model.BasicRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -51,8 +52,8 @@ public class ImportAccountRecord extends BasicRecord implements IImportAccount {
 		return getAttributeAsBoolean(IImportAccount.ROW_HEADER);
 	}
 	
-	public IImportAccount.EOverwrite getOverwrite() {
-		return IImportAccount.EOverwrite.valueOf(getAttributeAsString(IImportAccount.OVERWRITE));
+	public SqlInsertOptions getOverwrite() {
+		return SqlInsertOptions.valueOf(getAttributeAsString(IImportAccount.OVERWRITE));
 	}
 
 }

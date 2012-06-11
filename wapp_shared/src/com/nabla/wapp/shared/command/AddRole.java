@@ -19,8 +19,8 @@ package com.nabla.wapp.shared.command;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IRole;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -39,8 +39,8 @@ public class AddRole implements IAction<StringResult>, IRole {
 		this.name = name;
 	}
 
-	public void validate() throws ValidationException {
-		NAME_CONSTRAINT.validate(NAME, name);
+	public boolean validate(final IErrorList errors) {
+		return NAME_CONSTRAINT.validate(NAME, name, errors);
 	}
 
 	public String getName() {

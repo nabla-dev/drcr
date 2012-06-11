@@ -16,14 +16,14 @@
 */
 package com.nabla.wapp.server.csv;
 
+import com.nabla.wapp.shared.model.IErrorList;
+
 /**
  * @author nabla64
  *
  */
-public interface ICsvReader<T> {
-	enum Status { SUCCESS, ERROR, EOF };
-	
-	boolean readHeader();
-	Status next(T instance);
-	void close();
+public interface ICsvErrorList extends IErrorList {
+	void setLine(int line);
+	int getLine();
+	boolean isFull();
 }

@@ -14,16 +14,17 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.csv;
+package com.nabla.wapp.shared.model;
 
 /**
  * @author nabla64
  *
  */
-public interface ICsvReader<T> {
-	enum Status { SUCCESS, ERROR, EOF };
-	
-	boolean readHeader();
-	Status next(T instance);
-	void close();
+public interface IErrorList {
+	boolean isEmpty();
+	int size();
+	void add(final String field, final String error);
+	void add(final String error);
+	<E extends Enum<E>> void add(final String field, final E error);
+	<E extends Enum<E>> void add(final E error);
 }

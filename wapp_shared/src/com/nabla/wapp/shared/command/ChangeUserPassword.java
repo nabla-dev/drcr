@@ -18,8 +18,8 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -39,9 +39,11 @@ public class ChangeUserPassword implements IAction<StringResult>, IUser {
 		this.password = password;
 	}
 
-	public void validate() throws ValidationException {
-		NAME_CONSTRAINT.validate(NAME, name);
-		PASSWORD_CONSTRAINT.validate(PASSWORD, password);
+	public boolean validate(final IErrorList errors) {
+		int n = errors.size();
+		NAME_CONSTRAINT.validate(NAME, name, errors);
+		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors);
+		return n == errors.size();
 	}
 
 	public String getName() {
