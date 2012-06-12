@@ -17,7 +17,7 @@
 package com.nabla.dc.shared.command.settings;
 
 import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -38,11 +38,13 @@ public class UpdateCompany extends AddCompany {
 	}
 
 	@Override
-	public void validate() throws ValidationException {
-		if (name != null) {
-			NAME_CONSTRAINT.validate(NAME, name);
-			uname = name.toUpperCase();
-		}
+	public boolean validate(final IErrorList errors) {
+		if (name == null)
+			return true;
+		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
+			return false;
+		uname = name.toUpperCase();
+		return true;
 	}
 
 }

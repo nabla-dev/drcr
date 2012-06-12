@@ -39,7 +39,7 @@ public class UpdateUserHandler extends AbstractHandler<UpdateUser, StringResult>
 
 	@Override
 	public StringResult execute(final UpdateUser record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		record.validate();
+	//	record.validate();
 		sql.execute(ctx.getConnection(), record);
 		return null;
 	}

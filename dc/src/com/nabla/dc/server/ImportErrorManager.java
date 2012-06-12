@@ -50,14 +50,15 @@ public class ImportErrorManager implements ICsvErrorList {
 	private PreparedStatement		stmt;
 	private final Integer			batchId;
 	private int					line;
-	private int					counter;
-	
+	private int						maxErrors;
+	private int					size;
+
 	/**
 	 * Constructor
 	 * @param writeDb - database
 	 * @param batchId - import batch ID
 	 * @param maxErrors - maximum number of errors (default is 100)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public ImportErrorManager(final IDatabase writeDb, final Integer batchId, final int maxErrors) throws SQLException {
 		Assert.argumentNotNull(writeDb);
@@ -66,14 +67,15 @@ public class ImportErrorManager implements ICsvErrorList {
 		this.conn = writeDb.getConnection();
 		this.batchId = batchId;
 		line = 1;
-		this.counter = maxErrors + 1;
+		this.maxErrors = maxErrors;
+		this.size = 0;
 	}
 
 	/**
 	 * Constructor that uses the default maximum number of errors (100)
 	 * @param writeDb - database
 	 * @param batchId - import batch ID
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public ImportErrorManager(final IDatabase writeDb, final Integer batchId) throws SQLException {
 		this(writeDb, batchId, DEFAULT_MAX_ERRORS);
@@ -88,6 +90,11 @@ public class ImportErrorManager implements ICsvErrorList {
 			stmt = null;
 		}
 		Database.close(conn);
+	}
+
+	@Override
+	public int size() {
+		return size;
 	}
 
 	/**
@@ -105,7 +112,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	 */
 	@Override
 	public boolean isFull() {
-		return counter <= 0;
+		return size >= maxErrors;
 	}
 
 	/**
@@ -116,7 +123,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	public void setLine(int line) {
 		this.line = line;
 	}
-	
+
 	/**
 	 * Get current line number
 	 * @return line number of error
@@ -125,7 +132,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	public int getLine() {
 		return line;
 	}
-	
+
 	/**
 	 * Add error
 	 * @param fieldName - field name
@@ -134,9 +141,8 @@ public class ImportErrorManager implements ICsvErrorList {
 	 */
 	@Override
 	public void add(final String fieldName, String error) {
-		Assert.state(counter > 0);
 		Assert.state(fieldName == null || fieldName.length() < 32);
-		
+
 		if (!isFull()) {
 			if (error == null || error.isEmpty())
 				error = CommonServerErrors.INTERNAL_ERROR.toString();
@@ -157,13 +163,13 @@ public class ImportErrorManager implements ICsvErrorList {
 					stmt.setNull(COL_FIELD, Types.VARCHAR);
 				else
 					stmt.setString(COL_FIELD, fieldName);
-				--counter;
-				stmt.setString(COL_ERROR, (counter > 0) ? error : ServerErrors.TOO_MANY_ERRORS.toString());
+				++size;
+				stmt.setString(COL_ERROR, (size < maxErrors) ? error : ServerErrors.TOO_MANY_ERRORS.toString());
 				stmt.executeUpdate();
 			} catch (SQLException e) {
 				if (log.isErrorEnabled())
 					log.error("failed to save import error to database", e);
-				counter = 0;
+				size = maxErrors;
 			}
 		}
 	}
@@ -172,7 +178,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	public void add(final String error) {
 		add(null, error);
 	}
-	
+
 	@Override
 	public <E extends Enum<E>> void add(final String columnName, final E error) {
 		add(columnName, error.toString());

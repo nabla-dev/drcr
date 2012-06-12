@@ -16,8 +16,6 @@
 */
 package com.nabla.dc.server;
 
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -43,16 +41,11 @@ public class DummyLoginUserService extends RemoteServiceServlet implements ILogi
 
 	@Override
 	public String execute(String userName, String password) {
-		try {
-			IUser.NAME_CONSTRAINT.validate("user name", userName);
-			IUser.PASSWORD_CONSTRAINT.validate("password", password);
+		final ValidationException x = new ValidationException();
+		IUser.NAME_CONSTRAINT.validate("user name", userName, x);
+		IUser.PASSWORD_CONSTRAINT.validate("password", password, x);
+		if (x.isEmpty())
 			return UserSession.save(this.getThreadLocalRequest(), 1, "root");
-		} catch (final ValidationException e) {
-			if (log.isDebugEnabled()) {
-				final Map.Entry<String, String> error = e.getError();
-				log.debug("invalid " + error.getKey() + " '" + userName + "-'" + password + "' " + error.getValue());
-			}
-		}
 		return null;
 	}
 

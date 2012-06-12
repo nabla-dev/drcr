@@ -58,7 +58,7 @@ public class AddUserHandler extends AbstractHandler<AddUser, StringResult> {
 	@Override
 	@SuppressWarnings("static-access")
 	public StringResult execute(final AddUser record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		record.validate();
+	//	record.validate();
 		final Integer id = new UserManager(ctx.getWriteConnection()).addUser(record.getName(), record.getPassword());
 		if (id == null)
 			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);

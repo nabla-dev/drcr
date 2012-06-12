@@ -17,7 +17,7 @@
 package com.nabla.dc.shared.command.settings;
 
 import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -38,11 +38,13 @@ public class UpdateTaxRate extends AddTaxRate {
 	}
 
 	@Override
-	public void validate() throws ValidationException {
+	public boolean validate(final IErrorList errors) {
 		if (name != null) {
-			NAME_CONSTRAINT.validate(NAME, name);
+			if (!NAME_CONSTRAINT.validate(NAME, name, errors))
+				return false;
 			uname = name.toUpperCase();
 		}
+		return true;
 	}
 
 }

@@ -39,7 +39,7 @@ public class AddRoleHandler extends AbstractAddHandler<AddRole> {
 	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddRole record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		record.validate();
+	//	record.validate();
 		final Integer id = new UserManager(ctx.getConnection()).addRole(record.getName());
 		if (id == null)
 			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);

@@ -20,16 +20,16 @@ import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.ITaxRate;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
 @IRecordTable(name=ITaxRate.TABLE)
-public class AddTaxRate implements IAction<StringResult>, ITaxRate {
+public class AddTaxRate implements IRecordAction<StringResult>, ITaxRate {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,11 +50,14 @@ public class AddTaxRate implements IAction<StringResult>, ITaxRate {
 		this.active = active;
 	}
 
-	public void validate() throws ValidationException {
-		NAME_CONSTRAINT.validate(NAME, name);
-		uname = name.toUpperCase();
+	@Override
+	public boolean validate(final IErrorList errors) {
+		int n = errors.size();
+		if (NAME_CONSTRAINT.validate(NAME, name, errors))
+			uname = name.toUpperCase();
 		if (rate != null)
-			RATE_CONSTRAINT.validate(RATE, rate, ServerErrors.INVALID_TAX_CODE_RATE);
+			RATE_CONSTRAINT.validate(RATE, rate, ServerErrors.INVALID_TAX_CODE_RATE, errors);
+		return n == errors.size();
 	}
 
 }

@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IAction;
@@ -34,32 +35,40 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public abstract class AbstractAddHandler<A extends IAction<StringResult>> extends AbstractHandler<A, StringResult> {
 
-	private Method		validate;
-	
+	private Method		validateRecord;
+
+	@SuppressWarnings("unchecked")
 	protected AbstractAddHandler() {
 		super(true);
 		try {
-			validate = recordClass.getMethod("validate", IErrorList.class);
+			final Class<A> recordClass = (Class<A>)Util.getFirstGenericDeclaration(this.getClass());
+			validateRecord = recordClass.getMethod("validate", IErrorList.class);
 		} catch (Throwable __) {
-			validate = null;
+			validateRecord = null;
 		}
 	}
 
 	@Override
 	public StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final ValidationException x = new ValidationException();
-		validate(record, ctx, x);
-		if (!x.isEmpty())
-			throw x;
+		validate(record, ctx);
 		final JsonResponse json = new JsonResponse();
 		json.putId(add(record, ctx));
 		return json.toStringResult();
 	}
 
-	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx, final IErrorList errors) {
-		
+	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
+		if (validateRecord != null) {
+			final ValidationException x = new ValidationException();
+			try {
+				validateRecord.invoke(record, x);
+			} catch (Exception e) {
+				Util.throwInternalErrorException(e);
+			}
+			if (!x.isEmpty())
+				throw x;
+		}
 	}
-	
+
 	abstract protected int add(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;
 
 }

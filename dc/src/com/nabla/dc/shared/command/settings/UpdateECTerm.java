@@ -17,7 +17,7 @@
 package com.nabla.dc.shared.command.settings;
 
 import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -38,9 +38,8 @@ public class UpdateECTerm extends AddECTerm {
 	}
 
 	@Override
-	public void validate() throws ValidationException {
-		if (name != null)
-			super.validate();
+	public boolean validate(final IErrorList errors) {
+		return (name == null) ? true : super.validate(errors);
 	}
 
 }

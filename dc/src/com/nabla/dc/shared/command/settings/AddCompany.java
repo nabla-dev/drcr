@@ -19,16 +19,16 @@ package com.nabla.dc.shared.command.settings;
 import com.nabla.dc.shared.model.ICompany;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
 @IRecordTable(name=ICompany.TABLE)
-public class AddCompany implements IAction<StringResult>, ICompany {
+public class AddCompany implements IRecordAction<StringResult>, ICompany {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,9 +46,12 @@ public class AddCompany implements IAction<StringResult>, ICompany {
 		this.active = active;
 	}
 
-	public void validate() throws ValidationException {
-		NAME_CONSTRAINT.validate(NAME, name);
+	@Override
+	public boolean validate(final IErrorList errors) {
+		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
+			return false;
 		uname = name.toUpperCase();
+		return true;
 	}
 
 }
