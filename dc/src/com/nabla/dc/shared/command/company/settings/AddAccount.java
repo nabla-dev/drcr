@@ -20,17 +20,16 @@ import com.nabla.dc.shared.model.IAccount;
 import com.nabla.wapp.shared.csv.ICsvField;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
 @IRecordTable(name=IAccount.TABLE)
-public class AddAccount implements IAction<StringResult>, IAccount {
+public class AddAccount implements IRecordAction<StringResult>, IAccount {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,33 +67,32 @@ public class AddAccount implements IAction<StringResult>, IAccount {
 		this.active = active;
 	}
 
-	public void validate() throws ValidationException {
-		doValidate(true);
-	}
-
-	public void validate(final IErrorList errors) {
-		
+	@Override
+	public boolean validate(final IErrorList errors) {
+		return doValidate(true, errors);
 	}
 	
-	protected void doValidate(final boolean add) throws ValidationException {
+	protected boolean doValidate(boolean add, final IErrorList errors) {
+		int n = errors.size();
 		if (add || code != null)
-			CODE_CONSTRAINT.validate(CODE, code);
+			CODE_CONSTRAINT.validate(CODE, code, errors);
 		if (add || name != null) {
-			NAME_CONSTRAINT.validate(NAME, name);
-			uname = name.toUpperCase();
+			if (NAME_CONSTRAINT.validate(NAME, name, errors))
+				uname = name.toUpperCase();
 		}
 		if (cost_centre != null) {
 			if (cost_centre.isEmpty())
 				cost_centre = null;
 			else
-				CC_CONSTRAINT.validate(COST_CENTRE, cost_centre);
+				CC_CONSTRAINT.validate(COST_CENTRE, cost_centre, errors);
 		}
 		if (department != null) {
 			if (department.isEmpty())
 				department = null;
 			else
-				DEP_CONSTRAINT.validate(DEPARTMENT, department);
+				DEP_CONSTRAINT.validate(DEPARTMENT, department, errors);
 		}
+		return n == errors.size();
 	}
 
 	public Integer getCompanyId() {

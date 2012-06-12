@@ -115,7 +115,6 @@ public class SqlInsert<T> {
 		return (t != null) ? t : getTable(clazz.getSuperclass());
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected void buildParameterList(final Class clazz) {
 		if (clazz != null) {
 			for (Field field : clazz.getDeclaredFields()) {

@@ -20,30 +20,19 @@ import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
-import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.command.ChangeUserPassword;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class ChangeUserPasswordHandler extends AbstractHandler<ChangeUserPassword, StringResult> {
-
-	public ChangeUserPasswordHandler() {
-		super(true);
-	}
+public class ChangeUserPasswordHandler extends AbstractUpdateHandler<ChangeUserPassword> {
 
 	@Override
-	public StringResult execute(final ChangeUserPassword cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final ValidationException x = new ValidationException();
-		cmd.validate(x);
-		if (!x.isEmpty())
-			throw x;
-		new UserManager(ctx.getWriteConnection()).changeUserPassword(cmd.getName(), cmd.getPassword());
-		return null;
+	protected void update(ChangeUserPassword cmd, IUserSessionContext ctx) throws DispatchException, SQLException {
+		new UserManager(ctx.getWriteConnection()).changeUserPassword(cmd.getName(), cmd.getPassword());	
 	}
 
 }

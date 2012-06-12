@@ -21,27 +21,20 @@ import java.sql.SQLException;
 import com.nabla.dc.shared.command.company.settings.UpdateAccount;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.UpdateStatement;
-import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
  * @author nabla
  *
  */
-public class UpdateAccountHandler extends AbstractHandler<UpdateAccount, StringResult> {
+public class UpdateAccountHandler extends AbstractUpdateHandler<UpdateAccount> {
 
 	private static final UpdateStatement<UpdateAccount>	sql = new UpdateStatement<UpdateAccount>(UpdateAccount.class);
 
-	public UpdateAccountHandler() {
-		super(true);
-	}
-
 	@Override
-	public StringResult execute(final UpdateAccount record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		record.validate();
+	protected void update(UpdateAccount record, IUserSessionContext ctx) throws DispatchException, SQLException {
 		sql.execute(ctx.getConnection(), record);
-		return null;
 	}
 
 }

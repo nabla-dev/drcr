@@ -37,7 +37,6 @@ public class AddTaxRateHandler extends AbstractAddHandler<AddTaxRate> {
 	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddTaxRate record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		record.validate();
 		final Integer id = sql.execute(ctx.getWriteConnection(), record);
 		if (id == null)
 			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);

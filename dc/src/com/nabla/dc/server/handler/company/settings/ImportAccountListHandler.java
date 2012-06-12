@@ -26,7 +26,6 @@ import org.apache.commons.logging.LogFactory;
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.command.company.settings.AccountCsvReader;
 import com.nabla.dc.shared.command.company.settings.AddAccount;
 import com.nabla.dc.shared.command.company.settings.ImportAccountList;
 import com.nabla.dc.shared.model.company.settings.IImportAccount;
@@ -34,6 +33,7 @@ import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.database.SqlInsert;
@@ -41,6 +41,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
+import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
@@ -88,7 +89,13 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 				}
 				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 				try {
-					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, cmd.getOverwrite());
+					SqlInsertOptions option = cmd.getOverwrite();
+					if (option == SqlInsertOptions.REPLACE) {
+						Database.executeUpdate(ctx.getWriteConnection(),
+"UPDATE account SET uname=NULL WHERE company_id=?;", cmd.getCompanyId());
+						option = SqlInsertOptions.OVERWRITE;
+					}
+					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
 					final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
 					try {
 						final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), errors);

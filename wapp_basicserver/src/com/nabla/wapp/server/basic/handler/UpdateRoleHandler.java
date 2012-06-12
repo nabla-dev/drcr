@@ -20,28 +20,21 @@ import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.UpdateStatement;
-import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.command.UpdateRole;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
  * @author nabla
  *
  */
-public class UpdateRoleHandler extends AbstractHandler<UpdateRole, StringResult> {
+public class UpdateRoleHandler extends AbstractUpdateHandler<UpdateRole> {
 
 	private static final UpdateStatement<UpdateRole>	sql = new UpdateStatement<UpdateRole>(UpdateRole.class);
 
-	public UpdateRoleHandler() {
-		super(true);
-	}
-
 	@Override
-	public StringResult execute(final UpdateRole record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-	//	record.validate();
+	protected void update(UpdateRole record, IUserSessionContext ctx) throws DispatchException, SQLException {
 		sql.execute(ctx.getConnection(), record);
-		return null;
 	}
 
 }

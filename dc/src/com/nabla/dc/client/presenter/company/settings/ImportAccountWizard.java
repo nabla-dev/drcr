@@ -24,9 +24,9 @@ import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
-import com.nabla.wapp.shared.signal.Signal1;
+import com.nabla.wapp.shared.signal.Signal;
 import com.nabla.wapp.shared.slot.ISlot;
-import com.nabla.wapp.shared.slot.ISlotManager1;
+import com.nabla.wapp.shared.slot.ISlotManager;
 
 /**
  * @author nabla
@@ -45,7 +45,7 @@ public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizar
 	public interface IErrorPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
 
-	private final Signal1<Integer>		sigSuccess = new Signal1<Integer>();
+	private final Signal				sigSuccess = new Signal();
 	private final IUploadFilePage		uploadFilePage;
 	private final ICompletedPage		completedPage = new ImportAccountWizardCompletedPageUi();
 
@@ -58,7 +58,7 @@ public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizar
 		this(new ImportAccountWizardUi(), companyId);
 	}
 	
-	public ISlotManager1<Integer> getSuccessSlots() {
+	public ISlotManager getSuccessSlots() {
 		return sigSuccess;
 	}
 
@@ -92,7 +92,7 @@ public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizar
 		public void invoke() {
 			if(uploadFilePage.isSuccess()) {
 				getDisplay().displayNextPage(completedPage);
-				sigSuccess.fire(uploadFilePage.getBatchId());
+				sigSuccess.fire();
 			} else {
 				getDisplay().displayNextPage(new ImportWizardErrorPageUi(uploadFilePage.getBatchId()));
 			}

@@ -37,8 +37,7 @@ public class CompanyUi extends BindedTabDisplay<Tab> implements Company.IDisplay
 
 	@UiField TabDisplaySet		tabs;
 
-	public CompanyUi(final String companyName) {
-		
+	public CompanyUi(@SuppressWarnings("unused") final String companyName) {
 		this.create(uiBinder, this);
 	}
 

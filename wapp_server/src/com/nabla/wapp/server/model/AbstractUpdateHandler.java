@@ -20,15 +20,17 @@ import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * The <code></code> object is used to
  *
  */
-public abstract class AbstractUpdateHandler<A extends IAction<StringResult>> extends AbstractHandler<A, StringResult> {
+public abstract class AbstractUpdateHandler<A extends IRecordAction<StringResult>> extends AbstractHandler<A, StringResult> {
 
 	protected AbstractUpdateHandler() {
 		super(true);
@@ -36,9 +38,21 @@ public abstract class AbstractUpdateHandler<A extends IAction<StringResult>> ext
 
 	@Override
 	public StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		validate(record, ctx);
 		update(record, ctx);
 		return null;
 	}
 
+	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
+		final ValidationException x = new ValidationException();
+		try {
+			record.validate(x);
+		} catch (Exception e) {
+			Util.throwInternalErrorException(e);
+		}
+		if (!x.isEmpty())
+			throw x;
+	}
+	
 	abstract protected void update(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;
 }

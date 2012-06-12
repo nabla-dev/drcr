@@ -17,7 +17,7 @@
 package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
@@ -26,7 +26,7 @@ import com.nabla.wapp.shared.model.IUser;
  * @author nabla
  *
  */
-public class AddUser implements IAction<StringResult>, IUser {
+public class AddUser implements IRecordAction<StringResult>, IUser {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +45,7 @@ public class AddUser implements IAction<StringResult>, IUser {
 		this.password = password;
 	}
 
+	@Override
 	public boolean validate(final IErrorList errors) {
 		int n = errors.size();
 		NAME_CONSTRAINT.validate(NAME, name, errors);

@@ -29,9 +29,10 @@ import com.nabla.wapp.shared.dispatch.ActionException;
  */
 public class ValidationException extends ActionException implements IErrorList {
 
-	private static final long			serialVersionUID = 1L;
-	public static final String		ERROR_CODE = "VALIDATION_ERROR";
-	private final Map<String, String>	errors = new HashMap<String, String>();	// field, errorNo
+	private static final long		serialVersionUID = 1L;
+	public static final String	ERROR_CODE = "VALIDATION_ERROR";
+	
+	private Map<String, String>		errors = new HashMap<String, String>();	// field, errorNo
 
 	public ValidationException() {
 		super(ERROR_CODE);

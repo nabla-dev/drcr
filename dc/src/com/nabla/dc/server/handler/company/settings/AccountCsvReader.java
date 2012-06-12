@@ -14,11 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.company.settings;
+package com.nabla.dc.server.handler.company.settings;
 
 import java.io.Reader;
 import java.sql.SQLException;
 
+import com.nabla.dc.shared.command.company.settings.AddAccount;
+import com.nabla.dc.shared.command.company.settings.ImportAccountList;
 import com.nabla.wapp.server.csv.CsvReader;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.BatchInsertStatement;

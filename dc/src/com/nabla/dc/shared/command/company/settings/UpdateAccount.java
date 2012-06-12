@@ -17,7 +17,7 @@
 package com.nabla.dc.shared.command.company.settings;
 
 import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -38,8 +38,8 @@ public class UpdateAccount extends AddAccount {
 	}
 
 	@Override
-	public void validate() throws ValidationException {
-		doValidate(false);
+	public boolean validate(final IErrorList errors) {
+		return doValidate(false, errors);
 	}
 
 }

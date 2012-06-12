@@ -16,7 +16,6 @@
 */
 package com.nabla.wapp.server.model;
 
-import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
@@ -24,28 +23,18 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * The <code></code> object is used to
  *
  */
-public abstract class AbstractAddHandler<A extends IAction<StringResult>> extends AbstractHandler<A, StringResult> {
+public abstract class AbstractAddHandler<A extends IRecordAction<StringResult>> extends AbstractHandler<A, StringResult> {
 
-	private Method		validateRecord;
-
-	@SuppressWarnings("unchecked")
 	protected AbstractAddHandler() {
 		super(true);
-		try {
-			final Class<A> recordClass = (Class<A>)Util.getFirstGenericDeclaration(this.getClass());
-			validateRecord = recordClass.getMethod("validate", IErrorList.class);
-		} catch (Throwable __) {
-			validateRecord = null;
-		}
 	}
 
 	@Override
@@ -57,16 +46,14 @@ public abstract class AbstractAddHandler<A extends IAction<StringResult>> extend
 	}
 
 	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
-		if (validateRecord != null) {
-			final ValidationException x = new ValidationException();
-			try {
-				validateRecord.invoke(record, x);
-			} catch (Exception e) {
-				Util.throwInternalErrorException(e);
-			}
-			if (!x.isEmpty())
-				throw x;
+		final ValidationException x = new ValidationException();
+		try {
+			record.validate(x);
+		} catch (Exception e) {
+			Util.throwInternalErrorException(e);
 		}
+		if (!x.isEmpty())
+			throw x;
 	}
 
 	abstract protected int add(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;

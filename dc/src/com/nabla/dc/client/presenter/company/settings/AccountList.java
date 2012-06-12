@@ -134,7 +134,9 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	private final ISlot onImport = new ISlot() {
 		@Override
 		public void invoke() {
-			new ImportAccountWizard(companyId).revealDisplay();
+			final ImportAccountWizard wizard = new ImportAccountWizard(companyId);
+			wizard.getSuccessSlots().connect(onReload);
+			wizard.revealDisplay();
 		}
 	};
 }

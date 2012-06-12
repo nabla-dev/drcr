@@ -162,7 +162,6 @@ public class CsvReader<T> implements ICsvReader<T> {
 		try { impl.close(); } catch (IOException e) {}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void buildColumnList(final Class recordClass) {
 		if (recordClass != null) {
 			for (Field field : recordClass.getDeclaredFields()) {

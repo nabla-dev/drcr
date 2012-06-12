@@ -25,12 +25,12 @@ import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.json.IOdbcToJsonEncoder;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcTimeStampToJson;
+import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.command.AddUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
@@ -41,7 +41,7 @@ import com.nabla.wapp.shared.model.ValidationException;
  * @author nabla
  *
  */
-public class AddUserHandler extends AbstractHandler<AddUser, StringResult> {
+public class AddUserHandler extends AbstractAddHandler<AddUser> {
 
 	private static final List<IOdbcToJsonEncoder>	columns = new LinkedList<IOdbcToJsonEncoder>();
 
@@ -51,20 +51,12 @@ public class AddUserHandler extends AbstractHandler<AddUser, StringResult> {
 		columns.add(new OdbcTimeStampToJson("created"));
 	}
 
-	public AddUserHandler() {
-		super(true);
-	}
-
 	@Override
-	@SuppressWarnings("static-access")
 	public StringResult execute(final AddUser record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-	//	record.validate();
-		final Integer id = new UserManager(ctx.getWriteConnection()).addUser(record.getName(), record.getPassword());
-		if (id == null)
-			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		validate(record, ctx);
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active, created FROM user WHERE id=?;", id);
+"SELECT id, active, created FROM user WHERE id=?;", add(record, ctx));
 		try {
 			final JsonResponse json = new JsonResponse();
 			json.putNext(stmt.executeQuery(), columns);
@@ -72,6 +64,15 @@ public class AddUserHandler extends AbstractHandler<AddUser, StringResult> {
 		} finally {
 			Database.close(stmt);
 		}
+	}
+
+	@SuppressWarnings("static-access")
+	@Override
+	protected int add(AddUser record, IUserSessionContext ctx) throws DispatchException, SQLException {
+		final Integer id = new UserManager(ctx.getWriteConnection()).addUser(record.getName(), record.getPassword());
+		if (id == null)
+			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		return id;
 	}
 
 }
