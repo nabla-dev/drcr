@@ -6,12 +6,22 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	>
 
-	<wnd:Tab title="Company" icon="company_small.png" canClose="true">
-		<ui:attribute name="title" description="Tab title"/>
+	<ui:with field="companyName" type="java.lang.String" />
+
+	<wnd:Tab title="{companyName}" icon="company_small.png" canClose="true">
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">
-					<wnd:ToolbarButton tooltip="Add role"><ui:msg>Sales Ledger</ui:msg></wnd:ToolbarButton>
-					<wnd:ToolbarButton tooltip="Remove role"><ui:msg>Purchase Ledger</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton tooltip="Open nominal ledger"><ui:msg>Nominal Ledger</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton tooltip="Open sales ledger"><ui:msg>Sales Ledger</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton tooltip="Open purchase ledger"><ui:msg>Purchase Ledger</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarMenu title="Settings..." icon="settings_small.png">
+				<ui:attribute name="title" description="Settings menu title"/>
+					<wnd:ListGridToolbarMenuItem command="{cmd.editAccounts}">Accounts</wnd:ListGridToolbarMenuItem>
+					<wnd:ListGridToolbarMenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:ListGridToolbarMenuItem>
+					<wnd:ListGridToolbarMenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:ListGridToolbarMenuItem>						
+					<wnd:ListGridToolbarMenuItemSeparator/>
+					<wnd:ListGridToolbarMenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:ListGridToolbarMenuItem>
+				</wnd:ToolbarMenu>
 			</wnd:Toolbar>
 			<wnd:TabDisplaySet ui:field="tabs" width="100%" height="100%">
 			</wnd:TabDisplaySet>

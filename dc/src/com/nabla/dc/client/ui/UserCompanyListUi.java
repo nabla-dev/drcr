@@ -19,11 +19,16 @@ package com.nabla.dc.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.nabla.dc.client.model.UserCompanyRecord;
 import com.nabla.dc.client.presenter.UserCompanyList;
 import com.nabla.dc.client.presenter.UserCompanyList.ICommandSet;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.client.ui.TileGrid;
+import com.nabla.wapp.shared.signal.Signal1;
+import com.nabla.wapp.shared.slot.ISlotManager1;
+import com.smartgwt.client.widgets.tile.events.RecordDoubleClickEvent;
+import com.smartgwt.client.widgets.tile.events.RecordDoubleClickHandler;
 
 /**
  * @author nabla
@@ -35,12 +40,20 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField
-	ICommandSet			cmd;
+	ICommandSet		cmd;
 	@UiField
-	TileGrid			list;
+	TileGrid		list;
+	
+	private final Signal1<UserCompanyRecord>	sigSelected = new Signal1<UserCompanyRecord>();
 	
 	public UserCompanyListUi() {
 		this.create(uiBinder, this);
+		list.addRecordDoubleClickHandler(new RecordDoubleClickHandler() {
+			@Override
+			public void onRecordDoubleClick(RecordDoubleClickEvent event) {
+				sigSelected.fire(UserCompanyRecord.factory.get(event.getRecord().getJsObj()));
+			}
+		});
 	}
 
 	@Override
@@ -58,4 +71,9 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 //		list.saveViewState();
 	}
 
+	@Override
+	public ISlotManager1<UserCompanyRecord> getSelectedSlots() {
+		return sigSelected;
+	}
+	
 }

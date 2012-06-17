@@ -23,6 +23,7 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -61,6 +62,8 @@ public class AddPeriodEnd implements IRecordAction<StringResult>, IPeriodEnd {
 		int n = errors.size();
 		if (add || name != null)
 			NAME_CONSTRAINT.validate(NAME, name, errors);
+		if (add && end_date == null)
+			errors.add(END_DATE, CommonServerErrors.REQUIRED_VALUE);
 		return n == errors.size();
 	}
 

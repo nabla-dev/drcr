@@ -18,7 +18,6 @@ package com.nabla.dc.client.presenter;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.ui.WorkspaceUi;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractCanvasPresenter;
@@ -67,7 +66,6 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 			@Override
 			public void execute() {
 				addTab(new UserCompanyList(Workspace.this));
-				addTab(new CompanyList(Workspace.this));
 			}
 		});
 /*

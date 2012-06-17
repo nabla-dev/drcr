@@ -35,9 +35,13 @@ public class CompanyUi extends BindedTabDisplay<Tab> implements Company.IDisplay
 	interface Binder extends UiBinder<Tab, CompanyUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
-	@UiField TabDisplaySet		tabs;
+	@UiField(provided=true)
+	String			companyName;
+	@UiField
+	TabDisplaySet	tabs;
 
-	public CompanyUi(@SuppressWarnings("unused") final String companyName) {
+	public CompanyUi(final String companyName) {
+		this.companyName = companyName;
 		this.create(uiBinder, this);
 	}
 

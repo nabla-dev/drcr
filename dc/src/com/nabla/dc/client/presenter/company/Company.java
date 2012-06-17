@@ -16,12 +16,21 @@
 */
 package com.nabla.dc.client.presenter.company;
 
+import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.company.settings.AccountList;
+import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
+import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
+import com.nabla.dc.client.presenter.settings.CompanyRecordCommand;
 import com.nabla.dc.client.ui.company.CompanyUi;
+import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.TabManager;
+import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
 /**
@@ -31,6 +40,10 @@ import com.nabla.wapp.shared.slot.ISlotManager1;
 public class Company extends AbstractTabPresenter<Company.IDisplay> implements ITabManager {
 
 	public interface ICommandSet extends IBasicCommandSet {
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand changeLogo();
+		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) CompanyRecordCommand editUsers();
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand editTaxRates();
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand editAccounts();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -46,8 +59,8 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		this.companyId = companyId;
 	}
 
-	public Company(final Integer companyId) {
-		this(companyId, new CompanyUi("company"));
+	public Company(final Integer companyId, final String companyName) {
+		this(companyId, new CompanyUi(companyName));
 	}
 
 	@Override
@@ -65,5 +78,33 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 	public <D extends ITabDisplay> void addTab(final AbstractTabPresenter<D> tab) {
 		getDisplay().addTab(tabs.add(tab));
 	}
+
+	private final ISlot1<CompanyRecord> onChangeLogo = new ISlot1<CompanyRecord>() {
+		@Override
+		public void invoke(final CompanyRecord record) {
+			new ChangeCompanyLogoDialog(record.getId(), record.getName()).revealDisplay();
+		}
+	};
+
+	private final ISlot1<CompanyRecord> onEditUsers = new ISlot1<CompanyRecord>() {
+		@Override
+		public void invoke(final CompanyRecord record) {
+			tabs.addTab(new CompanyUserList(record.getId()));
+		}
+	};
+
+	private final ISlot1<CompanyRecord> onEditTaxRates = new ISlot1<CompanyRecord>() {
+		@Override
+		public void invoke(final CompanyRecord record) {
+			new CompanyTaxRateListDialog(record.getId(), record.getName()).revealDisplay();
+		}
+	};
+
+	private final ISlot1<CompanyRecord> onEditAccounts = new ISlot1<CompanyRecord>() {
+		@Override
+		public void invoke(final CompanyRecord record) {
+			tabs.addTab(new AccountList(record.getId()));
+		}
+	};
 
 }

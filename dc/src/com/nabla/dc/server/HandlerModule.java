@@ -17,20 +17,25 @@
 package com.nabla.dc.server;
 
 import com.google.inject.Singleton;
+import com.nabla.dc.server.handler.CompanyNameHandler;
 import com.nabla.dc.server.handler.FetchImportErrorListHandler;
 import com.nabla.dc.server.handler.RoleNameHandler;
 import com.nabla.dc.server.handler.UserNameHandler;
 import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
+import com.nabla.dc.server.handler.company.settings.AddPeriodEndHandler;
 import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
 import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
+import com.nabla.dc.server.handler.company.settings.FetchPeriodEndListHandler;
 import com.nabla.dc.server.handler.company.settings.ImportAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
+import com.nabla.dc.server.handler.company.settings.RemovePeriodEndHandler;
 import com.nabla.dc.server.handler.company.settings.RestoreAccountHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateAccountHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
+import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -133,7 +138,8 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(RemoveCompanyHandler.class);
 		bindHandler(RestoreCompanyHandler.class);
 		bindHandler(ChangeCompanyLogoHandler.class);
-
+		bindHandler(CompanyNameHandler.class);
+		
 		bindHandler(FetchCompanyTaxRateListHandler.class);
 		bindHandler(UpdateCompanyTaxRateHandler.class);
 
@@ -150,6 +156,10 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(RestoreAccountHandler.class);
 		bindHandler(ImportAccountListHandler.class);
 		
+		bindHandler(FetchPeriodEndListHandler.class);
+		bindHandler(AddPeriodEndHandler.class);
+		bindHandler(UpdatePeriodEndHandler.class);
+		bindHandler(RemovePeriodEndHandler.class);
 
 
 /*
