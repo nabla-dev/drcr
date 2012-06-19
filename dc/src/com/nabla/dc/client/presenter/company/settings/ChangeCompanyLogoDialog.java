@@ -34,8 +34,8 @@ public class ChangeCompanyLogoDialog extends AbstractTopPresenter<ChangeCompanyL
 		super(ui);
 	}
 
-	public ChangeCompanyLogoDialog(final Integer companyId, final String companyName) {
-		super(new ChangeCompanyLogoDialogUi(companyId, companyName));
+	public ChangeCompanyLogoDialog(final Integer companyId) {
+		super(new ChangeCompanyLogoDialogUi(companyId));
 	}
 
 	@Override

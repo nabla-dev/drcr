@@ -17,22 +17,20 @@
 package com.nabla.dc.client.model.options;
 
 
-import com.nabla.dc.shared.command.UserName;
 import com.nabla.wapp.client.model.Model;
+import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.command.FetchUserName;
 import com.nabla.wapp.shared.command.UpdateUserDefinition;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
 public class UserDefinitionModel extends RoleDefinitionModel {
-
-	static public class Fields {
-		public static String roles() { return "roles"; }
-	}
 
 	private final Integer	objectId;
 
@@ -51,6 +49,11 @@ public class UserDefinitionModel extends RoleDefinitionModel {
 	}
 
 	@Override
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchUserName(roleId);
+	}
+
+	@Override
 	public IAction<StringResult> getUpdateCommand(final RoleDefinitionRecord record) {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
@@ -58,8 +61,4 @@ public class UserDefinitionModel extends RoleDefinitionModel {
 		return new UpdateUserDefinition(objectId, roleId, delta);
 	}
 
-	@Override
-	public IAction<StringResult> getRoleName() {
-		return new UserName(roleId);
-	}
 }

@@ -37,16 +37,13 @@ public class ChangeCompanyLogoDialogUi extends BindedTopDisplay<ModalDialog> imp
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final String					companyName;
-	@UiField(provided=true)
 	final ChangeCompanyLogoModel	model;
 	@UiField
 	Form							form;
 	@UiField
 	UploadEditBox					logoFile;
 
-	public ChangeCompanyLogoDialogUi(final Integer companyId, final String companyName) {
-		this.companyName = companyName;
+	public ChangeCompanyLogoDialogUi(final Integer companyId) {
 		this.model = new ChangeCompanyLogoModel(companyId);
 		this.create(uiBinder, this);
 	}

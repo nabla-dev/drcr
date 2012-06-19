@@ -17,14 +17,17 @@
 package com.nabla.dc.client.model.company.settings;
 
 
+import com.nabla.dc.shared.command.FetchCompanyName;
 import com.nabla.dc.shared.command.company.settings.ChangeCompanyLogo;
 import com.nabla.dc.shared.model.ICompany;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UploadFileField;
+import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
@@ -53,6 +56,11 @@ public class ChangeCompanyLogoModel extends CModel<CompanyLogoRecord> {
 			new TextField(fields.companyName(), FieldAttributes.READ_ONLY),
 			new UploadFileField(fields.logoFile(), FieldAttributes.REQUIRED)
 				);
+	}
+
+	@Override
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchCompanyName(companyId);
 	}
 
 	@Override

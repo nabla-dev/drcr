@@ -17,13 +17,16 @@
 package com.nabla.dc.client.model.options;
 
 
-import com.nabla.dc.shared.command.RoleName;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.Model;
+import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.command.FetchRoleName;
 import com.nabla.wapp.shared.command.UpdateRoleDefinition;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.nabla.wapp.shared.model.IRole;
+import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
@@ -32,6 +35,7 @@ import com.nabla.wapp.shared.general.SelectionDelta;
 public class RoleDefinitionModel extends CModel<RoleDefinitionRecord> {
 
 	static public class Fields {
+		public String name() { return IRole.NAME; }
 		public static String roles() { return "roles"; }
 	}
 
@@ -47,6 +51,11 @@ public class RoleDefinitionModel extends CModel<RoleDefinitionRecord> {
 	}
 
 	@Override
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchRoleName(roleId);
+	}
+
+	@Override
 	public IAction<StringResult> getUpdateCommand(final RoleDefinitionRecord record) {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
@@ -54,7 +63,4 @@ public class RoleDefinitionModel extends CModel<RoleDefinitionRecord> {
 		return new UpdateRoleDefinition(roleId, delta);
 	}
 
-	public IAction<StringResult> getRoleName() {
-		return new RoleName(roleId);
-	}
 }

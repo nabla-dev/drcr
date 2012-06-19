@@ -24,8 +24,8 @@ public class FetchRoleDefinition extends AbstractFetch {
 
 	private static final long serialVersionUID = 1L;
 
-	Integer	roleId;
-	Integer	parentId;
+	private Integer	roleId;
+	private Integer	parentId;
 
 	protected FetchRoleDefinition() {}	// for serialization only
 

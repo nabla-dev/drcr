@@ -14,37 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command;
+package com.nabla.wapp.client.command;
 
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 
 /**
  * @author FNorais
  *
  */
-public class CompanyName implements IAction<StringResult> {
-	
-	private static final long serialVersionUID = 1L;
-	
-	Integer		id;
+public class ListGridRecordCommand extends TAbstractRecordCommand<BasicListGridRecord> {
 
-	public CompanyName() {}	// for serialization only
-
-	/**
-	 * Constructor for <code>RoleName</code> object.
-	 * @param id	- role ID
-	 */
-	public CompanyName(final Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * To get the company ID
-	 * @return this returns the company ID
-	 */
-	public Integer getId() {
-		return id;
+	@Override
+	public BasicListGridRecord getRecord(JavaScriptObject jsRecord) {
+		return new BasicListGridRecord(jsRecord);
 	}
 
 }

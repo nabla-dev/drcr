@@ -16,35 +16,26 @@
 */
 package com.nabla.dc.shared.command;
 
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author FNorais
  *
  */
-public class UserName implements IAction<StringResult> {
-	
+public class FetchCompanyName extends AbstractFetch {
+
 	private static final long serialVersionUID = 1L;
-	
-	Integer		userId;
 
-	public UserName() {}	// for serialization only
+	private Integer		id;
 
-	/**
-	 * Constructor for <code>UserName</code> object.
-	 * @param userId	- user ID
-	 */
-	public UserName(final Integer userId) {
-		this.userId = userId;
+	public FetchCompanyName() {}	// for serialization only
+
+	public FetchCompanyName(final Integer id) {
+		this.id = id;
 	}
 
-	/**
-	 * To get the user ID
-	 * @return this returns the user ID
-	 */
-	public Integer getUserId() {
-		return userId;
+	public Integer getId() {
+		return id;
 	}
 
 }

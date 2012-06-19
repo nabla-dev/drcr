@@ -19,6 +19,7 @@ package com.nabla.dc.client.ui.company.settings;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.nabla.dc.client.model.company.settings.CompanyTaxRateFormModel;
 import com.nabla.dc.client.model.company.settings.CompanyTaxRateListModel;
 import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
@@ -36,14 +37,14 @@ public class CompanyTaxRateListDialogUi extends BindedTopDisplay<ModalDialog> im
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final String					companyName;
+	final CompanyTaxRateFormModel	formModel;
 	@UiField(provided=true)
 	final CompanyTaxRateListModel	model;
 	@UiField
 	ListGrid						list;
 
-	public CompanyTaxRateListDialogUi(final Integer companyId, final String companyName) {
-		this.companyName = companyName;
+	public CompanyTaxRateListDialogUi(final Integer companyId) {
+		this.formModel = new CompanyTaxRateFormModel(companyId);
 		this.model = new CompanyTaxRateListModel(companyId);
 		this.create(uiBinder, this);
 	}

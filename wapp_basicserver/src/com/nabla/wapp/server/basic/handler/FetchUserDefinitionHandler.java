@@ -63,10 +63,6 @@ public class FetchUserDefinitionHandler extends AbstractFetchHandler<FetchUserDe
 				new OdbcStringToJson("name")
 			);
 
-	public FetchUserDefinitionHandler() {
-		super();
-	}
-
 	@Override
 	public FetchResult execute(final FetchUserDefinition cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (cmd.getParentId() == null) {

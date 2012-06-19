@@ -14,22 +14,26 @@
 * the License.
 *
 */
-package com.nabla.dc.client.presenter.options;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.wapp.client.command.TAbstractHideableRecordCommand;
-import com.nabla.wapp.client.model.RoleRecord;
+package com.nabla.wapp.shared.command;
 
 /**
- * The <code></code> object is used to
+ * @author nabla
  *
  */
-public class RoleRecordCommand extends TAbstractHideableRecordCommand<RoleRecord> {
+public class FetchRoleName extends AbstractFetch {
 
-	@Override
-	public RoleRecord getRecord(JavaScriptObject jsRecord) {
-		return RoleRecord.factory.get(jsRecord);
+	private static final long serialVersionUID = 1L;
+
+	private Integer	id;
+
+	protected FetchRoleName() {}	// for serialization only
+
+	public FetchRoleName(final Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 }
-

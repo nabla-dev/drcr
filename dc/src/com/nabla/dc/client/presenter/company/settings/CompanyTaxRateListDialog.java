@@ -35,8 +35,8 @@ public class CompanyTaxRateListDialog extends AbstractTopPresenter<CompanyTaxRat
 		super(ui);
 	}
 
-	public CompanyTaxRateListDialog(final Integer companyId, final String companyName) {
-		super(new CompanyTaxRateListDialogUi(companyId, companyName));
+	public CompanyTaxRateListDialog(final Integer companyId) {
+		super(new CompanyTaxRateListDialogUi(companyId));
 	}
 
 	@Override

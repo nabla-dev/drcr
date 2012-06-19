@@ -24,10 +24,12 @@ import com.nabla.dc.client.ui.options.UserListUi;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
+import com.nabla.wapp.client.command.HideableListGridRecordCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
@@ -54,8 +56,8 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		Command reload();
 		Command savePreferences();
 		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand changePassword();
-		@IRequiredRole(IRolePrivileges.ROLE_EDIT) UserRecordCommand editRoles();
-		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand editCompanies();
+		@IRequiredRole(IRolePrivileges.ROLE_EDIT) HideableListGridRecordCommand editRoles();
+		@IRequiredRole(IRolePrivileges.USER_EDIT) HideableListGridRecordCommand editCompanies();
 		@IRequiredRole(IRolePrivileges.USER_EDIT) CommandUiManager edit();
 	}
 
@@ -68,7 +70,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		ICommandSet getCommands();
 	}
 
-	private final ITabManager 		tabs;
+	private final ITabManager 	tabs;
 /*
 	@Inject private PrintManager						printerManager;
 */
@@ -160,16 +162,16 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<UserRecord> onEditUserRoles = new ISlot1<UserRecord>() {
+	private final ISlot1<BasicListGridRecord> onEditUserRoles = new ISlot1<BasicListGridRecord>() {
 		@Override
-		public void invoke(final UserRecord record) {
+		public void invoke(final BasicListGridRecord record) {
 			new RoleDefinitionDialog(new UserDefinitionModel(record.getId())).revealDisplay();
 		}
 	};
 
-	private final ISlot1<UserRecord> onEditUserCompanies = new ISlot1<UserRecord>() {
+	private final ISlot1<BasicListGridRecord> onEditUserCompanies = new ISlot1<BasicListGridRecord>() {
 		@Override
-		public void invoke(final UserRecord record) {
+		public void invoke(final BasicListGridRecord record) {
 			tabs.addTab(new UserCompanyList(record.getId()));
 		}
 	};

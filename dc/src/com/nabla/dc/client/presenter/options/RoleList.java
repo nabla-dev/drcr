@@ -22,9 +22,11 @@ import com.nabla.dc.client.ui.options.RoleListUi;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
+import com.nabla.wapp.client.command.HideableListGridRecordCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.model.RoleRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
@@ -46,7 +48,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		@IRequiredRole(IRolePrivileges.ROLE_REMOVE) HideableCommand removeRecord();
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IRolePrivileges.ROLE_EDIT) RoleRecordCommand editDefinition();
+		@IRequiredRole(IRolePrivileges.ROLE_EDIT) HideableListGridRecordCommand editDefinition();
 		@IRequiredRole(IRolePrivileges.ROLE_EDIT) CommandUiManager edit();
 		@IRequiredRole(IRolePrivileges.ROLE_ADD) CommandUiManager add();
 	}
@@ -118,9 +120,9 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<RoleRecord> onEditDefinition = new ISlot1<RoleRecord>() {
+	private final ISlot1<BasicListGridRecord> onEditDefinition = new ISlot1<BasicListGridRecord>() {
 		@Override
-		public void invoke(final RoleRecord role) {
+		public void invoke(final BasicListGridRecord role) {
 			new RoleDefinitionDialog(new RoleDefinitionModel(role.getId())).revealDisplay();
 		}
 	};

@@ -14,37 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command;
+package com.nabla.wapp.client.command;
 
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 
 /**
  * @author FNorais
  *
  */
-public class RoleName implements IAction<StringResult> {
-	
-	private static final long serialVersionUID = 1L;
-	
-	Integer		roleId;
+public class HideableListGridRecordCommand extends TAbstractHideableRecordCommand<BasicListGridRecord> {
 
-	public RoleName() {}	// for serialization only
-
-	/**
-	 * Constructor for <code>RoleName</code> object.
-	 * @param id	- role ID
-	 */
-	public RoleName(final Integer id) {
-		this.roleId = id;
-	}
-
-	/**
-	 * To get the role ID
-	 * @return this returns the role ID
-	 */
-	public Integer getRoleId() {
-		return roleId;
+	@Override
+	public BasicListGridRecord getRecord(JavaScriptObject jsRecord) {
+		return new BasicListGridRecord(jsRecord);
 	}
 
 }

@@ -17,15 +17,15 @@
 package com.nabla.dc.client.presenter.company.settings;
 
 import com.nabla.dc.client.model.options.UserDefinitionModel;
-import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.options.RoleDefinitionDialog;
-import com.nabla.dc.client.presenter.settings.CompanyRecordCommand;
 import com.nabla.dc.client.ui.company.settings.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
+import com.nabla.wapp.client.command.HideableListGridRecordCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
@@ -41,10 +41,10 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IPrivileges.COMPANY_USER_EDIT) CompanyRecordCommand editRoles();
+		@IRequiredRole(IPrivileges.COMPANY_USER_EDIT) HideableListGridRecordCommand editRoles();
 		@IRequiredRole(IPrivileges.COMPANY_USER_EDIT) CommandUiManager edit();
 	}
-	
+
 	public interface IDisplay extends ITabDisplay {
 		void reload();
 		void savePreferences();
@@ -52,7 +52,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	}
 
 	private final Integer	userId;
-	
+
 	public UserCompanyList(final Integer userId, final IDisplay ui) {
 		super(ui);
 		this.userId = userId;
@@ -86,9 +86,9 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		}
 	};
 
-	private final ISlot1<CompanyRecord> onEditUserRoles = new ISlot1<CompanyRecord>() {
+	private final ISlot1<BasicListGridRecord> onEditUserRoles = new ISlot1<BasicListGridRecord>() {
 		@Override
-		public void invoke(final CompanyRecord record) {
+		public void invoke(final BasicListGridRecord record) {
 			new RoleDefinitionDialog(new UserDefinitionModel(record.getId(), userId)).revealDisplay();
 		}
 	};

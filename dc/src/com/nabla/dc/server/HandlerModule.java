@@ -17,10 +17,8 @@
 package com.nabla.dc.server;
 
 import com.google.inject.Singleton;
-import com.nabla.dc.server.handler.CompanyNameHandler;
+import com.nabla.dc.server.handler.FetchCompanyNameHandler;
 import com.nabla.dc.server.handler.FetchImportErrorListHandler;
-import com.nabla.dc.server.handler.RoleNameHandler;
-import com.nabla.dc.server.handler.UserNameHandler;
 import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
 import com.nabla.dc.server.handler.company.settings.AddPeriodEndHandler;
 import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
@@ -58,8 +56,10 @@ import com.nabla.wapp.server.basic.handler.AddUserHandler;
 import com.nabla.wapp.server.basic.handler.ChangeUserPasswordHandler;
 import com.nabla.wapp.server.basic.handler.FetchRoleDefinitionHandler;
 import com.nabla.wapp.server.basic.handler.FetchRoleListHandler;
+import com.nabla.wapp.server.basic.handler.FetchRoleNameHandler;
 import com.nabla.wapp.server.basic.handler.FetchUserDefinitionHandler;
 import com.nabla.wapp.server.basic.handler.FetchUserListHandler;
+import com.nabla.wapp.server.basic.handler.FetchUserNameHandler;
 import com.nabla.wapp.server.basic.handler.GetFormDefaultValuesHandler;
 import com.nabla.wapp.server.basic.handler.IsUserInRoleHandler;
 import com.nabla.wapp.server.basic.handler.LoadListGridStateHandler;
@@ -95,18 +95,17 @@ public class HandlerModule extends AbstractHandlerModule {
 		bind(IUserSessionContextProvider.class).to(UserSessionContextProvider.class).in(Singleton.class);
 
 		bindHandler(IsUserInRoleHandler.class);
-		bindHandler(UserNameHandler.class);
-		bindHandler(RoleNameHandler.class);
-		
+
 		bindHandler(LoadListGridStateHandler.class);
 		bindHandler(SaveListGridStateHandler.class);
 		bindHandler(GetFormDefaultValuesHandler.class);
 		bindHandler(FetchImportErrorListHandler.class);
-		
+
 		bindHandler(FetchRoleListHandler.class);
 		bindHandler(AddRoleHandler.class);
 		bindHandler(UpdateRoleHandler.class);
 		bindHandler(RemoveRoleHandler.class);
+		bindHandler(FetchRoleNameHandler.class);
 		bindHandler(FetchRoleDefinitionHandler.class);
 		bindHandler(UpdateRoleDefinitionHandler.class);
 
@@ -115,6 +114,7 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdateUserHandler.class);
 		bindHandler(RemoveUserHandler.class);
 		bindHandler(RestoreUserHandler.class);
+		bindHandler(FetchUserNameHandler.class);
 		bindHandler(FetchUserDefinitionHandler.class);
 		bindHandler(UpdateUserDefinitionHandler.class);
 
@@ -138,14 +138,14 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(RemoveCompanyHandler.class);
 		bindHandler(RestoreCompanyHandler.class);
 		bindHandler(ChangeCompanyLogoHandler.class);
-		bindHandler(CompanyNameHandler.class);
-		
+		bindHandler(FetchCompanyNameHandler.class);
+
 		bindHandler(FetchCompanyTaxRateListHandler.class);
 		bindHandler(UpdateCompanyTaxRateHandler.class);
 
 		bindHandler(FetchCompanyUserListHandler.class);
 		bindHandler(UpdateCompanyUserHandler.class);
-		
+
 		bindHandler(com.nabla.dc.server.handler.FetchUserCompanyListHandler.class);
 		bindHandler(com.nabla.dc.server.handler.company.settings.FetchUserCompanyListHandler.class);
 
@@ -155,7 +155,7 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(RemoveAccountHandler.class);
 		bindHandler(RestoreAccountHandler.class);
 		bindHandler(ImportAccountListHandler.class);
-		
+
 		bindHandler(FetchPeriodEndListHandler.class);
 		bindHandler(AddPeriodEndHandler.class);
 		bindHandler(UpdatePeriodEndHandler.class);
