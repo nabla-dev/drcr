@@ -20,6 +20,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.presenter.company.Company;
+import com.nabla.dc.client.presenter.company.Company.ICommandSet;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
@@ -39,6 +40,8 @@ public class CompanyUi extends BindedTabDisplay<Tab> implements Company.IDisplay
 	String			companyName;
 	@UiField
 	TabDisplaySet	tabs;
+	@UiField
+	ICommandSet		cmd;
 
 	public CompanyUi(final String companyName) {
 		this.companyName = companyName;
@@ -55,4 +58,8 @@ public class CompanyUi extends BindedTabDisplay<Tab> implements Company.IDisplay
 		return tabs.getTabClosedSlots();
 	}
 
+	@Override
+	public ICommandSet getCommands() {
+		return cmd;
+	}
 }

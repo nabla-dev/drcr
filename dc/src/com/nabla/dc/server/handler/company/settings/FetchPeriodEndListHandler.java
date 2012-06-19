@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.company.settings;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.company.settings.FetchAccountList;
+import com.nabla.dc.shared.command.company.settings.FetchPeriodEndList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -33,7 +33,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchPeriodEndListHandler extends AbstractFetchHandler<FetchAccountList> {
+public class FetchPeriodEndListHandler extends AbstractFetchHandler<FetchPeriodEndList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
 		new OdbcIdToJson(),
@@ -47,7 +47,7 @@ public class FetchPeriodEndListHandler extends AbstractFetchHandler<FetchAccount
 	);
 
 	@Override
-	public FetchResult execute(final FetchAccountList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public FetchResult execute(final FetchPeriodEndList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(),
 "SELECT * FROM (" +
 "SELECT id, name, end_date, sl_opened, pl_opened, nl_opened, bank_opened, visible" +

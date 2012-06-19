@@ -17,18 +17,19 @@
 package com.nabla.dc.client.presenter.company;
 
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.company.settings.AccountList;
 import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
 import com.nabla.dc.client.ui.company.CompanyUi;
 import com.nabla.dc.shared.IPrivileges;
-import com.nabla.wapp.client.command.HideableListGridRecordCommand;
+import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
-import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.TabManager;
-import com.nabla.wapp.shared.slot.ISlot1;
+import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
 /**
@@ -38,15 +39,17 @@ import com.nabla.wapp.shared.slot.ISlotManager1;
 public class Company extends AbstractTabPresenter<Company.IDisplay> implements ITabManager {
 
 	public interface ICommandSet extends IBasicCommandSet {
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand changeLogo();
-		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) HideableListGridRecordCommand editUsers();
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand editTaxRates();
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand editAccounts();
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableCommand changeLogo();
+		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) HideableCommand editUsers();
+		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) HideableCommand editTaxRates();
+		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableCommand editAccounts();
+		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableCommand editPeriodEnds();
 	}
 
 	public interface IDisplay extends ITabDisplay {
 		ISlotManager1<ITabDisplay> getTabClosedSlots();
 		void addTab(final ITabDisplay tab);
+		ICommandSet getCommands();
 	}
 
 	private final Integer		companyId;
@@ -64,6 +67,12 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 	@Override
 	protected void onBind() {
 		registerHandler(getDisplay().getTabClosedSlots().connect(tabs.getTabClosedSlot()));
+		final ICommandSet cmd = getDisplay().getCommands();
+		registerSlot(cmd.changeLogo(), onChangeLogo);
+		registerSlot(cmd.editUsers(), onEditUsers);
+		registerSlot(cmd.editTaxRates(), onEditTaxRates);
+		registerSlot(cmd.editAccounts(), onEditAccounts);
+		cmd.updateUi();
 	}
 
 	@Override
@@ -77,31 +86,31 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		getDisplay().addTab(tabs.add(tab));
 	}
 
-	private final ISlot1<BasicListGridRecord> onChangeLogo = new ISlot1<BasicListGridRecord>() {
+	private final ISlot onChangeLogo = new ISlot() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-			new ChangeCompanyLogoDialog(record.getId()).revealDisplay();
+		public void invoke() {
+			new ChangeCompanyLogoDialog(companyId).revealDisplay();
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditUsers = new ISlot1<BasicListGridRecord>() {
+	private final ISlot onEditUsers = new ISlot() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-		//	tabs.addTab(new CompanyUserList(record.getId()));
+		public void invoke() {
+			addTab(new CompanyUserList(companyId));
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditTaxRates = new ISlot1<BasicListGridRecord>() {
+	private final ISlot onEditTaxRates = new ISlot() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-			new CompanyTaxRateListDialog(record.getId()).revealDisplay();
+		public void invoke() {
+			new CompanyTaxRateListDialog(companyId).revealDisplay();
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditAccounts = new ISlot1<BasicListGridRecord>() {
+	private final ISlot onEditAccounts = new ISlot() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-		//	tabs.addTab(new AccountList(record.getId()));
+		public void invoke() {
+			addTab(new AccountList(companyId));
 		}
 	};
 

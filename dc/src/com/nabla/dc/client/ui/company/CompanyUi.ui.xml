@@ -7,6 +7,7 @@
 	>
 
 	<ui:with field="companyName" type="java.lang.String" />
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.company.Company.ICommandSet"/>
 
 	<wnd:Tab title="{companyName}" icon="company_small.png" canClose="true">
 		<wnd:VLayout>
@@ -14,14 +15,16 @@
 				<wnd:ToolbarButton tooltip="Open nominal ledger"><ui:msg>Nominal Ledger</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton tooltip="Open sales ledger"><ui:msg>Sales Ledger</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton tooltip="Open purchase ledger"><ui:msg>Purchase Ledger</ui:msg></wnd:ToolbarButton>
-			<!-- 	<wnd:ToolbarMenu title="Settings..." icon="settings_small.png">
+			 	<wnd:ToolbarMenu title="Settings..." icon="settings_small.png">
 			 	<ui:attribute name="title" description="Settings menu title"/>
-					<wnd:ListGridToolbarMenuItem command="{cmd.editAccounts}">Accounts</wnd:ListGridToolbarMenuItem>
-					<wnd:ListGridToolbarMenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:ListGridToolbarMenuItem>
-					<wnd:ListGridToolbarMenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:ListGridToolbarMenuItem>						
-					<wnd:ListGridToolbarMenuItemSeparator/>
-					<wnd:ListGridToolbarMenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:ListGridToolbarMenuItem>
-				</wnd:ToolbarMenu>-->
+					<wnd:MenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:MenuItem>
+					<wnd:MenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.editPeriodEnds}">Period Ends</wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:MenuItem>
+				</wnd:ToolbarMenu>
 			</wnd:Toolbar>
 			<wnd:TabDisplaySet ui:field="tabs" width="100%" height="100%">
 			</wnd:TabDisplaySet>

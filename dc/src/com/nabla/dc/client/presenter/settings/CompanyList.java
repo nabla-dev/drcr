@@ -58,8 +58,9 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		Command savePreferences();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand changeLogo();
 		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) HideableListGridRecordCommand editUsers();
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand editTaxRates();
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand editAccounts();
+		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) HideableListGridRecordCommand editTaxRates();
+		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableListGridRecordCommand editAccounts();
+		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableListGridRecordCommand editPeriodEnds();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CommandUiManager edit();
 	}
 

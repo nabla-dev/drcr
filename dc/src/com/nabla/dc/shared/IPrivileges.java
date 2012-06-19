@@ -50,4 +50,9 @@ public interface IPrivileges extends IRolePrivileges {
 	static final String ACCOUNT_ADD = "account_add";
 	static final String ACCOUNT_REMOVE = "account_remove";
 	static final String ACCOUNT_EDIT = "account_edit";
+
+	static final String PERIOD_END_VIEW = "period_end_view";
+	static final String PERIOD_END_ADD = "period_end_add";
+	static final String PERIOD_END_REMOVE = "period_end_remove";
+	static final String PERIOD_END_EDIT = "period_end_edit";
 }

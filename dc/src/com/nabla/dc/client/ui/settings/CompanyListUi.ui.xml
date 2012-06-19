@@ -30,9 +30,11 @@
 					<wnd:ListGridToolbarMenu>
 						<wnd:ListGridToolbarMenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:ListGridToolbarMenuItem>
 						<wnd:ListGridToolbarMenuItemSeparator/>
-						<wnd:ListGridToolbarMenuItem command="{cmd.editAccounts}">Accounts</wnd:ListGridToolbarMenuItem>
-						<wnd:ListGridToolbarMenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:ListGridToolbarMenuItem>
-						<wnd:ListGridToolbarMenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:ListGridToolbarMenuItem>						
+						<wnd:ListGridToolbarMenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:ListGridToolbarMenuItem>
+						<wnd:ListGridToolbarMenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:ListGridToolbarMenuItem>
+						<wnd:ListGridToolbarMenuItem command="{cmd.editPeriodEnds}">Period Ends</wnd:ListGridToolbarMenuItem>
+						<wnd:ListGridToolbarMenuItemSeparator/>
+						<wnd:ListGridToolbarMenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:ListGridToolbarMenuItem>						
 					</wnd:ListGridToolbarMenu>							
 				</wnd:ListGridToolbar>				
 				<wnd:Menu>

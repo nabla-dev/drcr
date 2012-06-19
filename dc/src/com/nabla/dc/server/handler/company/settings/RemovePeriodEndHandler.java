@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.server.handler.company.settings;
 
-import com.nabla.dc.shared.command.company.settings.RemoveAccount;
+import com.nabla.dc.shared.command.company.settings.RemovePeriodEnd;
 import com.nabla.dc.shared.model.IPeriodEnd;
 import com.nabla.wapp.server.model.AbstractRemoveHandler;
 
@@ -24,7 +24,7 @@ import com.nabla.wapp.server.model.AbstractRemoveHandler;
  * @author nabla
  *
  */
-public class RemovePeriodEndHandler extends AbstractRemoveHandler<RemoveAccount> {
+public class RemovePeriodEndHandler extends AbstractRemoveHandler<RemovePeriodEnd> {
 
 	public RemovePeriodEndHandler() {
 		super(IPeriodEnd.TABLE);

@@ -41,12 +41,6 @@ public interface IRoles extends IPrivileges {
 	@IRole(REPORT_VIEW)
 	static String REPORT_RO = "report_ro";
 */
-	@IRole({USER_MANAGER/*, REPORT_RW*/})
-	static String ADMINISTRATOR = "administrator";
-
-	@IRole({USER_RO, ROLE_RO/*, REPORT_RO*/})
-	static String GUEST = "guest";
-
 	@IRole({COMPANY_TAX_RATE_EDIT, COMPANY_TAX_RATE_VIEW})
 	static String COMPANY_TAX_RATE_RW = "company_tax_rate_rw";
 	@IRole(COMPANY_TAX_RATE_VIEW)
@@ -57,9 +51,24 @@ public interface IRoles extends IPrivileges {
 	@IRole(COMPANY_USER_VIEW)
 	static String COMPANY_USER_RO = "company_user_ro";
 
-	@IRole({COMPANY_ADD, COMPANY_REMOVE, COMPANY_EDIT, COMPANY_VIEW,COMPANY_TAX_RATE_RW,COMPANY_USER_RW})
+	@IRole({ACCOUNT_ADD, ACCOUNT_REMOVE, ACCOUNT_EDIT, ACCOUNT_VIEW})
+	static String ACCOUNT_RW = "account_rw";
+	@IRole(ACCOUNT_VIEW)
+	static String ACCOUNT_RO = "account_ro";
+
+	@IRole({PERIOD_END_ADD, PERIOD_END_REMOVE, PERIOD_END_EDIT, PERIOD_END_VIEW})
+	static String PERIOD_END_RW = "period_end_rw";
+	@IRole(PERIOD_END_VIEW)
+	static String PERIOD_END_RO = "period_end_ro";
+
+	@IRole({COMPANY_TAX_RATE_RW,COMPANY_USER_RW,ACCOUNT_RW,PERIOD_END_RW})
+	static String COMPANY_SETTINGS_RW = "company_settings_rw";
+	@IRole({COMPANY_USER_RO,ACCOUNT_RO,PERIOD_END_RO})
+	static String COMPANY_SETTINGS_RO = "company_settings_ro";
+
+	@IRole({COMPANY_ADD, COMPANY_REMOVE, COMPANY_EDIT, COMPANY_VIEW,COMPANY_SETTINGS_RW})
 	static String COMPANY_RW = "company_rw";
-	@IRole({COMPANY_VIEW, COMPANY_TAX_RATE_RO,COMPANY_USER_RO})
+	@IRole({COMPANY_VIEW, COMPANY_SETTINGS_RO})
 	static String COMPANY_RO = "company_ro";
 
 	@IRole({TAX_RATE_ADD, TAX_RATE_REMOVE, TAX_RATE_EDIT, TAX_RATE_VIEW})
@@ -67,8 +76,9 @@ public interface IRoles extends IPrivileges {
 	@IRole(TAX_RATE_VIEW)
 	static String TAX_RATE_RO = "tax_rate_ro";
 
-	@IRole({ACCOUNT_ADD, ACCOUNT_REMOVE, ACCOUNT_EDIT, ACCOUNT_VIEW})
-	static String ACCOUNT_RW = "account_rw";
-	@IRole(ACCOUNT_VIEW)
-	static String ACCOUNT_RO = "account_ro";
+	@IRole({USER_MANAGER/*, REPORT_RW*/})
+	static String ADMINISTRATOR = "administrator";
+
+	@IRole({USER_RO, ROLE_RO/*, REPORT_RO*/})
+	static String GUEST = "guest";
 }

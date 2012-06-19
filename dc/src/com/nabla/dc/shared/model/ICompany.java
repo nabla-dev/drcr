@@ -26,7 +26,6 @@ public interface ICompany {
 
 	static final String					NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
-
 	static final String					ACTIVE = "active";
 
 	static final String					TABLE = "company";
