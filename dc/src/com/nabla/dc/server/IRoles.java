@@ -76,9 +76,14 @@ public interface IRoles extends IPrivileges {
 	@IRole(TAX_RATE_VIEW)
 	static String TAX_RATE_RO = "tax_rate_ro";
 
-	@IRole({USER_MANAGER/*, REPORT_RW*/})
+	@IRole({COMPANY_RW, TAX_RATE_RW})
+	static String SETTINGS_RW = "settings_rw";
+	@IRole({COMPANY_RO, TAX_RATE_RO})
+	static String SETTINGS_RO = "settings_ro";
+
+	@IRole({USER_MANAGER/*, REPORT_RW*/, SETTINGS_RW})
 	static String ADMINISTRATOR = "administrator";
 
-	@IRole({USER_RO, ROLE_RO/*, REPORT_RO*/})
+	@IRole({USER_RO, ROLE_RO/*, REPORT_RO*/, SETTINGS_RO})
 	static String GUEST = "guest";
 }

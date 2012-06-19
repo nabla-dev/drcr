@@ -142,7 +142,7 @@ public abstract class JSHelper {
 	}-*/;
 
 	/**
-     * SmartGWT getAttributeAsBoolean() is buddy i.e. always return false if attribute not set!
+     * SmartGWT getAttributeAsBoolean() is buggy i.e. always return false if attribute not set!
      *
      * @param jsObj - js object
      * @param attribute - name of attribute
@@ -153,7 +153,7 @@ public abstract class JSHelper {
 	}
 
 	/**
-     * Get boolean value orSmartGWT getAttributeAsBoolean() is buddy i.e. always return false if attribute not set!
+     * Get boolean value orSmartGWT getAttributeAsBoolean() is buggy i.e. always return false if attribute not set!
      *
      * @param jsObj - js object
      * @param attribute - name of attribute

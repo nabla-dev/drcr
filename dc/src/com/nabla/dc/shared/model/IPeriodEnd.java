@@ -30,7 +30,7 @@ public interface IPeriodEnd {
 	static final String				NL_OPENED = "nl_opened";
 	static final String				SL_OPENED = "sl_opened";
 	static final String				PL_OPENED = "pl_opened";
-	static final String				BANL_OPENED = "bank_opened";
+	static final String				CB_OPENED = "bank_opened";
 
 	static final String				TABLE = "period_end";
 }
