@@ -18,11 +18,12 @@ package com.nabla.dc.client.ui.options;
 
 import java.util.logging.Logger;
 
-import com.nabla.dc.client.model.options.SelectionDeltaRecord;
 import com.nabla.dc.client.model.options.RoleDefinitionTreeRecord;
+import com.nabla.dc.client.model.options.SelectionDeltaRecord;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.ui.TreeGrid;
+import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.nabla.wapp.shared.general.SelectionDelta;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
@@ -33,7 +34,7 @@ import com.smartgwt.client.widgets.grid.events.CellSavedHandler;
  * The <code></code> object is used to
  *
  */
-public class RoleTreeGrid extends TreeGrid {
+public class RoleTreeGrid extends TreeGridItem {
 
 	private static final Logger		logger = LoggerFactory.getLog(RoleTreeGrid.class);
 	private final SelectionDelta	delta = new SelectionDelta();

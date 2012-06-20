@@ -81,29 +81,27 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		String format(final ListGridRecord record, final int rowNum, final int colNum);
 	}
 
-	private static final Logger		logger = LoggerFactory.getLog(ListGrid.class);
+	private static final Logger					logger = LoggerFactory.getLog(ListGrid.class);
 	// only valid during initialization
-	private List<HeaderSpan>		headers = new LinkedList<HeaderSpan>();
-	private List<ListGridColumn>	children = new LinkedList<ListGridColumn>();
+	private List<HeaderSpan>						headers = new LinkedList<HeaderSpan>();
+	private List<ListGridColumn>					children = new LinkedList<ListGridColumn>();
 	// suport for CSS text formatter
-	private ICellCSSTextFormatter	cssTextFormatter;
+	private ICellCSSTextFormatter					cssTextFormatter;
 	// support for deleted record
-	private String					recordDeletedProperty  = IFieldReservedNames.RECORD_DELETED;
+	private String									recordDeletedProperty  = IFieldReservedNames.RECORD_DELETED;
 	// support for expansion component
-	private Form					editForm;
-	private HandlerRegistration		drawFormHandler;
-	private HandlerRegistration		cancelFormHandler;
+	private Form									editForm;
+	private HandlerRegistration						drawFormHandler;
+	private HandlerRegistration						cancelFormHandler;
 	// support for
-	private String					viewStateReference;
-	private String[]				groupByFields;
+	private String									viewStateReference;
+	private String[]								groupByFields;
 	// suport for checkbox selection
-	private Integer					lastSelectedRecord;
-	// only used when list is embedded in a form
-	private int						colSpan = 2;
+	private Integer									lastSelectedRecord;
 	// support for listgrid toolbar
-	private final Map<String, ListGridToolbar>	toolbars = new HashMap<String, ListGridToolbar>();
-	private ListGridRecord						currentRecord;
-	private final Canvas								defaultToolbar = new ListGridToolbar();
+	private final Map<String, ListGridToolbar>		toolbars = new HashMap<String, ListGridToolbar>();
+	private ListGridRecord							currentRecord;
+	private final Canvas							defaultToolbar = new ListGridToolbar();
 
 	public ListGrid() {
 		setAlternateRecordStyles(true);
@@ -470,14 +468,6 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 			});
 		}
 		return editForm;
-	}
-
-	public void setColSpan(final int colSpan) {
-		this.colSpan = colSpan;
-	}
-
-	public int getColSpan() {
-		return colSpan;
 	}
 
 	public String getRecordDeletedProperty() {

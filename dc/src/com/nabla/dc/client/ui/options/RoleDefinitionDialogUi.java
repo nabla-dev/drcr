@@ -24,8 +24,8 @@ import com.nabla.dc.client.presenter.options.RoleDefinitionDialog;
 import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
-import com.nabla.wapp.client.ui.TreeGrid;
 import com.nabla.wapp.client.ui.form.Form;
+import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
 /**
@@ -44,7 +44,7 @@ public class RoleDefinitionDialogUi extends BindedTopDisplay<ModalDialog> implem
 	@UiField(provided=true)
 	final Model		treeModel;
 	@UiField(provided=true)
-	TreeGrid		tree = new RoleTreeGrid();
+	TreeGridItem	tree = new RoleTreeGrid();
 
 	public RoleDefinitionDialogUi(final RoleDefinitionModel formModel) {
 		this.model = formModel;

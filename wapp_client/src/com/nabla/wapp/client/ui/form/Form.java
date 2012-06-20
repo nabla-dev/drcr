@@ -33,9 +33,7 @@ import com.nabla.wapp.client.model.AsyncGetDefaultValuesCallback;
 import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.ui.IHasWidgets;
 import com.nabla.wapp.client.ui.IPostCreateProcessing;
-import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.SubmitButton;
-import com.nabla.wapp.client.ui.TreeGrid;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.IHasValue;
@@ -188,10 +186,12 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 		else if (w instanceof IFormItemExtensionList) {
 			final IFormItemExtensionList ext = (IFormItemExtensionList)w;
 			extensions.put(ext.getBuddy(), ext);
-		} else if (w instanceof ListGrid)
-			children.add(new ListGridWrapper((ListGrid)w));
-		 else if (w instanceof TreeGrid)
-			children.add(new TreeGridWrapper((TreeGrid)w));
+		} else if (w instanceof ListGridItem)
+			children.add(new ListGridWrapper((ListGridItem)w));
+		 else if (w instanceof TreeGridItem)
+			children.add(new TreeGridWrapper((TreeGridItem)w));
+		 else if (w instanceof ColumnTreeItem)
+			children.add(new ColumnTreeWrapper((ColumnTreeItem)w));
 		else
 			logger.log(Level.SEVERE,"adding a widget of type '" + w.getClass().toString() + "' to a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
 	}

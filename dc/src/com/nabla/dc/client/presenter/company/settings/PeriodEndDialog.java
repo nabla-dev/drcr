@@ -14,26 +14,26 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.ui.form;
+package com.nabla.dc.client.presenter.company.settings;
 
-import com.nabla.wapp.client.ui.TitleDecoder;
-import com.smartgwt.client.types.TitleOrientation;
-import com.smartgwt.client.widgets.form.fields.CanvasItem;
+import com.nabla.dc.client.ui.company.settings.PeriodEndDialogUi;
+import com.nabla.wapp.client.mvp.AbstractTopPresenter;
+import com.nabla.wapp.client.mvp.ITopDisplay;
 
 /**
  * @author nabla
  *
  */
-class ListGridWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
+public class PeriodEndDialog extends AbstractTopPresenter<PeriodEndDialog.IDisplay> {
 
-	public ListGridWrapper(final ListGridItem list) {
-		super(new CanvasItem(), true);
-		impl.setTitleOrientation(TitleOrientation.TOP);
-		impl.setCanvas(list);
-		final String title = list.getTitle();
-		if (title != null)
-			new TitleDecoder(title).apply(impl);
-		impl.setColSpan(list.getColSpan());
+	public interface IDisplay extends ITopDisplay {}
+
+	public PeriodEndDialog(final IDisplay ui) {
+		super(ui);
+	}
+
+	public PeriodEndDialog(final Integer companyId) {
+		super(new PeriodEndDialogUi(companyId));
 	}
 
 }

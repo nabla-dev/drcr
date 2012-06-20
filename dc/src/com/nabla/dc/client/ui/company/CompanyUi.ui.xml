@@ -19,7 +19,7 @@
 			 	<ui:attribute name="title" description="Settings menu title"/>
 					<wnd:MenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:MenuItem>
 					<wnd:MenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:MenuItem>
-					<wnd:MenuItem command="{cmd.editPeriodEnds}">Period Ends</wnd:MenuItem>
+					<wnd:MenuItem icon="period_end_small.png" command="{cmd.editPeriodEnds}">Period Ends</wnd:MenuItem>
 					<wnd:MenuItemSeparator/>
 					<wnd:MenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:MenuItem>
 					<wnd:MenuItemSeparator/>

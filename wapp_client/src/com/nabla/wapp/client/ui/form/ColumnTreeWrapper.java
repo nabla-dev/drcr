@@ -24,20 +24,16 @@ import com.smartgwt.client.widgets.form.fields.CanvasItem;
  * @author nabla
  *
  */
-class TreeGridWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
+class ColumnTreeWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
 
-	public TreeGridWrapper(final TreeGridItem tree) {
+	public ColumnTreeWrapper(final ColumnTreeItem item) {
 		super(new CanvasItem(), true);
-		impl.setName(tree.getName());
-		impl.setShouldSaveValue(true);
 		impl.setTitleOrientation(TitleOrientation.TOP);
-		impl.setWidth(tree.getWidthAsString());
-		impl.setHeight(tree.getHeightAsString());
-		impl.setCanvas(tree);
-		final String title = tree.getTitle();
+		impl.setCanvas(item);
+		final String title = item.getTitle();
 		if (title != null)
 			new TitleDecoder(title).apply(impl);
-		impl.setColSpan(tree.getColSpan());
+		impl.setColSpan(item.getColSpan());
 	}
 
 }

@@ -16,16 +16,19 @@
 */
 package com.nabla.dc.client.presenter.company;
 
+import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.company.settings.AccountList;
 import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
+import com.nabla.dc.client.presenter.company.settings.PeriodEndDialog;
 import com.nabla.dc.client.ui.company.CompanyUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.general.AbstractRunAsyncCallback;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.TabManager;
@@ -72,6 +75,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		registerSlot(cmd.editUsers(), onEditUsers);
 		registerSlot(cmd.editTaxRates(), onEditTaxRates);
 		registerSlot(cmd.editAccounts(), onEditAccounts);
+		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
 		cmd.updateUi();
 	}
 
@@ -89,29 +93,60 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 	private final ISlot onChangeLogo = new ISlot() {
 		@Override
 		public void invoke() {
-			new ChangeCompanyLogoDialog(companyId).revealDisplay();
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					new ChangeCompanyLogoDialog(companyId).revealDisplay();	
+				}
+			});
 		}
 	};
 
 	private final ISlot onEditUsers = new ISlot() {
 		@Override
 		public void invoke() {
-			addTab(new CompanyUserList(companyId));
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					addTab(new CompanyUserList(companyId));
+				}
+			});			
 		}
 	};
 
 	private final ISlot onEditTaxRates = new ISlot() {
 		@Override
 		public void invoke() {
-			new CompanyTaxRateListDialog(companyId).revealDisplay();
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					new CompanyTaxRateListDialog(companyId).revealDisplay();
+				}
+			});
 		}
 	};
 
 	private final ISlot onEditAccounts = new ISlot() {
 		@Override
 		public void invoke() {
-			addTab(new AccountList(companyId));
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					addTab(new AccountList(companyId));
+				}
+			});
 		}
 	};
 
+	private final ISlot onEditPeriodEnds = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					new PeriodEndDialog(companyId).revealDisplay();
+				}
+			});
+		}
+	};
 }

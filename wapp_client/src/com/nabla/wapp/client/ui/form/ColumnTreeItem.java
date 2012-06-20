@@ -16,24 +16,31 @@
 */
 package com.nabla.wapp.client.ui.form;
 
-import com.nabla.wapp.client.ui.TitleDecoder;
-import com.smartgwt.client.types.TitleOrientation;
-import com.smartgwt.client.widgets.form.fields.CanvasItem;
+import com.nabla.wapp.client.ui.ColumnTree;
 
 /**
  * @author nabla
  *
  */
-class ListGridWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
+public class ColumnTreeItem extends ColumnTree {
 
-	public ListGridWrapper(final ListGridItem list) {
-		super(new CanvasItem(), true);
-		impl.setTitleOrientation(TitleOrientation.TOP);
-		impl.setCanvas(list);
-		final String title = list.getTitle();
-		if (title != null)
-			new TitleDecoder(title).apply(impl);
-		impl.setColSpan(list.getColSpan());
+	private String		name;
+	private int		colSpan = 2;
+
+	public void setColSpan(int colSpan) {
+		this.colSpan = colSpan;
+	}
+
+	public int getColSpan() {
+		return colSpan;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

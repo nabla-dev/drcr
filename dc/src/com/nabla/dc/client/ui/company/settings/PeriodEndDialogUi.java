@@ -19,44 +19,35 @@ package com.nabla.dc.client.ui.company.settings;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.company.settings.CompanyTaxRateFormModel;
-import com.nabla.dc.client.model.company.settings.CompanyTaxRateListModel;
-import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.model.company.settings.PeriodEndTreeModel;
+import com.nabla.dc.client.presenter.company.settings.PeriodEndDialog;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
-import com.nabla.wapp.client.ui.form.ListGridItem;
+import com.nabla.wapp.client.ui.form.ColumnTreeItem;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
 /**
  * @author nabla
  *
  */
-public class CompanyTaxRateListDialogUi extends BindedTopDisplay<ModalDialog> implements CompanyTaxRateListDialog.IDisplay {
+public class PeriodEndDialogUi extends BindedTopDisplay<ModalDialog> implements PeriodEndDialog.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, CompanyTaxRateListDialogUi> {}
+	interface Binder extends UiBinder<ModalDialog, PeriodEndDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final CompanyTaxRateFormModel	formModel;
-	@UiField(provided=true)
-	final CompanyTaxRateListModel	model;
+	final PeriodEndTreeModel	model;
 	@UiField
-	ListGridItem					list;
+	ColumnTreeItem				tree;
 
-	public CompanyTaxRateListDialogUi(final Integer companyId) {
-		this.formModel = new CompanyTaxRateFormModel(companyId);
-		this.model = new CompanyTaxRateListModel(companyId);
+	public PeriodEndDialogUi(final Integer companyId) {
+		this.model = new PeriodEndTreeModel(companyId);
 		this.create(uiBinder, this);
 	}
 
 	@Override
 	public ISlotManager getHideSlots() {
 		return impl.getCloseSlots();
-	}
-
-	@Override
-	public void savePreferences() {
-		list.saveViewState();
 	}
 
 }

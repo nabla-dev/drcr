@@ -23,6 +23,7 @@ import com.nabla.dc.client.presenter.company.settings.AccountList;
 import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
+import com.nabla.dc.client.presenter.company.settings.PeriodEndDialog;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.settings.CompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
@@ -101,6 +102,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		registerSlot(cmd.editUsers(), onEditUsers);
 		registerSlot(cmd.editTaxRates(), onEditTaxRates);
 		registerSlot(cmd.editAccounts(), onEditAccounts);
+		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
 		cmd.updateUi();
 
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
@@ -186,6 +188,13 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		@Override
 		public void invoke(final BasicListGridRecord record) {
 			tabs.addTab(new AccountList(record.getId()));
+		}
+	};
+
+	private final ISlot1<BasicListGridRecord> onEditPeriodEnds = new ISlot1<BasicListGridRecord>() {
+		@Override
+		public void invoke(final BasicListGridRecord record) {
+			new PeriodEndDialog(record.getId()).revealDisplay();
 		}
 	};
 

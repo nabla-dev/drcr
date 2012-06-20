@@ -16,41 +16,22 @@
 */
 package com.nabla.wapp.client.ui;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
-import com.nabla.wapp.client.command.ICommandUi;
-import com.nabla.wapp.client.command.ICommandUiManager;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
-import com.nabla.wapp.client.general.Util;
-import com.nabla.wapp.client.model.field.IdField;
-import com.nabla.wapp.client.ui.IHasWidgets.Helper;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.types.ListGridEditEvent;
-import com.smartgwt.client.types.SelectionAppearance;
-import com.smartgwt.client.types.TreeModelType;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
-import com.smartgwt.client.widgets.tree.Tree;
 
 /**
  * @author nabla
  *
  */
-public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implements HasWidgets, IPostCreateProcessing {
+public class ColumnTree extends com.smartgwt.client.widgets.grid.ColumnTree implements /*HasWidgets,*/ IPostCreateProcessing {
 
-	private static final Logger	logger = LoggerFactory.getLog(TreeGrid.class);
-	private List<TreeGridColumn>	children = new LinkedList<TreeGridColumn>();
+	private static final Logger		logger = LoggerFactory.getLog(ColumnTree.class);
+//	private List<TreeGridColumn>	children = new LinkedList<TreeGridColumn>();
 
-	public TreeGrid() {
-		setAlternateRecordStyles(true);
-		setEditEvent(ListGridEditEvent.CLICK);
+	public ColumnTree() {
+/*		setEditEvent(ListGridEditEvent.CLICK);
 		setCanEdit(false);
 		setShowOpenIcons(false);
 		setShowDropIcons(false);
@@ -59,20 +40,14 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 		this.setShowSelectedStyle(false);
 		setFixedRecordHeights(true);
 		// TODO: to be removed when SmartGWT supports it
-		setAttribute("selectionProperty", IFieldReservedNames.RECORD_SELECTED, true);
+		setAttribute("selectionProperty", IFieldReservedNames.RECORD_SELECTED, true);*/
 	}
 
 	public void setModel(final DataSource model) {
 		setAutoFetchData(true);
 		setDataSource(model);
 	}
-
-	// BUG in SmartGWT: lots of row height warning being displayed
-	// DO NOT USE
-	public void setShowCheckbox(final boolean show) {
-		setSelectionAppearance(show ? SelectionAppearance.CHECKBOX : SelectionAppearance.ROW_STYLE);
-	}
-
+/*
 	public void setCommand(final ICommandUiManager cmd) {
 		Assert.argumentNotNull(cmd);
 
@@ -100,17 +75,8 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 			}
 		});
 	}
-
-	public void setModelType(final TreeModelType type) {
-		Tree tree = getTree();
-		if (tree == null) {
-			tree = new Tree();
-			tree.setModelType(type);
-			setDataProperties(tree);
-		} else
-			tree.setModelType(type);
-	}
-
+*/
+/*
 	public void setIsFolderProperty(final String name) {
 		Tree tree = getTree();
 		if (tree == null) {
@@ -149,10 +115,10 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 		logger.log(Level.SEVERE,"removing children widget from a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
         return false;
 	}
-
+*/
 	@Override
 	public void onCreate() {
-		Assert.notNull(children);
+/*		Assert.notNull(children);
 
 		final List<com.smartgwt.client.widgets.tree.TreeGridField> fields = new LinkedList<com.smartgwt.client.widgets.tree.TreeGridField>();
 		int dataField = -1;
@@ -171,22 +137,12 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 			c.setCanGroupBy(false);
 		}
 		this.setFields(fields.toArray(new com.smartgwt.client.widgets.tree.TreeGridField[0]));
-		children = null;
+		children = null;*/
 	}
 
 	public void reload() {
-		discardAllEdits();
+//		discardAllEdits();
 		invalidateCache();
-	}
-
-	public List<Integer> getSelectedRecordIds() {
-		final List<Integer> ids = new LinkedList<Integer>();
-		final ListGridRecord[] records = getSelectedRecords();
-		if (records != null && records.length > 0) {
-			for (final ListGridRecord record : records)
-				ids.add(record.getAttributeAsInt(IdField.NAME));
-		}
-		return ids;
 	}
 
 }

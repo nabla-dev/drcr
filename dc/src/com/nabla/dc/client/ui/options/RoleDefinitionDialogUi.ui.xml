@@ -16,11 +16,11 @@
 		<ui:attribute name="caption" description="Edit role definition dialog caption"/>
 		<form:Form ui:field="form" model="{model}" autoFetchData="true" columnWidths="35,*" width="350" height="350">
 			<form:StaticText name="{fields.name}" width="*"><ui:msg>Name</ui:msg></form:StaticText>
-			<wnd:TreeGrid name="{fields.roles}" ui:field="tree" model="{treeModel}" title="Select from list of roles below" colSpan="2" width="*" height="200" loadDataOnDemand="true" nodeIcon="privilege_small.png" folderIcon="role_small.png">
+			<form:TreeGridItem name="{fields.roles}" ui:field="tree" model="{treeModel}" title="Select from list of roles below" colSpan="2" width="*" height="200" loadDataOnDemand="true" nodeIcon="privilege_small.png" folderIcon="role_small.png">
 				<ui:attribute name="title" description="Edit role definition message"/>
 				<wnd:TreeGridField name="{treeFields.name}" canSort="false"><ui:msg>Role</ui:msg></wnd:TreeGridField>
 				<wnd:TreeGridField name="{treeFields.include}" canSort="false" width="40" canEdit="true"><ui:msg>_</ui:msg></wnd:TreeGridField>
-			</wnd:TreeGrid>
+			</form:TreeGridItem>
 			<form:ButtonBar>
 				<wnd:SubmitButton><ui:msg description="OK button">*OK</ui:msg></wnd:SubmitButton>
 				<wnd:CancelButton><ui:msg description="Cancel button">*Cancel</ui:msg></wnd:CancelButton>

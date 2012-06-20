@@ -49,7 +49,7 @@ public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodE
 	public FetchResult execute(final FetchPeriodEndTree cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (cmd.getParentId() == null)
 			return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT TRUE AS 'isFolder', t.id, -1 AS 'parentId', t.name FROM" +
+"SELECT TRUE AS 'isFolder', t.id, -1 AS 'parentId', t.name" +
 " FROM financial_year AS t" +
 " WHERE t.company_id=?" +
 " ORDER BY (SELECT p.end_date FROM period_end AS p WHERE p.financial_year_id=t.id LIMIT 1) DESC",
