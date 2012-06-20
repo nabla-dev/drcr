@@ -52,7 +52,7 @@ public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodE
 "SELECT TRUE AS 'isFolder', t.id, -1 AS 'parentId', t.name FROM" +
 " FROM financial_year AS t" +
 " WHERE t.company_id=?" +
-" ORDER BY t.name ASC",
+" ORDER BY (SELECT p.end_date FROM period_end AS p WHERE p.financial_year_id=t.id LIMIT 1) DESC",
 				cmd.getCompanyId());
 
 		return fetcher.serialize(cmd, ctx.getConnection(),
