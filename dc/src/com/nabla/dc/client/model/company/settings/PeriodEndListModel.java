@@ -16,10 +16,8 @@
 */
 package com.nabla.dc.client.model.company.settings;
 
-import com.nabla.dc.shared.command.company.settings.AddPeriodEnd;
 import com.nabla.dc.shared.command.company.settings.FetchPeriodEndList;
 import com.nabla.dc.shared.command.company.settings.RemovePeriodEnd;
-import com.nabla.dc.shared.command.company.settings.UpdatePeriodEnd;
 import com.nabla.dc.shared.model.IAccount;
 import com.nabla.dc.shared.model.IPeriodEnd;
 import com.nabla.wapp.client.model.CModel;
@@ -29,8 +27,6 @@ import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
 /**
@@ -77,7 +73,7 @@ public class PeriodEndListModel extends CModel<PeriodEndRecord> {
 	public AbstractRemove getRemoveCommand() {
 		return new RemovePeriodEnd();
 	}
-	
+	/*
 	@Override
 	public IAction<StringResult> getUpdateCommand(final PeriodEndRecord record) {
 		return new UpdatePeriodEnd(record.getId(), record.getCode(), record.getName(), record.getCostCentre(), record.getDepartment(), record.isBalanceSheet(), record.getActive());
@@ -86,5 +82,5 @@ public class PeriodEndListModel extends CModel<PeriodEndRecord> {
 	@Override
 	public IAction<StringResult> getAddCommand(final PeriodEndRecord record) {
 		return new AddPeriodEnd(companyId, record.getCode(), record.getName(), record.getCostCentre(), record.getDepartment(), record.isBalanceSheet(), record.getActive());
-	}
+	}*/
 }
