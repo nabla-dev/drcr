@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.client.presenter.settings;
 
+import com.nabla.dc.client.model.settings.AddCompanyRecord;
 import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.company.settings.AccountList;
@@ -42,6 +43,7 @@ import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
@@ -65,7 +67,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 	}
 
 	public interface IDisplay extends ITabDisplay {
-		void addRecord();
+		void addRecord(final Record record);
 		void removeRecord(IListGridConfirmAction confirmUi);
 		boolean restoreRecord(final AbstractRestore cmd);
 		void reload();
@@ -107,7 +109,16 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			getDisplay().addRecord();
+			final AddCompanyDialog dlg = new AddCompanyDialog();
+			dlg.getSuccessSlots().connect(onRecordAdded);
+			dlg.revealDisplay();
+		}
+	};
+
+	private final ISlot1<AddCompanyRecord> onRecordAdded = new ISlot1<AddCompanyRecord>() {
+		@Override
+		public void invoke(final AddCompanyRecord user) {
+			getDisplay().addRecord(user);
 		}
 	};
 

@@ -14,27 +14,28 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.dc.shared.command.company.settings;
+
+import com.nabla.wapp.shared.command.AbstractFetchTree;
 
 /**
  * @author nabla
  *
  */
-public class FetchRoleDefinition extends AbstractFetchTree {
+public class FetchPeriodEndTree extends AbstractFetchTree {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer	roleId;
+	private Integer		companyId;
 
-	protected FetchRoleDefinition() {}	// for serialization only
+	protected FetchPeriodEndTree() {}	// for serialization only
 
-	public FetchRoleDefinition(final Integer roleId, final Integer parentId) {
+	public FetchPeriodEndTree(final Integer companyId, final Integer parentId) {
 		super(parentId);
-		this.roleId = roleId;
+		this.companyId = companyId;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public Integer getCompanyId() {
+		return companyId;
 	}
-
 }

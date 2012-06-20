@@ -14,27 +14,17 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.dc.shared.model;
+
+import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public class FetchRoleDefinition extends AbstractFetchTree {
+public interface IFinancialYear {
+	static final String					NAME = "name";
+	static final TextLengthConstraint	NAME_CONSTRAINT = IPeriodEnd.NAME_CONSTRAINT;
 
-	private static final long serialVersionUID = 1L;
-
-	private Integer	roleId;
-
-	protected FetchRoleDefinition() {}	// for serialization only
-
-	public FetchRoleDefinition(final Integer roleId, final Integer parentId) {
-		super(parentId);
-		this.roleId = roleId;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
+	static final String					TABLE = "financial_year";
 }

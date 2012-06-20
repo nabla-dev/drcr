@@ -16,25 +16,37 @@
 */
 package com.nabla.dc.shared.command.settings;
 
+import com.nabla.dc.shared.model.ICompany;
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdateCompany extends AddCompany {
+@IRecordTable(name=ICompany.TABLE)
+public class UpdateCompany implements IRecordAction<StringResult>, ICompany {
 
 	private static final long serialVersionUID = 1L;
 
 	@IRecordField(id=true)
-	Integer		id;
+	Integer				id;
+	@IRecordField(unique=true)
+	String				name;
+	@IRecordField
+	transient String	uname;
+	@IRecordField
+	Boolean				active;
 
 	protected UpdateCompany() {}	// for serialization only
 
 	public UpdateCompany(final Integer id, final String name, final Boolean active) {
-		super(name, active);
 		this.id = id;
+		this.name = name;
+		this.active = active;
 	}
 
 	@Override

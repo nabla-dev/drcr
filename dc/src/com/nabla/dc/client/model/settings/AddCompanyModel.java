@@ -17,43 +17,42 @@
 package com.nabla.dc.client.model.settings;
 
 
-import com.nabla.dc.shared.command.settings.FetchCompanyList;
-import com.nabla.dc.shared.command.settings.RemoveCompany;
-import com.nabla.dc.shared.command.settings.UpdateCompany;
+import com.nabla.dc.shared.command.settings.AddCompany;
 import com.nabla.dc.shared.model.ICompany;
+import com.nabla.dc.shared.model.IFinancialYear;
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.DeletedRecordField;
 import com.nabla.wapp.client.model.field.BooleanField;
+import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
-import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.command.AbstractRemove;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-public class CompanyListModel extends CModel<CompanyRecord> {
+public class AddCompanyModel extends CModel<AddCompanyRecord> {
 
 	static public class Fields {
 		public String name() { return ICompany.NAME; }
-		public String active() { return ICompany.ACTIVE; }
+		public static String financialYear() { return "financial_year"; }
+		public static String startDate() { return "start_date"; }
 	}
 
 	private static final Fields	fields = new Fields();
 
-	public CompanyListModel() {
-		super(CompanyRecord.factory);
+	@SuppressWarnings("static-access")
+	public AddCompanyModel() {
+		super(AddCompanyRecord.factory);
 
 		setFields(
-			new DeletedRecordField(),
-			new IdField(),
 			new TextField(fields.name(), ICompany.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new BooleanField(fields.active())
+			new TextField(fields.financialYear(), IFinancialYear.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new DateField(fields.startDate(), FieldAttributes.REQUIRED),
+			new IdField(FieldAttributes.OPTIONAL),
+			new BooleanField(ICompany.ACTIVE, FieldAttributes.OPTIONAL)
 				);
 	}
 
@@ -62,18 +61,8 @@ public class CompanyListModel extends CModel<CompanyRecord> {
 	}
 
 	@Override
-	public AbstractRemove getRemoveCommand() {
-		return new RemoveCompany();
-	}
-
-	@Override
-	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchCompanyList();
-	}
-
-	@Override
-	public IAction<StringResult> getUpdateCommand(final CompanyRecord record) {
-		return new UpdateCompany(record.getId(), record.getName(), record.getActive());
+	public IAction<StringResult> getAddCommand(final AddCompanyRecord r) {
+		return new AddCompany(r.getName(), r.getFinancialYear(), r.getStartDate());
 	}
 
 }

@@ -16,42 +16,55 @@
 */
 package com.nabla.dc.shared.command.settings;
 
+import java.util.Date;
+
 import com.nabla.dc.shared.model.ICompany;
-import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.dc.shared.model.IFinancialYear;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-@IRecordTable(name=ICompany.TABLE)
-public class AddCompany implements IRecordAction<StringResult>, ICompany {
+public class AddCompany implements IRecordAction<StringResult> {
 
 	private static final long serialVersionUID = 1L;
 
-	@IRecordField(unique=true)
-	String				name;
-	@IRecordField
-	transient String	uname;
-	@IRecordField
-	Boolean				active;
+	String	name;
+	String	financialYear;
+	Date	startDate;
 
 	protected AddCompany() {}	// for serialization only
 
-	public AddCompany(final String name, final Boolean active) {
+	public AddCompany(final String name, final String financialYear, final Date startDate) {
 		this.name = name;
-		this.active = active;
+		this.financialYear = financialYear;
+		this.startDate = startDate;
 	}
 
 	@Override
 	public boolean validate(final IErrorList errors) {
-		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
-			return false;
-		uname = name.toUpperCase();
-		return true;
+		int n = errors.size();
+		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors);
+		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors);
+		if (startDate == null)
+			errors.add("start_date", CommonServerErrors.REQUIRED_VALUE);
+		return n == errors.size();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getFinancialYear() {
+		return financialYear;
+	}
+
+	public Date getStartDate() {
+		return startDate;
 	}
 
 }

@@ -20,6 +20,7 @@ package com.nabla.dc.client.ui.settings;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.nabla.dc.client.model.settings.CompanyListModel;
 import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.presenter.settings.CompanyList.ICommandSet;
 import com.nabla.wapp.client.general.Application;
@@ -29,6 +30,8 @@ import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.shared.command.AbstractRestore;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.types.DSOperationType;
 
 /**
  * @author nabla
@@ -40,9 +43,11 @@ public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField
-	ICommandSet		cmd;
+	ICommandSet			cmd;
 	@UiField
-	ListGrid		list;
+	CompanyListModel	model;
+	@UiField
+	ListGrid			list;
 
 	public CompanyListUi() {
 		this.create(uiBinder, this);
@@ -51,8 +56,8 @@ public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.
 	}
 
 	@Override
-	public void addRecord() {
-		list.startEditingNew();
+	public void addRecord(final Record record) {
+		model.updateCache(record, DSOperationType.ADD);
 	}
 
 	@Override

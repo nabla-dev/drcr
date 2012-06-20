@@ -103,7 +103,9 @@ public class TileGrid extends com.smartgwt.client.widgets.tile.TileGrid implemen
 	}
 
 	public void reload() {
+		logger.fine("reloading tile grid");
 		invalidateCache();
+		this.fetchData();
 	}
 /*
 	public int getSelectedRecordCount() {

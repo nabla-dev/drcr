@@ -20,28 +20,23 @@ package com.nabla.wapp.shared.command;
  * @author nabla
  *
  */
-public class FetchUserDefinition extends AbstractFetch {
+public class FetchUserDefinition extends AbstractFetchTree {
 
 	private static final long serialVersionUID = 1L;
 
-	Integer	objectId;
-	Integer	userId;
-	Integer	parentId;
+	private Integer	objectId;
+	private Integer	userId;
 
 	protected FetchUserDefinition() {}	// for serialization only
 
 	public FetchUserDefinition(final Integer objectId, final Integer userId, final Integer parentId) {
+		super(parentId);
 		this.objectId = objectId;
 		this.userId = userId;
-		this.parentId = parentId;
 	}
 
 	public Integer getUserId() {
 		return userId;
-	}
-
-	public Integer getParentId() {
-		return parentId;
 	}
 
 	public Integer getObjectId() {

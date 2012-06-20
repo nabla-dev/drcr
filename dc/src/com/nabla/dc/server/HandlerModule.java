@@ -26,6 +26,7 @@ import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchPeriodEndListHandler;
+import com.nabla.dc.server.handler.company.settings.FetchPeriodEndTreeHandler;
 import com.nabla.dc.server.handler.company.settings.ImportAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
 import com.nabla.dc.server.handler.company.settings.RemovePeriodEndHandler;
@@ -156,6 +157,7 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(RestoreAccountHandler.class);
 		bindHandler(ImportAccountListHandler.class);
 
+		bindHandler(FetchPeriodEndTreeHandler.class);
 		bindHandler(FetchPeriodEndListHandler.class);
 		bindHandler(AddPeriodEndHandler.class);
 		bindHandler(UpdatePeriodEndHandler.class);

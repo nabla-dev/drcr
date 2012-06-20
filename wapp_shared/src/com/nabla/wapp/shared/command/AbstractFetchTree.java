@@ -20,21 +20,18 @@ package com.nabla.wapp.shared.command;
  * @author nabla
  *
  */
-public class FetchRoleDefinition extends AbstractFetchTree {
+public abstract class AbstractFetchTree extends AbstractFetch {
 
-	private static final long serialVersionUID = 1L;
+	private Integer	parentId;
 
-	private Integer	roleId;
+	protected AbstractFetchTree() {}	// for serialization only
 
-	protected FetchRoleDefinition() {}	// for serialization only
-
-	public FetchRoleDefinition(final Integer roleId, final Integer parentId) {
-		super(parentId);
-		this.roleId = roleId;
+	protected AbstractFetchTree(final Integer parentId) {
+		this.parentId = parentId;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public Integer getParentId() {
+		return parentId;
 	}
 
 }
