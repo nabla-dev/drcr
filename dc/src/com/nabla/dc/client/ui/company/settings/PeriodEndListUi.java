@@ -20,34 +20,41 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.PeriodEndTreeModel;
-import com.nabla.dc.client.presenter.company.settings.PeriodEndDialog;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
-import com.nabla.wapp.client.ui.ModalDialog;
-import com.nabla.wapp.client.ui.form.ColumnTreeItem;
-import com.nabla.wapp.shared.slot.ISlotManager;
+import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
+import com.nabla.dc.client.presenter.company.settings.PeriodEndList.ICommandSet;
+import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
+import com.nabla.wapp.client.ui.Tab;
+import com.nabla.wapp.client.ui.form.TreeGridItem;
 
 /**
  * @author nabla
  *
  */
-public class PeriodEndDialogUi extends BindedTopDisplay<ModalDialog> implements PeriodEndDialog.IDisplay {
+public class PeriodEndListUi extends BindedTabDisplay<Tab> implements PeriodEndList.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, PeriodEndDialogUi> {}
+	interface Binder extends UiBinder<Tab, PeriodEndListUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
 	final PeriodEndTreeModel	model;
 	@UiField
-	ColumnTreeItem				tree;
+	ICommandSet					cmd;
+	@UiField
+	TreeGridItem				tree;
 
-	public PeriodEndDialogUi(final Integer companyId) {
+	public PeriodEndListUi(final Integer companyId) {
 		this.model = new PeriodEndTreeModel(companyId);
 		this.create(uiBinder, this);
 	}
 
 	@Override
-	public ISlotManager getHideSlots() {
-		return impl.getCloseSlots();
+	public void reload() {
+		tree.reload();
+	}
+
+	@Override
+	public ICommandSet getCommands() {
+		return cmd;
 	}
 
 }

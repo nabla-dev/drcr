@@ -25,12 +25,7 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
 public interface IPeriodEnd {
 	static final String				NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 32);
-	static final String				VISIBLE = "visible";
 	static final String				END_DATE = "end_date";
-	static final String				NL_OPENED = "nl_opened";
-	static final String				SL_OPENED = "sl_opened";
-	static final String				PL_OPENED = "pl_opened";
-	static final String				CB_OPENED = "bank_opened";
 
 	static final String				TABLE = "period_end";
 }

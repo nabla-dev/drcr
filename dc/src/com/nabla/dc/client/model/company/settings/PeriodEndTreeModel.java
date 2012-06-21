@@ -18,38 +18,45 @@ package com.nabla.dc.client.model.company.settings;
 
 
 import com.nabla.dc.shared.command.company.settings.FetchPeriodEndTree;
+import com.nabla.dc.shared.command.company.settings.UpdateFinancialYear;
+import com.nabla.dc.shared.command.company.settings.UpdatePeriodEnd;
 import com.nabla.dc.shared.model.IPeriodEnd;
 import com.nabla.wapp.client.model.CModel;
+import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.TreeParentIdField;
 import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.util.JSOHelper;
 
 /**
  * @author nabla
  *
  */
-public class PeriodEndTreeModel extends CModel<Record> {
+public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
 
 	static public class Fields {
-		public String name() { return "name"; }
+		public String name() { return IPeriodEnd.NAME; }
+		public String endDate() { return IPeriodEnd.END_DATE; }
 	}
 
 	private static final Fields	fields = new Fields();
 	private final Integer		companyId;
 
 	public PeriodEndTreeModel(final Integer companyId) {
-		this.companyId = companyId;
+		super(PeriodEndTreeRecord.factory);
 
+		this.companyId = companyId;
 		setFields(
 			new IdField(),
 			new TreeParentIdField(),
-			new TextField("name", IPeriodEnd.NAME_CONSTRAINT, FieldAttributes.REQUIRED)
+			new TextField(fields.name(), IPeriodEnd.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new DateField(fields.endDate(), FieldAttributes.OPTIONAL, FieldAttributes.READ_ONLY)
 				);
 	}
 	public Fields fields() {
@@ -61,7 +68,15 @@ public class PeriodEndTreeModel extends CModel<Record> {
 		return new FetchPeriodEndTree(companyId, getParentId(request));
 	}
 
-	protected Integer getParentId(final DSRequest request) {
+	@Override
+	public IAction<StringResult> getUpdateCommand(final PeriodEndTreeRecord record) {
+		return record.isFinancialYear() ?
+				new UpdateFinancialYear(record.getId(), record.getName())
+				:
+				new UpdatePeriodEnd(record.getId(), record.getName());
+	}
+
+	private Integer getParentId(final DSRequest request) {
 		return JSOHelper.getAttributeAsInt(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
 	}
 

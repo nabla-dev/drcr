@@ -23,7 +23,7 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  *
  */
 public interface IFinancialYear {
-	static final String					NAME = "name";
+	static final String					NAME = IPeriodEnd.NAME;
 	static final TextLengthConstraint	NAME_CONSTRAINT = IPeriodEnd.NAME_CONSTRAINT;
 
 	static final String					TABLE = "financial_year";

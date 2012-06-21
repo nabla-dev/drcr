@@ -22,6 +22,7 @@ import com.nabla.dc.shared.command.company.settings.FetchPeriodEndTree;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
+import com.nabla.wapp.server.json.OdbcDateToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
@@ -38,7 +39,8 @@ public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodE
 				new OdbcBooleanToJson("isFolder"),
 				new OdbcIntToJson("id"),
 				new OdbcIntToJson("parentId"),
-				new OdbcStringToJson("name")
+				new OdbcStringToJson("name"),
+				new OdbcDateToJson("end_date")
 			);
 
 	public FetchPeriodEndTreeHandler() {
@@ -49,14 +51,14 @@ public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodE
 	public FetchResult execute(final FetchPeriodEndTree cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (cmd.getParentId() == null)
 			return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT TRUE AS 'isFolder', t.id, -1 AS 'parentId', t.name" +
+"SELECT TRUE AS 'isFolder', t.id, -1 AS 'parentId', t.name, NULL AS 'end_date'" +
 " FROM financial_year AS t" +
 " WHERE t.company_id=?" +
 " ORDER BY (SELECT p.end_date FROM period_end AS p WHERE p.financial_year_id=t.id LIMIT 1) DESC",
 				cmd.getCompanyId());
 
 		return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT FALSE as 'isFolder', t.id, t.financial_year_id AS 'parentId', t.name" +
+"SELECT FALSE as 'isFolder', t.id, t.financial_year_id AS 'parentId', t.name, t.end_date" +
 " FROM period_end AS t" +
 " WHERE t.financial_year_id=?" +
 " ORDER BY t.end_date ASC",

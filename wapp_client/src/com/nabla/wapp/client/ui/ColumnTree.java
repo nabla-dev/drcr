@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.types.TreeModelType;
+import com.smartgwt.client.widgets.tree.Tree;
 
 /**
  * @author nabla
@@ -31,11 +33,12 @@ public class ColumnTree extends com.smartgwt.client.widgets.grid.ColumnTree impl
 //	private List<TreeGridColumn>	children = new LinkedList<TreeGridColumn>();
 
 	public ColumnTree() {
-/*		setEditEvent(ListGridEditEvent.CLICK);
-		setCanEdit(false);
+		setShowHeaders(true);
 		setShowOpenIcons(false);
 		setShowDropIcons(false);
 		setClosedIconSuffix("");
+/*		setEditEvent(ListGridEditEvent.CLICK);
+		setCanEdit(false);
 		setCascadeSelection(true);
 		this.setShowSelectedStyle(false);
 		setFixedRecordHeights(true);
@@ -46,6 +49,18 @@ public class ColumnTree extends com.smartgwt.client.widgets.grid.ColumnTree impl
 	public void setModel(final DataSource model) {
 		setAutoFetchData(true);
 		setDataSource(model);
+	}
+
+	public void setModelType(final TreeModelType type) {
+		Tree tree = getData();
+		if (tree == null) {
+			final com.smartgwt.client.widgets.grid.ColumnTree t = new com.smartgwt.client.widgets.grid.ColumnTree();
+			tree = new Tree();
+			tree.setModelType(type);
+			t.setData(tree);
+			setDefaultProperties(t);
+		} else
+			tree.setModelType(type);
 	}
 /*
 	public void setCommand(final ICommandUiManager cmd) {

@@ -16,55 +16,37 @@
 */
 package com.nabla.dc.shared.command.company.settings;
 
-import java.sql.Date;
-
-import com.nabla.dc.shared.model.IPeriodEnd;
+import com.nabla.dc.shared.model.IFinancialYear;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-@IRecordTable(name=IPeriodEnd.TABLE)
-public class AddPeriodEnd implements IRecordAction<StringResult>, IPeriodEnd {
+@IRecordTable(name=IFinancialYear.TABLE)
+public class UpdateFinancialYear implements IRecordAction<StringResult>, IFinancialYear {
 
 	private static final long serialVersionUID = 1L;
 
-	@IRecordField
-	Integer			company_id;
+	@IRecordField(id=true)
+	Integer		id;
 	@IRecordField(unique=true)
-	String			name;
-	@IRecordField
-	Date			end_date;
-	@IRecordField
-	Boolean			visible;
+	String		name;
 
-	public AddPeriodEnd() {}	// for serialization only
+	protected UpdateFinancialYear() {}	// for serialization only
 
-	public AddPeriodEnd(final Integer companyId, final String name, final Date endDate, final Boolean visible) {
-		this.company_id = companyId;
+	public UpdateFinancialYear(final Integer id, final String name) {
+		this.id = id;
 		this.name = name;
-		this.end_date = endDate;
-		this.visible = visible;
 	}
 
 	@Override
 	public boolean validate(final IErrorList errors) {
-		return doValidate(true, errors);
-	}
-
-	protected boolean doValidate(boolean add, final IErrorList errors) {
-		int n = errors.size();
-		if (add || name != null)
-			NAME_CONSTRAINT.validate(NAME, name, errors);
-		if (add && end_date == null)
-			errors.add(END_DATE, CommonServerErrors.REQUIRED_VALUE);
-		return n == errors.size();
+		return NAME_CONSTRAINT.validate(NAME, name, errors);
 	}
 
 }

@@ -16,32 +16,37 @@
 */
 package com.nabla.dc.shared.command.company.settings;
 
-import java.sql.Date;
-
+import com.nabla.dc.shared.model.IPeriodEnd;
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdatePeriodEnd extends AddPeriodEnd {
+@IRecordTable(name=IPeriodEnd.TABLE)
+public class UpdatePeriodEnd implements IRecordAction<StringResult>, IPeriodEnd {
 
 	private static final long serialVersionUID = 1L;
 
 	@IRecordField(id=true)
 	Integer		id;
+	@IRecordField(unique=true)
+	String		name;
 
 	protected UpdatePeriodEnd() {}	// for serialization only
 
-	public UpdatePeriodEnd(final Integer id, final String name, final Date endDate, final Boolean visible) {
-		super(null, name, endDate, visible);
+	public UpdatePeriodEnd(final Integer id, final String name) {
 		this.id = id;
+		this.name = name;
 	}
 
 	@Override
 	public boolean validate(final IErrorList errors) {
-		return doValidate(false, errors);
+		return NAME_CONSTRAINT.validate(NAME, name, errors);
 	}
 
 }

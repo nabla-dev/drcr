@@ -20,20 +20,18 @@ import com.google.inject.Singleton;
 import com.nabla.dc.server.handler.FetchCompanyNameHandler;
 import com.nabla.dc.server.handler.FetchImportErrorListHandler;
 import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
-import com.nabla.dc.server.handler.company.settings.AddPeriodEndHandler;
 import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
 import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchPeriodEndListHandler;
 import com.nabla.dc.server.handler.company.settings.FetchPeriodEndTreeHandler;
 import com.nabla.dc.server.handler.company.settings.ImportAccountListHandler;
 import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
-import com.nabla.dc.server.handler.company.settings.RemovePeriodEndHandler;
 import com.nabla.dc.server.handler.company.settings.RestoreAccountHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateAccountHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
+import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
 import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
@@ -158,10 +156,8 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(ImportAccountListHandler.class);
 
 		bindHandler(FetchPeriodEndTreeHandler.class);
-		bindHandler(FetchPeriodEndListHandler.class);
-		bindHandler(AddPeriodEndHandler.class);
 		bindHandler(UpdatePeriodEndHandler.class);
-		bindHandler(RemovePeriodEndHandler.class);
+		bindHandler(UpdateFinancialYearHandler.class);
 
 
 /*

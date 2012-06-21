@@ -22,7 +22,7 @@ import com.nabla.dc.client.presenter.company.settings.AccountList;
 import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
-import com.nabla.dc.client.presenter.company.settings.PeriodEndDialog;
+import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
 import com.nabla.dc.client.ui.company.CompanyUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -96,7 +96,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					new ChangeCompanyLogoDialog(companyId).revealDisplay();	
+					new ChangeCompanyLogoDialog(companyId).revealDisplay();
 				}
 			});
 		}
@@ -110,7 +110,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 				public void onSuccess() {
 					addTab(new CompanyUserList(companyId));
 				}
-			});			
+			});
 		}
 	};
 
@@ -144,7 +144,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					new PeriodEndDialog(companyId).revealDisplay();
+					addTab(new PeriodEndList(companyId));
 				}
 			});
 		}

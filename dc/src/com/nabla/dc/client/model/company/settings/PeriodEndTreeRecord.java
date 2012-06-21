@@ -16,60 +16,40 @@
 */
 package com.nabla.dc.client.model.company.settings;
 
-import java.util.Date;
-
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.IPeriodEnd;
-import com.nabla.wapp.client.model.BasicListGridRecord;
+import com.nabla.wapp.client.model.BasicRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class PeriodEndRecord extends BasicListGridRecord implements IPeriodEnd {
+public class PeriodEndTreeRecord extends BasicRecord {
 
-	public static final IRecordFactory<PeriodEndRecord>	factory = new IRecordFactory<PeriodEndRecord>() {
+	public static final IRecordFactory<PeriodEndTreeRecord>	factory = new IRecordFactory<PeriodEndTreeRecord>() {
 		@Override
-		public PeriodEndRecord get(final JavaScriptObject data) {
-			return new PeriodEndRecord(data);
+		public PeriodEndTreeRecord get(final JavaScriptObject data) {
+			return new PeriodEndTreeRecord(data);
 		}
 	};
 
-	public PeriodEndRecord(final Record impl) {
+	public PeriodEndTreeRecord(final Record impl) {
 		super(impl);
 	}
 
-	public PeriodEndRecord(final JavaScriptObject js) {
+	public PeriodEndTreeRecord(final JavaScriptObject js) {
 		super(js);
 	}
 
 	public String getName() {
-		return getAttributeAsString(NAME);
-	}
-	
-	public Date getEndDate() {
-		return getAttributeAsDate(END_DATE);
-	}
-	
-	public Boolean getVisible() {
-		return getBoolean(VISIBLE);
-	}
-	
-	public Boolean isNominalLedgerOpened() {
-		return getBoolean(NL_OPENED);
-	}
-	
-	public Boolean isSalesLedgerOpened() {
-		return getBoolean(SL_OPENED);
+		return getAttributeAsString(IPeriodEnd.NAME);
 	}
 
-	public Boolean isPurchaseLedgerOpened() {
-		return getBoolean(PL_OPENED);
+	public boolean isFinancialYear() {
+		return getAttributeAsInt(IFieldReservedNames.TREEGRID_PARENT_ID) == -1;
 	}
 
-	public Boolean isCashBookOpened() {
-		return getBoolean(CB_OPENED);
-	}
 }

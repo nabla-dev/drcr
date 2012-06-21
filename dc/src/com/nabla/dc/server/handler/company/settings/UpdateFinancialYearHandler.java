@@ -18,29 +18,23 @@ package com.nabla.dc.server.handler.company.settings;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.company.settings.AddPeriodEnd;
+import com.nabla.dc.shared.command.company.settings.UpdateFinancialYear;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.database.InsertStatement;
-import com.nabla.wapp.server.model.AbstractAddHandler;
+import com.nabla.wapp.server.database.UpdateStatement;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class AddPeriodEndHandler extends AbstractAddHandler<AddPeriodEnd> {
+public class UpdateFinancialYearHandler extends AbstractUpdateHandler<UpdateFinancialYear> {
 
-	public static final InsertStatement<AddPeriodEnd>	sql = new InsertStatement<AddPeriodEnd>(AddPeriodEnd.class);
+	private static final UpdateStatement<UpdateFinancialYear>	sql = new UpdateStatement<UpdateFinancialYear>(UpdateFinancialYear.class);
 
-	@SuppressWarnings("static-access")
 	@Override
-	protected int add(final AddPeriodEnd record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final Integer id = sql.execute(ctx.getWriteConnection(), record);
-		if (id == null)
-			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
-		return id;
+	protected void update(UpdateFinancialYear record, IUserSessionContext ctx) throws DispatchException, SQLException {
+		sql.execute(ctx.getConnection(), record);
 	}
 
 }
