@@ -16,9 +16,9 @@
 			<wnd:Toolbar width="100%">
 				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
 			</wnd:Toolbar>
-			<wnd:TreeGrid ui:field="tree" model="{model}" modelType="CHILDREN" viewStateReference="period_end_tree" editCommand="{cmd.edit}" loadDataOnDemand="true" nodeIcon="period_end_small.png" folderIcon="financial_year_small.png">
-				<wnd:TreeGridField name="{model.fields.name}" canSort="false" width="150" />
-				<wnd:TreeGridField name="{model.fields.endDate}" canSort="false" width="150" />
+			<wnd:TreeGrid ui:field="tree" model="{model}" modelType="CHILDREN" command="{cmd.edit}" loadDataOnDemand="true" nodeIcon="period_end_small.png" folderIcon="financial_year_small.png">
+				<wnd:TreeGridField name="{model.fields.name}" canSort="false" width="200" />
+				<wnd:TreeGridField name="{model.fields.endDate}" canSort="false" width="110" />
 			</wnd:TreeGrid>
 		</wnd:VLayout>
 	</wnd:Tab>

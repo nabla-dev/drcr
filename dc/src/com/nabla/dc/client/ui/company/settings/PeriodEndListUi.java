@@ -24,7 +24,7 @@ import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
 import com.nabla.dc.client.presenter.company.settings.PeriodEndList.ICommandSet;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
-import com.nabla.wapp.client.ui.form.TreeGridItem;
+import com.nabla.wapp.client.ui.TreeGrid;
 
 /**
  * @author nabla
@@ -40,7 +40,7 @@ public class PeriodEndListUi extends BindedTabDisplay<Tab> implements PeriodEndL
 	@UiField
 	ICommandSet					cmd;
 	@UiField
-	TreeGridItem				tree;
+	TreeGrid					tree;
 
 	public PeriodEndListUi(final Integer companyId) {
 		this.model = new PeriodEndTreeModel(companyId);

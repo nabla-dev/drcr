@@ -19,7 +19,6 @@ package com.nabla.dc.client.model.company.settings;
 
 import com.nabla.dc.shared.command.company.settings.FetchPeriodEndTree;
 import com.nabla.dc.shared.command.company.settings.UpdateFinancialYear;
-import com.nabla.dc.shared.command.company.settings.UpdatePeriodEnd;
 import com.nabla.dc.shared.model.IPeriodEnd;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.DateField;
@@ -70,10 +69,7 @@ public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
 
 	@Override
 	public IAction<StringResult> getUpdateCommand(final PeriodEndTreeRecord record) {
-		return record.isFinancialYear() ?
-				new UpdateFinancialYear(record.getId(), record.getName())
-				:
-				new UpdatePeriodEnd(record.getId(), record.getName());
+		return new UpdateFinancialYear(record.getId(), record.getName());
 	}
 
 	private Integer getParentId(final DSRequest request) {

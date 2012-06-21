@@ -20,7 +20,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.IPeriodEnd;
 import com.nabla.wapp.client.model.BasicRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -46,10 +45,6 @@ public class PeriodEndTreeRecord extends BasicRecord {
 
 	public String getName() {
 		return getAttributeAsString(IPeriodEnd.NAME);
-	}
-
-	public boolean isFinancialYear() {
-		return getAttributeAsInt(IFieldReservedNames.TREEGRID_PARENT_ID) == -1;
 	}
 
 }
