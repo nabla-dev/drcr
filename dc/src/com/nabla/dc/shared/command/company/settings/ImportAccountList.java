@@ -28,7 +28,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class ImportAccountList implements IAction<StringResult> {
 
-	private static final long		serialVersionUID = 1L;
 	private Integer					companyId;
 	private Integer					batchId;
 	private Boolean					rowHeader;

@@ -20,5 +20,7 @@
         <dependency org="com.googlecode.gwtupload" name="gwtupload" rev="${gwtupload.version}" conf="compile->default;runtime->default" />
        
         <dependency org="mysql" name="mysql-connector-java" rev="${mysql.version}" conf="runtime->default"/>
+        
+        <dependency org="net.sourceforge.supercsv" name="supercsv" rev="latest.release" conf="compile->default;runtime->default" />
     </dependencies>
 </ivy-module>

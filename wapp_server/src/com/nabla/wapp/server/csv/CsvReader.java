@@ -54,7 +54,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 	}
 
 	protected final ICsvErrorList			errors;
-	private final Class<T>					recordClass;
+//	private final Class<T>					recordClass;
 	private final Map<String, ICsvColumn>	expectedColumns = new HashMap<String, ICsvColumn>();
 	private final ICsvListReader			impl;
 	private final ArrayList<ICsvColumn>	columns = new ArrayList<ICsvColumn>();
@@ -65,7 +65,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 		Assert.argumentNotNull(errors);
 		
 		this.errors = errors;
-		this.recordClass = recordClass;
+//		this.recordClass = recordClass;
 		impl = new CsvListReader(reader, CsvPreference.STANDARD_PREFERENCE);
 		buildColumnList(recordClass);
 		try {

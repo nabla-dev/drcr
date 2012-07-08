@@ -16,9 +16,6 @@
 */
 package com.nabla.wapp.client.ui;
 
-import java.util.logging.Logger;
-
-import com.nabla.wapp.client.general.LoggerFactory;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.tree.Tree;
@@ -29,7 +26,6 @@ import com.smartgwt.client.widgets.tree.Tree;
  */
 public class ColumnTree extends com.smartgwt.client.widgets.grid.ColumnTree implements /*HasWidgets,*/ IPostCreateProcessing {
 
-	private static final Logger		logger = LoggerFactory.getLog(ColumnTree.class);
 //	private List<TreeGridColumn>	children = new LinkedList<TreeGridColumn>();
 
 	public ColumnTree() {

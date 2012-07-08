@@ -26,8 +26,6 @@ import com.nabla.wapp.shared.general.SelectionDelta;
  */
 public class UpdateUserDefinition implements IAction<StringResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	Integer			objectId;
 	Integer			userId;
 	SelectionDelta	selectionDelta;

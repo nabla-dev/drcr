@@ -25,8 +25,6 @@ package com.nabla.wapp.shared.dispatch;
  */
 public class BooleanResult extends BasicResult<Boolean> {
 
-	private static final long serialVersionUID = 1L;
-
 	BooleanResult() {}	// for serialization only
 
 	/**

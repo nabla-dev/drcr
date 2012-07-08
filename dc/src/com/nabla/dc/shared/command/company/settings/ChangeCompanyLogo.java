@@ -29,8 +29,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 @IRecordTable(name=ICompany.TABLE)
 public class ChangeCompanyLogo implements IAction<StringResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(name="id", id=true)
 	Integer				companyId;
 	Integer				fileId;

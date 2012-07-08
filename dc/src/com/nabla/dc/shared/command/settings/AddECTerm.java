@@ -30,8 +30,6 @@ import com.nabla.wapp.shared.model.IErrorList;
 @IRecordTable(name=IECTerm.TABLE)
 public class AddECTerm implements IRecordAction<StringResult>, IECTerm {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(unique=true)
 	String				name;
 	@IRecordField

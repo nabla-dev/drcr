@@ -27,8 +27,6 @@ import com.nabla.wapp.shared.model.IUser;
  */
 public class ChangeUserPassword implements IRecordAction<StringResult>, IUser {
 
-	private static final long serialVersionUID = 1L;
-
 	String	name;
 	String	password;
 

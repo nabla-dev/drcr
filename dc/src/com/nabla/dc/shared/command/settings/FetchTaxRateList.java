@@ -24,6 +24,4 @@ import com.nabla.wapp.shared.command.AbstractFetch;
  */
 public class FetchTaxRateList extends AbstractFetch {
 
-	private static final long serialVersionUID = 1L;
-
 }

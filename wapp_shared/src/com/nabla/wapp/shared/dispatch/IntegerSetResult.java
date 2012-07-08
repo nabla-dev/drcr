@@ -27,8 +27,6 @@ import com.nabla.wapp.shared.general.IntegerSet;
  */
 public class IntegerSetResult extends BasicResult<IntegerSet> {
 
-	private static final long serialVersionUID = 1L;
-
 	IntegerSetResult() {}	// for serialization only
 
 	/**

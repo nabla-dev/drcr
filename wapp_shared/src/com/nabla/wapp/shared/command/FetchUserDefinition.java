@@ -22,8 +22,6 @@ package com.nabla.wapp.shared.command;
  */
 public class FetchUserDefinition extends AbstractFetchTree {
 
-	private static final long serialVersionUID = 1L;
-
 	private Integer	objectId;
 	private Integer	userId;
 

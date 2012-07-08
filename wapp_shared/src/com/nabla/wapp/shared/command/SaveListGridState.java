@@ -26,8 +26,6 @@ import com.nabla.wapp.shared.dispatch.VoidResult;
  */
 public class SaveListGridState implements IAction<VoidResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	private String		listGridName;
 	private String		state;
 

@@ -31,8 +31,6 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class AddCompany implements IRecordAction<StringResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	String	name;
 	String	financialYear;
 	Date	startDate;

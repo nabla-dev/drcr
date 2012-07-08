@@ -21,9 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.nabla.dc.shared.command.company.settings.ChangeCompanyLogo;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.Database;
@@ -40,8 +37,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class ChangeCompanyLogoHandler extends AbstractHandler<ChangeCompanyLogo, StringResult> {
 
-	private static final Log	log = LogFactory.getLog(ChangeCompanyLogoHandler.class);
-
 	private static final UpdateStatement<ChangeCompanyLogo>	sql = new UpdateStatement<ChangeCompanyLogo>(ChangeCompanyLogo.class);
 
 	public ChangeCompanyLogoHandler() {
@@ -51,7 +46,7 @@ public class ChangeCompanyLogoHandler extends AbstractHandler<ChangeCompanyLogo,
 	@Override
 	public StringResult execute(ChangeCompanyLogo record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getWriteConnection(), Statement.RETURN_GENERATED_KEYS,
-"INSERT INTO image (name,content_type,length,content)" + 
+"INSERT INTO image (name,content_type,length,content)" +
 " SELECT file_name AS 'name',content_type,length,content FROM import_data WHERE id=?;", record.getFileId());
 		try {
 			if (stmt.executeUpdate() != 1)

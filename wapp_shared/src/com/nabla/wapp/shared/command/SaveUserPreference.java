@@ -25,8 +25,6 @@ import com.nabla.wapp.shared.dispatch.VoidResult;
  */
 public class SaveUserPreference implements IAction<VoidResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	private String		group;
 	private String		name;
 	private String		state;

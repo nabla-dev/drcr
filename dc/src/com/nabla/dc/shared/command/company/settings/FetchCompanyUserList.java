@@ -24,8 +24,6 @@ import com.nabla.dc.shared.command.AbstractCompanyFetch;
  */
 public class FetchCompanyUserList extends AbstractCompanyFetch {
 
-	private static final long serialVersionUID = 1L;
-
 	protected FetchCompanyUserList() {}
 
 	public FetchCompanyUserList(Integer companyId) {

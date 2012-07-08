@@ -30,8 +30,6 @@ import com.nabla.wapp.shared.model.IErrorList;
 @IRecordTable(name=ICompany.TABLE)
 public class UpdateCompany implements IRecordAction<StringResult>, ICompany {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(id=true)
 	Integer				id;
 	@IRecordField(unique=true)

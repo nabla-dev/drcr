@@ -26,8 +26,6 @@ import com.nabla.wapp.shared.dispatch.IntegerResult;
  */
 public class AddListGridFilter implements IAction<IntegerResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	private String	filter;
 	private String	name;
 	private String	value;

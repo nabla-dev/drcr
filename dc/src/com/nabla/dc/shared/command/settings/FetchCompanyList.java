@@ -24,6 +24,4 @@ import com.nabla.wapp.shared.command.AbstractFetch;
  */
 public class FetchCompanyList extends AbstractFetch {
 
-	private static final long serialVersionUID = 1L;
-
 }

@@ -22,6 +22,4 @@ package com.nabla.wapp.shared.command;
  */
 public class FetchRoleList extends AbstractFetch {
 
-	private static final long serialVersionUID = 1L;
-
 }

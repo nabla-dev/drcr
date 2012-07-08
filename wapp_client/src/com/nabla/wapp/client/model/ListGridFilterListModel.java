@@ -31,12 +31,10 @@ public class ListGridFilterListModel extends CModel {
 		public String name() { return IListGridFilter.NAME; }
 	}
 
-	private static final Fields	fields = new Fields();
-	private final String filterName;
-	
-	public ListGridFilterListModel(final String filterName) {
+//	private static final Fields	fields = new Fields();
+
+	public ListGridFilterListModel(@SuppressWarnings("unused") final String filterName) {
 		super();
-		this.filterName = filterName;
 		setFields(
 			new IdField(),
 			new TextField(IListGridFilter.NAME, IListGridFilter.NAME_CONSTRAINT, FieldAttributes.REQUIRED),

@@ -27,8 +27,6 @@ import com.nabla.wapp.shared.model.IErrorList;
 @IRecordTable(name="role")
 public class UpdateRole extends AddRole {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(id=true)
 	Integer				id;
 	@IRecordField

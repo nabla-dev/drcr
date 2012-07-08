@@ -28,8 +28,6 @@ import com.nabla.wapp.shared.model.IRole;
  */
 public class AddRole implements IRecordAction<StringResult>, IRole {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(unique=true)
 	String	name;
 

@@ -31,8 +31,6 @@ import com.nabla.wapp.shared.model.IErrorList;
 @IRecordTable(name=IAccount.TABLE)
 public class AddAccount implements IRecordAction<StringResult>, IAccount {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField
 	Integer				company_id;
 	@IRecordField(unique=true)

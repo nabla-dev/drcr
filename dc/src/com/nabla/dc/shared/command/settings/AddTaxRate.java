@@ -31,8 +31,6 @@ import com.nabla.wapp.shared.model.IErrorList;
 @IRecordTable(name=ITaxRate.TABLE)
 public class AddTaxRate implements IRecordAction<StringResult>, ITaxRate {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(unique=true)
 	String				name;
 	@IRecordField

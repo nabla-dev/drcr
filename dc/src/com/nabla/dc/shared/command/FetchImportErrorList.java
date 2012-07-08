@@ -24,8 +24,6 @@ import com.nabla.wapp.shared.command.AbstractFetch;
  */
 public class FetchImportErrorList extends AbstractFetch {
 
-	private static final long serialVersionUID = 1L;
-
 	private Integer		batchId;
 	
 	FetchImportErrorList() {}

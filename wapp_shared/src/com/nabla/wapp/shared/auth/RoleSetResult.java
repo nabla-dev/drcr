@@ -27,8 +27,6 @@ import com.nabla.wapp.shared.general.StringSet;
  */
 public class RoleSetResult implements IResult {
 
-	private static final long serialVersionUID = 1L;
-
 	private StringSet	value;
 
 	public RoleSetResult() {}	// for serialization only

@@ -22,8 +22,6 @@ package com.nabla.wapp.shared.command;
  */
 public class FetchRoleName extends AbstractFetch {
 
-	private static final long serialVersionUID = 1L;
-
 	private Integer	id;
 
 	protected FetchRoleName() {}	// for serialization only

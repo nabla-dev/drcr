@@ -24,8 +24,6 @@ import com.nabla.dc.shared.command.AbstractCompanyFetch;
  */
 public class FetchCompanyTaxRateList extends AbstractCompanyFetch {
 
-	private static final long serialVersionUID = 1L;
-
 	protected FetchCompanyTaxRateList() {}
 
 	public FetchCompanyTaxRateList(Integer companyId) {

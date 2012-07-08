@@ -29,8 +29,6 @@ import com.nabla.wapp.shared.general.StringSet;
  */
 public class IsUserInRole implements IAction<RoleSetResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	Integer		objectId;
 	StringSet	roles;
 
@@ -38,7 +36,7 @@ public class IsUserInRole implements IAction<RoleSetResult> {
 
 	/**
 	 * Constructor for <code>IsUserInRole</code> object.
-	 * @param objectId	- object ID to which roles need to be appliied to
+	 * @param objectId	- object ID to which roles need to be applied to
 	 * @param roles	    - list of roles to query
 	 */
 	public IsUserInRole(final Integer objectId, final StringSet roles) {
@@ -47,7 +45,7 @@ public class IsUserInRole implements IAction<RoleSetResult> {
 	}
 
 	/**
-	 * To get the object ID to which roles need to be appliied to
+	 * To get the object ID to which roles need to be applied to
 	 * @return this returns the object ID
 	 */
 	public Integer getObjectId() {

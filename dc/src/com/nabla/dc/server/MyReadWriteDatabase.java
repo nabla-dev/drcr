@@ -20,9 +20,6 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.nabla.wapp.server.auth.AuthDatabase;
@@ -33,8 +30,6 @@ import com.nabla.wapp.server.auth.AuthDatabase;
  */
 @Singleton
 public class MyReadWriteDatabase extends AuthDatabase {
-
-	private static final Log	log = LogFactory.getLog(MyReadWriteDatabase.class);
 
 	@Inject
 	public MyReadWriteDatabase(final ServletContext serverContext/*, @IReportFolder final String reportFolder, @IReCompileReports boolean reCompileReports*/) throws SQLException {

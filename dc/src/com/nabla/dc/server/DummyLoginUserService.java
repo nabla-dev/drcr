@@ -16,9 +16,6 @@
 */
 package com.nabla.dc.server;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Singleton;
 import com.nabla.wapp.server.general.UserSession;
@@ -34,7 +31,6 @@ import com.nabla.wapp.shared.model.ValidationException;
 public class DummyLoginUserService extends RemoteServiceServlet implements ILoginUserRemoteService {
 
 	private static final long		serialVersionUID = 1L;
-	private static final Log		log = LogFactory.getLog(DummyLoginUserService.class);
 
 	public DummyLoginUserService() {
 	}

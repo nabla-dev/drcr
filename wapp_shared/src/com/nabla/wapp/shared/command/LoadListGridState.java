@@ -26,8 +26,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class LoadListGridState implements IAction<StringResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	private String		listGridName;
 
 	public LoadListGridState() {}

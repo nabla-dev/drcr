@@ -25,8 +25,6 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class UpdateTaxRate extends AddTaxRate {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(id=true)
 	Integer		id;
 

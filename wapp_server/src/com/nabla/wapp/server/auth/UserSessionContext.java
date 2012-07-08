@@ -18,9 +18,6 @@ package com.nabla.wapp.server.auth;
 
 import java.sql.Connection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.general.UserSession;
 
@@ -29,8 +26,6 @@ import com.nabla.wapp.server.general.UserSession;
  *
  */
 public class UserSessionContext implements IUserSessionContext {
-
-	private static final Log	log = LogFactory.getLog(UserSessionContext.class);
 
 	private final UserSession	userSession;
 	private final Connection	readConn;

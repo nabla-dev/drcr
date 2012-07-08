@@ -30,8 +30,6 @@ import com.nabla.wapp.shared.model.IErrorList;
 @IRecordTable(name=IPeriodEnd.TABLE)
 public class UpdatePeriodEnd implements IRecordAction<StringResult>, IPeriodEnd {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(id=true)
 	Integer		id;
 	@IRecordField(unique=true)

@@ -28,8 +28,6 @@ import com.nabla.wapp.shared.model.IUser;
  */
 public class AddUser implements IRecordAction<StringResult>, IUser {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(unique=true)
 	String	name;
 	String	password;

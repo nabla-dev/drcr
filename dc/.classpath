@@ -24,9 +24,9 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/json-smart-2.0-RC2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/smartgwt-3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/smartgwt-skins-3.0.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-servlet-3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/mysql-connector-java-5.1.19.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/SuperCSV-with_src-1.52.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/supercsv-1.52.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

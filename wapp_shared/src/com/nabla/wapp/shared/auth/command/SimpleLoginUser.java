@@ -24,7 +24,4 @@ import com.nabla.wapp.shared.dispatch.IAction;
  *
  */
 public class SimpleLoginUser implements IAction<BooleanResult> {
-
-	private static final long serialVersionUID = 1L;
-
 }

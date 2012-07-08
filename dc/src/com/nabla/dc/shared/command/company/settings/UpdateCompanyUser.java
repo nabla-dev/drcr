@@ -25,8 +25,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class UpdateCompanyUser implements IAction<StringResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	Integer		companyId;
 	Integer		userId;
 	Boolean		active;

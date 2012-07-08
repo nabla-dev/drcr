@@ -20,14 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.IApplication;
-import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.general.LoggerFactory;
-import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.server.IDispatchAsync;
 import com.nabla.wapp.shared.model.ValidationException;
 import com.smartgwt.client.data.DSRequest;
@@ -47,7 +44,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public abstract class Model extends DataSource {
 
-	private static final Logger					logger = LoggerFactory.getLog(Model.class);
+	private static final Logger				logger = LoggerFactory.getLog(Model.class);
 	protected IDispatchAsync					dispatcher = null;
 	private final Map<String, DataSourceField>	fields = new HashMap<String, DataSourceField>();
 	protected Record[]							clientOnlyData;
@@ -145,7 +142,7 @@ public abstract class Model extends DataSource {
 		final Record[] result = this.recordsFromXML(XMLTools.selectNodes(xmlResponse, path));
 		return (result == null) ? new Record[0] : result;
 	}
-
+/*
 	private JavaScriptObject transformRemoveRequest(final JavaScriptObject data, final String field) {
 		logger.fine("REMOVE original request: " + this.xmlSerialize(data));
 		logger.fine("send only primary key of deleted record(s) to server");
@@ -162,14 +159,14 @@ public abstract class Model extends DataSource {
 		JSHelper.copyAttribute(data, result, field);
 		return result;
 	}
-
+*/
 	/**
 	 * Remove values from data that should not be sent to server in the following conditions:
 	 *  - field has attribute canSave = false (SmartGWT should do that but...)
 	 * @param data - original data to sent to server
 	 * @return modified data
 	 */
-	private JavaScriptObject cleanData(final JavaScriptObject data) {
+/*	private JavaScriptObject cleanData(final JavaScriptObject data) {
 		for (final DataSourceField field : fields.values()) {
 			Boolean canSave = FieldAttributes.getCanSave(field);
 			if (canSave != null && !canSave) {
@@ -179,7 +176,7 @@ public abstract class Model extends DataSource {
 		}
 		return data;
 	}
-
+*/
 	public void updateCache(final Record record, final DSOperationType operation) {
 		Assert.argumentNotNull(record);
 

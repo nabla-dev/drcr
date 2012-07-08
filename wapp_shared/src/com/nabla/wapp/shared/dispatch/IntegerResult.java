@@ -25,8 +25,6 @@ package com.nabla.wapp.shared.dispatch;
  */
 public class IntegerResult extends BasicResult<Integer> {
 
-	private static final long serialVersionUID = 1L;
-
 	IntegerResult() {}	// for serialization only
 
 	/**

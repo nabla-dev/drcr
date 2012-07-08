@@ -19,7 +19,6 @@ package com.nabla.wapp.client.model;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nabla.wapp.client.general.Application;
@@ -45,7 +44,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 public abstract class CModel<R extends Record> extends Model {
 
 	private static final Logger						logger = LoggerFactory.getLog(CModel.class);
-	private static final IFilterOperatorSqlResource	operatorSql = GWT.create(IFilterOperatorSqlResource.class);
+//	private static final IFilterOperatorSqlResource	operatorSql = GWT.create(IFilterOperatorSqlResource.class);
 	private final IRecordFactory<R>					recordFactory;
 
 	protected CModel(final IRecordFactory<R> recordFactory) {

@@ -23,6 +23,4 @@ package com.nabla.wapp.shared.dispatch;
  */
 public class VoidResult implements IResult {
 
-	private static final long serialVersionUID = 1L;
-
 }

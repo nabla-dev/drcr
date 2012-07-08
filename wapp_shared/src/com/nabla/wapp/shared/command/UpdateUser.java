@@ -28,8 +28,6 @@ import com.nabla.wapp.shared.model.IUser;
 @IRecordTable(name="user")
 public class UpdateUser extends AddUser {
 
-	private static final long serialVersionUID = 1L;
-
 	@IRecordField(id=true)
 	Integer				id;
 	@IRecordField

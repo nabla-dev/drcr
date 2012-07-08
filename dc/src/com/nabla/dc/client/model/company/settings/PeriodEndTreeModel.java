@@ -24,8 +24,8 @@ import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
+import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.TextField;
-import com.nabla.wapp.client.model.field.TreeParentIdField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
@@ -45,15 +45,20 @@ public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
 	}
 
 	private static final Fields	fields = new Fields();
-	private final Integer		companyId;
+	private final Integer			companyId;
 
 	public PeriodEndTreeModel(final Integer companyId) {
 		super(PeriodEndTreeRecord.factory);
 
 		this.companyId = companyId;
+		final TextField id = new TextField("iid",  FieldAttributes.HIDDEN);
+		id.setPrimaryKey(true);
+		final TextField parentId = new TextField(IFieldReservedNames.TREEGRID_PARENT_ID,  FieldAttributes.HIDDEN);
+		parentId.setForeignKey("iid");
 		setFields(
-			new IdField(),
-			new TreeParentIdField(),
+			id,
+			new IntegerField(IdField.NAME, FieldAttributes.HIDDEN),
+			parentId,
 			new TextField(fields.name(), IPeriodEnd.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
 			new DateField(fields.endDate(), FieldAttributes.OPTIONAL, FieldAttributes.READ_ONLY)
 				);
@@ -72,8 +77,8 @@ public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
 		return new UpdateFinancialYear(record.getId(), record.getName());
 	}
 
-	private Integer getParentId(final DSRequest request) {
-		return JSOHelper.getAttributeAsInt(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
+	private String getParentId(final DSRequest request) {
+		return JSOHelper.getAttribute(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
 	}
 
 }

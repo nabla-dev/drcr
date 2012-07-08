@@ -16,26 +16,29 @@
 */
 package com.nabla.dc.shared.command.company.settings;
 
-import com.nabla.wapp.shared.command.AbstractFetchTree;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public class FetchPeriodEndTree extends AbstractFetchTree {
-
-	private static final long serialVersionUID = 1L;
+public class FetchPeriodEndTree extends AbstractFetch {
 
 	private Integer		companyId;
+	private String		parentId;
 
 	protected FetchPeriodEndTree() {}	// for serialization only
 
-	public FetchPeriodEndTree(final Integer companyId, final Integer parentId) {
-		super(parentId);
+	public FetchPeriodEndTree(final Integer companyId, final String parentId) {
 		this.companyId = companyId;
+		this.parentId = parentId;
 	}
 
 	public Integer getCompanyId() {
 		return companyId;
+	}
+
+	public String getParentId() {
+		return parentId;
 	}
 }
