@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,24 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_assets;
+package com.nabla.dc.server.handler.fixed_asset;
 
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
-
+import com.nabla.dc.shared.command.fixed_asset.RemoveAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
+import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
 /**
  * @author nabla
  *
  */
-public interface IBalanceSheetCategory {
+public class RemoveAssetCategoryHandler extends AbstractSoftRemoveHandler<RemoveAssetCategory> {
 
-	static final String					NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
-
-	static final String					ACTIVE = "active";
-
-	static final String					REPORT = "BALANCE_SHEET_CATEGORY_LIST";
-
-	static final String					DEFINITION = "category";
+	public RemoveAssetCategoryHandler() {
+		super(IAssetCategory.TABLE);
+	}
 
 }

@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,9 +14,8 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_assets;
+package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 
@@ -24,20 +23,17 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  * @author nabla
  *
  */
-public interface IAssetCategory {
+public interface IBalanceSheetCategory {
 
-	static final String					NAME = "name";
+	static final String				TABLE = "fa_bs_category";
+
+	static final String				NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
 
-	static final String					ACTIVE = "active";
-	static final String					TYPE = "type";
+	static final String				ACTIVE = "active";
 
-	static final String					MIN_DEP_PERIOD = "min_dep_period";
-	static final String					MAX_DEP_PERIOD = "max_dep_period";
-	static final IntegerRangeConstraint	DEP_PERIOD_CONSTRAINT = new IntegerRangeConstraint(12, 12 * 100);
-	static final int					DEFAULT_DEP_PERIOD = 5 * 12;
+	static final String				REPORT = "FA_BALANCE_SHEET_CATEGORY_LIST";
 
-	static final String					REPORT = "ASSET_CATEGORY_LIST";
+	static final String				DEFINITION = "category";
 
-	static final String					PREFERENCE_GROUP = "asset_category";
 }

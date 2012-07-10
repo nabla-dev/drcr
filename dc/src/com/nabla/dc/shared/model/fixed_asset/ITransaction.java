@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_assets;
+package com.nabla.dc.shared.model.fixed_asset;
 
 import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 
@@ -25,17 +25,19 @@ import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
  */
 public interface ITransaction {
 
-	static final String					ASSET_ID = "asset_id";
+	static final String					TABLE = "fa_transaction";
+
+	static final String					ASSET_ID = "fa_asset_id";
 
 	static final String					DATE = "date";
 	static final String					CLASS = "class";
 	static final String					TYPE = "type";
 	static final String					AMOUNT = "amount";
-	static final String					DEP_PERIOD = "dep_period";
-	static final IntegerRangeConstraint	DEP_PERIOD_CONSTRAINT = new IntegerRangeConstraint(1, 12 * 100);
+	static final String					DEPRECIATION_PERIOD = "depreciation_period";
+	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(1, 12 * 100);
 
-	static final String					REPORT = "TRANSACTION_LIST";
+	static final String					REPORT = "FA_TRANSACTION_LIST";
 
-	static final String					PREFERENCE_GROUP = "transaction";
+	static final String					PREFERENCE_GROUP = "fa_transaction";
 
 }

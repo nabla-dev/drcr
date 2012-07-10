@@ -41,7 +41,8 @@ public abstract class AbstractRemoveHandler<A extends AbstractRemove> extends Ab
 
 	@Override
 	public VoidResult execute(final A cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		Database.executeUpdate(ctx.getWriteConnection(), sql, cmd);
+		if (!cmd.isEmpty())
+			Database.executeUpdate(ctx.getWriteConnection(), sql, cmd);
 		return null;
 	}
 

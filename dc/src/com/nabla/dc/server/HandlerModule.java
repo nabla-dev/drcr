@@ -33,6 +33,10 @@ import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
 import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
+import com.nabla.dc.server.handler.fixed_asset.RemoveAssetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.RemoveAssetHandler;
+import com.nabla.dc.server.handler.fixed_asset.RemoveBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.RemoveTransactionHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -159,8 +163,72 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdatePeriodEndHandler.class);
 		bindHandler(UpdateFinancialYearHandler.class);
 
+		bindHandler(RemoveAssetCategoryHandler.class);
 
+		bindHandler(RemoveBalanceSheetCategoryHandler.class);
+
+		bindHandler(RemoveAssetHandler.class);
+
+		bindHandler(RemoveTransactionHandler.class);
 /*
+  bindHandler(FetchAssetCategoryListHandler.class);
+		bindHandler(AddAssetCategoryHandler.class);
+
+		bindHandler(RestoreAssetCategoryHandler.class);
+		bindHandler(UpdateAssetCategoryHandler.class);
+  bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);
+
+		bindHandler(FetchBalanceSheetCategoryListHandler.class);
+		bindHandler(AddBalanceSheetCategoryHandler.class);
+
+		bindHandler(RestoreBalanceSheetCategoryHandler.class);
+		bindHandler(UpdateBalanceSheetCategoryHandler.class);
+
+		bindHandler(FetchBalanceSheetCategoryDefinitionHandler.class);
+		bindHandler(UpdateBalanceSheetCategoryDefinitionHandler.class);
+
+		bindHandler(FetchAssetRegisterListHandler.class);
+		bindHandler(AddAssetRegisterHandler.class);
+		bindHandler(RemoveAssetRegisterHandler.class);
+		bindHandler(RestoreAssetRegisterHandler.class);
+		bindHandler(UpdateAssetRegisterHandler.class);
+		bindHandler(FetchAssetRegisterUserListHandler.class);
+		bindHandler(UpdateAssetRegisterUserListHandler.class);
+		bindHandler(FetchAssetRegisterAssetCategoryListHandler.class);
+		bindHandler(UpdateAssetRegisterAssetCategoryListHandler.class);
+
+		bindHandler(FetchAssetRegisterBalanceSheetCategoryListHandler.class);
+		bindHandler(UpdateAssetRegisterBalanceSheetCategoryListHandler.class);
+
+		bindHandler(FetchAssetRegisterActiveAssetCategoryListHandler.class);
+		bindHandler(FetchAssetListHandler.class);
+		bindHandler(AddAssetHandler.class);
+		bindHandler(UpdateAssetFieldHandler.class);
+		bindHandler(UpdateAssetHandler.class);
+
+		bindHandler(FetchAssetListRecordHandler.class);
+
+		bindHandler(FetchAssetDisposalHandler.class);
+		bindHandler(UpdateAssetDisposalHandler.class);
+		bindHandler(RevertAssetDisposalHandler.class);
+
+		bindHandler(FetchAssetRecordHandler.class);
+
+		bindHandler(FetchAssetAcquisitionHandler.class);
+		bindHandler(FetchAssetTransferHandler.class);
+
+		bindHandler(SplitAssetHandler.class);
+
+		bindHandler(ImportAssetListHandler.class);
+		bindHandler(ImportSettingsHandler.class);
+		bindHandler(FetchImportErrorListHandler.class);
+
+		bindHandler(FetchTransactionListHandler.class);
+		bindHandler(AddTransactionHandler.class);
+		bindHandler(UpdateTransactionHandler.class);
+
+		bindHandler(GetNewTransactionDefaultValuesHandler.class);
+
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);
 		bindHandler(UpdateListGridFilterHandler.class);
