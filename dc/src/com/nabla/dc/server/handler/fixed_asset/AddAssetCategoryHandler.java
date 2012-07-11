@@ -18,91 +18,39 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.fixed_assets.shared.AssetCategoryTypes;
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.ServerErrors;
-import com.nabla.fixed_assets.shared.command.AddAssetCategory;
-import com.nabla.fixed_assets.shared.model.IAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.AddAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
-import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.server.database.InsertStatement;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
+import com.nabla.wapp.server.model.AbstractAddHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class AddAssetCategoryHandler extends AbstractOperationHandler<AddAssetCategory, AddAssetCategoryHandler.Record> {
+public class AddAssetCategoryHandler extends AbstractAddHandler<AddAssetCategory> {
 
-	@Root(name="data")
-	@IRecordTable(name="asset_category")
-	public static class Record {
+	private static final InsertStatement<AddAssetCategory>	sql = new InsertStatement<AddAssetCategory>(AddAssetCategory.class);
 
-		@Element
-		@IRecordField(unique=true)
-		String				name;
-		@IRecordField
-		String				uname;
-		@Element(required=false)
-		@IRecordField
-		Boolean				active;
-		@Element
-		@IRecordField
-		AssetCategoryTypes	type;
-		@Element
-		@IRecordField
-		Integer				min_dep_period;
-		@Element(required=false)
-		@IRecordField
-		Integer				max_dep_period;
-
-		@Validate
-		public void validate() throws ValidationException {
-			IAssetCategory.NAME_CONSTRAINT.validate(IAssetCategory.NAME, name);
-			uname = name.toUpperCase();
-			IAssetCategory.DEP_PERIOD_CONSTRAINT.validate(IAssetCategory.MIN_DEP_PERIOD, min_dep_period, ServerErrors.INVALID_DEP_PERIOD);
-			if (max_dep_period == null)
-				max_dep_period = min_dep_period;
-			else {
-				IAssetCategory.DEP_PERIOD_CONSTRAINT.validate(IAssetCategory.MAX_DEP_PERIOD, max_dep_period, ServerErrors.INVALID_DEP_PERIOD);
-				if (max_dep_period < min_dep_period)
-					throw new ValidationException(IAssetCategory.MAX_DEP_PERIOD, ServerErrors.INVALID_MAX_DEP_PERIOD);
-			}
-			if (active == null)
-				active = false;
-			if (type == null)
-				type = AssetCategoryTypes.TANGIBLE;
-		}
-
-	}
-
-	public static final InsertStatement<Record>	sql = new InsertStatement<Record>(Record.class);
-
-	public AddAssetCategoryHandler() {
-		super(true, IPrivileges.ASSET_CATEGORY_ADD);
-	}
-
+	@SuppressWarnings("static-access")
 	@Override
-	protected String execute(final Record request, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	protected int add(final AddAssetCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 		try {
-			int id = sql.execute(ctx.getWriteConnection(), request);
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "type", request.type);
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "min_dep_period", request.min_dep_period);
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "max_dep_period", request.max_dep_period);
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "active", request.active);
+			final Integer id = sql.execute(ctx.getWriteConnection(), record);
+			if (id == null)
+				throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "type", record.getType());
+			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "min_depreciation_period", record.getMinDepreciationPeriod());
+			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "max_depreciation_period", record.getMaxDepreciationPeriod());
+			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "active", record.getActive());
 			guard.setSuccess();
-			return serialize(id);
+			return id;
 		} finally {
 			guard.close();
 		}

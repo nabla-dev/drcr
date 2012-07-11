@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public class AddAccountHandler extends AbstractAddHandler<AddAccount> {
 
-	public static final InsertStatement<AddAccount>	sql = new InsertStatement<AddAccount>(AddAccount.class);
+	private static final InsertStatement<AddAccount>	sql = new InsertStatement<AddAccount>(AddAccount.class);
 
 	@SuppressWarnings("static-access")
 	@Override
