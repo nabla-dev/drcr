@@ -43,14 +43,13 @@ public class FetchECTermListHandler extends AbstractFetchHandler<FetchECTermList
 
 	@Override
 	public FetchResult execute(final FetchECTermList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
+		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
-" FROM ec_term" +
-"{WHERE} {ORDER BY}"
+" FROM ec_term"
 			:
 "SELECT FALSE AS 'deleted', id, name, active" +
 " FROM ec_term" +
-" WHERE uname IS NOT NULL {AND WHERE} {ORDER BY}");
+" WHERE uname IS NOT NULL");
 	}
 
 }

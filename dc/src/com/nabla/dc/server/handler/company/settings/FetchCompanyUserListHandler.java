@@ -20,10 +20,10 @@ import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.settings.FetchCompanyUserList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SimpleJsonFetch;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -35,7 +35,10 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchCompanyUserListHandler extends AbstractFetchHandler<FetchCompanyUserList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
+	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
+"SELECT u.id, u.name, (c.company_id IS NOT NULL) AS 'active'" +
+" FROM user AS u LEFT JOIN company_user AS c ON u.id=c.user_id AND c.company_id=?" +
+" WHERE u.active=TRUE AND u.name NOT LIKE ? AND u.uname IS NOT NULL",
 		new OdbcIdToJson(),
 		new OdbcStringToJson("name"),
 		new OdbcBooleanToJson("active")
@@ -43,13 +46,7 @@ public class FetchCompanyUserListHandler extends AbstractFetchHandler<FetchCompa
 
 	@Override
 	public FetchResult execute(final FetchCompanyUserList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT * FROM (" +
-"SELECT u.id, u.name, (c.company_id IS NOT NULL) AS 'active'" +
-" FROM user AS u LEFT JOIN company_user AS c ON u.id=c.user_id AND c.company_id=?" +
-" WHERE u.active=TRUE AND u.name NOT LIKE ? AND u.uname IS NOT NULL" +
-") AS dt {WHERE} {ORDER BY}",
-			cmd.getCompanyId(), IRootUser.NAME);
+		return fetcher.fetch(cmd, ctx.getConnection(), cmd.getCompanyId(), IRootUser.NAME);
 	}
 
 }

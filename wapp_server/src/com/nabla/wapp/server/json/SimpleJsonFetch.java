@@ -51,4 +51,8 @@ public class SimpleJsonFetch extends JsonFetch {
 		return super.serialize(options, conn, baseSql, parameters);
 	}
 
+	public FetchResult fetch(final AbstractFetch options, final Connection conn, Object... parameters) throws SQLException {
+		return super.fetch(options, conn, baseSql, parameters);
+	}
+
 }

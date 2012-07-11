@@ -20,10 +20,10 @@ import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.settings.FetchCompanyTaxRateList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SimpleJsonFetch;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
@@ -34,7 +34,10 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchCompanyTaxRateListHandler extends AbstractFetchHandler<FetchCompanyTaxRateList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
+	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
+"SELECT r.id, r.name, (c.company_id IS NOT NULL) AS 'active'" +
+" FROM tax_rate AS r LEFT JOIN company_tax_rate AS c ON r.id=c.tax_rate_id AND c.company_id=?" +
+" WHERE r.active=TRUE AND r.uname IS NOT NULL",
 		new OdbcIntToJson("id"),
 		new OdbcStringToJson("name"),
 		new OdbcBooleanToJson("active")
@@ -42,13 +45,7 @@ public class FetchCompanyTaxRateListHandler extends AbstractFetchHandler<FetchCo
 
 	@Override
 	public FetchResult execute(final FetchCompanyTaxRateList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT * FROM (" +
-"SELECT r.id, r.name, (c.company_id IS NOT NULL) AS 'active'" +
-" FROM tax_rate AS r LEFT JOIN company_tax_rate AS c ON r.id=c.tax_rate_id AND c.company_id=?" +
-" WHERE r.active=TRUE AND r.uname IS NOT NULL" +
-") AS dt {WHERE} {ORDER BY}",
-			cmd.getCompanyId());
+		return fetcher.fetch(cmd, ctx.getConnection(), cmd.getCompanyId());
 	}
 
 }

@@ -20,109 +20,63 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.fixed_assets.shared.AssetCategoryTypes;
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.ServerErrors;
-import com.nabla.fixed_assets.shared.command.UpdateAssetCategory;
-import com.nabla.fixed_assets.shared.model.IAssetCategory;
+import com.nabla.dc.shared.ServerErrors;
+import com.nabla.dc.shared.command.fixed_asset.UpdateAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.database.UpdateStatement;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.ActionException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.general.SimpleString;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class UpdateAssetCategoryHandler extends AbstractOperationHandler<UpdateAssetCategory, UpdateAssetCategoryHandler.Record> {
+public class UpdateAssetCategoryHandler extends AbstractUpdateHandler<UpdateAssetCategory> {
 
-	@Root(name="data")
-	@IRecordTable(name="asset_category")
-	static class Record {
-
-		@Element
-		@IRecordField(id=true)
-		Integer		id;
-		@Element(required=false)
-		@IRecordField(unique=true)
-		SimpleString		name;
-		@IRecordField
-		String				uname;
-		@Element(required=false)
-		@IRecordField
-		Boolean				active;
-		@Element(required=false)
-		@IRecordField
-		AssetCategoryTypes	type;
-		@Element(required=false)
-		@IRecordField
-		Integer				min_dep_period;
-		@Element(required=false)
-		@IRecordField
-		Integer				max_dep_period;
-
-		@Validate
-		public void validate() throws ValidationException {
-			IAssetCategory.NAME_CONSTRAINT.validate(IAssetCategory.NAME, name);
-			if (name != null)
-				uname = name.getValue().toUpperCase();
-			if (min_dep_period != null)
-				IAssetCategory.DEP_PERIOD_CONSTRAINT.validate(IAssetCategory.MIN_DEP_PERIOD, min_dep_period, ServerErrors.INVALID_DEP_PERIOD);
-			if (max_dep_period != null)
-				IAssetCategory.DEP_PERIOD_CONSTRAINT.validate(IAssetCategory.MAX_DEP_PERIOD, max_dep_period, ServerErrors.INVALID_DEP_PERIOD);
-			if (max_dep_period != null && min_dep_period != null && min_dep_period > max_dep_period)
-				throw new ValidationException(IAssetCategory.MAX_DEP_PERIOD, ServerErrors.INVALID_DEP_PERIOD);
-		}
-
-	}
-
-	private static final UpdateStatement<Record>	sql = new UpdateStatement<Record>(Record.class);
-
-	public UpdateAssetCategoryHandler() {
-		super(true, IPrivileges.ASSET_CATEGORY_EDIT);
-	}
+	private static final UpdateStatement<UpdateAssetCategory>	sql = new UpdateStatement<UpdateAssetCategory>(UpdateAssetCategory.class);
 
 	@Override
-	protected String execute(final Record request, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		if (request.min_dep_period == null && request.max_dep_period != null) {
+	protected void update(UpdateAssetCategory record, IUserSessionContext ctx) throws DispatchException, SQLException {
+		if (record.getMinDepreciationPeriod() == null && record.getMaxDepreciationPeriod() != null) {
 			final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT min_dep_period FROM asset_category WHERE id=?;", request.id);
+"SELECT min_depreciation_period FROM fa_asset_category WHERE id=?;", record.getId());
 			try {
 				final ResultSet rs = stmt.executeQuery();
-				if (!rs.next())
-					throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
-				if (rs.getInt(1) > request.max_dep_period)
-					throw new ValidationException(IAssetCategory.MAX_DEP_PERIOD, ServerErrors.INVALID_DEP_PERIOD);
+				try {
+					if (!rs.next())
+						throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+					if (rs.getInt(1) > record.getMaxDepreciationPeriod())
+						throw new ValidationException(IAssetCategory.MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_DEPRECIATION_PERIOD);
+				} finally {
+					Database.close(rs);
+				}
 			} finally {
-				try { stmt.close(); } catch (final SQLException e) {}
+				Database.close(stmt);
 			}
-		} else if (request.min_dep_period != null && request.max_dep_period == null) {
+		} else if (record.getMinDepreciationPeriod() != null && record.getMaxDepreciationPeriod() == null) {
 			final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT max_dep_period FROM asset_category WHERE id=?;", request.id);
+"SELECT max_depreciation_period FROM fa_asset_category WHERE id=?;", record.getId());
 			try {
 				final ResultSet rs = stmt.executeQuery();
-				if (!rs.next())
-					throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
-				if (rs.getInt(1) < request.min_dep_period)
-					throw new ValidationException(IAssetCategory.MIN_DEP_PERIOD, ServerErrors.INVALID_DEP_PERIOD);
+				try {
+					if (!rs.next())
+						throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+					if (rs.getInt(1) < record.getMinDepreciationPeriod())
+						throw new ValidationException(IAssetCategory.MIN_DEPRECIATION_PERIOD, ServerErrors.INVALID_DEPRECIATION_PERIOD);
+				} finally {
+					Database.close(rs);
+				}
 			} finally {
-				try { stmt.close(); } catch (final SQLException e) {}
+				Database.close(stmt);
 			}
 		}
-
-		sql.execute(ctx.getWriteConnection(), request);
-		return null;
+		sql.execute(ctx.getConnection(), record);
 	}
 
 }

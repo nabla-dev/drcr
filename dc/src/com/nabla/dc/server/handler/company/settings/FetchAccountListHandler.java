@@ -47,18 +47,14 @@ public class FetchAccountListHandler extends AbstractFetchHandler<FetchAccountLi
 
 	@Override
 	public FetchResult execute(final FetchAccountList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
-"SELECT * FROM (" +
+		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, code, name, cost_centre, department, balance_sheet, active" +
 " FROM account" +
-" WHERE company_id=?" +
-") AS dt {WHERE} {ORDER BY}"
+" WHERE company_id=?"
 			:
-"SELECT * FROM (" +
 "SELECT FALSE AS 'deleted', id, code, name, cost_centre, department, balance_sheet, active" +
 " FROM account" +
-" WHERE company_id=? AND uname IS NOT NULL" +
-") AS dt {WHERE} {ORDER BY}"
+" WHERE company_id=? AND uname IS NOT NULL"
 			, cmd.getCompanyId());
 	}
 

@@ -119,4 +119,8 @@ public class JsonFetch extends LinkedList<IOdbcToJsonEncoder> {
 		}
 	}
 
+	public FetchResult fetch(final AbstractFetch options, final Connection conn, final String sql, Object... parameters) throws SQLException {
+		return serialize(options, conn, "SELECT * FROM (" + sql + ") AS dt {WHERE} {ORDER BY}", parameters);
+	}
+
 }

@@ -34,10 +34,13 @@ import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
 import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
 import com.nabla.dc.server.handler.fixed_asset.AddAssetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.FetchAssetCategoryListHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveAssetHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveBalanceSheetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveTransactionHandler;
+import com.nabla.dc.server.handler.fixed_asset.RestoreAssetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.UpdateAssetCategoryHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -164,8 +167,11 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdatePeriodEndHandler.class);
 		bindHandler(UpdateFinancialYearHandler.class);
 
+		bindHandler(FetchAssetCategoryListHandler.class);
 		bindHandler(AddAssetCategoryHandler.class);
+		bindHandler(UpdateAssetCategoryHandler.class);
 		bindHandler(RemoveAssetCategoryHandler.class);
+		bindHandler(RestoreAssetCategoryHandler.class);
 
 		bindHandler(RemoveBalanceSheetCategoryHandler.class);
 
@@ -173,11 +179,9 @@ public class HandlerModule extends AbstractHandlerModule {
 
 		bindHandler(RemoveTransactionHandler.class);
 /*
-  bindHandler(FetchAssetCategoryListHandler.class);
 
 
-		bindHandler(RestoreAssetCategoryHandler.class);
-		bindHandler(UpdateAssetCategoryHandler.class);
+
   bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);
 
 		bindHandler(FetchBalanceSheetCategoryListHandler.class);

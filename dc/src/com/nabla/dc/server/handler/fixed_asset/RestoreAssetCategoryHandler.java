@@ -16,9 +16,9 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
-import com.nabla.fixed_assets.shared.command.RestoreAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.RestoreAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
-import com.nabla.wapp.shared.auth.IRootUser;
 
 /**
  * @author nabla
@@ -27,7 +27,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 public class RestoreAssetCategoryHandler extends AbstractRestoreHandler<RestoreAssetCategory> {
 
 	public RestoreAssetCategoryHandler() {
-		super("asset_category", IRootUser.NAME);
+		super(IAssetCategory.TABLE);
 	}
 
 }

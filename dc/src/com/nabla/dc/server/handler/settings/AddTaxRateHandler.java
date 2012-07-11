@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public class AddTaxRateHandler extends AbstractAddHandler<AddTaxRate> {
 
-	public static final InsertStatement<AddTaxRate>	sql = new InsertStatement<AddTaxRate>(AddTaxRate.class);
+	private static final InsertStatement<AddTaxRate>	sql = new InsertStatement<AddTaxRate>(AddTaxRate.class);
 
 	@SuppressWarnings("static-access")
 	@Override

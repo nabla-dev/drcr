@@ -44,14 +44,13 @@ public class FetchTaxRateListHandler extends AbstractFetchHandler<FetchTaxRateLi
 
 	@Override
 	public FetchResult execute(final FetchTaxRateList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
+		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, rate, active" +
-" FROM tax_rate" +
-"{WHERE} {ORDER BY}"
+" FROM tax_rate"
 			:
 "SELECT FALSE AS 'deleted', id, name, rate, active" +
 " FROM tax_rate" +
-" WHERE uname IS NOT NULL {AND WHERE} {ORDER BY}");
+" WHERE uname IS NOT NULL");
 	}
 
 }
