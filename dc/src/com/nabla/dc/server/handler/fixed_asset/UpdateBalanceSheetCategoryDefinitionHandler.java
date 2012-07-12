@@ -16,65 +16,34 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Set;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
-
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.command.UpdateBalanceSheetCategoryDefinition;
+import com.nabla.dc.shared.command.fixed_asset.UpdateBalanceSheetCategoryDefinition;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
+import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
  * @author nabla
  *
  */
-public class UpdateBalanceSheetCategoryDefinitionHandler extends AbstractOperationHandler<UpdateBalanceSheetCategoryDefinition, UpdateBalanceSheetCategoryDefinitionHandler.Request> {
-
-	@Root(name="data")
-	public static class Request {
-		@Element
-		public Integer			id;
-		@ElementList(entry="category",required=false, inline=true)
-		public Set<Integer>		categories;
-	}
+public class UpdateBalanceSheetCategoryDefinitionHandler extends AbstractHandler<UpdateBalanceSheetCategoryDefinition, StringResult> {
 
 	public UpdateBalanceSheetCategoryDefinitionHandler() {
-		super(true, IPrivileges.BS_CATEGORY_EDIT);
+		super(true);
 	}
 
 	@Override
-	protected String execute(final Request request, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final Connection conn = ctx.getWriteConnection();
-		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
-		try {
-			Database.executeUpdate(conn,
-"DELETE FROM bs_category_definition WHERE bs_category_id=?;", request.id);
-			final PreparedStatement stmt = conn.prepareStatement(
-"INSERT INTO bs_category_definition (bs_category_id, asset_category_id) VALUES(?,?);");
-			try {
-				stmt.clearBatch();
-				stmt.setInt(1, request.id);
-				for (final Integer childId : request.categories) {
-					stmt.setInt(2, childId);
-					stmt.addBatch();
-				}
-				guard.setSuccess(Database.isBatchCompleted(stmt.executeBatch()));
-			} finally {
-				try { stmt.close(); } catch (final SQLException e) {}
-			}
-		} finally {
-			guard.close();
-		}
+	public StringResult execute(final UpdateBalanceSheetCategoryDefinition record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		Database.executeUpdate(ctx.getWriteConnection(),
+				record.getActive() ?
+"INSERT IGNORE INTO fa_bs_category_definition (fa_bs_category_id,fa_asset_category_id) VALUES(?,?);"
+						:
+"DELETE FROM fa_bs_category_definition WHERE fa_bs_category_id=? AND fa_asset_category_id=?;"
+				,
+				record.getBalanceSheetCategoryId(), record.getAssetCategoryId());
 		return null;
 	}
 

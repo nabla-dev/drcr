@@ -19,29 +19,24 @@ package com.nabla.dc.server.handler.fixed_asset;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-
-import com.nabla.fixed_assets.server.AssetDepreciation;
-import com.nabla.fixed_assets.server.AssetRecord;
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.command.AddAsset;
-import com.nabla.fixed_assets.shared.model.IAsset;
+import com.nabla.dc.shared.command.fixed_asset.AddAsset;
+import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
+import com.nabla.wapp.server.database.InsertStatement;
+import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
-import com.nabla.wapp.server.database.InsertStatement;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class AddAssetHandler extends AbstractOperationHandler<AddAsset, AddAssetHandler.Record> {
+public class AddAssetHandler extends AbstractAddHandler<AddAsset> {
 
 	@Root(name="data")
 	@IRecordTable(name="asset")
@@ -51,10 +46,14 @@ public class AddAssetHandler extends AbstractOperationHandler<AddAsset, AddAsset
 		Integer		asset_register_id;
 	}
 
-	public static final InsertStatement<Record>	sql = new InsertStatement<Record>(Record.class);
+	private static final InsertStatement<AddAsset>	sql = new InsertStatement<AddAsset>(AddAsset.class);
 
-	public AddAssetHandler() {
-		super(true, IPrivileges.ASSET_ADD);
+	@Override
+	protected int add(final AddAsset record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		final Integer id = sql.execute(ctx.getWriteConnection(), record);
+		if (id == null)
+			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		return id;
 	}
 
 	@Override

@@ -25,9 +25,9 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class UpdateCompanyTaxRate implements IAction<StringResult> {
 
-	Integer		companyId;
-	Integer		taxRateId;
-	Boolean		active;
+	private Integer		companyId;
+	private Integer		taxRateId;
+	private Boolean		active;
 
 	protected UpdateCompanyTaxRate() {}	// for serialization only
 

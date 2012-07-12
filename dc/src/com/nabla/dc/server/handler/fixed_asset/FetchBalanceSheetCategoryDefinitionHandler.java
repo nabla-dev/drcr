@@ -18,34 +18,34 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.command.FetchBalanceSheetCategoryDefinition;
+import com.nabla.dc.shared.command.fixed_asset.FetchBalanceSheetCategoryDefinition;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
-import com.nabla.wapp.server.model.FetchRecordRequest;
+import com.nabla.wapp.server.json.OdbcBooleanToJson;
+import com.nabla.wapp.server.json.OdbcIntToJson;
+import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.model.AbstractFetchHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.FetchResult;
 
 /**
  * @author nabla
  *
  */
-public class FetchBalanceSheetCategoryDefinitionHandler extends AbstractOperationHandler<FetchBalanceSheetCategoryDefinition, FetchRecordRequest> {
+public class FetchBalanceSheetCategoryDefinitionHandler extends AbstractFetchHandler<FetchBalanceSheetCategoryDefinition> {
 
-	public FetchBalanceSheetCategoryDefinitionHandler() {
-		super(false, IPrivileges.BS_CATEGORY_EDIT);
-	}
+	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
+"SELECT t.id, t.name, (tt.company_id IS NOT NULL) AS 'active'" +
+" FROM fa_asset_category AS t LEFT JOIN fa_bs_category_definition AS tt ON t.id=tt.fa_asset_category_id AND tt.fa_bs_category_id=?" +
+" WHERE t.active=TRUE AND t.uname IS NOT NULL",
+		new OdbcIntToJson("id"),
+		new OdbcStringToJson("name"),
+		new OdbcBooleanToJson("active")
+	);
 
 	@Override
-	protected String execute(final FetchRecordRequest request, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return request.serialize(ctx.getReadConnection(),
-"SELECT isSelected, id, name FROM" +
-" (SELECT id, name, 'true' AS 'isSelected' FROM bs_category_active_asset_category" +
-" WHERE bs_category_id=?" +
-" UNION" +
-" SELECT id, name, 'false' AS 'isSelected' FROM live_asset_category" +
-" WHERE id NOT IN (SELECT asset_category_id FROM bs_category_definition WHERE bs_category_id=?) AND active='true'" +
-") dt {WHERE} ORDER BY isSelected DESC, name ASC {AND ORDER BY}", request.recordId, request.recordId);
+	public FetchResult execute(final FetchBalanceSheetCategoryDefinition cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getBalanceSheetCategoryId());
 	}
 
 }
