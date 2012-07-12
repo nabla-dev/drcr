@@ -18,61 +18,29 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.command.AddBalanceSheetCategory;
-import com.nabla.fixed_assets.shared.model.IAssetCategory;
-import com.nabla.fixed_assets.shared.model.IBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.AddBalanceSheetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.server.database.InsertStatement;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
+import com.nabla.wapp.server.model.AbstractAddHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class AddBalanceSheetCategoryHandler extends AbstractOperationHandler<AddBalanceSheetCategory, AddBalanceSheetCategoryHandler.Record> {
+public class AddBalanceSheetCategoryHandler extends AbstractAddHandler<AddBalanceSheetCategory> {
 
-	@Root(name="data")
-	@IRecordTable(name="bs_category")
-	public static class Record {
+	private static final InsertStatement<AddBalanceSheetCategory>	sql = new InsertStatement<AddBalanceSheetCategory>(AddBalanceSheetCategory.class);
 
-		@Element
-		@IRecordField(unique=true)
-		String		name;
-		@IRecordField
-		String		uname;
-		@Element(required=false)
-		@IRecordField
-		Boolean		active;
-
-		@Validate
-		public void validate() throws ValidationException {
-			IAssetCategory.NAME_CONSTRAINT.validate(IBalanceSheetCategory.NAME, name);
-			uname = name.toUpperCase();
-			if (active == null)
-				active = false;
-		}
-
-	}
-
-	public static final InsertStatement<Record>	sql = new InsertStatement<Record>(Record.class);
-
-	public AddBalanceSheetCategoryHandler() {
-		super(true, IPrivileges.BS_CATEGORY_ADD);
-	}
-
+	@SuppressWarnings("static-access")
 	@Override
-	protected String execute(final Record request, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return serialize(sql.execute(ctx.getWriteConnection(), request));
+	protected int add(final AddBalanceSheetCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		final Integer id = sql.execute(ctx.getWriteConnection(), record);
+		if (id == null)
+			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		return id;
 	}
 
 }

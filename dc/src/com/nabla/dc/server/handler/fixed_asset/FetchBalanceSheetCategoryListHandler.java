@@ -18,33 +18,39 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.command.FetchBalanceSheetCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.FetchBalanceSheetCategoryList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
-import com.nabla.wapp.server.model.FetchRequest;
+import com.nabla.wapp.server.json.JsonFetch;
+import com.nabla.wapp.server.json.OdbcBooleanToJson;
+import com.nabla.wapp.server.json.OdbcIdToJson;
+import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.model.AbstractFetchHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.FetchResult;
 
 /**
  * @author nabla
  *
  */
-public class FetchBalanceSheetCategoryListHandler extends AbstractOperationHandler<FetchBalanceSheetCategoryList, FetchRequest> {
+public class FetchBalanceSheetCategoryListHandler extends AbstractFetchHandler<FetchBalanceSheetCategoryList> {
 
-	public FetchBalanceSheetCategoryListHandler() {
-		super(false, IPrivileges.BS_CATEGORY_VIEW);
-	}
+	private static final JsonFetch	fetcher = new JsonFetch(
+		new OdbcBooleanToJson("deleted"),
+		new OdbcIdToJson(),
+		new OdbcStringToJson("name"),
+		new OdbcBooleanToJson("active")
+	);
 
 	@Override
-	protected String execute(final FetchRequest request, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return request.serialize(ctx.getReadConnection(), ctx.isRoot() ?
-"SELECT * FROM (" +
-"SELECT sf_toBool(uname IS NULL) as 'deleted', id, name, sf_toBool(active) AS 'active'" +
-" FROM bs_category" +
-") AS dt {WHERE} {ORDER BY}"
+	public FetchResult execute(final FetchBalanceSheetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
+"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
+" FROM bs_category"
 		:
-"SELECT id, name, active FROM live_bs_category {WHERE} {ORDER BY}");
+"SELECT FALSE AS 'deleted', id, name, active" +
+" FROM fa_bs_category" +
+" WHERE uname IS NOT NULL"
+				);
 	}
 
 }

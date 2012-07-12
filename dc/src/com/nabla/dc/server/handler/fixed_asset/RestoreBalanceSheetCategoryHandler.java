@@ -16,9 +16,9 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
-import com.nabla.fixed_assets.shared.command.RestoreBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.RestoreBalanceSheetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IBalanceSheetCategory;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
-import com.nabla.wapp.shared.auth.IRootUser;
 
 /**
  * @author nabla
@@ -27,7 +27,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 public class RestoreBalanceSheetCategoryHandler extends AbstractRestoreHandler<RestoreBalanceSheetCategory> {
 
 	public RestoreBalanceSheetCategoryHandler() {
-		super("bs_category", IRootUser.NAME);
+		super(IBalanceSheetCategory.TABLE);
 	}
 
 }

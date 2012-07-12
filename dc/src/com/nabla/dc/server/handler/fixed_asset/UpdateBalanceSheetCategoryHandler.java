@@ -18,64 +18,23 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.command.UpdateBalanceSheetCategory;
-import com.nabla.fixed_assets.shared.model.IBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.UpdateBalanceSheetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.server.database.UpdateStatement;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
-import com.nabla.wapp.shared.general.SimpleString;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
  * @author nabla
  *
  */
-public class UpdateBalanceSheetCategoryHandler extends AbstractOperationHandler<UpdateBalanceSheetCategory, UpdateBalanceSheetCategoryHandler.Record> {
+public class UpdateBalanceSheetCategoryHandler extends AbstractUpdateHandler<UpdateBalanceSheetCategory> {
 
-	@Root(name="data")
-	@IRecordTable(name="bs_category")
-	static class Record {
-
-		@Element
-		@IRecordField(id=true)
-		Integer	id;
-		@Element(required=false)
-		@IRecordField(unique=true)
-		SimpleString		name;
-		@IRecordField
-		String				uname;
-		@Element(required=false)
-		@IRecordField
-		Boolean				active;
-
-		@Validate
-		public void validate() throws ValidationException {
-			IBalanceSheetCategory.NAME_CONSTRAINT.validate(IBalanceSheetCategory.NAME, name);
-			if (name != null)
-				uname = name.getValue().toUpperCase();
-		}
-
-	}
-
-	private final UpdateStatement<Record>	sql = new UpdateStatement<Record>(Record.class);
-
-	public UpdateBalanceSheetCategoryHandler() {
-		super(true, IPrivileges.BS_CATEGORY_EDIT);
-	}
+	private final UpdateStatement<UpdateBalanceSheetCategory>	sql = new UpdateStatement<UpdateBalanceSheetCategory>(UpdateBalanceSheetCategory.class);
 
 	@Override
-	protected String execute(final Record request, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		sql.execute(ctx.getWriteConnection(), request);
-		return null;
+	protected void update(UpdateBalanceSheetCategory record, IUserSessionContext ctx) throws DispatchException, SQLException {
+		sql.execute(ctx.getConnection(), record);
 	}
 
 }
