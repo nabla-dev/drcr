@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
+	
+	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.FixedAssetCategoryListModel"/>
+
+	<wnd:ModalDialog caption="New Fixed Asset Category" icon="fa_asset_category_small.png" autoClose="true">
+		<ui:attribute name="caption" description="Create new fixed asset category caption"/>
+		<form:Form ui:field="form" model="{model}">
+ 			<form:Control name="{model.fields.name}"><ui:msg>*Name</ui:msg></form:Control>
+			<form:Control name="{model.fields.type}"><ui:msg>*Type</ui:msg></form:Control>
+			<form:Control name="{model.fields.minPeriod}"><ui:msg>M*in dep period</ui:msg></form:Control>
+			<form:Control name="{model.fields.maxPeriod}"><ui:msg>Ma*x dep period</ui:msg></form:Control>
+			<form:Control name="{model.fields.active}"><ui:msg>*Active</ui:msg></form:Control>
+			<form:ButtonBar>
+				<wnd:SubmitButton><ui:msg>*OK</ui:msg></wnd:SubmitButton>
+				<wnd:CancelButton><ui:msg>*Cancel</ui:msg></wnd:CancelButton>
+			</form:ButtonBar>
+		</form:Form>
+	</wnd:ModalDialog>
+	
+</ui:UiBinder> 

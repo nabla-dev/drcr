@@ -21,8 +21,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.command.fixed_asset.UpdateAssetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.UpdateFixedAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
@@ -37,12 +37,12 @@ import com.nabla.wapp.shared.model.ValidationException;
  * @author nabla
  *
  */
-public class UpdateAssetCategoryHandler extends AbstractUpdateHandler<UpdateAssetCategory> {
+public class UpdateFixedAssetCategoryHandler extends AbstractUpdateHandler<UpdateFixedAssetCategory> {
 
-	private static final UpdateStatement<UpdateAssetCategory>	sql = new UpdateStatement<UpdateAssetCategory>(UpdateAssetCategory.class);
+	private static final UpdateStatement<UpdateFixedAssetCategory>	sql = new UpdateStatement<UpdateFixedAssetCategory>(UpdateFixedAssetCategory.class);
 
 	@Override
-	protected void update(UpdateAssetCategory record, IUserSessionContext ctx) throws DispatchException, SQLException {
+	protected void update(UpdateFixedAssetCategory record, IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (record.getMinDepreciationPeriod() == null && record.getMaxDepreciationPeriod() != null) {
 			final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT min_depreciation_period FROM fa_asset_category WHERE id=?;", record.getId());
@@ -52,7 +52,7 @@ public class UpdateAssetCategoryHandler extends AbstractUpdateHandler<UpdateAsse
 					if (!rs.next())
 						throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
 					if (rs.getInt(1) > record.getMaxDepreciationPeriod())
-						throw new ValidationException(IAssetCategory.MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_DEPRECIATION_PERIOD);
+						throw new ValidationException(IFixedAssetCategory.MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_DEPRECIATION_PERIOD);
 				} finally {
 					Database.close(rs);
 				}
@@ -68,7 +68,7 @@ public class UpdateAssetCategoryHandler extends AbstractUpdateHandler<UpdateAsse
 					if (!rs.next())
 						throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
 					if (rs.getInt(1) < record.getMinDepreciationPeriod())
-						throw new ValidationException(IAssetCategory.MIN_DEPRECIATION_PERIOD, ServerErrors.INVALID_DEPRECIATION_PERIOD);
+						throw new ValidationException(IFixedAssetCategory.MIN_DEPRECIATION_PERIOD, ServerErrors.INVALID_DEPRECIATION_PERIOD);
 				} finally {
 					Database.close(rs);
 				}

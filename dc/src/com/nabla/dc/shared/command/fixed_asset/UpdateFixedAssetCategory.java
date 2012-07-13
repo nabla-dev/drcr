@@ -17,7 +17,7 @@
 package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.model.fixed_asset.AssetCategoryTypes;
+import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -26,14 +26,14 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
-public class UpdateAssetCategory extends AddAssetCategory {
+public class UpdateFixedAssetCategory extends AddFixedAssetCategory {
 
 	@IRecordField(id=true)
 	Integer		id;
 
-	protected UpdateAssetCategory() {}	// for serialization only
+	protected UpdateFixedAssetCategory() {}	// for serialization only
 
-	public UpdateAssetCategory(final Integer id, final String name, final Boolean active, final AssetCategoryTypes type, final Integer min_depreciation_period, final Integer max_depreciation_period) {
+	public UpdateFixedAssetCategory(final Integer id, final String name, final Boolean active, final FixedAssetCategoryTypes type, final Integer min_depreciation_period, final Integer max_depreciation_period) {
 		super(name, active, type, min_depreciation_period, max_depreciation_period);
 		this.id = id;
 	}

@@ -17,8 +17,8 @@
 package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.model.fixed_asset.AssetCategoryTypes;
-import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
@@ -29,8 +29,8 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
-@IRecordTable(name=IAssetCategory.TABLE)
-public class AddAssetCategory implements IRecordAction<StringResult>, IAssetCategory {
+@IRecordTable(name=IFixedAssetCategory.TABLE)
+public class AddFixedAssetCategory implements IRecordAction<StringResult>, IFixedAssetCategory {
 
 	@IRecordField(unique=true)
 	String				name;
@@ -39,23 +39,19 @@ public class AddAssetCategory implements IRecordAction<StringResult>, IAssetCate
 	@IRecordField
 	Boolean				active;
 	@IRecordField
-	AssetCategoryTypes	type;
+	FixedAssetCategoryTypes	type;
 	@IRecordField
 	Integer				min_depreciation_period;
 	@IRecordField
 	Integer				max_depreciation_period;
 
-	protected AddAssetCategory() {}	// for serialization only
+	protected AddFixedAssetCategory() {}	// for serialization only
 
-	public AddAssetCategory(final String name, final Boolean active, final AssetCategoryTypes type, final Integer min_depreciation_period) {
+	public AddFixedAssetCategory(final String name, final Boolean active, final FixedAssetCategoryTypes type, final Integer min_depreciation_period, final Integer max_depreciation_period) {
 		this.name = name;
 		this.active = active;
 		this.type = type;
 		this.min_depreciation_period = min_depreciation_period;
-	}
-
-	public AddAssetCategory(final String name, final Boolean active, final AssetCategoryTypes type, final Integer min_depreciation_period, final Integer max_depreciation_period) {
-		this(name, active, type, min_depreciation_period);
 		this.max_depreciation_period = max_depreciation_period;
 	}
 
@@ -73,7 +69,7 @@ public class AddAssetCategory implements IRecordAction<StringResult>, IAssetCate
 		if (active == null)
 			active = false;
 		if (type == null)
-			type = AssetCategoryTypes.TANGIBLE;
+			type = FixedAssetCategoryTypes.TANGIBLE;
 		return n == errors.size();
 	}
 
@@ -81,7 +77,7 @@ public class AddAssetCategory implements IRecordAction<StringResult>, IAssetCate
 		return active;
 	}
 
-	public AssetCategoryTypes getType() {
+	public FixedAssetCategoryTypes getType() {
 		return type;
 	}
 

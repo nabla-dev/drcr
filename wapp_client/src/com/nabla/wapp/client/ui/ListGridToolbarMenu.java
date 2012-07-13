@@ -38,7 +38,7 @@ public class ListGridToolbarMenu extends ToolStripMenuButton implements HasWidge
 	private static final Logger	logger = LoggerFactory.getLog(ListGridToolbarMenu.class);
 	private ListGridToolbar		parent;
 	private final Menu			menu = new Menu();
-	
+
 	public ListGridToolbarMenu() {
 		menu.setHeight(16);
 		menu.setWidth(16);
@@ -53,12 +53,16 @@ public class ListGridToolbarMenu extends ToolStripMenuButton implements HasWidge
 	public JavaScriptObject getCurrentRecord() {
 		return (parent == null) ? null : parent.getCurrentRecord();
 	}
-	
+
 	@Override
 	public void add(final Widget w){
 		Assert.argumentNotNull(w);
 
-		if (w instanceof ListGridToolbarMenuItem) {
+		if (w instanceof Menu) {
+			final com.smartgwt.client.widgets.menu.MenuItem proxy = new com.smartgwt.client.widgets.menu.MenuItem(w.getTitle());
+			proxy.setSubmenu((Menu)w);
+			menu.addItem(proxy);
+		} else if (w instanceof ListGridToolbarMenuItem) {
 			ListGridToolbarMenuItem item = (ListGridToolbarMenuItem) w;
 			menu.addItem(item.getImpl());
 			item.setParent(this);

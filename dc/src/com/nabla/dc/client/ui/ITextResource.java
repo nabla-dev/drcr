@@ -113,4 +113,18 @@ public interface ITextResource extends Constants {
 	@DefaultStringValue("undefined Balance Sheet category")
 	String UNDEFINED_BS_CATEGORY();
 
+	@DefaultStringArrayValue({"Tangible", "Intangible"})
+	String[] fixedAssetCategoryTypes();
+
+	@DefaultStringArrayValue({"Purchase", "Transfer"})
+	String[] fixedAssetAcquisitionTypes();
+
+	@DefaultStringArrayValue({"Sold", "Transfer", "Scrapped"})
+	String[] fixedAssetDisposalTypes();
+
+	@DefaultStringValue("You need to select a deleted asset category to run this command")
+	String noDeletedFixedAssetCategorySelected();
+
+	@DefaultStringValue("You need to select a deleted BalanceSheet category to run this command")
+	String noDeletedBalanceSheetCategorySelected();
 }

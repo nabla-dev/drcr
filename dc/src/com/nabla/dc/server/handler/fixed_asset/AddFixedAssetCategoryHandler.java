@@ -18,8 +18,8 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.AddAssetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.AddFixedAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
@@ -33,22 +33,22 @@ import com.nabla.wapp.shared.model.ValidationException;
  * @author nabla
  *
  */
-public class AddAssetCategoryHandler extends AbstractAddHandler<AddAssetCategory> {
+public class AddFixedAssetCategoryHandler extends AbstractAddHandler<AddFixedAssetCategory> {
 
-	private static final InsertStatement<AddAssetCategory>	sql = new InsertStatement<AddAssetCategory>(AddAssetCategory.class);
+	private static final InsertStatement<AddFixedAssetCategory>	sql = new InsertStatement<AddFixedAssetCategory>(AddFixedAssetCategory.class);
 
 	@SuppressWarnings("static-access")
 	@Override
-	protected int add(final AddAssetCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	protected int add(final AddFixedAssetCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 		try {
 			final Integer id = sql.execute(ctx.getWriteConnection(), record);
 			if (id == null)
 				throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "type", record.getType());
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "min_depreciation_period", record.getMinDepreciationPeriod());
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "max_depreciation_period", record.getMaxDepreciationPeriod());
-			UserPreference.save(ctx, IAssetCategory.PREFERENCE_GROUP, "active", record.getActive());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "type", record.getType());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "min_depreciation_period", record.getMinDepreciationPeriod());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "max_depreciation_period", record.getMaxDepreciationPeriod());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "active", record.getActive());
 			guard.setSuccess();
 			return id;
 		} finally {

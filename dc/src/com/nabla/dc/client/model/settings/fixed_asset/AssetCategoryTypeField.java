@@ -14,20 +14,21 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.fixed_asset;
+package com.nabla.dc.client.model.settings.fixed_asset;
 
-import com.nabla.dc.shared.command.fixed_asset.RestoreAssetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IAssetCategory;
-import com.nabla.wapp.server.model.AbstractRestoreHandler;
+import com.nabla.dc.client.ui.Resource;
+import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
+import com.nabla.wapp.client.model.field.EnumField;
+import com.nabla.wapp.client.model.field.FieldAttributes;
 
 /**
  * @author nabla
  *
  */
-public class RestoreAssetCategoryHandler extends AbstractRestoreHandler<RestoreAssetCategory> {
+public class AssetCategoryTypeField extends EnumField {
 
-	public RestoreAssetCategoryHandler() {
-		super(IAssetCategory.TABLE);
+	public AssetCategoryTypeField(final String name) {
+		super(name, FixedAssetCategoryTypes.values(), Resource.strings.fixedAssetCategoryTypes(), FieldAttributes.REQUIRED);
+		this.setDefaultValue(FixedAssetCategoryTypes.TANGIBLE);
 	}
-
 }

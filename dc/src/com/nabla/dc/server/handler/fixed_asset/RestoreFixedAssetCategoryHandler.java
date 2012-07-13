@@ -14,12 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_asset;
+package com.nabla.dc.server.handler.fixed_asset;
+
+import com.nabla.dc.shared.command.fixed_asset.RestoreFixedAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
+import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
 /**
  * @author nabla
  *
  */
-public enum AssetCategoryTypes {
-	TANGIBLE, INTANGIBLE
+public class RestoreFixedAssetCategoryHandler extends AbstractRestoreHandler<RestoreFixedAssetCategory> {
+
+	public RestoreFixedAssetCategoryHandler() {
+		super(IFixedAssetCategory.TABLE);
+	}
+
 }

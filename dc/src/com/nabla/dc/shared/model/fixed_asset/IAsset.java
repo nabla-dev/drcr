@@ -53,7 +53,7 @@ public interface IAsset {
 	static final int						DEFAULT_INITIAL_ACCUM_DEPRECIATION = 0;
 	static final String					INITIAL_DEPRECIATION_PERIOD = "initial_depreciation_period";
 	static final int						DEFAULT_INITIAL_DEPRECIATION_PERIOD = 0;
-	static final IntegerRangeConstraint	INITIAL_DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(0, IAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.getMaxValue());
+	static final IntegerRangeConstraint	INITIAL_DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(0, IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.getMaxValue());
 	// if import asset
 	static final String					OPENING = "opening";
 	static final String					OPENING_YEAR = "opening_year";
@@ -66,7 +66,7 @@ public interface IAsset {
 	static final TextLengthConstraint		PURCHASE_INVOICE_CONSTRAINT = new TextLengthConstraint(0, 64);
 
 	static final String					DEPRECIATION_PERIOD = "depreciation_period";
-	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = IAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT;
+	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT;
 
 	static final String					RESIDUAL_VALUE = "residual_value";
 	static final int						DEFAULT_RESIDUAL_VALUE = 1;

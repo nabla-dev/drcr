@@ -24,6 +24,8 @@ import com.nabla.dc.client.presenter.options.RoleList;
 import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.presenter.settings.TaxRateList;
+import com.nabla.dc.client.presenter.settings.fixed_asset.BalanceSheetCategoryList;
+import com.nabla.dc.client.presenter.settings.fixed_asset.FixedAssetCategoryList;
 import com.nabla.dc.client.ui.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.Command;
@@ -50,6 +52,8 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		// SETTINGS
 		@IRequiredRole(IPrivileges.COMPANY_VIEW) HideableCommand companyList();
 		@IRequiredRole(IPrivileges.TAX_RATE_VIEW) HideableCommand taxCodeList();
+		@IRequiredRole(IPrivileges.FA_ASSET_CATEGORY_VIEW) HideableCommand fixedAssetCategoryList();
+		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand bsCategoryList();
 		// OPTIONS
 		Command changePassword();
 		@IRequiredRole(IPrivileges.USER_VIEW) HideableCommand userList();
@@ -86,6 +90,8 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.userList(), onUserList);
 		registerSlot(cmd.companyList(), onCompanyList);
 		registerSlot(cmd.taxCodeList(), onTaxRateList);
+		registerSlot(cmd.fixedAssetCategoryList(), onFixedAssetCategoryList);
+		registerSlot(cmd.bsCategoryList(), onBalanceSheetCategoryList);
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
 //		printerManager.bind(cmd, this, BuiltInReports.ACCOUNT_LIST);
@@ -167,6 +173,30 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 				@Override
 				public void onSuccess() {
 					tabs.addTab(new TaxRateList());
+				}
+			});
+		}
+	};
+
+	private final ISlot onFixedAssetCategoryList = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					tabs.addTab(new FixedAssetCategoryList());
+				}
+			});
+		}
+	};
+
+	private final ISlot onBalanceSheetCategoryList = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					tabs.addTab(new BalanceSheetCategoryList());
 				}
 			});
 		}

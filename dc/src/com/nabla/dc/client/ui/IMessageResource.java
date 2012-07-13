@@ -52,4 +52,13 @@ public interface IMessageResource extends Messages {
 	@DefaultMessage("Are you sure you want to delete these {0} accounts?")
 	@AlternateMessage({"one", "Are you sure you want to delete account ''{1}''?"})
 	String confirmRemoveAccounts(@PluralCount @Optional int count, @Optional String name);
+
+	@DefaultMessage("Are you sure you want to delete these {0} asset categories?")
+	@AlternateMessage({"one", "Are you sure you want to delete asset category ''{1}''?"})
+	String confirmRemoveFixedAssetCategories(@PluralCount @Optional int count, @Optional String name);
+
+	@DefaultMessage("Are you sure you want to delete these {0} BalanceSheet categories?")
+	@AlternateMessage({"one", "Are you sure you want to delete BalanceSheet category ''{1}''?"})
+	String confirmRemoveBalanceSheetCategories(@PluralCount @Optional int count, @Optional String name);
+
 }

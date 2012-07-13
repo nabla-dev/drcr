@@ -1,0 +1,44 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	>
+
+	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.FixedAssetCategoryListModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.settings.fixed_asset.FixedAssetCategoryList.ICommandSet"/>
+	
+	<wnd:Tab title="Fixed Asset Categories" canClose="true" icon="fa_asset_category_small.png">
+		<ui:attribute name="title" description="Tab title"/>
+		<wnd:VLayout>
+			<wnd:Toolbar width="100%">
+				<wnd:ToolbarButton command="{cmd.addRecord}" tooltip="Add category" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.removeRecord}" tooltip="Remove category" icon="remove.png"><ui:msg>Remove</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.restoreRecord}" tooltip="Restore category" icon="restore_small.png"><ui:msg>Restore</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
+				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
+			</wnd:Toolbar>
+			<wnd:ListGrid ui:field="list" viewStateReference="fa_asset_category_list" model="{model}" editByCell="true" showCheckbox="true" canSort="true" editCommand="{cmd.edit}" addCommand="{cmd.add}">
+				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.type}" width="150"><ui:msg>Type</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.minPeriod}" width="100" canGroupBy="false"><ui:msg>Min dep period</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.maxPeriod}" width="100" canGroupBy="false"><ui:msg>Max dep period</ui:msg></wnd:ListGridField>
+				<wnd:Menu>
+					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg>Export as CSV</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.print}" icon="print.png"><ui:msg>Print</ui:msg></wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:MenuItem>					
+				</wnd:Menu>
+			</wnd:ListGrid>
+		</wnd:VLayout>
+	</wnd:Tab>
+	
+</ui:UiBinder> 

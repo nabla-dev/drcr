@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.FetchAssetCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.FetchFixedAssetCategoryList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -33,7 +33,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchAssetCategoryListHandler extends AbstractFetchHandler<FetchAssetCategoryList> {
+public class FetchFixedAssetCategoryListHandler extends AbstractFetchHandler<FetchFixedAssetCategoryList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
 		new OdbcBooleanToJson("deleted"),
@@ -46,7 +46,7 @@ public class FetchAssetCategoryListHandler extends AbstractFetchHandler<FetchAss
 	);
 
 	@Override
-	public FetchResult execute(final FetchAssetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public FetchResult execute(final FetchFixedAssetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active, type, min_depreciation_period, max_depreciation_period" +
 " FROM fa_asset_category"

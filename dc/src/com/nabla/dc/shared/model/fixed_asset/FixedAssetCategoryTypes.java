@@ -14,12 +14,12 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
-
-import com.nabla.wapp.shared.command.AbstractFetch;
+package com.nabla.dc.shared.model.fixed_asset;
 
 /**
  * @author nabla
  *
  */
-public class FetchAssetCategoryList extends AbstractFetch {}
+public enum FixedAssetCategoryTypes {
+	TANGIBLE, INTANGIBLE
+}

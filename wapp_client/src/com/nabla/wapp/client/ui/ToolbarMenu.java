@@ -50,7 +50,11 @@ public class ToolbarMenu extends ToolStripMenuButton implements HasWidgets {
 	public void add(Widget w){
 		Assert.argumentNotNull(w);
 
-		if (w instanceof MenuItem)
+		if (w instanceof Menu) {
+			final com.smartgwt.client.widgets.menu.MenuItem proxy = new com.smartgwt.client.widgets.menu.MenuItem(w.getTitle());
+			proxy.setSubmenu((Menu)w);
+			menu.addItem(proxy);
+		} else if (w instanceof MenuItem)
 			menu.addItem(((MenuItem) w).getImpl());
 		else if (w instanceof MenuItemSeparator)
 			menu.addItem(((MenuItemSeparator) w).getImpl());
