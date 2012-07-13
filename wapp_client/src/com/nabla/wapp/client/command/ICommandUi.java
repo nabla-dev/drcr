@@ -21,7 +21,6 @@ package com.nabla.wapp.client.command;
  *
  */
 public interface ICommandUi {
-
 	boolean getEnabled();
 	void setEnabled(boolean value);
 
@@ -30,5 +29,4 @@ public interface ICommandUi {
 	void setVisible(boolean value);
 
 	void setText(String value);
-
 }

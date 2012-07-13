@@ -16,8 +16,21 @@
 */
 package com.nabla.wapp.client.command;
 
+import java.util.Set;
+
+import com.nabla.wapp.client.auth.IAuthSessionManager;
+import com.nabla.wapp.shared.general.StringSet;
+
 /**
  * @author nabla
  *
  */
-public interface IBasicCommandSet extends IBaseCommandSet {}
+public interface IBasicCommandSet {
+	StringSet getRequiredRoles();
+	void applyRoles(final Set<String> userRoles, boolean isRoot);
+
+	void updateUi(final IAuthSessionManager sessionManager);
+	void updateUi();
+
+	void setObjectId(final Integer objectId);
+}
