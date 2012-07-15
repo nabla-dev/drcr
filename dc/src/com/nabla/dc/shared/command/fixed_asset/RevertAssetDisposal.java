@@ -25,8 +25,6 @@ import com.nabla.wapp.shared.dispatch.VoidResult;
  */
 public class RevertAssetDisposal implements IAction<VoidResult> {
 
-	private static final long serialVersionUID = 1L;
-
 	private Integer	id;
 
 	protected RevertAssetDisposal() {}	// for serialization only

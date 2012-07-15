@@ -33,6 +33,7 @@ import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.uibinder.rebind.IndentedWriter;
+import com.nabla.wapp.client.command.IRecordCommand;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 
@@ -114,6 +115,7 @@ public class GenericCommandSetGenerator extends Generator {
 		writer.write(IMPORT, "java.util.Set");
 		writer.write(IMPORT, "java.util.HashSet");
 		writer.write(IMPORT, "java.util.Collections");
+		writer.write(IMPORT, "com.smartgwt.client.data.Record");
 		writer.write(IMPORT, "com.nabla.wapp.shared.slot.ISlot1");
 		writer.write(IMPORT, "com.nabla.wapp.shared.general.StringSet");
 		writer.write(IMPORT, "com.nabla.wapp.client.auth.IAuthSessionManager");
@@ -244,16 +246,40 @@ public class GenericCommandSetGenerator extends Generator {
 			    writer.write("}");	// isEnabled
 	    	}
 
+	    	if (isRecordCommandSet(interfaceType)) {
+			    writer.newline();
+			    writer.write("@Override public <R extends Record> void bindRecordProvider(final ICurrentRecordProvider<R> provider) {");
+			    writer.indent();
+			    for (final JMethod method : methods) {
+			    	if (method.getReturnType().getClass().isAssignableFrom(IRecordCommand.class))
+			    		writer.write("m_%2$s.setRecordProvider(provider);", method.getName());
+			    }
+				writer.outdent();
+			    writer.write("}");	// bindRecordProvider
+	    	}
 		writer.outdent();
 	    writer.write("}");	// class
 	}
 
 	private void getAllMethods(final JClassType interfaceType, final List<JMethod> methods) {
-		if (!interfaceType.getName().equals("IBasicCommandSet")) {
+		if (!interfaceType.getName().equals("IBasicCommandSet") &&
+			!interfaceType.getName().equals("IRecordCommandSet")) {
 			methods.addAll(Arrays.asList(interfaceType.getMethods()));
 			for (final JClassType subclass : interfaceType.getImplementedInterfaces())
 				getAllMethods(subclass, methods);
 		}
+	}
+
+	private boolean isRecordCommandSet(final JClassType interfaceType) {
+		if (interfaceType.getName().equals("IBasicCommandSet"))
+			return false;
+		if (interfaceType.getName().equals("IRecordCommandSet"))
+			return true;
+		for (final JClassType subclass : interfaceType.getImplementedInterfaces()) {
+			if (isRecordCommandSet(subclass))
+				return true;
+		}
+		return false;
 	}
 
 }
