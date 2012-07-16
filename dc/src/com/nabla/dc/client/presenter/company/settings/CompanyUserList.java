@@ -24,6 +24,7 @@ import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
@@ -49,6 +50,7 @@ public class CompanyUserList extends AbstractTabPresenter<CompanyUserList.IDispl
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
+		ICurrentRecordProvider<UserRecord> getCurrentRecordProvider();
 	}
 
 	private final Integer	companyId;
@@ -72,6 +74,7 @@ public class CompanyUserList extends AbstractTabPresenter<CompanyUserList.IDispl
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.editRoles(), onEditUserRoles);
+		cmd.editRoles().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);

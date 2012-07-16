@@ -16,10 +16,11 @@
 */
 package com.nabla.wapp.client.ui;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.HasText;
+import com.nabla.wapp.client.command.ICommand;
 import com.nabla.wapp.client.command.ICommandUi;
-import com.nabla.wapp.client.command.ITRecordCommand;
 import com.nabla.wapp.client.general.Assert;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.SelectionType;
@@ -32,10 +33,9 @@ import com.smartgwt.client.widgets.events.ClickHandler;
  * The <code></code> object is used to
  *
  */
-public class ListGridToolbarButton extends ImgButton implements HasText, ICommandUi, ClickHandler {
+public class ListGridToolbarButton extends ImgButton implements HasText, ICommandUi {
 
-	private ListGridToolbar		parent;
-	private ITRecordCommand		cmd;
+	private ICommand	cmd;
 
 	public ListGridToolbarButton() {
 		setShowDown(false);
@@ -43,11 +43,12 @@ public class ListGridToolbarButton extends ImgButton implements HasText, IComman
         setLayoutAlign(Alignment.CENTER);
         setHeight(16);
         setWidth(16);
-        this.addClickHandler(this);
-	}
-
-	public void setParent(final ListGridToolbar parent) {
-		this.parent = parent;
+        this.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(@SuppressWarnings("unused") ClickEvent event) {
+				fireCommand(cmd);
+			}
+		});
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class ListGridToolbarButton extends ImgButton implements HasText, IComman
 		setPrompt(text);
 	}
 
-	public void setCommand(final ITRecordCommand cmd) {
+	public void setCommand(final ICommand cmd) {
 		if (this.cmd != null)
 			this.cmd.removeUi(this);
 		this.cmd = cmd;
@@ -95,13 +96,14 @@ public class ListGridToolbarButton extends ImgButton implements HasText, IComman
 		return !getDisabled();
 	}
 
-	@Override
-	public void onClick(@SuppressWarnings("unused") final ClickEvent event) {
-		if (cmd != null && parent != null) {
-			final JavaScriptObject jsRecord = parent.getCurrentRecord();
-			if (jsRecord != null)
-				cmd.execute(jsRecord);
-		}
+	private static void fireCommand(final ICommand cmd) {
+		// need to defer signal to let SmartGWT update UI properly
+		// otherwise problems getting dialogboxes to catch the focus for instance!
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				cmd.fire();
+			}
+		});
 	}
-
 }

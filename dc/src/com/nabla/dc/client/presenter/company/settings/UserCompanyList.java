@@ -22,7 +22,7 @@ import com.nabla.dc.client.ui.company.settings.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
-import com.nabla.wapp.client.command.HideableListGridRecordCommand;
+import com.nabla.wapp.client.command.HideableListGridCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.model.BasicListGridRecord;
@@ -41,7 +41,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IPrivileges.COMPANY_USER_EDIT) HideableListGridRecordCommand editRoles();
+		@IRequiredRole(IPrivileges.COMPANY_USER_EDIT) HideableListGridCommand editRoles();
 		@IRequiredRole(IPrivileges.COMPANY_USER_EDIT) CommandUiManager edit();
 	}
 

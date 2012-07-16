@@ -53,6 +53,8 @@ public class ToolbarMenu extends ToolStripMenuButton implements HasWidgets {
 		if (w instanceof Menu) {
 			final com.smartgwt.client.widgets.menu.MenuItem proxy = new com.smartgwt.client.widgets.menu.MenuItem(w.getTitle());
 			proxy.setSubmenu((Menu)w);
+			proxy.setTitle(((com.nabla.wapp.client.ui.Menu)w).getTitle());
+			proxy.setIcon(((com.nabla.wapp.client.ui.Menu)w).getIcon());
 			menu.addItem(proxy);
 		} else if (w instanceof MenuItem)
 			menu.addItem(((MenuItem) w).getImpl());

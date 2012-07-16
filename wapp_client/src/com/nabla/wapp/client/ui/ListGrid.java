@@ -33,10 +33,12 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.command.ICommandUi;
 import com.nabla.wapp.client.command.ICommandUiManager;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.general.AbstractAsyncCallback;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.server.IDispatchAsync;
@@ -71,7 +73,7 @@ import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
  * @author nabla
  *
  */
-public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implements HasWidgets, IPostCreateProcessing {
+public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implements HasWidgets, IPostCreateProcessing, ICurrentListGridRecordProvider {
 
 	public interface IListGridConfirmAction {
 		void confirmRemoveRecords(final ListGridRecord[] records, final Command onSuccess);
@@ -85,7 +87,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 	// only valid during initialization
 	private List<HeaderSpan>						headers = new LinkedList<HeaderSpan>();
 	private List<ListGridColumn>					children = new LinkedList<ListGridColumn>();
-	// suport for CSS text formatter
+	// support for CSS text formatter
 	private ICellCSSTextFormatter					cssTextFormatter;
 	// support for deleted record
 	private String									recordDeletedProperty  = IFieldReservedNames.RECORD_DELETED;
@@ -96,11 +98,11 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 	// support for
 	private String									viewStateReference;
 	private String[]								groupByFields;
-	// suport for checkbox selection
+	// support for checkbox selection
 	private Integer									lastSelectedRecord;
 	// support for listgrid toolbar
 	private final Map<String, ListGridToolbar>		toolbars = new HashMap<String, ListGridToolbar>();
-	private ListGridRecord							currentRecord;
+	private BasicListGridRecord						currentRecord;
 	private final Canvas							defaultToolbar = new ListGridToolbar();
 
 	public ListGrid() {
@@ -249,7 +251,6 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 			if (!tb.isEmpty()) {
 				if (tb.getWidth() <= 1)
 					tb.setWidth(17 * tb.getMemberCount());
-				tb.setParent(this);
 				toolbars.put(tb.getField(), tb);
 				this.setShowRollOverCanvas(true);
 				this.setUseCellRollOvers(toolbars.size() > 1 || tb.getField() != null);
@@ -506,7 +507,7 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		if (!toolbars.isEmpty()) {
 			final ListGridRecord record = this.getRecord(rowNum);
 			if (ListGridColumn.isDataRecord(record)) {
-				currentRecord = record;
+				currentRecord = new BasicListGridRecord(record);
 				if (getUseCellRollOvers()) {
 					final ListGridToolbar rslt = toolbars.get(getFieldName(colNum));
 					if (rslt != null) {
@@ -525,8 +526,12 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		return super.getRollOverCanvas(rowNum, colNum);
 	}
 
-	public ListGridRecord getCurrentRecord() {
-		return currentRecord;
+	@Override
+	public BasicListGridRecord getCurrentRecord() {
+		if (currentRecord != null)
+			return currentRecord;
+		final ListGridRecord record = this.getSelectedRecord();
+		return (record == null) ? null : new BasicListGridRecord(record);
 	}
 
 }

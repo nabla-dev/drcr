@@ -14,10 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.ui;
+package com.nabla.wapp.client.command;
+
+import com.smartgwt.client.data.Record;
 
 /**
  * @author FNorais
  *
  */
-public class ListGridToolbarMenuItemSeparator extends MenuItemSeparator {}
+public class HideableRecordCommand<R extends Record> extends RecordCommand<R> {
+
+	@Override
+	public void setEnabled(final boolean value) {
+		super.setEnabled(value);
+		this.setVisible(value);
+	}
+
+}

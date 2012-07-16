@@ -31,10 +31,12 @@ import com.nabla.dc.shared.command.settings.RestoreCompany;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
-import com.nabla.wapp.client.command.HideableListGridRecordCommand;
+import com.nabla.wapp.client.command.HideableListGridCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.command.ListGridCommand;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
@@ -59,12 +61,15 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		@IRequireRootRole HideableCommand restoreRecord();
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridRecordCommand changeLogo();
-		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) HideableListGridRecordCommand editUsers();
-		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) HideableListGridRecordCommand editTaxRates();
-		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableListGridRecordCommand editAccounts();
-		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableListGridRecordCommand editPeriodEnds();
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridCommand changeLogo();
+		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) HideableListGridCommand editUsers();
+		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) HideableListGridCommand editTaxRates();
+		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableListGridCommand editAccounts();
+		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableListGridCommand editPeriodEnds();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CommandUiManager edit();
+
+		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) ListGridCommand editPeriodEnd();
+	//	void bindRecordProvider(ICurrentListGridRecordProvider provider);
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -74,6 +79,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
+		ICurrentListGridRecordProvider getCurrentRecordProvider();
 	}
 
 	private final ITabManager 	tabs;
@@ -103,8 +109,10 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		registerSlot(cmd.editTaxRates(), onEditTaxRates);
 		registerSlot(cmd.editAccounts(), onEditAccounts);
 		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
+		registerSlot(cmd.editPeriodEnd(), onEditPeriodEnds);
+		cmd.editPeriodEnd().setRecordProvider(getDisplay().getCurrentRecordProvider());
+	//	cmd.bindRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
-
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
 	}
 

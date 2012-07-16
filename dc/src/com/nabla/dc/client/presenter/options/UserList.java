@@ -24,12 +24,11 @@ import com.nabla.dc.client.ui.options.UserListUi;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
-import com.nabla.wapp.client.command.HideableListGridRecordCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
@@ -56,8 +55,9 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		Command reload();
 		Command savePreferences();
 		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand changePassword();
-		@IRequiredRole(IRolePrivileges.ROLE_EDIT) HideableListGridRecordCommand editRoles();
-		@IRequiredRole(IRolePrivileges.USER_EDIT) HideableListGridRecordCommand editCompanies();
+		@IRequiredRole(IRolePrivileges.ROLE_EDIT) UserRecordCommand editRoles();
+		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand editCompanies();
+
 		@IRequiredRole(IRolePrivileges.USER_EDIT) CommandUiManager edit();
 	}
 
@@ -68,6 +68,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
+		ICurrentRecordProvider<UserRecord> getCurrentRecordProvider();
 	}
 
 	private final ITabManager 	tabs;
@@ -93,8 +94,11 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.changePassword(), onChangeUserPassword);
+		cmd.changePassword().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editRoles(), onEditUserRoles);
+		cmd.editRoles().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editCompanies(), onEditUserCompanies);
+		cmd.editCompanies().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
@@ -162,16 +166,16 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditUserRoles = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<UserRecord> onEditUserRoles = new ISlot1<UserRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
+		public void invoke(final UserRecord record) {
 			new RoleDefinitionDialog(new UserDefinitionModel(record.getId())).revealDisplay();
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditUserCompanies = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<UserRecord> onEditUserCompanies = new ISlot1<UserRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
+		public void invoke(final UserRecord record) {
 			tabs.addTab(new UserCompanyList(record.getId()));
 		}
 	};

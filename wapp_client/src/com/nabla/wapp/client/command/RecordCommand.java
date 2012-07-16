@@ -16,6 +16,10 @@
 */
 package com.nabla.wapp.client.command;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotIterator;
 import com.nabla.wapp.shared.slot.SlotManager1;
@@ -27,6 +31,7 @@ import com.smartgwt.client.data.Record;
  */
 public class RecordCommand<R extends Record> extends SlotManager1<R> implements IRecordCommand<R> {
 
+	private static final Logger			logger = LoggerFactory.getLog(RecordCommand.class);
 	private final CommandUiManager		manager = new CommandUiManager();
 	private ICurrentRecordProvider<R>	provider;
 
@@ -78,7 +83,11 @@ public class RecordCommand<R extends Record> extends SlotManager1<R> implements 
 				final ISlotIterator<ISlot1<R>> iter = iterator();
 				while (iter.hasNext())
 					iter.next().invoke(record);
+			} else {
+				logger.fine("no current record");
 			}
+		} else {
+			logger.log(Level.WARNING, "no current record provider defined");
 		}
 	}
 

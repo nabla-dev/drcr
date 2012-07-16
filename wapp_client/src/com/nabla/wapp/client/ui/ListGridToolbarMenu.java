@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.Assert;
@@ -36,7 +35,6 @@ import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
 public class ListGridToolbarMenu extends ToolStripMenuButton implements HasWidgets, IPostCreateProcessing {
 
 	private static final Logger	logger = LoggerFactory.getLog(ListGridToolbarMenu.class);
-	private ListGridToolbar		parent;
 	private final Menu			menu = new Menu();
 
 	public ListGridToolbarMenu() {
@@ -46,14 +44,6 @@ public class ListGridToolbarMenu extends ToolStripMenuButton implements HasWidge
         this.setMenu(menu);
 	}
 
-	public void setParent(final ListGridToolbar parent) {
-		this.parent = parent;
-	}
-
-	public JavaScriptObject getCurrentRecord() {
-		return (parent == null) ? null : parent.getCurrentRecord();
-	}
-
 	@Override
 	public void add(final Widget w){
 		Assert.argumentNotNull(w);
@@ -61,13 +51,13 @@ public class ListGridToolbarMenu extends ToolStripMenuButton implements HasWidge
 		if (w instanceof Menu) {
 			final com.smartgwt.client.widgets.menu.MenuItem proxy = new com.smartgwt.client.widgets.menu.MenuItem(w.getTitle());
 			proxy.setSubmenu((Menu)w);
+			proxy.setTitle(((com.nabla.wapp.client.ui.Menu)w).getTitle());
+			proxy.setIcon(((com.nabla.wapp.client.ui.Menu)w).getIcon());
 			menu.addItem(proxy);
-		} else if (w instanceof ListGridToolbarMenuItem) {
-			ListGridToolbarMenuItem item = (ListGridToolbarMenuItem) w;
-			menu.addItem(item.getImpl());
-			item.setParent(this);
-		} else if (w instanceof ListGridToolbarMenuItemSeparator)
-			menu.addItem(((ListGridToolbarMenuItemSeparator) w).getImpl());
+		} else if (w instanceof MenuItem)
+			menu.addItem(((MenuItem) w).getImpl());
+		else if (w instanceof MenuItemSeparator)
+			menu.addItem(((MenuItemSeparator) w).getImpl());
 		else {
 			logger.log(Level.SEVERE, "adding a widget of type '" + w.getClass().toString() + "' to a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
 		}

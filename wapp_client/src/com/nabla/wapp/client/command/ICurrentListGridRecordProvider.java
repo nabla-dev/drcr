@@ -16,18 +16,10 @@
 */
 package com.nabla.wapp.client.command;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.model.BasicListGridRecord;
 
 /**
  * @author FNorais
  *
  */
-public class HideableListGridRecordCommand extends TAbstractHideableRecordCommand<BasicListGridRecord> {
-
-	@Override
-	public BasicListGridRecord getRecord(JavaScriptObject jsRecord) {
-		return new BasicListGridRecord(jsRecord);
-	}
-
-}
+public interface ICurrentListGridRecordProvider extends ICurrentRecordProvider<BasicListGridRecord> {}

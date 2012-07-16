@@ -23,15 +23,18 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.CompanyUserListModel;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
+import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;
+import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class CompanyUserListUi extends BindedTabDisplay<Tab> implements CompanyUserList.IDisplay {
+public class CompanyUserListUi extends BindedTabDisplay<Tab> implements CompanyUserList.IDisplay, ICurrentRecordProvider<UserRecord> {
 
 	interface Binder extends UiBinder<Tab, CompanyUserListUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
@@ -63,4 +66,14 @@ public class CompanyUserListUi extends BindedTabDisplay<Tab> implements CompanyU
 		list.saveViewState();
 	}
 
+	@Override
+	public ICurrentRecordProvider<UserRecord> getCurrentRecordProvider() {
+		return this;
+	}
+
+	@Override
+	public UserRecord getCurrentRecord() {
+		final Record record = list.getCurrentRecord();
+		return (record == null) ? null : new UserRecord(record);
+	}
 }

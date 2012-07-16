@@ -16,20 +16,12 @@
 */
 package com.nabla.dc.client.presenter.options;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.wapp.client.command.TAbstractHideableRecordCommand;
+import com.nabla.wapp.client.command.HideableRecordCommand;
 import com.nabla.wapp.client.model.UserRecord;
 
 /**
  * The <code></code> object is used to
  *
  */
-public class UserRecordCommand extends TAbstractHideableRecordCommand<UserRecord> {
-
-	@Override
-	public UserRecord getRecord(JavaScriptObject jsRecord) {
-		return UserRecord.factory.get(jsRecord);
-	}
-
-}
+public class UserRecordCommand extends HideableRecordCommand<UserRecord> {}
 

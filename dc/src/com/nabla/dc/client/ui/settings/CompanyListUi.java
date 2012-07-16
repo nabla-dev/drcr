@@ -23,6 +23,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.settings.CompanyListModel;
 import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.presenter.settings.CompanyList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
@@ -83,6 +84,11 @@ public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.
 	@Override
 	public void savePreferences() {
 		list.saveViewState();
+	}
+
+	@Override
+	public ICurrentListGridRecordProvider getCurrentRecordProvider() {
+		return list;
 	}
 
 }

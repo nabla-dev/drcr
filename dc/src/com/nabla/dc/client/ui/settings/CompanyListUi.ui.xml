@@ -13,7 +13,7 @@
 		<ui:attribute name="title" description="Tab title"/>
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">
-				<wnd:ToolbarButton command="{cmd.addRecord}" tooltip="Add company" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.editPeriodEnd}" tooltip="Add company" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.removeRecord}" tooltip="Remove company" icon="remove.png"><ui:msg>Remove</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.restoreRecord}" tooltip="Restore company" icon="restore_small.png"><ui:msg>Restore</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarSeparator />
@@ -28,14 +28,14 @@
 				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>
 				<wnd:ListGridToolbar field="{model.fields.name}">
 					<wnd:ListGridToolbarMenu>
-						<wnd:ListGridToolbarMenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:ListGridToolbarMenuItem>
-						<wnd:ListGridToolbarMenuItemSeparator/>
-						<wnd:ListGridToolbarMenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:ListGridToolbarMenuItem>
-						<wnd:ListGridToolbarMenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:ListGridToolbarMenuItem>
-						<wnd:ListGridToolbarMenuItem icon="period_end_small.png" command="{cmd.editPeriodEnds}">Period Ends</wnd:ListGridToolbarMenuItem>
+						<wnd:MenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:MenuItem>
+						<wnd:MenuItemSeparator/>
+						<wnd:MenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:MenuItem>
+						<wnd:MenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:MenuItem>
+						<wnd:MenuItem icon="period_end_small.png" command="{cmd.editPeriodEnds}">Period Ends</wnd:MenuItem>
 						
-						<wnd:ListGridToolbarMenuItemSeparator/>
-						<wnd:ListGridToolbarMenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:ListGridToolbarMenuItem>						
+						<wnd:MenuItemSeparator/>
+						<wnd:MenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:MenuItem>						
 					</wnd:ListGridToolbarMenu>							
 				</wnd:ListGridToolbar>				
 				<wnd:Menu>

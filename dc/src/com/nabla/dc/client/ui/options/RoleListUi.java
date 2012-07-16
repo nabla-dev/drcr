@@ -21,6 +21,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.presenter.options.RoleList;
 import com.nabla.dc.client.presenter.options.RoleList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
@@ -67,6 +68,11 @@ public class RoleListUi extends BindedTabDisplay<Tab> implements RoleList.IDispl
 	@Override
 	public void savePreferences() {
 		list.saveViewState();
+	}
+
+	@Override
+	public ICurrentListGridRecordProvider getCurrentRecordProvider() {
+		return list;
 	}
 
 }

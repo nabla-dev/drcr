@@ -33,7 +33,6 @@ import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.TypeOracle;
 import com.google.gwt.uibinder.rebind.IndentedWriter;
-import com.nabla.wapp.client.command.IRecordCommand;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 
@@ -45,6 +44,7 @@ public class GenericCommandSetGenerator extends Generator {
 
 	private static final String		PACKAGE = "package %1$s;";
 	private static final String		IMPORT = "import %1$s;";
+	private static final String		COMMAND_SET = "com.nabla.wapp.client.command.IBasicCommandSet";
 
 	public GenericCommandSetGenerator() {}
 
@@ -81,8 +81,8 @@ public class GenericCommandSetGenerator extends Generator {
 		final Map<String, String[]> commandRequiredRoles = new HashMap<String, String[]>();
 		final Set<String> requiredRoles = new HashSet<String>();
 		final Set<String> rootCommands = new HashSet<String>();
-		int maxRoleCount = 0;
-		boolean singleRole = false;	// true if at least one command needs a unique role
+		int maxRoleCountPerMethod = 0;
+		boolean singleRolePerMethod = false;	// true if at least one command needs a unique role
 		for (final JMethod method : methods) {
 			if (method.getParameters().length > 0) {
 				logger.log(TreeLogger.ERROR, "unsupported parameters for method '" + method.getName() + "'", null);
@@ -95,10 +95,10 @@ public class GenericCommandSetGenerator extends Generator {
 				logger.log(TreeLogger.INFO, "method '" + method.getName() + "' restricted to roles " + Arrays.asList(roles).toString());
 				requiredRoles.addAll(Arrays.asList(roles));
 				commandRequiredRoles.put(method.getName(), roles);
-				if (maxRoleCount < roles.length)
-					maxRoleCount = roles.length;
+				if (maxRoleCountPerMethod < roles.length)
+					maxRoleCountPerMethod = roles.length;
 				if (roles.length == 1)
-					singleRole = true;
+					singleRolePerMethod = true;
 			}
 			final IRequireRootRole rootRole = method.getAnnotation(IRequireRootRole.class);
 			if (rootRole != null) {
@@ -120,6 +120,7 @@ public class GenericCommandSetGenerator extends Generator {
 		writer.write(IMPORT, "com.nabla.wapp.shared.general.StringSet");
 		writer.write(IMPORT, "com.nabla.wapp.client.auth.IAuthSessionManager");
 		writer.write(IMPORT, "com.nabla.wapp.client.general.Application");
+		writer.write(IMPORT, "com.nabla.wapp.client.command.ICurrentRecordProvider");
 		writer.newline();
 		writer.write("public class %1$s implements %2$s {", className, interfaceType.getName());
 		writer.indent();
@@ -217,7 +218,7 @@ public class GenericCommandSetGenerator extends Generator {
 			writer.outdent();
 		    writer.write("}");	// updateUi
 
-	    	if (maxRoleCount > 1) {
+	    	if (maxRoleCountPerMethod > 1) {
 			    writer.newline();
 			    writer.write("private boolean isEnabled(final String[] requiredRoles, final Set<String> userRoles) {");
 			    writer.indent();
@@ -237,7 +238,7 @@ public class GenericCommandSetGenerator extends Generator {
 				writer.outdent();
 			    writer.write("}");	// isEnabled
 	    	}
-	    	if (singleRole) {
+	    	if (singleRolePerMethod) {
 			    writer.newline();
 			    writer.write("private boolean isEnabled(final String requiredRole, final Set<String> userRoles) {");
 			    writer.indent();
@@ -245,41 +246,15 @@ public class GenericCommandSetGenerator extends Generator {
 				writer.outdent();
 			    writer.write("}");	// isEnabled
 	    	}
-
-	    	if (isRecordCommandSet(interfaceType)) {
-			    writer.newline();
-			    writer.write("@Override public <R extends Record> void bindRecordProvider(final ICurrentRecordProvider<R> provider) {");
-			    writer.indent();
-			    for (final JMethod method : methods) {
-			    	if (method.getReturnType().getClass().isAssignableFrom(IRecordCommand.class))
-			    		writer.write("m_%2$s.setRecordProvider(provider);", method.getName());
-			    }
-				writer.outdent();
-			    writer.write("}");	// bindRecordProvider
-	    	}
 		writer.outdent();
 	    writer.write("}");	// class
 	}
 
 	private void getAllMethods(final JClassType interfaceType, final List<JMethod> methods) {
-		if (!interfaceType.getName().equals("IBasicCommandSet") &&
-			!interfaceType.getName().equals("IRecordCommandSet")) {
+		if (!interfaceType.getQualifiedSourceName().equals(COMMAND_SET)) {
 			methods.addAll(Arrays.asList(interfaceType.getMethods()));
 			for (final JClassType subclass : interfaceType.getImplementedInterfaces())
 				getAllMethods(subclass, methods);
 		}
 	}
-
-	private boolean isRecordCommandSet(final JClassType interfaceType) {
-		if (interfaceType.getName().equals("IBasicCommandSet"))
-			return false;
-		if (interfaceType.getName().equals("IRecordCommandSet"))
-			return true;
-		for (final JClassType subclass : interfaceType.getImplementedInterfaces()) {
-			if (isRecordCommandSet(subclass))
-				return true;
-		}
-		return false;
-	}
-
 }

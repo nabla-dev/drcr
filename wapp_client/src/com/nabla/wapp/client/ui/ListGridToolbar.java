@@ -16,8 +16,6 @@
 */
 package com.nabla.wapp.client.ui;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.Canvas;
 
 
@@ -27,29 +25,12 @@ import com.smartgwt.client.widgets.Canvas;
  */
 public class ListGridToolbar extends HLayout {
 
-	private ListGrid	list;
 	private String		fieldName;
 
 	public ListGridToolbar() {
 		setSnapTo("TR");
     	setHeight(22);
     	setWidth(1);
-	}
-
-	@Override
-	public void add(final Widget w){
-		super.add(w);
-		if (w instanceof ListGridToolbarButton) {
-			final ListGridToolbarButton button = (ListGridToolbarButton)w;
-			button.setParent(this);
-		} else if (w instanceof ListGridToolbarMenu) {
-			final ListGridToolbarMenu button = (ListGridToolbarMenu)w;
-			button.setParent(this);
-		}
-	}
-
-	public void setParent(final ListGrid list) {
-		this.list = list;
 	}
 
 	public void setField(final String fieldName) {
@@ -67,10 +48,6 @@ public class ListGridToolbar extends HLayout {
 	public int getMemberCount() {
 		final Canvas[] children = getMembers();
 		return children == null ? 0 : children.length;
-	}
-
-	public JavaScriptObject getCurrentRecord() {
-		return (list == null) ? null : list.getCurrentRecord().getJsObj();
 	}
 
 }

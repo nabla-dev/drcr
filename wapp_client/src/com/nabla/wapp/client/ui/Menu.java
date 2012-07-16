@@ -33,6 +33,8 @@ import com.nabla.wapp.client.general.Util;
 public class Menu extends com.smartgwt.client.widgets.menu.Menu implements HasWidgets, IPostCreateProcessing {
 
 	private static final Logger	logger = LoggerFactory.getLog(Menu.class);
+	private String				title;
+	private String				icon;
 
 	public Menu() {}
 
@@ -70,4 +72,21 @@ public class Menu extends com.smartgwt.client.widgets.menu.Menu implements HasWi
 
 	}
 
+	@Override
+	public void setTitle(final String title) {
+		this.title = title;
+	}
+
+	@Override
+	public String getTitle() {
+		return title;
+	}
+
+	public void setIcon(final String icon) {
+		this.icon = icon;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
 }

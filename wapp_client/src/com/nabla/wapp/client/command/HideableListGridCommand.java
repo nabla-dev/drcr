@@ -16,12 +16,10 @@
 */
 package com.nabla.wapp.client.command;
 
-import com.smartgwt.client.data.Record;
+import com.nabla.wapp.client.model.BasicListGridRecord;
 
 /**
  * @author FNorais
  *
  */
-public interface IRecordCommandSet extends IBasicCommandSet {
-	<R extends Record> void bindRecordProvider(final ICurrentRecordProvider<R> provider);
-}
+public class HideableListGridCommand extends HideableRecordCommand<BasicListGridRecord> {}

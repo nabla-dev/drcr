@@ -21,8 +21,8 @@
 					<wnd:MenuItem command="{cmd.taxCodeList}" icon="vat_small.png"><ui:msg>Tax codes</ui:msg></wnd:MenuItem>
 					<wnd:Menu title="Fixed assets...">
 					<ui:attribute name="title" description="Fixed asset settings menu title"/>
-						<wnd:MenuItem command="{cmd.fixedAssetCategoryList}" icon="fa_asset_category_small.png"><ui:msg>Asset Categories</ui:msg></wnd:MenuItem>
-						<wnd:MenuItem command="{cmd.bsCategoryList}" icon="fa_bs_category_small.png"><ui:msg>BalanceSheet Categories</ui:msg></wnd:MenuItem>
+						<wnd:MenuItem command="{cmd.fixedAssetCategoryList}" icon="fixed_asset/asset_category_small.png"><ui:msg>Asset Categories</ui:msg></wnd:MenuItem>
+						<wnd:MenuItem command="{cmd.bsCategoryList}" icon="fixed_asset/bs_category_small.png"><ui:msg>BalanceSheet Categories</ui:msg></wnd:MenuItem>
 					</wnd:Menu>
 					<wnd:MenuItemSeparator />
 					<wnd:MenuItem ><ui:msg>Import settings</ui:msg></wnd:MenuItem>

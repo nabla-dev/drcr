@@ -23,7 +23,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.options.UserListModel;
 import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.presenter.options.UserList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.general.Application;
+import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
 import com.nabla.wapp.client.ui.ListGrid;
@@ -37,7 +39,7 @@ import com.smartgwt.client.types.DSOperationType;
  * @author nabla
  *
  */
-public class UserListUi extends BindedTabDisplay<Tab> implements UserList.IDisplay {
+public class UserListUi extends BindedTabDisplay<Tab> implements UserList.IDisplay, ICurrentRecordProvider<UserRecord> {
 
 	interface Binder extends UiBinder<Tab, UserListUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
@@ -83,6 +85,17 @@ public class UserListUi extends BindedTabDisplay<Tab> implements UserList.IDispl
 	@Override
 	public void savePreferences() {
 		list.saveViewState();
+	}
+
+	@Override
+	public ICurrentRecordProvider<UserRecord> getCurrentRecordProvider() {
+		return this;
+	}
+
+	@Override
+	public UserRecord getCurrentRecord() {
+		final Record record = list.getCurrentRecord();
+		return (record == null) ? null : new UserRecord(record);
 	}
 
 }

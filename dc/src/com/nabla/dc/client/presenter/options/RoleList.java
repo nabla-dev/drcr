@@ -22,8 +22,9 @@ import com.nabla.dc.client.ui.options.RoleListUi;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
-import com.nabla.wapp.client.command.HideableListGridRecordCommand;
+import com.nabla.wapp.client.command.HideableListGridCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.model.BasicListGridRecord;
@@ -48,7 +49,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		@IRequiredRole(IRolePrivileges.ROLE_REMOVE) HideableCommand removeRecord();
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IRolePrivileges.ROLE_EDIT) HideableListGridRecordCommand editDefinition();
+		@IRequiredRole(IRolePrivileges.ROLE_EDIT) HideableListGridCommand editDefinition();
 		@IRequiredRole(IRolePrivileges.ROLE_EDIT) CommandUiManager edit();
 		@IRequiredRole(IRolePrivileges.ROLE_ADD) CommandUiManager add();
 	}
@@ -59,6 +60,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
+		ICurrentListGridRecordProvider getCurrentRecordProvider();
 	}
 
 //	@Inject private PrintManager					printerManager;
@@ -79,6 +81,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.editDefinition(), onEditDefinition);
+		cmd.editDefinition().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
 	//	printerManager.bind(cmd, this, BuiltInReports.ROLE_LIST);
