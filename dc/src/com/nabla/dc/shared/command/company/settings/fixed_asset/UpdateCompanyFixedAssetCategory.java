@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.company.fixed_asset;
+package com.nabla.dc.shared.command.company.settings.fixed_asset;
 
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;

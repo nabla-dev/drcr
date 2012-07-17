@@ -14,54 +14,47 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.options;
+package com.nabla.dc.client.model.company.settings.fixed_asset;
 
 
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.CTreeModel;
-import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.TreeParentIdField;
-import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.command.FetchRoleDefinition;
-import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class RoleDefinitionTreeModel extends CTreeModel<Record> {
-
-	static public final String	INCLUDE = "isIncluded";
+public class AvailableFixedAssetCategoryTreeModel extends CTreeModel<Record> {
 
 	static public class Fields {
-		public String name() { return "name"; }
-		public String include() { return INCLUDE; }
+		public String name() { return IFixedAssetCategory.NAME; }
 	}
 
 	private static final Fields	fields = new Fields();
-	protected final Integer		roleId;
+	protected final Integer		companyId;
 
-	public RoleDefinitionTreeModel(final Integer roleId) {
-		this.roleId = roleId;
+	public AvailableFixedAssetCategoryTreeModel(final Integer companyId) {
+		this.companyId = companyId;
 
 		setFields(
 			new IdField(),
 			new TreeParentIdField(),
-			new TextField(fields.name(), FieldAttributes.READ_ONLY),
-			new BooleanField(fields.include())
+			new TextField(fields.name(), FieldAttributes.READ_ONLY)
 				);
 	}
 
 	public Fields fields() {
 		return fields;
 	}
-
+/*
 	@Override
 	public AbstractFetch getFetchCommand(final DSRequest request) {
-		return new FetchRoleDefinition(roleId, getParentId(request));
+		return new FetchRoleDefinition(companyId);
 	}
-
+*/
 }

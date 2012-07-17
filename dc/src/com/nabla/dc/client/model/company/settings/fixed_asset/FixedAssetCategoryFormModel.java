@@ -14,47 +14,58 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.company.settings;
+package com.nabla.dc.client.model.company.settings.fixed_asset;
 
 
 import com.nabla.dc.shared.command.FetchCompanyName;
 import com.nabla.dc.shared.model.ICompany;
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.field.FieldAttributes;
-import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class CompanyTaxRateFormModel extends CModel<Record> {
+public class FixedAssetCategoryFormModel extends CModel<FixedAssetCategoryRecord> {
 
 	static public class Fields {
 		public String name() { return ICompany.NAME; }
+		public String availableCategories() { return "availableCategories"; }
+		public String categories() { return "categories"; }
 	}
 
 	private static final Fields	fields = new Fields();
-	private final Integer		companyId;
+	protected final Integer		companyId;
 
-	public CompanyTaxRateFormModel(final Integer companyId) {
-		super();
-
+	public FixedAssetCategoryFormModel(final Integer companyId) {
+		super(FixedAssetCategoryRecord.factory);
 		this.companyId = companyId;
-		setFields(
-			new TextField(fields.name(), FieldAttributes.READ_ONLY)
-				);
 	}
 
 	public Fields fields() {
 		return fields;
 	}
 
+	public AvailableFixedAssetCategoryTreeModel getAvailableTreeModel() {
+		return new AvailableFixedAssetCategoryTreeModel(companyId);
+	}
+
+	public FixedAssetCategoryTreeModel getAssignedTreeModel() {
+		return new FixedAssetCategoryTreeModel(companyId);
+	}
+
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
 		return new FetchCompanyName(companyId);
 	}
-
+/*
+	@Override
+	public IAction<StringResult> getUpdateCommand(final CompanyFixedAssetCategoryRecord record) {
+		final SelectionDelta delta = record.getDefinitionDelta();
+		if (delta == null || delta.isEmpty())
+			return null;	// save a round trip to the server
+		return new UpdateRoleDefinition(roleId, delta);
+	}
+*/
 }

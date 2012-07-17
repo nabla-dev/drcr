@@ -14,28 +14,38 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.options;
+package com.nabla.dc.client.model.company.settings.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.model.BasicRecord;
+import com.nabla.wapp.client.model.IRecordFactory;
 import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class RoleDefinitionTreeRecord extends BasicRecord {
+public class FixedAssetCategoryRecord extends BasicRecord {
 
-	public RoleDefinitionTreeRecord(JavaScriptObject js) {
+	public static final IRecordFactory<FixedAssetCategoryRecord>	factory = new IRecordFactory<FixedAssetCategoryRecord>() {
+
+		@Override
+		public FixedAssetCategoryRecord get(JavaScriptObject data) {
+			return new FixedAssetCategoryRecord(data);
+		}
+
+	};
+
+	public FixedAssetCategoryRecord(JavaScriptObject js) {
 		super(js);
 	}
 
-	public RoleDefinitionTreeRecord(Record record) {
+	public FixedAssetCategoryRecord(Record record) {
 		super(record);
 	}
-
-	public Boolean isIncluded() {
-		return this.getAttributeAsBoolean(RoleDefinitionTreeModel.INCLUDE);
+/*
+	public SelectionDelta getDefinitionDelta() {
+		return ((SelectionDeltaRecord)getAttributeAsRecord(RoleDefinitionModel.Fields.roles())).getData();
 	}
-
+*/
 }

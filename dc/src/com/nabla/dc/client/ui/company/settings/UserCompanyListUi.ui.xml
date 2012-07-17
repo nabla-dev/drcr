@@ -6,11 +6,11 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
+	<ui:with field="tabTitle" type="java.lang.String"/>
 	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.UserCompanyListModel"/>
 	<ui:with field="cmd" type="com.nabla.dc.client.presenter.company.settings.UserCompanyList.ICommandSet"/>
 
-	<wnd:Tab title="User companies" icon="company_small.png" canClose="true">
-		<ui:attribute name="title" description="Tab title"/>
+	<wnd:Tab title="{tabTitle}" icon="company_small.png" canClose="true">
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">
 				<wnd:ToolbarPrintButton commandSet="{cmd}"/>

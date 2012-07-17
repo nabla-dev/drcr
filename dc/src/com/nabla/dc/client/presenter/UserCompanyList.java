@@ -24,7 +24,7 @@ import com.nabla.dc.client.presenter.options.RoleList;
 import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.presenter.settings.TaxRateList;
-import com.nabla.dc.client.presenter.settings.fixed_asset.BalanceSheetCategoryList;
+import com.nabla.dc.client.presenter.settings.fixed_asset.FinancialStatementCategoryList;
 import com.nabla.dc.client.presenter.settings.fixed_asset.FixedAssetCategoryList;
 import com.nabla.dc.client.ui.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
@@ -196,7 +196,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					tabs.addTab(new BalanceSheetCategoryList());
+					tabs.addTab(new FinancialStatementCategoryList());
 				}
 			});
 		}

@@ -14,20 +14,28 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.company.fixed_asset;
+package com.nabla.wapp.client.model;
 
-import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
+import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.util.JSOHelper;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class FetchCompanyFixedAssetCategoryList extends AbstractCompanyFetch {
+public abstract class CTreeModel<R extends Record> extends CModel<R> {
 
-	protected FetchCompanyFixedAssetCategoryList() {}
-
-	public FetchCompanyFixedAssetCategoryList(Integer companyId) {
-		super(companyId);
+	protected CTreeModel(final IRecordFactory<R> recordFactory) {
+		super(recordFactory);
 	}
 
+	protected CTreeModel() {
+		super();
+	}
+
+	public Integer getParentId(final DSRequest request) {
+		return JSOHelper.getAttributeAsInt(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
+	}
 }

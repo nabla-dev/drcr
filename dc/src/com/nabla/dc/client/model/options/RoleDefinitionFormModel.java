@@ -17,40 +17,46 @@
 package com.nabla.dc.client.model.options;
 
 
-import com.nabla.wapp.client.model.Model;
+import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.command.FetchUserName;
-import com.nabla.wapp.shared.command.UpdateUserDefinition;
+import com.nabla.wapp.shared.command.FetchRoleName;
+import com.nabla.wapp.shared.command.UpdateRoleDefinition;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-public class UserDefinitionModel extends RoleDefinitionModel {
+public class RoleDefinitionFormModel extends CModel<RoleDefinitionRecord> {
 
-	private final Integer	objectId;
-
-	public UserDefinitionModel(final Integer objectId, final Integer roleId) {
-		super(roleId);
-		this.objectId = objectId;
+	static public class Fields {
+		public String name() { return IRole.NAME; }
+		public String roles() { return IRole.DEFINITION; }
 	}
 
-	public UserDefinitionModel(final Integer roleId) {
-		this(null, roleId);
+	private static final Fields	fields = new Fields();
+	protected final Integer		roleId;
+
+	public RoleDefinitionFormModel(final Integer roleId) {
+		super(RoleDefinitionRecord.factory);
+		this.roleId = roleId;
 	}
 
-	@Override
-	public Model getTreeModel() {
-		return new UserDefinitionTreeModel(objectId, roleId);
+	public Fields fields() {
+		return fields;
+	}
+
+	public RoleDefinitionTreeModel getTreeModel() {
+		return new RoleDefinitionTreeModel(roleId);
 	}
 
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchUserName(roleId);
+		return new FetchRoleName(roleId);
 	}
 
 	@Override
@@ -58,7 +64,7 @@ public class UserDefinitionModel extends RoleDefinitionModel {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
 			return null;	// save a round trip to the server
-		return new UpdateUserDefinition(objectId, roleId, delta);
+		return new UpdateRoleDefinition(roleId, delta);
 	}
 
 }

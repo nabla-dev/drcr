@@ -18,7 +18,7 @@ package com.nabla.dc.client.presenter.settings.fixed_asset;
 
 import com.nabla.dc.client.model.settings.fixed_asset.FinancialStatementCategoryRecord;
 import com.nabla.dc.client.ui.Resource;
-import com.nabla.dc.client.ui.settings.fixed_asset.BalanceSheetCategoryListUi;
+import com.nabla.dc.client.ui.settings.fixed_asset.FinancialStatementCategoryListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.fixed_asset.RestoreFinancialStatementCategory;
 import com.nabla.wapp.client.command.Command;
@@ -40,7 +40,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
  * @author nabla
  *
  */
-public class BalanceSheetCategoryList extends AbstractTabPresenter<BalanceSheetCategoryList.IDisplay> {
+public class FinancialStatementCategoryList extends AbstractTabPresenter<FinancialStatementCategoryList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {
 		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_ADD) HideableCommand addRecord();
@@ -61,12 +61,12 @@ public class BalanceSheetCategoryList extends AbstractTabPresenter<BalanceSheetC
 		ICommandSet getCommands();
 	}
 
-	public BalanceSheetCategoryList(final IDisplay display) {
+	public FinancialStatementCategoryList(final IDisplay display) {
 		super(display);
 	}
 
-	public BalanceSheetCategoryList() {
-		this(new BalanceSheetCategoryListUi());
+	public FinancialStatementCategoryList() {
+		this(new FinancialStatementCategoryListUi());
 	}
 
 	@Override

@@ -20,8 +20,8 @@ import com.nabla.dc.client.model.settings.AddCompanyRecord;
 import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.company.settings.AccountList;
-import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
-import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.presenter.company.settings.ChangeLogoDialog;
+import com.nabla.dc.client.presenter.company.settings.TaxRateListDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
 import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
 import com.nabla.dc.client.ui.Resource;
@@ -170,7 +170,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 	private final ISlot1<CompanyRecord> onChangeLogo = new ISlot1<CompanyRecord>() {
 		@Override
 		public void invoke(final CompanyRecord record) {
-			new ChangeCompanyLogoDialog(record.getId()).revealDisplay();
+			new ChangeLogoDialog(record.getId()).revealDisplay();
 		}
 	};
 
@@ -184,7 +184,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 	private final ISlot1<CompanyRecord> onEditTaxRates = new ISlot1<CompanyRecord>() {
 		@Override
 		public void invoke(final CompanyRecord record) {
-			new CompanyTaxRateListDialog(record.getId()).revealDisplay();
+			new TaxRateListDialog(record.getId()).revealDisplay();
 		}
 	};
 

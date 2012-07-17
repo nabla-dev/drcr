@@ -19,32 +19,33 @@ package com.nabla.dc.client.ui.company.settings;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.company.settings.ChangeCompanyLogoModel;
-import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
+import com.nabla.dc.client.model.company.settings.TaxRateFormModel;
+import com.nabla.dc.client.model.company.settings.TaxRateListModel;
+import com.nabla.dc.client.presenter.company.settings.TaxRateListDialog;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
-import com.nabla.wapp.client.ui.form.Form;
-import com.nabla.wapp.client.ui.form.UploadEditBox;
+import com.nabla.wapp.client.ui.form.ListGridItem;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
 /**
  * @author nabla
  *
  */
-public class ChangeCompanyLogoDialogUi extends BindedTopDisplay<ModalDialog> implements ChangeCompanyLogoDialog.IDisplay {
+public class TaxRateListDialogUi extends BindedTopDisplay<ModalDialog> implements TaxRateListDialog.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, ChangeCompanyLogoDialogUi> {}
+	interface Binder extends UiBinder<ModalDialog, TaxRateListDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final ChangeCompanyLogoModel	model;
+	final TaxRateFormModel	formModel;
+	@UiField(provided=true)
+	final TaxRateListModel	model;
 	@UiField
-	Form							form;
-	@UiField
-	UploadEditBox					logoFile;
+	ListGridItem					list;
 
-	public ChangeCompanyLogoDialogUi(final Integer companyId) {
-		this.model = new ChangeCompanyLogoModel(companyId);
+	public TaxRateListDialogUi(final Integer companyId) {
+		this.formModel = new TaxRateFormModel(companyId);
+		this.model = new TaxRateListModel(companyId);
 		this.create(uiBinder, this);
 	}
 
@@ -54,8 +55,8 @@ public class ChangeCompanyLogoDialogUi extends BindedTopDisplay<ModalDialog> imp
 	}
 
 	@Override
-	public void cleanup() {
-		logoFile.cleanup();
+	public void savePreferences() {
+		list.saveViewState();
 	}
 
 }

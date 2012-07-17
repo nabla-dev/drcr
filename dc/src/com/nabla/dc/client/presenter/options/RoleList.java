@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.presenter.options;
 
-import com.nabla.dc.client.model.options.RoleDefinitionModel;
+import com.nabla.dc.client.model.options.RoleDefinitionFormModel;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.RoleListUi;
 import com.nabla.wapp.client.command.Command;
@@ -126,7 +126,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 	private final ISlot1<BasicListGridRecord> onEditDefinition = new ISlot1<BasicListGridRecord>() {
 		@Override
 		public void invoke(final BasicListGridRecord role) {
-			new RoleDefinitionDialog(new RoleDefinitionModel(role.getId())).revealDisplay();
+			new RoleDefinitionDialog(new RoleDefinitionFormModel(role.getId())).revealDisplay();
 		}
 	};
 

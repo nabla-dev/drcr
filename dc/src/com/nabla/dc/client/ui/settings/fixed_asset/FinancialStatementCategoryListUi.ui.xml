@@ -6,10 +6,10 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	>
 
-	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.BalanceSheetCategoryListModel"/>
-	<ui:with field="cmd" type="com.nabla.dc.client.presenter.settings.fixed_asset.BalanceSheetCategoryList.ICommandSet"/>
+	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.FinancialStatementCategoryListModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.settings.fixed_asset.FinancialStatementCategoryList.ICommandSet"/>
 	
-	<wnd:Tab title="BalanceSheet Categories" canClose="true" icon="fixed_asset/fs_category_small.png">
+	<wnd:Tab title="Financial Statement Categories" canClose="true" icon="fixed_asset/fs_category_small.png">
 		<ui:attribute name="title" description="Tab title"/>
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">

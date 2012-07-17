@@ -20,6 +20,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.model.BasicRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -46,7 +47,7 @@ public class RoleDefinitionRecord extends BasicRecord {
 	}
 
 	public SelectionDelta getDefinitionDelta() {
-		return ((SelectionDeltaRecord)getAttributeAsRecord(RoleDefinitionModel.Fields.roles())).getData();
+		return ((SelectionDeltaRecord)getAttributeAsRecord(IRole.DEFINITION)).getData();
 	}
 
 }

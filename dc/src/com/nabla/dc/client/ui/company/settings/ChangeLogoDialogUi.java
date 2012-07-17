@@ -19,33 +19,32 @@ package com.nabla.dc.client.ui.company.settings;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.company.settings.CompanyTaxRateFormModel;
-import com.nabla.dc.client.model.company.settings.CompanyTaxRateListModel;
-import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.model.company.settings.ChangeLogoModel;
+import com.nabla.dc.client.presenter.company.settings.ChangeLogoDialog;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
-import com.nabla.wapp.client.ui.form.ListGridItem;
+import com.nabla.wapp.client.ui.form.Form;
+import com.nabla.wapp.client.ui.form.UploadEditBox;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
 /**
  * @author nabla
  *
  */
-public class CompanyTaxRateListDialogUi extends BindedTopDisplay<ModalDialog> implements CompanyTaxRateListDialog.IDisplay {
+public class ChangeLogoDialogUi extends BindedTopDisplay<ModalDialog> implements ChangeLogoDialog.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, CompanyTaxRateListDialogUi> {}
+	interface Binder extends UiBinder<ModalDialog, ChangeLogoDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final CompanyTaxRateFormModel	formModel;
-	@UiField(provided=true)
-	final CompanyTaxRateListModel	model;
+	final ChangeLogoModel	model;
 	@UiField
-	ListGridItem					list;
+	Form							form;
+	@UiField
+	UploadEditBox					logoFile;
 
-	public CompanyTaxRateListDialogUi(final Integer companyId) {
-		this.formModel = new CompanyTaxRateFormModel(companyId);
-		this.model = new CompanyTaxRateListModel(companyId);
+	public ChangeLogoDialogUi(final Integer companyId) {
+		this.model = new ChangeLogoModel(companyId);
 		this.create(uiBinder, this);
 	}
 
@@ -55,8 +54,8 @@ public class CompanyTaxRateListDialogUi extends BindedTopDisplay<ModalDialog> im
 	}
 
 	@Override
-	public void savePreferences() {
-		list.saveViewState();
+	public void cleanup() {
+		logoFile.cleanup();
 	}
 
 }

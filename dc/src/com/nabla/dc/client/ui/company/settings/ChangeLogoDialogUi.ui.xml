@@ -6,7 +6,7 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
-	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.ChangeCompanyLogoModel"/>
+	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.ChangeLogoModel"/>
 
 	<wnd:ModalDialog caption="Change Company Logo" icon="logo_small.png" autoClose="true">
 		<ui:attribute name="caption" description="change company logo caption"/>

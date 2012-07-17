@@ -72,4 +72,7 @@ public interface IMessageResource extends Messages {
 	@DefaultMessage("{0} - Users")
 	@AlternateMessage({"", "Users"})
 	String userListTitle(@Select String companyName);
+
+	@DefaultMessage("{0} - Companies")
+	String userCompanyListTitle(String userName);
 }

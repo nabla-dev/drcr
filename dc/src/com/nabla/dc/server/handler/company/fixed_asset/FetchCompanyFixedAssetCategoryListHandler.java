@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.company.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.company.fixed_asset.FetchCompanyFixedAssetCategoryList;
+import com.nabla.dc.shared.command.company.settings.fixed_asset.FetchCompanyFixedAssetCategoryList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;

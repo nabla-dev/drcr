@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.command.company.fixed_asset.UpdateCompanyFixedAssetCategory;
+import com.nabla.dc.shared.command.company.settings.fixed_asset.UpdateCompanyFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;

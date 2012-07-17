@@ -17,42 +17,39 @@
 package com.nabla.dc.client.model.options;
 
 
-import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.command.FetchRoleName;
-import com.nabla.wapp.shared.command.UpdateRoleDefinition;
+import com.nabla.wapp.shared.command.FetchUserName;
+import com.nabla.wapp.shared.command.UpdateUserDefinition;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
-import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-public class RoleDefinitionModel extends CModel<RoleDefinitionRecord> {
+public class UserDefinitionFormModel extends RoleDefinitionFormModel {
 
-	static public class Fields {
-		public String name() { return IRole.NAME; }
-		public static String roles() { return "roles"; }
+	private final Integer	objectId;
+
+	public UserDefinitionFormModel(final Integer objectId, final Integer roleId) {
+		super(roleId);
+		this.objectId = objectId;
 	}
 
-	protected final Integer	roleId;
-
-	public RoleDefinitionModel(final Integer roleId) {
-		super(RoleDefinitionRecord.factory);
-		this.roleId = roleId;
+	public UserDefinitionFormModel(final Integer roleId) {
+		this(null, roleId);
 	}
 
-	public Model getTreeModel() {
-		return new RoleDefinitionTreeModel(roleId);
+	@Override
+	public RoleDefinitionTreeModel getTreeModel() {
+		return new UserDefinitionTreeModel(objectId, roleId);
 	}
 
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchRoleName(roleId);
+		return new FetchUserName(roleId);
 	}
 
 	@Override
@@ -60,7 +57,7 @@ public class RoleDefinitionModel extends CModel<RoleDefinitionRecord> {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
 			return null;	// save a round trip to the server
-		return new UpdateRoleDefinition(roleId, delta);
+		return new UpdateUserDefinition(objectId, roleId, delta);
 	}
 
 }

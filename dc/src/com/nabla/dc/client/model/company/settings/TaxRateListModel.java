@@ -35,7 +35,7 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class CompanyTaxRateListModel extends CModel<TaxRateRecord> {
+public class TaxRateListModel extends CModel<TaxRateRecord> {
 
 	static public class Fields {
 		public String name() { return ITaxRate.NAME; }
@@ -45,7 +45,7 @@ public class CompanyTaxRateListModel extends CModel<TaxRateRecord> {
 	private static final Fields	fields = new Fields();
 	private final Integer		companyId;
 
-	public CompanyTaxRateListModel(final Integer companyId) {
+	public TaxRateListModel(final Integer companyId) {
 		super(TaxRateRecord.factory);
 
 		this.companyId = companyId;

@@ -45,10 +45,10 @@ public class FetchFinancialStatementCategoryListHandler extends AbstractFetchHan
 	public FetchResult execute(final FetchFinancialStatementCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
-" FROM fa_bs_category"
+" FROM fa_fs_category"
 		:
 "SELECT FALSE AS 'deleted', id, name, active" +
-" FROM fa_bs_category" +
+" FROM fa_fs_category" +
 " WHERE uname IS NOT NULL"
 				);
 	}

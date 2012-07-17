@@ -19,8 +19,8 @@ package com.nabla.dc.client.presenter.company;
 import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.company.settings.AccountList;
-import com.nabla.dc.client.presenter.company.settings.ChangeCompanyLogoDialog;
-import com.nabla.dc.client.presenter.company.settings.CompanyTaxRateListDialog;
+import com.nabla.dc.client.presenter.company.settings.ChangeLogoDialog;
+import com.nabla.dc.client.presenter.company.settings.TaxRateListDialog;
 import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
 import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
 import com.nabla.dc.client.ui.company.CompanyUi;
@@ -96,7 +96,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					new ChangeCompanyLogoDialog(companyId).revealDisplay();
+					new ChangeLogoDialog(companyId).revealDisplay();
 				}
 			});
 		}
@@ -120,7 +120,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					new CompanyTaxRateListDialog(companyId).revealDisplay();
+					new TaxRateListDialog(companyId).revealDisplay();
 				}
 			});
 		}

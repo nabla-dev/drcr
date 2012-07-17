@@ -26,22 +26,22 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class CompanyLogoRecord extends BasicRecord implements ICompany {
+public class LogoRecord extends BasicRecord implements ICompany {
 
-	public static final IRecordFactory<CompanyLogoRecord>	factory = new IRecordFactory<CompanyLogoRecord>() {
+	public static final IRecordFactory<LogoRecord>	factory = new IRecordFactory<LogoRecord>() {
 
 		@Override
-		public CompanyLogoRecord get(JavaScriptObject data) {
-			return new CompanyLogoRecord(data);
+		public LogoRecord get(JavaScriptObject data) {
+			return new LogoRecord(data);
 		}
 
 	};
 
-	public CompanyLogoRecord(Record impl) {
+	public LogoRecord(Record impl) {
 		super(impl);
 	}
 
-	public CompanyLogoRecord(JavaScriptObject js) {
+	public LogoRecord(JavaScriptObject js) {
 		super(js);
 	}
 

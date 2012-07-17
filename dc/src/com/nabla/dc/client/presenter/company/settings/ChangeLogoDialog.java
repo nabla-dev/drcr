@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.presenter.company.settings;
 
-import com.nabla.dc.client.ui.company.settings.ChangeCompanyLogoDialogUi;
+import com.nabla.dc.client.ui.company.settings.ChangeLogoDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 
@@ -24,18 +24,18 @@ import com.nabla.wapp.client.mvp.ITopDisplay;
  * @author nabla
  *
  */
-public class ChangeCompanyLogoDialog extends AbstractTopPresenter<ChangeCompanyLogoDialog.IDisplay> {
+public class ChangeLogoDialog extends AbstractTopPresenter<ChangeLogoDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {
 		void cleanup();
 	}
 
-	public ChangeCompanyLogoDialog(final IDisplay ui) {
+	public ChangeLogoDialog(final IDisplay ui) {
 		super(ui);
 	}
 
-	public ChangeCompanyLogoDialog(final Integer companyId) {
-		super(new ChangeCompanyLogoDialogUi(companyId));
+	public ChangeLogoDialog(final Integer companyId) {
+		super(new ChangeLogoDialogUi(companyId));
 	}
 
 	@Override

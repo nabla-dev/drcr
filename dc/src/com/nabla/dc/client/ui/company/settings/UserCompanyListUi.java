@@ -22,6 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.UserCompanyListModel;
 import com.nabla.dc.client.presenter.company.settings.UserCompanyList;
 import com.nabla.dc.client.presenter.company.settings.UserCompanyList.ICommandSet;
+import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
@@ -36,6 +37,8 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 	interface Binder extends UiBinder<Tab, UserCompanyListUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
+	@UiField(provided=true)
+	String					tabTitle;
 	@UiField
 	ICommandSet				cmd;
 	@UiField(provided=true)
@@ -43,7 +46,8 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 	@UiField
 	ListGrid				list;
 
-	public UserCompanyListUi(final Integer userId) {
+	public UserCompanyListUi(final Integer userId, final String userName) {
+		this.tabTitle = Resource.messages.userCompanyListTitle(userName);
 		this.model = new UserCompanyListModel(userId);
 		this.create(uiBinder, this);
 	}

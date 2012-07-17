@@ -20,8 +20,8 @@ package com.nabla.dc.client.ui.settings.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.presenter.settings.fixed_asset.BalanceSheetCategoryList;
-import com.nabla.dc.client.presenter.settings.fixed_asset.BalanceSheetCategoryList.ICommandSet;
+import com.nabla.dc.client.presenter.settings.fixed_asset.FinancialStatementCategoryList;
+import com.nabla.dc.client.presenter.settings.fixed_asset.FinancialStatementCategoryList.ICommandSet;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
@@ -34,9 +34,9 @@ import com.nabla.wapp.shared.command.AbstractRestore;
  * @author nabla
  *
  */
-public class BalanceSheetCategoryListUi extends BindedTabDisplay<Tab> implements BalanceSheetCategoryList.IDisplay {
+public class FinancialStatementCategoryListUi extends BindedTabDisplay<Tab> implements FinancialStatementCategoryList.IDisplay {
 
-	interface Binder extends UiBinder<Tab, BalanceSheetCategoryListUi> {}
+	interface Binder extends UiBinder<Tab, FinancialStatementCategoryListUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField
@@ -44,7 +44,7 @@ public class BalanceSheetCategoryListUi extends BindedTabDisplay<Tab> implements
 	@UiField
 	ListGrid		list;
 
-	public BalanceSheetCategoryListUi() {
+	public FinancialStatementCategoryListUi() {
 		this.create(uiBinder, this);
 		if (Application.getInstance().getUserSessionManager().isRoot())
 			list.setCellCSSTextFormatter(new DeletedRecordGridFormatter());

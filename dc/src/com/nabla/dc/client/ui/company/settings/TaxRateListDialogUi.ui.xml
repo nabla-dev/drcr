@@ -6,8 +6,8 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
-	<ui:with field="formModel" type="com.nabla.dc.client.model.company.settings.CompanyTaxRateFormModel" />
-	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.CompanyTaxRateListModel"/>
+	<ui:with field="formModel" type="com.nabla.dc.client.model.company.settings.TaxRateFormModel" />
+	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.TaxRateListModel"/>
 
 	<wnd:ModalDialog caption="Company Tax Rates" icon="vat_small.png" autoClose="true">
 		<ui:attribute name="caption" description="change company tax rates caption"/>

@@ -14,14 +14,15 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.options;
+package com.nabla.dc.client.ui.company.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.options.RoleDefinitionFormModel;
-import com.nabla.dc.client.model.options.RoleDefinitionTreeModel;
-import com.nabla.dc.client.presenter.options.RoleDefinitionDialog;
+import com.nabla.dc.client.model.company.settings.fixed_asset.AvailableFixedAssetCategoryTreeModel;
+import com.nabla.dc.client.model.company.settings.fixed_asset.FixedAssetCategoryFormModel;
+import com.nabla.dc.client.model.company.settings.fixed_asset.FixedAssetCategoryTreeModel;
+import com.nabla.dc.client.ui.options.RoleTreeGrid;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
@@ -32,23 +33,26 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class RoleDefinitionDialogUi extends BindedTopDisplay<ModalDialog> implements RoleDefinitionDialog.IDisplay {
+public class FixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDialog> implements FixedAssetCategoryDialog.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, RoleDefinitionDialogUi> {}
+	interface Binder extends UiBinder<ModalDialog, FixedAssetCategoryDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final RoleDefinitionFormModel	model;
+	final FixedAssetCategoryFormModel			formModel;
 	@UiField
-	Form							form;
+	Form										form;
 	@UiField(provided=true)
-	final RoleDefinitionTreeModel	treeModel;
+	final AvailableFixedAssetCategoryTreeModel	availableModel;
 	@UiField(provided=true)
-	final TreeGridItem				tree = new RoleTreeGrid();
+	final FixedAssetCategoryTreeModel			model;
+	@UiField(provided=true)
+	final TreeGridItem							categories = new RoleTreeGrid();
 
-	public RoleDefinitionDialogUi(final RoleDefinitionFormModel formModel) {
-		this.model = formModel;
-		this.treeModel = formModel.getTreeModel();
+	public FixedAssetCategoryDialogUi(final FixedAssetCategoryFormModel model) {
+		this.formModel = model;
+		this.availableModel = model.getAvailableTreeModel();
+		this.model = model.getAssignedTreeModel();
 		this.create(uiBinder, this);
 	}
 

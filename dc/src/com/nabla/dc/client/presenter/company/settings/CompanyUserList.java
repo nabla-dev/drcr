@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.presenter.company.settings;
 
-import com.nabla.dc.client.model.options.UserDefinitionModel;
+import com.nabla.dc.client.model.options.UserDefinitionFormModel;
 import com.nabla.dc.client.presenter.options.RoleDefinitionDialog;
 import com.nabla.dc.client.presenter.options.UserRecordCommand;
 import com.nabla.dc.client.ui.company.settings.CompanyUserListUi;
@@ -101,7 +101,7 @@ public class CompanyUserList extends AbstractTabPresenter<CompanyUserList.IDispl
 	private final ISlot1<UserRecord> onEditUserRoles = new ISlot1<UserRecord>() {
 		@Override
 		public void invoke(final UserRecord record) {
-			new RoleDefinitionDialog(new UserDefinitionModel(companyId, record.getId())).revealDisplay();
+			new RoleDefinitionDialog(new UserDefinitionFormModel(companyId, record.getId())).revealDisplay();
 		}
 	};
 

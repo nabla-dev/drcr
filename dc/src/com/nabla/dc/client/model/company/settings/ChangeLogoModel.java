@@ -33,7 +33,7 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class ChangeCompanyLogoModel extends CModel<CompanyLogoRecord> {
+public class ChangeLogoModel extends CModel<LogoRecord> {
 
 	static public class Fields {
 		public String companyName() { return ICompany.NAME; }
@@ -48,8 +48,8 @@ public class ChangeCompanyLogoModel extends CModel<CompanyLogoRecord> {
 
 	private final Integer	companyId;
 
-	public ChangeCompanyLogoModel(final Integer companyId) {
-		super(CompanyLogoRecord.factory);
+	public ChangeLogoModel(final Integer companyId) {
+		super(LogoRecord.factory);
 		this.companyId = companyId;
 
 		setFields(
@@ -64,12 +64,12 @@ public class ChangeCompanyLogoModel extends CModel<CompanyLogoRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final CompanyLogoRecord record) {
+	public IAction<StringResult> getAddCommand(final LogoRecord record) {
 		return new ChangeCompanyLogo(companyId, record.getFileId());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final CompanyLogoRecord record) {
+	public IAction<StringResult> getUpdateCommand(final LogoRecord record) {
 		return new ChangeCompanyLogo(companyId, record.getFileId());
 	}
 

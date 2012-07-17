@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.presenter.company.settings;
 
-import com.nabla.dc.client.ui.company.settings.CompanyTaxRateListDialogUi;
+import com.nabla.dc.client.ui.company.settings.TaxRateListDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
@@ -25,18 +25,18 @@ import com.nabla.wapp.shared.slot.ISlot;
  * @author nabla
  *
  */
-public class CompanyTaxRateListDialog extends AbstractTopPresenter<CompanyTaxRateListDialog.IDisplay> {
+public class TaxRateListDialog extends AbstractTopPresenter<TaxRateListDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {
 		void savePreferences();
 	}
 
-	public CompanyTaxRateListDialog(final IDisplay ui) {
+	public TaxRateListDialog(final IDisplay ui) {
 		super(ui);
 	}
 
-	public CompanyTaxRateListDialog(final Integer companyId) {
-		super(new CompanyTaxRateListDialogUi(companyId));
+	public TaxRateListDialog(final Integer companyId) {
+		super(new TaxRateListDialogUi(companyId));
 	}
 
 	@Override

@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.presenter.options;
 
-import com.nabla.dc.client.model.options.RoleDefinitionModel;
+import com.nabla.dc.client.model.options.RoleDefinitionFormModel;
 import com.nabla.dc.client.ui.options.RoleDefinitionDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
@@ -33,7 +33,7 @@ public class RoleDefinitionDialog extends AbstractTopPresenter<RoleDefinitionDia
 		super(ui);
 	}
 
-	public RoleDefinitionDialog(final RoleDefinitionModel formModel) {
+	public RoleDefinitionDialog(final RoleDefinitionFormModel formModel) {
 		super(new RoleDefinitionDialogUi(formModel));
 	}
 

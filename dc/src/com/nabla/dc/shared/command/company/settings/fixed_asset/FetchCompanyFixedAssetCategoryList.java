@@ -14,26 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.model;
+package com.nabla.dc.shared.command.company.settings.fixed_asset;
 
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
+import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
 
 /**
  * @author nabla
  *
  */
-public interface IUser {
+public class FetchCompanyFixedAssetCategoryList extends AbstractCompanyFetch {
 
-	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
+	protected FetchCompanyFixedAssetCategoryList() {}
 
-	static final String				PASSWORD = "password";
-	static final TextLengthConstraint	PASSWORD_CONSTRAINT = new TextLengthConstraint(8, 32);
-
-	static final String				CONFIRM_PASSWORD = "confirm";
-
-	static final String				ACTIVE = "active";
-	static final String				CREATED = "created";
-	static final String				LAST_LOGIN = "last_login";
+	public FetchCompanyFixedAssetCategoryList(Integer companyId) {
+		super(companyId);
+	}
 
 }
