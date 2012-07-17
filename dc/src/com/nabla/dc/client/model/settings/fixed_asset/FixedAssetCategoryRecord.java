@@ -55,7 +55,8 @@ public class FixedAssetCategoryRecord extends BasicListGridRecord implements IFi
 	}
 
 	public FixedAssetCategoryTypes getType() {
-		return FixedAssetCategoryTypes.valueOf(getAttributeAsString(TYPE));
+		final String t = getAttributeAsString(TYPE);
+		return (t == null) ? null : FixedAssetCategoryTypes.valueOf(t);
 	}
 
 	public Integer getMinDepreciationPeriod() {

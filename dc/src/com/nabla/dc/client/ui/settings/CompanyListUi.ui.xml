@@ -13,7 +13,7 @@
 		<ui:attribute name="title" description="Tab title"/>
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">
-				<wnd:ToolbarButton command="{cmd.editPeriodEnd}" tooltip="Add company" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.addRecord}" tooltip="Add company" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.removeRecord}" tooltip="Remove company" icon="remove.png"><ui:msg>Remove</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.restoreRecord}" tooltip="Restore company" icon="restore_small.png"><ui:msg>Restore</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarSeparator />

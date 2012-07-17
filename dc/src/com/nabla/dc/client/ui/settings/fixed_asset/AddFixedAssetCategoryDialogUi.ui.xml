@@ -8,7 +8,7 @@
 	
 	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.FixedAssetCategoryListModel"/>
 
-	<wnd:ModalDialog caption="New Fixed Asset Category" icon="fa_asset_category_small.png" autoClose="true">
+	<wnd:ModalDialog caption="New Fixed Asset Category" icon="fixed_asset/asset_category_small.png" autoClose="true">
 		<ui:attribute name="caption" description="Create new fixed asset category caption"/>
 		<form:Form ui:field="form" model="{model}">
  			<form:Control name="{model.fields.name}"><ui:msg>*Name</ui:msg></form:Control>

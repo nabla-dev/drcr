@@ -9,7 +9,7 @@
 	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.FixedAssetCategoryListModel"/>
 	<ui:with field="cmd" type="com.nabla.dc.client.presenter.settings.fixed_asset.FixedAssetCategoryList.ICommandSet"/>
 	
-	<wnd:Tab title="Fixed Asset Categories" canClose="true" icon="fa_asset_category_small.png">
+	<wnd:Tab title="Fixed Asset Categories" canClose="true" icon="fixed_asset/asset_category_small.png">
 		<ui:attribute name="title" description="Tab title"/>
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">

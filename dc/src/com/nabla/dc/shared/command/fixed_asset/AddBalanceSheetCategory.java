@@ -18,6 +18,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.dc.shared.model.fixed_asset.IBalanceSheetCategory;
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -26,6 +27,7 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
+@IRecordTable(name=IBalanceSheetCategory.TABLE)
 public class AddBalanceSheetCategory implements IRecordAction<StringResult>, IBalanceSheetCategory {
 
 	@IRecordField(unique=true)

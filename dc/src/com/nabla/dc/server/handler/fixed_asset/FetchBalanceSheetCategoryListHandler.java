@@ -45,7 +45,7 @@ public class FetchBalanceSheetCategoryListHandler extends AbstractFetchHandler<F
 	public FetchResult execute(final FetchBalanceSheetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
-" FROM bs_category"
+" FROM fa_bs_category"
 		:
 "SELECT FALSE AS 'deleted', id, name, active" +
 " FROM fa_bs_category" +

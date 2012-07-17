@@ -24,6 +24,7 @@ import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableListGridCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
@@ -49,6 +50,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
+		ICurrentListGridRecordProvider getCurrentRecordProvider();
 	}
 
 	private final Integer	userId;
@@ -69,6 +71,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.editRoles(), onEditUserRoles);
+		cmd.editRoles().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 	}
 

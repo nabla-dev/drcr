@@ -9,7 +9,7 @@
 	<ui:with field="model" type="com.nabla.dc.client.model.settings.fixed_asset.BalanceSheetCategoryListModel"/>
 	<ui:with field="cmd" type="com.nabla.dc.client.presenter.settings.fixed_asset.BalanceSheetCategoryList.ICommandSet"/>
 	
-	<wnd:Tab title="BalanceSheet Categories" canClose="true" icon="fa_bs_category_small.png">
+	<wnd:Tab title="BalanceSheet Categories" canClose="true" icon="fixed_asset/bs_category_small.png">
 		<ui:attribute name="title" description="Tab title"/>
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">

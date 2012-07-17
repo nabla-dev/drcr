@@ -22,6 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.UserCompanyListModel;
 import com.nabla.dc.client.presenter.company.settings.UserCompanyList;
 import com.nabla.dc.client.presenter.company.settings.UserCompanyList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;
@@ -60,6 +61,11 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 	@Override
 	public void savePreferences() {
 		list.saveViewState();
+	}
+
+	@Override
+	public ICurrentListGridRecordProvider getCurrentRecordProvider() {
+		return list;
 	}
 
 }

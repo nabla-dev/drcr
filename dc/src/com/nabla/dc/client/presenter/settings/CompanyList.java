@@ -36,7 +36,6 @@ import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
-import com.nabla.wapp.client.command.ListGridCommand;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
@@ -67,9 +66,6 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableListGridCommand editAccounts();
 		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableListGridCommand editPeriodEnds();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CommandUiManager edit();
-
-		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) ListGridCommand editPeriodEnd();
-	//	void bindRecordProvider(ICurrentListGridRecordProvider provider);
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -105,13 +101,15 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.changeLogo(), onChangeLogo);
+		cmd.changeLogo().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editUsers(), onEditUsers);
+		cmd.editUsers().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editTaxRates(), onEditTaxRates);
+		cmd.editTaxRates().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editAccounts(), onEditAccounts);
+		cmd.editAccounts().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
-		registerSlot(cmd.editPeriodEnd(), onEditPeriodEnds);
-		cmd.editPeriodEnd().setRecordProvider(getDisplay().getCurrentRecordProvider());
-	//	cmd.bindRecordProvider(getDisplay().getCurrentRecordProvider());
+		cmd.editPeriodEnds().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
 	}

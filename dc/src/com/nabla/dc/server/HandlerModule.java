@@ -33,20 +33,18 @@ import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
 import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
-import com.nabla.dc.server.handler.fixed_asset.AddFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.AddBalanceSheetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.FetchFixedAssetCategoryListHandler;
-import com.nabla.dc.server.handler.fixed_asset.FetchBalanceSheetCategoryDefinitionHandler;
+import com.nabla.dc.server.handler.fixed_asset.AddFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.FetchBalanceSheetCategoryListHandler;
-import com.nabla.dc.server.handler.fixed_asset.RemoveFixedAssetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.FetchFixedAssetCategoryListHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveAssetHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.RemoveFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveTransactionHandler;
-import com.nabla.dc.server.handler.fixed_asset.RestoreFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RestoreBalanceSheetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.UpdateFixedAssetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.UpdateBalanceSheetCategoryDefinitionHandler;
+import com.nabla.dc.server.handler.fixed_asset.RestoreFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.UpdateBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.UpdateFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -184,8 +182,6 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdateBalanceSheetCategoryHandler.class);
 		bindHandler(RemoveBalanceSheetCategoryHandler.class);
 		bindHandler(RestoreBalanceSheetCategoryHandler.class);
-		bindHandler(FetchBalanceSheetCategoryDefinitionHandler.class);
-		bindHandler(UpdateBalanceSheetCategoryDefinitionHandler.class);
 
 		bindHandler(RemoveAssetHandler.class);
 

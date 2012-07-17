@@ -51,7 +51,7 @@ public class InsertStatement<T> extends SqlStatement {
 
 	public InsertStatement(final Class<T> recordClass) {
 		final IRecordTable table = commonConstructor(recordClass);
-		Assert.notNull(table);
+		Assert.notNull(table, "have you defined @IRecordTable for your class?");
 		// build SQL template
 		sqlTemplate = "INSERT INTO " + table.name() + " ({0}) VALUES({1});";
 	}
