@@ -14,12 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
+package com.nabla.dc.shared.command.company.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
 
 /**
  * @author nabla
  *
  */
-public class FetchBalanceSheetCategoryList extends AbstractFetch {}
+public class FetchCompanyFixedAssetCategoryList extends AbstractCompanyFetch {
+
+	protected FetchCompanyFixedAssetCategoryList() {}
+
+	public FetchCompanyFixedAssetCategoryList(Integer companyId) {
+		super(companyId);
+	}
+
+}

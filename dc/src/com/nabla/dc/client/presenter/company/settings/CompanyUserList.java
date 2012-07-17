@@ -68,6 +68,10 @@ public class CompanyUserList extends AbstractTabPresenter<CompanyUserList.IDispl
 		this(companyId, new CompanyUserListUi(companyId));
 	}
 
+	public CompanyUserList(final Integer companyId, final String companyName) {
+		this(companyId, new CompanyUserListUi(companyId, companyName));
+	}
+
 	@Override
 	protected void onBind() {
 		final ICommandSet cmd = getDisplay().getCommands();

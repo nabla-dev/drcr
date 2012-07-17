@@ -31,13 +31,11 @@ import com.nabla.dc.shared.command.settings.RestoreCompany;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
-import com.nabla.wapp.client.command.HideableListGridCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
-import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
@@ -60,11 +58,11 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		@IRequireRootRole HideableCommand restoreRecord();
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IPrivileges.COMPANY_EDIT) HideableListGridCommand changeLogo();
-		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) HideableListGridCommand editUsers();
-		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) HideableListGridCommand editTaxRates();
-		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableListGridCommand editAccounts();
-		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableListGridCommand editPeriodEnds();
+		@IRequiredRole(IPrivileges.COMPANY_EDIT) CompanyRecordCommand changeLogo();
+		@IRequiredRole(IPrivileges.COMPANY_USER_VIEW) CompanyRecordCommand editUsers();
+		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) CompanyRecordCommand editTaxRates();
+		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) CompanyRecordCommand editAccounts();
+		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) CompanyRecordCommand editPeriodEnds();
 		@IRequiredRole(IPrivileges.COMPANY_EDIT) CommandUiManager edit();
 	}
 
@@ -75,7 +73,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
-		ICurrentListGridRecordProvider getCurrentRecordProvider();
+		ICurrentRecordProvider<CompanyRecord> getCurrentRecordProvider();
 	}
 
 	private final ITabManager 	tabs;
@@ -169,38 +167,38 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onChangeLogo = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<CompanyRecord> onChangeLogo = new ISlot1<CompanyRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
+		public void invoke(final CompanyRecord record) {
 			new ChangeCompanyLogoDialog(record.getId()).revealDisplay();
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditUsers = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<CompanyRecord> onEditUsers = new ISlot1<CompanyRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-			tabs.addTab(new CompanyUserList(record.getId()));
+		public void invoke(final CompanyRecord record) {
+			tabs.addTab(new CompanyUserList(record.getId(), record.getName()));
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditTaxRates = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<CompanyRecord> onEditTaxRates = new ISlot1<CompanyRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
+		public void invoke(final CompanyRecord record) {
 			new CompanyTaxRateListDialog(record.getId()).revealDisplay();
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditAccounts = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<CompanyRecord> onEditAccounts = new ISlot1<CompanyRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-			tabs.addTab(new AccountList(record.getId()));
+		public void invoke(final CompanyRecord record) {
+			tabs.addTab(new AccountList(record.getId(), record.getName()));
 		}
 	};
 
-	private final ISlot1<BasicListGridRecord> onEditPeriodEnds = new ISlot1<BasicListGridRecord>() {
+	private final ISlot1<CompanyRecord> onEditPeriodEnds = new ISlot1<CompanyRecord>() {
 		@Override
-		public void invoke(final BasicListGridRecord record) {
-			tabs.addTab(new PeriodEndList(record.getId()));
+		public void invoke(final CompanyRecord record) {
+			tabs.addTab(new PeriodEndList(record.getId(), record.getName()));
 		}
 	};
 

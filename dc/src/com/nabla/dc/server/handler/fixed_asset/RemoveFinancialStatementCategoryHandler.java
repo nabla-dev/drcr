@@ -14,26 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
+package com.nabla.dc.server.handler.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.dc.shared.command.fixed_asset.RemoveFinancialStatementCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
+import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
 /**
  * @author nabla
  *
  */
-public class FetchBalanceSheetCategoryDefinition extends AbstractFetch {
+public class RemoveFinancialStatementCategoryHandler extends AbstractSoftRemoveHandler<RemoveFinancialStatementCategory> {
 
-	private Integer		balanceSheetCategoryId;
-
-	FetchBalanceSheetCategoryDefinition() {}
-
-	public FetchBalanceSheetCategoryDefinition(final Integer balanceSheetCategoryId) {
-		this.balanceSheetCategoryId = balanceSheetCategoryId;
-	}
-
-	public Integer getBalanceSheetCategoryId() {
-		return balanceSheetCategoryId;
+	public RemoveFinancialStatementCategoryHandler() {
+		super(IFinancialStatementCategory.TABLE);
 	}
 
 }

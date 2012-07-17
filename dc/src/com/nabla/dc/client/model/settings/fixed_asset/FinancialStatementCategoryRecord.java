@@ -26,22 +26,22 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class BalanceSheetCategoryRecord extends BasicListGridRecord implements IFixedAssetCategory {
+public class FinancialStatementCategoryRecord extends BasicListGridRecord implements IFixedAssetCategory {
 
-	public static final IRecordFactory<BalanceSheetCategoryRecord>	factory = new IRecordFactory<BalanceSheetCategoryRecord>() {
+	public static final IRecordFactory<FinancialStatementCategoryRecord>	factory = new IRecordFactory<FinancialStatementCategoryRecord>() {
 
 		@Override
-		public BalanceSheetCategoryRecord get(JavaScriptObject data) {
-			return new BalanceSheetCategoryRecord(data);
+		public FinancialStatementCategoryRecord get(JavaScriptObject data) {
+			return new FinancialStatementCategoryRecord(data);
 		}
 
 	};
 
-	public BalanceSheetCategoryRecord(Record impl) {
+	public FinancialStatementCategoryRecord(Record impl) {
 		super(impl);
 	}
 
-	public BalanceSheetCategoryRecord(JavaScriptObject js) {
+	public FinancialStatementCategoryRecord(JavaScriptObject js) {
 		super(js);
 	}
 

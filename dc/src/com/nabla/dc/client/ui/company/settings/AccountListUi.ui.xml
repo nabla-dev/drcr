@@ -7,11 +7,11 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	>
 
+	<ui:with field="tabTitle" type="java.lang.String" />
 	<ui:with field="model" type="com.nabla.dc.client.model.company.settings.AccountListModel"/>
 	<ui:with field="cmd" type="com.nabla.dc.client.presenter.company.settings.AccountList.ICommandSet"/>
 
-	<wnd:Tab title="Accounts" icon="account_small.png" canClose="true">
-		<ui:attribute name="title" description="Tab title"/>
+	<wnd:Tab title="{tabTitle}" icon="account_small.png" canClose="true">
 		<wnd:VLayout>
 			<wnd:Toolbar width="100%">
 				<wnd:ToolbarButton command="{cmd.addRecord}" tooltip="Add account" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>

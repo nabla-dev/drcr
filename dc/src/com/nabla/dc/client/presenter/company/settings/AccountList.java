@@ -62,7 +62,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	}
 
 	private final Integer	companyId;
-	
+
 	public AccountList(final Integer companyId, final IDisplay display) {
 		super(display);
 		this.companyId = companyId;
@@ -70,6 +70,10 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 
 	public AccountList(final Integer companyId) {
 		this(companyId, new AccountListUi(companyId));
+	}
+
+	public AccountList(final Integer companyId, final String companyName) {
+		this(companyId, new AccountListUi(companyId, companyName));
 	}
 
 	@Override

@@ -53,7 +53,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.COMPANY_VIEW) HideableCommand companyList();
 		@IRequiredRole(IPrivileges.TAX_RATE_VIEW) HideableCommand taxCodeList();
 		@IRequiredRole(IPrivileges.FA_ASSET_CATEGORY_VIEW) HideableCommand fixedAssetCategoryList();
-		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand bsCategoryList();
+		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand financialStatementCategoryList();
 		// OPTIONS
 		Command changePassword();
 		@IRequiredRole(IPrivileges.USER_VIEW) HideableCommand userList();
@@ -91,7 +91,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.companyList(), onCompanyList);
 		registerSlot(cmd.taxCodeList(), onTaxRateList);
 		registerSlot(cmd.fixedAssetCategoryList(), onFixedAssetCategoryList);
-		registerSlot(cmd.bsCategoryList(), onBalanceSheetCategoryList);
+		registerSlot(cmd.financialStatementCategoryList(), onFinancialStatementCategoryList);
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
 //		printerManager.bind(cmd, this, BuiltInReports.ACCOUNT_LIST);
@@ -190,7 +190,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		}
 	};
 
-	private final ISlot onBalanceSheetCategoryList = new ISlot() {
+	private final ISlot onFinancialStatementCategoryList = new ISlot() {
 		@Override
 		public void invoke() {
 			GWT.runAsync(new AbstractRunAsyncCallback() {

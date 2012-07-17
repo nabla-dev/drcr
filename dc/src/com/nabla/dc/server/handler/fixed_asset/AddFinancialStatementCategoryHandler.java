@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.AddBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.AddFinancialStatementCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.InsertStatement;
 import com.nabla.wapp.server.model.AbstractAddHandler;
@@ -30,13 +30,13 @@ import com.nabla.wapp.shared.model.ValidationException;
  * @author nabla
  *
  */
-public class AddBalanceSheetCategoryHandler extends AbstractAddHandler<AddBalanceSheetCategory> {
+public class AddFinancialStatementCategoryHandler extends AbstractAddHandler<AddFinancialStatementCategory> {
 
-	private static final InsertStatement<AddBalanceSheetCategory>	sql = new InsertStatement<AddBalanceSheetCategory>(AddBalanceSheetCategory.class);
+	private static final InsertStatement<AddFinancialStatementCategory>	sql = new InsertStatement<AddFinancialStatementCategory>(AddFinancialStatementCategory.class);
 
 	@SuppressWarnings("static-access")
 	@Override
-	protected int add(final AddBalanceSheetCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	protected int add(final AddFinancialStatementCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final Integer id = sql.execute(ctx.getWriteConnection(), record);
 		if (id == null)
 			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);

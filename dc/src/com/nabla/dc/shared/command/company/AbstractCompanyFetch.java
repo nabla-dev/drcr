@@ -14,26 +14,26 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_asset;
+package com.nabla.dc.shared.command.company;
 
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
-
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public interface IBalanceSheetCategory {
+public abstract class AbstractCompanyFetch extends AbstractFetch {
 
-	static final String				TABLE = "fa_bs_category";
+	private Integer		companyId;
 
-	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
+	protected AbstractCompanyFetch() {}
 
-	static final String				ACTIVE = "active";
+	protected AbstractCompanyFetch(final Integer companyId) {
+		this.companyId = companyId;
+	}
 
-	static final String				REPORT = "FA_BALANCE_SHEET_CATEGORY_LIST";
-
-	static final String				DEFINITION = "category";
+	public Integer getCompanyId() {
+		return companyId;
+	}
 
 }

@@ -19,6 +19,7 @@ package com.nabla.dc.server;
 import com.google.inject.Singleton;
 import com.nabla.dc.server.handler.FetchCompanyNameHandler;
 import com.nabla.dc.server.handler.FetchImportErrorListHandler;
+import com.nabla.dc.server.handler.company.fixed_asset.FetchCompanyFixedAssetCategoryListHandler;
 import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
 import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
 import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
@@ -33,17 +34,17 @@ import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
 import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
 import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
-import com.nabla.dc.server.handler.fixed_asset.AddBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.AddFinancialStatementCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.AddFixedAssetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.FetchBalanceSheetCategoryListHandler;
+import com.nabla.dc.server.handler.fixed_asset.FetchFinancialStatementCategoryListHandler;
 import com.nabla.dc.server.handler.fixed_asset.FetchFixedAssetCategoryListHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveAssetHandler;
-import com.nabla.dc.server.handler.fixed_asset.RemoveBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.RemoveFinancialStatementCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveTransactionHandler;
-import com.nabla.dc.server.handler.fixed_asset.RestoreBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.RestoreFinancialStatementCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RestoreFixedAssetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.UpdateBalanceSheetCategoryHandler;
+import com.nabla.dc.server.handler.fixed_asset.UpdateFinancialStatementCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.UpdateFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
@@ -177,11 +178,13 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(RemoveFixedAssetCategoryHandler.class);
 		bindHandler(RestoreFixedAssetCategoryHandler.class);
 
-		bindHandler(FetchBalanceSheetCategoryListHandler.class);
-		bindHandler(AddBalanceSheetCategoryHandler.class);
-		bindHandler(UpdateBalanceSheetCategoryHandler.class);
-		bindHandler(RemoveBalanceSheetCategoryHandler.class);
-		bindHandler(RestoreBalanceSheetCategoryHandler.class);
+		bindHandler(FetchFinancialStatementCategoryListHandler.class);
+		bindHandler(AddFinancialStatementCategoryHandler.class);
+		bindHandler(UpdateFinancialStatementCategoryHandler.class);
+		bindHandler(RemoveFinancialStatementCategoryHandler.class);
+		bindHandler(RestoreFinancialStatementCategoryHandler.class);
+
+		bindHandler(FetchCompanyFixedAssetCategoryListHandler.class);
 
 		bindHandler(RemoveAssetHandler.class);
 

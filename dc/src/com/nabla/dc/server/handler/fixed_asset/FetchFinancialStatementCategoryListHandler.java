@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.FetchBalanceSheetCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.FetchFinancialStatementCategoryList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchBalanceSheetCategoryListHandler extends AbstractFetchHandler<FetchBalanceSheetCategoryList> {
+public class FetchFinancialStatementCategoryListHandler extends AbstractFetchHandler<FetchFinancialStatementCategoryList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
 		new OdbcBooleanToJson("deleted"),
@@ -42,7 +42,7 @@ public class FetchBalanceSheetCategoryListHandler extends AbstractFetchHandler<F
 	);
 
 	@Override
-	public FetchResult execute(final FetchBalanceSheetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public FetchResult execute(final FetchFinancialStatementCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
 "SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
 " FROM fa_bs_category"

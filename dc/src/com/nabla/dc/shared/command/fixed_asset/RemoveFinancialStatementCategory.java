@@ -14,20 +14,16 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.fixed_asset;
+package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.dc.shared.command.fixed_asset.RemoveBalanceSheetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IBalanceSheetCategory;
-import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
+import com.nabla.wapp.shared.command.AbstractRemove;
 
 /**
  * @author nabla
  *
  */
-public class RemoveBalanceSheetCategoryHandler extends AbstractSoftRemoveHandler<RemoveBalanceSheetCategory> {
+public class RemoveFinancialStatementCategory extends AbstractRemove {
 
-	public RemoveBalanceSheetCategoryHandler() {
-		super(IBalanceSheetCategory.TABLE);
-	}
+	private static final long serialVersionUID = 1L;
 
 }

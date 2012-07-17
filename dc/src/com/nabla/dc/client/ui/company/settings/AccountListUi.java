@@ -22,6 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.AccountListModel;
 import com.nabla.dc.client.presenter.company.settings.AccountList;
 import com.nabla.dc.client.presenter.company.settings.AccountList.ICommandSet;
+import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
@@ -40,6 +41,8 @@ public class AccountListUi extends BindedTabDisplay<Tab> implements AccountList.
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
+	String				tabTitle;
+	@UiField(provided=true)
 	AccountListModel	model;
 	@UiField
 	ICommandSet			cmd;
@@ -47,6 +50,11 @@ public class AccountListUi extends BindedTabDisplay<Tab> implements AccountList.
 	ListGrid			list;
 
 	public AccountListUi(final Integer companyId) {
+		this(companyId, "");
+	}
+
+	public AccountListUi(final Integer companyId, final String companyName) {
+		this.tabTitle = Resource.messages.accountListTitle(companyName);
 		this.model = new AccountListModel(companyId);
 		this.create(uiBinder, this);
 		if (Application.getInstance().getUserSessionManager().isRoot())

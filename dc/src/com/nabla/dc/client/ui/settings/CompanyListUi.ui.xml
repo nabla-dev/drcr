@@ -33,7 +33,8 @@
 						<wnd:MenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:MenuItem>
 						<wnd:MenuItem icon="vat_small.png" command="{cmd.editTaxRates}">Tax rates</wnd:MenuItem>
 						<wnd:MenuItem icon="period_end_small.png" command="{cmd.editPeriodEnds}">Period Ends</wnd:MenuItem>
-						
+						<wnd:MenuItemSeparator/>
+						<wnd:MenuItem icon="fixed_asset/asset_category_small.png" command="{cmd.editPeriodEnds}">Fixed Asset Categories</wnd:MenuItem>
 						<wnd:MenuItemSeparator/>
 						<wnd:MenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:MenuItem>						
 					</wnd:ListGridToolbarMenu>							

@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.dc.shared.model.fixed_asset.IBalanceSheetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
@@ -27,8 +27,8 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
-@IRecordTable(name=IBalanceSheetCategory.TABLE)
-public class AddBalanceSheetCategory implements IRecordAction<StringResult>, IBalanceSheetCategory {
+@IRecordTable(name=IFinancialStatementCategory.TABLE)
+public class AddFinancialStatementCategory implements IRecordAction<StringResult>, IFinancialStatementCategory {
 
 	@IRecordField(unique=true)
 	String				name;
@@ -37,9 +37,9 @@ public class AddBalanceSheetCategory implements IRecordAction<StringResult>, IBa
 	@IRecordField
 	Boolean				active;
 
-	protected AddBalanceSheetCategory() {}	// for serialization only
+	protected AddFinancialStatementCategory() {}	// for serialization only
 
-	public AddBalanceSheetCategory(final String name, final Boolean active) {
+	public AddFinancialStatementCategory(final String name, final Boolean active) {
 		this.name = name;
 		this.active = active;
 	}

@@ -23,23 +23,25 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
-public class UpdateBalanceSheetCategory extends AddBalanceSheetCategory {
+public class UpdateFinancialStatementCategory extends AddFinancialStatementCategory {
 
 	@IRecordField(id=true)
 	Integer		id;
 
-	protected UpdateBalanceSheetCategory() {}	// for serialization only
+	protected UpdateFinancialStatementCategory() {}	// for serialization only
 
-	public UpdateBalanceSheetCategory(final Integer id, final String name, final Boolean active) {
+	public UpdateFinancialStatementCategory(final Integer id, final String name, final Boolean active) {
 		super(name, active);
 		this.id = id;
 	}
 
 	@Override
 	public boolean validate(final IErrorList errors) {
-		if (name != null && !NAME_CONSTRAINT.validate(NAME, name, errors))
-			return false;
-		uname = name.toUpperCase();
+		if (name != null) {
+			if (!NAME_CONSTRAINT.validate(NAME, name, errors))
+				return false;
+			uname = name.toUpperCase();
+		}
 		return true;
 	}
 

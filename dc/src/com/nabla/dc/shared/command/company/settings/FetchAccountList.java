@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.shared.command.company.settings;
 
-import com.nabla.dc.shared.command.AbstractCompanyFetch;
+import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
 
 /**
  * @author nabla

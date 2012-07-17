@@ -16,14 +16,10 @@
 */
 package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractRestore;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public class RestoreBalanceSheetCategory extends AbstractRestore {
-
-	private static final long serialVersionUID = 1L;
-
-}
+public class FetchFinancialStatementCategoryList extends AbstractFetch {}

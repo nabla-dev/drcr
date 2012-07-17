@@ -61,4 +61,15 @@ public interface IMessageResource extends Messages {
 	@AlternateMessage({"one", "Are you sure you want to delete BalanceSheet category ''{1}''?"})
 	String confirmRemoveBalanceSheetCategories(@PluralCount @Optional int count, @Optional String name);
 
+	@DefaultMessage("{0} - Accounts")
+	@AlternateMessage({"", "Accounts"})
+	String accountListTitle(@Select String companyName);
+
+	@DefaultMessage("{0} - Period Ends")
+	@AlternateMessage({"", "Period Ends"})
+	String periodEndListTitle(@Select String companyName);
+
+	@DefaultMessage("{0} - Users")
+	@AlternateMessage({"", "Users"})
+	String userListTitle(@Select String companyName);
 }

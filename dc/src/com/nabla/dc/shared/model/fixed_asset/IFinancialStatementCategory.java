@@ -14,20 +14,22 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.fixed_asset;
+package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.dc.shared.command.fixed_asset.RestoreBalanceSheetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IBalanceSheetCategory;
-import com.nabla.wapp.server.model.AbstractRestoreHandler;
+import com.nabla.wapp.shared.validator.TextLengthConstraint;
+
 
 /**
  * @author nabla
  *
  */
-public class RestoreBalanceSheetCategoryHandler extends AbstractRestoreHandler<RestoreBalanceSheetCategory> {
+public interface IFinancialStatementCategory {
 
-	public RestoreBalanceSheetCategoryHandler() {
-		super(IBalanceSheetCategory.TABLE);
-	}
+	static final String				TABLE = "fa_fs_category";
 
+	static final String				NAME = "name";
+	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
+	static final String				ACTIVE = "active";
+
+	static final String				REPORT = "FA_FS_CATEGORY_LIST";
 }

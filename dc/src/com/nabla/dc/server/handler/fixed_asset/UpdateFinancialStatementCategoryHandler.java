@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.UpdateBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.UpdateFinancialStatementCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
@@ -28,12 +28,12 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  * @author nabla
  *
  */
-public class UpdateBalanceSheetCategoryHandler extends AbstractUpdateHandler<UpdateBalanceSheetCategory> {
+public class UpdateFinancialStatementCategoryHandler extends AbstractUpdateHandler<UpdateFinancialStatementCategory> {
 
-	private final UpdateStatement<UpdateBalanceSheetCategory>	sql = new UpdateStatement<UpdateBalanceSheetCategory>(UpdateBalanceSheetCategory.class);
+	private final UpdateStatement<UpdateFinancialStatementCategory>	sql = new UpdateStatement<UpdateFinancialStatementCategory>(UpdateFinancialStatementCategory.class);
 
 	@Override
-	protected void update(UpdateBalanceSheetCategory record, IUserSessionContext ctx) throws DispatchException, SQLException {
+	protected void update(UpdateFinancialStatementCategory record, IUserSessionContext ctx) throws DispatchException, SQLException {
 		sql.execute(ctx.getConnection(), record);
 	}
 

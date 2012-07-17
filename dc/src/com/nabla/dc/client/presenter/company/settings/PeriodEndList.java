@@ -48,7 +48,11 @@ public class PeriodEndList extends AbstractTabPresenter<PeriodEndList.IDisplay> 
 	}
 
 	public PeriodEndList(final Integer companyId) {
-		super(new PeriodEndListUi(companyId));
+		this(new PeriodEndListUi(companyId));
+	}
+
+	public PeriodEndList(final Integer companyId, final String companyName) {
+		this(new PeriodEndListUi(companyId, companyName));
 	}
 
 	@Override

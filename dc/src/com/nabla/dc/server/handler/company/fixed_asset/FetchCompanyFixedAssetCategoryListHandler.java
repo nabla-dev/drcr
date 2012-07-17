@@ -14,11 +14,11 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.fixed_asset;
+package com.nabla.dc.server.handler.company.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.FetchBalanceSheetCategoryDefinition;
+import com.nabla.dc.shared.command.company.fixed_asset.FetchCompanyFixedAssetCategoryList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;
@@ -32,20 +32,21 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchBalanceSheetCategoryDefinitionHandler extends AbstractFetchHandler<FetchBalanceSheetCategoryDefinition> {
+public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHandler<FetchCompanyFixedAssetCategoryList> {
 
 	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT t.id, t.name, (tt.company_id IS NOT NULL) AS 'active'" +
-" FROM fa_asset_category AS t LEFT JOIN fa_bs_category_definition AS tt ON t.id=tt.fa_asset_category_id AND tt.fa_bs_category_id=?" +
+"SELECT t.id, t.name, IF(b.id IS NOT NULL, b.name, NULL) AS 'bs_category', IF(c.company_id IS NOT NULL, c.active, FALSE) AS 'active'" +
+" FROM fa_asset_category AS t LEFT JOIN (fa_company_asset_category AS c INNER JOIN fa_bs_category AS b ON c.fa_bs_category_id=b.id)ON t.id=c.fa_asset_category_id AND c.company_id=?" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL",
 		new OdbcIntToJson("id"),
 		new OdbcStringToJson("name"),
+		new OdbcStringToJson("bs_category"),
 		new OdbcBooleanToJson("active")
 	);
 
 	@Override
-	public FetchResult execute(final FetchBalanceSheetCategoryDefinition cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getBalanceSheetCategoryId());
+	public FetchResult execute(final FetchCompanyFixedAssetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return fetcher.fetch(cmd, ctx.getConnection(), cmd.getCompanyId());
 	}
 
 }

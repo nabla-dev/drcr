@@ -22,6 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.PeriodEndTreeModel;
 import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
 import com.nabla.dc.client.presenter.company.settings.PeriodEndList.ICommandSet;
+import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.client.ui.TreeGrid;
@@ -36,6 +37,8 @@ public class PeriodEndListUi extends BindedTabDisplay<Tab> implements PeriodEndL
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
+	String				tabTitle;
+	@UiField(provided=true)
 	final PeriodEndTreeModel	model;
 	@UiField
 	ICommandSet					cmd;
@@ -43,6 +46,11 @@ public class PeriodEndListUi extends BindedTabDisplay<Tab> implements PeriodEndL
 	TreeGrid					tree;
 
 	public PeriodEndListUi(final Integer companyId) {
+		this(companyId, "");
+	}
+
+	public PeriodEndListUi(final Integer companyId, final String companyName) {
+		this.tabTitle = Resource.messages.periodEndListTitle(companyName);
 		this.model = new PeriodEndTreeModel(companyId);
 		this.create(uiBinder, this);
 	}

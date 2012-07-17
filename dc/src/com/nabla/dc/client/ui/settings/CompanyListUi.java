@@ -21,9 +21,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.settings.CompanyListModel;
+import com.nabla.dc.client.model.settings.CompanyRecord;
 import com.nabla.dc.client.presenter.settings.CompanyList;
 import com.nabla.dc.client.presenter.settings.CompanyList.ICommandSet;
-import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
@@ -38,7 +39,7 @@ import com.smartgwt.client.types.DSOperationType;
  * @author nabla
  *
  */
-public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.IDisplay {
+public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.IDisplay, ICurrentRecordProvider<CompanyRecord> {
 
 	interface Binder extends UiBinder<Tab, CompanyListUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
@@ -87,8 +88,14 @@ public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.
 	}
 
 	@Override
-	public ICurrentListGridRecordProvider getCurrentRecordProvider() {
-		return list;
+	public ICurrentRecordProvider<CompanyRecord> getCurrentRecordProvider() {
+		return this;
+	}
+
+	@Override
+	public CompanyRecord getCurrentRecord() {
+		final Record record = list.getCurrentRecord();
+		return (record == null) ? null : new CompanyRecord(record);
 	}
 
 }

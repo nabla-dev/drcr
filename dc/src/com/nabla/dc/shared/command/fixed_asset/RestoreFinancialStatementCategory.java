@@ -14,26 +14,16 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command;
+package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.command.AbstractRestore;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractCompanyFetch extends AbstractFetch {
+public class RestoreFinancialStatementCategory extends AbstractRestore {
 
-	private Integer		companyId;
-
-	protected AbstractCompanyFetch() {}
-
-	protected AbstractCompanyFetch(final Integer companyId) {
-		this.companyId = companyId;
-	}
-
-	public Integer getCompanyId() {
-		return companyId;
-	}
+	private static final long serialVersionUID = 1L;
 
 }

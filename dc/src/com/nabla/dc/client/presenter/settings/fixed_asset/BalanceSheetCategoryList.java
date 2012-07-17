@@ -16,11 +16,11 @@
 */
 package com.nabla.dc.client.presenter.settings.fixed_asset;
 
-import com.nabla.dc.client.model.settings.fixed_asset.BalanceSheetCategoryRecord;
+import com.nabla.dc.client.model.settings.fixed_asset.FinancialStatementCategoryRecord;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.settings.fixed_asset.BalanceSheetCategoryListUi;
 import com.nabla.dc.shared.IPrivileges;
-import com.nabla.dc.shared.command.fixed_asset.RestoreBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.RestoreFinancialStatementCategory;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -97,7 +97,7 @@ public class BalanceSheetCategoryList extends AbstractTabPresenter<BalanceSheetC
 	private final IListGridConfirmAction onConfirmRemoveRecord = new IListGridConfirmAction() {
 		@Override
 		public void confirmRemoveRecords(final ListGridRecord[] records, final com.google.gwt.user.client.Command onSuccess) {
-			final BalanceSheetCategoryRecord record = new BalanceSheetCategoryRecord(records[0]);
+			final FinancialStatementCategoryRecord record = new FinancialStatementCategoryRecord(records[0]);
 			Application.getInstance().getMessageBox().ask(
 					Resource.messages.confirmRemoveBalanceSheetCategories(records.length, record.getName()),
 					onSuccess);
@@ -107,7 +107,7 @@ public class BalanceSheetCategoryList extends AbstractTabPresenter<BalanceSheetC
 	private final ISlot onRestoreRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			if (!getDisplay().restoreRecord(new RestoreBalanceSheetCategory()))
+			if (!getDisplay().restoreRecord(new RestoreFinancialStatementCategory()))
 				Application.getInstance().getMessageBox().error(Resource.strings.noDeletedBalanceSheetCategorySelected());
 		}
 	};

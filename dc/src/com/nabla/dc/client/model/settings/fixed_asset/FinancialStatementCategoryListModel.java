@@ -17,11 +17,11 @@
 package com.nabla.dc.client.model.settings.fixed_asset;
 
 
-import com.nabla.dc.shared.command.fixed_asset.AddBalanceSheetCategory;
-import com.nabla.dc.shared.command.fixed_asset.FetchBalanceSheetCategoryList;
-import com.nabla.dc.shared.command.fixed_asset.RemoveBalanceSheetCategory;
-import com.nabla.dc.shared.command.fixed_asset.UpdateBalanceSheetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IBalanceSheetCategory;
+import com.nabla.dc.shared.command.fixed_asset.AddFinancialStatementCategory;
+import com.nabla.dc.shared.command.fixed_asset.FetchFinancialStatementCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.RemoveFinancialStatementCategory;
+import com.nabla.dc.shared.command.fixed_asset.UpdateFinancialStatementCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.DeletedRecordField;
 import com.nabla.wapp.client.model.field.BooleanField;
@@ -38,22 +38,22 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class BalanceSheetCategoryListModel extends CModel<BalanceSheetCategoryRecord> {
+public class FinancialStatementCategoryListModel extends CModel<FinancialStatementCategoryRecord> {
 
 	static public class Fields {
-		public String name() { return IBalanceSheetCategory.NAME; }
-		public String active() { return IBalanceSheetCategory.ACTIVE; }
+		public String name() { return IFinancialStatementCategory.NAME; }
+		public String active() { return IFinancialStatementCategory.ACTIVE; }
 	}
 
 	private static final Fields	fields = new Fields();
 
-	public BalanceSheetCategoryListModel() {
-		super(BalanceSheetCategoryRecord.factory);
+	public FinancialStatementCategoryListModel() {
+		super(FinancialStatementCategoryRecord.factory);
 
 		setFields(
 			new DeletedRecordField(),
 			new IdField(),
-			new TextField(fields.name(), IBalanceSheetCategory.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new TextField(fields.name(), IFinancialStatementCategory.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
 			new BooleanField(fields.active())
 				);
 	}
@@ -64,22 +64,22 @@ public class BalanceSheetCategoryListModel extends CModel<BalanceSheetCategoryRe
 
 	@Override
 	public AbstractRemove getRemoveCommand() {
-		return new RemoveBalanceSheetCategory();
+		return new RemoveFinancialStatementCategory();
 	}
 
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchBalanceSheetCategoryList();
+		return new FetchFinancialStatementCategoryList();
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final BalanceSheetCategoryRecord record) {
-		return new AddBalanceSheetCategory(record.getName(), record.getActive());
+	public IAction<StringResult> getAddCommand(final FinancialStatementCategoryRecord record) {
+		return new AddFinancialStatementCategory(record.getName(), record.getActive());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final BalanceSheetCategoryRecord record) {
-		return new UpdateBalanceSheetCategory(record.getId(), record.getName(), record.getActive());
+	public IAction<StringResult> getUpdateCommand(final FinancialStatementCategoryRecord record) {
+		return new UpdateFinancialStatementCategory(record.getId(), record.getName(), record.getActive());
 	}
 
 }
