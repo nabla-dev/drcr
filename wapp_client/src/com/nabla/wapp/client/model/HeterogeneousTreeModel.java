@@ -16,26 +16,27 @@
 */
 package com.nabla.wapp.client.model;
 
+import com.nabla.wapp.client.model.field.TreeStringIdField;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.util.JSOHelper;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * @author nabla64
  *
  */
-public abstract class CTreeModel<R extends Record> extends CModel<R> {
+public abstract class HeterogeneousTreeModel<R extends TreeNode> extends CModel<R> {
 
-	protected CTreeModel(final IRecordFactory<R> recordFactory) {
+	protected HeterogeneousTreeModel(final IRecordFactory<R> recordFactory) {
 		super(recordFactory);
 	}
 
-	protected CTreeModel() {
+	protected HeterogeneousTreeModel() {
 		super();
 	}
 
 	public Integer getParentId(final DSRequest request) {
-		return JSOHelper.getAttributeAsInt(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
+		return TreeStringIdField.extractId(JSOHelper.getAttribute(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID));
 	}
 }

@@ -14,31 +14,26 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.company.settings;
+package com.nabla.wapp.shared.command;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public class FetchPeriodEndTree extends AbstractFetch {
+public class CloneUser extends AddUser {
 
-	Integer		companyId;
-	Integer		parentId;
+	Integer	fromUserId;
 
-	protected FetchPeriodEndTree() {}	// for serialization only
+	protected CloneUser() {}	// for serialization only
 
-	public FetchPeriodEndTree(final Integer companyId, final Integer parentId) {
-		this.companyId = companyId;
-		this.parentId = parentId;
+	public CloneUser(final Integer fromUserId, final String name, final String password) {
+		super(name, password);
+		this.fromUserId = fromUserId;
 	}
 
-	public Integer getCompanyId() {
-		return companyId;
+	public Integer getFromUserId() {
+		return fromUserId;
 	}
 
-	public Integer getParentId() {
-		return parentId;
-	}
 }

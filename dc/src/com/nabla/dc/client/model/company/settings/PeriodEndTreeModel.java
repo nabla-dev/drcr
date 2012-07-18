@@ -20,24 +20,22 @@ package com.nabla.dc.client.model.company.settings;
 import com.nabla.dc.shared.command.company.settings.FetchPeriodEndTree;
 import com.nabla.dc.shared.command.company.settings.UpdateFinancialYear;
 import com.nabla.dc.shared.model.IPeriodEnd;
-import com.nabla.wapp.client.model.CModel;
+import com.nabla.wapp.client.model.HeterogeneousTreeModel;
 import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
-import com.nabla.wapp.client.model.field.IdField;
-import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.TextField;
+import com.nabla.wapp.client.model.field.TreeStringIdField;
+import com.nabla.wapp.client.model.field.TreeStringParentIdField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.util.JSOHelper;
 
 /**
  * @author nabla
  *
  */
-public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
+public class PeriodEndTreeModel extends HeterogeneousTreeModel<PeriodEndTreeRecord> {
 
 	static public class Fields {
 		public String name() { return IPeriodEnd.NAME; }
@@ -51,14 +49,9 @@ public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
 		super(PeriodEndTreeRecord.factory);
 
 		this.companyId = companyId;
-		final TextField id = new TextField("iid",  FieldAttributes.HIDDEN);
-		id.setPrimaryKey(true);
-		final TextField parentId = new TextField(IFieldReservedNames.TREEGRID_PARENT_ID,  FieldAttributes.HIDDEN);
-		parentId.setForeignKey("iid");
 		setFields(
-			id,
-			new IntegerField(IdField.NAME, FieldAttributes.HIDDEN),
-			parentId,
+			new TreeStringIdField(),
+			new TreeStringParentIdField(),
 			new TextField(fields.name(), IPeriodEnd.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
 			new DateField(fields.endDate(), FieldAttributes.OPTIONAL, FieldAttributes.READ_ONLY)
 				);
@@ -75,10 +68,6 @@ public class PeriodEndTreeModel extends CModel<PeriodEndTreeRecord> {
 	@Override
 	public IAction<StringResult> getUpdateCommand(final PeriodEndTreeRecord record) {
 		return new UpdateFinancialYear(record.getId(), record.getName());
-	}
-
-	private String getParentId(final DSRequest request) {
-		return JSOHelper.getAttribute(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
 	}
 
 }

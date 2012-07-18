@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -530,8 +531,15 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 	public BasicListGridRecord getCurrentRecord() {
 		if (currentRecord != null)
 			return currentRecord;
-		final ListGridRecord record = this.getSelectedRecord();
-		return (record == null) ? null : new BasicListGridRecord(record);
+		final ListGridRecord[] records = getSelectedRecords();
+		return (records != null && records.length == 1) ? new BasicListGridRecord(records[0]) : null;
+	}
+
+	public JavaScriptObject getCurrentRecordData() {
+		if (currentRecord != null)
+			return currentRecord.getJsObj();
+		final ListGridRecord[] records = getSelectedRecords();
+		return (records != null && records.length == 1) ? records[0].getJsObj() : null;
 	}
 
 }

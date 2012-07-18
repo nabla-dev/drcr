@@ -14,27 +14,28 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model.field;
+package com.nabla.wapp.client.model;
 
-import com.smartgwt.client.data.fields.DataSourceIntegerField;
-
+import com.nabla.wapp.shared.model.IFieldReservedNames;
+import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.util.JSOHelper;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * @author nabla64
  *
  */
-public class IdField extends DataSourceIntegerField {
+public abstract class HomogeneousTreeModel<R extends TreeNode> extends CModel<R> {
 
-	public static final String	NAME = "id";
-
-	public IdField(final String name) {
-		super(name);
-		this.setHidden(true);
-		this.setPrimaryKey(true);
+	protected HomogeneousTreeModel(final IRecordFactory<R> recordFactory) {
+		super(recordFactory);
 	}
 
-	public IdField() {
-		this(NAME);
+	protected HomogeneousTreeModel() {
+		super();
 	}
 
+	public Integer getParentId(final DSRequest request) {
+		return JSOHelper.getAttributeAsInt(request.getData(), IFieldReservedNames.TREEGRID_PARENT_ID);
+	}
 }

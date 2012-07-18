@@ -185,6 +185,37 @@ IRootUser.NAME, IRootUser.NAME.toUpperCase(), getPasswordEncryptor().encryptPass
 userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(password));
 	}
 
+	public Integer cloneUser(final Integer fromUserId, final String userName, final String password) throws SQLException {
+		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
+		try {
+			final Integer id = unguardedCloneUser(fromUserId, userName, password);
+			guard.setSuccess();
+			return id;
+		} finally {
+			guard.close();
+		}
+	}
+
+	public Integer unguardedCloneUser(final Integer fromUserId, final String userName, final String password) throws SQLException {
+		final Integer userId = addUser(userName, password);
+		if (userId == null)
+			return null;
+		// copy user definition and roles
+		Database.executeUpdate(conn,
+"INSERT INTO user_definition (user_id,role_id,object_id)" +
+" SELECT ? AS 'user_id', t.role_id, t.object_id" +
+" FROM user_definition AS t" +
+" WHERE t.user_id=?;",
+			userId, fromUserId);
+		Database.executeUpdate(conn,
+"INSERT INTO user_role (user_id,role_id,object_id)" +
+" SELECT ? AS 'user_id', t.role_id, t.object_id" +
+" FROM user_role AS t" +
+" WHERE t.user_id=?;",
+			userId, fromUserId);
+		return userId;
+	}
+
 	public boolean removeUsers(final IntegerSet userIds) throws SQLException {
 		Database.executeUpdate(conn, "UPDATE user SET uname=NULL WHERE id IN (?);", userIds);
 		return true;

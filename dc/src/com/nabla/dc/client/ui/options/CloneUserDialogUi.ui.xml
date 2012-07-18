@@ -6,9 +6,9 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
-	<ui:with field="model" type="com.nabla.dc.client.model.options.AddUserModel"/>
+	<ui:with field="model" type="com.nabla.dc.client.model.options.CloneUserModel"/>
 
-	<wnd:ModalDialog caption="New User" icon="user_small.png" autoClose="true">
+	<wnd:ModalDialog caption="Clone User" icon="user_small.png" autoClose="true">
 		<ui:attribute name="caption" description="Create new user caption"/>
 		<form:Form ui:field="form" model="{model}">
  			<form:TextEditBox name="{model.fields.userName}"><ui:msg>*Username</ui:msg></form:TextEditBox>

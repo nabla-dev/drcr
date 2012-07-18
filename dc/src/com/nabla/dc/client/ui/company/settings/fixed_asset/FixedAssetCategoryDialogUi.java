@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.company.fixed_asset;
+package com.nabla.dc.client.ui.company.settings.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -22,6 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.settings.fixed_asset.AvailableFixedAssetCategoryTreeModel;
 import com.nabla.dc.client.model.company.settings.fixed_asset.FixedAssetCategoryFormModel;
 import com.nabla.dc.client.model.company.settings.fixed_asset.FixedAssetCategoryTreeModel;
+import com.nabla.dc.client.presenter.company.settings.fixed_asset.FixedAssetCategoryDialog;
 import com.nabla.dc.client.ui.options.RoleTreeGrid;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;

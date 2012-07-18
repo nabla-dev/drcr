@@ -57,6 +57,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand changePassword();
 		@IRequiredRole(IRolePrivileges.ROLE_EDIT) UserRecordCommand editRoles();
 		@IRequiredRole(IRolePrivileges.USER_EDIT) UserRecordCommand editCompanies();
+		@IRequiredRole(IRolePrivileges.USER_ADD) UserRecordCommand cloneRecord();
 
 		@IRequiredRole(IRolePrivileges.USER_EDIT) CommandUiManager edit();
 	}
@@ -99,6 +100,8 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		cmd.editRoles().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.editCompanies(), onEditUserCompanies);
 		cmd.editCompanies().setRecordProvider(getDisplay().getCurrentRecordProvider());
+		registerSlot(cmd.cloneRecord(), onCloneRecord);
+		cmd.cloneRecord().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
@@ -108,6 +111,15 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		@Override
 		public void invoke() {
 			final AddUserDialog dlg = new AddUserDialog();
+			dlg.getSuccessSlots().connect(onRecordAdded);
+			dlg.revealDisplay();
+		}
+	};
+
+	private final ISlot1<UserRecord> onCloneRecord = new ISlot1<UserRecord>() {
+		@Override
+		public void invoke(final UserRecord user) {
+			final CloneUserDialog dlg = new CloneUserDialog(user.getId());
 			dlg.getSuccessSlots().connect(onRecordAdded);
 			dlg.revealDisplay();
 		}

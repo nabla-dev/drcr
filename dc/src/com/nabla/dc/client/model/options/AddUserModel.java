@@ -42,16 +42,22 @@ public class AddUserModel extends CModel<UserRecord> {
 		public String confirmPassword() { return IUser.CONFIRM_PASSWORD; }
 	}
 
+	private static final Fields	fields = new Fields();
+
 	public AddUserModel() {
 		super(UserRecord.factory);
 
 		setFields(
 			new UserNameField(),
 			new UserPasswordField(),
-			new IdField(FieldAttributes.OPTIONAL),
+			new IdField(),
 			new BooleanField(IUser.ACTIVE, FieldAttributes.OPTIONAL),
 			new TextField(IUser.LAST_LOGIN, FieldAttributes.OPTIONAL)
 				);
+	}
+
+	public Fields fields() {
+		return fields;
 	}
 
 	@Override

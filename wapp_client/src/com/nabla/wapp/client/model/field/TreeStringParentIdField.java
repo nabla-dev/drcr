@@ -16,25 +16,23 @@
 */
 package com.nabla.wapp.client.model.field;
 
-import com.smartgwt.client.data.fields.DataSourceIntegerField;
-
+import com.nabla.wapp.shared.model.IFieldReservedNames;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.data.fields.DataSourceTextField;
 
 /**
- * @author nabla64
+ * The <code></code> object is used to
  *
  */
-public class IdField extends DataSourceIntegerField {
+public class TreeStringParentIdField extends DataSourceTextField {
 
-	public static final String	NAME = "id";
-
-	public IdField(final String name) {
-		super(name);
-		this.setHidden(true);
-		this.setPrimaryKey(true);
+	public TreeStringParentIdField() {
+		super(IFieldReservedNames.TREEGRID_PARENT_ID);
+		setForeignKey(TreeStringIdField.NAME);
+		setHidden(true);
 	}
 
-	public IdField() {
-		this(NAME);
+	public static Integer extractId(final Record record) {
+		return TreeStringIdField.extractId(record.getAttribute(IFieldReservedNames.TREEGRID_PARENT_ID));
 	}
-
 }

@@ -19,8 +19,8 @@ package com.nabla.dc.client.ui.options;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.options.AddUserModel;
-import com.nabla.dc.client.presenter.options.AddUserDialog;
+import com.nabla.dc.client.model.options.CloneUserModel;
+import com.nabla.dc.client.presenter.options.CloneUserDialog;
 import com.nabla.wapp.client.model.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
@@ -34,19 +34,20 @@ import com.nabla.wapp.shared.slot.ISlotManager1;
  * @author nabla
  *
  */
-public class AddUserDialogUi extends BindedTopDisplay<ModalDialog> implements AddUserDialog.IDisplay {
+public class CloneUserDialogUi extends BindedTopDisplay<ModalDialog> implements CloneUserDialog.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, AddUserDialogUi> {}
+	interface Binder extends UiBinder<ModalDialog, CloneUserDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	@UiField
-	AddUserModel	model;
+	@UiField(provided=true)
+	CloneUserModel	model;
 	@UiField
 	Form			form;
 
 	private final Signal1<UserRecord>	sigSuccess = new Signal1<UserRecord>();
 
-	public AddUserDialogUi() {
+	public CloneUserDialogUi(final Integer fromUserId) {
+		this.model = new CloneUserModel(fromUserId);
 		this.create(uiBinder, this);
 		form.getSuccessSlots(Form.Operations.ADD).connect(new ISlot() {
 			@Override

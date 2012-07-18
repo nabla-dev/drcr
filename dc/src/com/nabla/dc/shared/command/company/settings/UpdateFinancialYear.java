@@ -47,4 +47,7 @@ public class UpdateFinancialYear implements IRecordAction<StringResult>, IFinanc
 		return NAME_CONSTRAINT.validate(NAME, name, errors);
 	}
 
+	public Integer getId(){
+		return id;
+	}
 }

@@ -18,18 +18,18 @@ package com.nabla.dc.client.model.company.settings.fixed_asset;
 
 
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.client.model.CTreeModel;
+import com.nabla.wapp.client.model.HomogeneousTreeModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.TreeParentIdField;
-import com.smartgwt.client.data.Record;
+import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
  * @author nabla
  *
  */
-public class AvailableFixedAssetCategoryTreeModel extends CTreeModel<Record> {
+public class AvailableFixedAssetCategoryTreeModel extends HomogeneousTreeModel<TreeNode> {
 
 	static public class Fields {
 		public String name() { return IFixedAssetCategory.NAME; }

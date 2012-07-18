@@ -46,6 +46,7 @@ import com.nabla.dc.server.handler.fixed_asset.RestoreFinancialStatementCategory
 import com.nabla.dc.server.handler.fixed_asset.RestoreFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.UpdateFinancialStatementCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.UpdateFixedAssetCategoryHandler;
+import com.nabla.dc.server.handler.options.CloneUserHandler;
 import com.nabla.dc.server.handler.settings.AddCompanyHandler;
 import com.nabla.dc.server.handler.settings.AddECTermHandler;
 import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
@@ -123,6 +124,7 @@ public class HandlerModule extends AbstractHandlerModule {
 
 		bindHandler(FetchUserListHandler.class);
 		bindHandler(AddUserHandler.class);
+		bindHandler(CloneUserHandler.class);
 		bindHandler(UpdateUserHandler.class);
 		bindHandler(RemoveUserHandler.class);
 		bindHandler(RestoreUserHandler.class);

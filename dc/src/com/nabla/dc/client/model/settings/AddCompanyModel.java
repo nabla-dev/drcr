@@ -51,7 +51,7 @@ public class AddCompanyModel extends CModel<AddCompanyRecord> {
 			new TextField(fields.name(), ICompany.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
 			new TextField(fields.financialYear(), IFinancialYear.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
 			new DateField(fields.startDate(), FieldAttributes.REQUIRED),
-			new IdField(FieldAttributes.OPTIONAL),
+			new IdField(),
 			new BooleanField(ICompany.ACTIVE, FieldAttributes.OPTIONAL)
 				);
 	}

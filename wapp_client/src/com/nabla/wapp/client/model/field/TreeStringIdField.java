@@ -16,25 +16,35 @@
 */
 package com.nabla.wapp.client.model.field;
 
-import com.smartgwt.client.data.fields.DataSourceIntegerField;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.data.fields.DataSourceTextField;
 
 
 /**
  * @author nabla64
  *
  */
-public class IdField extends DataSourceIntegerField {
+public class TreeStringIdField extends DataSourceTextField {
 
 	public static final String	NAME = "id";
 
-	public IdField(final String name) {
+	public TreeStringIdField(final String name) {
 		super(name);
 		this.setHidden(true);
 		this.setPrimaryKey(true);
 	}
 
-	public IdField() {
+	public TreeStringIdField() {
 		this(NAME);
+	}
+
+	public static Integer extractId(final Record record) {
+		return extractId(record.getAttribute(NAME));
+	}
+
+	// format: [?]id
+	public static Integer extractId(final String id) {
+		return (id == null) ? null : Integer.valueOf(id.substring(1));
 	}
 
 }

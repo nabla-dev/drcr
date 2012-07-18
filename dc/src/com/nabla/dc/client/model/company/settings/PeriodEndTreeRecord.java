@@ -18,7 +18,7 @@ package com.nabla.dc.client.model.company.settings;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.IPeriodEnd;
-import com.nabla.wapp.client.model.BasicRecord;
+import com.nabla.wapp.client.model.HeterogeneousTreeGridRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.smartgwt.client.data.Record;
 
@@ -26,7 +26,7 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class PeriodEndTreeRecord extends BasicRecord {
+public class PeriodEndTreeRecord extends HeterogeneousTreeGridRecord {
 
 	public static final IRecordFactory<PeriodEndTreeRecord>	factory = new IRecordFactory<PeriodEndTreeRecord>() {
 		@Override
@@ -43,6 +43,7 @@ public class PeriodEndTreeRecord extends BasicRecord {
 		super(js);
 	}
 
+	@Override
 	public String getName() {
 		return getAttributeAsString(IPeriodEnd.NAME);
 	}

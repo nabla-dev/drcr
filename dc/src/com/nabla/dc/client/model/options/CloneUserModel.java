@@ -14,31 +14,30 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.company.settings;
+package com.nabla.dc.client.model.options;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+
+import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.shared.command.CloneUser;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
  * @author nabla
  *
  */
-public class FetchPeriodEndTree extends AbstractFetch {
+public class CloneUserModel extends AddUserModel {
 
-	Integer		companyId;
-	Integer		parentId;
+	private final Integer	fromUserId;
 
-	protected FetchPeriodEndTree() {}	// for serialization only
-
-	public FetchPeriodEndTree(final Integer companyId, final Integer parentId) {
-		this.companyId = companyId;
-		this.parentId = parentId;
+	public CloneUserModel(final Integer fromUserId) {
+		super();
+		this.fromUserId = fromUserId;
 	}
 
-	public Integer getCompanyId() {
-		return companyId;
+	@Override
+	public IAction<StringResult> getAddCommand(final UserRecord user) {
+		return new CloneUser(fromUserId, user.getName(), user.getPassword());
 	}
 
-	public Integer getParentId() {
-		return parentId;
-	}
 }
