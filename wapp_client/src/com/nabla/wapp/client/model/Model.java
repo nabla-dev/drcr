@@ -32,7 +32,6 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.Record;
-import com.smartgwt.client.data.XMLTools;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.DSDataFormat;
@@ -106,12 +105,6 @@ public abstract class Model extends DataSource {
 		onResponse(request, new Response(request, fieldName, Application.getInstance().getLocalizedError(errorCode)));
 	}
 
-	protected Record[] recordsFromXmlResponse(final DSRequest request, final String xmlResponse, final String path) {
-		return combineRecords(	getEditedRecords(request),
-								recordsFromXml(xmlResponse, path)
-								);
-	}
-
 	protected Record[] getEditedRecords(final DSRequest request) {
 		return combineRecords(	Record.convertToRecordArray(request.getAttributeAsJavaScriptObject("oldValues")),
 								Record.convertToRecordArray(request.getData())
@@ -138,45 +131,6 @@ public abstract class Model extends DataSource {
 		return result;
 	}
 
-	public Record[] recordsFromXml(final String xmlResponse, final String path) {
-		final Record[] result = this.recordsFromXML(XMLTools.selectNodes(xmlResponse, path));
-		return (result == null) ? new Record[0] : result;
-	}
-/*
-	private JavaScriptObject transformRemoveRequest(final JavaScriptObject data, final String field) {
-		logger.fine("REMOVE original request: " + this.xmlSerialize(data));
-		logger.fine("send only primary key of deleted record(s) to server");
-		if (JSOHelper.isArray(data)) {
-			final JavaScriptObject[] dataArray = JSOHelper.toArray(data);
-			final JavaScriptObject[] result = new JavaScriptObject[dataArray.length];
-			for (int i = 0; i < dataArray.length; ++i) {
-				result[i] = JSOHelper.createObject();
-				JSHelper.copyAttribute(dataArray[i], result[i], field);
-			}
-			return JSOHelper.arrayConvert(result);
-		}
-		final JavaScriptObject result = JSOHelper.createObject();
-		JSHelper.copyAttribute(data, result, field);
-		return result;
-	}
-*/
-	/**
-	 * Remove values from data that should not be sent to server in the following conditions:
-	 *  - field has attribute canSave = false (SmartGWT should do that but...)
-	 * @param data - original data to sent to server
-	 * @return modified data
-	 */
-/*	private JavaScriptObject cleanData(final JavaScriptObject data) {
-		for (final DataSourceField field : fields.values()) {
-			Boolean canSave = FieldAttributes.getCanSave(field);
-			if (canSave != null && !canSave) {
-				logger.warning("removing field '" + field.getName() + "' from data to be sent");
-				JSOHelper.deleteAttributeIfExists(data, field.getName());
-			}
-		}
-		return data;
-	}
-*/
 	public void updateCache(final Record record, final DSOperationType operation) {
 		Assert.argumentNotNull(record);
 
