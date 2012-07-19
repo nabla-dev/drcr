@@ -14,20 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.dispatch;
+package com.nabla.dc.shared.command.fixed_asset.settings;
 
-import com.google.inject.Singleton;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
-
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
-	}
-
-}
+public class FetchFixedAssetCategoryList extends AbstractFetch {}

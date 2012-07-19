@@ -17,7 +17,7 @@
 package com.nabla.dc.client.model.company.settings.fixed_asset;
 
 
-import com.nabla.dc.shared.command.FetchCompanyName;
+import com.nabla.dc.shared.command.company.FetchCompanyName;
 import com.nabla.dc.shared.model.ICompany;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.shared.command.AbstractFetch;

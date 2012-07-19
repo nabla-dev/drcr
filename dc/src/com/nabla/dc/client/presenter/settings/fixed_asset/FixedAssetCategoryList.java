@@ -21,7 +21,7 @@ import com.nabla.dc.client.model.settings.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.settings.fixed_asset.FixedAssetCategoryListUi;
 import com.nabla.dc.shared.IPrivileges;
-import com.nabla.dc.shared.command.fixed_asset.RestoreFixedAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.RestoreFixedAssetCategory;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;

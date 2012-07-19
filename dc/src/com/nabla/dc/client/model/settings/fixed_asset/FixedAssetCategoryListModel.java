@@ -17,10 +17,10 @@
 package com.nabla.dc.client.model.settings.fixed_asset;
 
 
-import com.nabla.dc.shared.command.fixed_asset.AddFixedAssetCategory;
-import com.nabla.dc.shared.command.fixed_asset.FetchFixedAssetCategoryList;
-import com.nabla.dc.shared.command.fixed_asset.RemoveFixedAssetCategory;
-import com.nabla.dc.shared.command.fixed_asset.UpdateFixedAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.AddFixedAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.FetchFixedAssetCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.settings.RemoveFixedAssetCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.UpdateFixedAssetCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.DeletedRecordField;

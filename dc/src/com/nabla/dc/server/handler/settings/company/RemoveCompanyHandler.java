@@ -14,20 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.dispatch;
+package com.nabla.dc.server.handler.settings.company;
 
-import com.google.inject.Singleton;
+import com.nabla.dc.shared.command.settings.RemoveCompany;
+import com.nabla.dc.shared.model.ICompany;
+import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
+public class RemoveCompanyHandler extends AbstractSoftRemoveHandler<RemoveCompany> {
 
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
+	public RemoveCompanyHandler() {
+		super(ICompany.TABLE);
 	}
 
 }

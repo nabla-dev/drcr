@@ -15,11 +15,11 @@
 		<ui:attribute name="caption" description="Edit company fixed asset categories dialog caption"/>
 		<form:Form ui:field="form" model="{formModel}" autoFetchData="true" columnWidths="35,*" width="550" height="350">
 			<form:StaticText name="{formModel.fields.name}" width="*"><ui:msg>Company</ui:msg></form:StaticText>
-			<form:TreeGridItem name="{formModel.fields.availableCategories}" ui:field="availableCategories" model="{availableModel}" title="Select from list of roles below" colSpan="2" width="*" height="200" loadDataOnDemand="true" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png">
+			<form:TreeGridItem name="{formModel.fields.availableCategories}" ui:field="availableCategories" model="{availableModel}" title="List of available asset categories" width="150" height="200" loadDataOnDemand="true" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png" canDragRecordsOut="true">
 				<ui:attribute name="title" description="Edit role definition message"/>
 				<wnd:TreeGridField name="{availableModel.fields.name}" canSort="false"><ui:msg>Category</ui:msg></wnd:TreeGridField>
 			</form:TreeGridItem>
-			<form:TreeGridItem name="{formModel.fields.categories}" ui:field="categories" model="{model}" title="Select from list of roles below" colSpan="2" width="*" height="200" loadDataOnDemand="true" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png">
+			<form:TreeGridItem name="{formModel.fields.categories}" ui:field="categories" model="{model}" title="Company categories" width="200" height="200" loadDataOnDemand="true" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png">
 				<ui:attribute name="title" description="Edit role definition message"/>
 				<wnd:TreeGridField name="{model.fields.name}" canSort="false"><ui:msg>Category</ui:msg></wnd:TreeGridField>
 				<wnd:TreeGridField name="{model.fields.active}" canSort="false" width="40" canEdit="true"><ui:msg>_</ui:msg></wnd:TreeGridField>

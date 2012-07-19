@@ -17,10 +17,10 @@
 package com.nabla.dc.client.model.settings.fixed_asset;
 
 
-import com.nabla.dc.shared.command.fixed_asset.AddFinancialStatementCategory;
-import com.nabla.dc.shared.command.fixed_asset.FetchFinancialStatementCategoryList;
-import com.nabla.dc.shared.command.fixed_asset.RemoveFinancialStatementCategory;
-import com.nabla.dc.shared.command.fixed_asset.UpdateFinancialStatementCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.AddFinancialStatementCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.FetchFinancialStatementCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.settings.RemoveFinancialStatementCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.UpdateFinancialStatementCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.DeletedRecordField;

@@ -16,18 +16,19 @@
 */
 package com.nabla.wapp.server.dispatch;
 
-import com.google.inject.Singleton;
+import com.google.inject.AbstractModule;
+import com.google.inject.internal.UniqueAnnotations;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IResult;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
+public abstract class AbstractHandlerSubModule extends AbstractModule {
 
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
+	protected <A extends IAction<R>, R extends IResult> void bindHandler(Class<? extends IActionHandler<A, R>> handlerClass ) {
+		bind(IActionHandlerMap.class).annotatedWith(UniqueAnnotations.create()).toInstance(new ActionHandlerMap<A, R>(handlerClass));
 	}
 
 }

@@ -14,20 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.dispatch;
+package com.nabla.dc.server.handler.settings.fixed_asset;
 
-import com.google.inject.Singleton;
+import com.nabla.dc.shared.command.fixed_asset.settings.RestoreFixedAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
+import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
+public class RestoreFixedAssetCategoryHandler extends AbstractRestoreHandler<RestoreFixedAssetCategory> {
 
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
+	public RestoreFixedAssetCategoryHandler() {
+		super(IFixedAssetCategory.TABLE);
 	}
 
 }

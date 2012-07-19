@@ -14,20 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.dispatch;
+package com.nabla.dc.server.handler.settings.fixed_asset;
 
-import com.google.inject.Singleton;
+import com.nabla.dc.shared.command.fixed_asset.settings.RemoveFinancialStatementCategory;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
+import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
+public class RemoveFinancialStatementCategoryHandler extends AbstractSoftRemoveHandler<RemoveFinancialStatementCategory> {
 
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
+	public RemoveFinancialStatementCategoryHandler() {
+		super(IFinancialStatementCategory.TABLE);
 	}
 
 }

@@ -20,7 +20,7 @@ import com.nabla.dc.client.model.settings.fixed_asset.FinancialStatementCategory
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.settings.fixed_asset.FinancialStatementCategoryListUi;
 import com.nabla.dc.shared.IPrivileges;
-import com.nabla.dc.shared.command.fixed_asset.RestoreFinancialStatementCategory;
+import com.nabla.dc.shared.command.fixed_asset.settings.RestoreFinancialStatementCategory;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;

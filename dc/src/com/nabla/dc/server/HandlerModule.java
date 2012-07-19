@@ -17,73 +17,20 @@
 package com.nabla.dc.server;
 
 import com.google.inject.Singleton;
-import com.nabla.dc.server.handler.FetchCompanyNameHandler;
 import com.nabla.dc.server.handler.FetchImportErrorListHandler;
-import com.nabla.dc.server.handler.company.fixed_asset.FetchCompanyFixedAssetCategoryListHandler;
-import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
-import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
-import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchPeriodEndTreeHandler;
-import com.nabla.dc.server.handler.company.settings.ImportAccountListHandler;
-import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
-import com.nabla.dc.server.handler.company.settings.RestoreAccountHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateAccountHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
-import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
-import com.nabla.dc.server.handler.fixed_asset.AddFinancialStatementCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.AddFixedAssetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.FetchFinancialStatementCategoryListHandler;
-import com.nabla.dc.server.handler.fixed_asset.FetchFixedAssetCategoryListHandler;
+import com.nabla.dc.server.handler.FetchUserCompanyListHandler;
+import com.nabla.dc.server.handler.company.CompanyHandlerModule;
+import com.nabla.dc.server.handler.fixed_asset.FixedAssetHandlerModule;
 import com.nabla.dc.server.handler.fixed_asset.RemoveAssetHandler;
-import com.nabla.dc.server.handler.fixed_asset.RemoveFinancialStatementCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.RemoveFixedAssetCategoryHandler;
 import com.nabla.dc.server.handler.fixed_asset.RemoveTransactionHandler;
-import com.nabla.dc.server.handler.fixed_asset.RestoreFinancialStatementCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.RestoreFixedAssetCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.UpdateFinancialStatementCategoryHandler;
-import com.nabla.dc.server.handler.fixed_asset.UpdateFixedAssetCategoryHandler;
-import com.nabla.dc.server.handler.options.CloneUserHandler;
-import com.nabla.dc.server.handler.settings.AddCompanyHandler;
-import com.nabla.dc.server.handler.settings.AddECTermHandler;
-import com.nabla.dc.server.handler.settings.AddTaxRateHandler;
-import com.nabla.dc.server.handler.settings.FetchCompanyListHandler;
-import com.nabla.dc.server.handler.settings.FetchECTermListHandler;
-import com.nabla.dc.server.handler.settings.FetchTaxRateListHandler;
-import com.nabla.dc.server.handler.settings.RemoveCompanyHandler;
-import com.nabla.dc.server.handler.settings.RemoveECTermHandler;
-import com.nabla.dc.server.handler.settings.RemoveTaxRateHandler;
-import com.nabla.dc.server.handler.settings.RestoreCompanyHandler;
-import com.nabla.dc.server.handler.settings.RestoreECTermHandler;
-import com.nabla.dc.server.handler.settings.RestoreTaxRateHandler;
-import com.nabla.dc.server.handler.settings.UpdateCompanyHandler;
-import com.nabla.dc.server.handler.settings.UpdateECTermHandler;
-import com.nabla.dc.server.handler.settings.UpdateTaxRateHandler;
+import com.nabla.dc.server.handler.options.OptionsHandlerModule;
+import com.nabla.dc.server.handler.settings.SettingsHandlerModule;
 import com.nabla.wapp.server.auth.IUserSessionContextProvider;
 import com.nabla.wapp.server.basic.general.UserSessionContextProvider;
-import com.nabla.wapp.server.basic.handler.AddRoleHandler;
-import com.nabla.wapp.server.basic.handler.AddUserHandler;
-import com.nabla.wapp.server.basic.handler.ChangeUserPasswordHandler;
-import com.nabla.wapp.server.basic.handler.FetchRoleDefinitionHandler;
-import com.nabla.wapp.server.basic.handler.FetchRoleListHandler;
-import com.nabla.wapp.server.basic.handler.FetchRoleNameHandler;
-import com.nabla.wapp.server.basic.handler.FetchUserDefinitionHandler;
-import com.nabla.wapp.server.basic.handler.FetchUserListHandler;
-import com.nabla.wapp.server.basic.handler.FetchUserNameHandler;
 import com.nabla.wapp.server.basic.handler.GetFormDefaultValuesHandler;
 import com.nabla.wapp.server.basic.handler.IsUserInRoleHandler;
 import com.nabla.wapp.server.basic.handler.LoadListGridStateHandler;
-import com.nabla.wapp.server.basic.handler.RemoveRoleHandler;
-import com.nabla.wapp.server.basic.handler.RemoveUserHandler;
-import com.nabla.wapp.server.basic.handler.RestoreUserHandler;
 import com.nabla.wapp.server.basic.handler.SaveListGridStateHandler;
-import com.nabla.wapp.server.basic.handler.UpdateRoleDefinitionHandler;
-import com.nabla.wapp.server.basic.handler.UpdateRoleHandler;
-import com.nabla.wapp.server.basic.handler.UpdateUserDefinitionHandler;
-import com.nabla.wapp.server.basic.handler.UpdateUserHandler;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadOnlyDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
@@ -100,6 +47,10 @@ public class HandlerModule extends AbstractHandlerModule {
 	@Override
 	protected void configure() {
 		super.configure();
+		install(new OptionsHandlerModule());
+		install(new SettingsHandlerModule());
+		install(new CompanyHandlerModule());
+		install(new FixedAssetHandlerModule());
 
 //		bindConstant().annotatedWith(IReCompileReports.class).to(RECOMPILE_REPORTS);
 
@@ -114,128 +65,12 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(GetFormDefaultValuesHandler.class);
 		bindHandler(FetchImportErrorListHandler.class);
 
-		bindHandler(FetchRoleListHandler.class);
-		bindHandler(AddRoleHandler.class);
-		bindHandler(UpdateRoleHandler.class);
-		bindHandler(RemoveRoleHandler.class);
-		bindHandler(FetchRoleNameHandler.class);
-		bindHandler(FetchRoleDefinitionHandler.class);
-		bindHandler(UpdateRoleDefinitionHandler.class);
-
-		bindHandler(FetchUserListHandler.class);
-		bindHandler(AddUserHandler.class);
-		bindHandler(CloneUserHandler.class);
-		bindHandler(UpdateUserHandler.class);
-		bindHandler(RemoveUserHandler.class);
-		bindHandler(RestoreUserHandler.class);
-		bindHandler(FetchUserNameHandler.class);
-		bindHandler(FetchUserDefinitionHandler.class);
-		bindHandler(UpdateUserDefinitionHandler.class);
-
-		bindHandler(ChangeUserPasswordHandler.class);
-
-		bindHandler(FetchECTermListHandler.class);
-		bindHandler(AddECTermHandler.class);
-		bindHandler(UpdateECTermHandler.class);
-		bindHandler(RemoveECTermHandler.class);
-		bindHandler(RestoreECTermHandler.class);
-
-		bindHandler(FetchTaxRateListHandler.class);
-		bindHandler(AddTaxRateHandler.class);
-		bindHandler(UpdateTaxRateHandler.class);
-		bindHandler(RemoveTaxRateHandler.class);
-		bindHandler(RestoreTaxRateHandler.class);
-
-		bindHandler(FetchCompanyListHandler.class);
-		bindHandler(AddCompanyHandler.class);
-		bindHandler(UpdateCompanyHandler.class);
-		bindHandler(RemoveCompanyHandler.class);
-		bindHandler(RestoreCompanyHandler.class);
-		bindHandler(ChangeCompanyLogoHandler.class);
-		bindHandler(FetchCompanyNameHandler.class);
-
-		bindHandler(FetchCompanyTaxRateListHandler.class);
-		bindHandler(UpdateCompanyTaxRateHandler.class);
-
-		bindHandler(FetchCompanyUserListHandler.class);
-		bindHandler(UpdateCompanyUserHandler.class);
-
-		bindHandler(com.nabla.dc.server.handler.FetchUserCompanyListHandler.class);
-		bindHandler(com.nabla.dc.server.handler.company.settings.FetchUserCompanyListHandler.class);
-
-		bindHandler(FetchAccountListHandler.class);
-		bindHandler(AddAccountHandler.class);
-		bindHandler(UpdateAccountHandler.class);
-		bindHandler(RemoveAccountHandler.class);
-		bindHandler(RestoreAccountHandler.class);
-		bindHandler(ImportAccountListHandler.class);
-
-		bindHandler(FetchPeriodEndTreeHandler.class);
-		bindHandler(UpdatePeriodEndHandler.class);
-		bindHandler(UpdateFinancialYearHandler.class);
-
-		bindHandler(FetchFixedAssetCategoryListHandler.class);
-		bindHandler(AddFixedAssetCategoryHandler.class);
-		bindHandler(UpdateFixedAssetCategoryHandler.class);
-		bindHandler(RemoveFixedAssetCategoryHandler.class);
-		bindHandler(RestoreFixedAssetCategoryHandler.class);
-
-		bindHandler(FetchFinancialStatementCategoryListHandler.class);
-		bindHandler(AddFinancialStatementCategoryHandler.class);
-		bindHandler(UpdateFinancialStatementCategoryHandler.class);
-		bindHandler(RemoveFinancialStatementCategoryHandler.class);
-		bindHandler(RestoreFinancialStatementCategoryHandler.class);
-
-		bindHandler(FetchCompanyFixedAssetCategoryListHandler.class);
+		bindHandler(FetchUserCompanyListHandler.class);
 
 		bindHandler(RemoveAssetHandler.class);
 
 		bindHandler(RemoveTransactionHandler.class);
 /*
-  bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);
-
-		bindHandler(FetchAssetRegisterListHandler.class);
-		bindHandler(AddAssetRegisterHandler.class);
-		bindHandler(RemoveAssetRegisterHandler.class);
-		bindHandler(RestoreAssetRegisterHandler.class);
-		bindHandler(UpdateAssetRegisterHandler.class);
-		bindHandler(FetchAssetRegisterUserListHandler.class);
-		bindHandler(UpdateAssetRegisterUserListHandler.class);
-		bindHandler(FetchAssetRegisterAssetCategoryListHandler.class);
-		bindHandler(UpdateAssetRegisterAssetCategoryListHandler.class);
-
-		bindHandler(FetchAssetRegisterBalanceSheetCategoryListHandler.class);
-		bindHandler(UpdateAssetRegisterBalanceSheetCategoryListHandler.class);
-
-		bindHandler(FetchAssetRegisterActiveAssetCategoryListHandler.class);
-		bindHandler(FetchAssetListHandler.class);
-		bindHandler(AddAssetHandler.class);
-		bindHandler(UpdateAssetFieldHandler.class);
-		bindHandler(UpdateAssetHandler.class);
-
-		bindHandler(FetchAssetListRecordHandler.class);
-
-		bindHandler(FetchAssetDisposalHandler.class);
-		bindHandler(UpdateAssetDisposalHandler.class);
-		bindHandler(RevertAssetDisposalHandler.class);
-
-		bindHandler(FetchAssetRecordHandler.class);
-
-		bindHandler(FetchAssetAcquisitionHandler.class);
-		bindHandler(FetchAssetTransferHandler.class);
-
-		bindHandler(SplitAssetHandler.class);
-
-		bindHandler(ImportAssetListHandler.class);
-		bindHandler(ImportSettingsHandler.class);
-		bindHandler(FetchImportErrorListHandler.class);
-
-		bindHandler(FetchTransactionListHandler.class);
-		bindHandler(AddTransactionHandler.class);
-		bindHandler(UpdateTransactionHandler.class);
-
-		bindHandler(GetNewTransactionDefaultValuesHandler.class);
-
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);
 		bindHandler(UpdateListGridFilterHandler.class);

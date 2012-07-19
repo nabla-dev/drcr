@@ -22,6 +22,4 @@ import com.nabla.wapp.shared.command.AbstractFetch;
  * @author nabla
  *
  */
-public class FetchUserCompanyList extends AbstractFetch {
-
-}
+public class FetchUserCompanyList extends AbstractFetch {}

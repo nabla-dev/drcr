@@ -14,20 +14,17 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.dispatch;
+package com.nabla.dc.shared.command.fixed_asset.settings;
 
-import com.google.inject.Singleton;
+import com.nabla.wapp.shared.command.AbstractRestore;
+
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
+public class RestoreFixedAssetCategory extends AbstractRestore {
 
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
-	}
+	private static final long serialVersionUID = 1L;
 
 }

@@ -23,7 +23,6 @@ import com.nabla.dc.client.model.company.settings.fixed_asset.AvailableFixedAsse
 import com.nabla.dc.client.model.company.settings.fixed_asset.FixedAssetCategoryFormModel;
 import com.nabla.dc.client.model.company.settings.fixed_asset.FixedAssetCategoryTreeModel;
 import com.nabla.dc.client.presenter.company.settings.fixed_asset.FixedAssetCategoryDialog;
-import com.nabla.dc.client.ui.options.RoleTreeGrid;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
@@ -48,7 +47,7 @@ public class FixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDialog> im
 	@UiField(provided=true)
 	final FixedAssetCategoryTreeModel			model;
 	@UiField(provided=true)
-	final TreeGridItem							categories = new RoleTreeGrid();
+	final TreeGridItem							categories = new FixedAssetCategoryTreeGrid();
 
 	public FixedAssetCategoryDialogUi(final FixedAssetCategoryFormModel model) {
 		this.formModel = model;

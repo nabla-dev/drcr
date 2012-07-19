@@ -14,20 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.dispatch;
+package com.nabla.dc.server.handler.settings.company;
 
-import com.google.inject.Singleton;
+import com.nabla.dc.shared.command.settings.RestoreTaxRate;
+import com.nabla.dc.shared.model.ITaxRate;
+import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
+public class RestoreTaxRateHandler extends AbstractRestoreHandler<RestoreTaxRate> {
 
-	@Override
-	protected void configure() {
-		bind(ActionHandlerRegister.class).in(Singleton.class);
-        requestStaticInjection(ActionHandlerRegisterInitializer.class);
+	public RestoreTaxRateHandler() {
+		super(ITaxRate.TABLE);
 	}
 
 }
