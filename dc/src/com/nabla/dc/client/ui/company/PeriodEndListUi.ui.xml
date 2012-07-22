@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	>
+	
+	<ui:with field="tabTitle" type="java.lang.String" />
+	<ui:with field="model" type="com.nabla.dc.client.model.company.PeriodEndTreeModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.company.PeriodEndList.ICommandSet"/>
+
+	<wnd:Tab title="{tabTitle}" icon="period_end_small.png" canClose="true">
+		<wnd:VLayout>
+			<wnd:Toolbar width="100%">
+				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
+			</wnd:Toolbar>
+			<wnd:TreeGrid ui:field="tree" model="{model}" modelType="CHILDREN" command="{cmd.edit}" loadDataOnDemand="true" nodeIcon="period_end_small.png" folderIcon="financial_year_small.png">
+				<wnd:TreeGridField name="{model.fields.name}" canSort="false" width="200" />
+				<wnd:TreeGridField name="{model.fields.endDate}" canSort="false" width="110" />
+			</wnd:TreeGrid>
+		</wnd:VLayout>
+	</wnd:Tab>
+</ui:UiBinder> 

@@ -18,11 +18,7 @@ package com.nabla.dc.client.presenter.company;
 
 import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.presenter.ITabManager;
-import com.nabla.dc.client.presenter.company.settings.AccountList;
-import com.nabla.dc.client.presenter.company.settings.ChangeLogoDialog;
-import com.nabla.dc.client.presenter.company.settings.TaxRateListDialog;
-import com.nabla.dc.client.presenter.company.settings.CompanyUserList;
-import com.nabla.dc.client.presenter.company.settings.PeriodEndList;
+import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
 import com.nabla.dc.client.ui.company.CompanyUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -47,6 +43,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		@IRequiredRole(IPrivileges.COMPANY_TAX_RATE_VIEW) HideableCommand editTaxRates();
 		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableCommand editAccounts();
 		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableCommand editPeriodEnds();
+		@IRequiredRole(IPrivileges.COMPANY_ASSET_CATEGORY_EDIT) HideableCommand editAssetCategories();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -76,6 +73,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		registerSlot(cmd.editTaxRates(), onEditTaxRates);
 		registerSlot(cmd.editAccounts(), onEditAccounts);
 		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
+		registerSlot(cmd.editAssetCategories(), onEditAssetCategories);
 		cmd.updateUi();
 	}
 
@@ -147,6 +145,13 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 					addTab(new PeriodEndList(companyId));
 				}
 			});
+		}
+	};
+
+	private final ISlot onEditAssetCategories = new ISlot() {
+		@Override
+		public void invoke() {
+			new CompanyFixedAssetCategoryDialog(companyId).revealDisplay();
 		}
 	};
 }

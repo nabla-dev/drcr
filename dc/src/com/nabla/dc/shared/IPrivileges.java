@@ -55,20 +55,21 @@ public interface IPrivileges extends IRolePrivileges {
 	static final String PERIOD_END_ADD = "period_end_add";
 	static final String PERIOD_END_REMOVE = "period_end_remove";
 	static final String PERIOD_END_EDIT = "period_end_edit";
-	
-	static final String	FA_ASSET_CATEGORY_VIEW = "fa_asset_category_view";
-	static final String	FA_ASSET_CATEGORY_ADD = "fa_asset_category_add";
-	static final String	FA_ASSET_CATEGORY_REMOVE = "fa_asset_category_remove";
-	static final String	FA_ASSET_CATEGORY_EDIT = "fa_asset_category_edit";
 
-	static final String	FA_BS_CATEGORY_VIEW = "fa_bs_category_view";
-	static final String	FA_BS_CATEGORY_ADD = "fa_bs_category_add";
-	static final String	FA_BS_CATEGORY_REMOVE = "fa_bs_category_remove";
-	static final String	FA_BS_CATEGORY_EDIT = "fa_bs_category_edit";
+	static final String FA_ASSET_CATEGORY_VIEW = "fa_asset_category_view";
+	static final String FA_ASSET_CATEGORY_ADD = "fa_asset_category_add";
+	static final String FA_ASSET_CATEGORY_REMOVE = "fa_asset_category_remove";
+	static final String FA_ASSET_CATEGORY_EDIT = "fa_asset_category_edit";
+
+	static final String FA_BS_CATEGORY_VIEW = "fa_bs_category_view";
+	static final String FA_BS_CATEGORY_ADD = "fa_bs_category_add";
+	static final String FA_BS_CATEGORY_REMOVE = "fa_bs_category_remove";
+	static final String FA_BS_CATEGORY_EDIT = "fa_bs_category_edit";
 
 	static final String FA_ASSET_VIEW = "fa_asset_view";
 	static final String FA_ASSET_ADD = "fa_asset_add";
 	static final String FA_ASSET_REMOVE = "fa_asset_remove";
 	static final String FA_ASSET_EDIT = "fa_asset_edit";
 
+	static final String COMPANY_ASSET_CATEGORY_EDIT = "company_asset_category_edit";
 }

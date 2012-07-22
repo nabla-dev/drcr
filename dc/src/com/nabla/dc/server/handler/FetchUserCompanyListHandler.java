@@ -20,10 +20,9 @@ import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.FetchUserCompanyList;
 import com.nabla.dc.shared.model.IUserCompany;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcIntToJson;
+import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -36,7 +35,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserCompanyList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcIntToJson(IdField.NAME),
+		new OdbcIdToJson(),
 		new OdbcStringToJson(IUserCompany.NAME),
 		new OdbcStringToJson(IUserCompany.LOGO)
 	);
@@ -52,7 +51,7 @@ public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserC
 "SELECT c.id, c.name, IF(c.logo_id IS NOT NULL,CONCAT('/dc/image?id=',c.logo_id), 'default_logo.png') AS 'image'" +
 " FROM company AS c INNER JOIN company_user AS u ON c.id=u.company_id" +
 " WHERE c.active=TRUE AND c.uname IS NOT NULL AND u.user_id=?",
-			ctx.getUserId());			
+			ctx.getUserId());
 	}
 
 }

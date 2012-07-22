@@ -21,12 +21,14 @@ import java.sql.SQLException;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
+import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.command.FetchRoleDefinition;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
@@ -35,11 +37,11 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchRoleDefinitionHandler extends AbstractFetchHandler<FetchRoleDefinition> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
-				new OdbcBooleanToJson("isFolder"),
+				new OdbcBooleanToJson(IFieldReservedNames.TREEGRID_IS_FOLDER),
 				new OdbcBooleanToJson("isIncluded"),
-				new OdbcBooleanToJson("enabled"),
-				new OdbcIntToJson("id"),
-				new OdbcIntToJson("parentId"),
+				new OdbcBooleanToJson(IFieldReservedNames.RECORD_ENABLED),
+				new OdbcIdToJson(),
+				new OdbcIntToJson(IFieldReservedNames.TREEGRID_PARENT_ID),
 				new OdbcStringToJson("name")
 			);
 

@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
+import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.json.OdbcTimeStampToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
@@ -29,6 +29,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.command.FetchUserList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
@@ -37,9 +38,9 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchUserListHandler extends AbstractFetchHandler<FetchUserList> {
 
 	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcBooleanToJson("enabled"),
-		new OdbcBooleanToJson("deleted"),
-		new OdbcIntToJson("id"),
+		new OdbcBooleanToJson(IFieldReservedNames.RECORD_ENABLED),
+		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
+		new OdbcIdToJson(),
 		new OdbcStringToJson("name"),
 		new OdbcBooleanToJson("active"),
 		new OdbcTimeStampToJson("created"),

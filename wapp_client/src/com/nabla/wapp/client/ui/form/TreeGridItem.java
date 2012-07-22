@@ -26,6 +26,7 @@ public class TreeGridItem extends TreeGrid {
 
 	private String		name;
 	private int		colSpan = 2;
+	private boolean	endRow = true;
 
 	public void setColSpan(int colSpan) {
 		this.colSpan = colSpan;
@@ -41,6 +42,14 @@ public class TreeGridItem extends TreeGrid {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(boolean endRow) {
+		this.endRow = endRow;
 	}
 
 }

@@ -16,22 +16,6 @@
 */
 package com.nabla.dc.server.handler.company;
 
-import com.nabla.dc.server.handler.company.settings.AddAccountHandler;
-import com.nabla.dc.server.handler.company.settings.ChangeCompanyLogoHandler;
-import com.nabla.dc.server.handler.company.settings.FetchAccountListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchCompanyTaxRateListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchCompanyUserListHandler;
-import com.nabla.dc.server.handler.company.settings.FetchPeriodEndTreeHandler;
-import com.nabla.dc.server.handler.company.settings.FetchUserCompanyListHandler;
-import com.nabla.dc.server.handler.company.settings.ImportAccountListHandler;
-import com.nabla.dc.server.handler.company.settings.RemoveAccountHandler;
-import com.nabla.dc.server.handler.company.settings.RestoreAccountHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateAccountHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateCompanyTaxRateHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateCompanyUserHandler;
-import com.nabla.dc.server.handler.company.settings.UpdateFinancialYearHandler;
-import com.nabla.dc.server.handler.company.settings.UpdatePeriodEndHandler;
-import com.nabla.dc.server.handler.company.settings.fixed_asset.FetchFixedAssetCategoryListHandler;
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
 /**
@@ -42,6 +26,12 @@ public class CompanyHandlerModule extends AbstractHandlerSubModule {
 
 	@Override
 	protected void configure() {
+		bindHandler(FetchCompanyListHandler.class);
+		bindHandler(AddCompanyHandler.class);
+		bindHandler(UpdateCompanyHandler.class);
+		bindHandler(RemoveCompanyHandler.class);
+		bindHandler(RestoreCompanyHandler.class);
+
 		bindHandler(FetchCompanyNameHandler.class);
 
 		bindHandler(ChangeCompanyLogoHandler.class);
@@ -63,8 +53,6 @@ public class CompanyHandlerModule extends AbstractHandlerSubModule {
 		bindHandler(FetchPeriodEndTreeHandler.class);
 		bindHandler(UpdatePeriodEndHandler.class);
 		bindHandler(UpdateFinancialYearHandler.class);
-
-		bindHandler(FetchFixedAssetCategoryListHandler.class);
 
 /*
   bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);

@@ -34,6 +34,7 @@ class ListGridWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
 		if (title != null)
 			new TitleDecoder(title).apply(impl);
 		impl.setColSpan(list.getColSpan());
+		impl.setEndRow(list.isEndRow());
 	}
 
 }

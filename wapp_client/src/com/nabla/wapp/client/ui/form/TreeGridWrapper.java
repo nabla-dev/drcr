@@ -38,6 +38,7 @@ class TreeGridWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
 		if (title != null)
 			new TitleDecoder(title).apply(impl);
 		impl.setColSpan(tree.getColSpan());
+		impl.setEndRow(tree.isEndRow());
 	}
 
 }

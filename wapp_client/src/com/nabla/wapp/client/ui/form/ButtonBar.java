@@ -38,11 +38,12 @@ public class ButtonBar extends UiBinderFormItemSpeudoWidgetList<CanvasItem> impl
 		super(new CanvasItem());
 		setColSpan(2);
 		impl.setAlign(Alignment.RIGHT);
-		impl.setShowTitle(false);
+		setShowTitle(false);
 		buttons.setAutoHeight();
 		buttons.setAutoWidth();
 		setDefaultMargin(Resource.bundle.style().DIALOG_DEFAULT_SPACING());
 		impl.setCanvas(buttons);
+		impl.setCanFocus(true);
 	}
 
 	public void setDefaultMargin(final int margin) {
@@ -54,10 +55,8 @@ public class ButtonBar extends UiBinderFormItemSpeudoWidgetList<CanvasItem> impl
 	public void add(final Widget w) {
 		Assert.argumentNotNull(w);
 
-		if (w instanceof IButton)
-			buttons.addMember((IButton)w);
-		else if (w instanceof HLayoutSpacer)
-			buttons.addMember((HLayoutSpacer)w);
+		if (w instanceof IButton || w instanceof HLayoutSpacer)
+			buttons.add(w);
 		else
 			super.add(w);
 	}

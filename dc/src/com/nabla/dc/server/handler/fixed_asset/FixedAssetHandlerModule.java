@@ -16,7 +16,6 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
-import com.nabla.dc.server.handler.company.settings.fixed_asset.FetchFixedAssetCategoryListHandler;
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
 /**
@@ -28,6 +27,23 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 	@Override
 	protected void configure() {
 		bindHandler(FetchFixedAssetCategoryListHandler.class);
+		bindHandler(AddFixedAssetCategoryHandler.class);
+		bindHandler(UpdateFixedAssetCategoryHandler.class);
+		bindHandler(RemoveFixedAssetCategoryHandler.class);
+		bindHandler(RestoreFixedAssetCategoryHandler.class);
+
+		bindHandler(FetchFinancialStatementCategoryListHandler.class);
+		bindHandler(AddFinancialStatementCategoryHandler.class);
+		bindHandler(UpdateFinancialStatementCategoryHandler.class);
+		bindHandler(RemoveFinancialStatementCategoryHandler.class);
+		bindHandler(RestoreFinancialStatementCategoryHandler.class);
+
+		bindHandler(FetchCompanyFixedAssetCategoryListHandler.class);
+		bindHandler(FetchAvailableFixedAssetCategoryListHandler.class);
+
+		bindHandler(RemoveAssetHandler.class);
+
+		bindHandler(RemoveTransactionHandler.class);
 
 /*
   bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);

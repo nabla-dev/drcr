@@ -79,28 +79,18 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 		}
 	}
 
-	private static final Logger						logger = LoggerFactory.getLog(Form.class);
-	private static int								defaultMargin = 10;
+	private static final Logger					logger = LoggerFactory.getLog(Form.class);
 	private Model									model;
 	private List<IFormItemSpeudoWidget>				children = new LinkedList<IFormItemSpeudoWidget>();
 	private Map<String, IFormItemExtensionList>		extensions = new HashMap<String, IFormItemExtensionList>();
 	private final Signal							sigSubmit = new Signal();
 	final Map<Operations, Signal>					sigSuccess = new HashMap<Operations, Signal>();
 	final Map<Operations, Signal>					sigFailure = new HashMap<Operations, Signal>();
-	private boolean									saving = false;
+	private boolean								saving = false;
 
 	public Form() {
 		this.setHiliteRequiredFields(false);
 		this.setSelectOnFocus(true);
-		setMargin(defaultMargin);
-	}
-
-	public static void setDefaultMargin(final int defaultMargin) {
-		Form.defaultMargin = defaultMargin;
-	}
-
-	public static int getDefaultMargin() {
-		return defaultMargin;
 	}
 
 	// TODO: remove when SmartGWT bug corrected!

@@ -26,7 +26,7 @@ import com.smartgwt.client.data.fields.DataSourceTextField;
  */
 public class TreeStringIdField extends DataSourceTextField {
 
-	public static final String	NAME = "id";
+	public static final String	NAME = IdField.NAME;
 
 	public TreeStringIdField(final String name) {
 		super(name);

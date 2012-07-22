@@ -29,7 +29,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.json.IOdbcToJsonEncoder;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
+import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcTimeStampToJson;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.command.CloneUser;
@@ -47,7 +47,7 @@ public class CloneUserHandler extends AbstractAddHandler<CloneUser> {
 	private static final List<IOdbcToJsonEncoder>	columns = new LinkedList<IOdbcToJsonEncoder>();
 
 	static {
-		columns.add(new OdbcIntToJson("id"));
+		columns.add(new OdbcIdToJson());
 		columns.add(new OdbcBooleanToJson("active"));
 		columns.add(new OdbcTimeStampToJson("created"));
 	}

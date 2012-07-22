@@ -27,7 +27,9 @@ public interface IResource extends ClientBundle {
 
 	public interface IStyle extends CssResource {
 
+		int DIALOG_DEFAULT_MARGIN();
 		int DIALOG_DEFAULT_SPACING();
+		int DIALOG_DEFAULT_BUTTONS_TOP_MARGIN();
 
 		@ClassName("form-required-info-message")
 		String formRequiredInfoMessage();

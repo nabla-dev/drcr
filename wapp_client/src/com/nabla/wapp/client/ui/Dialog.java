@@ -17,14 +17,12 @@
 package com.nabla.wapp.client.ui;
 
 import java.util.Iterator;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.LoggerFactory;
-import com.nabla.wapp.client.general.Util;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.Form.Operations;
 import com.nabla.wapp.shared.signal.Signal;
@@ -43,8 +41,11 @@ import com.smartgwt.client.widgets.events.CloseClickHandler;
 public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing {
 
 	private static final Logger	logger = LoggerFactory.getLog(Dialog.class);
-	private final Signal		sigClose = new Signal();
+	private static int			margin = Resource.bundle.style().DIALOG_DEFAULT_MARGIN();
+	private static int			spacing = Resource.bundle.style().DIALOG_DEFAULT_SPACING();
+	private final Signal			sigClose = new Signal();
 	private boolean				autoClose = false;
+	private final VLayout			layout = new VLayout();
 
 	public Dialog() {
 		this.setShowMaximizeButton(false);
@@ -52,20 +53,29 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 		this.setShowCloseButton(false);	// will be set to true if CancelButton is found in children
 		this.setDismissOnEscape(false);	// will be set to true if CancelButton is found in children
 		this.setAutoSize(true);
+		layout.setMargin(margin);
+		layout.setMembersMargin(spacing);
+		layout.setWidth("100%");
+		layout.setHeight("100%");
+		addItem(layout);
+	}
+
+	static public void setDefaultMargin(int value) {
+		margin = value;
+	}
+
+	static public void setDefaultSpacing(int value) {
+		spacing = value;
 	}
 
 	@Override
 	public void add(final Widget w){
-		Helper.onCreate(w);
 		if (w instanceof Form) {
 			final Form form = (Form)w;
-			addItem(form);
 			form.getSuccessSlots(Operations.ADD).connect(onSuccess);
 			form.getSuccessSlots(Operations.UPDATE).connect(onSuccess);
-		} else if (w instanceof VLayout)
-			addItem((VLayout)w);
-		else
-			logger.log(Level.SEVERE,"adding a widget of type '" + w.getClass().toString() + "' to a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
+		}
+		layout.add(w);
 	}
 
 	@Override
@@ -81,19 +91,17 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 
 	@Override
 	public Iterator<Widget> iterator() {
-        return IHasWidgets.Helper.iterator(this.getItems());
+        return layout.iterator();
 	}
 
 	@Override
 	public boolean remove(final Widget w) {
-		remove(w);
-		return false;
+		return layout.remove(w);
 	}
 
 	@Override
 	public <T> T findChild(final Class<T> type, final boolean recursive) {
-		// NOTE: Window.getChildren does not work!!!
-		return IHasWidgets.Helper.findChild(this.getItems(), type, recursive);
+		return layout.findChild(type, recursive);
 	}
 
 	public ISlotManager getCloseSlots() {

@@ -20,7 +20,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.ImportErrorListModel;
-import com.nabla.dc.client.presenter.company.settings.ImportAccountWizard;
+import com.nabla.dc.client.presenter.company.ImportAccountWizard;
 import com.nabla.wapp.client.mvp.binder.bindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 

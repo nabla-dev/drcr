@@ -24,7 +24,8 @@ import com.nabla.wapp.client.ui.ListGrid;
  */
 public class ListGridItem extends ListGrid {
 
-	private int	colSpan = 2;
+	private int		colSpan = 2;
+	private boolean	endRow = true;
 
 	public void setColSpan(final int colSpan) {
 		this.colSpan = colSpan;
@@ -34,4 +35,11 @@ public class ListGridItem extends ListGrid {
 		return colSpan;
 	}
 
+	public boolean isEndRow() {
+		return endRow;
+	}
+
+	public void setEndRow(boolean endRow) {
+		this.endRow = endRow;
+	}
 }

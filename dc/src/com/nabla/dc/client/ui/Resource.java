@@ -17,7 +17,7 @@
 package com.nabla.dc.client.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.nabla.wapp.client.ui.form.Form;
+import com.nabla.wapp.client.ui.Dialog;
 
 /**
  * @author nabla
@@ -34,6 +34,6 @@ public class Resource {
 
 	public Resource() {
 		bundle.style().ensureInjected();
-		Form.setDefaultMargin(bundle.style().DIALOG_MARGIN());
+		Dialog.setDefaultMargin(bundle.style().DIALOG_MARGIN());
 	}
 }

@@ -18,7 +18,7 @@ package com.nabla.dc.client.presenter.options;
 
 import com.nabla.dc.client.model.options.UserDefinitionFormModel;
 import com.nabla.dc.client.presenter.ITabManager;
-import com.nabla.dc.client.presenter.company.settings.UserCompanyList;
+import com.nabla.dc.client.presenter.company.UserCompanyList;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.UserListUi;
 import com.nabla.wapp.client.command.Command;
