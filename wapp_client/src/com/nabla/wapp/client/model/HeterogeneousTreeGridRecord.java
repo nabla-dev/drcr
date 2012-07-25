@@ -18,7 +18,6 @@ package com.nabla.wapp.client.model;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.general.JSHelper;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TreeStringIdField;
 import com.nabla.wapp.client.model.field.TreeStringParentIdField;
 import com.smartgwt.client.data.Record;
@@ -47,7 +46,7 @@ public class HeterogeneousTreeGridRecord extends TreeNode {
 	}
 
 	public boolean isNew() {
-		return !JSHelper.isAttribute(getJsObj(), IdField.NAME);
+		return !JSHelper.isAttribute(getJsObj(), TreeStringIdField.NAME);
 	}
 
 	protected Boolean getBoolean(final String attribute) {

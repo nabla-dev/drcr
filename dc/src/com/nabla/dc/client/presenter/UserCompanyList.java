@@ -17,6 +17,8 @@
 package com.nabla.dc.client.presenter;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.nabla.dc.client.model.UserCompanyRecord;
 import com.nabla.dc.client.presenter.company.Company;
 import com.nabla.dc.client.presenter.company.CompanyList;
@@ -95,6 +97,13 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
 //		printerManager.bind(cmd, this, BuiltInReports.ACCOUNT_LIST);
+
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				cmd.companyList().fire();
+			}
+		});
 	}
 
 	private final ISlot onReload = new ISlot() {

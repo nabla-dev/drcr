@@ -19,7 +19,6 @@ package com.nabla.dc.client.model.fixed_asset;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchCompanyFixedAssetCategoryList;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.client.model.HeterogeneousTreeGridRecord;
 import com.nabla.wapp.client.model.HeterogeneousTreeModel;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
@@ -33,7 +32,7 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<HeterogeneousTreeGridRecord> {
+public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<CompanyFixedAssetCategoryRecord> {
 
 	static public class Fields {
 		public String name() { return IFixedAssetCategory.NAME; }

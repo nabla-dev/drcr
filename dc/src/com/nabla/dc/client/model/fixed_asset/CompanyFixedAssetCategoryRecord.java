@@ -17,7 +17,7 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.wapp.client.model.BasicRecord;
+import com.nabla.wapp.client.model.HeterogeneousTreeGridRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.smartgwt.client.data.Record;
 
@@ -25,7 +25,7 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class CompanyFixedAssetCategoryRecord extends BasicRecord {
+public class CompanyFixedAssetCategoryRecord extends HeterogeneousTreeGridRecord {
 
 	public static final IRecordFactory<CompanyFixedAssetCategoryRecord>	factory = new IRecordFactory<CompanyFixedAssetCategoryRecord>() {
 

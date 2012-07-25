@@ -16,16 +16,9 @@
 */
 package com.nabla.dc.client.ui.fixed_asset;
 
-import java.util.logging.Logger;
-
-import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.smartgwt.client.types.DragDataAction;
 import com.smartgwt.client.types.TreeModelType;
-import com.smartgwt.client.widgets.grid.events.CellSavedEvent;
-import com.smartgwt.client.widgets.grid.events.CellSavedHandler;
-import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
-import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 
 /**
  * The <code></code> object is used to
@@ -33,7 +26,7 @@ import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
  */
 public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem {
 
-	private static final Logger		logger = LoggerFactory.getLog(CompanyFixedAssetCategoryTreeGrid.class);
+//	private static final Logger		log = LoggerFactory.getLog(CompanyFixedAssetCategoryTreeGrid.class);
 //	private final SelectionDelta	delta = new SelectionDelta();
 
 	public CompanyFixedAssetCategoryTreeGrid() {
@@ -49,25 +42,15 @@ public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem {
 		this.setCanDropOnLeaves(false);
 		this.setDragDataAction(DragDataAction.MOVE);
 		this.setCanReorderRecords(true);
-		this.addFolderDropHandler(onDropToFolder);
-		addCellSavedHandler(onAllocationChanged);
+	//	addCellSavedHandler(onAllocationChanged);
 	}
 
-	private final FolderDropHandler onDropToFolder = new FolderDropHandler() {
-
-		@Override
-		public void onFolderDrop(FolderDropEvent event) {
-
-
-		}
-
-	};
-
+/*
 	private final CellSavedHandler onAllocationChanged = new CellSavedHandler() {
 		@Override
 		public void onCellSaved(CellSavedEvent event) {
 			logger.fine("status change at column " + event.getColNum() + " = " + getFieldName(event.getColNum()));
-/*           	final RoleDefinitionTreeRecord record = new RoleDefinitionTreeRecord(event.getRecord());
+           	final RoleDefinitionTreeRecord record = new RoleDefinitionTreeRecord(event.getRecord());
 			final Integer roleId = record.getId();
 			final Boolean isIncluded = (Boolean) event.getNewValue();
 logger.fine("status changed for role " + roleId + " = " + isIncluded);
@@ -80,7 +63,7 @@ logger.fine("status changed for role " + roleId + " = " + isIncluded);
 			final CanvasItem wrapper = grid.getCanvasItem();
 			Assert.notNull(wrapper);
 			// wrap value in a record otherwise I get a javascript error
-			wrapper.storeValue(new SelectionDeltaRecord(delta));*/
+			wrapper.storeValue(new SelectionDeltaRecord(delta));
 		}
-	};
+	};*/
 }
