@@ -26,13 +26,15 @@ import com.smartgwt.client.data.fields.DataSourceTextField;
  */
 public class TreeStringParentIdField extends DataSourceTextField {
 
+	public static final String	NAME = IFieldReservedNames.TREEGRID_PARENT_ID;
+
 	public TreeStringParentIdField() {
-		super(IFieldReservedNames.TREEGRID_PARENT_ID);
+		super(NAME);
 		setForeignKey(TreeStringIdField.NAME);
 		setHidden(true);
 	}
 
 	public static Integer extractId(final Record record) {
-		return TreeStringIdField.extractId(record.getAttribute(IFieldReservedNames.TREEGRID_PARENT_ID));
+		return TreeStringIdField.extractId(record.getAttribute(NAME));
 	}
 }

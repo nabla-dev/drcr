@@ -17,8 +17,10 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.HeterogeneousTreeGridRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -43,6 +45,13 @@ public class CompanyFixedAssetCategoryRecord extends HeterogeneousTreeGridRecord
 	public CompanyFixedAssetCategoryRecord(Record record) {
 		super(record);
 	}
+
+	public void setParent(final CompanyFixedAssetCategoryRecord parent) {
+		this.setAttribute(IFieldReservedNames.TREEGRID_PARENT_ID, parent.getStringId());
+		this.setAttribute(IFieldReservedNames.TREEGRID_IS_FOLDER, false);
+		this.setAttribute(IFixedAssetCategory.ACTIVE, true);
+	}
+
 /*
 	public SelectionDelta getDefinitionDelta() {
 		return ((SelectionDeltaRecord)getAttributeAsRecord(RoleDefinitionModel.Fields.roles())).getData();

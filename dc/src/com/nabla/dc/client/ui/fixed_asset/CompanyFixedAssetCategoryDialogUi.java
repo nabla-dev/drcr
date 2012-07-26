@@ -25,14 +25,16 @@ import com.nabla.dc.client.model.fixed_asset.AvailableFixedAssetCategoryListMode
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryFormModel;
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryRecord;
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryTreeModel;
-import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
+import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.TreeGridItem;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.nabla.wapp.shared.slot.ISlotManager;
+import com.smartgwt.client.types.DSOperationType;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
 import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
@@ -78,18 +80,32 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 			event.cancel();
 			log.fine("stop dropping category to NO folder");
 		} else {
-			final CompanyFixedAssetCategoryRecord fsCategory = new CompanyFixedAssetCategoryRecord(event.getFolder());
-			if (fsCategory.isNew()) {
+			final CompanyFixedAssetCategoryRecord parent = new CompanyFixedAssetCategoryRecord(event.getFolder());
+			if (parent.isNew()) {
 				event.cancel();
 				log.fine("stop dropping category to ROOT folder");
 			} else {
-
-			TreeNode[] nodes = event.getNodes();
-			for (TreeNode node : nodes) {
-				final FixedAssetCategoryRecord category = new FixedAssetCategoryRecord(node);
-log.fine("dropping category " + category.getName() + " into " + fsCategory.getName());
-			}
-				event.cancel();	// handle the drop ourself
+				TreeNode[] nodes = event.getNodes();
+				for (TreeNode node : nodes) {
+					final CompanyFixedAssetCategoryRecord child = new CompanyFixedAssetCategoryRecord(node);
+					if (JSHelper.isAttribute(node.getJsObj(), IFieldReservedNames.TREEGRID_IS_FOLDER)) {
+						// user is dragging a company category around
+						if (child.isFolder()) {
+							event.cancel();
+							log.fine("stop moving a financial statement category");
+							return;
+						} else {
+							log.fine("moving category " + child.getName() + " into " + parent.getName());
+						}
+					} else {
+						// user is dragging an asset category into the company category list
+						child.setParent(parent);
+						log.fine("dropping category " + child.getName() + " into " + parent.getName());
+						event.cancel();
+						availableModel.updateCache(node, DSOperationType.REMOVE);
+						model.updateCache(child, DSOperationType.ADD);
+					}
+				}
 			}
 		}
 	}

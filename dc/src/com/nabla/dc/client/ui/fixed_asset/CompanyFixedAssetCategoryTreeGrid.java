@@ -18,6 +18,7 @@ package com.nabla.dc.client.ui.fixed_asset;
 
 import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.smartgwt.client.types.DragDataAction;
+import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.types.TreeModelType;
 
 /**
@@ -32,9 +33,12 @@ public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem {
 	public CompanyFixedAssetCategoryTreeGrid() {
 		super();
 		setCanEdit(true);
+		this.setAutoSaveEdits(false);
 		setModelType(TreeModelType.CHILDREN);
 		setColSpan(1);
 		setShowConnectors(true);
+		setShowDropIcons(true);
+		setSelectionAppearance(SelectionAppearance.CHECKBOX);
 		setLoadDataOnDemand(true);
 	//	this.setCanAcceptDrop(true);
 		this.setCanAcceptDroppedRecords(true);

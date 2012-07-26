@@ -25,8 +25,10 @@ import com.smartgwt.client.data.fields.DataSourceIntegerField;
  */
 public class TreeParentIdField extends DataSourceIntegerField {
 
+	public static final String	NAME = IFieldReservedNames.TREEGRID_PARENT_ID;
+
 	public TreeParentIdField() {
-		super(IFieldReservedNames.TREEGRID_PARENT_ID);
+		super(NAME);
 		setForeignKey(IdField.NAME);
 		setHidden(true);
 	}

@@ -16,8 +16,6 @@
 */
 package com.nabla.dc.client.presenter.company;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.nabla.dc.client.model.company.AddCompanyRecord;
 import com.nabla.dc.client.model.company.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
@@ -111,14 +109,6 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		cmd.editAssetCategories().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 //		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
-
-		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-			@Override
-			public void execute() {
-
-				cmd.editAssetCategories().fire();
-			}
-		});
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

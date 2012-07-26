@@ -20,6 +20,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.model.field.TreeStringIdField;
 import com.nabla.wapp.client.model.field.TreeStringParentIdField;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
@@ -37,16 +38,30 @@ public class HeterogeneousTreeGridRecord extends TreeNode {
 		super(js);
 	}
 
+	public HeterogeneousTreeGridRecord() {}
+
 	public Integer getId() {
 		return TreeStringIdField.extractId(this);
+	}
+
+	public String getStringId() {
+		return getAttribute(TreeStringIdField.NAME);
 	}
 
 	public Integer getParentId() {
 		return TreeStringParentIdField.extractId(this);
 	}
 
+	public String getParentStringId() {
+		return getAttribute(TreeStringParentIdField.NAME);
+	}
+
 	public boolean isNew() {
 		return !JSHelper.isAttribute(getJsObj(), TreeStringIdField.NAME);
+	}
+
+	public boolean isFolder() {
+		return getBoolean(IFieldReservedNames.TREEGRID_IS_FOLDER);
 	}
 
 	protected Boolean getBoolean(final String attribute) {

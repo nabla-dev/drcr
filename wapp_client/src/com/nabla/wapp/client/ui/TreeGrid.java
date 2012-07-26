@@ -56,7 +56,8 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 		setShowDropIcons(false);
 		setClosedIconSuffix("");
 		setCascadeSelection(true);
-		this.setShowSelectedStyle(false);
+		setShowPartialSelection(true);
+		setShowSelectedStyle(false);
 		setFixedRecordHeights(true);
 		// TODO: to be removed when SmartGWT supports it
 		setAttribute("selectionProperty", IFieldReservedNames.RECORD_SELECTED, true);

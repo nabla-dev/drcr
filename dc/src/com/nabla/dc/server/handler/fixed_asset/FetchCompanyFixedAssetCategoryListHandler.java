@@ -35,12 +35,12 @@ import com.nabla.wapp.shared.model.IFieldReservedNames;
 public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHandler<FetchCompanyFixedAssetCategoryList> {
 
 	private static final String SQL_FS_CATEGORY =
-"SELECT TRUE AS 'isFolder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, IF(r.company_id IS NOT NULL, r.active, FALSE) AS 'active'" +
-" FROM fa_fs_category AS t LEFT JOIN fa_company_asset_category AS r ON t.id=r.fa_fs_category_id AND r.company_id=?" +
+"SELECT TRUE AS 'isFolder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, NULL AS 'isSelected'" +
+" FROM fa_fs_category AS t" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL";
 
 	private static final String SQL_ASSET_CATEGORY =
-"SELECT FALSE AS 'isFolder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active" +
+"SELECT FALSE AS 'isFolder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active AS 'isSelected'" +
 " FROM fa_asset_category AS t INNER JOIN fa_company_asset_category AS r ON t.id=r.fa_asset_category_id AND r.company_id=? AND r.fa_fs_category_id=?" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL";
 
@@ -49,14 +49,15 @@ public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHand
 			new OdbcStringToJson(IFieldReservedNames.TREEGRID_PARENT_ID),
 			new OdbcStringToJson("id"),
 			new OdbcStringToJson("name"),
-			new OdbcBooleanToJson("active")
+			new OdbcBooleanToJson(IFieldReservedNames.RECORD_SELECTED)
 		);
 
 	@Override
 	public FetchResult execute(final FetchCompanyFixedAssetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		if (cmd.getParentId() == null)
-			return fetcher.serialize(cmd, ctx.getConnection(), SQL_FS_CATEGORY, cmd.getCompanyId());
-		return fetcher.serialize(cmd, ctx.getConnection(), SQL_ASSET_CATEGORY, cmd.getCompanyId(), cmd.getParentId());
+		return (cmd.getParentId() == null) ?
+			fetcher.serialize(cmd, ctx.getConnection(), SQL_FS_CATEGORY)
+			:
+			fetcher.serialize(cmd, ctx.getConnection(), SQL_ASSET_CATEGORY, cmd.getCompanyId(), cmd.getParentId());
 	}
 
 }
