@@ -18,9 +18,12 @@ package com.nabla.dc.client.model.fixed_asset;
 
 
 import com.nabla.dc.shared.command.company.FetchCompanyName;
+import com.nabla.dc.shared.command.fixed_asset.UpdateCompanyFixedAssetCategory;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
 /**
@@ -59,13 +62,10 @@ public class CompanyFixedAssetCategoryFormModel extends CModel<CompanyFixedAsset
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
 		return new FetchCompanyName(companyId);
 	}
-/*
+
 	@Override
 	public IAction<StringResult> getUpdateCommand(final CompanyFixedAssetCategoryFormRecord record) {
-		final SelectionDelta delta = record.getDefinitionDelta();
-		if (delta == null || delta.isEmpty())
-			return null;	// save a round trip to the server
-		return new UpdateRoleDefinition(roleId, delta);
+		return new UpdateCompanyFixedAssetCategory(companyId, record.getCategories());
 	}
-*/
+
 }

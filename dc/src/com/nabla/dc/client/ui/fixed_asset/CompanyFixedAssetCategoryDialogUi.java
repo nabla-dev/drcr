@@ -18,7 +18,6 @@ package com.nabla.dc.client.ui.fixed_asset;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -29,26 +28,21 @@ import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryRecord;
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryTreeModel;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
-import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.TransferImgButton;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.ListGridItem;
-import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.nabla.wapp.shared.signal.Signal1;
 import com.nabla.wapp.shared.signal.Signal2;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 import com.nabla.wapp.shared.slot.ISlotManager2;
 import com.smartgwt.client.types.DSOperationType;
-import com.smartgwt.client.util.JSOHelper;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
-import com.smartgwt.client.widgets.grid.events.CellSavedEvent;
-import com.smartgwt.client.widgets.grid.events.CellSavedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
 import com.smartgwt.client.widgets.tree.TreeNode;
@@ -59,7 +53,7 @@ import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
  * @author nabla
  *
  */
-public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDialog> implements CompanyFixedAssetCategoryDialog.IDisplay, RecordDropHandler, FolderDropHandler, CellSavedHandler {
+public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDialog> implements CompanyFixedAssetCategoryDialog.IDisplay, RecordDropHandler, FolderDropHandler {
 
 	interface Binder extends UiBinder<ModalDialog, CompanyFixedAssetCategoryDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
@@ -79,7 +73,7 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 	@UiField(provided=true)
 	final CompanyFixedAssetCategoryTreeModel	model;
 	@UiField(provided=true)
-	final TreeGridItem							categories = new CompanyFixedAssetCategoryTreeGrid();
+	final CompanyFixedAssetCategoryTreeGrid		categories = new CompanyFixedAssetCategoryTreeGrid();
 	@UiField
 	TransferImgButton							addButton;
 	@UiField
@@ -88,15 +82,15 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 	private final CategoryDropSignal			sigCategoryDrop = new CategoryDropSignal();
 	private final CategoryReparentSignal		sigCategoryReparent = new CategoryReparentSignal();
 	private final AvailableCategoryDropSignal	sigRecordDrop = new AvailableCategoryDropSignal();
-	private boolean							loopGuard = false;
-	private static final Logger	log = LoggerFactory.getLog(CompanyFixedAssetCategoryDialogUi.class);
+
+
 	public CompanyFixedAssetCategoryDialogUi(final Integer companyId) {
 		formModel = new CompanyFixedAssetCategoryFormModel(companyId);
 		availableModel = formModel.getAvailableTreeModel();
 		model = formModel.getCategoryTreeModel();
 		this.create(uiBinder, this);
 		categories.addFolderDropHandler(this);
-		categories.addCellSavedHandler(this);
+		categories.postCreate(model.fields().active());
 		availableCategories.addRecordDropHandler(this);
 		addButton.addClickHandler(new ClickHandler() {
 			@Override
@@ -194,32 +188,6 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 		final ListGridRecord[] records = categories.getSelectedRecords();
 		if (records != null && records.length > 0)
 			sigRecordDrop.fire(arrayToList(records, CompanyFixedAssetCategoryRecord.factory));
-	}
-
-	@Override
-	public void onCellSaved(CellSavedEvent event) {
-		if (!loopGuard) {
-			log.fine("CALLED");
-			loopGuard = true;
-			final CompanyFixedAssetCategoryRecord record = new CompanyFixedAssetCategoryRecord(event.getRecord());
-			if (record.isFolder()) {
-				log.fine("CASCADE");
-				final Boolean value = (Boolean) event.getNewValue();
-				final String parentId = record.getStringId();
-				for (ListGridRecord r : categories.getRecords()) {
-					final CompanyFixedAssetCategoryRecord node = new CompanyFixedAssetCategoryRecord(r);
-					if (parentId.equals(node.getParentStringId()) && value != node.getActive()) {
-//						node.setActive(value);
-						JSOHelper.deleteAttribute(node.getJsObj(), "active");
-						log.fine("updating " + node.getName() + " to " + node.getActive());
-						categories.updateData(node);
-					}
-				}
-			} else {
-
-			}
-			loopGuard = false;
-		}
 	}
 
 	private <T extends ListGridRecord, N extends ListGridRecord> List<T> arrayToList(final N[] records, final IRecordFactory<T> factory) {

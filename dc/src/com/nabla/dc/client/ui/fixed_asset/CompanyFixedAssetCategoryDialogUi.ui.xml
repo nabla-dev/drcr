@@ -25,11 +25,11 @@
 				<wnd:TransferImgButton ui:field="removeButton" image="LEFT" />
 				<wnd:VLayoutSpacer/>
 			</ctrl:VerticalButtonBar>
-			<form:TreeGridItem name="{formModel.fields.categories}" ui:field="categories" model="{model}" title="Company asset categories" width="300" height="250" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png">
+			<ctrl:CompanyFixedAssetCategoryTreeGrid name="{formModel.fields.categories}" ui:field="categories" model="{model}" title="Company asset categories" width="300" height="250" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png">
 				<ui:attribute name="title" description="Company asset categories message"/>
 				<wnd:TreeGridField name="{model.fields.name}" canSort="false"><ui:msg>Category</ui:msg></wnd:TreeGridField>
-				<wnd:TreeGridField name="{model.fields.active}" canSort="false"><ui:msg>_</ui:msg></wnd:TreeGridField>
-			</form:TreeGridItem>
+				<wnd:TreeGridField name="{model.fields.active}" canSort="false" width="24"><ui:msg>_</ui:msg></wnd:TreeGridField>
+			</ctrl:CompanyFixedAssetCategoryTreeGrid>
 			<form:ButtonBar colSpan="4">
 				<wnd:SubmitButton><ui:msg description="OK button">*OK</ui:msg></wnd:SubmitButton>
 				<wnd:CancelButton><ui:msg description="Cancel button">*Cancel</ui:msg></wnd:CancelButton>
