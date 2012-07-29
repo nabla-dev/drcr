@@ -25,7 +25,7 @@ import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.presenter.options.UserList.ICommandSet;
 import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
 import com.nabla.wapp.client.ui.ListGrid;

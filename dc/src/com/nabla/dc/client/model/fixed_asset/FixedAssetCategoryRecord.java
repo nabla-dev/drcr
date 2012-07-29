@@ -19,8 +19,8 @@ package com.nabla.dc.client.model.fixed_asset;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -44,6 +44,11 @@ public class FixedAssetCategoryRecord extends BasicListGridRecord implements IFi
 
 	public FixedAssetCategoryRecord(JavaScriptObject js) {
 		super(js);
+	}
+
+	public FixedAssetCategoryRecord(final CompanyFixedAssetCategoryRecord node) {
+		setAttribute(ID, node.getSpeudoId());
+		setAttribute(NAME, node.getName());
 	}
 
 	public String getName() {

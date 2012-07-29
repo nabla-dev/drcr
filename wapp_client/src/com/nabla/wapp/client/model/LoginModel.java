@@ -16,6 +16,8 @@
 */
 package com.nabla.wapp.client.model;
 
+import com.nabla.wapp.client.model.field.UserNameField;
+import com.nabla.wapp.client.model.field.UserPasswordField;
 import com.nabla.wapp.shared.model.IUser;
 
 /**

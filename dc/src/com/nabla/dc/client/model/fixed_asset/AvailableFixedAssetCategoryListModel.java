@@ -22,6 +22,7 @@ import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
+import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
@@ -42,10 +43,11 @@ public class AvailableFixedAssetCategoryListModel extends CModel<Record> {
 
 	public AvailableFixedAssetCategoryListModel(final Integer companyId) {
 		this.companyId = companyId;
-
+		this.setClientOnly(true);
 		setFields(
 			new IdField(),
-			new TextField(fields.name(), FieldAttributes.READ_ONLY)
+			new TextField(fields.name(), FieldAttributes.READ_ONLY),
+			new IntegerField("iid", FieldAttributes.HIDDEN)
 				);
 	}
 

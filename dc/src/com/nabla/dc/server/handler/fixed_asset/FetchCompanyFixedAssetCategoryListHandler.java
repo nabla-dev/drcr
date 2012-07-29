@@ -22,6 +22,7 @@ import com.nabla.dc.shared.command.fixed_asset.FetchCompanyFixedAssetCategoryLis
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
+import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -35,12 +36,12 @@ import com.nabla.wapp.shared.model.IFieldReservedNames;
 public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHandler<FetchCompanyFixedAssetCategoryList> {
 
 	private static final String SQL_FS_CATEGORY =
-"SELECT TRUE AS 'isFolder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, NULL AS 'isSelected'" +
+"SELECT TRUE AS 'isFolder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, NULL AS 'active', NULL AS 'iid'" +
 " FROM fa_fs_category AS t" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL";
 
 	private static final String SQL_ASSET_CATEGORY =
-"SELECT FALSE AS 'isFolder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active AS 'isSelected'" +
+"SELECT FALSE AS 'isFolder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active, t.id AS 'iid'" +
 " FROM fa_asset_category AS t INNER JOIN fa_company_asset_category AS r ON t.id=r.fa_asset_category_id AND r.company_id=? AND r.fa_fs_category_id=?" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL";
 
@@ -49,7 +50,8 @@ public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHand
 			new OdbcStringToJson(IFieldReservedNames.TREEGRID_PARENT_ID),
 			new OdbcStringToJson("id"),
 			new OdbcStringToJson("name"),
-			new OdbcBooleanToJson(IFieldReservedNames.RECORD_SELECTED)
+			new OdbcBooleanToJson("active"),
+			new OdbcIntToJson("iid")
 		);
 
 	@Override

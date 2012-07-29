@@ -16,58 +16,53 @@
 */
 package com.nabla.dc.client.ui.fixed_asset;
 
+import com.nabla.dc.shared.model.fixed_asset.CompanyFixedAssetCategoryTree;
+import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.client.model.data.IValueStore;
+import com.nabla.wapp.client.model.data.ValueStoreWrapper;
 import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.smartgwt.client.types.DragDataAction;
-import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.types.TreeModelType;
+import com.smartgwt.client.widgets.events.DrawEvent;
+import com.smartgwt.client.widgets.events.DrawHandler;
+import com.smartgwt.client.widgets.form.fields.CanvasItem;
 
 /**
  * The <code></code> object is used to
  *
  */
-public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem {
-
-//	private static final Logger		log = LoggerFactory.getLog(CompanyFixedAssetCategoryTreeGrid.class);
-//	private final SelectionDelta	delta = new SelectionDelta();
+public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem implements IValueStore<CompanyFixedAssetCategoryTree> {
 
 	public CompanyFixedAssetCategoryTreeGrid() {
 		super();
 		setCanEdit(true);
-		this.setAutoSaveEdits(false);
 		setModelType(TreeModelType.CHILDREN);
 		setColSpan(1);
+		this.setShowHeader(false);
 		setShowConnectors(true);
 		setShowDropIcons(true);
-		setSelectionAppearance(SelectionAppearance.CHECKBOX);
-		setLoadDataOnDemand(true);
-	//	this.setCanAcceptDrop(true);
+		setShowSelectedStyle(true);
+		setLoadDataOnDemand(false);
 		this.setCanAcceptDroppedRecords(true);
 		this.setCanDragRecordsOut(true);
 		this.setCanDropOnLeaves(false);
 		this.setDragDataAction(DragDataAction.MOVE);
 		this.setCanReorderRecords(true);
-	//	addCellSavedHandler(onAllocationChanged);
+
+		addDrawHandler(new DrawHandler() {
+			@Override
+			public void onDraw(@SuppressWarnings("unused") final DrawEvent event) {
+				final CanvasItem wrapper = getCanvasItem();
+				Assert.notNull(wrapper);
+				// wrap value in a record otherwise I get a javascript error
+				wrapper.storeValue(new ValueStoreWrapper<CompanyFixedAssetCategoryTree>(CompanyFixedAssetCategoryTreeGrid.this));
+			}
+		});
 	}
 
-/*
-	private final CellSavedHandler onAllocationChanged = new CellSavedHandler() {
-		@Override
-		public void onCellSaved(CellSavedEvent event) {
-			logger.fine("status change at column " + event.getColNum() + " = " + getFieldName(event.getColNum()));
-           	final RoleDefinitionTreeRecord record = new RoleDefinitionTreeRecord(event.getRecord());
-			final Integer roleId = record.getId();
-			final Boolean isIncluded = (Boolean) event.getNewValue();
-logger.fine("status changed for role " + roleId + " = " + isIncluded);
-			if (isIncluded)
-				delta.add(roleId);
-			else
-				delta.remove(roleId);
-			final TreeGrid grid = (TreeGrid)event.getSource();
-			Assert.notNull(grid);
-			final CanvasItem wrapper = grid.getCanvasItem();
-			Assert.notNull(wrapper);
-			// wrap value in a record otherwise I get a javascript error
-			wrapper.storeValue(new SelectionDeltaRecord(delta));
-		}
-	};*/
+	@Override
+	public CompanyFixedAssetCategoryTree get() {
+		return null;
+	}
+
 }

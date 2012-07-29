@@ -25,7 +25,7 @@ import com.nabla.dc.client.presenter.company.CompanyUserList;
 import com.nabla.dc.client.presenter.company.CompanyUserList.ICommandSet;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.command.ICurrentRecordProvider;
-import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;

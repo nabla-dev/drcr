@@ -18,7 +18,7 @@ package com.nabla.dc.client.model.options;
 
 
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.RoleRecord;
+import com.nabla.wapp.client.model.data.RoleRecord;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;

@@ -27,19 +27,19 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class CompanyFixedAssetCategoryFormModel extends CModel<CompanyFixedAssetCategoryRecord> {
+public class CompanyFixedAssetCategoryFormModel extends CModel<CompanyFixedAssetCategoryFormRecord> {
 
 	static public class Fields {
 		public String name() { return ICompany.NAME; }
 		public String availableCategories() { return "availableCategories"; }
-		public String categories() { return "categories"; }
+		public static String categories() { return "categories"; }
 	}
 
 	private static final Fields	fields = new Fields();
 	protected final Integer		companyId;
 
 	public CompanyFixedAssetCategoryFormModel(final Integer companyId) {
-		super(CompanyFixedAssetCategoryRecord.factory);
+		super(CompanyFixedAssetCategoryFormRecord.factory);
 		this.companyId = companyId;
 	}
 
@@ -61,7 +61,7 @@ public class CompanyFixedAssetCategoryFormModel extends CModel<CompanyFixedAsset
 	}
 /*
 	@Override
-	public IAction<StringResult> getUpdateCommand(final CompanyFixedAssetCategoryRecord record) {
+	public IAction<StringResult> getUpdateCommand(final CompanyFixedAssetCategoryFormRecord record) {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
 			return null;	// save a round trip to the server

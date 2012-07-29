@@ -45,9 +45,9 @@ public class UpdateCompanyFixedAssetCategoryHandler extends AbstractHandler<Upda
 
 	@Override
 	public StringResult execute(final UpdateCompanyFixedAssetCategory record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		if (record.getBalanceSheetCategory() != null)
+/*		if (record.getBalanceSheetCategory() != null)
 			record.setBalanceSheetCategoryId(getBalanceSheetCategoryId(record.getBalanceSheetCategory(), ctx.getReadConnection()));
-
+*/
 		return null;
 	}
 

@@ -14,14 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.client.presenter.options;
+package com.nabla.wapp.client.model.field;
 
-import com.nabla.wapp.client.command.HideableRecordCommand;
-import com.nabla.wapp.client.model.data.UserRecord;
+import com.nabla.wapp.shared.model.IUser;
 
 /**
- * The <code></code> object is used to
+ * @author nabla64
  *
  */
-public class UserRecordCommand extends HideableRecordCommand<UserRecord> {}
+public class UserNameField extends TextField {
 
+	public UserNameField() {
+		super(IUser.NAME, IUser.NAME_CONSTRAINT, FieldAttributes.REQUIRED);
+	}
+
+}

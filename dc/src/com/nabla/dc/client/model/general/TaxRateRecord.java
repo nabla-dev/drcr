@@ -18,8 +18,8 @@ package com.nabla.dc.client.model.general;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.ITaxRate;
-import com.nabla.wapp.client.model.BasicListGridRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.smartgwt.client.data.Record;
 
 /**

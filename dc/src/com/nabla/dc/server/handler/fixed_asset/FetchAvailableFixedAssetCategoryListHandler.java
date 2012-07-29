@@ -19,7 +19,9 @@ package com.nabla.dc.server.handler.fixed_asset;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchAvailableFixedAssetCategoryList;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
+import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.json.SimpleJsonFetch;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
@@ -42,8 +44,8 @@ public class FetchAvailableFixedAssetCategoryListHandler extends AbstractFetchHa
 " FROM fa_asset_category AS a LEFT JOIN fa_company_asset_category AS c ON a.id=c.fa_asset_category_id" +
 " WHERE c.id IS NULL" +
 ") dt ORDER BY name ASC",
-		new OdbcStringToJson("id"),
-		new OdbcStringToJson("name")
+		new OdbcIdToJson(),
+		new OdbcStringToJson(IFixedAssetCategory.NAME)
 	);
 
 	@Override

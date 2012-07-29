@@ -14,20 +14,16 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.wapp.client.model.field.BooleanField;
-import com.nabla.wapp.client.model.field.FieldAttributes;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
+import java.util.HashMap;
 
 /**
- * @author nabla
- *
+ * @author nabla64
+ * Map<FinancialStatementCategoryId, Map<AssetCategoryId, Active> >
  */
-public class SelectedRecordField extends BooleanField {
+public class CompanyFixedAssetCategoryTree extends HashMap<Integer, HashMap<Integer, Boolean>> {
 
-	public SelectedRecordField() {
-		super(IFieldReservedNames.RECORD_SELECTED, FieldAttributes.HIDDEN);
-	}
+	private static final long serialVersionUID = 1L;
 
 }

@@ -18,8 +18,8 @@ package com.nabla.dc.client.model.company;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.company.IImportAccount;
-import com.nabla.wapp.client.model.BasicRecord;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.smartgwt.client.data.Record;
 

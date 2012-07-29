@@ -16,8 +16,8 @@
 */
 package com.nabla.wapp.client.ui;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.nabla.wapp.client.general.LoggerFactory;
@@ -28,8 +28,8 @@ import com.nabla.wapp.client.general.LoggerFactory;
  */
 public class ModalDialog extends Dialog {
 
-	private static final Logger				log = LoggerFactory.getLog(ModalDialog.class);
-	private static final List<ModalDialog>	openedDialogs = new LinkedList<ModalDialog>();
+	private static final Logger					log = LoggerFactory.getLog(ModalDialog.class);
+	private static final Map<Class, ModalDialog>	openedDialogs = new HashMap<Class, ModalDialog>();
 
 	public ModalDialog() {
 		super();
@@ -43,22 +43,23 @@ public class ModalDialog extends Dialog {
 
 	@Override
 	public void show(){
-		if (openedDialogs.isEmpty()) {
-			super.show();
-			openedDialogs.add(this);
+		final Class clazz = this.getClass();
+		if (openedDialogs.containsKey(clazz)) {
+			log.warning("stopped opening dialog box '" + this.getTitle() + "' - class = '" + clazz.getName() + "'");
 		} else {
-			log.warning("stopped opening dialog box '" + this.getTitle() + "'");
+			super.show();
+			openedDialogs.put(clazz, this);
 		}
 	}
 
 	@Override
 	public void hide() {
-		openedDialogs.remove(this);
+		openedDialogs.remove(this.getClass());
 		super.hide();
 	}
 
 	public static void hideAll() {
-		while (!openedDialogs.isEmpty())
-			openedDialogs.get(0).hide();
+		for (ModalDialog dlg : openedDialogs.values())
+			dlg.hide();
 	}
 }

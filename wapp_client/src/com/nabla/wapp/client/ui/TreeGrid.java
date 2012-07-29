@@ -33,7 +33,6 @@ import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.ui.IHasWidgets.Helper;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.types.ListGridEditEvent;
 import com.smartgwt.client.types.SelectionAppearance;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -50,13 +49,10 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 
 	public TreeGrid() {
 		setAlternateRecordStyles(true);
-		setEditEvent(ListGridEditEvent.CLICK);
 		setCanEdit(false);
 		setShowOpenIcons(false);
 		setShowDropIcons(false);
 		setClosedIconSuffix("");
-		setCascadeSelection(true);
-		setShowPartialSelection(true);
 		setShowSelectedStyle(false);
 		setFixedRecordHeights(true);
 		// TODO: to be removed when SmartGWT supports it

@@ -14,9 +14,10 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.data;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.Record;
 

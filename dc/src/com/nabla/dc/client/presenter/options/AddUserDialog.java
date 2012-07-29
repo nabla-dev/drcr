@@ -17,7 +17,7 @@
 package com.nabla.dc.client.presenter.options;
 
 import com.nabla.dc.client.ui.options.AddUserDialogUi;
-import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlot;

@@ -17,10 +17,11 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.client.model.HeterogeneousTreeGridRecord;
+import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.model.IRecordFactory;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
+import com.nabla.wapp.client.model.data.HeterogeneousTreeGridRecord;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -46,15 +47,54 @@ public class CompanyFixedAssetCategoryRecord extends HeterogeneousTreeGridRecord
 		super(record);
 	}
 
-	public void setParent(final CompanyFixedAssetCategoryRecord parent) {
-		this.setAttribute(IFieldReservedNames.TREEGRID_PARENT_ID, parent.getStringId());
-		this.setAttribute(IFieldReservedNames.TREEGRID_IS_FOLDER, false);
-		this.setAttribute(IFixedAssetCategory.ACTIVE, true);
+	public CompanyFixedAssetCategoryRecord(final CompanyFixedAssetCategoryRecord parent, final FixedAssetCategoryRecord category) {
+		Assert.argumentNotNull(parent);
+		Assert.argumentNotNull(category);
+
+		setIsFolder(false);
+		setParentStringId(parent.getStringId());
+		setStringId("c" + category.getId());
+		setName(category.getName());
+		setActive(true);
+		setSpeudoId(category.getId());	// store for later reuse
 	}
 
-/*
-	public SelectionDelta getDefinitionDelta() {
-		return ((SelectionDeltaRecord)getAttributeAsRecord(RoleDefinitionModel.Fields.roles())).getData();
+	public CompanyFixedAssetCategoryRecord(final CompanyFixedAssetCategoryRecord parent, final CompanyFixedAssetCategoryRecord category) {
+		Assert.argumentNotNull(parent);
+		Assert.argumentNotNull(category);
+
+		setIsFolder(false);
+		setParentStringId(parent.getStringId());
+		setStringId(category.getStringId());
+		setName(category.getName());
+		setActive(category.getActive());
+		setSpeudoId(category.getSpeudoId());	// store for later reuse
 	}
-*/
+
+	@Override
+	public String getName() {
+		return getAttributeAsString(IFixedAssetCategory.NAME);
+	}
+
+	@Override
+	public void setName(String value) {
+		setAttribute(IFixedAssetCategory.NAME, value);
+	}
+
+	public Boolean getActive() {
+		return getBoolean(IFixedAssetCategory.ACTIVE);
+	}
+
+	public void setActive(Boolean active) {
+		setAttribute(IFixedAssetCategory.ACTIVE, active);
+	}
+
+	public Integer getSpeudoId() {
+		return getAttributeAsInt(IFinancialStatementCategory.SPEUDO_ID);
+	}
+
+	public void setSpeudoId(Integer value) {
+		setAttribute(IFinancialStatementCategory.SPEUDO_ID, value);
+	}
+
 }

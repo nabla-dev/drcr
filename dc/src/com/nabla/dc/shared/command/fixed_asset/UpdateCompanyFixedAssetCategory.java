@@ -16,8 +16,7 @@
 */
 package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.dc.shared.model.fixed_asset.CompanyFixedAssetCategoryTree;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
@@ -25,46 +24,23 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  * @author nabla
  *
  */
-@IRecordTable(name="fa_company_asset_category")
 public class UpdateCompanyFixedAssetCategory implements IAction<StringResult> {
 
-	@IRecordField
-	Integer		company_id;
-	@IRecordField
-	Integer		fa_asset_category_id;
-	String		balanceSheetCategory;
-	@IRecordField
-	Integer		fa_bs_category_id;
-	@IRecordField
-	Boolean		active;
+	Integer							company_id;
+	CompanyFixedAssetCategoryTree	categories;
 
 	protected UpdateCompanyFixedAssetCategory() {}	// for serialization only
 
-	public UpdateCompanyFixedAssetCategory(final Integer companyId, final Integer assetCategoryId, final String balanceSheetCategory, final Boolean active) {
+	public UpdateCompanyFixedAssetCategory(final Integer companyId, final CompanyFixedAssetCategoryTree categories) {
 		this.company_id = companyId;
-		this.fa_asset_category_id = assetCategoryId;
-		this.balanceSheetCategory = balanceSheetCategory;
-		this.active = active;
+		this.categories = categories;
 	}
 
 	public Integer getCompanyId() {
 		return company_id;
 	}
 
-	public Integer getAssetCategoryId() {
-		return fa_asset_category_id;
+	public CompanyFixedAssetCategoryTree getCategories() {
+		return categories;
 	}
-
-	public String getBalanceSheetCategory() {
-		return balanceSheetCategory;
-	}
-
-	public void setBalanceSheetCategoryId(int id) {
-		fa_bs_category_id = id;
-	}
-
-	public Boolean getActive() {
-		return active;
-	}
-
 }

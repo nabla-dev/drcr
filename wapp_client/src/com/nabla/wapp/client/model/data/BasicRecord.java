@@ -14,10 +14,9 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.data;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.model.field.IdField;
 import com.smartgwt.client.data.Record;
@@ -26,30 +25,26 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class BasicRecordWrapper {
+public class BasicRecord extends Record {
 
-	protected final Record	impl;
-
-	protected BasicRecordWrapper(final Record impl) {
-		Assert.argumentNotNull(impl);
-
-		this.impl = impl;
+	public BasicRecord(final Record impl) {
+		super(impl.getJsObj());
 	}
 
-	protected BasicRecordWrapper(final JavaScriptObject js) {
-		this(new Record(js));
-	}
-
-	public Record getImpl() {
-		return impl;
+	public BasicRecord(final JavaScriptObject js) {
+		super(js);
 	}
 
 	public Integer getId() {
-		return impl.getAttributeAsInt(IdField.NAME);
+		return getAttributeAsInt(IdField.NAME);
 	}
 
 	public boolean isNew() {
-		return !JSHelper.isAttribute(impl.getJsObj(), IdField.NAME);
+		return !JSHelper.isAttribute(getJsObj(), IdField.NAME);
+	}
+
+	protected Boolean getBoolean(final String attribute) {
+		return JSHelper.getAttributeAsBoolean(this.getJsObj(), attribute);
 	}
 
 }

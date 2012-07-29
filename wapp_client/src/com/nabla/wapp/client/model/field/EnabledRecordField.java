@@ -14,20 +14,17 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.field;
 
-import com.nabla.wapp.client.model.field.FieldAttributes;
-import com.nabla.wapp.client.model.field.PasswordField;
-import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
- * @author nabla64
+ * @author nabla
  *
  */
-public class UserPasswordField extends PasswordField {
+public class EnabledRecordField extends BooleanField {
 
-	public UserPasswordField() {
-		super(IUser.PASSWORD, IUser.PASSWORD_CONSTRAINT, FieldAttributes.REQUIRED);
+	public EnabledRecordField() {
+		super(IFieldReservedNames.RECORD_ENABLED, FieldAttributes.HIDDEN);
 	}
-
 }

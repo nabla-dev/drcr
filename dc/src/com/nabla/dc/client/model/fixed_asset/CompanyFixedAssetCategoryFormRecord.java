@@ -17,40 +17,36 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.CompanyFixedAssetCategoryTree;
 import com.nabla.wapp.client.model.IRecordFactory;
-import com.nabla.wapp.client.model.data.BasicListGridRecord;
+import com.nabla.wapp.client.model.data.ValueStoreWrapper;
 import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class FinancialStatementCategoryRecord extends BasicListGridRecord implements IFixedAssetCategory {
+public class CompanyFixedAssetCategoryFormRecord extends Record {
 
-	public static final IRecordFactory<FinancialStatementCategoryRecord>	factory = new IRecordFactory<FinancialStatementCategoryRecord>() {
+	public static final IRecordFactory<CompanyFixedAssetCategoryFormRecord>	factory = new IRecordFactory<CompanyFixedAssetCategoryFormRecord>() {
 
 		@Override
-		public FinancialStatementCategoryRecord get(JavaScriptObject data) {
-			return new FinancialStatementCategoryRecord(data);
+		public CompanyFixedAssetCategoryFormRecord get(JavaScriptObject data) {
+			return new CompanyFixedAssetCategoryFormRecord(data);
 		}
 
 	};
 
-	public FinancialStatementCategoryRecord(Record impl) {
-		super(impl);
-	}
-
-	public FinancialStatementCategoryRecord(JavaScriptObject js) {
+	public CompanyFixedAssetCategoryFormRecord(JavaScriptObject js) {
 		super(js);
 	}
 
-	public String getName() {
-		return getAttributeAsString(NAME);
+	public CompanyFixedAssetCategoryTree getCategories() {
+		return getValue(CompanyFixedAssetCategoryFormModel.Fields.categories());
 	}
 
-	public Boolean getActive() {
-		return getBoolean(ACTIVE);
+	@SuppressWarnings("unchecked")
+	public <T> T getValue(final String name) {
+		return ((ValueStoreWrapper<T>)getAttributeAsRecord(name)).getData();
 	}
-
 }

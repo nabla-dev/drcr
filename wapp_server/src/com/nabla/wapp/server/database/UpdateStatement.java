@@ -22,6 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,10 +43,10 @@ public class UpdateStatement<T> extends SqlStatement {
 
 	private static final Log	log = LogFactory.getLog(UpdateStatement.class);
 
-	private final String							sqlTemplate;
-	private final ArrayList<IStatementParameter>	parameters = new ArrayList<IStatementParameter>();
-	private IStatementParameter						recordId = null;
-	private String									uniqueFieldName = null;	// null if n/a
+	private final String						sqlTemplate;
+	private final List<IStatementParameter>	parameters = new ArrayList<IStatementParameter>();
+	private IStatementParameter					recordId = null;
+	private String								uniqueFieldName = null;	// null if n/a
 
 	public UpdateStatement(final Class<T> recordClass) {
 		final IRecordTable table = commonConstructor(recordClass);
@@ -85,7 +86,7 @@ public class UpdateStatement<T> extends SqlStatement {
 	public void execute(final Connection conn, final T record) throws SQLException, DispatchException, ValidationException {
 		Assert.argumentNotNull(conn);
 
-		final ArrayList<IStatementParameter> parametersToUpdate = new ArrayList<IStatementParameter>();
+		final List<IStatementParameter> parametersToUpdate = new ArrayList<IStatementParameter>();
 		final ArgumentList updates = new ArgumentList();
 		for (IStatementParameter parameter : parameters) {
 			if (!parameter.include(record))

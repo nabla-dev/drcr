@@ -21,7 +21,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.options.AddUserModel;
 import com.nabla.dc.client.presenter.options.AddUserDialog;
-import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;

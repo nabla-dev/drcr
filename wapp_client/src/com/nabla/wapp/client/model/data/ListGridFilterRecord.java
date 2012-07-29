@@ -14,28 +14,34 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.options;
+package com.nabla.wapp.client.model.data;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.wapp.client.model.data.BasicRecord;
+import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.shared.model.IListGridFilter;
+import com.smartgwt.client.data.AdvancedCriteria;
 import com.smartgwt.client.data.Record;
+import com.smartgwt.client.util.JSON;
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public class RoleDefinitionTreeRecord extends BasicRecord {
+public class ListGridFilterRecord {
 
-	public RoleDefinitionTreeRecord(JavaScriptObject js) {
-		super(js);
+	protected final Record	impl;
+
+	public ListGridFilterRecord(final Record impl) {
+		Assert.argumentNotNull(impl);
+
+		this.impl = impl;
 	}
 
-	public RoleDefinitionTreeRecord(Record record) {
-		super(record);
+	public Record getImpl() {
+		return impl;
 	}
 
-	public Boolean isIncluded() {
-		return this.getAttributeAsBoolean(RoleDefinitionTreeModel.INCLUDE);
+	public AdvancedCriteria getCriteria() {
+		return new AdvancedCriteria(JSON.decode(impl.getAttributeAsString(IListGridFilter.VALUE)));
 	}
 
 }

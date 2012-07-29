@@ -18,14 +18,14 @@ package com.nabla.dc.client.model.options;
 
 
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.DeletedRecordField;
-import com.nabla.wapp.client.model.EnabledRecordField;
-import com.nabla.wapp.client.model.UserNameField;
-import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.model.field.BooleanField;
+import com.nabla.wapp.client.model.field.DeletedRecordField;
+import com.nabla.wapp.client.model.field.EnabledRecordField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
+import com.nabla.wapp.client.model.field.UserNameField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
 import com.nabla.wapp.shared.command.FetchUserList;

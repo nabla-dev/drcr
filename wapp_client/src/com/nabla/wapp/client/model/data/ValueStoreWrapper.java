@@ -14,30 +14,25 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.options;
+package com.nabla.wapp.client.model.data;
 
-
-import com.nabla.wapp.client.model.data.UserRecord;
-import com.nabla.wapp.shared.command.CloneUser;
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
+import com.smartgwt.client.data.Record;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class CloneUserModel extends AddUserModel {
+public class ValueStoreWrapper<T> extends Record {
 
-	private final Integer	fromUserId;
+	static final String	DATA = "data";
 
-	public CloneUserModel(final Integer fromUserId) {
-		super();
-		this.fromUserId = fromUserId;
+	public ValueStoreWrapper(final IValueStore<T> store) {
+		setAttribute(DATA, store);
 	}
 
-	@Override
-	public IAction<StringResult> getAddCommand(final UserRecord user) {
-		return new CloneUser(fromUserId, user.getName(), user.getPassword());
+	@SuppressWarnings("unchecked")
+	public T getData() {
+		return ((IValueStore<T>)getAttributeAsObject(DATA)).get();
 	}
 
 }

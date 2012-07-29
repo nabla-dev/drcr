@@ -14,34 +14,42 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.data;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.general.Assert;
-import com.nabla.wapp.shared.model.IListGridFilter;
-import com.smartgwt.client.data.AdvancedCriteria;
+import com.nabla.wapp.client.general.JSHelper;
+import com.nabla.wapp.client.model.field.IdField;
 import com.smartgwt.client.data.Record;
-import com.smartgwt.client.util.JSON;
 
 /**
- * The <code></code> object is used to
+ * @author nabla
  *
  */
-public class ListGridFilterRecord {
+public class BasicRecordWrapper {
 
 	protected final Record	impl;
 
-	public ListGridFilterRecord(final Record impl) {
+	protected BasicRecordWrapper(final Record impl) {
 		Assert.argumentNotNull(impl);
 
 		this.impl = impl;
+	}
+
+	protected BasicRecordWrapper(final JavaScriptObject js) {
+		this(new Record(js));
 	}
 
 	public Record getImpl() {
 		return impl;
 	}
 
-	public AdvancedCriteria getCriteria() {
-		return new AdvancedCriteria(JSON.decode(impl.getAttributeAsString(IListGridFilter.VALUE)));
+	public Integer getId() {
+		return impl.getAttributeAsInt(IdField.NAME);
+	}
+
+	public boolean isNew() {
+		return !JSHelper.isAttribute(impl.getJsObj(), IdField.NAME);
 	}
 
 }

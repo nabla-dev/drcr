@@ -14,38 +14,46 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.data;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.wapp.client.general.JSHelper;
-import com.nabla.wapp.client.model.field.IdField;
+import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.shared.model.IUser;
 import com.smartgwt.client.data.Record;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
  * @author nabla
  *
  */
-public class BasicListGridRecord extends ListGridRecord {
+public class UserRecord extends BasicListGridRecord implements IUser {
 
-	public BasicListGridRecord(final Record impl) {
-		super(impl.getJsObj());
+	public static final IRecordFactory<UserRecord>	factory = new IRecordFactory<UserRecord>() {
+
+		@Override
+		public UserRecord get(JavaScriptObject data) {
+			return new UserRecord(data);
+		}
+
+	};
+
+	public UserRecord(Record impl) {
+		super(impl);
 	}
 
-	public BasicListGridRecord(final JavaScriptObject js) {
+	public UserRecord(JavaScriptObject js) {
 		super(js);
 	}
 
-	public Integer getId() {
-		return getAttributeAsInt(IdField.NAME);
+	public String getName() {
+		return getAttributeAsString(NAME);
 	}
 
-	public boolean isNew() {
-		return !JSHelper.isAttribute(getJsObj(), IdField.NAME);
+	public String getPassword() {
+		return getAttributeAsString(PASSWORD);
 	}
 
-	protected Boolean getBoolean(final String attribute) {
-		return JSHelper.getAttributeAsBoolean(this.getJsObj(), attribute);
+	public Boolean getActive() {
+		return getBoolean(ACTIVE);
 	}
 
 }

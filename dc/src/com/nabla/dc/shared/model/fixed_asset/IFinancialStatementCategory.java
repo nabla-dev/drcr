@@ -27,6 +27,7 @@ public interface IFinancialStatementCategory {
 
 	static final String				TABLE = "fa_fs_category";
 
+	static final String				SPEUDO_ID = "iid";
 	static final String				NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
 	static final String				ACTIVE = "active";

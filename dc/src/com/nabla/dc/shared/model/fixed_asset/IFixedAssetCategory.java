@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
+import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
@@ -28,6 +29,7 @@ public interface IFixedAssetCategory {
 
 	static final String					TABLE = "fa_asset_category";
 
+	static final String					ID = IdField.NAME;
 	static final String					NAME = "name";
 	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
 

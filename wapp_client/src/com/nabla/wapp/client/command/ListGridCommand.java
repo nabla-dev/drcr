@@ -16,7 +16,7 @@
 */
 package com.nabla.wapp.client.command;
 
-import com.nabla.wapp.client.model.BasicListGridRecord;
+import com.nabla.wapp.client.model.data.BasicListGridRecord;
 
 /**
  * @author FNorais

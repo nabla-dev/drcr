@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
+import com.nabla.wapp.client.model.data.ValidationErrorRecord;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.Record;

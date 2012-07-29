@@ -26,7 +26,7 @@ import com.nabla.wapp.client.command.HideableListGridCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.ICurrentListGridRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
-import com.nabla.wapp.client.model.BasicListGridRecord;
+import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;

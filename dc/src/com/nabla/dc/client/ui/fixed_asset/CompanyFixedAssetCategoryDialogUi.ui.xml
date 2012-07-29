@@ -3,7 +3,7 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default"
-    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
+    xmlns:ctrl="urn:import:com.nabla.dc.client.ui.fixed_asset"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
@@ -13,18 +13,24 @@
 	
 	<wnd:ModalDialog caption="Fixed Asset Categories" icon="fixed_asset/asset_category_small.png" autoClose="true">
 		<ui:attribute name="caption" description="Edit company fixed asset categories dialog caption"/>
-		<form:Form ui:field="form" model="{formModel}" autoFetchData="true" columnWidths="35,215,300" width="580" height="350">
+		<form:Form ui:field="form" model="{formModel}" autoFetchData="true" columnWidths="35,215,24,300" width="600" height="350">
 			<form:StaticText name="{formModel.fields.name}" width="*"><ui:msg>Company</ui:msg></form:StaticText>
-			<form:ListGridItem ui:field="availableCategories" model="{availableModel}" title="Available asset categories" colSpan="2" width="250" height="250" canDragRecordsOut="true" dragDataAction="MOVE" endRow="false">
+			<form:ListGridItem ui:field="availableCategories" model="{availableModel}" title="Available asset categories" colSpan="2" width="250" height="250" showHeader="false" canDragRecordsOut="true" dragDataAction="MOVE" canAcceptDroppedRecords="true" autoSaveEdits="false" endRow="false">
 				<ui:attribute name="title" description="Available company asset categories message"/>
 				<wnd:ListGridField name="{availableModel.fields.name}" canSort="false"><ui:msg>Category</ui:msg></wnd:ListGridField>
 			</form:ListGridItem>
+			<ctrl:VerticalButtonBar endRow="false">
+				<wnd:VLayoutSpacer/>
+				<wnd:TransferImgButton ui:field="addButton" image="RIGHT" />
+				<wnd:TransferImgButton ui:field="removeButton" image="LEFT" />
+				<wnd:VLayoutSpacer/>
+			</ctrl:VerticalButtonBar>
 			<form:TreeGridItem name="{formModel.fields.categories}" ui:field="categories" model="{model}" title="Company asset categories" width="300" height="250" nodeIcon="fixed_asset/asset_category_small.png" folderIcon="fixed_asset/fs_category_small.png">
 				<ui:attribute name="title" description="Company asset categories message"/>
 				<wnd:TreeGridField name="{model.fields.name}" canSort="false"><ui:msg>Category</ui:msg></wnd:TreeGridField>
-				<wnd:TreeGridField name="{model.fields.active}" canSort="false" width="40" canEdit="true"><ui:msg>_</ui:msg></wnd:TreeGridField>
+				<wnd:TreeGridField name="{model.fields.active}" canSort="false"><ui:msg>_</ui:msg></wnd:TreeGridField>
 			</form:TreeGridItem>
-			<form:ButtonBar colSpan="3">
+			<form:ButtonBar colSpan="4">
 				<wnd:SubmitButton><ui:msg description="OK button">*OK</ui:msg></wnd:SubmitButton>
 				<wnd:CancelButton><ui:msg description="Cancel button">*Cancel</ui:msg></wnd:CancelButton>
 			</form:ButtonBar>

@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.data;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.general.JSHelper;
@@ -48,6 +48,10 @@ public class HeterogeneousTreeGridRecord extends TreeNode {
 		return getAttribute(TreeStringIdField.NAME);
 	}
 
+	public void setStringId(String value) {
+		setAttribute(TreeStringIdField.NAME, value);
+	}
+
 	public Integer getParentId() {
 		return TreeStringParentIdField.extractId(this);
 	}
@@ -56,12 +60,20 @@ public class HeterogeneousTreeGridRecord extends TreeNode {
 		return getAttribute(TreeStringParentIdField.NAME);
 	}
 
+	public void setParentStringId(String value) {
+		setAttribute(TreeStringParentIdField.NAME, value);
+	}
+
 	public boolean isNew() {
 		return !JSHelper.isAttribute(getJsObj(), TreeStringIdField.NAME);
 	}
 
 	public boolean isFolder() {
 		return getBoolean(IFieldReservedNames.TREEGRID_IS_FOLDER);
+	}
+
+	public void setIsFolder(Boolean value) {
+		setAttribute(IFieldReservedNames.TREEGRID_IS_FOLDER, value);
 	}
 
 	protected Boolean getBoolean(final String attribute) {

@@ -18,13 +18,13 @@ package com.nabla.dc.client.model.options;
 
 
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.UserNameField;
-import com.nabla.wapp.client.model.UserPasswordField;
-import com.nabla.wapp.client.model.UserRecord;
+import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
+import com.nabla.wapp.client.model.field.UserNameField;
+import com.nabla.wapp.client.model.field.UserPasswordField;
 import com.nabla.wapp.shared.command.AddUser;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;

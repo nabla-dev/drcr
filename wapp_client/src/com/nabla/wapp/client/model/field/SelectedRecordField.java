@@ -14,19 +14,18 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.field;
 
-import com.nabla.wapp.client.model.field.BooleanField;
-import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
  *
  */
-public class DeletedRecordField extends BooleanField {
+public class SelectedRecordField extends BooleanField {
 
-	public DeletedRecordField() {
-		super(IFieldReservedNames.RECORD_DELETED, FieldAttributes.OPTIONAL, FieldAttributes.HIDDEN);
+	public SelectedRecordField() {
+		super(IFieldReservedNames.RECORD_SELECTED, FieldAttributes.HIDDEN);
 	}
+
 }

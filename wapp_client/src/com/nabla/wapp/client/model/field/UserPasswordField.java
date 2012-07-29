@@ -14,16 +14,18 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.field;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.nabla.wapp.shared.dispatch.StringResult;
-
+import com.nabla.wapp.shared.model.IUser;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public interface IOperationCommand {
-	void execute(final String xmlRequest, final AsyncCallback<StringResult> callback);
+public class UserPasswordField extends PasswordField {
+
+	public UserPasswordField() {
+		super(IUser.PASSWORD, IUser.PASSWORD_CONSTRAINT, FieldAttributes.REQUIRED);
+	}
+
 }

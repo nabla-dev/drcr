@@ -14,20 +14,13 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.model;
+package com.nabla.wapp.client.model.data;
 
-import com.nabla.wapp.client.model.field.FieldAttributes;
-import com.nabla.wapp.client.model.field.TextField;
-import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla64
  *
  */
-public class UserNameField extends TextField {
-
-	public UserNameField() {
-		super(IUser.NAME, IUser.NAME_CONSTRAINT, FieldAttributes.REQUIRED);
-	}
-
+public interface IValueStore<T> {
+	T get();
 }

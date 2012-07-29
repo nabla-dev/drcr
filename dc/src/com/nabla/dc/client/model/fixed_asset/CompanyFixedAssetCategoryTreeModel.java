@@ -22,6 +22,7 @@ import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.HeterogeneousTreeModel;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
+import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.TreeStringIdField;
 import com.nabla.wapp.client.model.field.TreeStringParentIdField;
@@ -36,7 +37,7 @@ public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<C
 
 	static public class Fields {
 		public String name() { return IFixedAssetCategory.NAME; }
-		public String active() { return IFixedAssetCategory.ACTIVE; }
+		public String active() {return IFixedAssetCategory.ACTIVE; }
 	}
 
 	private static final Fields	fields = new Fields();
@@ -49,7 +50,8 @@ public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<C
 			new TreeStringIdField(),
 			new TreeStringParentIdField(),
 			new TextField(fields.name(), FieldAttributes.READ_ONLY),
-			new BooleanField(fields.active())
+			new BooleanField(fields.active(), FieldAttributes.OPTIONAL),
+			new IntegerField("iid", FieldAttributes.HIDDEN)
 				);
 	}
 
