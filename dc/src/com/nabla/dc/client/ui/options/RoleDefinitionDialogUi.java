@@ -22,7 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.options.RoleDefinitionFormModel;
 import com.nabla.dc.client.model.options.RoleDefinitionTreeModel;
 import com.nabla.dc.client.presenter.options.RoleDefinitionDialog;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.TreeGridItem;
@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class RoleDefinitionDialogUi extends BindedTopDisplay<ModalDialog> implements RoleDefinitionDialog.IDisplay {
+public class RoleDefinitionDialogUi extends BindedModalDialog implements RoleDefinitionDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, RoleDefinitionDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);

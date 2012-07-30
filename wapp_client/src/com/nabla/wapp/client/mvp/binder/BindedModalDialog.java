@@ -17,19 +17,18 @@
 package com.nabla.wapp.client.mvp.binder;
 
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.wapp.client.ui.IPostCreateProcessing;
+import com.nabla.wapp.client.ui.ModalDialog;
 
 /**
  * @author nabla
  *
  */
-public class BindedDisplay<U extends IPostCreateProcessing> {
+public class BindedModalDialog extends BindedTopDisplay<ModalDialog> {
 
-	protected U		impl;
-
-	protected <D> void create(final UiBinder<U, D> uiBinder, final D instance) {
-		impl = uiBinder.createAndBindUi(instance);
-		impl.onCreate();
+	@Override
+	protected <D> void create(final UiBinder<ModalDialog, D> uiBinder, final D instance) {
+		super.create(uiBinder, instance);
+		impl.setDisplayClass(instance.getClass());
 	}
 
 }

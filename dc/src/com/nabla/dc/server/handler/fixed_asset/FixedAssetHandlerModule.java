@@ -40,6 +40,7 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 
 		bindHandler(FetchCompanyFixedAssetCategoryListHandler.class);
 		bindHandler(FetchAvailableFixedAssetCategoryListHandler.class);
+		bindHandler(UpdateCompanyFixedAssetCategoryHandler.class);
 
 		bindHandler(RemoveAssetHandler.class);
 
@@ -47,19 +48,6 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 
 /*
   bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);
-
-		bindHandler(FetchAssetRegisterListHandler.class);
-		bindHandler(AddAssetRegisterHandler.class);
-		bindHandler(RemoveAssetRegisterHandler.class);
-		bindHandler(RestoreAssetRegisterHandler.class);
-		bindHandler(UpdateAssetRegisterHandler.class);
-		bindHandler(FetchAssetRegisterUserListHandler.class);
-		bindHandler(UpdateAssetRegisterUserListHandler.class);
-		bindHandler(FetchAssetRegisterAssetCategoryListHandler.class);
-		bindHandler(UpdateAssetRegisterAssetCategoryListHandler.class);
-
-		bindHandler(FetchAssetRegisterBalanceSheetCategoryListHandler.class);
-		bindHandler(UpdateAssetRegisterBalanceSheetCategoryListHandler.class);
 
 		bindHandler(FetchAssetRegisterActiveAssetCategoryListHandler.class);
 		bindHandler(FetchAssetListHandler.class);

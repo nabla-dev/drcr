@@ -18,7 +18,7 @@ package com.nabla.dc.client.ui;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.Html;
 import com.nabla.wapp.client.ui.IWizardPage;
 import com.nabla.wapp.client.ui.ModalDialog;
@@ -31,7 +31,7 @@ import com.smartgwt.client.widgets.Canvas;
  * @author nabla
  *
  */
-public class WizardUi extends BindedTopDisplay<ModalDialog> {
+public class WizardUi extends BindedModalDialog {
 
 	@UiField(provided=true)
 	static public final IResource	res = Resource.bundle;

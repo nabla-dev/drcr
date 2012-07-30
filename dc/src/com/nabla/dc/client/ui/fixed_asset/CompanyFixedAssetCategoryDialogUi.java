@@ -28,8 +28,9 @@ import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryRecord;
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryTreeModel;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
+import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.model.IRecordFactory;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.TransferImgButton;
 import com.nabla.wapp.client.ui.form.Form;
@@ -45,6 +46,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.RecordDropEvent;
 import com.smartgwt.client.widgets.grid.events.RecordDropHandler;
+import com.smartgwt.client.widgets.tree.Tree;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
 import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
@@ -53,7 +55,7 @@ import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
  * @author nabla
  *
  */
-public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDialog> implements CompanyFixedAssetCategoryDialog.IDisplay, RecordDropHandler, FolderDropHandler {
+public class CompanyFixedAssetCategoryDialogUi extends BindedModalDialog implements CompanyFixedAssetCategoryDialog.IDisplay, RecordDropHandler, FolderDropHandler {
 
 	interface Binder extends UiBinder<ModalDialog, CompanyFixedAssetCategoryDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
@@ -83,7 +85,6 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 	private final CategoryReparentSignal		sigCategoryReparent = new CategoryReparentSignal();
 	private final AvailableCategoryDropSignal	sigRecordDrop = new AvailableCategoryDropSignal();
 
-
 	public CompanyFixedAssetCategoryDialogUi(final Integer companyId) {
 		formModel = new CompanyFixedAssetCategoryFormModel(companyId);
 		availableModel = formModel.getAvailableTreeModel();
@@ -104,7 +105,6 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 				onRemoveCategory();
 			}
 		});
-
 	}
 
 	@Override
@@ -163,6 +163,12 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDia
 
 	@Override
 	public void addCategory(CompanyFixedAssetCategoryRecord record) {
+		final Tree t = categories.getTree();
+		final TreeNode parent = t.findById(record.getParentStringId());
+		Assert.notNull(parent);
+		// the next 2 lines only works because all data has been loaded at startup
+		// otherwise we would have to wait until data arrives and then add record!
+		t.openFolder(parent);
 		model.updateCache(record, DSOperationType.ADD);
 	}
 

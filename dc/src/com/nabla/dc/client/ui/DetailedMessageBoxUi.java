@@ -19,7 +19,7 @@ package com.nabla.dc.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.Button;
 import com.nabla.wapp.client.ui.DetailedMessageBox;
 import com.nabla.wapp.client.ui.Html;
@@ -33,7 +33,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
  * @author nabla
  *
  */
-public class DetailedMessageBoxUi extends BindedTopDisplay<ModalDialog> implements DetailedMessageBox.IDisplay {
+public class DetailedMessageBoxUi extends BindedModalDialog implements DetailedMessageBox.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, DetailedMessageBoxUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

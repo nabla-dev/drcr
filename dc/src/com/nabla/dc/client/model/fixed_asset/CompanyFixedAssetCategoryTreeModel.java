@@ -60,9 +60,8 @@ public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<C
 	}
 
 	@Override
-	public AbstractFetch getFetchCommand(final DSRequest request) {
-		return new FetchCompanyFixedAssetCategoryList(companyId, getParentId(request));
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchCompanyFixedAssetCategoryList(companyId/*, getParentId(request)*/);
 	}
-
 
 }

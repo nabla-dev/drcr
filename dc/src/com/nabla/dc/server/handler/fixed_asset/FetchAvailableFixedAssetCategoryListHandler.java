@@ -41,7 +41,7 @@ public class FetchAvailableFixedAssetCategoryListHandler extends AbstractFetchHa
 " WHERE c.company_id=? AND c.fa_fs_category_id IS NULL" +
 " UNION" +
 " SELECT a.id, a.name" +
-" FROM fa_asset_category AS a LEFT JOIN fa_company_asset_category AS c ON a.id=c.fa_asset_category_id" +
+" FROM fa_asset_category AS a LEFT JOIN fa_company_asset_category AS c ON a.id=c.fa_asset_category_id AND c.company_id=?" +
 " WHERE c.id IS NULL" +
 ") dt ORDER BY name ASC",
 		new OdbcIdToJson(),
@@ -50,7 +50,7 @@ public class FetchAvailableFixedAssetCategoryListHandler extends AbstractFetchHa
 
 	@Override
 	public FetchResult execute(final FetchAvailableFixedAssetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getCompanyId());
+		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getCompanyId(), cmd.getCompanyId());
 	}
 
 }

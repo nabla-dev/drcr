@@ -20,14 +20,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.wapp.client.model.Model;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
 /**
  * @author nabla
  *
  */
-class ListGridFilterListDialogUi extends BindedTopDisplay<ModalDialog> implements ListGridFilterListDialog.IDisplay {
+class ListGridFilterListDialogUi extends BindedModalDialog implements ListGridFilterListDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ListGridFilterListDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);

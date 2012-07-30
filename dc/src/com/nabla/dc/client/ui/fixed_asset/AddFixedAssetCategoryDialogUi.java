@@ -21,7 +21,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryListModel;
 import com.nabla.dc.client.presenter.fixed_asset.AddFixedAssetCategoryDialog;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.shared.slot.ISlotManager;
@@ -30,7 +30,7 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class AddFixedAssetCategoryDialogUi extends BindedTopDisplay<ModalDialog> implements AddFixedAssetCategoryDialog.IDisplay {
+public class AddFixedAssetCategoryDialogUi extends BindedModalDialog implements AddFixedAssetCategoryDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, AddFixedAssetCategoryDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

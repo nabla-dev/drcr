@@ -25,7 +25,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.model.LoginModel;
 import com.nabla.wapp.client.model.Model;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.server.ILoginDialogUi;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
@@ -37,7 +37,7 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class ReLoginDialogUi extends BindedTopDisplay<ModalDialog> implements ILoginDialogUi {
+public class ReLoginDialogUi extends BindedModalDialog implements ILoginDialogUi {
 
 	interface Binder extends UiBinder<ModalDialog, ReLoginDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);

@@ -69,7 +69,6 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 		registerSlot(getDisplay().getAvailableCategoryDropSlots(), onAvailableCategoryDrop);
 	}
 
-
 	private AvailableCategoryDropSlot onAvailableCategoryDrop = new AvailableCategoryDropSlot() {
 		@Override
 		public void invoke(final List<CompanyFixedAssetCategoryRecord> records) {

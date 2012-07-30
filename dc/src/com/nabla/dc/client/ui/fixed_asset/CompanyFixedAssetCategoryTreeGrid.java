@@ -26,7 +26,10 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.model.data.IValueStore;
 import com.nabla.wapp.client.model.data.ValueStoreWrapper;
+import com.nabla.wapp.client.ui.form.Form;
+import com.nabla.wapp.client.ui.form.Form.Operations;
 import com.nabla.wapp.client.ui.form.TreeGridItem;
+import com.nabla.wapp.shared.slot.ISlot;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
@@ -35,6 +38,8 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.grid.events.CellSavedEvent;
 import com.smartgwt.client.widgets.grid.events.CellSavedHandler;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
 /**
@@ -54,24 +59,35 @@ public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem implements I
 	public CompanyFixedAssetCategoryTreeGrid() {
 		super();
 		setCanEdit(true);
-		setModelType(TreeModelType.CHILDREN);
+		setModelType(TreeModelType.PARENT);
+		setLoadDataOnDemand(false);	// load all nodes initially
 		setColSpan(1);
 		setShowHeader(false);
 		setShowConnectors(true);
 		setShowDropIcons(true);
 		setShowSelectedStyle(true);
-		setLoadDataOnDemand(false);
 		setCanAcceptDroppedRecords(true);
 		setCanDragRecordsOut(true);
 		setCanDropOnLeaves(false);
 		setCanReorderRecords(true);
+		this.addDataArrivedHandler(new DataArrivedHandler() {
+			@Override
+			public void onDataArrived(@SuppressWarnings("unused") DataArrivedEvent event) {
+				getTree().openAll();
+			}
+		});
 	}
 
 	public void postCreate(final String activeColumnName) {
 		final CanvasItem wrapper = getCanvasItem();
 		Assert.notNull(wrapper);
-		// wrap value in a record otherwise I get a javascript error
-		wrapper.storeValue(new ValueStoreWrapper<CompanyFixedAssetCategoryTree>(CompanyFixedAssetCategoryTreeGrid.this));
+		final Form form = (Form)wrapper.getForm();
+		form.getSuccessSlots(Operations.VALIDATE).connect(new ISlot() {
+			@Override
+			public void invoke() {
+				wrapper.storeValue(new ValueStoreWrapper<CompanyFixedAssetCategoryTree>(CompanyFixedAssetCategoryTreeGrid.this));
+			}
+		});
 
 		final ListGridField field = getField(activeColumnName);
 		field.setCellFormatter(this);
@@ -81,7 +97,7 @@ public class CompanyFixedAssetCategoryTreeGrid extends TreeGridItem implements I
 	@Override
 	public CompanyFixedAssetCategoryTree get() {
 		final CompanyFixedAssetCategoryTree ret = new CompanyFixedAssetCategoryTree();
-		for (ListGridRecord r : getRecords()) {
+		for (TreeNode r : getData().getAllNodes()) {
 			final CompanyFixedAssetCategoryRecord child = new CompanyFixedAssetCategoryRecord(r);
 			if (child.isFolder())
 				continue;

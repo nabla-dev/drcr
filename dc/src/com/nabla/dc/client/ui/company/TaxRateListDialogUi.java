@@ -22,7 +22,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.company.TaxRateFormModel;
 import com.nabla.dc.client.model.company.TaxRateListModel;
 import com.nabla.dc.client.presenter.company.TaxRateListDialog;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.ListGridItem;
 import com.nabla.wapp.shared.slot.ISlotManager;
@@ -31,7 +31,7 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class TaxRateListDialogUi extends BindedTopDisplay<ModalDialog> implements TaxRateListDialog.IDisplay {
+public class TaxRateListDialogUi extends BindedModalDialog implements TaxRateListDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, TaxRateListDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

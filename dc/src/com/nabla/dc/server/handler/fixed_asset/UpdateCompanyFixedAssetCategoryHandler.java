@@ -16,11 +16,17 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.nabla.dc.shared.command.fixed_asset.UpdateCompanyFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
+import com.nabla.wapp.server.database.ConnectionTransactionGuard;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
@@ -30,24 +36,41 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class UpdateCompanyFixedAssetCategoryHandler extends AbstractHandler<UpdateCompanyFixedAssetCategory, StringResult> {
 
-//	private final SqlInsert<UpdateCompanyFixedAssetCategory> sql = new SqlInsert<UpdateCompanyFixedAssetCategory>(UpdateCompanyFixedAssetCategory.class, SqlInsertOptions.OVERWRITE);
-
+	public UpdateCompanyFixedAssetCategoryHandler() {
+		super(true);
+	}
 
 	@Override
 	public StringResult execute(final UpdateCompanyFixedAssetCategory cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-/*		final ImportErrorManager errors = new ImportErrorManager(writeDb, cmd.getBatchId());
+		final Connection conn = ctx.getWriteConnection();
+		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 		try {
-			final JsonResponse json = new JsonResponse();
-			json.put(IImportAccount.SUCCESS, add(cmd, errors, ctx));
-			return json.toStringResult();
-		} catch (Throwable e) {
-			if (log.isErrorEnabled())
-				log.error("failed to parse accounts from CSV data", e);
-			Util.throwInternalErrorException(e);
+			Database.executeUpdate(conn,
+"UPDATE fa_company_asset_category SET fa_fs_category_id=NULL WHERE company_id=?;",
+					cmd.getCompanyId());
+			final PreparedStatement stmt = conn.prepareStatement(
+"INSERT INTO fa_company_asset_category (company_id,fa_asset_category_id,fa_fs_category_id,active) VALUES(?,?,?,?)" +
+" ON DUPLICATE KEY UPDATE fa_fs_category_id=VALUES(fa_fs_category_id),active=VALUES(active);");
+			try {
+				stmt.setInt(1, cmd.getCompanyId());
+				for (Map.Entry<Integer, Map<Integer,Boolean>> fsCategory : cmd.getCategories().entrySet()) {
+					stmt.setInt(3, fsCategory.getKey());
+					for (Map.Entry<Integer,Boolean> assetCategory : fsCategory.getValue().entrySet()) {
+						stmt.setInt(2, assetCategory.getKey());
+						stmt.setBoolean(4, assetCategory.getValue());
+						stmt.addBatch();
+					}
+				}
+				if (!Database.isBatchCompleted(stmt.executeBatch()))
+					Util.throwInternalErrorException("failed to save company asset categories");
+			} finally {
+				Database.close(stmt);
+			}
+			guard.setSuccess();
+			return null;
 		} finally {
-			errors.close();
-		}*/
-		return null;
+			guard.close();
+		}
 	}
 
 }

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 
 /**
@@ -28,33 +29,39 @@ import com.nabla.wapp.client.general.LoggerFactory;
  */
 public class ModalDialog extends Dialog {
 
-	private static final Logger					log = LoggerFactory.getLog(ModalDialog.class);
+	private static final Logger						log = LoggerFactory.getLog(ModalDialog.class);
 	private static final Map<Class, ModalDialog>	openedDialogs = new HashMap<Class, ModalDialog>();
+	private Class									displayClass;
 
 	public ModalDialog() {
 		super();
 		this.setShowShadow(true);
-	//	this.setAutoSize(true);
 		this.setCanDragReposition(true);
 		this.setCanDragResize(true);
 		this.setAutoCenter(true);
 		this.setIsModal(true);
 	}
 
+	public void setDisplayClass(final Class displayClass) {
+		this.displayClass = displayClass;
+	}
+
 	@Override
 	public void show(){
-		final Class clazz = this.getClass();
-		if (openedDialogs.containsKey(clazz)) {
-			log.warning("stopped opening dialog box '" + this.getTitle() + "' - class = '" + clazz.getName() + "'");
+		Assert.notNull(displayClass, "have you forgotten to set display class?");
+
+		if (openedDialogs.containsKey(displayClass)) {
+			log.warning("stopped opening dialog box '" + this.getTitle() + "' - display class = '" + displayClass.getName() + "'");
 		} else {
 			super.show();
-			openedDialogs.put(clazz, this);
+			openedDialogs.put(displayClass, this);
+			log.fine("opening dialog box '" + this.getTitle() + "' - display class = '" + displayClass.getName() + "'");
 		}
 	}
 
 	@Override
 	public void hide() {
-		openedDialogs.remove(this.getClass());
+		openedDialogs.remove(displayClass);
 		super.hide();
 	}
 
