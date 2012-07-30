@@ -33,7 +33,7 @@
 				<wnd:ListGridField name="{model.fields.cc}" width="150"><ui:msg>CC</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.dep}" width="150"><ui:msg>DEP</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.bs}" width="50" canEdit="true"><ui:msg>BS</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.active}" width="50" canEdit="true"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50" canEdit="true"><ui:msg>Visible</ui:msg></wnd:ListGridField>
 				<wnd:Menu>
 					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>				
 					<wnd:MenuItemSeparator/>

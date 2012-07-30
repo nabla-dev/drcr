@@ -20,6 +20,7 @@ import com.nabla.dc.client.model.company.AddCompanyRecord;
 import com.nabla.dc.client.ui.company.AddCompanyDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
+import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
 /**
@@ -36,8 +37,13 @@ public class AddCompanyDialog extends AbstractTopPresenter<AddCompanyDialog.IDis
 		super(ui);
 	}
 
-	public AddCompanyDialog() {
-		super(new AddCompanyDialogUi());
+	public AddCompanyDialog(final IDisplay ui, final ISlot1<AddCompanyRecord> successSlot) {
+		this(ui);
+		getSuccessSlots().connect(successSlot);
+	}
+
+	public AddCompanyDialog(final ISlot1<AddCompanyRecord> successSlot) {
+		this(new AddCompanyDialogUi(), successSlot);
 	}
 
 	public ISlotManager1<AddCompanyRecord> getSuccessSlots() {

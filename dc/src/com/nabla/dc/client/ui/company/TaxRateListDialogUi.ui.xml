@@ -16,7 +16,7 @@
  			<form:ListGridItem ui:field="list" model="{model}" title="Select tax rates supported by company below" colSpan="2" width="250" height="300" editByCell="true" selectionType="SINGLE" editEvent="CLICK" viewStateReference="company_tax_rate">
 				<ui:attribute name="title" description="Select tax rates message"/>
 				<wnd:ListGridField name="{model.fields.name}" width="150" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.active}" width="80" canEdit="true"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="80" canEdit="true"><ui:msg>Visible</ui:msg></wnd:ListGridField>
 			</form:ListGridItem>
 			<form:ButtonBar>
 				<wnd:CancelButton><ui:msg>*Close</ui:msg></wnd:CancelButton>

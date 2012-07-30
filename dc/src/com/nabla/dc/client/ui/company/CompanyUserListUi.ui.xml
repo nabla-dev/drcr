@@ -22,7 +22,7 @@
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="company_user_list" model="{model}" editByCell="true" canSort="true" editCommand="{cmd.edit}">
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.active}" width="50" canEdit="true"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50" canEdit="true"><ui:msg>Include</ui:msg></wnd:ListGridField>
 				<wnd:ListGridToolbar field="{model.fields.name}">
 					<wnd:ListGridToolbarButton icon="privilege_small.png" command="{cmd.editRoles}"><ui:msg>Edit roles</ui:msg></wnd:ListGridToolbarButton>
 				</wnd:ListGridToolbar>				

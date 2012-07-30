@@ -14,12 +14,12 @@
 * the License.
 *
 */
-package com.nabla.dc.client.presenter.company;
+package com.nabla.dc.client.presenter;
 
+import com.nabla.dc.client.ui.ImportSettingsWizardCompletedPageUi;
+import com.nabla.dc.client.ui.ImportSettingsWizardFilePageUi;
+import com.nabla.dc.client.ui.ImportSettingsWizardUi;
 import com.nabla.dc.client.ui.ImportWizardErrorPageUi;
-import com.nabla.dc.client.ui.company.ImportAccountWizardCompletedPageUi;
-import com.nabla.dc.client.ui.company.ImportAccountWizardFilePageUi;
-import com.nabla.dc.client.ui.company.ImportAccountWizardUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizard.IDisplay> {
+public class ImportSettingsWizard extends AbstractTopPresenter<ImportSettingsWizard.IDisplay> {
 
 	public interface IDisplay extends IWizardDisplay {}
 
@@ -47,20 +47,20 @@ public class ImportAccountWizard extends AbstractTopPresenter<ImportAccountWizar
 
 	private final Signal				sigSuccess = new Signal();
 	private final IUploadFilePage		uploadFilePage;
-	private final ICompletedPage		completedPage = new ImportAccountWizardCompletedPageUi();
+	private final ICompletedPage		completedPage = new ImportSettingsWizardCompletedPageUi();
 
-	public ImportAccountWizard(final IDisplay ui, final Integer companyId) {
+	public ImportSettingsWizard(final IDisplay ui) {
 		super(ui);
-		uploadFilePage = new ImportAccountWizardFilePageUi(companyId, onFileUploaded);
+		uploadFilePage = new ImportSettingsWizardFilePageUi(onFileUploaded);
 	}
 
-	public ImportAccountWizard(final IDisplay ui, final Integer companyId, final ISlot successSlot) {
-		this(ui, companyId);
+	public ImportSettingsWizard(final IDisplay ui, final ISlot successSlot) {
+		this(ui);
 		sigSuccess.connect(successSlot);
 	}
 
-	public ImportAccountWizard(final Integer companyId, final ISlot successSlot) {
-		this(new ImportAccountWizardUi(), companyId, successSlot);
+	public ImportSettingsWizard(final ISlot successSlot) {
+		this(new ImportSettingsWizardUi(), successSlot);
 	}
 
 	public ISlotManager getSuccessSlots() {

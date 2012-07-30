@@ -72,4 +72,6 @@ public interface IPrivileges extends IRolePrivileges {
 	static final String FA_ASSET_EDIT = "fa_asset_edit";
 
 	static final String COMPANY_ASSET_CATEGORY_EDIT = "company_asset_category_edit";
+
+	static final String IMPORT_SETTINGS = "import_settings";
 }

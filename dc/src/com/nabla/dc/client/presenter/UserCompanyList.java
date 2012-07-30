@@ -17,8 +17,6 @@
 package com.nabla.dc.client.presenter;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.nabla.dc.client.model.UserCompanyRecord;
 import com.nabla.dc.client.presenter.company.Company;
 import com.nabla.dc.client.presenter.company.CompanyList;
@@ -56,6 +54,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.TAX_RATE_VIEW) HideableCommand taxCodeList();
 		@IRequiredRole(IPrivileges.FA_ASSET_CATEGORY_VIEW) HideableCommand fixedAssetCategoryList();
 		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand financialStatementCategoryList();
+		@IRequiredRole(IPrivileges.IMPORT_SETTINGS) HideableCommand importSettings();
 		// OPTIONS
 		Command changePassword();
 		@IRequiredRole(IPrivileges.USER_VIEW) HideableCommand userList();
@@ -94,16 +93,10 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.taxCodeList(), onTaxRateList);
 		registerSlot(cmd.fixedAssetCategoryList(), onFixedAssetCategoryList);
 		registerSlot(cmd.financialStatementCategoryList(), onFinancialStatementCategoryList);
+		registerSlot(cmd.importSettings(), onImportSettings);
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
 //		printerManager.bind(cmd, this, BuiltInReports.ACCOUNT_LIST);
-
-		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-			@Override
-			public void execute() {
-				cmd.companyList().fire();
-			}
-		});
 	}
 
 	private final ISlot onReload = new ISlot() {
@@ -206,6 +199,18 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 				@Override
 				public void onSuccess() {
 					tabs.addTab(new FinancialStatementCategoryList());
+				}
+			});
+		}
+	};
+
+	private final ISlot onImportSettings = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					new ImportSettingsWizard(onReload).revealDisplay();
 				}
 			});
 		}

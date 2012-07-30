@@ -114,9 +114,7 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			final AddCompanyDialog dlg = new AddCompanyDialog();
-			dlg.getSuccessSlots().connect(onRecordAdded);
-			dlg.revealDisplay();
+			new AddCompanyDialog(onRecordAdded).revealDisplay();
 		}
 	};
 

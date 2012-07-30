@@ -25,7 +25,7 @@
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="fa_bs_category_list" model="{model}" showCheckbox="true" editByCell="true" canSort="true" editCommand="{cmd.edit}" addCommand="{cmd.add}">
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Visible</ui:msg></wnd:ListGridField>
 				<wnd:Menu>
 					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>
 					<wnd:MenuItemSeparator/>

@@ -26,7 +26,7 @@
 			<wnd:ListGrid ui:field="list" viewStateReference="fa_asset_category_list" model="{model}" editByCell="true" showCheckbox="true" canSort="true" editCommand="{cmd.edit}" addCommand="{cmd.add}">
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.type}" width="150"><ui:msg>Type</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Visible</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.minPeriod}" width="100" canGroupBy="false"><ui:msg>Min dep period</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.maxPeriod}" width="100" canGroupBy="false"><ui:msg>Max dep period</ui:msg></wnd:ListGridField>
 				<wnd:Menu>

@@ -14,10 +14,10 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.company;
+package com.nabla.dc.client.model;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.dc.shared.model.company.IImportAccount;
+import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
@@ -27,29 +27,25 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class ImportAccountRecord extends BasicRecord implements IImportAccount {
+public class ImportSettingsRecord extends BasicRecord implements IImportSettings {
 
-	public static final IRecordFactory<ImportAccountRecord>	factory = new IRecordFactory<ImportAccountRecord>() {
+	public static final IRecordFactory<ImportSettingsRecord>	factory = new IRecordFactory<ImportSettingsRecord>() {
 		@Override
-		public ImportAccountRecord get(final JavaScriptObject data) {
-			return new ImportAccountRecord(data);
+		public ImportSettingsRecord get(final JavaScriptObject data) {
+			return new ImportSettingsRecord(data);
 		}
 	};
 
-	public ImportAccountRecord(final Record impl) {
+	public ImportSettingsRecord(final Record impl) {
 		super(impl);
 	}
 
-	public ImportAccountRecord(final JavaScriptObject js) {
+	public ImportSettingsRecord(final JavaScriptObject js) {
 		super(js);
 	}
 
 	public Integer getFileId() {
 		return getAttributeAsInt(FILE);
-	}
-
-	public Boolean isRowHeader() {
-		return getAttributeAsBoolean(ROW_HEADER);
 	}
 
 	public SqlInsertOptions getOverwrite() {

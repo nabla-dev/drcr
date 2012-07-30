@@ -15,7 +15,7 @@
 			<form:Control name="{model.fields.type}"><ui:msg>*Type</ui:msg></form:Control>
 			<form:Control name="{model.fields.minPeriod}"><ui:msg>M*in dep period</ui:msg></form:Control>
 			<form:Control name="{model.fields.maxPeriod}"><ui:msg>Ma*x dep period</ui:msg></form:Control>
-			<form:Control name="{model.fields.active}"><ui:msg>*Active</ui:msg></form:Control>
+			<form:Control name="{model.fields.active}"><ui:msg>*Visible</ui:msg></form:Control>
 			<form:ButtonBar>
 				<wnd:SubmitButton><ui:msg>*OK</ui:msg></wnd:SubmitButton>
 				<wnd:CancelButton><ui:msg>*Cancel</ui:msg></wnd:CancelButton>

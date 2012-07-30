@@ -25,7 +25,7 @@
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="company_list" model="{model}" selectionType="SINGLE" editByCell="true" canSort="true" editCommand="{cmd.edit}">
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Active</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.active}" width="50"><ui:msg>Visible</ui:msg></wnd:ListGridField>
 				<wnd:ListGridToolbar field="{model.fields.name}">
 					<wnd:ListGridToolbarMenu>
 						<wnd:MenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:MenuItem>

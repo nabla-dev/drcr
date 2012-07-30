@@ -34,8 +34,6 @@ import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.DSOperationType;
-import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
-import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 
 /**
  * @author nabla
@@ -57,13 +55,6 @@ public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.
 		this.create(uiBinder, this);
 		if (Application.getInstance().getUserSessionManager().isRoot())
 			list.setCellCSSTextFormatter(new DeletedRecordGridFormatter());
-		list.addDataArrivedHandler(new DataArrivedHandler() {
-			@Override
-			public void onDataArrived(@SuppressWarnings("unused") DataArrivedEvent event) {
-				list.selectRecord(0);
-				cmd.editAssetCategories().fire();
-			}
-		});
 	}
 
 	@Override
