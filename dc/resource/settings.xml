@@ -1,77 +1,3404 @@
-<dc>
-<settings>
+<dc-settings>
 	<privileges>
-		<privilege></privilege>
+		<privilege>CMR Estates</privilege>
+		<privilege>CMR Leisure</privilege>
 	</privileges>
 	<roles>
 		<role>
-			<name></name>
+			<name>Group Accountant</name>
 			<definition>
-				<role></role>
+				<role>settings_rw</role>
+				<role>company_rw</role>
+			</definition>
+		</role>
+		<role>
+			<name>Accountant</name>
+			<definition>
+				<role>accounts_rw</role>
+			</definition>
+		</role>
+		<role>
+			<name>Accounts Assistant</name>
+			<definition>
+				<role>accounts_rw</role>
+			</definition>
+		</role>
+		<role>
+			<name>Sales Manager</name>
+			<definition>
+				<role>guest</role>
 			</definition>
 		</role>
 	</roles>
 	<users>
 		<user>
-			<name></name>
-			<password></password>
-			<active></active>
-			<definition>
-				<role></role>
-			</definition>
+			<name>admin</name>
+			<password>password</password>
+			<active>true</active>
+			<roles>
+				<role>administrator</role>
+			</roles>
+		</user>
+		<user>
+			<name>fnorais</name>
+			<password>inabla5</password>
+			<active>true</active>
+			<roles>
+				<role>administrator</role>
+			</roles>
+		</user>
+		<user>
+			<name>lreid</name>
+			<password>password</password>
+			<active>true</active>
+			<roles>
+				<role>Group Accountant</role>
+			</roles>
+		</user>
+		<user>
+			<name>jnicholls</name>
+			<password>password</password>
 		</user>
 	</users>
 	<asset_categories>
 		<asset_category>
-			<name></name>
-			<visible></visible>
-			<type></type>
-			<min_depreciation></min_depreciation>
-			<max_depreciation></max_depreciation>
+			<name>Commercial Vehicles (20%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>60</min_depreciation_period>
+			<max_depreciation_period>60</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Computers (20%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>60</min_depreciation_period>
+			<max_depreciation_period>60</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Fixtures & Fittings (15%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>80</min_depreciation_period>
+			<max_depreciation_period>80</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Furniture, Fixtures & Equipment (15%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>80</min_depreciation_period>
+			<max_depreciation_period>80</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Goodwill (10 years)</name>
+			<visible>true</visible>
+			<type>INTANGIBLE</type>
+			<min_depreciation_period>120</min_depreciation_period>
+			<max_depreciation_period>120</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Leasehold Property (68 months)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>68</min_depreciation_period>
+			<max_depreciation_period>68</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Motor Vehicles (20%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>60</min_depreciation_period>
+			<max_depreciation_period>60</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Office Equipment (15%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>80</min_depreciation_period>
+			<max_depreciation_period>80</max_depreciation_period>
+		</asset_category>
+		<asset_category>
+			<name>Plant & Machinery (20%)</name>
+			<visible>true</visible>
+			<type>TANGIBLE</type>
+			<min_depreciation_period>60</min_depreciation_period>
+			<max_depreciation_period>60</max_depreciation_period>
 		</asset_category>
 	</asset_categories>
 	<financial_statement_categories>
 		<financial_statement_category>
-			<name></name>
-			<visible></visible>
+			<name>Fixtures, Fittings & Equipment</name>
+			<visible>true</visible>
+		</financial_statement_category>
+		<financial_statement_category>
+			<name>Furniture, Fixtures & Equipment</name>
+			<visible>true</visible>
+		</financial_statement_category>
+		<financial_statement_category>
+			<name>Leasehold Property</name>
+			<visible>true</visible>
+		</financial_statement_category>
+		<financial_statement_category>
+			<name>Plant & Machinery</name>
+			<visible>true</visible>
+		</financial_statement_category>
+		<financial_statement_category>
+			<name>Goodwill</name>
+			<visible>true</visible>
 		</financial_statement_category>
 	</financial_statement_categories>
 	<tax_rates>
 		<tax_rate>
 			<name></name>
-			<visible></visible>
+			<visible>true</visible>
 			<rate></rate>
 		</tax_rate>
 	</tax_rates>
 	<companies>
 		<company>
-			<name></name>
-			<visible></visible>
-			<financial_year></financial_year>
-			<start_date></start_date>
-			<financial_statement_categories>
-				<financial_statement_category>
-					<name></name>
-					<asset_category>
-						<name></name>
-						<visible></visible>
-					</asset_category>
-				</financial_statement_category>
-			</financial_statement_categories>
+			<name>CMR Estates Ltd</name>
+			<visible>true</visible>
+			<financial_year>2012</financial_year>
+			<start_date>01/07/2011</start_date>
+			<asset_categories>
+				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Furniture, Fixtures & Equipment (15%)</asset_category>
+				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Computers (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</asset_category>
+			</asset_categories>
 			<tax_rates>
 				<tax_rate></tax_rate>
 			<tax_rates>
 			<accounts>
-				<account>
-					<code></code>
-					<name></name>
-					<cost_centre></cost_centre>
-					<department></department>
-					<balance_sheet></balance_sheet>
-					<visible></visible>
-				</account>
+<account>
+<code>0010</code>
+<name>SHARE CAPITAL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0020</code>
+<name>DIVIDEND PAYABLE</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0030</code>
+<name>PROFIT & LOSS ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0050</code>
+<name>REVALUATION RESERVE</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0080</code>
+<name>DEFERRED TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0100</code>
+<name>CORPORATION TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0130</code>
+<name>VAT OUTPUTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0135</code>
+<name>VAT INPUTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0136</code>
+<name>VAT SUSPENSE</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0137</code>
+<name>PAYE/ NIC CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500</code>
+<name>F/ HOLD PROP</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/001</code>
+<name>F/ HOLD PROP UNIT 1-4 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/002</code>
+<name>F/ HOLD PROP UNIT 2 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/003</code>
+<name>F/ HOLD PROP UNIT 3 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/004</code>
+<name>F/ HOLD PROP UNIT 4 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/005</code>
+<name>F/ HOLD PROP UNIT 5-8 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/006</code>
+<name>F/ HOLD PROP UNIT 6 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/007</code>
+<name>F/ HOLD PROP UNIT 7 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/008</code>
+<name>F/ HOLD PROP UNIT 8 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/009</code>
+<name>F/ HOLD PROP UNIT 9-12 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/010</code>
+<name>F/ HOLD PROP UNIT 10 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/011</code>
+<name>F/ HOLD PROP UNIT 11 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/012</code>
+<name>F/ HOLD PROP UNIT 12 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/013</code>
+<name>F/ HOLD PROP UNIT13-15 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/014</code>
+<name>F/ HOLD PROP UNIT 14 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/015</code>
+<name>F/ HOLD PROP UNIT 15 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/016</code>
+<name>F/ HOLD PROP UNIT 16 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/017</code>
+<name>F/ HOLD PROP UNIT 17 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/018</code>
+<name>F/ HOLD PROP UNIT 18 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/019</code>
+<name>F/ HOLD PROP UNIT 17-19 P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/031</code>
+<name>F/HOLD PROP COAL YARD P/E</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/032</code>
+<name>F/HOLD PROP RADLEY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/033</code>
+<name>F/HOLD PROP LOWESTOFT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/034</code>
+<name>F/HOLD PROP 17 WHITELADIES RD</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/035</code>
+<name>F/HOLD PROP EMERSON GREEN.</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/036</code>
+<name>F/HOLD PROP GRASSMOOR COALYARD</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0500/037</code>
+<name>F/HOLD PROP TILMANSTONE</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0510</code>
+<name>PLANT & MACHINERY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0515</code>
+<name>PLANT ACCUM DEPRN</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0520</code>
+<name>COMPUTERS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0525</code>
+<name>COMPUTERS ACCUM DEPRN</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0530</code>
+<name>OFFICE EQUIPMENT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0535</code>
+<name>OFFICE EQUIPMENT ACCUM DEPRN</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0540</code>
+<name>ASSETS IN COURSE OF CONSTRUCTION</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0550</code>
+<name>MOTOR VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0555</code>
+<name>MOTOR VEHICLES ACCUM DEPRN</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1000</code>
+<name>SUNDRY DEBTORS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1100</code>
+<name>DEBTORS CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1105</code>
+<name>BAD DEBT PROVISION</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1200</code>
+<name>INVESTMENTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1250</code>
+<name>PREPAYMENTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1310</code>
+<name>BARCLAYS BANK CURRENT A/C</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1400</code>
+<name>SUSPENSE ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1450</code>
+<name>SUNDRY CREDITORS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1490</code>
+<name>BARCLAYS BANK LOAN ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1500</code>
+<name>CREDITORS CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1550</code>
+<name>ACCRUALS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1700</code>
+<name>INTERCOMPANY E.H.B</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1701</code>
+<name>INTERCOMPANY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1702</code>
+<name>BROOK OFFICE PARK (2001) LTD</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1703</code>
+<name>CURRENT ACCOUNT E & R</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1704</code>
+<name>RUDRUM HOLDINGS CURRENT ACC</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1705</code>
+<name>CMR LEISURE CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1706</code>
+<name>WAL CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1707</code>
+<name>CMR RETAIL CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1708</code>
+<name>CORRALS CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1800</code>
+<name>FINANCE LEASE LEXUS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3000</code>
+<name>RENT RECEIVABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/001</code>
+<name>RENT RECV UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/002</code>
+<name>RENT RECV UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/003</code>
+<name>RENT RECV UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/004</code>
+<name>RENT RECV UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/005</code>
+<name>RENT RECV UNIT 5-8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/006</code>
+<name>RENT RECV UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/007</code>
+<name>RENT RECV UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/008</code>
+<name>RENT RECV UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/009</code>
+<name>RENT RECV UNIT 9-12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/010</code>
+<name>RENT RECV UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/011</code>
+<name>RENT RECV UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/012</code>
+<name>RENT RECV UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/013</code>
+<name>RENT RECV UNIT 13-15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/014</code>
+<name>RENT RECV UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/015</code>
+<name>RENT RECV UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/016</code>
+<name>RENT RECV UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/017</code>
+<name>RENT RECV UNIT 17 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/018</code>
+<name>RENT RECV UNIT 18 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/019</code>
+<name>RENT RECV UNIT 19 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/031</code>
+<name>RENT RECV COAL DEPOT P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/032</code>
+<name>RENT RECV RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/033</code>
+<name>RENT RECV LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/034</code>
+<name>RENT RECV 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3000/037</code>
+<name>RENT RCV TILMANSTONE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3010</code>
+<name>SALES SOUTHERN SYRINGE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3011</code>
+<name>SALES HAMPTON PRINTING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500</code>
+<name>SERVICE CHARGE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/001</code>
+<name>SERV CHGE UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/002</code>
+<name>SERV CHGE UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/003</code>
+<name>SERV CHGE UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/004</code>
+<name>SERV CHGE UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/005</code>
+<name>SERV CHGE UNIT 5-8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/006</code>
+<name>SERV CHGE UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/007</code>
+<name>SERV CHGE UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/008</code>
+<name>SERV CHGE UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/009</code>
+<name>SERV CHGE UNIT 9-12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/010</code>
+<name>SERV CHGE UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/011</code>
+<name>SERV CHGE UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/012</code>
+<name>SERV CHGE UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/013</code>
+<name>SERV CHGE UNIT 13-15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/014</code>
+<name>SERV CHGE UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/015</code>
+<name>SERV CHGE UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/016</code>
+<name>SERV CHGE UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/017</code>
+<name>SERV CHGE UNIT 17 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/018</code>
+<name>SERV CHGE UNIT 18 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/019</code>
+<name>SERV CHGE UNIT 19 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/031</code>
+<name>SERV GHGE COAL DEPOT P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/032</code>
+<name>SERV GHGE RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/033</code>
+<name>SERV GHGE LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/034</code>
+<name>SERV GHGE 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3500/037</code>
+<name>SERV CHGE TILMANSTONE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3501</code>
+<name>SERVICE SUSPENSE ACCOUNT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3502</code>
+<name>SERVICE CHARGE COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3503</code>
+<name>NON CHARGEABLE MAINTENANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>3600</code>
+<name>OTHER INCOME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4000</code>
+<name>C.O.S.INVESTMENT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4010</code>
+<name>C.O.S SOUTHERN SYRINGE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4011</code>
+<name>C.O.S/HAMPTON</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4012</code>
+<name>COS  EMERSON GREEN BROOK OFFICE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000/003</code>
+<name>GENERAL RATES UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000/005</code>
+<name>GENERAL RATES UNIT 5-8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000/013</code>
+<name>GENERAL RATES UNIT 13-15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000/019</code>
+<name>GENERAL RATES UNIT 19 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000/034</code>
+<name>GENERAL RATES - 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8001</code>
+<name>WATER RATES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/001</code>
+<name>BLDG REPAIRS 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/002</code>
+<name>BLDG REPAIRS 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/003</code>
+<name>BLDG REPAIRS 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/004</code>
+<name>BLDG REPAIRS 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/005</code>
+<name>BLDG REPAIRS 5 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/009</code>
+<name>BLDG REPAIRS 9 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/013</code>
+<name>BLDG REPAIRS 13 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030/019</code>
+<name>BLDG REPAIRS 19 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8170/003</code>
+<name>ELECTRICITY UNIT 3 P/ERISSEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8170/005</code>
+<name>ELECTRICITY UNIT 5-8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8170/09</code>
+<name>ELECTRICITY UNIT 9-12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8170/013</code>
+<name>ELECTRICITY UNIT 13 P/ERISSEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8170/016</code>
+<name>ELECTRICITY UNIT 16 P/ERISSEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8180/005</code>
+<name>WATER UNIT 5 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8180/009</code>
+<name>WATER UNIT 9 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8513</code>
+<name>PENSIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8520</code>
+<name>SALARIES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8521</code>
+<name>EMPLOYERS N.I</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8522</code>
+<name>N.I.DUE ON BENEFITS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8531</code>
+<name>CONSULTANCY FEES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8540</code>
+<name>TRAVEL & HOTEL COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8551</code>
+<name>ENTERTAINING DISALLOWABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8560</code>
+<name>MOTOR VEHICLE PETROL & OIL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8561</code>
+<name>MOTOR VEHICLE MAINTENANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8570</code>
+<name>MOTOR VEHICLE LICENCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8571</code>
+<name>MOTOR VEHICLE INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670</code>
+<name>INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/001</code>
+<name>INSURANCE UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/002</code>
+<name>INSURANCE UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/003</code>
+<name>INSURANCE UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/004</code>
+<name>INSURANCE UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/005</code>
+<name>INSURANCE UNIT 5 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/006</code>
+<name>INSURANCE UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/007</code>
+<name>INSURANCE UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/008</code>
+<name>INSURANCE UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/009</code>
+<name>INSURANCE UNIT 9 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/010</code>
+<name>INSURANCE UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/011</code>
+<name>INSURANCE UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/012</code>
+<name>INSURANCE UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/013</code>
+<name>INSURANCE UNIT 13 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/014</code>
+<name>INSURANCE UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/015</code>
+<name>INSURANCE UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/016</code>
+<name>INSURANCE UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/017</code>
+<name>INSURANCE UNIT 17 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/018</code>
+<name>INSURANCE UNIT 18 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/019</code>
+<name>INSURANCE UNIT 19 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/031</code>
+<name>INSURANCE COAL DEPOT P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/032</code>
+<name>INSURANCE RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/033</code>
+<name>INSURANCE LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8670/034</code>
+<name>INSURANCE 17 W/LADIES RD.</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8671</code>
+<name>GROUP LIFE INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8672</code>
+<name>PRIVATE HEALTH SCHEME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680</code>
+<name>TELEPHONE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/001</code>
+<name>TELEPHONE UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/002</code>
+<name>TELEPHONE UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/003</code>
+<name>TELEPHONE UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/004</code>
+<name>TELEPHONE UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/005</code>
+<name>TELEPHONE UNIT 5 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/006</code>
+<name>TELEPHONE UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/007</code>
+<name>TELEPHONE UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/008</code>
+<name>TELEPHONE UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/009</code>
+<name>TELEPHONE UNIT 9 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/010</code>
+<name>TELEPHONE UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/011</code>
+<name>TELEPHONE UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/012</code>
+<name>TELEPHONE UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/013</code>
+<name>TELEPHONE UNIT 13 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/014</code>
+<name>TELEPHONE UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/015</code>
+<name>TELEPHONE UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/016</code>
+<name>TELEPHONE UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/031</code>
+<name>TELEPHONE COAL YEAR P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/032</code>
+<name>TELEPHONE RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/033</code>
+<name>TELEPHONE LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8680/034</code>
+<name>TELEPHONE 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8690</code>
+<name>PRINTING & STATIONERY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8780</code>
+<name>GIFTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8790</code>
+<name>AUDIT COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800</code>
+<name>LEGAL & PROFESSIONAL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/001</code>
+<name>LEGAL/ PROF UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/002</code>
+<name>LEGAL/ PROF UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/003</code>
+<name>LEGAL/ PROF UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/004</code>
+<name>LEGAL/ PROF UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/005</code>
+<name>LEGAL/ PROF UNIT 5-8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/006</code>
+<name>LEGAL/ PROF UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/007</code>
+<name>LEGAL/ PROF UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/008</code>
+<name>LEGAL/ PROF UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/009</code>
+<name>LEGAL/ PROF UNIT 9-12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/010</code>
+<name>LEGAL/ PROF UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/011</code>
+<name>LEGAL/ PROF UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/012</code>
+<name>LEGAL/ PROF UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/013</code>
+<name>LEGAL/ PROF UNIT 13-15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/014</code>
+<name>LEGAL/ PROF UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/015</code>
+<name>LEGAL/ PROF UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/016</code>
+<name>LEGAL/ PROF UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/017</code>
+<name>LEGAL/ PROF UNIT 17 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/018</code>
+<name>LEGAL/ PROF UNIT 18 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/019</code>
+<name>LEGAL/ PROF UNIT 19 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/022</code>
+<name>LEGAL/ PROF UNIT 22 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/031</code>
+<name>LEGAL/PROF COAL YARD P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/032</code>
+<name>LEGAL/PROF RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/033</code>
+<name>LEGAL/PROF LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/034</code>
+<name>LEGAL/PROF 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/035</code>
+<name>LEGAL/PROF EMERSON</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8800/036</code>
+<name>LEGAL & PROF TILMANSTONE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8801</code>
+<name>PORTBURY DEVELOPMENT CLAIM</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8802</code>
+<name>CREDIT CONTROL COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8850</code>
+<name>MANAGEMENT CHARGES PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871</code>
+<name>MANAGEMENT CHARGES RECV</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/001</code>
+<name>MANGT CHGS RECV UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/002</code>
+<name>MANGT CHGS RECV UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/003</code>
+<name>MANGT CHGS RECV UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/004</code>
+<name>MANGT CHGS RECV UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/005</code>
+<name>MANGT CHGS RECV UNIT 5 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/006</code>
+<name>MANGT CHGS RECV UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/007</code>
+<name>MANGT CHGS RECV UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/008</code>
+<name>MANGT CHGS RECV UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/009</code>
+<name>MANGT CHGS RECV UNIT 9-12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/010</code>
+<name>MANGT CHGS RECV UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/011</code>
+<name>MANGT CHGS RECV UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/012</code>
+<name>MANGT CHGS RECV UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/013</code>
+<name>MANGT CHGS RECV UNIT 13-15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/014</code>
+<name>MANGT CHGS RECV UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/015</code>
+<name>MANGT CHGS RECV UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/016</code>
+<name>MANGT CHGS RECV UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/031</code>
+<name>MANGT CHGS RECV COAL YARD P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/032</code>
+<name>MANGT CHGS RECV RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/033</code>
+<name>MANGT CHGS RECV LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8871/034</code>
+<name>MANGT CHGS RECV 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8950</code>
+<name>SUNDRY EXPENSES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8956</code>
+<name>MAINTENANCE COMPUTER</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8957</code>
+<name>SUBSCRIPTIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8958</code>
+<name>DONATIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8959</code>
+<name>BOOKS & PERIODICALS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960</code>
+<name>ADVERTISING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/001</code>
+<name>ADVERTISING UNIT 1 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/002</code>
+<name>ADVERTISING UNIT 2 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/003</code>
+<name>ADVERTISING UNIT 3 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/004</code>
+<name>ADVERTISING UNIT 4 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/005</code>
+<name>ADVERTISING UNIT 5-8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/006</code>
+<name>ADVERTISING UNIT 6 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/007</code>
+<name>ADVERTISING UNIT 7 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/008</code>
+<name>ADVERTISING UNIT 8 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/009</code>
+<name>ADVERTISING UNIT 9-12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/010</code>
+<name>ADVERTISING UNIT 10 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/011</code>
+<name>ADVERTISING UNIT 11 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/012</code>
+<name>ADVERTISING UNIT 12 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/013</code>
+<name>ADVERTISING UNIT 13 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/014</code>
+<name>ADVERTISING UNIT 14 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/015</code>
+<name>ADVERTISING UNIT 15 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/016</code>
+<name>ADVERTISING UNIT 16 P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/031</code>
+<name>ADVERTISING COALDEPOT P/E</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/032</code>
+<name>ADVERTISING RADLEY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/033</code>
+<name>ADVERTISING LOWESTOFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/034</code>
+<name>ADVERTISING 17 WHITELADIES RD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8960/035</code>
+<name>ADVERTISING BROOK OFFICE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8961</code>
+<name>MEETINGS COURSES & SEMINARS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8970</code>
+<name>BANK CHARGES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8971</code>
+<name>INTEREST PAYABLE BANK</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8972</code>
+<name>OTHER INTEREST PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8973</code>
+<name>INTEREST PAYABLE INTERGROUP</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8976</code>
+<name>INTEREST RECEIVABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8990</code>
+<name>P/L ON SALE OF FIXED ASSETS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8991</code>
+<name>SALE OF INVESTMENT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8995</code>
+<name>BAD DEBTS</name>
+<bs>false</bs>
+</account>
 			</accounts>
+			<users>
+				<user>
+					<name>fnorais</name>
+					<active>true</active>
+					<roles>
+						<role>Accountant</role>
+					</roles>
+				</user>
+			</users>
+		</company>
+
+		<company>
+			<name>CRSC Redruth</name>
+			<visible>true</visible>
+			<financial_year>2012</financial_year>
+			<start_date>01/07/2011</start_date>
+			<asset_categories>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures & Fittings (15%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Computers (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Commercial Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</name>
+			</asset_categories>
+			<accounts>
+<account>
+<code>0001</code>
+<name>SHARE CAPITAL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0010</code>
+<name>CORPORATION TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0011</code>
+<name>DEFERRED TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0020</code>
+<name>DIVIDEND PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>0050</code>
+<name>GOODWILL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0051</code>
+<name>PLANT & EQUIPMENT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0052</code>
+<name>FIXTURES & FITTINGS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0053</code>
+<name>OFFICE EQUIPMENT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0054</code>
+<name>COMPUTERS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0055</code>
+<name>MOTOR VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0056</code>
+<name>COMMERCIAL VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0070</code>
+<name>AMORTISATION - GOODWILL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0071</code>
+<name>ACCUM DEP'N - PLANT & EQUIP</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0072</code>
+<name>ACCUM DEP'N - FIX & FIT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0073</code>
+<name>ACCUM DEP'N - OFFICE EQUIP</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0074</code>
+<name>ACCUM DEP'N - COMPUTERS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0075</code>
+<name>ACCUM DEP'N - MOTOR VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0076</code>
+<name>ACCUM DEP'N - COMMERCIAL VEH</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1100</code>
+<name>DEBTORS CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1102</code>
+<name>BAD DEBT PROVISION</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1103</code>
+<name>STOCK</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1300</code>
+<name>BANK CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1301</code>
+<name>BANK BUSINESS CALL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1305</code>
+<name>BANK ADJUSTMENTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1306</code>
+<name>DRIVERS' CASH FLOATS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1307</code>
+<name>PETTY CASH CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1308</code>
+<name>DRIVERS CHANGE - PETTY CASH</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1309</code>
+<name>YARD SALES -PETTY CASH</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1310</code>
+<name>SATURDAY FLOAT - PETTY CASH</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1500</code>
+<name>CREDITORS CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1600</code>
+<name>PAYE CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1605</code>
+<name>CSA CLIENT FUND CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1650</code>
+<name>WAGES CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1655</code>
+<name>TEMPORARY STAFF WAGES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>2109</code>
+<name>ACCRUALS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2200</code>
+<name>VAT OUTPUT TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2201</code>
+<name>VAT INPUT TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2202</code>
+<name>VAT LIABILITY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2204</code>
+<name>Manual Adjustments</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2232</code>
+<name>ATTACHMENTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3200</code>
+<name>PROFIT & LOSS ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3500</code>
+<name>CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3501</code>
+<name>CURRENT ACCOUNT - E H BENNETT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3502</code>
+<name>CURRENT ACCOUNT - CRS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3503</code>
+<name>CURRENT ACCOUNT - CMR</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3504</code>
+<name>CURRENT ACCOUNT - RUDRUM HOLDINGS LTD</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3505</code>
+<name>CURRENT ACCOUNT - TAMAR FUELS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3506</code>
+<name>CURRENT ACCOUNT - CMR LEISURE</name>
+<bs>true</bs>
+</account>
+<account>
+<code>4000</code>
+<name>SALES DEFAULT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4001</code>
+<name>SALES - RETAIL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4002</code>
+<name>SALES - WHOLESALE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4003</code>
+<name>SALES - INTRA GROUP</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4007</code>
+<name>SALES - OTHER</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4009</code>
+<name>DISCOUNTS ALLOWED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4015</code>
+<name>OTHER INCOME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4099</code>
+<name>Flat Rate - Gain/Loss</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4020</code>
+<name>DISTRIBUTION INCOME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4115</code>
+<name>COST OF OTHER INCOME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4500</code>
+<name>PURCHASES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4550</code>
+<name>REBATES RECEIVED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4580</code>
+<name>PALLETS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4590</code>
+<name>COST OF BAGS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4600</code>
+<name>HAULAGE IN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4700</code>
+<name>HAULAGE OUT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>5009</code>
+<name>DISCOUNTS TAKEN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7600</code>
+<name>PENSION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7800</code>
+<name>DEDUCTIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7906</code>
+<name>Exchange Rate Variance</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000</code>
+<name>GENERAL RATES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8001</code>
+<name>WATER RATES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8002</code>
+<name>RENT PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8005</code>
+<name>LIGHT HEAT & POWER</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8007</code>
+<name>REPAIRS MAINT.BUILDINGS/YARD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8008</code>
+<name>GARAGE EQUIPMENT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8010</code>
+<name>SALARIES ADMIN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8011</code>
+<name>NATIONAL INS ADMIN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8020</code>
+<name>WAGES - YARD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8021</code>
+<name>NATIONAL INS - YARD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8030</code>
+<name>WAGES - DISTRIBUTION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8031</code>
+<name>NATIONAL INS - DISTRIBUTON</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8040</code>
+<name>MGT CHGS PAY EXT SALES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8041</code>
+<name>MGT CHGS PAY INT SALES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8042</code>
+<name>MGT CHGS PAY ACCOUNTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8043</code>
+<name>MGT CHGS PAY GENERAL MGT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8044</code>
+<name>MGT CHGS PAY PREMISES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8045</code>
+<name>MGT CHGS PAY GENERAL H/O</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8050</code>
+<name>TRAVELLING EXPENSES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8055</code>
+<name>ENTERTAINING EXPS - ALLOWABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8056</code>
+<name>ENTERTAINING EXPS DISALLOWABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8059</code>
+<name>HEALTH SCHEME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8060</code>
+<name>GENERAL INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8061</code>
+<name>STOCK INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8062</code>
+<name>GIFTS & GRATUITIES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8063</code>
+<name>LEGAL & PROFESSIONAL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8065</code>
+<name>GROUP LIFE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8070</code>
+<name>TELEPHONE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8071</code>
+<name>POSTAGE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8073</code>
+<name>COMPUTER REPAIRS & MAINTENANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8075</code>
+<name>PRINTING & STATIONERY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8080</code>
+<name>CLEANING & REFRESHMENTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8081</code>
+<name>SUBSCRIPTIONS & DONATIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8082</code>
+<name>HEALTH & SAFETY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8084</code>
+<name>AUDIT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8085</code>
+<name>SUNDRY EXPENSES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8086</code>
+<name>ADVERTISING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8087</code>
+<name>PROTECTIVE CLOTHING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8088</code>
+<name>REFUSE COLLECTIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8100</code>
+<name>REPAIRS PLANT - GENERAL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8101</code>
+<name>REPAIRS PLANT - VOLVO L90</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8102</code>
+<name>REPAIRS PLANT - VOLVO 4300</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8103</code>
+<name>REPAIRS PLANT - FORKLIFT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8104</code>
+<name>REPAIRS PLANT - SCREENER</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8105</code>
+<name>REPAIRS PLANT - SWIVEL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8106</code>
+<name>REPAIRS PLANT - ELEVATORS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8107</code>
+<name>REPAIRS PLANT - METRO</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8150</code>
+<name>MOTOR VEH - REPAIRS & MAINT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8151</code>
+<name>MOTOR VEH - PETROL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8152</code>
+<name>MOTOR VEH - LICENCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8153</code>
+<name>MOTOR VEH - INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8200</code>
+<name>COMM VEH REPAIR.E989 KLY  - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8201</code>
+<name>COMM VEH REPAIR-G714 BAF - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8202</code>
+<name>COMM VEH REPAIR - H941 BAE - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8203</code>
+<name>COMM VEH REPAIR - P310 PHU - TRF OUT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8204</code>
+<name>COMM VEH REPAIR - P459 OCV - TRF OUT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8205</code>
+<name>COMM VEH REPAIR - L471 LWY - SOLD 08.08.00</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8206</code>
+<name>COMM VEH REPAIR - N100 ONT -  SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8207</code>
+<name>COMM VEH REPAIR - P820 WTC</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8208</code>
+<name>COMM VEH REPAIR - P821 WTC - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8209</code>
+<name>COMM VEH REPAIR - J874 MDF - SOLD 14.02.02</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8210</code>
+<name>COMM VEH REPAIR - J907 KWM - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8211</code>
+<name>COMM VEH REPAIR- G708 BRL - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8212</code>
+<name>COMM REP; & MAIN TO BE REALLOCATED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8213</code>
+<name>COMM VEH REPAIR-L746 GFC - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8214</code>
+<name>COMM VEH REPAIRS - L836 GFC - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8215</code>
+<name>COMM VEH REPAIR L715 GFC - SCAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8216</code>
+<name>COMM VEH REPAIR -  L775 GFC - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8217</code>
+<name>COMM VEH REPAIR - J533 LRL - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8218</code>
+<name>COMM VEH REPAIR - M802 AOU</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8219</code>
+<name>COMM VEH REPAIR - M857 EGT - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8220</code>
+<name>COMM VEH REPAIR. P623 TGG - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8221</code>
+<name>COMM VEH REPAIR - P264 OCV - SOLD 05.11.02</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8222</code>
+<name>COMM VEH REPAIRS - B334 ARL - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8223</code>
+<name>COMM VEH REPAIRS - T643 MAB</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8224</code>
+<name>COMM VEH REPAIRS - L858 CJU - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8225</code>
+<name>COMM VEH REPAIR - L381 TGO - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8226</code>
+<name>COMM VEH REPAIR - L841 GFC - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8227</code>
+<name>COMM VEH REPAIR - N681 UTT - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8228</code>
+<name>COMM VEH REPAIR - N893 ABL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8229</code>
+<name>COMM VEH REPAIR - K300 SOV  - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8230</code>
+<name>COMM VEH REPAIR - R591 ERL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8231</code>
+<name>COMM VEH REPAIRS - E519 LBK - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8232</code>
+<name>COMM VEH REPAIRS - J956 DWR - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8233</code>
+<name>COMM VEH REPAIRS - R282 HAV - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8234</code>
+<name>COMM VEH REPAIRS - Y877 0BJ</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8235</code>
+<name>COMM VEH REPAIRS - Y878 0BJ</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8236</code>
+<name>COMM VEH REPAIRS - Y592 FJN                                 </name>
+<bs>false</bs>
+</account>
+<account>
+<code>8237</code>
+<name>COMM VEH REPAIRS - V820 GTY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8238</code>
+<name>COMM VEH REPAIRS - V782 NUB</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8239</code>
+<name>COMM VEHICLE REPAIRS - KL02 KOH</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8240</code>
+<name>COMM VEHICLE REPAIRS - WX03 MHJ</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8290</code>
+<name>COMM VEHICLE FUEL DERV & GAS OIL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8291</code>
+<name>ENGINE OIL & HYDRAULIC OIL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8295</code>
+<name>COMM VEHICLE LICENCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8296</code>
+<name>COMM VEHICLE - INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8300</code>
+<name>DEPRECIATION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9000</code>
+<name>BANK CHARGES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9010</code>
+<name>BANK INTEREST PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9011</code>
+<name>GROUP INTEREST PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9012</code>
+<name>OTHER INTEREST PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9020</code>
+<name>BANK INTEREST RECEIVABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9021</code>
+<name>GROUP INTEREST RECEIVABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9022</code>
+<name>OTHER INTEREST RECEIVABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9100</code>
+<name>BAD DEBT WRITE OFF</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9102</code>
+<name>BAD DEBT RECOVERED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9900</code>
+<name>P/L ON SALE OF FIXED ASSETS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9998</code>
+<name>SUSPENSE ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>9999</code>
+<name>MISPOSTINGS ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>8301</code>
+<name>AMORTISATION</name>
+<bs>false</bs>
+</account>
+			</accounts>
+			<users>
+				<user>
+					<name>fnorais</name>
+					<active>true</active>
+					<roles>
+						<role>Accountant</role>
+					</roles>
+				</user>
+			</users>
+		</company>
+
+		<company>
+			<name>CRSC Tamar</name>
+			<visible>true</visible>
+			<financial_year>2012</financial_year>
+			<start_date>01/07/2011</start_date>
+			<asset_categories>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures & Fittings (15%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Computers (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Commercial Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</name>
+			</asset_categories>
+			<accounts>
+<account>
+<code>0001</code>
+<name>COMMISSION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>0010</code>
+<name>COMMERCIAL VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0011</code>
+<name>ACCUM DEP'N - COMMERCIAL VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0020</code>
+<name>PLANT AND MACHINERY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0021</code>
+<name>PLANT/MACHINERY DEPRECIATION</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0030</code>
+<name>OFFICE EQUIPMENT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0031</code>
+<name>ACCUM DEP'N - OFFICE EQUIPMENT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0040</code>
+<name>FIXTURES & FITTINGS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0041</code>
+<name>ACCUM DEP'N - FIXTURES & FITTINGS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0050</code>
+<name>MOTOR VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0051</code>
+<name>ACCUM DEP'N - MOTOR VEHICLES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0060</code>
+<name>GOODWILL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0061</code>
+<name>GOODWILL AMORTISATION</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0070</code>
+<name>LEASEHOLD PROPERTY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>0071</code>
+<name>AMORTISATION LEASEHOLD PROPERTY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1001</code>
+<name>STOCK</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1100</code>
+<name>DEBTORS CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1101</code>
+<name>BAD DEBT PROVISION</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1102</code>
+<name>OTHER DEBTORS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1103</code>
+<name>PREPAYMENTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1200</code>
+<name>BANK CURRENT ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1205</code>
+<name>RESERVE ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1210</code>
+<name>CASH ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1230</code>
+<name>PETTY CASH</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1235</code>
+<name>CASH REGISTER</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1240</code>
+<name>COMPANY CREDIT CARD</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1250</code>
+<name>CREDIT CARD RECEIPTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1300</code>
+<name>CURRENT ACCOUNT - RUDRUM HOLDINGS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1301</code>
+<name>CURRENT ACCOUNT - CRS (CORNWALL)</name>
+<bs>true</bs>
+</account>
+<account>
+<code>1302</code>
+<name>CURRENT ACCOUNT - CMR LEISURE</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2100</code>
+<name>CREDITORS CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2101</code>
+<name>SUNDRY CREDITORS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2102</code>
+<name>OTHER CREDITORS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2109</code>
+<name>GOODWILL ACCRUALS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2200</code>
+<name>SALES TAX CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2201</code>
+<name>PURCHASE TAX CONTROL ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2202</code>
+<name>VAT LIABILITY</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2204</code>
+<name>MANUAL ADJUSTMENTS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2210</code>
+<name>P.A.Y.E. CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2211</code>
+<name>CSA CLIENT FUNDS CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2215</code>
+<name>PENSION CONTROL</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2220</code>
+<name>TEMPORARY STAFF WAGES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>2300</code>
+<name>LOANS</name>
+<bs>true</bs>
+</account>
+<account>
+<code>2320</code>
+<name>CORPORATION TAX</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3100</code>
+<name>RESERVES</name>
+<bs>true</bs>
+</account>
+<account>
+<code>3200</code>
+<name>PROFIT AND LOSS ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>4000</code>
+<name>SALES EXTERNAL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4001</code>
+<name>GROUP SALES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4009</code>
+<name>DISCOUNTS ALLOWED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4015</code>
+<name>OTHER INCOME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4099</code>
+<name>FLAT RATE - GAIN/LOSS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4200</code>
+<name>P/L ON SALES OF FIXED ASSETS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4400</code>
+<name>CREDIT CHARGES (LATE PAYMENTS)</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4904</code>
+<name>RENT INCOME</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4905</code>
+<name>HAULAGE OUT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>4906</code>
+<name>HAULAGE IN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>5000</code>
+<name>PURCHASES(STOCK)</name>
+<bs>false</bs>
+</account>
+<account>
+<code>5002</code>
+<name>PALLETS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>5003</code>
+<name>PACKAGING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>5009</code>
+<name>DISCOUNTS TAKEN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>5050</code>
+<name>REBATE RECEIVABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6000</code>
+<name>MGT CHGS PAY INT SALES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6001</code>
+<name>MGT CHGS PAY ACCOUNTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6002</code>
+<name>MGT CHGS PAY GENERAL MGT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6003</code>
+<name>MGT CHGS PAY GENERAL H/O</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6004</code>
+<name>MGT CHGS PAY PREMISES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6201</code>
+<name>ADVERTISING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6202</code>
+<name>GIFTS AND SAMPLES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>6900</code>
+<name>MISCELLANEOUS EXPENSES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7000</code>
+<name>SALARIES - ADMIN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7001</code>
+<name>EMPLOYERS N.I - ADMIN</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7002</code>
+<name>WAGES - YARD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7003</code>
+<name>EMPLOYERS N.I. - YARD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7004</code>
+<name>WAGES - DISTRIBUTION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7006</code>
+<name>EMPLOYERS N.I. - DISTRIBUTION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7007</code>
+<name>EMPLOYERS PENSIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7010</code>
+<name>SSP RECLAIMED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7011</code>
+<name>SMP RECLAIMED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7100</code>
+<name>RENT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7101</code>
+<name>OFFICE HIRE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7102</code>
+<name>WATER RATES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7103</code>
+<name>GENERAL RATES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7104</code>
+<name>PREMISES INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7200</code>
+<name>ELECTRICITY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7250</code>
+<name>MOTOR VEH - REPAIRS & MAINT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7251</code>
+<name>MOTOR VEH - INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7252</code>
+<name>MOTOR VEH - LICENCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7253</code>
+<name>MOTOR VEH - PETROL & OIL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7300</code>
+<name>FUEL AND OIL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7301</code>
+<name>COMM REP & MAINT TO BE REALLOCATED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7302</code>
+<name>COMM VEHICLE - LICENCES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7303</code>
+<name>COMM VEHICLE - INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7304</code>
+<name>MISC MOTOR EXPENSES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7305</code>
+<name>NISSAN S189 DDV - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7306</code>
+<name>NISSAN V372 DGV - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7307</code>
+<name>LEYLAND DAF M345 JPL - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7308</code>
+<name>IVECO L517 CKK - SOLD</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7309</code>
+<name>LEYLAND DAF V789 LKJ</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7310</code>
+<name>TOLL FEES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7311</code>
+<name>DAF Y387 UKJ</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7312</code>
+<name>NISSAN WJ59 NLK</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7313</code>
+<name>DAF X832 XNG</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7314</code>
+<name>NISSAN W311 MFS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7315</code>
+<name>V197 HCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7316</code>
+<name>NISSAN N146 YNP</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7350</code>
+<name>REPAIRS PLANT - GENERAL</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7351</code>
+<name>VOLVO FHW 398W</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7352</code>
+<name>FORK LIFT TRUCK G20</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7353</code>
+<name>LOADING SHOVEL - SCRAPPED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7354</code>
+<name>LTO</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7400</code>
+<name>TRAVELLING/EXPENSES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7403</code>
+<name>U.K. ENTERTAINMENT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7406</code>
+<name>REFRESHMENTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7500</code>
+<name>PRINTING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7501</code>
+<name>POSTAGE AND CARRIAGE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7502</code>
+<name>TELEPHONE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7503</code>
+<name>FAX</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7504</code>
+<name>OFFICE STATIONERY</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7505</code>
+<name>BOOKS ETC.</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7600</code>
+<name>LEGAL FEES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7601</code>
+<name>AUDIT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7650</code>
+<name>RELOCATION COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7700</code>
+<name>EQUIPMENT HIRE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7701</code>
+<name>OFFICE MACHINE MAINTENANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7800</code>
+<name>COMPUTER REPAIRS & MAINTENANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7801</code>
+<name>CLEANING</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7802</code>
+<name>SAFETY EQUIPMENT</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7803</code>
+<name>BUILDING REPAIRS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7804</code>
+<name>REFUSE COLLECTIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7900</code>
+<name>BANK INTEREST RECEIVED</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7901</code>
+<name>BANK CHARGES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7902</code>
+<name>BANK INTEREST PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7903</code>
+<name>OTHER INTEREST PAYABLE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>7906</code>
+<name>EXCHANGE RATE VARIANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8000</code>
+<name>DEPRECIATION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8001</code>
+<name>AMORTISATION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8100</code>
+<name>BAD DEBT WRITE OFF</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8102</code>
+<name>BAD DEBT PROVISION</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8200</code>
+<name>DONATIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8201</code>
+<name>SUBSCRIPTIONS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8202</code>
+<name>CLOTHING COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8203</code>
+<name>TRAINING COSTS</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8204</code>
+<name>INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8205</code>
+<name>CASH REGISTER DISCREPANCIES</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8206</code>
+<name>STOCK INSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>8207</code>
+<name>GROUP LIFE ASSURANCE</name>
+<bs>false</bs>
+</account>
+<account>
+<code>9998</code>
+<name>SUSPENSE ACCOUNT</name>
+<bs>true</bs>
+</account>
+<account>
+<code>9999</code>
+<name>MISPOSTINGS ACCOUNT</name>
+<bs>true</bs>
+</account>
+
+			</accounts>
+			<users>
+				<user>
+					<name>fnorais</name>
+					<active>true</active>
+					<roles>
+						<role>Accountant</role>
+					</roles>
+				</user>
+			</users>
+		</company>
+
+		<company>
+			<name>Cornwall Country Estates Ltd</name>
+			<visible>true</visible>
+			<financial_year>2012</financial_year>
+			<start_date>01/11/2011</start_date>
+			<users>
+				<user>
+					<name>jnicholls</name>
+					<active>true</active>
+					<roles>
+						<role>Accountant</role>
+					</roles>
+				</user>
+			</users>			
+		</company>
+		<company>
+			<name>Bennett Fergusson Coal Ltd</name>
+			<visible>true</visible>
+			<financial_year>2012</financial_year>
+			<start_date>01/01/2012</start_date>
+			<users>
+				<user>
+					<name>fnorais</name>
+					<active>true</active>
+					<roles>
+						<role>Accountant</role>
+					</roles>
+				</user>
+				<user>
+					<name>lreid</name>
+					<active>false</active>
+				</user>
+			</users>			
+		</company>
+		<company>
+			<name>CMR Leisure Ltd</name>
+			<visible>true</visible>
+			<financial_year>2012</financial_year>
+			<start_date>01/01/2012</start_date>
+			<users>
+				<user>
+					<name>fnorais</name>
+					<active>true</active>
+					<roles>
+						<role>Accountant</role>
+					</roles>
+				</user>
+				<user>
+					<name>lreid</name>
+					<active>true</active>
+				</user>
+			</users>			
 		</company>
 	</companies>
-</settings>
-</dc>
+</dc-settings>

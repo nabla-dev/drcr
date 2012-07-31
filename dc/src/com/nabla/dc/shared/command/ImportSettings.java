@@ -26,14 +26,14 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  * @author nabla
  *
  */
-public class ImportSettingsList implements IAction<StringResult> {
+public class ImportSettings implements IAction<StringResult> {
 
 	private Integer				batchId;
 	private SqlInsertOptions	overwrite;
 
-	ImportSettingsList() {}
+	ImportSettings() {}
 
-	public ImportSettingsList(final Integer batchId, final SqlInsertOptions overwrite) {
+	public ImportSettings(final Integer batchId, final SqlInsertOptions overwrite) {
 		this.batchId = batchId;
 		this.overwrite = overwrite;
 	}

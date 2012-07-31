@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.model;
 
-import com.nabla.dc.shared.command.ImportSettingsList;
+import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
@@ -53,7 +53,7 @@ public class ImportSettingsUploadFileModel extends CModel<ImportSettingsRecord> 
 
 	@Override
 	public IAction<StringResult> getAddCommand(final ImportSettingsRecord record) {
-		return new ImportSettingsList(record.getFileId(), record.getOverwrite());
+		return new ImportSettings(record.getFileId(), record.getOverwrite());
 	}
 
 	@Override
