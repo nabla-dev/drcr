@@ -16,9 +16,9 @@
 */
 package com.nabla.dc.client.model;
 
+import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.nabla.dc.shared.command.FetchImportErrorList;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.general.IApplication;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.TextField;
@@ -40,7 +40,7 @@ public class ImportErrorListModel extends CModel<Record> {
 
 	private static final Fields	fields = new Fields();
 	private final Integer		batchId;
-	
+
 	public ImportErrorListModel(final Integer batchId) {
 		super();
 		this.batchId = batchId;
@@ -54,21 +54,23 @@ public class ImportErrorListModel extends CModel<Record> {
 	public Fields fields() {
 		return fields;
 	}
-	
+
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
 		return new FetchImportErrorList(batchId);
 	}
-	
+
 	@Override
 	protected Record[] recordsFromJson(final String jsonRecords) {
 		// convert error code to human readable error message
 		final Record[] records = super.recordsFromJson(jsonRecords);
 		if (records != null) {
-			final IApplication app = Application.getInstance();
+			final ConstantsWithLookup errorMessages = Application.getInstance().getServerErrorResource();
 			for (Record record : records) {
-				final String message = app.getLocalizedError(record.getAttribute(fields.error()));
-				record.setAttribute(fields.error(), message);
+				try {
+					final String message = errorMessages.getString(record.getAttribute(fields.error()));
+					record.setAttribute(fields.error(), message);
+				} catch (final Throwable _) {}
 			}
 		}
 		return records;

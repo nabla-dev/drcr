@@ -76,14 +76,14 @@
 			<max_depreciation_period>60</max_depreciation_period>
 		</asset_category>
 		<asset_category>
-			<name>Fixtures & Fittings (15%)</name>
+			<name>Fixtures &amp; Fittings (15%)</name>
 			<visible>true</visible>
 			<type>TANGIBLE</type>
 			<min_depreciation_period>80</min_depreciation_period>
 			<max_depreciation_period>80</max_depreciation_period>
 		</asset_category>
 		<asset_category>
-			<name>Furniture, Fixtures & Equipment (15%)</name>
+			<name>Furniture, Fixtures &amp; Equipment (15%)</name>
 			<visible>true</visible>
 			<type>TANGIBLE</type>
 			<min_depreciation_period>80</min_depreciation_period>
@@ -118,7 +118,7 @@
 			<max_depreciation_period>80</max_depreciation_period>
 		</asset_category>
 		<asset_category>
-			<name>Plant & Machinery (20%)</name>
+			<name>Plant &amp; Machinery (20%)</name>
 			<visible>true</visible>
 			<type>TANGIBLE</type>
 			<min_depreciation_period>60</min_depreciation_period>
@@ -127,11 +127,11 @@
 	</asset_categories>
 	<financial_statement_categories>
 		<financial_statement_category>
-			<name>Fixtures, Fittings & Equipment</name>
+			<name>Fixtures, Fittings &amp; Equipment</name>
 			<visible>true</visible>
 		</financial_statement_category>
 		<financial_statement_category>
-			<name>Furniture, Fixtures & Equipment</name>
+			<name>Furniture, Fixtures &amp; Equipment</name>
 			<visible>true</visible>
 		</financial_statement_category>
 		<financial_statement_category>
@@ -139,7 +139,7 @@
 			<visible>true</visible>
 		</financial_statement_category>
 		<financial_statement_category>
-			<name>Plant & Machinery</name>
+			<name>Plant &amp; Machinery</name>
 			<visible>true</visible>
 		</financial_statement_category>
 		<financial_statement_category>
@@ -161,10 +161,10 @@
 			<financial_year>2012</financial_year>
 			<start_date>01/07/2011</start_date>
 			<asset_categories>
-				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Furniture, Fixtures & Equipment (15%)</asset_category>
+				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Furniture, Fixtures &amp; Equipment (15%)</asset_category>
 				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Computers (20%)</asset_category>
 				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Plant &amp; Machinery (20%)</asset_category>
 			</asset_categories>
 			<tax_rates>
 				<tax_rate></tax_rate>
@@ -182,7 +182,7 @@
 </account>
 <account>
 <code>0030</code>
-<name>PROFIT & LOSS ACCOUNT</name>
+<name>PROFIT &amp; LOSS ACCOUNT</name>
 <bs>true</bs>
 </account>
 <account>
@@ -1668,10 +1668,10 @@
 			<financial_year>2012</financial_year>
 			<start_date>01/07/2011</start_date>
 			<asset_categories>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures & Fittings (15%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures &amp; Fittings (15%)</asset_category>
 				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Computers (20%)</asset_category>
 				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Plant &amp; Machinery (20%)</asset_category>
 				<asset_category financial_statement_category="Plant & Machinery">Commercial Vehicles (20%)</asset_category>
 				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
 				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</name>
@@ -2585,10 +2585,10 @@
 			<financial_year>2012</financial_year>
 			<start_date>01/07/2011</start_date>
 			<asset_categories>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures & Fittings (15%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures &amp; Fittings (15%)</asset_category>
 				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Computers (20%)</asset_category>
 				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant & Machinery">Plant &amp; Machinery (20%)</asset_category>
 				<asset_category financial_statement_category="Plant & Machinery">Commercial Vehicles (20%)</asset_category>
 				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
 				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</name>

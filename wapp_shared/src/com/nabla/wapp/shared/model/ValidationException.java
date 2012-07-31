@@ -31,7 +31,7 @@ public class ValidationException extends ActionException implements IErrorList {
 
 	private static final long		serialVersionUID = 1L;
 	public static final String	ERROR_CODE = "VALIDATION_ERROR";
-	
+
 	private Map<String, String>		errors = new HashMap<String, String>();	// field, errorNo
 
 	public ValidationException() {
@@ -52,12 +52,12 @@ public class ValidationException extends ActionException implements IErrorList {
 	public boolean isEmpty() {
 		return errors.isEmpty();
 	}
-	
+
 	@Override
 	public int size() {
 		return errors.size();
 	}
-	
+
 	@Override
 	public void add(final String field, final String error) {
 		errors.put(field, error);
@@ -67,7 +67,7 @@ public class ValidationException extends ActionException implements IErrorList {
 	public void add(final String error) {
 		add("n/a", error);
 	}
-	
+
 	@Override
 	public <E extends Enum<E>> void add(final String field, final E error) {
 		add(field, error.toString());
@@ -77,7 +77,7 @@ public class ValidationException extends ActionException implements IErrorList {
 	public <E extends Enum<E>> void add(final E error) {
 		add(error.toString());
 	}
-	
+
 	public Map<String, String> getErrors() {
 		return errors;
 	}
@@ -91,7 +91,7 @@ public class ValidationException extends ActionException implements IErrorList {
 			return null;
 		return errors.entrySet().iterator().next();
 	}
-	
+
 	public Map<String, String> getErrorMessages(final ConstantsWithLookup resource) {
 		if (resource == null)
 			throw new IllegalArgumentException("resource");
@@ -99,6 +99,11 @@ public class ValidationException extends ActionException implements IErrorList {
 		for (final Map.Entry<String, String> e : errors.entrySet())
 				ret.put(e.getKey(), resource.getString(e.getValue()));
 		return ret;
+	}
+
+	@Override
+	public boolean isFull() {
+		return false;
 	}
 
 }

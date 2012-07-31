@@ -60,6 +60,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
+import com.nabla.wapp.server.xml.SimpleMatcher;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
@@ -70,6 +71,8 @@ import com.nabla.wapp.shared.model.ValidationException;
  *
  */
 public class ImportSettingsHandler extends AbstractHandler<ImportSettings, StringResult> {
+
+	private static final String		XML_ROW_COL = "[row,col]:[";
 
 	@Root
 	static class Role {
@@ -83,13 +86,13 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	@Root
 	static class User {
 		@Element
-		String		name;
+		String			name;
 		@Element(required=false)
-		String		password;
+		String			password;
 		@Element(required=false)
-		Boolean		active;
-		@ElementList(required=false)
-		List<Role>	roles;
+		Boolean			active;
+		@ElementList(entry="role", required=false)
+		List<String>	roles;
 
 		@Validate
 		public void validate() {
@@ -330,7 +333,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 					return null;
 				}
 				final CurrentXmlLine currentLine = new CurrentXmlLine(errors);
-				final Serializer serializer = new Persister(new VisitorStrategy(currentLine));
+				final Serializer serializer = new Persister(new VisitorStrategy(currentLine), new SimpleMatcher());
 				try {
 					final Settings settings = serializer.read(Settings.class, rs.getBinaryStream("content"));
 					return /*settings.validate(conn, errors) ?*/ settings /*: null*/;
@@ -348,16 +351,16 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 					} else {
 						if (log.isErrorEnabled())
 							log.error("error while deserializing xml request", ee);
-						errors.add(CommonServerErrors.INTERNAL_ERROR);
+						errors.add(ee.getLocalizedMessage());
 					}
 				} catch (final ValueRequiredException e) {
 					if (log.isDebugEnabled())
 						log.debug("required value", e);
-					errors.add(extractFieldName(e.getMessage()), CommonServerErrors.REQUIRED_VALUE);
+					errors.add(extractFieldName(e), CommonServerErrors.REQUIRED_VALUE);
 				} catch (final PersistenceException e) {
 					if (log.isDebugEnabled())
 						log.debug("deserialization error", e);
-					errors.add(extractFieldName(e.getMessage()), CommonServerErrors.INVALID_VALUE);
+					errors.add(extractFieldName(e), CommonServerErrors.INVALID_VALUE);
 				} catch (final Exception e) {
 					if (log.isDebugEnabled())
 						log.debug("error", e);
@@ -372,9 +375,21 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		}
 	}
 
-	private static String extractFieldName(final String simpleErrorMessage) {
-		final String[] matches = simpleErrorMessage.split("'");
+	private static String extractFieldName(final PersistenceException e) {
+		// looking for ...'field name'...
+		final String[] matches = e.getMessage().split("'");
 		return (matches.length < 3) ? "?" : matches[1];
+	}
+
+	private static Integer extractLine(final PersistenceException e) {
+		final String message = e.getMessage();
+		// looking for [row,col]:[x,x]
+		int from = message.indexOf(XML_ROW_COL);
+		if (from < 0)
+			return null;
+		from += XML_ROW_COL.length();
+		int to = message.indexOf(',', from);
+		return Integer.valueOf(message.substring(from, to));
 	}
 
 }

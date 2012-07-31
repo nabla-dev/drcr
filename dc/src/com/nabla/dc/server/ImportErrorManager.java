@@ -38,6 +38,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 public class ImportErrorManager implements ICsvErrorList {
 
 	private static final int		MAX_ERROR_MESSAGE = 255;
+	private static final int		MAX_FIELD_NAME = 32;
 	private static final int		DEFAULT_MAX_ERRORS = 100;
 
 	private static final int		COL_ID = 1;
@@ -140,10 +141,10 @@ public class ImportErrorManager implements ICsvErrorList {
 	 * @throws SQLException
 	 */
 	@Override
-	public void add(final String fieldName, String error) {
-		Assert.state(fieldName == null || fieldName.length() < 32);
-
+	public void add(String fieldName, String error) {
 		if (!isFull()) {
+			if (fieldName != null && fieldName.length() > MAX_FIELD_NAME)
+				fieldName = fieldName.substring(0, MAX_FIELD_NAME);
 			if (error == null || error.isEmpty())
 				error = CommonServerErrors.INTERNAL_ERROR.toString();
 			if (error.length() > MAX_ERROR_MESSAGE)

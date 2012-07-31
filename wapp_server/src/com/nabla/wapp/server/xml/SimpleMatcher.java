@@ -14,18 +14,29 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.model;
+package com.nabla.wapp.server.xml;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+
+import org.simpleframework.xml.transform.Matcher;
+import org.simpleframework.xml.transform.Transform;
 
 /**
- * @author nabla64
+ * @author nabla
  *
  */
-public interface IErrorList {
-	boolean isEmpty();
-	boolean isFull();
-	int size();
-	void add(final String field, final String error);
-	void add(final String error);
-	<E extends Enum<E>> void add(final String field, final E error);
-	<E extends Enum<E>> void add(final E error);
+public class SimpleMatcher implements Matcher  {
+
+	@Override
+	public Transform match(Class type) throws Exception {
+		if (type != null) {
+			if (type.equals(Date.class))
+				return new SimpleDateTransform();
+			if (type.equals(Timestamp.class))
+				return new SimpleTimestampTransform();
+		}
+		return null;
+	}
+
 }
