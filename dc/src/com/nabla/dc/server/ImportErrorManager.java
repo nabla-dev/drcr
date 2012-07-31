@@ -50,8 +50,8 @@ public class ImportErrorManager implements ICsvErrorList {
 	private final Connection		conn;
 	private PreparedStatement		stmt;
 	private final Integer			batchId;
-	private int					line;
-	private int						maxErrors;
+	private Integer					line;
+	private int					maxErrors;
 	private int					size;
 
 	/**
@@ -67,7 +67,6 @@ public class ImportErrorManager implements ICsvErrorList {
 
 		this.conn = writeDb.getConnection();
 		this.batchId = batchId;
-		line = 1;
 		this.maxErrors = maxErrors;
 		this.size = 0;
 	}
@@ -121,7 +120,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	 * @param lineNo - line number of error
 	 * */
 	@Override
-	public void setLine(int line) {
+	public void setLine(Integer line) {
 		this.line = line;
 	}
 
@@ -130,7 +129,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	 * @return line number of error
 	 * */
 	@Override
-	public int getLine() {
+	public Integer getLine() {
 		return line;
 	}
 
@@ -159,7 +158,10 @@ public class ImportErrorManager implements ICsvErrorList {
 "INSERT INTO import_error(import_data_id,line_no,field,error) VALUES(?,?,?,?);");
 					stmt.setInt(COL_ID, batchId);
 				}
-				stmt.setInt(COL_LINE_NO, getLine());
+				if (getLine() == null)
+					stmt.setNull(COL_LINE_NO, Types.INTEGER);
+				else
+					stmt.setInt(COL_LINE_NO, getLine());
 				if (fieldName == null)
 					stmt.setNull(COL_FIELD, Types.VARCHAR);
 				else

@@ -161,14 +161,11 @@
 			<financial_year>2012</financial_year>
 			<start_date>01/07/2011</start_date>
 			<asset_categories>
-				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Furniture, Fixtures &amp; Equipment (15%)</asset_category>
-				<asset_category financial_statement_category="Furniture, Fixtures & Equipment">Computers (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Plant &amp; Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Furniture, Fixtures &amp; Equipment">Furniture, Fixtures &amp; Equipment (15%)</asset_category>
+				<asset_category financial_statement_category="Furniture, Fixtures &amp; Equipment">Computers (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Motor Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</asset_category>
 			</asset_categories>
-			<tax_rates>
-				<tax_rate></tax_rate>
-			<tax_rates>
 			<accounts>
 <account>
 <code>0010</code>
@@ -357,7 +354,7 @@
 </account>
 <account>
 <code>0510</code>
-<name>PLANT & MACHINERY</name>
+<name>PLANT &amp; MACHINERY</name>
 <bs>true</bs>
 </account>
 <account>
@@ -472,7 +469,7 @@
 </account>
 <account>
 <code>1703</code>
-<name>CURRENT ACCOUNT E & R</name>
+<name>CURRENT ACCOUNT E &amp; R</name>
 <bs>true</bs>
 </account>
 <account>
@@ -937,7 +934,7 @@
 </account>
 <account>
 <code>8540</code>
-<name>TRAVEL & HOTEL COSTS</name>
+<name>TRAVEL &amp; HOTEL COSTS</name>
 <bs>false</bs>
 </account>
 <account>
@@ -947,7 +944,7 @@
 </account>
 <account>
 <code>8560</code>
-<name>MOTOR VEHICLE PETROL & OIL</name>
+<name>MOTOR VEHICLE PETROL &amp; OIL</name>
 <bs>false</bs>
 </account>
 <account>
@@ -1202,7 +1199,7 @@
 </account>
 <account>
 <code>8690</code>
-<name>PRINTING & STATIONERY</name>
+<name>PRINTING &amp; STATIONERY</name>
 <bs>false</bs>
 </account>
 <account>
@@ -1217,7 +1214,7 @@
 </account>
 <account>
 <code>8800</code>
-<name>LEGAL & PROFESSIONAL</name>
+<name>LEGAL &amp; PROFESSIONAL</name>
 <bs>false</bs>
 </account>
 <account>
@@ -1347,7 +1344,7 @@
 </account>
 <account>
 <code>8800/036</code>
-<name>LEGAL & PROF TILMANSTONE</name>
+<name>LEGAL &amp; PROF TILMANSTONE</name>
 <bs>false</bs>
 </account>
 <account>
@@ -1492,7 +1489,7 @@
 </account>
 <account>
 <code>8959</code>
-<name>BOOKS & PERIODICALS</name>
+<name>BOOKS &amp; PERIODICALS</name>
 <bs>false</bs>
 </account>
 <account>
@@ -1607,7 +1604,7 @@
 </account>
 <account>
 <code>8961</code>
-<name>MEETINGS COURSES & SEMINARS</name>
+<name>MEETINGS COURSES &amp; SEMINARS</name>
 <bs>false</bs>
 </account>
 <account>
@@ -1668,13 +1665,13 @@
 			<financial_year>2012</financial_year>
 			<start_date>01/07/2011</start_date>
 			<asset_categories>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures &amp; Fittings (15%)</asset_category>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Computers (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Plant &amp; Machinery (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Commercial Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Fixtures &amp; Fittings (15%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Computers (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Motor Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Commercial Vehicles (20%)</asset_category>
 				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</name>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</name>
 			</asset_categories>
 			<accounts>
 <account>
@@ -1704,12 +1701,12 @@
 </account>
 <account>
 <code>0051</code>
-<name>PLANT & EQUIPMENT</name>
+<name>PLANT &amp; EQUIPMENT</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0052</code>
-<name>FIXTURES & FITTINGS</name>
+<name>FIXTURES &amp; FITTINGS</name>
 <bs>true</bs>
 </account>
 <account>
@@ -1739,12 +1736,12 @@
 </account>
 <account>
 <code>0071</code>
-<name>ACCUM DEP'N - PLANT & EQUIP</name>
+<name>ACCUM DEP'N - PLANT &amp; EQUIP</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0072</code>
-<name>ACCUM DEP'N - FIX & FIT</name>
+<name>ACCUM DEP'N - FIX &amp; FIT</name>
 <bs>true</bs>
 </account>
 <account>
@@ -1879,7 +1876,7 @@
 </account>
 <account>
 <code>3200</code>
-<name>PROFIT & LOSS ACCOUNT</name>
+<name>PROFIT &amp; LOSS ACCOUNT</name>
 <bs>true</bs>
 </account>
 <account>
@@ -2034,7 +2031,7 @@
 </account>
 <account>
 <code>8005</code>
-<name>LIGHT HEAT & POWER</name>
+<name>LIGHT HEAT &amp; POWER</name>
 <bs>false</bs>
 </account>
 <account>
@@ -2139,12 +2136,12 @@
 </account>
 <account>
 <code>8062</code>
-<name>GIFTS & GRATUITIES</name>
+<name>GIFTS &amp; GRATUITIES</name>
 <bs>false</bs>
 </account>
 <account>
 <code>8063</code>
-<name>LEGAL & PROFESSIONAL</name>
+<name>LEGAL &amp; PROFESSIONAL</name>
 <bs>false</bs>
 </account>
 <account>
@@ -2164,27 +2161,27 @@
 </account>
 <account>
 <code>8073</code>
-<name>COMPUTER REPAIRS & MAINTENANCE</name>
+<name>COMPUTER REPAIRS &amp; MAINTENANCE</name>
 <bs>false</bs>
 </account>
 <account>
 <code>8075</code>
-<name>PRINTING & STATIONERY</name>
+<name>PRINTING &amp; STATIONERY</name>
 <bs>false</bs>
 </account>
 <account>
 <code>8080</code>
-<name>CLEANING & REFRESHMENTS</name>
+<name>CLEANING &amp; REFRESHMENTS</name>
 <bs>false</bs>
 </account>
 <account>
 <code>8081</code>
-<name>SUBSCRIPTIONS & DONATIONS</name>
+<name>SUBSCRIPTIONS &amp; DONATIONS</name>
 <bs>false</bs>
 </account>
 <account>
 <code>8082</code>
-<name>HEALTH & SAFETY</name>
+<name>HEALTH &amp; SAFETY</name>
 <bs>false</bs>
 </account>
 <account>
@@ -2254,7 +2251,7 @@
 </account>
 <account>
 <code>8150</code>
-<name>MOTOR VEH - REPAIRS & MAINT</name>
+<name>MOTOR VEH - REPAIRS &amp; MAINT</name>
 <bs>false</bs>
 </account>
 <account>
@@ -2334,7 +2331,7 @@
 </account>
 <account>
 <code>8212</code>
-<name>COMM REP; & MAIN TO BE REALLOCATED</name>
+<name>COMM REP; &amp; MAIN TO BE REALLOCATED</name>
 <bs>false</bs>
 </account>
 <account>
@@ -2479,12 +2476,12 @@
 </account>
 <account>
 <code>8290</code>
-<name>COMM VEHICLE FUEL DERV & GAS OIL</name>
+<name>COMM VEHICLE FUEL DERV &amp; GAS OIL</name>
 <bs>false</bs>
 </account>
 <account>
 <code>8291</code>
-<name>ENGINE OIL & HYDRAULIC OIL</name>
+<name>ENGINE OIL &amp; HYDRAULIC OIL</name>
 <bs>false</bs>
 </account>
 <account>
@@ -2585,13 +2582,13 @@
 			<financial_year>2012</financial_year>
 			<start_date>01/07/2011</start_date>
 			<asset_categories>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Fixtures &amp; Fittings (15%)</asset_category>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Computers (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Motor Vehicles (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Plant &amp; Machinery (20%)</asset_category>
-				<asset_category financial_statement_category="Plant & Machinery">Commercial Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Fixtures &amp; Fittings (15%)</asset_category>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Computers (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Motor Vehicles (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</asset_category>
+				<asset_category financial_statement_category="Plant &amp; Machinery">Commercial Vehicles (20%)</asset_category>
 				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
-				<asset_category financial_statement_category="Fixtures, Fittings & Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant & Machinery">Plant & Machinery (20%)</name>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</name>
 			</asset_categories>
 			<accounts>
 <account>
@@ -2631,12 +2628,12 @@
 </account>
 <account>
 <code>0040</code>
-<name>FIXTURES & FITTINGS</name>
+<name>FIXTURES &amp; FITTINGS</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0041</code>
-<name>ACCUM DEP'N - FIXTURES & FITTINGS</name>
+<name>ACCUM DEP'N - FIXTURES &amp; FITTINGS</name>
 <bs>true</bs>
 </account>
 <account>
@@ -3016,7 +3013,7 @@
 </account>
 <account>
 <code>7250</code>
-<name>MOTOR VEH - REPAIRS & MAINT</name>
+<name>MOTOR VEH - REPAIRS &amp; MAINT</name>
 <bs>false</bs>
 </account>
 <account>
@@ -3031,7 +3028,7 @@
 </account>
 <account>
 <code>7253</code>
-<name>MOTOR VEH - PETROL & OIL</name>
+<name>MOTOR VEH - PETROL &amp; OIL</name>
 <bs>false</bs>
 </account>
 <account>
@@ -3041,7 +3038,7 @@
 </account>
 <account>
 <code>7301</code>
-<name>COMM REP & MAINT TO BE REALLOCATED</name>
+<name>COMM REP &amp; MAINT TO BE REALLOCATED</name>
 <bs>false</bs>
 </account>
 <account>
@@ -3216,7 +3213,7 @@
 </account>
 <account>
 <code>7800</code>
-<name>COMPUTER REPAIRS & MAINTENANCE</name>
+<name>COMPUTER REPAIRS &amp; MAINTENANCE</name>
 <bs>false</bs>
 </account>
 <account>

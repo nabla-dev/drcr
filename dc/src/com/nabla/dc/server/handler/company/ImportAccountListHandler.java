@@ -25,7 +25,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
-import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.command.company.AddAccount;
 import com.nabla.dc.shared.command.company.ImportAccountList;
 import com.nabla.dc.shared.model.company.IImportAccount;
@@ -44,6 +43,7 @@ import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 
 /**
  * @author nabla
@@ -53,13 +53,13 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 
 	private static final Log		log = LogFactory.getLog(ImportAccountListHandler.class);
 	private final IDatabase		writeDb;
-	
+
 	@Inject
 	public ImportAccountListHandler(@IReadWriteDatabase final IDatabase writeDb) {
 		super(true);
 		this.writeDb = writeDb;
 	}
-	
+
 	@Override
 	public StringResult execute(final ImportAccountList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final ImportErrorManager errors = new ImportErrorManager(writeDb, cmd.getBatchId());
@@ -76,7 +76,7 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 		}
 		return null;
 	}
-	
+
 	private boolean add(final ImportAccountList cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmtFile = StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT content FROM import_data WHERE id=?;", cmd.getBatchId());
@@ -84,7 +84,7 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 			final ResultSet rs = stmtFile.executeQuery();
 			try {
 				if (!rs.next()) {
-					errors.add(ServerErrors.NO_DATA_TO_IMPORT);
+					errors.add(CommonServerErrors.NO_DATA);
 					return false;
 				}
 				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());

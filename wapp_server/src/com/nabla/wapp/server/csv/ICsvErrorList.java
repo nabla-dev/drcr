@@ -23,6 +23,6 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 public interface ICsvErrorList extends IErrorList {
-	void setLine(int line);
-	int getLine();
+	void setLine(Integer line);
+	Integer getLine();
 }

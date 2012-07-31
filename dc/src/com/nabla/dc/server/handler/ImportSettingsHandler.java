@@ -16,15 +16,10 @@
 */
 package com.nabla.dc.server.handler;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -33,46 +28,35 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.Text;
 import org.simpleframework.xml.core.PersistenceException;
-import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.Validate;
-import org.simpleframework.xml.core.ValueRequiredException;
 import org.simpleframework.xml.strategy.Type;
 import org.simpleframework.xml.strategy.Visitor;
-import org.simpleframework.xml.strategy.VisitorStrategy;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.NodeMap;
 import org.simpleframework.xml.stream.OutputNode;
 
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
-import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
-import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
-import com.nabla.wapp.server.xml.SimpleMatcher;
+import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
 public class ImportSettingsHandler extends AbstractHandler<ImportSettings, StringResult> {
-
-	private static final String		XML_ROW_COL = "[row,col]:[";
 
 	@Root
 	static class Role {
@@ -287,7 +271,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	}
 
 	private boolean add(final ImportSettings cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final Settings settings = readSettings(cmd.getBatchId(), ctx.getReadConnection(), errors);
+		final Settings settings = new Importer(ctx.getReadConnection(), errors).read(Settings.class, cmd.getBatchId());
 		if (settings == null)
 			return false;
 			/*	final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
@@ -320,76 +304,6 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 					guard.close();
 				}*/
 		return true;
-	}
-
-	private Settings readSettings(final Integer batchId, final Connection conn, final ImportErrorManager errors) throws DispatchException, SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT content FROM import_data WHERE id=?;", batchId);
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			try {
-				if (!rs.next()) {
-					errors.add(ServerErrors.NO_DATA_TO_IMPORT);
-					return null;
-				}
-				final CurrentXmlLine currentLine = new CurrentXmlLine(errors);
-				final Serializer serializer = new Persister(new VisitorStrategy(currentLine), new SimpleMatcher());
-				try {
-					final Settings settings = serializer.read(Settings.class, rs.getBinaryStream("content"));
-					return /*settings.validate(conn, errors) ?*/ settings /*: null*/;
-				} catch (final InvocationTargetException e) {
-					if (log.isDebugEnabled())
-						log.debug("reflection wrapped an exception thrown during deserialization");
-					final Throwable ee = e.getCause();
-					if (ee == null) {
-						if (log.isErrorEnabled())
-							log.error("error while deserializing xml request", e);
-						errors.add(CommonServerErrors.INTERNAL_ERROR);
-					} else if (ee.getClass().equals(ValidationException.class)) {
-						final Map.Entry<String, String> error = ((ValidationException)ee).getError();
-						errors.add(error.getKey(), error.getValue());
-					} else {
-						if (log.isErrorEnabled())
-							log.error("error while deserializing xml request", ee);
-						errors.add(ee.getLocalizedMessage());
-					}
-				} catch (final ValueRequiredException e) {
-					if (log.isDebugEnabled())
-						log.debug("required value", e);
-					errors.add(extractFieldName(e), CommonServerErrors.REQUIRED_VALUE);
-				} catch (final PersistenceException e) {
-					if (log.isDebugEnabled())
-						log.debug("deserialization error", e);
-					errors.add(extractFieldName(e), CommonServerErrors.INVALID_VALUE);
-				} catch (final Exception e) {
-					if (log.isDebugEnabled())
-						log.debug("error", e);
-					errors.add(e.getLocalizedMessage());
-				}
-				return null;
-			} finally {
-				Database.close(rs);
-			}
-		} finally {
-			Database.close(stmt);
-		}
-	}
-
-	private static String extractFieldName(final PersistenceException e) {
-		// looking for ...'field name'...
-		final String[] matches = e.getMessage().split("'");
-		return (matches.length < 3) ? "?" : matches[1];
-	}
-
-	private static Integer extractLine(final PersistenceException e) {
-		final String message = e.getMessage();
-		// looking for [row,col]:[x,x]
-		int from = message.indexOf(XML_ROW_COL);
-		if (from < 0)
-			return null;
-		from += XML_ROW_COL.length();
-		int to = message.indexOf(',', from);
-		return Integer.valueOf(message.substring(from, to));
 	}
 
 }
