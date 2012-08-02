@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.server.handler;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -38,14 +39,22 @@ import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.wapp.server.auth.IUserSessionContext;
+import com.nabla.wapp.server.auth.UserManager;
+import com.nabla.wapp.server.basic.general.UserPreference;
+import com.nabla.wapp.server.csv.ICsvErrorList;
+import com.nabla.wapp.server.database.ConnectionTransactionGuard;
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.xml.Importer;
+import com.nabla.wapp.shared.auth.IRootUser;
+import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 
 /**
  * @author nabla
@@ -59,6 +68,24 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		String			name;
 		@ElementList(entry="role", required=false)
 		List<String>	definition;
+
+		@Validate
+		public void validate() {
+
+		}
+
+		public boolean save(final UserManager userManager, final ICsvErrorList errors) throws SQLException {
+			if (IRootUser.NAME.equalsIgnoreCase(name)){	// ROOT name not allowed
+				errors.add("name", CommonServerErrors.INVALID_VALUE);
+				return false;
+			}
+			final Integer id = userManager.addRole(name);
+			if (id == null) {
+				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
+				return false;
+			}
+			return true;
+		}
 	}
 
 	@Root
@@ -200,8 +227,6 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	@Root(name="dc-settings",strict=false)
 	static class Settings {
 
-		@ElementList(entry="privilege", required=false)
-		List<String>						privileges;
 		@ElementList(required=false)
 		List<Role>							roles;
 		@ElementList(required=false)
@@ -213,8 +238,38 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		@ElementList(required=false)
 		List<Company>						companies;
 
-/*		public boolean validate(final Connection conn, final ImportErrorManager errors) throws SQLException {
-		}*/
+		public void clearOldValues(final Connection conn) throws SQLException {
+			Database.executeUpdate(conn,
+"DELETE FROM company, fa_asset_category, fa_fs_category;");
+			Database.executeUpdate(conn,
+"DELETE FROM user WHERE name NOT LIKE ?;", IRootUser.NAME);
+		}
+
+		public boolean save(final Connection conn, final ICsvErrorList errors) throws SQLException {
+			errors.setLine(null);
+			final UserManager userManager = new UserManager(conn);
+			for (Role role : roles) {
+				if (!role.save(userManager, errors) && errors.isFull())
+					return false;
+			}
+
+			/*					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
+								final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
+								try {
+									final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), errors);
+									try {
+										if (!csv.read(cmd, stmt))
+											return false;
+									} finally {
+										csv.close();
+									}
+									stmt.execute();
+								} finally {
+									stmt.close();
+								}*/
+
+			return false;
+		}
 	}
 
 	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);
@@ -243,40 +298,23 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		return null;
 	}
 
-	private boolean add(final ImportSettings cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	private boolean add(final ImportSettings cmd, final ICsvErrorList errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final Settings settings = new Importer(ctx.getReadConnection(), errors).read(Settings.class, cmd.getBatchId());
 		if (settings == null)
 			return false;
-			/*	final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
-				try {
-					SqlInsertOptions option = cmd.getOverwrite();
-					if (option == SqlInsertOptions.REPLACE) {
-						Database.executeUpdate(ctx.getWriteConnection(),
-"UPDATE account SET uname=NULL WHERE company_id=?;", cmd.getCompanyId());
-						option = SqlInsertOptions.OVERWRITE;
-					}
-					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
-					final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
-					try {
-						final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), errors);
-						try {
-							if (!csv.read(cmd, stmt))
-								return false;
-						} finally {
-							csv.close();
-						}
-						stmt.execute();
-					} finally {
-						stmt.close();
-					}
-					UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.ROW_HEADER, cmd.isRowHeader());
-					UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.OVERWRITE, cmd.getOverwrite());
-					guard.setSuccess();
-					return true;
-				} finally {
-					guard.close();
-				}*/
-		return true;
+		final Connection conn = ctx.getWriteConnection();
+		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
+		try {
+			SqlInsertOptions option = cmd.getOverwrite();
+			if (option == SqlInsertOptions.REPLACE) {
+				settings.clearOldValues(conn);
+				option = SqlInsertOptions.OVERWRITE;
+			}
+			UserPreference.save(ctx, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
+			return guard.setSuccess(settings.save(conn, errors));
+		} finally {
+			guard.close();
+		}
 	}
 
 }

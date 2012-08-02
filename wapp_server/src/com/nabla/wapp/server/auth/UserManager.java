@@ -232,7 +232,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 	public Integer addRole(final String name) throws SQLException {
 		Assert.argumentNotNull(name);
 
-		if (name.equalsIgnoreCase(IRootUser.NAME))	// ROOT name not allowed
+		if (IRootUser.NAME.equalsIgnoreCase(name))	// ROOT name not allowed
 			return null;
 		return Database.addUniqueRecord(conn,
 "INSERT INTO role (name,uname) VALUES(?,?);", name, name.toUpperCase());

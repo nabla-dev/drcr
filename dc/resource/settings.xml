@@ -1,9 +1,7 @@
 <dc-settings>
-	<privileges>
-		<privilege>CMR Estates</privilege>
-		<privilege>CMR Leisure</privilege>
-	</privileges>
 	<roles>
+		<role><name>CMR Estates</name></role>
+		<role><name>CMR Leisure</name></role>
 		<role>
 			<name>Group Accountant</name>
 			<definition>
