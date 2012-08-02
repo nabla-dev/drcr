@@ -16,6 +16,8 @@
 */
 package com.nabla.wapp.server.xml;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.core.PersistenceException;
 
 /**
@@ -25,6 +27,7 @@ import org.simpleframework.xml.core.PersistenceException;
 public abstract class Util {
 
 	private static final String		ROW_COL = "[row,col]:[";
+	private static final Log		log = LogFactory.getLog(Util.class);
 
 	public static String extractFieldName(final PersistenceException e) {
 		final String message = e.getMessage();
@@ -34,7 +37,7 @@ public abstract class Util {
 			if (matches.length > 2)
 				return matches[1];
 		}
-		return "?";
+		return null;
 	}
 
 	public static Integer extractLine(final Exception e) {
@@ -45,8 +48,14 @@ public abstract class Util {
 			if (from >= 0) {
 				from += ROW_COL.length();
 				int to = message.indexOf(',', from);
-				if (to > from)
-					return Integer.valueOf(message.substring(from, to));
+				if (to > from) {
+					final String row = message.substring(from, to);
+					try {
+						return Integer.valueOf(row);
+					} catch (Throwable x) {
+						log.warn("fail to convert " + row + " to a row", x);
+					}
+				}
 			}
 		}
 		return null;

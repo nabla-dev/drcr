@@ -1671,7 +1671,7 @@
 				<asset_category financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</asset_category>
 				<asset_category financial_statement_category="Plant &amp; Machinery">Commercial Vehicles (20%)</asset_category>
 				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
-				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</name>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Office Equipment (15%)</asset_category>																			
 			</asset_categories>
 			<accounts>
 <account>
@@ -1736,32 +1736,32 @@
 </account>
 <account>
 <code>0071</code>
-<name>ACCUM DEP'N - PLANT &amp; EQUIP</name>
+<name>ACCUM DEP&apos;N - PLANT &amp; EQUIP</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0072</code>
-<name>ACCUM DEP'N - FIX &amp; FIT</name>
+<name>ACCUM DEP&apos;N - FIX &amp; FIT</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0073</code>
-<name>ACCUM DEP'N - OFFICE EQUIP</name>
+<name>ACCUM DEP&apos;N - OFFICE EQUIP</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0074</code>
-<name>ACCUM DEP'N - COMPUTERS</name>
+<name>ACCUM DEP&apos;N - COMPUTERS</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0075</code>
-<name>ACCUM DEP'N - MOTOR VEHICLES</name>
+<name>ACCUM DEP&apos;N - MOTOR VEHICLES</name>
 <bs>true</bs>
 </account>
 <account>
 <code>0076</code>
-<name>ACCUM DEP'N - COMMERCIAL VEH</name>
+<name>ACCUM DEP&apos;N - COMMERCIAL VEH</name>
 <bs>true</bs>
 </account>
 <account>
@@ -1796,7 +1796,7 @@
 </account>
 <account>
 <code>1306</code>
-<name>DRIVERS' CASH FLOATS</name>
+<name>DRIVERS&apos; CASH FLOATS</name>
 <bs>true</bs>
 </account>
 <account>
@@ -2588,7 +2588,7 @@
 				<asset_category financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</asset_category>
 				<asset_category financial_statement_category="Plant &amp; Machinery">Commercial Vehicles (20%)</asset_category>
 				<asset_category financial_statement_category="Goodwill">Goodwill (10 years)</asset_category>
-				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Office Equipment (15%)</asset_category>																			<name financial_statement_category="Plant &amp; Machinery">Plant &amp; Machinery (20%)</name>
+				<asset_category financial_statement_category="Fixtures, Fittings &amp; Equipment">Office Equipment (15%)</asset_category>																			
 			</asset_categories>
 			<accounts>
 <account>
@@ -2603,7 +2603,7 @@
 </account>
 <account>
 <code>0011</code>
-<name>ACCUM DEP'N - COMMERCIAL VEHICLES</name>
+<name>ACCUM DEP&apos;N - COMMERCIAL VEHICLES</name>
 <bs>true</bs>
 </account>
 <account>
@@ -2623,7 +2623,7 @@
 </account>
 <account>
 <code>0031</code>
-<name>ACCUM DEP'N - OFFICE EQUIPMENT</name>
+<name>ACCUM DEP&apos;N - OFFICE EQUIPMENT</name>
 <bs>true</bs>
 </account>
 <account>
@@ -2633,7 +2633,7 @@
 </account>
 <account>
 <code>0041</code>
-<name>ACCUM DEP'N - FIXTURES &amp; FITTINGS</name>
+<name>ACCUM DEP&apos;N - FIXTURES &amp; FITTINGS</name>
 <bs>true</bs>
 </account>
 <account>
@@ -2643,7 +2643,7 @@
 </account>
 <account>
 <code>0051</code>
-<name>ACCUM DEP'N - MOTOR VEHICLES</name>
+<name>ACCUM DEP&apos;N - MOTOR VEHICLES</name>
 <bs>true</bs>
 </account>
 <account>

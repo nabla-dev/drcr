@@ -31,11 +31,6 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Validate;
-import org.simpleframework.xml.strategy.Type;
-import org.simpleframework.xml.strategy.Visitor;
-import org.simpleframework.xml.stream.InputNode;
-import org.simpleframework.xml.stream.NodeMap;
-import org.simpleframework.xml.stream.OutputNode;
 
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
@@ -64,7 +59,6 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		String			name;
 		@ElementList(entry="role", required=false)
 		List<String>	definition;
-
 	}
 
 	@Root
@@ -183,20 +177,20 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		Date						start_date;
 		@ElementList(entry="asset_category", required=false)
 		List<CompanyAssetCategory>	asset_categories;
-		@ElementList(entry="user", required=false)
-		List<CompanyUser>			users;
 		@ElementList(required=false)
 		List<Account>				accounts;
+		@ElementList(entry="user", required=false)
+		List<CompanyUser>			users;
 
 		@Validate
 		public void validate() throws PersistenceException {
 			if (visible == null)
 				visible = false;
 			if (asset_categories != null && !asset_categories.isEmpty()) {
-				final Set<String>	categories = new HashSet<String>();
+				final Set<String> categories = new HashSet<String>();
 				for (CompanyAssetCategory category : asset_categories) {
 					if (categories.contains(category.asset_category))
-						throw new PersistenceException("company asset category '" + category.asset_category + "' already defined");
+						throw new PersistenceException("asset category ''%s'' already defined for company ''%s''", category.asset_category, name);
 					categories.add(category.asset_category);
 				}
 			}
@@ -221,27 +215,6 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 
 /*		public boolean validate(final Connection conn, final ImportErrorManager errors) throws SQLException {
 		}*/
-	}
-
-	static class CurrentXmlLine implements Visitor {
-
-		private final ImportErrorManager	errors;
-
-		public CurrentXmlLine(final ImportErrorManager errors) {
-			this.errors = errors;
-		}
-
-		@Override
-		public void read(@SuppressWarnings("unused") Type arg0, NodeMap<InputNode> node) throws Exception {
-			int nodeLine = node.getNode().getPosition().getLine();
-			if (nodeLine > errors.getLine())
-				errors.setLine(nodeLine);
-		}
-
-		@Override
-		public void write(@SuppressWarnings("unused") Type arg0, @SuppressWarnings("unused") NodeMap<OutputNode> arg1) throws Exception {
-		}
-
 	}
 
 	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);

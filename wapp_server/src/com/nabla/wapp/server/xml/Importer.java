@@ -31,6 +31,7 @@ import org.simpleframework.xml.core.ElementException;
 import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.ValueRequiredException;
+import org.simpleframework.xml.strategy.VisitorStrategy;
 
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
@@ -43,7 +44,7 @@ import com.nabla.wapp.shared.model.ValidationException;
  * @author nabla64
  *
  */
-public class Importer extends Persister {
+public class Importer {
 
 	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
 	private static final Log		log = LogFactory.getLog(Importer.class);
@@ -51,12 +52,14 @@ public class Importer extends Persister {
 	private final Connection		conn;
 	private final String			sql;
 	private final ICsvErrorList	errors;
+	private final CurrentXmlLine	currentLine = new CurrentXmlLine();
+	private final Persister			impl;
 
 	public Importer(final Connection conn, final String sql, final ICsvErrorList errors) {
-		super(new SimpleMatcher());
 		this.conn = conn;
 		this.sql = sql;
 		this.errors = errors;
+		impl = new Persister(new VisitorStrategy(currentLine), new SimpleMatcher());
 	}
 
 	public Importer(final Connection conn, final ICsvErrorList errors) {
@@ -72,11 +75,13 @@ public class Importer extends Persister {
 					errors.add(CommonServerErrors.NO_DATA);
 					return null;
 				}
+				currentLine.reset();
 				try {
-					return super.read(clazz, rs.getBinaryStream("content"));
+					return impl.read(clazz, rs.getBinaryStream("content"));
 				} catch (final InvocationTargetException e) {
 					if (log.isDebugEnabled())
 						log.debug("reflection wrapped an exception thrown during deserialization");
+					errors.setLine(currentLine.getValue());
 					final Throwable ee = e.getCause();
 					if (ee == null) {
 						if (log.isErrorEnabled())
@@ -93,26 +98,25 @@ public class Importer extends Persister {
 				} catch (final ValueRequiredException e) {
 					if (log.isDebugEnabled())
 						log.debug("required value", e);
-					errors.setLine(Util.extractLine(e));
+					errors.setLine(getCurrentLine(e));
 					errors.add(Util.extractFieldName(e), CommonServerErrors.REQUIRED_VALUE);
 				} catch (final ElementException e) {
-					if (log.isDebugEnabled())
-						log.debug("required value", e);
-					errors.setLine(Util.extractLine(e));
+					errors.setLine(getCurrentLine(e));
 					errors.add(Util.extractFieldName(e), e.getLocalizedMessage());
 				} catch (final PersistenceException e) {
 					if (log.isDebugEnabled())
 						log.debug("deserialization error", e);
-					errors.setLine(Util.extractLine(e));
+					errors.setLine(getCurrentLine(e));
 					errors.add(Util.extractFieldName(e), CommonServerErrors.INVALID_VALUE);
 				} catch (final XMLStreamException e) {
 					if (log.isDebugEnabled())
 						log.debug("XML error", e);
-					errors.setLine(Util.extractLine(e));
+					errors.setLine(getCurrentLine(e));
 					errors.add(e.getLocalizedMessage());
 				} catch (final Exception e) {
 					if (log.isDebugEnabled())
 						log.debug("error", e);
+					errors.setLine(getCurrentLine(e));
 					errors.add(e.getLocalizedMessage());
 				}
 				return null;
@@ -124,4 +128,8 @@ public class Importer extends Persister {
 		}
 	}
 
+	protected int getCurrentLine(final Exception e) {
+		final Integer value = Util.extractLine(e);
+		return (value == null) ? currentLine.getValue() : value;
+	}
 }
