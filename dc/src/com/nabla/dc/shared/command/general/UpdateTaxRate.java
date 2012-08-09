@@ -17,6 +17,7 @@
 package com.nabla.dc.shared.command.general;
 
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -36,7 +37,7 @@ public class UpdateTaxRate extends AddTaxRate {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (name != null) {
 			if (!NAME_CONSTRAINT.validate(NAME, name, errors))
 				return false;

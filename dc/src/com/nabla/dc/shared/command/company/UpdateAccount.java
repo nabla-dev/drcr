@@ -17,6 +17,7 @@
 package com.nabla.dc.shared.command.company;
 
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -36,7 +37,7 @@ public class UpdateAccount extends AddAccount {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		return doValidate(false, errors);
 	}
 

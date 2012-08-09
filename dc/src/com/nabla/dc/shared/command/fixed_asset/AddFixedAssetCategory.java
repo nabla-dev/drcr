@@ -21,6 +21,7 @@ import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -56,7 +57,7 @@ public class AddFixedAssetCategory implements IRecordAction<StringResult>, IFixe
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 		if (NAME_CONSTRAINT.validate(NAME, name, errors))
 			uname = name.toUpperCase();

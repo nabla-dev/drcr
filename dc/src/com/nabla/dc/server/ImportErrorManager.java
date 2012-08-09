@@ -29,6 +29,7 @@ import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.general.Assert;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 
@@ -140,7 +141,7 @@ public class ImportErrorManager implements ICsvErrorList {
 	 * @throws SQLException
 	 */
 	@Override
-	public void add(String fieldName, String error) throws FullErrorListException {
+	public void add(String fieldName, String error) throws DispatchException {
 		if (isFull())
 			throw new FullErrorListException();
 		if (fieldName != null && fieldName.length() > MAX_FIELD_NAME)
@@ -174,21 +175,22 @@ public class ImportErrorManager implements ICsvErrorList {
 			if (log.isErrorEnabled())
 				log.error("failed to save import error to database", e);
 			size = maxErrors;
+			throw new FullErrorListException();
 		}
 	}
 
 	@Override
-	public void add(final String error) {
+	public void add(final String error) throws DispatchException {
 		add(null, error);
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final String columnName, final E error) {
+	public <E extends Enum<E>> void add(final String columnName, final E error) throws DispatchException {
 		add(columnName, error.toString());
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final E error) {
+	public <E extends Enum<E>> void add(final E error) throws DispatchException {
 		add(null, error);
 	}
 

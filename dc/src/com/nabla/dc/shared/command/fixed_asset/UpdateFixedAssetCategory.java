@@ -19,6 +19,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 
@@ -39,7 +40,7 @@ public class UpdateFixedAssetCategory extends AddFixedAssetCategory {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 		if (name != null && NAME_CONSTRAINT.validate(NAME, name, errors))
 			uname = name.toUpperCase();

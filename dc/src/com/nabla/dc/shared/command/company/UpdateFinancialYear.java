@@ -19,6 +19,7 @@ package com.nabla.dc.shared.command.company;
 import com.nabla.dc.shared.model.company.IFinancialYear;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -43,7 +44,7 @@ public class UpdateFinancialYear implements IRecordAction<StringResult>, IFinanc
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		return NAME_CONSTRAINT.validate(NAME, name, errors);
 	}
 

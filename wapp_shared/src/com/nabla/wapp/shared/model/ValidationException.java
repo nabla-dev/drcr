@@ -40,16 +40,12 @@ public class ValidationException extends ActionException implements IErrorList {
 
 	public ValidationException(final String field, final String error) {
 		super(ERROR_CODE);
-		try {
-			add(field, error);
-		} catch (FullErrorListException __) {}
+		add(field, error);
 	}
 
 	public <E extends Enum<E>> ValidationException(final String field, final E error) {
 		super(ERROR_CODE);
-		try {
-			add(field, error);
-		} catch (FullErrorListException e) {}
+		add(field, error);
 	}
 
 	@Override
@@ -63,22 +59,22 @@ public class ValidationException extends ActionException implements IErrorList {
 	}
 
 	@Override
-	public void add(final String field, final String error) throws FullErrorListException {
+	public void add(final String field, final String error) {
 		errors.put(field, error);
 	}
 
 	@Override
-	public void add(final String error) throws FullErrorListException {
+	public void add(final String error) {
 		add("n/a", error);
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final String field, final E error) throws FullErrorListException {
+	public <E extends Enum<E>> void add(final String field, final E error) {
 		add(field, error.toString());
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final E error) throws FullErrorListException {
+	public <E extends Enum<E>> void add(final E error) {
 		add(error.toString());
 	}
 

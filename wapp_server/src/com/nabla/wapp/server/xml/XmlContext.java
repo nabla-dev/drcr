@@ -14,18 +14,21 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.csv;
+package com.nabla.wapp.server.xml;
 
-import com.nabla.wapp.shared.model.FullErrorListException;
+import org.simpleframework.xml.strategy.Strategy;
+import org.simpleframework.xml.strategy.Visitor;
+import org.simpleframework.xml.strategy.VisitorStrategy;
 
 /**
  * @author nabla64
  *
  */
-public interface ICsvReader<T> {
-	enum Status { SUCCESS, ERROR, EOF };
+public class XmlContext extends VisitorStrategy {
 
-	boolean readHeader() throws FullErrorListException;
-	Status next(T instance) throws FullErrorListException;
-	void close();
+	public XmlContext(Visitor visitor, Strategy strategy) {
+		super(visitor, strategy);
+		// TODO Auto-generated constructor stub
+	}
+
 }

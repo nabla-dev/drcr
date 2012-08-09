@@ -33,6 +33,7 @@ import org.supercsv.prefs.CsvPreference;
 
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.csv.ICsvField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -81,7 +82,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 	}
 
 	@Override
-	public boolean readHeader() {
+	public boolean readHeader() throws FullErrorListException {
 		try {
 			errors.setLine(1);
 			String[] labels;
@@ -107,7 +108,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 					columns.add(column);
 			}
 			return errors.isEmpty();
-		} catch (FullErrorListException __) {
+		} catch (DispatchException __) {
 			return false;
 		}
 	}
@@ -117,7 +118,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 	}
 
 	@Override
-	public Status next(T instance) {
+	public Status next(T instance) throws FullErrorListException {
 		Assert.argumentNotNull(instance);
 
 		try {
@@ -157,7 +158,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 				return Status.ERROR;
 			}
 			return errors.isEmpty() ? Status.SUCCESS : Status.ERROR;
-		} catch (FullErrorListException __) {
+		} catch (DispatchException __) {
 			return Status.ERROR;
 		}
 	}

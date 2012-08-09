@@ -17,6 +17,7 @@
 package com.nabla.dc.shared.command.general;
 
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -36,7 +37,7 @@ public class UpdateECTerm extends AddECTerm {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		return (name == null) ? true : super.validate(errors);
 	}
 

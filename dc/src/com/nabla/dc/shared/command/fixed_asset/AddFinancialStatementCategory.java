@@ -19,6 +19,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -45,7 +46,7 @@ public class AddFinancialStatementCategory implements IRecordAction<StringResult
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
 			return false;
 		uname = name.toUpperCase();

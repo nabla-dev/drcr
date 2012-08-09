@@ -20,6 +20,7 @@ import com.nabla.dc.shared.model.company.IAccount;
 import com.nabla.wapp.shared.csv.ICsvField;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -66,11 +67,11 @@ public class AddAccount implements IRecordAction<StringResult>, IAccount {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		return doValidate(true, errors);
 	}
 
-	protected boolean doValidate(boolean add, final IErrorList errors) {
+	protected boolean doValidate(boolean add, final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 		if (add || code != null)
 			CODE_CONSTRAINT.validate(CODE, code, errors);

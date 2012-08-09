@@ -19,6 +19,7 @@ package com.nabla.dc.shared.command.company;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -48,7 +49,7 @@ public class UpdateCompany implements IRecordAction<StringResult>, ICompany {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (name == null)
 			return true;
 		if (!NAME_CONSTRAINT.validate(NAME, name, errors))

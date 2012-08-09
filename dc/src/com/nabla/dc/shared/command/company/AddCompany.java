@@ -20,6 +20,7 @@ import java.util.Date;
 
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.dc.shared.model.company.IFinancialYear;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
@@ -44,7 +45,7 @@ public class AddCompany implements IRecordAction<StringResult> {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors);
 		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors);
