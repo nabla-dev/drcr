@@ -34,6 +34,7 @@ import org.supercsv.prefs.CsvPreference;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.csv.ICsvField;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -59,11 +60,11 @@ public class CsvReader<T> implements ICsvReader<T> {
 	private final ICsvListReader			impl;
 	private final ArrayList<ICsvColumn>	columns = new ArrayList<ICsvColumn>();
 	private Method							validate;
-	
+
 	public CsvReader(final Reader reader, final Class<T> recordClass, final ICsvErrorList errors) {
 		Assert.argumentNotNull(recordClass);
 		Assert.argumentNotNull(errors);
-		
+
 		this.errors = errors;
 //		this.recordClass = recordClass;
 		impl = new CsvListReader(reader, CsvPreference.STANDARD_PREFERENCE);
@@ -78,90 +79,94 @@ public class CsvReader<T> implements ICsvReader<T> {
 	public ICsvErrorList getErrors() {
 		return errors;
 	}
-	
+
 	@Override
 	public boolean readHeader() {
-		errors.setLine(1);
-		String[] labels;
 		try {
-			labels = impl.getCSVHeader(true);
-		} catch (IOException e) {
-			if (log.isErrorEnabled())
-				log.error("error while reading csv header", e);
-			errors.add(CommonServerErrors.INTERNAL_ERROR);
+			errors.setLine(1);
+			String[] labels;
+			try {
+				labels = impl.getCSVHeader(true);
+			} catch (IOException e) {
+				if (log.isErrorEnabled())
+					log.error("error while reading csv header", e);
+				errors.add(CommonServerErrors.INTERNAL_ERROR);
+				return false;
+			}
+			if (labels == null) {
+				errors.add(CommonServerErrors.NO_DATA);
+				return false;
+			}
+			columns.clear();
+			for (int i = 0; i < labels.length; ++i) {
+				labels[i] = labels[i].toLowerCase();
+				final ICsvColumn column = expectedColumns.get(labels[i].toLowerCase());
+				if (column == null) {
+					errors.add(labels[i], CommonServerErrors.UNSUPPORTED_FIELD);
+				} else
+					columns.add(column);
+			}
+			return errors.isEmpty();
+		} catch (FullErrorListException __) {
 			return false;
 		}
-		if (labels == null) {
-			errors.add(CommonServerErrors.NO_DATA);
-			return false;
-		}
-		columns.clear();
-		for (int i = 0; i < labels.length; ++i) {
-			labels[i] = labels[i].toLowerCase();
-			final ICsvColumn column = expectedColumns.get(labels[i].toLowerCase());
-			if (column == null) {
-				errors.add(labels[i], CommonServerErrors.UNSUPPORTED_FIELD);
-				if (errors.isFull())
-					return false;
-			} else
-				columns.add(column);
-		}
-		return errors.isEmpty();
 	}
-	
+
 	public int getLineNumber() {
 		return impl.getLineNumber();
 	}
-	
+
 	@Override
 	public Status next(T instance) {
 		Assert.argumentNotNull(instance);
-		
-		List<String> values;
+
 		try {
-			values = impl.read();
-		} catch (IOException e) {
-			if (log.isErrorEnabled())
-				log.error("error while reading next csv line", e);
-			errors.setLine(getLineNumber());
-			errors.add(CommonServerErrors.INTERNAL_ERROR);
-			return Status.ERROR;
-		}
-		if (values == null)
-			return Status.EOF;
-		errors.setLine(getLineNumber());
-		if (columns.size() != values.size()) {
-			errors.add(CommonServerErrors.INVALID_FIELD_COUNT);
-			return Status.ERROR;
-		}
-		for (int c = 0; c < columns.size(); ++c) {
+			List<String> values;
 			try {
-				columns.get(c).setValue(instance, values.get(c));
-			} catch (Throwable e) {
+				values = impl.read();
+			} catch (IOException e) {
 				if (log.isErrorEnabled())
 					log.error("error while reading next csv line", e);
-				errors.add(columns.get(c).getName(), CommonServerErrors.INVALID_VALUE);
-				if (errors.isFull())
-					return Status.ERROR;
+				errors.setLine(getLineNumber());
+				errors.add(CommonServerErrors.INTERNAL_ERROR);
+				return Status.ERROR;
 			}
-		}
-		try {
-			if (validate != null)
-				validate.invoke(instance, errors);
-		} catch (Throwable e) {
-			if (log.isErrorEnabled())
-				log.error("error while validating next csv line", e);
-			errors.add(CommonServerErrors.INTERNAL_ERROR);
+			if (values == null)
+				return Status.EOF;
+			errors.setLine(getLineNumber());
+			if (columns.size() != values.size()) {
+				errors.add(CommonServerErrors.INVALID_FIELD_COUNT);
+				return Status.ERROR;
+			}
+			for (int c = 0; c < columns.size(); ++c) {
+				try {
+					columns.get(c).setValue(instance, values.get(c));
+				} catch (Throwable e) {
+					if (log.isErrorEnabled())
+						log.error("error while reading next csv line", e);
+					errors.add(columns.get(c).getName(), CommonServerErrors.INVALID_VALUE);
+				}
+			}
+			try {
+				if (validate != null)
+					validate.invoke(instance, errors);
+			} catch (Throwable e) {
+				if (log.isErrorEnabled())
+					log.error("error while validating next csv line", e);
+				errors.add(CommonServerErrors.INTERNAL_ERROR);
+				return Status.ERROR;
+			}
+			return errors.isEmpty() ? Status.SUCCESS : Status.ERROR;
+		} catch (FullErrorListException __) {
 			return Status.ERROR;
 		}
-		return errors.isEmpty() ? Status.SUCCESS : Status.ERROR;
 	}
-	
+
 	@Override
 	public void close() {
 		try { impl.close(); } catch (IOException e) {}
 	}
-	
+
 	private void buildColumnList(final Class recordClass) {
 		if (recordClass != null) {
 			for (Field field : recordClass.getDeclaredFields()) {
@@ -179,5 +184,5 @@ public class CsvReader<T> implements ICsvReader<T> {
 			buildColumnList(recordClass.getSuperclass());
 		}
 	}
-	
+
 }

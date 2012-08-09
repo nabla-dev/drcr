@@ -14,15 +14,19 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.validator;
+package com.nabla.wapp.shared.model;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.model.IErrorList;
+
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public interface IValueConstraint<ValueType> {
-	boolean validate(final String field, final ValueType value, final IErrorList errors) throws DispatchException;
+public class FullErrorListException extends DispatchException {
+
+	private static final long serialVersionUID = 1L;
+
+    public FullErrorListException() {}
+
 }

@@ -16,6 +16,7 @@
 */
 package com.nabla.wapp.shared.validator;
 
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -38,7 +39,7 @@ public class RegexConstraint extends TextLengthConstraint {
 	}
 
 	@Override
-	public boolean validate(final String field, final String value, final IErrorList errors) {
+	public boolean validate(final String field, final String value, final IErrorList errors) throws DispatchException {
 		if (!super.validate(field, value, errors))
 			return false;
 		if (value != null && !value.matches(expression)) {

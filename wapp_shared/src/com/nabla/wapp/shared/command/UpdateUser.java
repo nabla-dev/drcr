@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
 
@@ -44,7 +45,7 @@ public class UpdateUser extends AddUser {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (name != null) {
 			if (!IUser.NAME_CONSTRAINT.validate(NAME, name, errors))
 				return false;

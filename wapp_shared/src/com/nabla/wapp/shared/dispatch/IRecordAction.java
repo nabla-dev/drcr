@@ -23,5 +23,5 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 public interface IRecordAction<R extends IResult> extends IAction<R> {
-	boolean validate(final IErrorList errors);
+	boolean validate(final IErrorList errors) throws DispatchException;
 }

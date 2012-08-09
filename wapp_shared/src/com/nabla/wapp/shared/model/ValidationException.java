@@ -40,12 +40,16 @@ public class ValidationException extends ActionException implements IErrorList {
 
 	public ValidationException(final String field, final String error) {
 		super(ERROR_CODE);
-		add(field, error);
+		try {
+			add(field, error);
+		} catch (FullErrorListException __) {}
 	}
 
 	public <E extends Enum<E>> ValidationException(final String field, final E error) {
 		super(ERROR_CODE);
-		add(field, error);
+		try {
+			add(field, error);
+		} catch (FullErrorListException e) {}
 	}
 
 	@Override
@@ -59,22 +63,22 @@ public class ValidationException extends ActionException implements IErrorList {
 	}
 
 	@Override
-	public void add(final String field, final String error) {
+	public void add(final String field, final String error) throws FullErrorListException {
 		errors.put(field, error);
 	}
 
 	@Override
-	public void add(final String error) {
+	public void add(final String error) throws FullErrorListException {
 		add("n/a", error);
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final String field, final E error) {
+	public <E extends Enum<E>> void add(final String field, final E error) throws FullErrorListException {
 		add(field, error.toString());
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final E error) {
+	public <E extends Enum<E>> void add(final E error) throws FullErrorListException {
 		add(error.toString());
 	}
 
@@ -99,11 +103,6 @@ public class ValidationException extends ActionException implements IErrorList {
 		for (final Map.Entry<String, String> e : errors.entrySet())
 				ret.put(e.getKey(), resource.getString(e.getValue()));
 		return ret;
-	}
-
-	@Override
-	public boolean isFull() {
-		return false;
 	}
 
 }

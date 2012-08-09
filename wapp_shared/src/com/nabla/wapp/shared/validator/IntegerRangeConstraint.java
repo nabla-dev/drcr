@@ -16,6 +16,7 @@
 */
 package com.nabla.wapp.shared.validator;
 
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -47,11 +48,11 @@ public class IntegerRangeConstraint implements IValueConstraint<Integer> {
 	}
 
 	@Override
-	public boolean validate(final String field, final Integer value, final IErrorList errors) {
+	public boolean validate(final String field, final Integer value, final IErrorList errors) throws DispatchException {
 		return validate(field, value, CommonServerErrors.INVALID_VALUE, errors);
 	}
 
-	public <E extends Enum<E>> boolean validate(final String field, final Integer value, final E error, final IErrorList errors) {
+	public <E extends Enum<E>> boolean validate(final String field, final Integer value, final E error, final IErrorList errors) throws DispatchException {
 		if (value == null) {
 			errors.add(field, CommonServerErrors.REQUIRED_VALUE);
 			return false;

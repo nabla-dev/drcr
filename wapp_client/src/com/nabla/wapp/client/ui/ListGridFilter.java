@@ -27,6 +27,7 @@ import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.model.data.ListGridFilterRecord;
 import com.nabla.wapp.client.server.IDispatchAsync;
 import com.nabla.wapp.shared.command.AddListGridFilter;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.model.IListGridFilter;
 import com.nabla.wapp.shared.model.ValidationException;
@@ -190,8 +191,10 @@ public class ListGridFilter extends VLayout {
 				if (name != null && !name.isEmpty()) {
 					final String value = JSON.encode(criteria.getJsObj());
 					final ValidationException x = new ValidationException();
-					IListGridFilter.NAME_CONSTRAINT.validate(IListGridFilter.NAME, name, x);
-					IListGridFilter.VALUE_CONSTRAINT.validate(IListGridFilter.VALUE, value, x);
+					try {
+						IListGridFilter.NAME_CONSTRAINT.validate(IListGridFilter.NAME, name, x);
+						IListGridFilter.VALUE_CONSTRAINT.validate(IListGridFilter.VALUE, value, x);
+					} catch (DispatchException _) {}
 					if (x.isEmpty()) {
 						saveFilter(name, value);
 					} else {

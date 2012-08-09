@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -55,6 +56,7 @@ import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -70,15 +72,12 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		List<String>	definition;
 
 		@Validate
-		public void validate() {
-
+		public void validate(Map session) throws ValidationException {
+			if (IRootUser.NAME.equalsIgnoreCase(name))	// ROOT name not allowed
+				throw new ValidationException("name", CommonServerErrors.INVALID_VALUE);
 		}
 
 		public boolean save(final UserManager userManager, final ICsvErrorList errors) throws SQLException {
-			if (IRootUser.NAME.equalsIgnoreCase(name)){	// ROOT name not allowed
-				errors.add("name", CommonServerErrors.INVALID_VALUE);
-				return false;
-			}
 			final Integer id = userManager.addRole(name);
 			if (id == null) {
 				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);

@@ -30,6 +30,7 @@ import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.general.UserSession;
 import com.nabla.wapp.shared.auth.ILoginUserRemoteService;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.ValidationException;
 
@@ -53,8 +54,10 @@ public class LoginUserService extends RemoteServiceServlet implements ILoginUser
 	@Override
 	public String execute(String userName, String password) {
 		final ValidationException x = new ValidationException();
-		IUser.NAME_CONSTRAINT.validate("user name", userName, x);
-		IUser.PASSWORD_CONSTRAINT.validate("password", password, x);
+		try {
+			IUser.NAME_CONSTRAINT.validate("user name", userName, x);
+			IUser.PASSWORD_CONSTRAINT.validate("password", password, x);
+		} catch (DispatchException __) {}
 		if (x.isEmpty()) {
 			try {
 				final Connection conn = db.getConnection();

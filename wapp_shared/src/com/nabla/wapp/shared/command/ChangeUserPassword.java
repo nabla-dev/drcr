@@ -16,6 +16,7 @@
 */
 package com.nabla.wapp.shared.command;
 
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -38,7 +39,7 @@ public class ChangeUserPassword implements IRecordAction<StringResult>, IUser {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 		NAME_CONSTRAINT.validate(NAME, name, errors);
 		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors);

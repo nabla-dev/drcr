@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -40,7 +41,7 @@ public class UpdateRole extends AddRole {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (!super.validate(errors))
 			return false;
 		uname = name.toUpperCase();

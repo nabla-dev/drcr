@@ -16,16 +16,17 @@
 */
 package com.nabla.wapp.shared.model;
 
+import com.nabla.wapp.shared.dispatch.DispatchException;
+
 /**
  * @author nabla64
  *
  */
 public interface IErrorList {
 	boolean isEmpty();
-	boolean isFull();
 	int size();
-	void add(final String field, final String error);
-	void add(final String error);
-	<E extends Enum<E>> void add(final String field, final E error);
-	<E extends Enum<E>> void add(final E error);
+	void add(final String field, final String error) throws DispatchException;
+	void add(final String error) throws DispatchException;
+	<E extends Enum<E>> void add(final String field, final E error) throws DispatchException;
+	<E extends Enum<E>> void add(final E error) throws DispatchException;
 }

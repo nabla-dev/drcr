@@ -30,6 +30,7 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.FullErrorListException;
 
 /**
  * @author nabla
@@ -110,7 +111,6 @@ public class ImportErrorManager implements ICsvErrorList {
 	 * Check if maximum number of errors has been reached
 	 * @return true if maximum number of errors has been reached, false otherwise
 	 */
-	@Override
 	public boolean isFull() {
 		return size >= maxErrors;
 	}
@@ -140,40 +140,40 @@ public class ImportErrorManager implements ICsvErrorList {
 	 * @throws SQLException
 	 */
 	@Override
-	public void add(String fieldName, String error) {
-		if (!isFull()) {
-			if (fieldName != null && fieldName.length() > MAX_FIELD_NAME)
-				fieldName = fieldName.substring(0, MAX_FIELD_NAME);
-			if (error == null || error.isEmpty())
-				error = CommonServerErrors.INTERNAL_ERROR.toString();
-			if (error.length() > MAX_ERROR_MESSAGE)
-				error = error.substring(0, MAX_ERROR_MESSAGE);
-			if (log.isTraceEnabled())
-				log.trace("[" + getLine() + "] " + fieldName + ":" + error);
-			try {
-				if (stmt == null) {
-					Database.executeUpdate(conn,
+	public void add(String fieldName, String error) throws FullErrorListException {
+		if (isFull())
+			throw new FullErrorListException();
+		if (fieldName != null && fieldName.length() > MAX_FIELD_NAME)
+			fieldName = fieldName.substring(0, MAX_FIELD_NAME);
+		if (error == null || error.isEmpty())
+			error = CommonServerErrors.INTERNAL_ERROR.toString();
+		if (error.length() > MAX_ERROR_MESSAGE)
+			error = error.substring(0, MAX_ERROR_MESSAGE);
+		if (log.isTraceEnabled())
+			log.trace("[" + getLine() + "] " + fieldName + ":" + error);
+		try {
+			if (stmt == null) {
+				Database.executeUpdate(conn,
 "DELETE FROM import_error WHERE import_data_id=?;", batchId);
-					stmt = conn.prepareStatement(
+				stmt = conn.prepareStatement(
 "INSERT INTO import_error(import_data_id,line_no,field,error) VALUES(?,?,?,?);");
-					stmt.setInt(COL_ID, batchId);
-				}
-				if (getLine() == null)
-					stmt.setNull(COL_LINE_NO, Types.INTEGER);
-				else
-					stmt.setInt(COL_LINE_NO, getLine());
-				if (fieldName == null)
-					stmt.setNull(COL_FIELD, Types.VARCHAR);
-				else
-					stmt.setString(COL_FIELD, fieldName);
-				++size;
-				stmt.setString(COL_ERROR, (size < maxErrors) ? error : ServerErrors.TOO_MANY_ERRORS.toString());
-				stmt.executeUpdate();
-			} catch (SQLException e) {
-				if (log.isErrorEnabled())
-					log.error("failed to save import error to database", e);
-				size = maxErrors;
+				stmt.setInt(COL_ID, batchId);
 			}
+			if (getLine() == null)
+				stmt.setNull(COL_LINE_NO, Types.INTEGER);
+			else
+				stmt.setInt(COL_LINE_NO, getLine());
+			if (fieldName == null)
+				stmt.setNull(COL_FIELD, Types.VARCHAR);
+			else
+				stmt.setString(COL_FIELD, fieldName);
+			++size;
+			stmt.setString(COL_ERROR, (size < maxErrors) ? error : ServerErrors.TOO_MANY_ERRORS.toString());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			if (log.isErrorEnabled())
+				log.error("failed to save import error to database", e);
+			size = maxErrors;
 		}
 	}
 
