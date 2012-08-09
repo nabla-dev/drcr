@@ -31,7 +31,11 @@ import org.simpleframework.xml.core.ElementException;
 import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.ValueRequiredException;
+import org.simpleframework.xml.strategy.Type;
+import org.simpleframework.xml.strategy.Value;
 import org.simpleframework.xml.strategy.VisitorStrategy;
+import org.simpleframework.xml.stream.InputNode;
+import org.simpleframework.xml.stream.NodeMap;
 
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
@@ -48,18 +52,49 @@ public class Importer {
 
 	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
 	private static final Log		log = LogFactory.getLog(Importer.class);
+	private static final String	CTX_KEY = "ctx";
+	private static final String	ERRORS_KEY = "errors";
+
+	class MyVisitorStrategy extends VisitorStrategy {
+
+		private boolean				mapInitialized = false;
+		private final ICsvErrorList	errors;
+		private Object					ctx;
+
+		public MyVisitorStrategy(Object ctx, final ICsvErrorList errors) {
+			super(null);
+			this.errors = errors;
+			this.ctx = ctx;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public Value read(Type type, NodeMap<InputNode> node, Map map) throws Exception {
+			if (!mapInitialized) {
+				if (ctx != null) {
+					map.put(CTX_KEY, ctx);
+					ctx = null;
+				}
+				map.put(ERRORS_KEY, errors);
+				mapInitialized = true;
+			}
+			errors.setLine(node.getNode().getPosition().getLine());
+			return super.read(type, node, map);
+		}
+
+	}
+
 
 	private final Connection		conn;
 	private final String			sql;
 	private final ICsvErrorList	errors;
-	private final CurrentXmlLine	currentLine = new CurrentXmlLine();
 	private final Persister			impl;
 
 	public Importer(final Connection conn, final String sql, final ICsvErrorList errors) {
 		this.conn = conn;
 		this.sql = sql;
 		this.errors = errors;
-		impl = new Persister(new VisitorStrategy(currentLine), new SimpleMatcher());
+		impl = new Persister(new MyVisitorStrategy(errors), new SimpleMatcher());
 	}
 
 	public Importer(final Connection conn, final ICsvErrorList errors) {

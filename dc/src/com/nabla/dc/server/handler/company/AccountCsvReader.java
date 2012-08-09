@@ -24,6 +24,7 @@ import com.nabla.dc.shared.command.company.ImportAccountList;
 import com.nabla.wapp.server.csv.CsvReader;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.BatchInsertStatement;
+import com.nabla.wapp.shared.model.FullErrorListException;
 
 /**
  * @author nabla64
@@ -36,23 +37,25 @@ public class AccountCsvReader extends CsvReader<AddAccount> {
 	}
 
 	public boolean read(final ImportAccountList cmd, final BatchInsertStatement<AddAccount> stmt) throws SQLException {
-		if (cmd.isRowHeader() && !readHeader())
-			return false;
-		final AddAccount record = new AddAccount();
-		record.setCompanyId(cmd.getCompanyId());
-		record.setActive(true);
-		while (true) {
-			switch (next(record)) {
-			case ERROR:
-				if (errors.isFull())
-					return false;
-				break;
-			case SUCCESS:
-				stmt.add(record);
-				break;
-			case EOF:
-				return errors.isEmpty();
+		try {
+			if (cmd.isRowHeader() && !readHeader())
+				return false;
+			final AddAccount record = new AddAccount();
+			record.setCompanyId(cmd.getCompanyId());
+			record.setActive(true);
+			while (true) {
+				switch (next(record)) {
+				case ERROR:
+					break;
+				case SUCCESS:
+					stmt.add(record);
+					break;
+				case EOF:
+					return errors.isEmpty();
+				}
 			}
-		}		
+		} catch (FullErrorListException __) {
+			return false;
+		}
 	}
 }

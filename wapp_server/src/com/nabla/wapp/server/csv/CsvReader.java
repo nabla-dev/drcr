@@ -19,6 +19,7 @@ package com.nabla.wapp.server.csv;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,6 @@ import org.supercsv.prefs.CsvPreference;
 
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.csv.ICsvField;
-import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -108,7 +108,9 @@ public class CsvReader<T> implements ICsvReader<T> {
 					columns.add(column);
 			}
 			return errors.isEmpty();
-		} catch (DispatchException __) {
+		} catch (FullErrorListException e) {
+			throw e;
+		} catch (Throwable e) {
 			return false;
 		}
 	}
@@ -151,14 +153,21 @@ public class CsvReader<T> implements ICsvReader<T> {
 			try {
 				if (validate != null)
 					validate.invoke(instance, errors);
-			} catch (Throwable e) {
+			} catch (final InvocationTargetException e) {
+				final Throwable ee = e.getCause();
 				if (log.isErrorEnabled())
-					log.error("error while validating next csv line", e);
-				errors.add(CommonServerErrors.INTERNAL_ERROR);
-				return Status.ERROR;
+					log.error("error while validating next csv line", ee);
+				if (ee != null && ee.getClass().equals(FullErrorListException.class))
+					throw new FullErrorListException();
+				else {
+					errors.add(CommonServerErrors.INTERNAL_ERROR);
+					return Status.ERROR;
+				}
 			}
 			return errors.isEmpty() ? Status.SUCCESS : Status.ERROR;
-		} catch (DispatchException __) {
+		} catch (FullErrorListException e) {
+			throw e;
+		} catch (Throwable e) {
 			return Status.ERROR;
 		}
 	}
