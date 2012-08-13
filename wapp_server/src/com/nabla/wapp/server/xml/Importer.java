@@ -40,9 +40,9 @@ import org.simpleframework.xml.stream.NodeMap;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
+import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla64
@@ -50,36 +50,35 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public class Importer {
 
-	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
 	private static final Log		log = LogFactory.getLog(Importer.class);
 	private static final String	CTX_KEY = "ctx";
-	private static final String	ERRORS_KEY = "errors";
+	private static final String	ERROR_LIST_KEY = "errors";
+	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
 
-	class MyVisitorStrategy extends VisitorStrategy {
+	static class MyVisitorStrategy extends VisitorStrategy {
 
-		private boolean				mapInitialized = false;
+		private boolean				sessionInitialized = false;
 		private final ICsvErrorList	errors;
 		private Object					ctx;
 
 		public MyVisitorStrategy(Object ctx, final ICsvErrorList errors) {
 			super(null);
+			Assert.argumentNotNull(errors);
 			this.errors = errors;
 			this.ctx = ctx;
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public Value read(Type type, NodeMap<InputNode> node, Map map) throws Exception {
-			if (!mapInitialized) {
-				if (ctx != null) {
-					map.put(CTX_KEY, ctx);
-					ctx = null;
-				}
-				map.put(ERRORS_KEY, errors);
-				mapInitialized = true;
+		public Value read(Type type, NodeMap<InputNode> node, Map session) throws Exception {
+			if (!sessionInitialized) {
+				if (ctx != null)
+					session.put(CTX_KEY, ctx);
+				session.put(ERROR_LIST_KEY, errors);
+				sessionInitialized = true;
 			}
 			errors.setLine(node.getNode().getPosition().getLine());
-			return super.read(type, node, map);
+			return super.read(type, node, session);
 		}
 
 	}
@@ -88,17 +87,34 @@ public class Importer {
 	private final Connection		conn;
 	private final String			sql;
 	private final ICsvErrorList	errors;
-	private final Persister			impl;
+	private final Persister		impl;
 
-	public Importer(final Connection conn, final String sql, final ICsvErrorList errors) {
+	public Importer(final Connection conn, final String sql, Object ctx, final ICsvErrorList errors) {
 		this.conn = conn;
 		this.sql = sql;
 		this.errors = errors;
-		impl = new Persister(new MyVisitorStrategy(errors), new SimpleMatcher());
+		impl = new Persister(new MyVisitorStrategy(ctx, errors), new SimpleMatcher());
+	}
+
+	public Importer(final Connection conn, Object ctx, final ICsvErrorList errors) {
+		this(conn, DEFAULT_SQL, ctx, errors);
 	}
 
 	public Importer(final Connection conn, final ICsvErrorList errors) {
-		this(conn, DEFAULT_SQL, errors);
+		this(conn, null, errors);
+	}
+
+	public static ICsvErrorList getErrors(Map session) {
+		if (session == null)
+			return null;
+		return (ICsvErrorList)session.get(ERROR_LIST_KEY);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T getContext(Map session) {
+		if (session == null)
+			return null;
+		return (T) session.get(CTX_KEY);
 	}
 
 	public <T> T read(final Class<T> clazz, final Integer dataId)  throws DispatchException, SQLException {
@@ -110,48 +126,33 @@ public class Importer {
 					errors.add(CommonServerErrors.NO_DATA);
 					return null;
 				}
-				currentLine.reset();
 				try {
 					return impl.read(clazz, rs.getBinaryStream("content"));
 				} catch (final InvocationTargetException e) {
 					if (log.isDebugEnabled())
-						log.debug("reflection wrapped an exception thrown during deserialization");
-					errors.setLine(currentLine.getValue());
-					final Throwable ee = e.getCause();
-					if (ee == null) {
-						if (log.isErrorEnabled())
-							log.error("error while deserializing xml request", e);
-						errors.add(CommonServerErrors.INTERNAL_ERROR);
-					} else if (ee.getClass().equals(ValidationException.class)) {
-						final Map.Entry<String, String> error = ((ValidationException)ee).getError();
-						errors.add(error.getKey(), error.getValue());
-					} else {
-						if (log.isErrorEnabled())
-							log.error("error while deserializing xml request", ee);
-						errors.add(ee.getLocalizedMessage());
-					}
+						log.debug("exception thrown from a validate(). assume error was added to list");
 				} catch (final ValueRequiredException e) {
 					if (log.isDebugEnabled())
 						log.debug("required value", e);
-					errors.setLine(getCurrentLine(e));
+					extractCurrentLine(e);
 					errors.add(Util.extractFieldName(e), CommonServerErrors.REQUIRED_VALUE);
 				} catch (final ElementException e) {
-					errors.setLine(getCurrentLine(e));
+					extractCurrentLine(e);
 					errors.add(Util.extractFieldName(e), e.getLocalizedMessage());
 				} catch (final PersistenceException e) {
 					if (log.isDebugEnabled())
 						log.debug("deserialization error", e);
-					errors.setLine(getCurrentLine(e));
+					extractCurrentLine(e);
 					errors.add(Util.extractFieldName(e), CommonServerErrors.INVALID_VALUE);
 				} catch (final XMLStreamException e) {
 					if (log.isDebugEnabled())
 						log.debug("XML error", e);
-					errors.setLine(getCurrentLine(e));
+					extractCurrentLine(e);
 					errors.add(e.getLocalizedMessage());
 				} catch (final Exception e) {
 					if (log.isDebugEnabled())
 						log.debug("error", e);
-					errors.setLine(getCurrentLine(e));
+					extractCurrentLine(e);
 					errors.add(e.getLocalizedMessage());
 				}
 				return null;
@@ -163,8 +164,9 @@ public class Importer {
 		}
 	}
 
-	protected int getCurrentLine(final Exception e) {
+	protected void extractCurrentLine(final Exception e) {
 		final Integer value = Util.extractLine(e);
-		return (value == null) ? currentLine.getValue() : value;
+		if (value != null)
+			errors.setLine(value);
 	}
 }

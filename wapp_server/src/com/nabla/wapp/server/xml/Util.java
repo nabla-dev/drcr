@@ -26,7 +26,7 @@ import org.simpleframework.xml.core.PersistenceException;
  */
 public abstract class Util {
 
-	private static final String		ROW_COL = "[row,col]:[";
+	private static final String	ROW_COL = "[row,col]:[";
 	private static final Log		log = LogFactory.getLog(Util.class);
 
 	public static String extractFieldName(final PersistenceException e) {

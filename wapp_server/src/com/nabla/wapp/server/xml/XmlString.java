@@ -16,19 +16,19 @@
 */
 package com.nabla.wapp.server.xml;
 
-import org.simpleframework.xml.strategy.Strategy;
-import org.simpleframework.xml.strategy.Visitor;
-import org.simpleframework.xml.strategy.VisitorStrategy;
+import org.simpleframework.xml.Text;
 
 /**
  * @author nabla64
  *
  */
-public class XmlContext extends VisitorStrategy {
+public class XmlString extends XmlNode {
 
-	public XmlContext(Visitor visitor, Strategy strategy) {
-		super(visitor, strategy);
-		// TODO Auto-generated constructor stub
+	@Text
+	protected String	value;
+
+	public String getValue() {
+		return value;
 	}
 
 }

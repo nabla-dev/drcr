@@ -365,11 +365,11 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 		Database.executeUpdate(conn, "UPDATE user SET last_login=now() WHERE id=?;", userId);
 	}
 
-	private static PasswordEncryptor getPasswordEncryptor() {
+	public static PasswordEncryptor getPasswordEncryptor() {
 		return new StrongPasswordEncryptor();
 	}
 
-	private boolean updateUserRoleTable() throws SQLException {
+	public boolean updateUserRoleTable() throws SQLException {
 		final Map<Integer, Map<Integer,Set<Integer>>> userRoles = loadUserRoles();
 		Database.executeUpdate(conn, "DELETE FROM user_role;");
 		final PreparedStatement stmt = conn.prepareStatement(

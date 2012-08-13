@@ -18,14 +18,16 @@ package com.nabla.dc.server.handler;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -36,13 +38,16 @@ import org.simpleframework.xml.core.Validate;
 
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
+import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.csv.ICsvErrorList;
+import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
@@ -51,12 +56,17 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.xml.Importer;
+import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.auth.IRootUser;
+import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.model.FullErrorListException;
+import com.nabla.wapp.shared.model.IRole;
+import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla
@@ -65,69 +75,201 @@ import com.nabla.wapp.shared.model.ValidationException;
 public class ImportSettingsHandler extends AbstractHandler<ImportSettings, StringResult> {
 
 	@Root
+	static class RoleName extends XmlString {
+
+		public static final String FIELD = "name";
+
+		@Override
+		protected void doValidate(final ICsvErrorList errors) throws DispatchException {
+			super.doValidate(errors);
+			if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
+				errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
+			IRole.NAME_CONSTRAINT.validate(FIELD, value, errors);
+		}
+
+		public void save(final Connection conn) throws SQLException {
+			Database.executeUpdate(conn,
+"INSERT IGNORE INTO role (name,uname) VALUES(?,?);", value, value.toUpperCase());
+		}
+	}
+
+	@Root
 	static class Role {
 		@Element
-		String			name;
+		RoleName		name;
 		@ElementList(entry="role", required=false)
-		List<String>	definition;
+		List<RoleName>	definition;
+
+		public void save(final Connection conn) throws SQLException {
+			name.save(conn);
+		}
+
+		public void saveDefinition(final Connection conn, final Map<String, Integer> roleIds, final ICsvErrorList errors) throws SQLException, DispatchException {
+			final Integer roleId = roleIds.get(name.getValue());
+			if (roleId == null) {
+				errors.setLine(name.getRow());
+				errors.add(RoleName.FIELD, CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+			} else {
+				Database.executeUpdate(conn,
+"DELETE FROM role_definition WHERE role_id=?;", roleId);
+				final PreparedStatement stmt = conn.prepareStatement(
+"INSERT INTO role_definition (role_id, child_role_id) VALUES(?,?);");
+				try {
+					stmt.setInt(1, roleId);
+					int n = errors.size();
+					for (RoleName role : definition) {
+						final Integer id = roleIds.get(role.getValue());
+						if (id == null) {
+							errors.setLine(role.getRow());
+							errors.add(RoleName.FIELD, CommonServerErrors.INVALID_VALUE);
+						} else {
+							stmt.setInt(2, id);
+							stmt.addBatch();
+						}
+					}
+					if (n == errors.size() && !Database.isBatchCompleted(stmt.executeBatch()))
+						Util.throwInternalErrorException("failed to insert role definition");
+				} finally {
+					Database.close(stmt);
+				}
+			}
+		}
+	}
+
+	@Root
+	static class UserName {
+
+		public static final String FIELD = "name";
+
+		@Text
+		String	value;
+
+		public String getValue() {
+			return value;
+		}
 
 		@Validate
-		public void validate(Map session) throws ValidationException {
-			if (IRootUser.NAME.equalsIgnoreCase(name))	// ROOT name not allowed
-				throw new ValidationException("name", CommonServerErrors.INVALID_VALUE);
+		public void validate(Map session) throws DispatchException {
+			final ICsvErrorList errors = Importer.getErrors(session);
+			if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
+				errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
+			IUser.NAME_CONSTRAINT.validate(FIELD, value, errors);
 		}
 
-		public boolean save(final UserManager userManager, final ICsvErrorList errors) throws SQLException {
-			final Integer id = userManager.addRole(name);
-			if (id == null) {
-				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
-				return false;
-			}
-			return true;
+	}
+
+	@Root
+	static class UserPassword {
+
+		public static final String FIELD = "password";
+
+		@Text
+		String	value;
+
+		public String getValue() {
+			return value;
 		}
+
+		@Validate
+		public void validate(Map session) throws DispatchException {
+			IUser.PASSWORD_CONSTRAINT.validate(FIELD, value, Importer.getErrors(session));
+		}
+
 	}
 
 	@Root
 	static class User {
 		@Element
-		String			name;
+		XmlString		name;
 		@Element(required=false)
-		String			password;
+		XmlString		password;
 		@Element(required=false)
 		Boolean			active;
 		@ElementList(entry="role", required=false)
-		List<String>	roles;
+		List<RoleName>	roles;
 
 		@Validate
 		public void validate() {
-			if (password == null && password.isEmpty())
-				password = "password";
 			if (active == null)
 				active = false;
+		}
+
+		public void save(final Connection conn, final Map<String, Integer> roleIds, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
+			final Integer userId = Database.addRecord(conn,
+"INSERT INTO user (name,uname,active,password) VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE password=VALUES(password),active=VALUES(active);",
+					name.getValue(), name.getValue().toUpperCase(), active, UserManager.getPasswordEncryptor().encryptPassword(password.getValue()));
+			if (userId == null) {
+				if (option != SqlInsertOptions.APPEND)
+					Util.throwInternalErrorException("failed to insert user");
+				// user already exists so do nothing
+			} else {
+				Database.executeUpdate(conn,
+"DELETE FROM user_definition WHERE object_id IS NULL AND user_id=;", userId);
+				final PreparedStatement stmt = conn.prepareStatement(
+"INSERT INTO user_definition (user_id, role_id) VALUES(?,?);");
+				try {
+					stmt.setInt(1, userId);
+					int n = errors.size();
+					for (RoleName role : roles) {
+						final Integer id = roleIds.get(role.getValue());
+						if (id == null) {
+							errors.setLine(role.getRow());
+							errors.add(RoleName.FIELD, CommonServerErrors.INVALID_VALUE);
+						} else {
+							stmt.setInt(2, id);
+							stmt.addBatch();
+						}
+					}
+					if (n == errors.size() && !Database.isBatchCompleted(stmt.executeBatch()))
+						Util.throwInternalErrorException("failed to insert user definition");
+				} finally {
+					Database.close(stmt);
+				}
+			}
 		}
 	}
 
 	@Root
-	static class AssetCategory {
+	@IRecordTable(name=IFixedAssetCategory.TABLE)
+	static class AssetCategory implements IFixedAssetCategory {
 		@Element
-		String					name;
+		@IRecordField
+		XmlString				name;
+		@IRecordField
+		String					uname;
+		@Element(name="active",required=false)
+		@IRecordField
+		Boolean					active;
 		@Element(required=false)
-		Boolean					visible;
-		@Element(required=false)
+		@IRecordField
 		FixedAssetCategoryTypes	type;
 		@Element
+		@IRecordField
 		Integer					min_depreciation_period;
 		@Element(required=false)
+		@IRecordField
 		Integer					max_depreciation_period;
 
 		@Validate
-		public void validate() {
-			if (visible == null)
-				visible = false;
-			if (type == null)
-				type = FixedAssetCategoryTypes.TANGIBLE;
+		public void validate(Map session) throws DispatchException {
+			final ICsvErrorList errors = Importer.getErrors(session);
+			errors.setLine(name.getRow());
+			NAME_CONSTRAINT.validate("name", name.getValue(), errors);
+			uname = name.getValue().toUpperCase();
+			DEPRECIATION_PERIOD_CONSTRAINT.validate(MIN_DEPRECIATION_PERIOD, min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors);
 			if (max_depreciation_period == null)
 				max_depreciation_period = min_depreciation_period;
+			else if (DEPRECIATION_PERIOD_CONSTRAINT.validate(MAX_DEPRECIATION_PERIOD, max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors) &&
+				max_depreciation_period < min_depreciation_period)
+					errors.add(MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_MAX_DEPRECIATION_PERIOD);
+			if (active == null)
+				active = false;
+			if (type == null)
+				type = FixedAssetCategoryTypes.TANGIBLE;
+		}
+
+		public static void saveAll(final List<AssetCategory> list, final Connection conn, final SqlInsertOptions option) {
+
 		}
 	}
 
@@ -238,19 +380,46 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		List<Company>						companies;
 
 		public void clearOldValues(final Connection conn) throws SQLException {
-			Database.executeUpdate(conn,
-"DELETE FROM company, fa_asset_category, fa_fs_category;");
-			Database.executeUpdate(conn,
+			if (!asset_categories.isEmpty())
+				Database.executeUpdate(conn, "DELETE FROM fa_asset_category;");
+			if (!financial_statement_categories.isEmpty())
+				Database.executeUpdate(conn, "DELETE FROM fa_fs_category;");
+			if (!companies.isEmpty())
+				Database.executeUpdate(conn, "DELETE FROM company;");
+			if (!users.isEmpty())
+				Database.executeUpdate(conn,
 "DELETE FROM user WHERE name NOT LIKE ?;", IRootUser.NAME);
 		}
 
-		public boolean save(final Connection conn, final ICsvErrorList errors) throws SQLException {
-			errors.setLine(null);
-			final UserManager userManager = new UserManager(conn);
-			for (Role role : roles) {
-				if (!role.save(userManager, errors) && errors.isFull())
+		public boolean save(final Connection conn, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
+			try {
+				for (Role role : roles)
+					role.save(conn);
+				if (!errors.isEmpty())
 					return false;
-			}
+				final Map<String, Integer> roleIds = new HashMap<String, Integer>();
+				final Statement stmt = conn.createStatement();
+				try {
+					final ResultSet rs = stmt.executeQuery(
+"SELECT id, name FROM role;");
+					try {
+						rs.next();
+						roleIds.put(rs.getString(2), rs.getInt(1));
+					} finally {
+						Database.close(rs);
+					}
+				} finally {
+					Database.close(stmt);
+				}
+				for (Role role : roles)
+					role.saveDefinition(conn, roleIds, errors);
+				if (!errors.isEmpty())
+					return false;
+				for (User user : users)
+					user.save(conn, roleIds, option, errors);
+				if (!errors.isEmpty())
+					return false;
+				final BatchInsertStatement<AssetCategory> assetCategoryBatch = new BatchInsertStatement<AssetCategory>();
 
 			/*					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
 								final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
@@ -266,13 +435,13 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 								} finally {
 									stmt.close();
 								}*/
-
+			} catch (FullErrorListException _) {}
 			return false;
 		}
 	}
 
-	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);
-	private final IDatabase		writeDb;
+//	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);
+	private final IDatabase	writeDb;
 
 	@Inject
 	public ImportSettingsHandler(@IReadWriteDatabase final IDatabase writeDb) {
@@ -287,9 +456,9 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 			final JsonResponse json = new JsonResponse();
 			json.put(IImportSettings.SUCCESS, add(cmd, errors, ctx));
 			return json.toStringResult();
+		} catch (DispatchException e) {
+			throw e;
 		} catch (Throwable e) {
-			if (log.isErrorEnabled())
-				log.error("failed to parse settings from XML data", e);
 			Util.throwInternalErrorException(e);
 		} finally {
 			errors.close();
@@ -298,8 +467,9 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	}
 
 	private boolean add(final ImportSettings cmd, final ICsvErrorList errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		UserPreference.save(ctx, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
 		final Settings settings = new Importer(ctx.getReadConnection(), errors).read(Settings.class, cmd.getBatchId());
-		if (settings == null)
+		if (settings == null || !errors.isEmpty())
 			return false;
 		final Connection conn = ctx.getWriteConnection();
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
@@ -307,10 +477,9 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 			SqlInsertOptions option = cmd.getOverwrite();
 			if (option == SqlInsertOptions.REPLACE) {
 				settings.clearOldValues(conn);
-				option = SqlInsertOptions.OVERWRITE;
+				option = SqlInsertOptions.INSERT;
 			}
-			UserPreference.save(ctx, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
-			return guard.setSuccess(settings.save(conn, errors));
+			return guard.setSuccess(settings.save(conn, option, errors));
 		} finally {
 			guard.close();
 		}
