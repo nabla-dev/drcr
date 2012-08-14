@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.nabla.wapp.server.general.Assert;
+import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.StringSet;
 
@@ -44,6 +45,7 @@ public class StatementFormat {
 		cache.put(Date.class, new DateSetter());
 		cache.put(IntegerSet.class, new IntegerSetSetter());
 		cache.put(StringSet.class, new StringSetSetter());
+		cache.put(XmlString.class, new XmlStringSetter());
 	}
 
 	public static IStatementSetter getSetter(Class parameterClass) {

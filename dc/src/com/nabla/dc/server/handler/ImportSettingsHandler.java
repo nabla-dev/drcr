@@ -41,7 +41,10 @@ import com.nabla.dc.server.ImportErrorManager;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
+import com.nabla.dc.shared.model.company.ICompany;
+import com.nabla.dc.shared.model.company.IFinancialYear;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
@@ -52,6 +55,7 @@ import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
+import com.nabla.wapp.server.database.SqlInsert;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
@@ -254,8 +258,8 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		public void validate(Map session) throws DispatchException {
 			final ICsvErrorList errors = Importer.getErrors(session);
 			errors.setLine(name.getRow());
-			NAME_CONSTRAINT.validate("name", name.getValue(), errors);
-			uname = name.getValue().toUpperCase();
+			if (NAME_CONSTRAINT.validate("name", name.getValue(), errors))
+				uname = name.getValue().toUpperCase();
 			DEPRECIATION_PERIOD_CONSTRAINT.validate(MIN_DEPRECIATION_PERIOD, min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors);
 			if (max_depreciation_period == null)
 				max_depreciation_period = min_depreciation_period;
@@ -268,22 +272,79 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 				type = FixedAssetCategoryTypes.TANGIBLE;
 		}
 
-		public static void saveAll(final List<AssetCategory> list, final Connection conn, final SqlInsertOptions option) {
+		public static void saveAll(final List<AssetCategory> list, final Connection conn, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
+			if (validateAll(list, errors)) {
+				final SqlInsert<AssetCategory> sql = new SqlInsert<AssetCategory>(AssetCategory.class, option);
+				final BatchInsertStatement<AssetCategory> batch = new BatchInsertStatement<AssetCategory>(conn, sql);
+				try {
+					for (AssetCategory e : list)
+						batch.add(e);
+					batch.execute();
+				} finally {
+					batch.close();
+				}
+			}
+		}
 
+		private static boolean validateAll(final List<AssetCategory> list, final ICsvErrorList errors) throws DispatchException {
+			final Set<String> names = new HashSet<String>();
+			for (AssetCategory e : list) {
+				if (names.contains(e.name.getValue())) {
+					errors.setLine(e.name.getRow());
+					errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
+				} else
+					names.add(e.name.getValue());
+			}
+			return names.size() == list.size();
 		}
 	}
 
 	@Root
-	static class FinancialStatementCategory {
+	@IRecordTable(name=IFinancialStatementCategory.TABLE)
+	static class FinancialStatementCategory implements IFinancialStatementCategory {
 		@Element
-		String		name;
-		@Element(required=false)
-		Boolean		visible;
+		@IRecordField
+		XmlString	name;
+		@IRecordField
+		String		uname;
+		@Element(name="visible", required=false)
+		@IRecordField
+		Boolean		active;
 
 		@Validate
-		public void validate() {
-			if (visible == null)
-				visible = false;
+		public void validate(Map session) throws DispatchException {
+			final ICsvErrorList errors = Importer.getErrors(session);
+			errors.setLine(name.getRow());
+			if (NAME_CONSTRAINT.validate(NAME, name.getValue(), errors))
+				uname = name.getValue().toUpperCase();
+			if (active == null)
+				active = false;
+		}
+
+		public static void saveAll(final List<FinancialStatementCategory> list, final Connection conn, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
+			if (validateAll(list, errors)) {
+				final SqlInsert<FinancialStatementCategory> sql = new SqlInsert<FinancialStatementCategory>(FinancialStatementCategory.class, option);
+				final BatchInsertStatement<FinancialStatementCategory> batch = new BatchInsertStatement<FinancialStatementCategory>(conn, sql);
+				try {
+					for (FinancialStatementCategory e : list)
+						batch.add(e);
+					batch.execute();
+				} finally {
+					batch.close();
+				}
+			}
+		}
+
+		private static boolean validateAll(final List<FinancialStatementCategory> list, final ICsvErrorList errors) throws DispatchException {
+			final Set<String> names = new HashSet<String>();
+			for (FinancialStatementCategory e : list) {
+				if (names.contains(e.name.getValue())) {
+					errors.setLine(e.name.getRow());
+					errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
+				} else
+					names.add(e.name.getValue());
+			}
+			return names.size() == list.size();
 		}
 	}
 
@@ -336,11 +397,11 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	@Root
 	static class Company {
 		@Element
-		String						name;
-		@Element(required=false)
-		Boolean						visible;
+		XmlString					name;
+		@Element(name="visible", required=false)
+		Boolean						active;
 		@Element
-		String						financial_year;
+		XmlString					financial_year;
 		@Element
 		Date						start_date;
 		@ElementList(entry="asset_category", required=false)
@@ -351,9 +412,16 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		List<CompanyUser>			users;
 
 		@Validate
-		public void validate() throws PersistenceException {
-			if (visible == null)
-				visible = false;
+		public void validate(Map session) throws DispatchException {
+			final ICsvErrorList errors = Importer.getErrors(session);
+			errors.setLine(name.getRow());
+			ICompany.NAME_CONSTRAINT.validate("name", name.getValue(), errors);
+			errors.setLine(financial_year.getRow());
+			IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financial_year.getValue(), errors);
+			if (startDate == null)
+				errors.add("start_date", CommonServerErrors.REQUIRED_VALUE);
+			if (active == null)
+				active = false;
 			if (asset_categories != null && !asset_categories.isEmpty()) {
 				final Set<String> categories = new HashSet<String>();
 				for (CompanyAssetCategory category : asset_categories) {
@@ -362,6 +430,10 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 					categories.add(category.asset_category);
 				}
 			}
+		}
+
+		public static void saveAll(final List<Company> list, final Connection conn, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
+
 		}
 	}
 
@@ -397,46 +469,39 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 					role.save(conn);
 				if (!errors.isEmpty())
 					return false;
-				final Map<String, Integer> roleIds = new HashMap<String, Integer>();
-				final Statement stmt = conn.createStatement();
-				try {
-					final ResultSet rs = stmt.executeQuery(
-"SELECT id, name FROM role;");
-					try {
-						rs.next();
-						roleIds.put(rs.getString(2), rs.getInt(1));
-					} finally {
-						Database.close(rs);
-					}
-				} finally {
-					Database.close(stmt);
-				}
+				final Map<String, Integer> roleIds = getRoleIdList(conn);
 				for (Role role : roles)
 					role.saveDefinition(conn, roleIds, errors);
 				if (!errors.isEmpty())
 					return false;
 				for (User user : users)
 					user.save(conn, roleIds, option, errors);
+				AssetCategory.saveAll(asset_categories, conn, option, errors);
+				FinancialStatementCategory.saveAll(financial_statement_categories, conn, option, errors);
 				if (!errors.isEmpty())
 					return false;
-				final BatchInsertStatement<AssetCategory> assetCategoryBatch = new BatchInsertStatement<AssetCategory>();
+				Company.saveAll(companies, conn, option, errors);
 
-			/*					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
-								final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
-								try {
-									final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), errors);
-									try {
-										if (!csv.read(cmd, stmt))
-											return false;
-									} finally {
-										csv.close();
-									}
-									stmt.execute();
-								} finally {
-									stmt.close();
-								}*/
 			} catch (FullErrorListException _) {}
 			return false;
+		}
+
+		private Map<String, Integer> getRoleIdList(final Connection conn) throws SQLException {
+			final Map<String, Integer> roleIds = new HashMap<String, Integer>();
+			final Statement stmt = conn.createStatement();
+			try {
+				final ResultSet rs = stmt.executeQuery(
+"SELECT id, name FROM role;");
+				try {
+					rs.next();
+					roleIds.put(rs.getString(2), rs.getInt(1));
+				} finally {
+					Database.close(rs);
+				}
+			} finally {
+				Database.close(stmt);
+			}
+			return roleIds;
 		}
 	}
 
