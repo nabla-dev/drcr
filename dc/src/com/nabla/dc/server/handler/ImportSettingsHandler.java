@@ -17,7 +17,6 @@
 package com.nabla.dc.server.handler;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +32,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
-import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Validate;
 
 import com.google.inject.Inject;
@@ -60,6 +58,8 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.xml.Importer;
+import com.nabla.wapp.server.xml.XmlDate;
+import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.database.IRecordField;
@@ -184,9 +184,9 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	@Root
 	static class User {
 		@Element
-		XmlString		name;
+		UserName		name;
 		@Element(required=false)
-		XmlString		password;
+		UserPassword	password;
 		@Element(required=false)
 		Boolean			active;
 		@ElementList(entry="role", required=false)
@@ -205,7 +205,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 			if (userId == null) {
 				if (option != SqlInsertOptions.APPEND)
 					Util.throwInternalErrorException("failed to insert user");
-				// user already exists so do nothing
+				// otherwise user already exists so do nothing
 			} else {
 				Database.executeUpdate(conn,
 "DELETE FROM user_definition WHERE object_id IS NULL AND user_id=;", userId);
@@ -365,7 +365,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 	}
 
 	@Root
-	static class CompanyAssetCategory {
+	static class CompanyAssetCategory extends XmlNode {
 		@Attribute
 		String		financial_statement_category;
 		@Text
@@ -403,7 +403,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		@Element
 		XmlString					financial_year;
 		@Element
-		Date						start_date;
+		XmlDate						start_date;
 		@ElementList(entry="asset_category", required=false)
 		List<CompanyAssetCategory>	asset_categories;
 		@ElementList(required=false)
@@ -418,22 +418,34 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 			ICompany.NAME_CONSTRAINT.validate("name", name.getValue(), errors);
 			errors.setLine(financial_year.getRow());
 			IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financial_year.getValue(), errors);
-			if (startDate == null)
-				errors.add("start_date", CommonServerErrors.REQUIRED_VALUE);
 			if (active == null)
 				active = false;
 			if (asset_categories != null && !asset_categories.isEmpty()) {
-				final Set<String> categories = new HashSet<String>();
+/*				final Set<String> categories = new HashSet<String>();
 				for (CompanyAssetCategory category : asset_categories) {
 					if (categories.contains(category.asset_category))
 						throw new PersistenceException("asset category ''%s'' already defined for company ''%s''", category.asset_category, name);
 					categories.add(category.asset_category);
-				}
+				}*/
 			}
 		}
 
 		public static void saveAll(final List<Company> list, final Connection conn, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
+			if (validateAll(list, errors)) {
 
+			}
+		}
+
+		private static boolean validateAll(final List<Company> list, final ICsvErrorList errors) throws DispatchException {
+			final Set<String> names = new HashSet<String>();
+			for (Company e : list) {
+				if (names.contains(e.name.getValue())) {
+					errors.setLine(e.name.getRow());
+					errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
+				} else
+					names.add(e.name.getValue());
+			}
+			return names.size() == list.size();
 		}
 	}
 
@@ -480,7 +492,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 				FinancialStatementCategory.saveAll(financial_statement_categories, conn, option, errors);
 				if (!errors.isEmpty())
 					return false;
-				Company.saveAll(companies, conn, option, errors);
+//				Company.saveAll(companies, conn, option, errors);
 
 			} catch (FullErrorListException _) {}
 			return false;

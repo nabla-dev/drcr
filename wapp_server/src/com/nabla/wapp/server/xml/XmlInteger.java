@@ -16,32 +16,19 @@
 */
 package com.nabla.wapp.server.xml;
 
-import java.util.Map;
-
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.wapp.server.csv.ICsvErrorList;
-import com.nabla.wapp.shared.dispatch.DispatchException;
+import org.simpleframework.xml.Text;
 
 /**
  * @author nabla64
  *
  */
-public class XmlNode {
+public class XmlInteger extends XmlNode {
 
-	Integer	row;
+	@Text
+	protected Integer	value;
 
-	public Integer getRow() {
-		return row;
-	}
-
-	@Validate
-	public void validate(Map session) throws DispatchException {
-		doValidate(Importer.getErrors(session));
-	}
-
-	protected void doValidate(final ICsvErrorList errors) throws DispatchException {
-		row = errors.getLine();
+	public Integer getValue() {
+		return value;
 	}
 
 }

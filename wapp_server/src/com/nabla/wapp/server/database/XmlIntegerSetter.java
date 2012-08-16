@@ -14,34 +14,27 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.xml;
+package com.nabla.wapp.server.database;
 
-import java.util.Map;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.wapp.server.csv.ICsvErrorList;
-import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.server.xml.XmlInteger;
 
 /**
- * @author nabla64
+ * @author nabla
  *
  */
-public class XmlNode {
+public class XmlIntegerSetter extends AbstractSimpleSetter {
 
-	Integer	row;
-
-	public Integer getRow() {
-		return row;
-	}
-
-	@Validate
-	public void validate(Map session) throws DispatchException {
-		doValidate(Importer.getErrors(session));
-	}
-
-	protected void doValidate(final ICsvErrorList errors) throws DispatchException {
-		row = errors.getLine();
+	@Override
+	public int setValue(PreparedStatement stmt, int parameterIndex, Object value) throws SQLException {
+		if (value == null)
+			stmt.setNull(parameterIndex, Types.INTEGER);
+		else
+			stmt.setInt(parameterIndex, ((XmlInteger)value).getValue());
+		return 1;
 	}
 
 }
