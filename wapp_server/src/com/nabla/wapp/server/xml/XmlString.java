@@ -32,20 +32,14 @@ public class XmlString extends XmlNode {
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	   {
-	     //if the two objects are equal in reference, they are equal
-	     if(this == obj)
-	       return true;
-	     if (obj instanceof Customer)
-	     {
-	       Customer cust = (Customer) obj;
-	       return cust.getName().equals( this.getName() ) &&
-	           cust.getAddress().equals( this.getAddress() );
-	     }
-	     else
-	     {
-	       return false;
-	     }
-	   }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj instanceof XmlString) {
+			XmlString e = (XmlString) obj;
+			return e.getValue().equals(this.getValue());
+		}
+		return false;
+   }
+
 }
