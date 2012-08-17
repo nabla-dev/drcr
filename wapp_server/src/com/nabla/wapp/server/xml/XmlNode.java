@@ -37,10 +37,10 @@ public class XmlNode {
 
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		doValidate(Importer.getErrors(session));
+		doValidate(Importer.getErrors(session), session);
 	}
 
-	protected void doValidate(final ICsvErrorList errors) throws DispatchException {
+	protected void doValidate(final ICsvErrorList errors, @SuppressWarnings("unused") final Map session) throws DispatchException {
 		row = errors.getLine();
 	}
 

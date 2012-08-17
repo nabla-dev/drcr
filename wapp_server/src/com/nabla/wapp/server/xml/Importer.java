@@ -83,7 +83,6 @@ public class Importer {
 
 	}
 
-
 	private final Connection		conn;
 	private final String			sql;
 	private final ICsvErrorList	errors;
@@ -115,6 +114,16 @@ public class Importer {
 		if (session == null)
 			return null;
 		return (T) session.get(CTX_KEY);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> void setContext(Map session, T ctx) {
+		Assert.argumentNotNull(session);
+		session.put(CTX_KEY, ctx);
+	}
+
+	public static void clearContext(Map session) {
+		session.remove(CTX_KEY);
 	}
 
 	public <T> T read(final Class<T> clazz, final Integer dataId)  throws DispatchException, SQLException {

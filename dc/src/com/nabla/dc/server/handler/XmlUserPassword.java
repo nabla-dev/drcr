@@ -10,7 +10,8 @@ import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IUser;
 
-@Root class XmlUserPassword {
+@Root
+class XmlUserPassword {
 
 	public static final String FIELD = "password";
 
