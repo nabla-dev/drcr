@@ -19,9 +19,14 @@ package com.nabla.dc.server.handler;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
+import com.nabla.dc.server.handler.settings.ImportContext;
+import com.nabla.dc.server.handler.settings.SaveContext;
+import com.nabla.dc.server.handler.settings.XmlSettings;
 import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.wapp.server.auth.IUserSessionContext;
@@ -44,7 +49,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class ImportSettingsHandler extends AbstractHandler<ImportSettings, StringResult> {
 
-	//	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);
+	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);
 	private final IDatabase	writeDb;
 
 	@Inject
@@ -72,7 +77,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 
 	private boolean add(final ImportSettings cmd, final ICsvErrorList errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
-		final XmlSettings settings = new Importer(ctx.getReadConnection(), errors).read(XmlSettings.class, cmd.getBatchId());
+		final XmlSettings settings = new Importer(ctx.getReadConnection(), errors, new ImportContext()).read(XmlSettings.class, cmd.getBatchId());
 		if (settings == null || !errors.isEmpty())
 			return false;
 		final Connection conn = ctx.getWriteConnection();
@@ -80,10 +85,12 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		try {
 			SqlInsertOptions option = cmd.getOverwrite();
 			if (option == SqlInsertOptions.REPLACE) {
-				settings.clearOldValues(conn);
+				if (log.isDebugEnabled())
+					log.debug("replacing old settings, so deleting all settings");
+				settings.clear(conn);
 				option = SqlInsertOptions.INSERT;
 			}
-			return guard.setSuccess(settings.save(conn, option, errors));
+			return guard.setSuccess(settings.save(conn, new SaveContext(conn, option, errors)));
 		} finally {
 			guard.close();
 		}

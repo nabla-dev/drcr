@@ -31,6 +31,7 @@ public class StatementParameter implements IStatementParameter {
 	private final Field			field;
 	private final String			name;
 	private final boolean			includeNull;
+	private final boolean			unique;
 	private final IStatementSetter	writer;
 
 	public StatementParameter(final Field field, final IStatementSetter writer) {
@@ -38,6 +39,7 @@ public class StatementParameter implements IStatementParameter {
 		final IRecordField properties = field.getAnnotation(IRecordField.class);
 		this.name = properties.name().isEmpty() ? field.getName() : properties.name();
 		this.includeNull = properties.required();
+		this.unique = properties.unique();
 		this.writer = writer;
 	}
 
@@ -64,4 +66,8 @@ public class StatementParameter implements IStatementParameter {
 		return name;
 	}
 
+	@Override
+	public boolean isUnique() {
+		return unique;
+	}
 }

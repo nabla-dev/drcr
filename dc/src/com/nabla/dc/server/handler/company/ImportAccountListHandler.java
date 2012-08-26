@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.server.handler.company;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,6 +36,7 @@ import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
+import com.nabla.wapp.server.database.LockTableGuard;
 import com.nabla.wapp.server.database.SqlInsert;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
@@ -87,34 +89,40 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 					errors.add(CommonServerErrors.NO_DATA);
 					return false;
 				}
-				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
+				final Connection conn = ctx.getWriteConnection();
+				final LockTableGuard lock = new LockTableGuard(conn, "account WRITE");
 				try {
-					SqlInsertOptions option = cmd.getOverwrite();
-					if (option == SqlInsertOptions.REPLACE) {
-						Database.executeUpdate(ctx.getWriteConnection(),
-"UPDATE account SET uname=NULL WHERE company_id=?;", cmd.getCompanyId());
-						option = SqlInsertOptions.OVERWRITE;
-					}
-					final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
-					final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
+					final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 					try {
-						final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), errors);
-						try {
-							if (!csv.read(cmd, stmt))
-								return false;
-						} finally {
-							csv.close();
+						SqlInsertOptions option = cmd.getOverwrite();
+						if (option == SqlInsertOptions.REPLACE) {
+							Database.executeUpdate(ctx.getWriteConnection(),
+	"UPDATE account SET uname=NULL WHERE company_id=?;", cmd.getCompanyId());
+							option = SqlInsertOptions.OVERWRITE;
 						}
-						stmt.execute();
+						final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
+						final BatchInsertStatement<AddAccount> stmt = sql.prepareBatchStatement(ctx.getWriteConnection());
+						try {
+							final AccountCsvReader csv = new AccountCsvReader(rs.getCharacterStream("content"), conn, cmd.getCompanyId(), errors);
+							try {
+								if (!csv.read(cmd.isRowHeader(), stmt))
+									return false;
+							} finally {
+								csv.close();
+							}
+							stmt.execute();
+						} finally {
+							stmt.close();
+						}
+						UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.ROW_HEADER, cmd.isRowHeader());
+						UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.OVERWRITE, cmd.getOverwrite());
+						guard.setSuccess();
+						return true;
 					} finally {
-						stmt.close();
+						guard.close();
 					}
-					UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.ROW_HEADER, cmd.isRowHeader());
-					UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.OVERWRITE, cmd.getOverwrite());
-					guard.setSuccess();
-					return true;
 				} finally {
-					guard.close();
+					lock.close();
 				}
 			} finally {
 				rs.close();

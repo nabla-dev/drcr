@@ -21,7 +21,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -31,16 +30,10 @@ import org.simpleframework.xml.core.ElementException;
 import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.ValueRequiredException;
-import org.simpleframework.xml.strategy.Type;
-import org.simpleframework.xml.strategy.Value;
-import org.simpleframework.xml.strategy.VisitorStrategy;
-import org.simpleframework.xml.stream.InputNode;
-import org.simpleframework.xml.stream.NodeMap;
 
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
@@ -51,79 +44,30 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 public class Importer {
 
 	private static final Log		log = LogFactory.getLog(Importer.class);
-	private static final String	CTX_KEY = "ctx";
-	private static final String	ERROR_LIST_KEY = "errors";
 	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
-
-	static class MyVisitorStrategy extends VisitorStrategy {
-
-		private boolean				sessionInitialized = false;
-		private final ICsvErrorList	errors;
-		private Object					ctx;
-
-		public MyVisitorStrategy(Object ctx, final ICsvErrorList errors) {
-			super(null);
-			Assert.argumentNotNull(errors);
-			this.errors = errors;
-			this.ctx = ctx;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		public Value read(Type type, NodeMap<InputNode> node, Map session) throws Exception {
-			if (!sessionInitialized) {
-				if (ctx != null)
-					session.put(CTX_KEY, ctx);
-				session.put(ERROR_LIST_KEY, errors);
-				sessionInitialized = true;
-			}
-			errors.setLine(node.getNode().getPosition().getLine());
-			return super.read(type, node, session);
-		}
-
-	}
 
 	private final Connection		conn;
 	private final String			sql;
 	private final ICsvErrorList	errors;
 	private final Persister		impl;
 
-	public Importer(final Connection conn, final String sql, Object ctx, final ICsvErrorList errors) {
+	public <T> Importer(final Connection conn, final String sql, final ICsvErrorList errors, final T ctx) {
 		this.conn = conn;
 		this.sql = sql;
 		this.errors = errors;
-		impl = new Persister(new MyVisitorStrategy(ctx, errors), new SimpleMatcher());
+		impl = new Persister(new ImportVisitorStrategy(errors, ctx), new SimpleMatcher());
 	}
 
-	public Importer(final Connection conn, Object ctx, final ICsvErrorList errors) {
-		this(conn, DEFAULT_SQL, ctx, errors);
+	public Importer(final Connection conn, final String sql, final ICsvErrorList errors) {
+		this(conn, sql, errors, null);
+	}
+
+	public <T> Importer(final Connection conn, final ICsvErrorList errors, final T ctx) {
+		this(conn, DEFAULT_SQL, errors, ctx);
 	}
 
 	public Importer(final Connection conn, final ICsvErrorList errors) {
-		this(conn, null, errors);
-	}
-
-	public static ICsvErrorList getErrors(Map session) {
-		if (session == null)
-			return null;
-		return (ICsvErrorList)session.get(ERROR_LIST_KEY);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T> T getContext(Map session) {
-		if (session == null)
-			return null;
-		return (T) session.get(CTX_KEY);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <T> void setContext(Map session, T ctx) {
-		Assert.argumentNotNull(session);
-		session.put(CTX_KEY, ctx);
-	}
-
-	public static void clearContext(Map session) {
-		session.remove(CTX_KEY);
+		this(conn, DEFAULT_SQL, errors);
 	}
 
 	public <T> T read(final Class<T> clazz, final Integer dataId)  throws DispatchException, SQLException {
@@ -139,7 +83,7 @@ public class Importer {
 					return impl.read(clazz, rs.getBinaryStream("content"));
 				} catch (final InvocationTargetException e) {
 					if (log.isDebugEnabled())
-						log.debug("exception thrown from a validate(). assume error was added to list");
+						log.debug("exception thrown from a validate(). assume error was added to list", e);
 				} catch (final ValueRequiredException e) {
 					if (log.isDebugEnabled())
 						log.debug("required value", e);

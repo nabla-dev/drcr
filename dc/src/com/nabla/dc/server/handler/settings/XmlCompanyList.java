@@ -14,24 +14,19 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler;
+package com.nabla.dc.server.handler.settings;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
-import org.simpleframework.xml.core.Persist;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.xml.Importer;
-import com.nabla.wapp.shared.auth.IRootUser;
-import com.nabla.wapp.shared.database.SqlInsertOptions;
+import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
@@ -39,29 +34,29 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  *
  */
 @Root
-public class XmlUserList {
-	@ElementList(entry="user", inline=true, required=false)
-	List<XmlUser>	list;
+public class XmlCompanyList {
 
-	@Persist
-	public void prepare(Map session) {
-		Importer.setContext(session, new HashSet<String>());
-	}
+	@ElementList(entry="company", inline=true, required=false)
+	List<XmlCompany>	list;
 
 	@Commit
 	public void commit(Map session) {
-		Importer.clearContext(session);
+		XmlNode.<ImportContext>getContext(session).getCompanyNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn,
-"DELETE FROM user WHERE name NOT LIKE ?;", IRootUser.NAME);
+		Database.executeUpdate(conn, "DELETE FROM company;");
 	}
 
-	public boolean save(final Connection conn, final Map<String, Integer> roleIds, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException, DispatchException {
-		int n = errors.size();
-		for (XmlUser e : list)
-			e.save(conn, roleIds, option, errors);
-		return n != errors.size();
+	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
+		if (list == null || list.isEmpty())
+			return true;
+		final Map<String, Integer> companyIds = SaveContext.getIdList(conn,
+"SELECT id, name FROM company WHERE uname IS NOT NULL;");
+		boolean success = true;
+		for (XmlCompany e : list)
+			success = e.save(conn, companyIds, ctx) && success;
+		return success;
 	}
+
 }

@@ -14,18 +14,28 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.database;
+package com.nabla.wapp.server.xml;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Map;
+
+import org.simpleframework.xml.core.Validate;
+
+import com.nabla.wapp.server.csv.ICsvErrorList;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public interface IStatementParameter {
-	String getName();
-	boolean include(Object record);
-	boolean isUnique();
-	void write(final PreparedStatement stmt, int parameterIndex, Object record) throws SQLException;
+public abstract class TXmlNode<T> extends XmlNode {
+
+	@Override
+	@Validate
+	public void validate(Map session) throws DispatchException {
+		super.validate(session);
+		final T ctx = getContext(session);
+		doValidate(ctx, getErrorList(session));
+	}
+
+	protected abstract void doValidate(final T ctx, final ICsvErrorList errors) throws DispatchException;
 }

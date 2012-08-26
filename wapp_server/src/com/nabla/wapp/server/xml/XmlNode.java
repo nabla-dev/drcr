@@ -37,11 +37,19 @@ public class XmlNode {
 
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		doValidate(Importer.getErrors(session), session);
+		row = getRow(session);
 	}
 
-	protected void doValidate(final ICsvErrorList errors, @SuppressWarnings("unused") final Map session) throws DispatchException {
-		row = errors.getLine();
+	public static Integer getRow(final Map session) {
+		return ImportVisitorStrategy.getRow(session);
+	}
+
+	public static ICsvErrorList getErrorList(Map session) {
+		return ImportVisitorStrategy.getErrorList(session);
+	}
+
+	public static <T> T getContext(Map session) {
+		return ImportVisitorStrategy.getContext(session);
 	}
 
 }

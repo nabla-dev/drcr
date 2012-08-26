@@ -97,7 +97,7 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	@DefaultStringValue("undefined asset category")
 	String UNDEFINED_ASSET_CATEGORY();
 
-	@DefaultStringValue("undefined Balance Sheet category")
-	String UNDEFINED_BS_CATEGORY();
+	@DefaultStringValue("undefined Financial Statement category")
+	String UNDEFINED_FS_CATEGORY();
 
 }

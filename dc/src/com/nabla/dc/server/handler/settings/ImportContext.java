@@ -14,36 +14,31 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.xml;
+package com.nabla.dc.server.handler.settings;
 
-import org.simpleframework.xml.Text;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author nabla64
  *
  */
-public class XmlString extends XmlNode {
+public class ImportContext {
 
-	@Text
-	protected String	value;
+	private final Set<String>		names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+	private final Set<String>		companyNames = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+	private final Set<String>		accountCodes = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 
-	public String getValue() {
-		return value;
+	public Set<String> getNameList() {
+		return names;
 	}
 
-	public boolean isEmpty() {
-		return value == null || value.isEmpty();
+	public Set<String> getCompanyNameList() {
+		return companyNames;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj instanceof XmlString) {
-			XmlString e = (XmlString) obj;
-			return e.getValue().equals(this.getValue());
-		}
-		return false;
-   }
+	public Set<String> getAccountCodeList() {
+		return accountCodes;
+	}
 
 }

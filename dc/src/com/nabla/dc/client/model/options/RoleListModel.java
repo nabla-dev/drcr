@@ -19,6 +19,7 @@ package com.nabla.dc.client.model.options;
 
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.data.RoleRecord;
+import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
@@ -41,6 +42,7 @@ public class RoleListModel extends CModel<RoleRecord> {
 
 	static public class Fields {
 		public String name() { return IRole.NAME; }
+		public String builtIn() { return IRole.INTERNAL; }
 	}
 
 	private static final Fields	fields = new Fields();
@@ -50,7 +52,8 @@ public class RoleListModel extends CModel<RoleRecord> {
 
 		setFields(
 			new IdField(),
-			new TextField(IRole.NAME, IRole.NAME_CONSTRAINT, FieldAttributes.REQUIRED)
+			new TextField(IRole.NAME, IRole.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new BooleanField(IRole.INTERNAL, FieldAttributes.READ_ONLY)
 				);
 	}
 

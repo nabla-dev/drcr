@@ -110,4 +110,12 @@ public class AddAccount implements IRecordAction<StringResult>, IAccount {
 		this.active = active;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 }

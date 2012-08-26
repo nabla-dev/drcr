@@ -34,6 +34,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
+import com.nabla.wapp.server.database.LockTableGuard;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.general.IntegerSet;
@@ -49,7 +50,7 @@ public class UserManager {
 		Map<String, String[]> get();
 	}
 
-	private static final String	LOCK_USER_TABLES = "LOCK TABLES role WRITE, user WRITE, user_role WRITE, role_definition WRITE, user_definition WRITE;";
+	private static final String	LOCK_USER_TABLES = "role WRITE, user WRITE, user_role WRITE, role_definition WRITE, user_definition WRITE";
 
 	private static final Log		log = LogFactory.getLog(UserManager.class);
 	private final Connection		conn;
@@ -62,87 +63,78 @@ public class UserManager {
 	public boolean initializeDatabase(final IRoleListProvider roleListProvider, final String rootPassword) throws SQLException {
 		Assert.argumentNotNull(roleListProvider);
 
-		final Statement lockStmt = conn.createStatement();
+		final LockTableGuard lock = new LockTableGuard(conn, LOCK_USER_TABLES);
 		try {
-			lockStmt.execute(LOCK_USER_TABLES);
+			if (!Database.isTableEmpty(conn, "role"))
+				return true;
+			if (log.isDebugEnabled())
+				log.debug("initializing role tables");
+			final Map<String, String[]> roles = roleListProvider.get();
+			Assert.state(!roles.containsKey(IRootUser.NAME));
+			final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 			try {
-				final ResultSet rs = lockStmt.executeQuery("SELECT COUNT(*) FROM role;");
+				final PreparedStatement stmtRole = conn.prepareStatement(
+"INSERT INTO role (name,uname,privilege,internal) VALUES(?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
+				final Map<String, Integer> roleIds = new HashMap<String, Integer>();
 				try {
-					if (rs.next() && rs.getInt(1) > 0)
-						return true;
+					stmtRole.clearBatch();
+					stmtRole.setBoolean(4, true);
+					// add privileges and default roles
+					for (final Map.Entry<String, String[]> role : roles.entrySet()) {
+						stmtRole.setString(1, role.getKey());
+						stmtRole.setString(2, role.getKey().toUpperCase());
+						stmtRole.setBoolean(3, role.getValue() == null);
+						stmtRole.addBatch();
+					}
+					if (!Database.isBatchCompleted(stmtRole.executeBatch()))
+						return false;
+					final ResultSet rsKey = stmtRole.getGeneratedKeys();
+					try {
+						for (final Map.Entry<String, String[]> role : roles.entrySet()) {
+							rsKey.next();
+							roleIds.put(role.getKey(), rsKey.getInt(1));
+						}
+					} finally {
+						rsKey.close();
+					}
 				} finally {
-					Database.close(rs);
+					stmtRole.close();
 				}
-				if (log.isDebugEnabled())
-					log.debug("initializing role tables");
-				final Map<String, String[]> roles = roleListProvider.get();
-				Assert.state(!roles.containsKey(IRootUser.NAME));
-				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
-				try {
-					final PreparedStatement stmtRole = conn.prepareStatement(
-"INSERT INTO role (name,uname,privilege) VALUES(?,?,?);", Statement.RETURN_GENERATED_KEYS);
-					final Map<String, Integer> roleIds = new HashMap<String, Integer>();
-					try {
-						stmtRole.clearBatch();
-						// add privileges and default roles
-						for (final Map.Entry<String, String[]> role : roles.entrySet()) {
-							stmtRole.setString(1, role.getKey());
-							stmtRole.setString(2, role.getKey().toUpperCase());
-							stmtRole.setBoolean(3, role.getValue() == null);
-							stmtRole.addBatch();
-						}
-						if (!Database.isBatchCompleted(stmtRole.executeBatch()))
-							return false;
-						final ResultSet rsKey = stmtRole.getGeneratedKeys();
-						try {
-							for (final Map.Entry<String, String[]> role : roles.entrySet()) {
-								rsKey.next();
-								roleIds.put(role.getKey(), rsKey.getInt(1));
-							}
-						} finally {
-							rsKey.close();
-						}
-					} finally {
-						stmtRole.close();
-					}
-					final PreparedStatement stmtDefinition = conn.prepareStatement(
+				final PreparedStatement stmtDefinition = conn.prepareStatement(
 "INSERT INTO role_definition (role_id,child_role_id) VALUES(?,?);");
-					try {
-						stmtDefinition.clearBatch();
-						for (final Map.Entry<String, String[]> role : roles.entrySet()) {
-							final String[] definition = role.getValue();
-							if (definition == null)
-								continue;
-							stmtDefinition.setInt(1, roleIds.get(role.getKey()));
-							for (final String child : definition) {
-								final Integer childId = roleIds.get(child);
-								if (childId == null) {
-									if (log.isErrorEnabled())
-										log.error("child role '" + child + "' not defined!");
-									return false;
-								}
-								stmtDefinition.setInt(2, childId);
-								stmtDefinition.addBatch();
+				try {
+					stmtDefinition.clearBatch();
+					for (final Map.Entry<String, String[]> role : roles.entrySet()) {
+						final String[] definition = role.getValue();
+						if (definition == null)
+							continue;
+						stmtDefinition.setInt(1, roleIds.get(role.getKey()));
+						for (final String child : definition) {
+							final Integer childId = roleIds.get(child);
+							if (childId == null) {
+								if (log.isErrorEnabled())
+									log.error("child role '" + child + "' not defined!");
+								return false;
 							}
+							stmtDefinition.setInt(2, childId);
+							stmtDefinition.addBatch();
 						}
-						if (!Database.isBatchCompleted(stmtDefinition.executeBatch()))
-							return false;
-					} finally {
-						stmtDefinition.close();
 					}
-					// add 'root' user
-					Database.executeUpdate(conn,
+					if (!Database.isBatchCompleted(stmtDefinition.executeBatch()))
+						return false;
+				} finally {
+					stmtDefinition.close();
+				}
+				// add 'root' user
+				Database.executeUpdate(conn,
 "INSERT INTO user (name,uname,active,password) VALUES(?,?,TRUE,?);",
 IRootUser.NAME, IRootUser.NAME.toUpperCase(), getPasswordEncryptor().encryptPassword(rootPassword));
-					return guard.setSuccess(true);
-				} finally {
-					guard.close();
-				}
+				return guard.setSuccess(true);
 			} finally {
-				lockStmt.execute("UNLOCK TABLES;");
+				guard.close();
 			}
 		} finally {
-			Database.close(lockStmt);
+			lock.close();
 		}
 	}
 
@@ -242,23 +234,18 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 		Assert.argumentNotNull(roleIds);
 		Assert.argument(!roleIds.isEmpty());
 
-		final Statement lockStmt = conn.createStatement();
+		final LockTableGuard lock = new LockTableGuard(conn, LOCK_USER_TABLES);
 		try {
-			lockStmt.execute(LOCK_USER_TABLES);
+			final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 			try {
-				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
-				try {
-					// delete roles from 'role', 'role_definition', 'user_definition' tables
-					Database.executeUpdate(conn, "DELETE FROM role WHERE id IN (?);", roleIds);
-					return guard.setSuccess(updateUserRoleTable());
-				} finally {
-					guard.close();
-				}
+				// delete roles from 'role', 'role_definition', 'user_definition' tables
+				Database.executeUpdate(conn, "DELETE FROM role WHERE id IN (?);", roleIds);
+				return guard.setSuccess(updateUserRoleTable());
 			} finally {
-				lockStmt.execute("UNLOCK TABLES;");
+				guard.close();
 			}
 		} finally {
-			Database.close(lockStmt);
+			lock.close();
 		}
 	}
 
@@ -266,40 +253,35 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 		Assert.argumentNotNull(roleId);
 		Assert.argumentNotNull(delta);
 
-		final Statement lockStmt = conn.createStatement();
+		final LockTableGuard lock = new LockTableGuard(conn, LOCK_USER_TABLES);
 		try {
-			lockStmt.execute(LOCK_USER_TABLES);
+			final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 			try {
-				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
-				try {
-					if (delta.isRemovals())
-						Database.executeUpdate(conn,
+				if (delta.isRemovals())
+					Database.executeUpdate(conn,
 "DELETE FROM role_definition WHERE role_id=? AND child_role_id IN (?);", roleId, delta.getRemovals());
-					if (delta.isAdditions()) {
-						final PreparedStatement stmt = conn.prepareStatement(
+				if (delta.isAdditions()) {
+					final PreparedStatement stmt = conn.prepareStatement(
 "INSERT INTO role_definition (role_id, child_role_id) VALUES(?,?);");
-						try {
-							stmt.clearBatch();
-							stmt.setInt(1, roleId);
-							for (final Integer childId : delta.getAdditions()) {
-								stmt.setInt(2, childId);
-								stmt.addBatch();
-							}
-							if (!Database.isBatchCompleted(stmt.executeBatch()))
-								return false;
-						} finally {
-							stmt.close();
+					try {
+						stmt.clearBatch();
+						stmt.setInt(1, roleId);
+						for (final Integer childId : delta.getAdditions()) {
+							stmt.setInt(2, childId);
+							stmt.addBatch();
 						}
+						if (!Database.isBatchCompleted(stmt.executeBatch()))
+							return false;
+					} finally {
+						stmt.close();
 					}
-					return guard.setSuccess(updateUserRoleTable());
-				} finally {
-					guard.close();
 				}
+				return guard.setSuccess(updateUserRoleTable());
 			} finally {
-				lockStmt.execute("UNLOCK TABLES;");
+				guard.close();
 			}
 		} finally {
-			Database.close(lockStmt);
+			lock.close();
 		}
 	}
 
@@ -307,49 +289,44 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 		Assert.argumentNotNull(userId);
 		Assert.argumentNotNull(delta);
 
-		final Statement lockStmt = conn.createStatement();
+		final LockTableGuard lock = new LockTableGuard(conn, LOCK_USER_TABLES);
 		try {
-			lockStmt.execute(LOCK_USER_TABLES);
+			final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 			try {
-				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
-				try {
-					if (delta.isRemovals()) {
-						if (objectId == null)
-							Database.executeUpdate(conn,
+				if (delta.isRemovals()) {
+					if (objectId == null)
+						Database.executeUpdate(conn,
 "DELETE FROM user_definition WHERE object_id IS NULL AND user_id=? AND role_id IN (?);", userId, delta.getRemovals());
-						else
-							Database.executeUpdate(conn,
+					else
+						Database.executeUpdate(conn,
 "DELETE FROM user_definition WHERE object_id=? AND user_id=? AND role_id IN (?);", objectId, userId, delta.getRemovals());
-					}
-					if (delta.isAdditions()) {
-						final PreparedStatement stmt = conn.prepareStatement(
-"INSERT INTO user_definition (object_id, user_id, role_id) VALUES(?,?,?);");
-						try {
-							stmt.clearBatch();
-							if (objectId == null)
-								stmt.setNull(1, Types.BIGINT);
-							else
-								stmt.setInt(1, objectId);
-							stmt.setInt(2, userId);
-							for (final Integer childId : delta.getAdditions()) {
-								stmt.setInt(3, childId);
-								stmt.addBatch();
-							}
-							if (!Database.isBatchCompleted(stmt.executeBatch()))
-								return false;
-						} finally {
-							stmt.close();
-						}
-					}
-					return guard.setSuccess(updateUserRoleTable());
-				} finally {
-					guard.close();
 				}
+				if (delta.isAdditions()) {
+					final PreparedStatement stmt = conn.prepareStatement(
+"INSERT INTO user_definition (object_id, user_id, role_id) VALUES(?,?,?);");
+					try {
+						stmt.clearBatch();
+						if (objectId == null)
+							stmt.setNull(1, Types.BIGINT);
+						else
+							stmt.setInt(1, objectId);
+						stmt.setInt(2, userId);
+						for (final Integer childId : delta.getAdditions()) {
+							stmt.setInt(3, childId);
+							stmt.addBatch();
+						}
+						if (!Database.isBatchCompleted(stmt.executeBatch()))
+							return false;
+					} finally {
+						stmt.close();
+					}
+				}
+				return guard.setSuccess(updateUserRoleTable());
 			} finally {
-				lockStmt.execute("UNLOCK TABLES;");
+				guard.close();
 			}
 		} finally {
-			Database.close(lockStmt);
+			lock.close();
 		}
 	}
 
@@ -391,7 +368,7 @@ userName, userName.toUpperCase(), getPasswordEncryptor().encryptPassword(passwor
 			}
 			return Database.isBatchCompleted(stmt.executeBatch());
 		} finally {
-			Database.close(stmt);
+			stmt.close();
 		}
 	}
 

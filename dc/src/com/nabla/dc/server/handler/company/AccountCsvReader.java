@@ -17,13 +17,20 @@
 package com.nabla.dc.server.handler.company;
 
 import java.io.Reader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.nabla.dc.shared.command.company.AddAccount;
-import com.nabla.dc.shared.command.company.ImportAccountList;
 import com.nabla.wapp.server.csv.CsvReader;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.BatchInsertStatement;
+import com.nabla.wapp.server.database.StatementFormat;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 
 /**
@@ -32,23 +39,51 @@ import com.nabla.wapp.shared.model.FullErrorListException;
  */
 public class AccountCsvReader extends CsvReader<AddAccount> {
 
-	public AccountCsvReader(final Reader reader, final ICsvErrorList errors) {
+	private final Set<String>	codes = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+	private final Set<String>	names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+	private final Integer		companyId;
+
+	public AccountCsvReader(final Reader reader, final Connection conn, final Integer companyId, final ICsvErrorList errors) throws SQLException {
 		super(reader, AddAccount.class, errors);
+		this.companyId = companyId;
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT code, name FROM account WHERE uname IS NOT NULL AND company_id=?;", companyId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				while (rs.next()) {
+					codes.add(rs.getString(1));
+					names.add(rs.getString(2));
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
 	}
 
-	public boolean read(final ImportAccountList cmd, final BatchInsertStatement<AddAccount> stmt) throws SQLException {
+	public boolean read(final Boolean rowHeader, final BatchInsertStatement<AddAccount> stmt) throws SQLException, DispatchException {
 		try {
-			if (cmd.isRowHeader() && !readHeader())
+			if (rowHeader && !readHeader())
 				return false;
 			final AddAccount record = new AddAccount();
-			record.setCompanyId(cmd.getCompanyId());
+			record.setCompanyId(companyId);
 			record.setActive(true);
 			while (true) {
 				switch (next(record)) {
 				case ERROR:
 					break;
 				case SUCCESS:
-					stmt.add(record);
+					if (codes.contains(record.getCode()))
+						errors.add(AddAccount.CODE, CommonServerErrors.DUPLICATE_ENTRY);
+					else if (names.contains(record.getName()))
+						errors.add(AddAccount.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+					else {
+						codes.add(record.getCode());
+						names.add(record.getName());
+						stmt.add(record);
+					}
 					break;
 				case EOF:
 					return errors.isEmpty();

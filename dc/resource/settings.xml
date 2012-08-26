@@ -12,13 +12,13 @@
 		<role>
 			<name>Accountant</name>
 			<definition>
-				<role>accounts_rw</role>
+				<role>account_rw</role>
 			</definition>
 		</role>
 		<role>
 			<name>Accounts Assistant</name>
 			<definition>
-				<role>accounts_rw</role>
+				<role>account_rw</role>
 			</definition>
 		</role>
 		<role>
@@ -39,7 +39,7 @@
 		</user>
 		<user>
 			<name>fnorais</name>
-			<password>inabla5</password>
+			<password>inabla52</password>
 			<active>true</active>
 			<roles>
 				<role>administrator</role>
@@ -3276,7 +3276,7 @@
 </account>
 <account>
 <code>8102</code>
-<name>BAD DEBT PROVISION</name>
+<name>BAD DEBT PROVISION P/L</name>
 <bs>false</bs>
 </account>
 <account>

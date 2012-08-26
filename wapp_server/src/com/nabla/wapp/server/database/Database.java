@@ -38,16 +38,16 @@ public class Database implements IDatabase {
 	public static final String		PRODUCTION_MODE = "production_mode";
 	private static final Log			log = LogFactory.getLog(Database.class);
 	private final IConnectionPool		pool;
-	
+
 	/**
 	 * Constructor
 	 * @param dbName			- database name as defined in pool
 	 * @param serverContext		- web app context
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public Database(final String dbName, final ServletContext serverContext) throws SQLException {
 		Assert.argumentNotNull(serverContext);
-		
+
 		pool = ("1".equals(serverContext.getInitParameter(PRODUCTION_MODE))) ?
 				new TomcatConnectionPool(dbName)
 			:
@@ -59,11 +59,11 @@ public class Database implements IDatabase {
 		return pool.get();
 	}
 
-	
+
 	public static void close(final Connection conn) {
 		try { conn.close(); } catch (final SQLException e) {}
 	}
-	
+
 	public static void close(final Statement stmt) {
 		try { stmt.close(); } catch (final SQLException e) {}
 	}
@@ -88,7 +88,7 @@ public class Database implements IDatabase {
 		try {
 			return stmt.executeUpdate() == 1;
 		} finally {
-			close(stmt);
+			stmt.close();
 		}
 	}
 
@@ -105,10 +105,10 @@ public class Database implements IDatabase {
 				rsKey.next();
 				return rsKey.getInt(1);
 			} finally {
-				close(rsKey);
+				rsKey.close();
 			}
 		} finally {
-			close(stmt);
+			stmt.close();
 		}
 	}
 
@@ -150,10 +150,10 @@ public class Database implements IDatabase {
 			try {
 				return rs.next() && rs.getInt(1) == 0;
 			} finally {
-				close(rs);
+				rs.close();
 			}
 		} finally {
-			close(stmt);
+			stmt.close();
 		}
 	}
 

@@ -53,6 +53,10 @@ public class SqlInsert<T> {
 		this(recordClass, Statement.NO_GENERATED_KEYS, option);
 	}
 
+	public SqlInsert(final Class<T> recordClass) {
+		this(recordClass, SqlInsertOptions.INSERT);
+	}
+
 	public SqlInsert(final Class<T> recordClass, final String sqlTemplate) {
 		this(recordClass, sqlTemplate, Statement.NO_GENERATED_KEYS);
 	}
@@ -68,7 +72,8 @@ public class SqlInsert<T> {
 		for (IStatementParameter parameter : parameters) {
 			names.add(parameter.getName());
 			values.add("?");
-			updates.add(parameter.getName() + "=VALUES(" + parameter.getName() + ")");
+			if (!parameter.isUnique())
+				updates.add(parameter.getName() + "=VALUES(" + parameter.getName() + ")");
 		}
 		sql = MessageFormat.format(sqlTemplate, names.toString(), values.toString(), updates.toString());
 		if (log.isDebugEnabled())

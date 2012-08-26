@@ -26,6 +26,7 @@ public interface IRole {
 
 	static final String				NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
+	static final String				INTERNAL = "internal";
 
 	static final String				DEFINITION = "roles";
 }

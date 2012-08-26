@@ -1,4 +1,4 @@
-package com.nabla.dc.server.handler;
+package com.nabla.dc.server.handler.settings;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 import org.simpleframework.xml.core.Validate;
 
-import com.nabla.wapp.server.xml.Importer;
+import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IUser;
 
@@ -24,7 +24,7 @@ class XmlUserPassword {
 
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		IUser.PASSWORD_CONSTRAINT.validate(FIELD, value, Importer.getErrors(session));
+		IUser.PASSWORD_CONSTRAINT.validate(FIELD, value, XmlNode.getErrorList(session));
 	}
 
 }

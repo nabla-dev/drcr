@@ -19,6 +19,7 @@ package com.nabla.wapp.server.basic.handler;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
+import com.nabla.wapp.server.json.OdbcBooleanToJson;
 import com.nabla.wapp.server.json.OdbcIdToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
 import com.nabla.wapp.server.json.SimpleJsonFetch;
@@ -26,6 +27,7 @@ import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.command.FetchRoleList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
+import com.nabla.wapp.shared.model.IRole;
 
 /**
  * @author nabla
@@ -34,9 +36,10 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchRoleListHandler extends AbstractFetchHandler<FetchRoleList> {
 
 	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT id, name FROM role WHERE privilege=FALSE {AND WHERE} {ORDER BY}",
+"SELECT id, name, internal FROM role WHERE privilege=FALSE {AND WHERE} {ORDER BY}",
 		new OdbcIdToJson(),
-		new OdbcStringToJson("name")
+		new OdbcStringToJson(IRole.NAME),
+		new OdbcBooleanToJson(IRole.INTERNAL)
 			);
 
 	public FetchRoleListHandler() {

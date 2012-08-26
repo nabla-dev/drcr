@@ -1,13 +1,11 @@
-package com.nabla.dc.server.handler;
+package com.nabla.dc.server.handler.settings;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Map;
 
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.core.Validate;
 
 import com.nabla.wapp.server.csv.ICsvErrorList;
-import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -20,16 +18,14 @@ class XmlRoleName extends XmlString {
 	public static final String FIELD = "name";
 
 	@Override
-	protected void doValidate(final ICsvErrorList errors, final Map session) throws DispatchException {
-		super.doValidate(errors, session);
+	@Validate
+	public void validate(final Map session) throws DispatchException {
+		super.validate(session);
+		final ICsvErrorList errors = getErrorList(session);
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
 			errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
-		IRole.NAME_CONSTRAINT.validate(FIELD, value, errors);
-	}
-
-	public boolean save(final Connection conn) throws SQLException {
-		return Database.executeUpdate(conn,
-"INSERT IGNORE INTO role (name,uname) VALUES(?,?);", value, value.toUpperCase());
+		else
+			IRole.NAME_CONSTRAINT.validate(FIELD, value, errors);
 	}
 
 }

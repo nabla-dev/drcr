@@ -24,7 +24,8 @@
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="role_list" model="{model}" editByCell="true" showCheckbox="true" canGroupBy="false" editCommand="{cmd.edit}" addCommand="{cmd.add}">
 				<wnd:ListGridField name="{model.fields.name}" width="300"><ui:msg>Name</ui:msg></wnd:ListGridField>
-				<wnd:ListGridToolbar>
+				<wnd:ListGridField name="{model.fields.builtIn}" width="100" align="RIGHT" canGroupBy="false"><ui:msg>Internal</ui:msg></wnd:ListGridField>
+				<wnd:ListGridToolbar field="{model.fields.name}">
 					<wnd:ListGridToolbarButton icon="edit_small.png" command="{cmd.editDefinition}"><ui:msg>Edit definition</ui:msg></wnd:ListGridToolbarButton>
 				</wnd:ListGridToolbar>				
 				<wnd:Menu>
