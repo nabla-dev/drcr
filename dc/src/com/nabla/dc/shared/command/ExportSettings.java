@@ -14,31 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.shared.command;
 
-import java.util.Set;
-import java.util.TreeSet;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IntegerResult;
 
 /**
  * @author nabla64
  *
  */
-public class ImportContext {
-
-	private final Set<String>		names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-	private final Set<String>		companyNames = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-	private final Set<String>		accountCodes = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
-
-	public Set<String> getNameList() {
-		return names;
-	}
-
-	public Set<String> getCompanyNameList() {
-		return companyNames;
-	}
-
-	public Set<String> getAccountCodeList() {
-		return accountCodes;
-	}
-
-}
+public class ExportSettings implements IAction<IntegerResult> {}

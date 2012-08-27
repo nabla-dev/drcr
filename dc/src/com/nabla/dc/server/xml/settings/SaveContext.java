@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

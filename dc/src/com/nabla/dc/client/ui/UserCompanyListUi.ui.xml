@@ -26,6 +26,7 @@
 					</wnd:Menu>
 					<wnd:MenuItemSeparator />
 					<wnd:MenuItem command="{cmd.importSettings}" icon="import_settings_small.png"><ui:msg>Import settings</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.exportSettings}" icon="export_settings_small.png"><ui:msg>Export settings</ui:msg></wnd:MenuItem>
 				</wnd:ToolbarMenu>
 				<wnd:ToolbarMenu title="Options..." icon="options_small.png">
 				<ui:attribute name="title" description="Options menu title"/>

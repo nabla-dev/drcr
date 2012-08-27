@@ -1,4 +1,4 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.util.Map;
 
@@ -17,6 +17,12 @@ class XmlUserPassword {
 
 	@Text
 	String	value;
+
+	public XmlUserPassword() {}
+
+	public XmlUserPassword(final String value) {
+		this.value = value;
+	}
 
 	public String getValue() {
 		return value;

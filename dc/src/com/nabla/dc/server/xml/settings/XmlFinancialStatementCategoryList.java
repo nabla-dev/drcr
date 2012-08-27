@@ -14,10 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +40,15 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
  *
  */
 @Root
-public class XmlAssetCategoryList {
+public class XmlFinancialStatementCategoryList {
+	@ElementList(entry="financial_statement_category", inline=true, required=false)
+	List<XmlFinancialStatementCategory>		list;
 
-	@ElementList(entry="asset_category", inline=true, required=false)
-	List<XmlAssetCategory>	list;
+	public XmlFinancialStatementCategoryList() {}
+
+	public XmlFinancialStatementCategoryList(final Connection conn) throws SQLException {
+		load(conn);
+	}
 
 	@Commit
 	public void commit(Map session) {
@@ -48,15 +56,15 @@ public class XmlAssetCategoryList {
 	}
 
 	public void clear(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn, "DELETE FROM fa_asset_category;");
+		Database.executeUpdate(conn, "DELETE FROM fa_fs_category;");
 	}
 
 	public void save(final Connection conn, final SqlInsertOptions option) throws SQLException, InternalErrorException {
 		if (list != null && !list.isEmpty()) {
-			final SqlInsert<XmlAssetCategory> sql = new SqlInsert<XmlAssetCategory>(XmlAssetCategory.class, option);
-			final BatchInsertStatement<XmlAssetCategory> batch = new BatchInsertStatement<XmlAssetCategory>(conn, sql);
+			final SqlInsert<XmlFinancialStatementCategory> sql = new SqlInsert<XmlFinancialStatementCategory>(XmlFinancialStatementCategory.class, option);
+			final BatchInsertStatement<XmlFinancialStatementCategory> batch = new BatchInsertStatement<XmlFinancialStatementCategory>(conn, sql);
 			try {
-				for (XmlAssetCategory e : list)
+				for (XmlFinancialStatementCategory e : list)
 					batch.add(e);
 				batch.execute();
 			} finally {
@@ -65,4 +73,23 @@ public class XmlAssetCategoryList {
 		}
 	}
 
+	public void load(final Connection conn) throws SQLException {
+		final Statement stmt = conn.createStatement();
+		try {
+			final ResultSet rs = stmt.executeQuery(
+"SELECT name, active FROM fa_fs_category WHERE uname IS NOT NULL;");
+			try {
+				if (rs.next()) {
+					list = new LinkedList<XmlFinancialStatementCategory>();
+					do {
+						list.add(new XmlFinancialStatementCategory(rs));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
+	}
 }

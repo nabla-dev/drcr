@@ -1,4 +1,7 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
@@ -17,6 +20,13 @@ class XmlCompanyAssetCategory extends TXmlNode<ImportContext> {
 	String		financial_statement_category;
 	@Text
 	String		asset_category;
+
+	public XmlCompanyAssetCategory() {}
+
+	public XmlCompanyAssetCategory(final ResultSet rs) throws SQLException {
+		financial_statement_category = rs.getString(1);
+		asset_category = rs.getString(2);
+	}
 
 	@Override
 	protected void doValidate(final ImportContext ctx, final ICsvErrorList errors) throws DispatchException {

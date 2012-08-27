@@ -1,9 +1,10 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -12,6 +13,7 @@ import org.simpleframework.xml.core.Validate;
 
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
+import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
@@ -19,11 +21,19 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 @Root
 class XmlCompanyUser {
 	@Element
-	XmlUserName			name;
+	XmlUserName				name;
 	@Element(required=false)
-	Boolean				active;
+	Boolean					active;
 	@ElementList(entry="role", required=false)
-	List<XmlRoleName>	roles;
+	LinkedList<XmlRoleName>	roles;
+
+	public XmlCompanyUser() {}
+
+	public XmlCompanyUser(final Integer companyId, final ResultSet rs) throws SQLException {
+		name = new XmlUserName(rs.getString(2));
+		active = true;
+		load(rs.getStatement().getConnection(), rs.getInt(1), companyId);
+	}
 
 	@Validate
 	public void validate() {
@@ -66,6 +76,28 @@ class XmlCompanyUser {
 			return success;
 		} finally {
 			Database.close(stmt);
+		}
+	}
+
+	public void load(final Connection conn, final Integer userId, final Integer companyId) throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT r.name" +
+" FROM user_definition AS d INNER JOIN role AS r ON d.role_id=r.id" +
+" WHERE d.user_id=? AND d.object_id=?;", userId, companyId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (rs.next()) {
+					roles = new LinkedList<XmlRoleName>();
+					do {
+						roles.add(new XmlRoleName(rs.getString(1)));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
 		}
 	}
 }

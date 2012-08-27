@@ -1,4 +1,4 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.util.Map;
 
@@ -16,6 +16,12 @@ import com.nabla.wapp.shared.model.IRole;
 class XmlRoleName extends XmlString {
 
 	public static final String FIELD = "name";
+
+	public XmlRoleName() {}
+
+	public XmlRoleName(final String value) {
+		super(value);
+	}
 
 	@Override
 	@Validate

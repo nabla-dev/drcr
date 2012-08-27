@@ -14,10 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,25 +37,53 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  *
  */
 @Root
-public class XmlRoleList {
-	@ElementList(entry="role", inline=true, required=false)
-	List<XmlRole>	list;
+public class XmlCompanyList {
+	@ElementList(entry="company", inline=true, required=false)
+	List<XmlCompany>	list;
+
+	public XmlCompanyList() {}
+
+	public XmlCompanyList(final Connection conn) throws SQLException {
+		load(conn);
+	}
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getNameList().clear();
+		XmlNode.<ImportContext>getContext(session).getCompanyNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn, "DELETE FROM role WHERE internal=FALSE;");
+		Database.executeUpdate(conn, "DELETE FROM company;");
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
+		if (list == null || list.isEmpty())
+			return true;
+		final Map<String, Integer> companyIds = SaveContext.getIdList(conn,
+"SELECT id, name FROM company WHERE uname IS NOT NULL;");
 		boolean success = true;
-		if (list != null) {
-			for (XmlRole e : list)
-				success = e.save(conn, ctx) && success;
-		}
+		for (XmlCompany e : list)
+			success = e.save(conn, companyIds, ctx) && success;
 		return success;
+	}
+
+	public void load(final Connection conn) throws SQLException {
+		final Statement stmt = conn.createStatement();
+		try {
+			final ResultSet rs = stmt.executeQuery(
+"SELECT id, name, active FROM company WHERE uname IS NOT NULL;");
+			try {
+				if (rs.next()) {
+					list = new LinkedList<XmlCompany>();
+					do {
+						list.add(new XmlCompany(rs));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
 	}
 }

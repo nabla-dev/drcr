@@ -1,4 +1,4 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,6 +25,12 @@ public class XmlSettings {
 	XmlFinancialStatementCategoryList	financial_statement_categories;
 	@Element(required=false)
 	XmlCompanyList						companies;
+
+	public XmlSettings() {}
+
+	public XmlSettings(final Connection conn) throws SQLException {
+		load(conn);
+	}
 
 	public void clear(final Connection conn) throws SQLException {
 		if (companies != null) {
@@ -67,6 +73,14 @@ public class XmlSettings {
 			return companies == null || companies.save(conn, ctx);
 		} catch (FullErrorListException _) {}
 		return false;
+	}
+
+	public void load(final Connection conn) throws SQLException {
+		roles = new XmlRoleList(conn);
+		users = new XmlUserList(conn);
+		asset_categories = new XmlAssetCategoryList(conn);
+		financial_statement_categories = new XmlFinancialStatementCategoryList(conn);
+		companies = new XmlCompanyList(conn);
 	}
 
 }

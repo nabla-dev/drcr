@@ -16,6 +16,7 @@
 */
 package com.nabla.wapp.server.database;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -47,6 +48,7 @@ public class StatementFormat {
 		cache.put(Date.class, new DateSetter());
 		cache.put(IntegerSet.class, new IntegerSetSetter());
 		cache.put(StringSet.class, new StringSetSetter());
+		cache.put(InputStream.class, new InputStreamSetter());
 		cache.put(XmlString.class, new XmlStringSetter());
 		cache.put(XmlInteger.class, new XmlIntegerSetter());
 		cache.put(XmlDate.class, new XmlDateSetter());

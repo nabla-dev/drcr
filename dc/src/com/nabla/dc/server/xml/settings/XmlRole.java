@@ -1,9 +1,10 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -15,6 +16,7 @@ import org.simpleframework.xml.core.Validate;
 
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
+import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
@@ -26,9 +28,16 @@ class XmlRole {
 	private static final Log	log = LogFactory.getLog(XmlRole.class);
 
 	@Element
-	XmlRoleName			name;
+	XmlRoleName				name;
 	@ElementList(entry="role", required=false)
-	List<XmlRoleName>	definition;
+	LinkedList<XmlRoleName>	definition;
+
+	public XmlRole() {}
+
+	public XmlRole(final ResultSet rs) throws SQLException {
+		name = new XmlRoleName(rs.getString(2));
+		load(rs.getStatement().getConnection(), rs.getInt(1));
+	}
 
 	public String getName() {
 		return name.getValue();
@@ -97,6 +106,28 @@ class XmlRole {
 			return success;
 		} finally {
 			Database.close(stmt);
+		}
+	}
+
+	public void load(final Connection conn, final Integer id) throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT r.name" +
+" FROM role_definition AS d INNER JOIN role AS r ON d.child_role_id=r.id" +
+" WHERE d.role_id=?;", id);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (rs.next()) {
+					definition = new LinkedList<XmlRoleName>();
+					do {
+						definition.add(new XmlRoleName(rs.getString(1)));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
 		}
 	}
 

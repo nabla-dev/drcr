@@ -17,6 +17,7 @@
 package com.nabla.dc.client.presenter;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.nabla.dc.client.model.UserCompanyRecord;
 import com.nabla.dc.client.presenter.company.Company;
 import com.nabla.dc.client.presenter.company.CompanyList;
@@ -28,14 +29,17 @@ import com.nabla.dc.client.presenter.options.RoleList;
 import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.ui.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
+import com.nabla.dc.shared.command.ExportSettings;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.general.AbstractAsyncCallback;
 import com.nabla.wapp.client.general.AbstractRunAsyncCallback;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
+import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager1;
@@ -55,6 +59,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.FA_ASSET_CATEGORY_VIEW) HideableCommand fixedAssetCategoryList();
 		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand financialStatementCategoryList();
 		@IRequiredRole(IPrivileges.IMPORT_SETTINGS) HideableCommand importSettings();
+		Command exportSettings();
 		// OPTIONS
 		Command changePassword();
 		@IRequiredRole(IPrivileges.USER_VIEW) HideableCommand userList();
@@ -94,6 +99,8 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.fixedAssetCategoryList(), onFixedAssetCategoryList);
 		registerSlot(cmd.financialStatementCategoryList(), onFinancialStatementCategoryList);
 		registerSlot(cmd.importSettings(), onImportSettings);
+		registerSlot(cmd.exportSettings(), onExportSettings);
+
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
 //		printerManager.bind(cmd, this, BuiltInReports.ACCOUNT_LIST);
@@ -215,4 +222,21 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 			});
 		}
 	};
+
+	private final ISlot onExportSettings = new ISlot() {
+		@Override
+		public void invoke() {
+			Application.getInstance().getDispatcher().execute(new ExportSettings(), new AbstractAsyncCallback<IntegerResult> () {
+				@Override
+				public void onSuccess(IntegerResult result) {
+					// open window and display (i.e. save as) file
+					if (result != null && result.get() != null) {
+						final String url = GWT.getModuleBaseURL() + "export?id=" + result.get().toString();
+						Window.open(url, "_blank", null);
+					}
+				}
+			});
+		}
+	};
+
 }

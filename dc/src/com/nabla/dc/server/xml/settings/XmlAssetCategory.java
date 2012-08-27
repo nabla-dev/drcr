@@ -1,5 +1,7 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.simpleframework.xml.Element;
@@ -37,6 +39,16 @@ class XmlAssetCategory {
 	@Element(required=false)
 	@IRecordField
 	Integer					max_depreciation_period;
+
+	public XmlAssetCategory() {}
+
+	public XmlAssetCategory(final ResultSet rs) throws SQLException {
+		name = new XmlString(rs.getString(1));
+		active = rs.getBoolean(2);
+		type = FixedAssetCategoryTypes.valueOf(rs.getString(3));
+		min_depreciation_period = rs.getInt(4);
+		max_depreciation_period = rs.getInt(5);
+	}
 
 	@Validate
 	public void validate(Map session) throws DispatchException {

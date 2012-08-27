@@ -1,5 +1,7 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.simpleframework.xml.Element;
@@ -26,6 +28,13 @@ class XmlFinancialStatementCategory {
 	@Element(name="visible", required=false)
 	@IRecordField
 	Boolean		active;
+
+	public XmlFinancialStatementCategory() {}
+
+	public XmlFinancialStatementCategory(final ResultSet rs) throws SQLException {
+		name = new XmlString(rs.getString(1));
+		active = rs.getBoolean(2);
+	}
 
 	@Validate
 	public void validate(Map session) throws DispatchException {

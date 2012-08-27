@@ -14,11 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ import org.simpleframework.xml.core.Commit;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
+import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -39,9 +42,14 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlCompanyAssetCategoryList {
-
 	@ElementList(entry="asset_category", inline=true, required=false)
 	List<XmlCompanyAssetCategory>	list;
+
+	public XmlCompanyAssetCategoryList() {}
+
+	public XmlCompanyAssetCategoryList(final Connection conn, final Integer companyId) throws SQLException {
+		load(conn, companyId);
+	}
 
 	@Commit
 	public void commit(Map session) {
@@ -91,4 +99,26 @@ public class XmlCompanyAssetCategoryList {
 		}
 	}
 
+	public void load(final Connection conn, final Integer companyId) throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT c.name, a.name" +
+" FROM fa_company_asset_category AS t INNER JOIN fa_asset_category AS a ON t.fa_asset_category_id=a.id INNER JOIN fa_fs_category AS c ON t.fa_fs_category_id=c.id" +
+" WHERE t.company_id=? AND t.active=TRUE;",
+companyId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (rs.next()) {
+					list = new LinkedList<XmlCompanyAssetCategory>();
+					do {
+						list.add(new XmlCompanyAssetCategory(rs));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
+	}
 }

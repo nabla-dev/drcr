@@ -1,4 +1,4 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
@@ -17,6 +17,12 @@ class XmlUserName extends TXmlNode<ImportContext> {
 
 	@Text
 	String	value;
+
+	public XmlUserName() {}
+
+	public XmlUserName(final String value) {
+		this.value = value;
+	}
 
 	public String getValue() {
 		return value;

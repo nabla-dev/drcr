@@ -14,42 +14,26 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.xml;
+package com.nabla.wapp.server.database;
 
-import org.simpleframework.xml.Text;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
 /**
- * @author nabla64
+ * @author nabla
  *
  */
-public class XmlString extends XmlNode {
-
-	@Text
-	protected String	value;
-
-	public XmlString() {}
-
-	public XmlString(final String value) {
-		this.value = value;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public boolean isEmpty() {
-		return value == null || value.isEmpty();
-	}
+public class InputStreamSetter extends AbstractSimpleSetter {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj instanceof XmlString) {
-			XmlString e = (XmlString) obj;
-			return e.getValue().equals(this.getValue());
-		}
-		return false;
-   }
+	public int setValue(final PreparedStatement stmt, int parameterIndex, Object value) throws SQLException {
+		if (value == null)
+			stmt.setNull(parameterIndex, Types.BLOB);
+		else
+			stmt.setBinaryStream(parameterIndex, (InputStream)value);
+		return 1;
+	}
 
 }

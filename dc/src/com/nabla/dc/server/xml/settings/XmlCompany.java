@@ -1,8 +1,9 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.dc.shared.model.company.IFinancialYear;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
+import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.server.xml.XmlString;
@@ -44,6 +46,14 @@ class XmlCompany {
 	XmlAccountList				accounts;
 	@Element(required=false)
 	XmlCompanyUserList			users;
+
+	public XmlCompany() {}
+
+	public XmlCompany(final ResultSet rs) throws SQLException {
+		name = new XmlString(rs.getString(2));
+		active = rs.getBoolean(3);
+		load(rs.getStatement().getConnection(), rs.getInt(1));
+	}
 
 	public String getName() {
 		return name.getValue();
@@ -116,4 +126,32 @@ getName(), getName().toUpperCase(), active);
 				(users == null || users.save(conn, companyId, ctx));
 	}
 
+	public void load(final Connection conn, final Integer id) throws SQLException {
+		asset_categories = new XmlCompanyAssetCategoryList(conn, id);
+		accounts = new XmlAccountList(conn, id);
+		users = new XmlCompanyUserList(conn, id);
+		// find first financial year + period
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT f.name, p.end_date" +
+" FROM period_end AS p INNER JOIN financial_year AS f ON p.financial_year_id=f.id" +
+" WHERE f.company_id=? ORDER BY p.end_date ASC LIMIT 1;", id);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				final Calendar dt = new GregorianCalendar();	// i.e. today
+				if (rs.next()) {
+					financial_year = new XmlString(rs.getString(1));
+					dt.setTime(rs.getDate(2));
+					dt.set(GregorianCalendar.DAY_OF_MONTH, 1);
+				} else {
+					financial_year = new XmlString(new Integer(dt.get(GregorianCalendar.YEAR)).toString());
+				}
+				start_date = new Date(dt.getTime().getTime());
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
+	}
 }

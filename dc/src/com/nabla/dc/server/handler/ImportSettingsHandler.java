@@ -24,9 +24,9 @@ import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
-import com.nabla.dc.server.handler.settings.ImportContext;
-import com.nabla.dc.server.handler.settings.SaveContext;
-import com.nabla.dc.server.handler.settings.XmlSettings;
+import com.nabla.dc.server.xml.settings.ImportContext;
+import com.nabla.dc.server.xml.settings.SaveContext;
+import com.nabla.dc.server.xml.settings.XmlSettings;
 import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.wapp.server.auth.IUserSessionContext;

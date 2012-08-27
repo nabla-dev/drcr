@@ -14,10 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +30,7 @@ import org.simpleframework.xml.core.Commit;
 
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.xml.XmlNode;
+import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
@@ -34,28 +38,52 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  *
  */
 @Root
-public class XmlCompanyUserList {
+public class XmlUserList {
 	@ElementList(entry="user", inline=true, required=false)
-	List<XmlCompanyUser>	list;
+	List<XmlUser>	list;
+
+	public XmlUserList() {}
+
+	public XmlUserList(final Connection conn) throws SQLException {
+		load(conn);
+	}
 
 	@Commit
 	public void commit(Map session) {
 		XmlNode.<ImportContext>getContext(session).getNameList().clear();
 	}
 
-	public void clear(final Connection conn, final Integer companyId) throws SQLException {
+	public void clear(final Connection conn) throws SQLException {
 		Database.executeUpdate(conn,
-"DELETE FROM company_user WHERE company_id=?;", 	companyId);
-		Database.executeUpdate(conn,
-"DELETE FROM user_definition WHERE object_id=?;", companyId);
+"DELETE FROM user WHERE name NOT LIKE ?;", IRootUser.NAME);
 	}
 
-	public boolean save(final Connection conn, final Integer companyId, final SaveContext ctx) throws SQLException, DispatchException {
+	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
 		boolean success = true;
 		if (list != null) {
-			for (XmlCompanyUser e : list)
-				success = e.save(conn, companyId, ctx) && success;
+			for (XmlUser e : list)
+				success = e.save(conn, ctx) && success;
 		}
 		return success;
+	}
+
+	public void load(final Connection conn) throws SQLException {
+		final Statement stmt = conn.createStatement();
+		try {
+			final ResultSet rs = stmt.executeQuery(
+"SELECT id, name, active FROM user WHERE uname IS NOT NULL AND uname NOT LIKE 'root';");
+			try {
+				if (rs.next()) {
+					list = new LinkedList<XmlUser>();
+					do {
+						list.add(new XmlUser(rs));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
 	}
 }

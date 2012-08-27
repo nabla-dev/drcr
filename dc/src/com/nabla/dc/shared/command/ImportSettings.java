@@ -31,7 +31,7 @@ public class ImportSettings implements IAction<StringResult> {
 	private Integer				batchId;
 	private SqlInsertOptions	overwrite;
 
-	ImportSettings() {}
+	ImportSettings() {}	// for serialization only
 
 	public ImportSettings(final Integer batchId, final SqlInsertOptions overwrite) {
 		this.batchId = batchId;

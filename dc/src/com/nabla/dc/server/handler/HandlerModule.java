@@ -66,6 +66,7 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(FetchUserCompanyListHandler.class);
 
 		bindHandler(ImportSettingsHandler.class);
+		bindHandler(ExportSettingsHandler.class);
 /*
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);

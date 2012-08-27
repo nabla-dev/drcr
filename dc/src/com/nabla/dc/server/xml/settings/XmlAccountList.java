@@ -14,10 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +33,7 @@ import org.simpleframework.xml.core.Commit;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.SqlInsert;
+import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
@@ -43,6 +47,12 @@ public class XmlAccountList {
 
 	@ElementList(entry="account", inline=true, required=false)
 	List<XmlAccount>	list;
+
+	public XmlAccountList() {}
+
+	public XmlAccountList(final Connection conn, final Integer companyId) throws SQLException {
+		load(conn, companyId);
+	}
 
 	@Commit
 	public void commit(Map session) {
@@ -71,6 +81,29 @@ public class XmlAccountList {
 			} finally {
 				batch.close();
 			}
+		}
+	}
+
+	public void load(final Connection conn, final Integer companyId) throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT code, name, active, cost_centre, department, balance_sheet" +
+" FROM account" +
+" WHERE company_id=? AND uname IS NOT NULL;",
+companyId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (rs.next()) {
+					list = new LinkedList<XmlAccount>();
+					do {
+						list.add(new XmlAccount(rs));
+					} while (rs.next());
+				}
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
 		}
 	}
 }

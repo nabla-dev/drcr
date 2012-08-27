@@ -1,5 +1,7 @@
-package com.nabla.dc.server.handler.settings;
+package com.nabla.dc.server.xml.settings;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.simpleframework.xml.Element;
@@ -18,7 +20,6 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 @Root
 @IRecordTable(name=IAccount.TABLE)
 class XmlAccount {
-
 	@IRecordField
 	Integer		company_id;
 	@Element
@@ -41,6 +42,21 @@ class XmlAccount {
 	@Element
 	@IRecordField(name="balance_sheet")
 	Boolean		bs;
+
+	public XmlAccount() {}
+
+	public XmlAccount(final ResultSet rs) throws SQLException {
+		code = new XmlString(rs.getString(1));
+		name = new XmlString(rs.getString(2));
+		visible = rs.getBoolean(3);
+		String s = rs.getString(4);
+		if (!rs.wasNull())
+			cc = new XmlString(s);
+		s = rs.getString(5);
+		if (!rs.wasNull())
+			dep = new XmlString(s);
+		bs = rs.getBoolean(6);
+	}
 
 	@Validate
 	public void validate(Map session) throws DispatchException {
