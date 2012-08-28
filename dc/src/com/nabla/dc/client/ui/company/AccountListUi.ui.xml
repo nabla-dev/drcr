@@ -28,7 +28,7 @@
 				
 			</wnd:Toolbar>
 			<wnd:ListGrid ui:field="list" viewStateReference="account_list" model="{model}" editByCell="false" canSort="true" editCommand="{cmd.edit}">
-				<wnd:ListGridField name="{model.fields.code}" width="50" canGroupBy="false"><ui:msg>Code</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.code}" width="70" canGroupBy="false"><ui:msg>Code</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.name}" width="250" canGroupBy="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.cc}" width="150"><ui:msg>CC</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.dep}" width="150"><ui:msg>DEP</ui:msg></wnd:ListGridField>

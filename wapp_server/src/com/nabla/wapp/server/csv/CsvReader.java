@@ -101,7 +101,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 			columns.clear();
 			for (int i = 0; i < labels.length; ++i) {
 				labels[i] = labels[i].toLowerCase();
-				final ICsvColumn column = expectedColumns.get(labels[i].toLowerCase());
+				final ICsvColumn column = expectedColumns.get(labels[i]);
 				if (column == null) {
 					errors.add(labels[i], CommonServerErrors.UNSUPPORTED_FIELD);
 				} else

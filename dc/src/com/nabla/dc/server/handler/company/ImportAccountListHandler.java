@@ -97,7 +97,7 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 						SqlInsertOptions option = cmd.getOverwrite();
 						if (option == SqlInsertOptions.REPLACE) {
 							Database.executeUpdate(ctx.getWriteConnection(),
-	"UPDATE account SET uname=NULL WHERE company_id=?;", cmd.getCompanyId());
+"UPDATE account SET uname=NULL WHERE company_id=?;", cmd.getCompanyId());
 							option = SqlInsertOptions.OVERWRITE;
 						}
 						final SqlInsert<AddAccount> sql = new SqlInsert<AddAccount>(AddAccount.class, option);
