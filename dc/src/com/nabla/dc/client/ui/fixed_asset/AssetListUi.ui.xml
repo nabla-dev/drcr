@@ -1,0 +1,58 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+
+	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.AssetListModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.fixed_asset.AssetList.ICommandSet"/>
+
+	<wnd:Tab title="Fixed Assets" canClose="true" icon="fixed_asset/asset_small.png">
+		<wnd:VLayout>
+			<wnd:Toolbar width="100%">
+				<wnd:ToolbarButton command="{cmd.addRecord}" tooltip="Add fixed asset" icon="add.png"><ui:msg>Add</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.removeRecord}" tooltip="Remove fixed assets" icon="remove.png"><ui:msg>Remove</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
+				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.importAssets}" tooltip="Import fixed assets" icon="fixed_asset/import_assets_small.png"><ui:msg>Import</ui:msg></wnd:ToolbarButton>
+			</wnd:Toolbar>
+			<wnd:ListGrid ui:field="list" viewStateReference="fa_asset_list" model="{model}" showCheckbox="true" canSort="true" editByCell="true" editCommand="{cmd.edit}">
+				<wnd:ListGridField name="{model.fields.name}" width="200" canGroupBy="false" showHover="true"><ui:msg>Name</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.reference}" width="100" emptyCellValue="--"><ui:msg>Reference</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.location}" width="100" emptyCellValue="--" showHover="true"><ui:msg>Location</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.pi}" width="100" emptyCellValue="--" showHover="true"><ui:msg>P.I.</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.category}" width="200"><ui:msg>Category</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.cost}" width="80" canEdit="false"><ui:msg>Cost (£)</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.depPeriod}"><ui:msg>Dep period (month)</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.acquisitionDate}" canEdit="false"><ui:msg>Acquisition</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.disposalDate}" canEdit="false" emptyCellValue="--"><ui:msg>Disposal</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.proceeds}" width="80" canEdit="false" emptyCellValue="--"><ui:msg>Proceeds (£)</ui:msg></wnd:ListGridField>
+				<wnd:ListGridToolbar field="{model.fields.name}">
+					<wnd:ListGridToolbarMenu>
+						<wnd:MenuItem icon="edit_small.png" command="{cmd.edit}">Edit asset properties</wnd:MenuItem>
+						<wnd:MenuItem icon="properties_small.png" command="{cmd.view}">View asset properties</wnd:MenuItem>
+						<wnd:MenuItemSeparator/>
+						<wnd:MenuItem icon="fixed_asset/disposal_small.png" command="{cmd.disposal}">Asset disposal</wnd:MenuItem>
+						<wnd:MenuItem icon="fixed_asset/split_asset_small.png" command="{cmd.split}">Split asset</wnd:MenuItem>
+						<wnd:MenuItemSeparator/>
+						<wnd:MenuItem icon="fixed_asset/transaction_small.png" command="{cmd.transaction}">Edit asset transactions</wnd:MenuItem>
+					</wnd:ListGridToolbarMenu>							
+				</wnd:ListGridToolbar>		
+				<wnd:Menu>
+					<wnd:MenuItem command="{cmd.addRecord}" icon="add.png"><ui:msg>New</ui:msg></wnd:MenuItem>				
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg>Export as CSV</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.print}" icon="print.png"><ui:msg>Print</ui:msg></wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:MenuItem>					
+				</wnd:Menu>
+			</wnd:ListGrid>
+		</wnd:VLayout>
+	</wnd:Tab>
+</ui:UiBinder> 
