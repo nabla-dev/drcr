@@ -27,7 +27,7 @@
 				<wnd:ListGridField name="{model.fields.reference}" width="100" emptyCellValue="--"><ui:msg>Reference</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.location}" width="100" emptyCellValue="--" showHover="true"><ui:msg>Location</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.pi}" width="100" emptyCellValue="--" showHover="true"><ui:msg>P.I.</ui:msg></wnd:ListGridField>
-				<wnd:ListGridField name="{model.fields.category}" width="200"><ui:msg>Category</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.category}" width="200" canEdit="false"><ui:msg>Category</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.cost}" width="80" canEdit="false"><ui:msg>Cost (£)</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.depPeriod}"><ui:msg>Dep period (month)</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.acquisitionDate}" canEdit="false"><ui:msg>Acquisition</ui:msg></wnd:ListGridField>

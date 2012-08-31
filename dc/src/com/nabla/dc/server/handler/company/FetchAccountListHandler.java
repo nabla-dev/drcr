@@ -19,6 +19,7 @@ package com.nabla.dc.server.handler.company;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.FetchAccountList;
+import com.nabla.dc.shared.model.company.IAccount;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -38,12 +39,12 @@ public class FetchAccountListHandler extends AbstractFetchHandler<FetchAccountLi
 	private static final JsonFetch	fetcher = new JsonFetch(
 		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
 		new OdbcIdToJson(),
-		new OdbcStringToJson("code"),
-		new OdbcStringToJson("name"),
-		new OdbcStringToJson("cost_centre"),
-		new OdbcStringToJson("department"),
-		new OdbcBooleanToJson("balance_sheet"),
-		new OdbcBooleanToJson("active")
+		new OdbcStringToJson(IAccount.CODE),
+		new OdbcStringToJson(IAccount.NAME),
+		new OdbcStringToJson(IAccount.COST_CENTRE),
+		new OdbcStringToJson(IAccount.DEPARTMENT),
+		new OdbcBooleanToJson(IAccount.BALANCE_SHEET),
+		new OdbcBooleanToJson(IAccount.ACTIVE)
 	);
 
 	@Override

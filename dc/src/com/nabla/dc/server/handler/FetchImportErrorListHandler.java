@@ -19,10 +19,11 @@ package com.nabla.dc.server.handler;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.FetchImportErrorList;
+import com.nabla.dc.shared.model.IImportError;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SimpleJsonFetch;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
@@ -33,19 +34,18 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchImportErrorListHandler extends AbstractFetchHandler<FetchImportErrorList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
-			new OdbcIntToJson("line_no"),
-			new OdbcStringToJson("field"),
-			new OdbcStringToJson("error")
+	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
+"SELECT line_no, field, error" +
+" FROM import_error" +
+" WHERE import_data_id=? {AND WHERE} {ORDER BY}",
+		new OdbcIntToJson(IImportError.LINE),
+		new OdbcStringToJson(IImportError.FIELD),
+		new OdbcStringToJson(IImportError.ERROR)
 	);
 
 	@Override
 	public FetchResult execute(final FetchImportErrorList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT line_no, field, error" +
-" FROM import_error" +
-" WHERE import_data_id=? {AND WHERE} {ORDER BY}",
-				cmd.getBatchId());
+		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getBatchId());
 	}
 
 }

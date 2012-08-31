@@ -35,7 +35,7 @@ public interface IAsset {
 	static final String					NAME_B = "nameB";
 	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
 
-	static final String					CATEGORY = "fa_asset_category_id";
+	static final String					CATEGORY = "category";
 
 	static final String					REFERENCE = "reference";
 	static final String					REFERENCE_A = "referenceA";

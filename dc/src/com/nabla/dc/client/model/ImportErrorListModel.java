@@ -18,6 +18,7 @@ package com.nabla.dc.client.model;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.nabla.dc.shared.command.FetchImportErrorList;
+import com.nabla.dc.shared.model.IImportError;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.IntegerField;
@@ -33,9 +34,9 @@ import com.smartgwt.client.data.Record;
 public class ImportErrorListModel extends CModel<Record> {
 
 	static public class Fields {
-		public String lineNo() { return "line_no"; }
-		public String field() { return "field"; }
-		public String error() { return "error"; }
+		public String lineNo() { return IImportError.LINE; }
+		public String field() { return IImportError.FIELD; }
+		public String error() { return IImportError.ERROR; }
 	}
 
 	private static final Fields	fields = new Fields();

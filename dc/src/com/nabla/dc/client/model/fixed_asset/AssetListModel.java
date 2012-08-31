@@ -17,6 +17,7 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 
+import com.nabla.dc.shared.command.fixed_asset.FetchAssetList;
 import com.nabla.dc.shared.command.fixed_asset.RemoveAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.model.CModel;
@@ -25,12 +26,9 @@ import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.PositiveIntegerField;
 import com.nabla.wapp.client.model.field.PoundField;
-import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
 /**
@@ -44,10 +42,10 @@ public class AssetListModel extends CModel<AssetRecord> {
 		public String category() { return IAsset.CATEGORY; }
 		public String reference() { return IAsset.REFERENCE; }
 		public String location() { return IAsset.LOCATION; }
-		public String pi() { return IAsset.PI; }
+		public String pi() { return IAsset.PURCHASE_INVOICE; }
 
 		public String cost() { return IAsset.COST; }
-		public String depPeriod() { return IAsset.DEP_PERIOD; }
+		public String depPeriod() { return IAsset.DEPRECIATION_PERIOD; }
 
 		public String acquisitionDate() { return IAsset.ACQUISITION_DATE; }
 		public String acquisitionType() { return IAsset.ACQUISITION_TYPE; }
@@ -67,20 +65,20 @@ public class AssetListModel extends CModel<AssetRecord> {
 		setFields(
 			new IdField(),
 
-			new TextField(IAsset.NAME, IAsset.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new SelectBoxField(IAsset.CATEGORY, categoryModelFactory.get(assetRegisterId), IdField.NAME, IAssetCategory.NAME, FieldAttributes.REQUIRED),
-			new TextField(IAsset.REFERENCE, IAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
-			new TextField(IAsset.LOCATION, IAsset.LOCATION_CONSTRAINT, FieldAttributes.OPTIONAL),
+			new TextField(fields.name(), IAsset.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new TextField(fields.category(), FieldAttributes.REQUIRED),
+			new TextField(fields.reference(), IAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
+			new TextField(fields.location(), IAsset.LOCATION_CONSTRAINT, FieldAttributes.OPTIONAL),
 
-			new DateField(IAsset.ACQUISITION_DATE, FieldAttributes.REQUIRED),
-			new AcquisitionTypeField(IAsset.ACQUISITION_TYPE, FieldAttributes.REQUIRED),
-			new PoundField(IAsset.COST, FieldAttributes.REQUIRED),
-			new TextField(IAsset.PI, IAsset.PI_CONSTRAINT, FieldAttributes.OPTIONAL),
+			new DateField(fields.acquisitionDate(), FieldAttributes.REQUIRED),
+			new AcquisitionTypeField(fields.acquisitionType(), FieldAttributes.REQUIRED),
+			new PoundField(fields.cost(), FieldAttributes.REQUIRED),
+			new TextField(fields.pi(), IAsset.PURCHASE_INVOICE_CONSTRAINT, FieldAttributes.OPTIONAL),
 
-			new PositiveIntegerField(IAsset.DEP_PERIOD, FieldAttributes.REQUIRED),
+			new PositiveIntegerField(fields.depPeriod(), FieldAttributes.REQUIRED),
 
-			new DateField(IAsset.DISPOSAL_DATE, FieldAttributes.OPTIONAL),
-			new PoundField(IAsset.PROCEEDS, FieldAttributes.OPTIONAL)
+			new DateField(fields.disposalDate(), FieldAttributes.OPTIONAL),
+			new PoundField(fields.proceeds(), FieldAttributes.OPTIONAL)
 				);
 	}
 
@@ -101,12 +99,12 @@ public class AssetListModel extends CModel<AssetRecord> {
 	public AbstractRemove getRemoveCommand() {
 		return new RemoveAsset();
 	}
-
+/*
 	@Override
 	public IAction<StringResult> getUpdateCommand(final AssetRecord record) {
 		final IAction<StringResult> ret = enableUpdate ? new UpdateAssetField(record.getId()) : null;
 		enableUpdate = true;
 		return ret;
 	}
-
+*/
 }
