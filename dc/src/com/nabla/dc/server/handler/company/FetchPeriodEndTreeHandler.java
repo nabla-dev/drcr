@@ -19,6 +19,8 @@ package com.nabla.dc.server.handler.company;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.FetchPeriodEndTree;
+import com.nabla.dc.shared.model.company.IPeriodEnd;
+import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -37,11 +39,11 @@ public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodE
 
 	private static final JsonFetch	fetcher = new JsonFetch(
 				new OdbcBooleanToJson(IFieldReservedNames.TREEGRID_IS_FOLDER),
-				new OdbcStringToJson("id"),
+				new OdbcStringToJson(IdField.NAME),
 				new OdbcStringToJson(IFieldReservedNames.TREEGRID_PARENT_ID),
-				new OdbcBooleanToJson("enabled"),
-				new OdbcStringToJson("name"),
-				new OdbcDateToJson("end_date")
+				new OdbcBooleanToJson(IFieldReservedNames.RECORD_ENABLED),
+				new OdbcStringToJson(IPeriodEnd.NAME),
+				new OdbcDateToJson(IPeriodEnd.END_DATE)
 			);
 
 	@Override

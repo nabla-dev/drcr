@@ -77,7 +77,7 @@ public class JsonResponse extends JSONArray {
 		record.put(field, value);
 		add(record);
 	}
-	
+
 	public static List<IOdbcToJsonEncoder> getEncoderList(final ResultSet rs) throws SQLException {
 		final List<IOdbcToJsonEncoder> encoders = new LinkedList<IOdbcToJsonEncoder>();
 		final ResultSetMetaData header = rs.getMetaData();
@@ -94,6 +94,7 @@ public class JsonResponse extends JSONArray {
 					encoders.add(new OdbcIntToJson(label));
 					break;
 				case Types.BOOLEAN:
+				case Types.BIT:
 					encoders.add(new OdbcBooleanToJson(label));
 					break;
 				case Types.DATE:

@@ -19,6 +19,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchFixedAssetCategoryList;
+import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -39,11 +40,11 @@ public class FetchFixedAssetCategoryListHandler extends AbstractFetchHandler<Fet
 	private static final JsonFetch	fetcher = new JsonFetch(
 		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
 		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active"),
-		new OdbcStringToJson("type"),
-		new OdbcIntToJson("min_depreciation_period"),
-		new OdbcIntToJson("max_depreciation_period")
+		new OdbcStringToJson(IFixedAssetCategory.NAME),
+		new OdbcBooleanToJson(IFixedAssetCategory.ACTIVE),
+		new OdbcStringToJson(IFixedAssetCategory.TYPE),
+		new OdbcIntToJson(IFixedAssetCategory.MIN_DEPRECIATION_PERIOD),
+		new OdbcIntToJson(IFixedAssetCategory.MAX_DEPRECIATION_PERIOD)
 	);
 
 	@Override

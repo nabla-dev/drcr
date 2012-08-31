@@ -19,6 +19,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchFinancialStatementCategoryList;
+import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.JsonFetch;
 import com.nabla.wapp.server.json.OdbcBooleanToJson;
@@ -38,8 +39,8 @@ public class FetchFinancialStatementCategoryListHandler extends AbstractFetchHan
 	private static final JsonFetch	fetcher = new JsonFetch(
 		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
 		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active")
+		new OdbcStringToJson(IFinancialStatementCategory.NAME),
+		new OdbcBooleanToJson(IFinancialStatementCategory.ACTIVE)
 	);
 
 	@Override

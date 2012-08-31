@@ -27,6 +27,7 @@ import com.nabla.wapp.server.json.SimpleJsonFetch;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
+import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla
@@ -39,8 +40,8 @@ public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserC
 " FROM company AS c LEFT JOIN company_user AS l ON c.id=l.company_id AND l.user_id=?" +
 " WHERE c.active=TRUE AND c.uname IS NOT NULL",
 		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active")
+		new OdbcStringToJson(IUser.NAME),
+		new OdbcBooleanToJson(IUser.ACTIVE)
 	);
 
 	@Override

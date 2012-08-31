@@ -30,6 +30,7 @@ import com.nabla.wapp.shared.command.FetchUserList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
+import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla
@@ -41,10 +42,10 @@ public class FetchUserListHandler extends AbstractFetchHandler<FetchUserList> {
 		new OdbcBooleanToJson(IFieldReservedNames.RECORD_ENABLED),
 		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
 		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active"),
-		new OdbcTimeStampToJson("created"),
-		new OdbcTimeStampToJson("last_login")
+		new OdbcStringToJson(IUser.NAME),
+		new OdbcBooleanToJson(IUser.ACTIVE),
+		new OdbcTimeStampToJson(IUser.CREATED),
+		new OdbcTimeStampToJson(IUser.LAST_LOGIN)
 	);
 
 	public FetchUserListHandler() {

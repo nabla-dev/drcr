@@ -28,6 +28,7 @@ import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
+import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla
@@ -40,8 +41,8 @@ public class FetchCompanyUserListHandler extends AbstractFetchHandler<FetchCompa
 " FROM user AS u LEFT JOIN company_user AS c ON u.id=c.user_id AND c.company_id=?" +
 " WHERE u.active=TRUE AND u.name NOT LIKE ? AND u.uname IS NOT NULL",
 		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active")
+		new OdbcStringToJson(IUser.NAME),
+		new OdbcBooleanToJson(IUser.ACTIVE)
 	);
 
 	@Override
