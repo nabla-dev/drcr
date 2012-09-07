@@ -19,11 +19,8 @@ package com.nabla.dc.server.handler;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.FetchUserCompanyList;
-import com.nabla.dc.shared.model.IUserCompany;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
@@ -34,11 +31,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserCompanyList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcIdToJson(),
-		new OdbcStringToJson(IUserCompany.NAME),
-		new OdbcStringToJson(IUserCompany.LOGO)
-	);
+	private static final SqlToJson	fetcher = new SqlToJson();
 
 	@Override
 	public FetchResult execute(final FetchUserCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {

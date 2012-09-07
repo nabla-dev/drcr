@@ -19,7 +19,9 @@ package com.nabla.wapp.server.json;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +37,8 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class JsonResponse extends JSONArray {
 
-	private static final long 	serialVersionUID = 1L;
+	private static final long 				serialVersionUID = 1L;
+	private static final SimpleDateFormat	format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	public int putAll(final ResultSet rs, final List<IOdbcToJsonEncoder> encoders) throws SQLException {
 		Assert.argumentNotNull(rs);
@@ -44,11 +47,25 @@ public class JsonResponse extends JSONArray {
 			add(writeRecord(rs, encoders));
 		return size();
 	}
-/*
-	public int putAll(final ResultSet rs) throws SQLException {
-		return putAll(rs, getEncoderList(rs));
+
+	public int putAll(final ResultSet rs, final int[] columnTypes) throws SQLException {
+		Assert.argumentNotNull(rs);
+
+		while (rs.next())
+			add(writeRecord(rs, columnTypes));
+		return size();
 	}
-*/
+
+	public int putAll(final ResultSet rs) throws SQLException {
+		if (rs.next()) {
+			final int[] columnTypes = getColumnTypes(rs);
+			do {
+				add(writeRecord(rs, columnTypes));
+			} while (rs.next());
+		}
+		return size();
+	}
+
 	public boolean putNext(final ResultSet rs, final List<IOdbcToJsonEncoder> encoders) throws SQLException {
 		Assert.argumentNotNull(rs);
 
@@ -57,11 +74,25 @@ public class JsonResponse extends JSONArray {
 		add(writeRecord(rs, encoders));
 		return true;
 	}
-/*
-	public boolean putNext(final ResultSet rs) throws SQLException {
-		return putNext(rs, getEncoderList(rs));
+
+	public boolean putNext(final ResultSet rs, final int[] columnTypes) throws SQLException {
+		Assert.argumentNotNull(rs);
+
+		if (!rs.next())
+			return false;
+		add(writeRecord(rs, columnTypes));
+		return true;
 	}
-*/
+
+	public boolean putNext(final ResultSet rs) throws SQLException {
+		Assert.argumentNotNull(rs);
+
+		if (!rs.next())
+			return false;
+		add(writeRecord(rs, getColumnTypes(rs)));
+		return true;
+	}
+
 	public void putId(final Integer value) {
 		put("id", value);
 	}
@@ -121,6 +152,25 @@ public class JsonResponse extends JSONArray {
 		return encoders;
 	}
 
+	public static int[] getColumnTypes(final ResultSet rs) throws SQLException {
+		Assert.argumentNotNull(rs);
+
+		final ResultSetMetaData header = rs.getMetaData();
+		int columnCount = header.getColumnCount();
+		final int[] types = new int[columnCount];
+		for (int c = 1; c <= columnCount; ++c)
+			types[c-1] = isColumnBoolean(header.getColumnLabel(c)) ? Types.BOOLEAN : header.getColumnType(c);
+		return types;
+	}
+
+	public static boolean isColumnBoolean(final String label) {
+		if (label.startsWith("is"))
+			return label.length() > 2 && Character.isUpperCase(label.charAt(2));
+		if (label.startsWith("can") || label.startsWith("has"))
+			return label.length() > 3 && Character.isUpperCase(label.charAt(3));
+		return false;
+	}
+
 	private static JSONObject writeRecord(final ResultSet rs, final List<IOdbcToJsonEncoder> encoders) throws SQLException {
 		Assert.argumentNotNull(rs);
 		Assert.argumentNotNull(encoders);
@@ -129,6 +179,57 @@ public class JsonResponse extends JSONArray {
 		for (int i = 0; i < encoders.size(); ++i)
 			encoders.get(i).encode(rs, i + 1, record);
 		return record;
+	}
+
+	private static JSONObject writeRecord(final ResultSet rs, final int[] columnTypes) throws SQLException {
+		Assert.argumentNotNull(rs);
+		Assert.argumentNotNull(columnTypes);
+
+		final JSONObject record = new JSONObject();
+		final ResultSetMetaData header = rs.getMetaData();
+		int columnCount = header.getColumnCount();
+		for (int i = 1; i <= columnCount; ++i)
+			writeColumn(rs, i, columnTypes[i-1], record, header.getColumnLabel(i));
+		return record;
+	}
+
+	private static void writeColumn(final ResultSet rs, int column, int columnType, final JSONObject record, final String label) throws SQLException {
+		switch (columnType) {
+		case Types.BIGINT:
+		case Types.INTEGER:
+		case Types.SMALLINT:
+		case Types.TINYINT:
+			record.put(label, rs.getInt(column));
+			break;
+		case Types.BOOLEAN:
+		case Types.BIT:
+			record.put(label, rs.getBoolean(column));
+			break;
+		case Types.DATE:
+			record.put(label, rs.getDate(column));
+			break;
+		case Types.TIMESTAMP:
+			final Timestamp tm = rs.getTimestamp(column);
+			if (rs.wasNull())
+				record.put(label, null);
+			else
+				record.put(label, format.format(tm));
+			return;
+		case Types.DOUBLE:
+			record.put(label, rs.getDouble(column));
+			break;
+		case Types.FLOAT:
+			record.put(label, rs.getFloat(column));
+			break;
+		case Types.NULL:
+			record.put(label, null);
+			return;
+		default:
+			record.put(label, rs.getString(column));
+			break;
+		}
+		if (rs.wasNull())
+			record.put(label, null);
 	}
 
 	public StringResult toStringResult() {

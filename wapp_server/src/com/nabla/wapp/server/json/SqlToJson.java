@@ -20,8 +20,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,15 +33,20 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * The <code></code> object is used to
  *
  */
-public class JsonFetch extends LinkedList<IOdbcToJsonEncoder> {
+public class SqlToJson {
 
-	private static final long	serialVersionUID = 1L;
-	private static final Log	log = LogFactory.getLog(JsonFetch.class);
+	private static final Log	log = LogFactory.getLog(SqlToJson.class);
+	private final String		baseSql;
+	private final int[]			columnTypes;
 
-	public JsonFetch() {}
+	public SqlToJson(final String baseSql) {
+		this.baseSql = baseSql;
+		columnTypes = null;
+	}
 
-	public JsonFetch(IOdbcToJsonEncoder... encoders) {
-		super(Arrays.asList(encoders));
+	public SqlToJson(final String baseSql, final int... columnTypes) {
+		this.baseSql = baseSql;
+		this.columnTypes = columnTypes;
 	}
 
 	public static String createSql(final AbstractFetch options, final String baseSql) {
@@ -88,7 +91,7 @@ public class JsonFetch extends LinkedList<IOdbcToJsonEncoder> {
 
 		final JsonResponse response = new JsonResponse();
 		Integer endRow = null;
-		int total = response.putAll(stmt.executeQuery(), this);
+		int total = (columnTypes == null) ? response.putAll(stmt.executeQuery()) : response.putAll(stmt.executeQuery(), columnTypes);
 		if (options.isRange()) {
 			int lastRow = options.getStartRow() + total - 1;
 			endRow = (options.getEndRow() < lastRow) ? options.getEndRow() : lastRow;
