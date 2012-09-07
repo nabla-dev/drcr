@@ -114,6 +114,8 @@ public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implemen
 		setGroupStartOpen(GroupStartOpen.ALL);
 		// TODO: to be removed when SmartGWT supports it
 		setAttribute("selectionProperty", IFieldReservedNames.RECORD_SELECTED, true);
+		this.setRecordEnabledProperty(IFieldReservedNames.RECORD_ENABLED);
+		this.setRecordDeletedProperty(IFieldReservedNames.RECORD_DELETED);
 
 		addDrawHandler(new DrawHandler() {
 			@Override

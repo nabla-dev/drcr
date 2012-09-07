@@ -57,6 +57,8 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 		setFixedRecordHeights(true);
 		// TODO: to be removed when SmartGWT supports it
 		setAttribute("selectionProperty", IFieldReservedNames.RECORD_SELECTED, true);
+		this.setRecordEnabledProperty(IFieldReservedNames.RECORD_ENABLED);
+//		this.setRecordDeletedProperty(IFieldReservedNames.RECORD_DELETED);
 	}
 
 	public void setModel(final DataSource model) {

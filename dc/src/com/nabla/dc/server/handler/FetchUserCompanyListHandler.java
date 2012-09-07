@@ -31,20 +31,22 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserCompanyList> {
 
-	private static final SqlToJson	fetcher = new SqlToJson();
-
-	@Override
-	public FetchResult execute(final FetchUserCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		if (ctx.isRoot())
-			return fetcher.serialize(cmd, ctx.getConnection(),
+	private static final SqlToJson	rootSql = new SqlToJson(
 "SELECT c.id, c.name, IF(c.logo_id IS NOT NULL,CONCAT('/dc/image?id=',c.logo_id), 'default_logo.png') AS 'image'" +
 " FROM company AS c" +
 " WHERE c.active=TRUE AND c.uname IS NOT NULL");
-		return fetcher.serialize(cmd, ctx.getConnection(),
+
+	private static final SqlToJson	sql = new SqlToJson(
 "SELECT c.id, c.name, IF(c.logo_id IS NOT NULL,CONCAT('/dc/image?id=',c.logo_id), 'default_logo.png') AS 'image'" +
 " FROM company AS c INNER JOIN company_user AS u ON c.id=u.company_id" +
-" WHERE c.active=TRUE AND c.uname IS NOT NULL AND u.user_id=?",
-			ctx.getUserId());
+" WHERE c.active=TRUE AND c.uname IS NOT NULL AND u.user_id=?");
+
+	@Override
+	public FetchResult execute(final FetchUserCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return ctx.isRoot() ?
+			rootSql.serialize(cmd, ctx.getConnection())
+			:
+			sql.serialize(cmd, ctx.getConnection(), ctx.getUserId());
 	}
 
 }

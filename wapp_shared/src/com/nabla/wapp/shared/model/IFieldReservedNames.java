@@ -25,11 +25,11 @@ public interface IFieldReservedNames {
 	public static final String	TREEGRID_PARENT_ID = "parentId";	// == Tree.getParentIdField
 	public static final String	TREEGRID_IS_FOLDER = "isFolder";	// == Tree.getIsFolderProperty
 
-	public static final String	RECORD_ENABLED = "enabled";	// == ListGrid.getRecordEnabledProperty
+	public static final String	RECORD_ENABLED = "isEnabled";	// == ListGrid.getRecordEnabledProperty
 	public static final String	RECORD_SELECTED = "isSelected";	//
 	public static final String	RECORD_CAN_SELECT = "canSelect";	//
 
-	public static final String	RECORD_DELETED = "deleted";
+	public static final String	RECORD_DELETED = "isDeleted";
 
 	public static final String	DEFAULT_VALUE = "defaultValue";
 

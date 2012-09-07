@@ -108,7 +108,7 @@ public class SqlToJson {
 		return new FetchResult(options.getStartRow(), endRow, total, response.toJSONString());
 	}
 
-	public FetchResult serialize(final AbstractFetch options, final Connection conn, final String sql, Object... parameters) throws SQLException {
+	public FetchResult serializeSql(final AbstractFetch options, final Connection conn, final String sql, Object... parameters) throws SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn, createSql(options, sql), parameters);
 		try {
 			int i = (parameters != null) ? parameters.length : 0;
@@ -122,8 +122,12 @@ public class SqlToJson {
 		}
 	}
 
-	public FetchResult fetch(final AbstractFetch options, final Connection conn, final String sql, Object... parameters) throws SQLException {
-		return serialize(options, conn, "SELECT * FROM (" + sql + ") AS dt {WHERE} {ORDER BY}", parameters);
+	public FetchResult serialize(final AbstractFetch options, final Connection conn, Object... parameters) throws SQLException {
+		return serializeSql(options, conn, baseSql, parameters);
+	}
+
+	public FetchResult fetch(final AbstractFetch options, final Connection conn, Object... parameters) throws SQLException {
+		return serializeSql(options, conn, "SELECT * FROM (" + baseSql + ") AS dt {WHERE} {ORDER BY}", parameters);
 	}
 
 }
