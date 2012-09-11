@@ -41,7 +41,7 @@ public class AssetWizardDepreciationPageUi extends AssetWizardBasicPageUi implem
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@Inject
-	public AssetWizardDepreciationPageUi(@Assisted final ValuesManager model, @Assisted AssetCategoryDepreciationPeriodRange range, @Assisted boolean canCreateTransaction) {
+	public AssetWizardDepreciationPageUi(@Assisted final ValuesManager model, @Assisted DepreciationPeriodRange range, @Assisted boolean canCreateTransaction) {
 		super(model, uiBinder);
 		// limit depreciation period using asset category depreciation period range
 		final SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.DEP_PERIOD);

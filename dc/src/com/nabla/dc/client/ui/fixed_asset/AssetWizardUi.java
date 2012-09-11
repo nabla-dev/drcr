@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,11 +14,12 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.ui;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.fixed_assets.client.presenter.AssetWizard;
+import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
+import com.nabla.dc.client.ui.WizardUi;
 import com.nabla.wapp.client.ui.ModalDialog;
 
 /**

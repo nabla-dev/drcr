@@ -20,16 +20,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.inject.Inject;
+import com.nabla.dc.client.model.fixed_asset.AssetWizardData;
+import com.nabla.dc.client.ui.fixed_asset.AssetWizardGeneralPageUi;
+import com.nabla.dc.client.ui.fixed_asset.AssetWizardWelcomePageUi;
 import com.nabla.dc.shared.command.fixed_asset.FetchAssetListRecord;
+import com.nabla.dc.shared.command.fixed_asset.GetFixedAssetCategoryDepreciationPeriodRange;
+import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.AbstractAsyncCallback;
+import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
-import com.nabla.wapp.client.server.IDispatchAsync;
 import com.nabla.wapp.client.ui.IWizardPage;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.slot.ISlot;
@@ -56,22 +60,11 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	public interface IDepreciationPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
 
-	private static final Logger					logger = LoggerFactory.getLog(AssetWizard.class);
-	private final WizardData					data;
-	private final ISlot1<Record>				onSuccessHandler;
+	private static final Logger		logger = LoggerFactory.getLog(AssetWizard.class);
+	private final AssetWizardData		data;
+	private final ISlot1<Record>		onSuccessHandler;
 
-	// TODO:
-	// I would like to have Provider<IWelcomePage> but I get a compiler error!
-	@Inject private IWelcomePage				welcomePage;
-	@Inject private IGeneralPageFactory			generalPageFactory;
-	@Inject private IAcquisitionPageFactory		acquisitionPageFactory;
-	@Inject private IDepreciationPageFactory	depreciationPageFactory;
-	@Inject private ICompletedPageFactory		completedPageFactory;
-
-	@Inject private IDispatchAsync				server;
-
-	@Inject
-	public AssetWizard(IDisplay ui, @Assisted WizardData data, @Assisted ISlot1<Record> onSuccessHandler) {
+	public AssetWizard(IDisplay ui, AssetWizardData data, ISlot1<Record> onSuccessHandler) {
 		super(ui);
 		this.data = data;
 		this.onSuccessHandler = onSuccessHandler;
@@ -81,7 +74,7 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	protected void onBind() {
 		super.onBind();
 		if (data.isNewRecord()) {
-			displayNextPage(welcomePage, new ISlot() {
+			displayNextPage(new AssetWizardWelcomePageUi(), new ISlot() {
 				@Override
 				public void invoke() {
 					displayGeneralPage();
@@ -94,18 +87,19 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	}
 
 	private void displayGeneralPage() {
-		displayNextPage(generalPageFactory.get(data), new ISlot1<IWizardPage>() {
+		displayNextPage(new AssetWizardGeneralPageUi(data), new ISlot1<IWizardPage>() {
 			@Override
 			public void invoke(final IWizardPage page) {
-				server.execute(new GetAssetCategoryDepreciationPeriodRange(((IGeneralPage)page).getAssetCategoryId()), new AsyncCallback<AssetCategoryDepreciationPeriodRange>() {
+				Integer fixedAssetCategoryId = ((IGeneralPage)page).getAssetCategoryId();
+				Application.getInstance().getDispatcher().execute(new GetFixedAssetCategoryDepreciationPeriodRange(fixedAssetCategoryId), new AsyncCallback<DepreciationPeriodRange>() {
 					@Override
 					public void onFailure(Throwable caught) {
 						logger.log(Level.WARNING, "failed to get depreciation range. use default range", caught);
-						displayAcquisitionPage(new AssetCategoryDepreciationPeriodRange(IAsset.DEP_PERIOD_CONSTRAINT.getMinValue(), IAsset.DEP_PERIOD_CONSTRAINT.getMaxValue()));
+						displayAcquisitionPage(new DepreciationPeriodRange(IAsset.DEPRECIATION_PERIOD_CONSTRAINT.getMinValue(), IAsset.DEPRECIATION_PERIOD_CONSTRAINT.getMaxValue()));
 					}
 
 					@Override
-					public void onSuccess(AssetCategoryDepreciationPeriodRange range) {
+					public void onSuccess(DepreciationPeriodRange range) {
 						logger.fine("restricting depreciation range to [" + range.getMin() + ", " + range.getMax() + "]");
 						displayAcquisitionPage(range);
 					}
@@ -114,7 +108,7 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 		});
 	}
 
-	private void displayAcquisitionPage(final AssetCategoryDepreciationPeriodRange depreciationPeriodRange) {
+	private void displayAcquisitionPage(final DepreciationPeriodRange depreciationPeriodRange) {
 		displayNextPage(acquisitionPageFactory.get(data, depreciationPeriodRange.getMax()), new ISlot1<IWizardPage>() {
 			@Override
 			public void invoke(final IWizardPage page) {
@@ -123,7 +117,7 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 		});
 	}
 
-	private void displayDepreciationPage(AssetCategoryDepreciationPeriodRange depreciationPeriodRange, boolean canCreateTransaction) {
+	private void displayDepreciationPage(DepreciationPeriodRange depreciationPeriodRange, boolean canCreateTransaction) {
 		displayNextPage(depreciationPageFactory.get(data, depreciationPeriodRange, canCreateTransaction), new ISlot() {
 			@Override
 			public void invoke() {

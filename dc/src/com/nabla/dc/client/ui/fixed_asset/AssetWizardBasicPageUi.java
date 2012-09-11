@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.ui;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -32,7 +32,7 @@ public class AssetWizardBasicPageUi extends bindedWizardPageDisplay<WizardPage> 
 	@UiField(provided=true)
 	final ValuesManager		model;
 	@UiField
-	Form				form;
+	Form					form;
 
 	protected AssetWizardBasicPageUi(final ValuesManager model, final UiBinder<WizardPage, AssetWizardBasicPageUi> uiBinder) {
 		this.model = model;

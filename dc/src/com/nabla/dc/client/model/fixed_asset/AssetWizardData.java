@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,7 +14,7 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.model;
+package com.nabla.dc.client.model.fixed_asset;
 
 import com.nabla.wapp.client.model.Model;
 import com.smartgwt.client.data.Record;
@@ -24,15 +24,15 @@ import com.smartgwt.client.widgets.form.ValuesManager;
  * @author nabla
  *
  */
-public class WizardData extends ValuesManager {
+public class AssetWizardData extends ValuesManager {
 
 	private Record	editedRecord;
 
-	public WizardData(final Model model) {
+	public AssetWizardData(final Model model) {
 		this(model, null);
 	}
 
-	public WizardData(final Model model, final Record record) {
+	public AssetWizardData(final Model model, final Record record) {
 		this.setDataSource(model);
 		if (record == null)
 			editNewRecord();

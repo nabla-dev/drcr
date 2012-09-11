@@ -14,25 +14,27 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.fixed_asset;
+package com.nabla.dc.shared.command.fixed_asset;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
-import com.nabla.dc.client.ui.StaticWizardPageUi;
-import com.nabla.wapp.client.ui.Html;
+import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
+import com.nabla.wapp.shared.dispatch.IAction;
 
 /**
  * @author nabla
  *
  */
-public class AssetWizardWelcomePageUi extends StaticWizardPageUi implements AssetWizard.IWelcomePage {
+public class GetFixedAssetCategoryDepreciationPeriodRange implements IAction<DepreciationPeriodRange> {
 
-	interface Binder extends UiBinder<Html, StaticWizardPageUi> {}
-	private static final Binder	uiBinder = GWT.create(Binder.class);
+	private Integer		id;
 
-	public AssetWizardWelcomePageUi() {
-		super(uiBinder);
+	public GetFixedAssetCategoryDepreciationPeriodRange() {}
+
+	public GetFixedAssetCategoryDepreciationPeriodRange(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 }

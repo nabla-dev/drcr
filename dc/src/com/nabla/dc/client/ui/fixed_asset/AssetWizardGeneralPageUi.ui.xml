@@ -8,7 +8,7 @@
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
 	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager" />
-	<ui:with field="fields" type="com.nabla.fixed_assets.client.model.AssetWizardModel.Fields" />
+	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetWizardModel.Fields" />
 		
 	<wnd:WizardPage title="Enter asset name and other general information.">
 		<ui:attribute name="title" description="Asset wizard - general page caption"/>

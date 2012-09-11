@@ -44,6 +44,7 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 
 		bindHandler(FetchAssetListHandler.class);
 		bindHandler(RemoveAssetHandler.class);
+		bindHandler(GetFixedAssetCategoryDepreciationPeriodRangeHandler.class);
 
 		bindHandler(RemoveTransactionHandler.class);
 
