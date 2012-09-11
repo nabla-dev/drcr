@@ -1,0 +1,14 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+	
+	<wnd:Html title="Welcome to the asset wizard">
+		<ui:attribute name="title" description="Asset wizard welcome page caption"/>
+		<ui:msg>
+<p>This wizard will help you create a new asset.<br/>Click 'Next' to continue or 'Cancel' to exit this wizard.</p>
+		</ui:msg>
+	</wnd:Html>
+</ui:UiBinder> 

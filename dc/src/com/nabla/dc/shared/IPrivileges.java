@@ -46,6 +46,13 @@ public interface IPrivileges extends IRolePrivileges {
 	static final String COMPANY_USER_VIEW = "company_user_view";
 	static final String COMPANY_USER_EDIT = "company_user_edit";
 
+	static final String COMPANY_ASSET_CATEGORY_EDIT = "company_asset_category_edit";
+
+	static final String FA_COMPANY_ASSET_VIEW = "fa_company_asset_view";
+	static final String FA_COMPANY_ASSET_ADD = "fa_company_asset_add";
+	static final String FA_COMPANY_ASSET_REMOVE = "fa_company_asset_remove";
+	static final String FA_COMPANY_ASSET_EDIT = "fa_company_asset_edit";
+
 	static final String ACCOUNT_VIEW = "account_view";
 	static final String ACCOUNT_ADD = "account_add";
 	static final String ACCOUNT_REMOVE = "account_remove";
@@ -70,8 +77,6 @@ public interface IPrivileges extends IRolePrivileges {
 	static final String FA_ASSET_ADD = "fa_asset_add";
 	static final String FA_ASSET_REMOVE = "fa_asset_remove";
 	static final String FA_ASSET_EDIT = "fa_asset_edit";
-
-	static final String COMPANY_ASSET_CATEGORY_EDIT = "company_asset_category_edit";
 
 	static final String IMPORT_SETTINGS = "import_settings";
 }

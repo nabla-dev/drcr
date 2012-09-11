@@ -18,6 +18,7 @@ package com.nabla.dc.client.presenter.company;
 
 import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.fixed_asset.AssetList;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
 import com.nabla.dc.client.ui.company.CompanyUi;
 import com.nabla.dc.shared.IPrivileges;
@@ -44,6 +45,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		@IRequiredRole(IPrivileges.ACCOUNT_VIEW) HideableCommand editAccounts();
 		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableCommand editPeriodEnds();
 		@IRequiredRole(IPrivileges.COMPANY_ASSET_CATEGORY_EDIT) HideableCommand editAssetCategories();
+		@IRequiredRole(IPrivileges.FA_COMPANY_ASSET_VIEW) HideableCommand editFixedAssets();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -74,6 +76,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		registerSlot(cmd.editAccounts(), onEditAccounts);
 		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
 		registerSlot(cmd.editAssetCategories(), onEditAssetCategories);
+		registerSlot(cmd.editFixedAssets(), onEditFixedAssets);
 		cmd.updateUi();
 	}
 
@@ -152,6 +155,18 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		@Override
 		public void invoke() {
 			new CompanyFixedAssetCategoryDialog(companyId).revealDisplay();
+		}
+	};
+
+	private final ISlot onEditFixedAssets = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					addTab(new AssetList(companyId, Company.this));
+				}
+			});
 		}
 	};
 }

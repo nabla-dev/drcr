@@ -31,17 +31,20 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchAssetListHandler extends AbstractFetchHandler<FetchAssetList> {
 
-	private static final SqlToJson	fetcher = new SqlToJson(
+	private static final SqlToJson	sql = new SqlToJson(
 "SELECT t.id, t.name, t.reference, t.location, t.purchase_invoice" +
-", c.name AS 'category', tt.value AS 'cost'" +
+", c.name AS 'category'," +
+" (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type IN ('OPENING','REVALUATION')) AS 'cost'" +
 ", t.depreciation_period, t.acquisition_date, t.disposal_date, t.proceeds" +
-" FROM fa_asset AS t" +
-" WHERE register_id=? {AND WHERE} {ORDER BY}"
+" FROM fa_asset AS t INNER JOIN (" +
+" fa_company_asset_category AS l INNER JOIN fa_asset_category AS c ON l.fa_asset_category_id=c.id" +
+" ) ON t.fa_company_asset_category_id=t.id" +
+" WHERE l.company_id=?"
 	);
 
 	@Override
 	public FetchResult execute(final FetchAssetList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.fetch(cmd, ctx.getConnection(), cmd.getCompanyId());
+		return sql.fetch(cmd, ctx.getConnection(), cmd.getCompanyId());
 	}
 
 }

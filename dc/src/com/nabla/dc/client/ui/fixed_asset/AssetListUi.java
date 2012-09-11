@@ -26,6 +26,7 @@ import com.nabla.dc.client.presenter.fixed_asset.AssetList.ICommandSet;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;
+import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
@@ -67,7 +68,7 @@ public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDis
 	public void savePreferences() {
 		list.saveViewState();
 	}
-/*
+
 	@Override
 	public void addRecord(Record record) {
 		list.addData(record);
@@ -75,8 +76,8 @@ public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDis
 
 	@Override
 	public void updateRecord(Record record) {
-		((AssetListModel)model).setEnableUpdate(false);
+		model.setEnableUpdate(false);
 		list.updateData(record);
 	}
-*/
+
 }

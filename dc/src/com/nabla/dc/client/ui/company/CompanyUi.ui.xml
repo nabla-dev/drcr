@@ -15,6 +15,7 @@
 				<wnd:ToolbarButton tooltip="Open nominal ledger"><ui:msg>Nominal Ledger</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton tooltip="Open sales ledger"><ui:msg>Sales Ledger</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton tooltip="Open purchase ledger"><ui:msg>Purchase Ledger</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.editFixedAssets}" icon="fixed_asset/asset_small.png" tooltip="Open fixed assets register"><ui:msg>Fixed Assets</ui:msg></wnd:ToolbarButton>
 			 	<wnd:ToolbarMenu title="Settings..." icon="settings_small.png">
 			 	<ui:attribute name="title" description="Settings menu title"/>
 					<wnd:MenuItem icon="account_small.png" command="{cmd.editAccounts}">Accounts</wnd:MenuItem>

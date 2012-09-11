@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+	
+	<ui:with field="res" type="com.nabla.fixed_assets.client.ui.IResource"/>
+	<ui:with field="cmd" type="com.nabla.wapp.client.ui.IWizardNavigationCommandSet"/>
+	
+	<ui:style>
+		.wizard-page-title {
+			font-family: Verdana, sans-serif;
+			font-size: 11px;
+			padding-left: 56px;
+			background: transparent url("public/images/asset_normal.png") no-repeat center left;
+			min-height: 48px;
+			font-weight: bold;
+		}
+	</ui:style>
+	
+	<wnd:ModalDialog caption="Asset Wizard" icon="asset_small.png" width="400">
+		<ui:attribute name="caption" description="Asset wizard dialog caption"/>
+		<wnd:VLayout margin="{res.style.DIALOG_MARGIN}" width="100%" height="100%">
+			<wnd:Html ui:field="pageTitle" styleName="{style.wizard-page-title}" height="48px"/>
+			<wnd:WizardClientArea ui:field="client" navigation="{cmd}"/>
+			<wnd:WizardNavigationBar>		
+				<wnd:HLayoutSpacer />
+				<wnd:Button command="{cmd.previous}" icon="wizard_prev.png" autoFit="true"><ui:msg description="Previous button">*Previous</ui:msg></wnd:Button>
+				<wnd:Button command="{cmd.next}" icon="wizard_next.png" iconOrientation="right" autoFit="true"><ui:msg description="Next button">*Next</ui:msg></wnd:Button>
+				<wnd:Button command="{cmd.finish}" icon="wizard_finish.png" autoFit="true"><ui:msg description="Finish button">*Finish</ui:msg></wnd:Button>
+				<wnd:CancelButton command="{cmd.cancel}" autoFit="true"><ui:msg description="Cancel button">*Cancel</ui:msg></wnd:CancelButton>
+			</wnd:WizardNavigationBar>		
+		</wnd:VLayout>
+	</wnd:ModalDialog>
+</ui:UiBinder> 
