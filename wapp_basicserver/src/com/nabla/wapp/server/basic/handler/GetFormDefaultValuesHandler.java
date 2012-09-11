@@ -30,10 +30,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class GetFormDefaultValuesHandler extends AbstractGetDefaultValuesHandler<GetFormDefaultValues> {
 
-	public GetFormDefaultValuesHandler() {
-		super();
-	}
-
 	@Override
 	public StringResult execute(final GetFormDefaultValues cmd, IUserSessionContext ctx) throws DispatchException, SQLException {
 		return getDefaultValues(cmd.getGroup(), ctx);

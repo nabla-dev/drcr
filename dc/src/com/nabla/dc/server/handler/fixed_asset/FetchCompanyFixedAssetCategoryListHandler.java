@@ -19,25 +19,20 @@ package com.nabla.dc.server.handler.fixed_asset;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchCompanyFixedAssetCategoryList;
-import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
  *
  */
 public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHandler<FetchCompanyFixedAssetCategoryList> {
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT isFolder, parentId, id, name, active, iid FROM" +
+
+	private static final SqlToJson	fetcher = new SqlToJson(
+"SELECT isFolder, parentId, id, name, active AS 'isActive', iid FROM" +
 "(SELECT TRUE AS 'isFolder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, NULL AS 'active', NULL AS 'iid'" +
 " FROM fa_fs_category AS t" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL" +
@@ -45,22 +40,12 @@ public class FetchCompanyFixedAssetCategoryListHandler extends AbstractFetchHand
 " SELECT FALSE AS 'isFolder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active, t.id AS 'iid'" +
 " FROM fa_asset_category AS t INNER JOIN fa_company_asset_category AS r ON t.id=r.fa_asset_category_id AND r.company_id=?" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL AND r.fa_fs_category_id IS NOT NULL" +
-") dt",
-			new OdbcBooleanToJson(IFieldReservedNames.TREEGRID_IS_FOLDER),
-			new OdbcStringToJson(IFieldReservedNames.TREEGRID_PARENT_ID),
-			new OdbcStringToJson(IdField.NAME),
-			new OdbcStringToJson(IFixedAssetCategory.NAME),
-			new OdbcBooleanToJson(IFixedAssetCategory.ACTIVE),
-			new OdbcIntToJson("iid")
+") dt"
 		);
 
 	@Override
 	public FetchResult execute(final FetchCompanyFixedAssetCategoryList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getCompanyId());
-/*		return (cmd.getParentId() == null) ?
-			fetcher.serialize(cmd, ctx.getConnection(), SQL_FS_CATEGORY)
-			:
-			fetcher.serialize(cmd, ctx.getConnection(), SQL_ASSET_CATEGORY, cmd.getCompanyId(), cmd.getParentId());*/
 	}
 
 }

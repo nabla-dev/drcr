@@ -42,10 +42,6 @@ public class IsUserInRoleHandler extends AbstractHandler<IsUserInRole, RoleSetRe
 " FROM role AS r INNER JOIN (user_role AS d INNER JOIN user AS u ON d.user_id=u.id) ON r.id=d.role_id" +
 " WHERE u.id=? AND (d.object_id IS NULL OR d.object_id=?) AND r.uname IN (?);";
 
-	public IsUserInRoleHandler() {
-		super();
-	}
-
 	@Override
 	public RoleSetResult execute(final IsUserInRole cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		// if user is 'root' then it supports all roles

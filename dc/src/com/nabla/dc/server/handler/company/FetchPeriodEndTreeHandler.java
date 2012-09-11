@@ -19,17 +19,11 @@ package com.nabla.dc.server.handler.company;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.FetchPeriodEndTree;
-import com.nabla.dc.shared.model.company.IPeriodEnd;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcDateToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
@@ -37,30 +31,26 @@ import com.nabla.wapp.shared.model.IFieldReservedNames;
  */
 public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodEndTree> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
-				new OdbcBooleanToJson(IFieldReservedNames.TREEGRID_IS_FOLDER),
-				new OdbcStringToJson(IdField.NAME),
-				new OdbcStringToJson(IFieldReservedNames.TREEGRID_PARENT_ID),
-				new OdbcBooleanToJson(IFieldReservedNames.RECORD_ENABLED),
-				new OdbcStringToJson(IPeriodEnd.NAME),
-				new OdbcDateToJson(IPeriodEnd.END_DATE)
-			);
+	private static final SqlToJson	parentSql = new SqlToJson(
+"SELECT TRUE AS 'isFolder', CONCAT('f',t.id) AS 'id', NULL AS 'parentId', TRUE AS 'isEnabled', t.name, NULL AS 'end_date'" +
+" FROM financial_year AS t" +
+" WHERE t.company_id=?" +
+" ORDER BY (SELECT p.end_date FROM period_end AS p WHERE p.financial_year_id=t.id LIMIT 1) DESC"
+	);
+
+	private static final SqlToJson	childSql = new SqlToJson(
+"SELECT FALSE as 'isFolder', CONCAT('p',t.id) AS 'id', CONCAT('f',t.financial_year_id) AS 'parentId', FALSE AS 'isEnabled', t.name, t.end_date" +
+" FROM period_end AS t" +
+" WHERE t.financial_year_id=?" +
+" ORDER BY t.end_date ASC"
+	);
 
 	@Override
 	public FetchResult execute(final FetchPeriodEndTree cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		if (cmd.getParentId() == null)
-			return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT TRUE AS 'isFolder', CONCAT('f',t.id) AS 'id', NULL AS 'parentId', TRUE AS 'enabled', t.name, NULL AS 'end_date'" +
-" FROM financial_year AS t" +
-" WHERE t.company_id=?" +
-" ORDER BY (SELECT p.end_date FROM period_end AS p WHERE p.financial_year_id=t.id LIMIT 1) DESC",
-				cmd.getCompanyId());
-		return fetcher.serialize(cmd, ctx.getConnection(),
-"SELECT FALSE as 'isFolder', CONCAT('p',t.id) AS 'id', CONCAT('f',t.financial_year_id) AS 'parentId', FALSE AS 'enabled', t.name, t.end_date" +
-" FROM period_end AS t" +
-" WHERE t.financial_year_id=?" +
-" ORDER BY t.end_date ASC",
-				cmd.getParentId());
+		return (cmd.getParentId() == null) ?
+			parentSql.serialize(cmd, ctx.getConnection(), cmd.getCompanyId())
+			:
+			childSql.serialize(cmd, ctx.getConnection(), cmd.getParentId());
 	}
 
 }

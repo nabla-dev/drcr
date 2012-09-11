@@ -17,19 +17,13 @@
 package com.nabla.wapp.server.basic.handler;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
-import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.json.IOdbcToJsonEncoder;
 import com.nabla.wapp.server.json.JsonResponse;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
-import com.nabla.wapp.server.json.OdbcTimeStampToJson;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.command.AddUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -43,26 +37,23 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public class AddUserHandler extends AbstractAddHandler<AddUser> {
 
-	private static final List<IOdbcToJsonEncoder>	columns = new LinkedList<IOdbcToJsonEncoder>();
-
-	static {
-		columns.add(new OdbcIntToJson("id"));
-		columns.add(new OdbcBooleanToJson("active"));
-		columns.add(new OdbcTimeStampToJson("created"));
-	}
-
 	@Override
 	public StringResult execute(final AddUser record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		validate(record, ctx);
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active, created FROM user WHERE id=?;", add(record, ctx));
+"SELECT id, active AS 'isActive', created FROM user WHERE id=?;", add(record, ctx));
 		try {
-			final JsonResponse json = new JsonResponse();
-			json.putNext(stmt.executeQuery(), columns);
-			return json.toStringResult();
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				final JsonResponse json = new JsonResponse();
+				json.putNext(rs);
+				return json.toStringResult();
+			} finally {
+				rs.close();
+			}
 		} finally {
-			Database.close(stmt);
+			stmt.close();
 		}
 	}
 

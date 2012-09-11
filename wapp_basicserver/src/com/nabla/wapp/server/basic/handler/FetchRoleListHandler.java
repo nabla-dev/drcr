@@ -19,15 +19,11 @@ package com.nabla.wapp.server.basic.handler;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.command.FetchRoleList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IRole;
 
 /**
  * @author nabla
@@ -35,20 +31,15 @@ import com.nabla.wapp.shared.model.IRole;
  */
 public class FetchRoleListHandler extends AbstractFetchHandler<FetchRoleList> {
 
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT id, name, internal FROM role WHERE privilege=FALSE {AND WHERE} {ORDER BY}",
-		new OdbcIdToJson(),
-		new OdbcStringToJson(IRole.NAME),
-		new OdbcBooleanToJson(IRole.INTERNAL)
-			);
-
-	public FetchRoleListHandler() {
-		super();
-	}
+	private static final SqlToJson	fetcher = new SqlToJson(
+"SELECT id, name, internal AS 'isInternal'" +
+" FROM role" +
+" WHERE privilege=FALSE"
+	);
 
 	@Override
 	public FetchResult execute(final FetchRoleList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection());
+		return fetcher.fetch(cmd, ctx.getConnection());
 	}
 
 }

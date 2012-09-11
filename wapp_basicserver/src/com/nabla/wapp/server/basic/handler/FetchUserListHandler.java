@@ -19,18 +19,12 @@ package com.nabla.wapp.server.basic.handler;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.OdbcTimeStampToJson;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.command.FetchUserList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
-import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla
@@ -38,34 +32,23 @@ import com.nabla.wapp.shared.model.IUser;
  */
 public class FetchUserListHandler extends AbstractFetchHandler<FetchUserList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcBooleanToJson(IFieldReservedNames.RECORD_ENABLED),
-		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
-		new OdbcIdToJson(),
-		new OdbcStringToJson(IUser.NAME),
-		new OdbcBooleanToJson(IUser.ACTIVE),
-		new OdbcTimeStampToJson(IUser.CREATED),
-		new OdbcTimeStampToJson(IUser.LAST_LOGIN)
+	private static final SqlToJson	rootSql = new SqlToJson(
+"SELECT (name NOT LIKE ?) AS 'isEnabled', (uname IS NULL) as 'isDeleted', id, name, active AS 'isActive', created, last_login" +
+" FROM user"
 	);
 
-	public FetchUserListHandler() {
-		super();
-	}
+	private static final SqlToJson	sql = new SqlToJson(
+"SELECT TRUE AS 'isEnabled', FALSE AS 'isDeleted', id, name, active AS 'isActive', created, last_login" +
+" FROM user" +
+" WHERE uname IS NOT NULL AND name NOT LIKE ?"
+	);
 
 	@Override
 	public FetchResult execute(final FetchUserList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), ctx.isRoot() ?
-"SELECT * FROM (" +
-"SELECT (name NOT LIKE ?) AS 'enabled', (uname IS NULL) as 'deleted', id, name, active, created, last_login" +
-" FROM user" +
-") AS dt {WHERE} {ORDER BY}"
+		return ctx.isRoot() ?
+			rootSql.fetch(cmd, ctx.getConnection(), IRootUser.NAME)
 			:
-"SELECT * FROM (" +
-"SELECT TRUE AS 'enabled', FALSE AS 'deleted', id, name, active, created, last_login" +
-" FROM user" +
-" WHERE uname IS NOT NULL AND name NOT LIKE ?" +
-") AS dt {WHERE} {ORDER BY}",
-		IRootUser.NAME);
+			sql.fetch(cmd, ctx.getConnection(), IRootUser.NAME);
 	}
 
 }

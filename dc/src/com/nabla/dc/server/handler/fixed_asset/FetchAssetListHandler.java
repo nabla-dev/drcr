@@ -19,13 +19,8 @@ package com.nabla.dc.server.handler.fixed_asset;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchAssetList;
-import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcDateToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
@@ -36,23 +31,12 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchAssetListHandler extends AbstractFetchHandler<FetchAssetList> {
 
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
+	private static final SqlToJson	fetcher = new SqlToJson(
 "SELECT t.id, t.name, t.reference, t.location, t.purchase_invoice" +
 ", c.name AS 'category', tt.value AS 'cost'" +
 ", t.depreciation_period, t.acquisition_date, t.disposal_date, t.proceeds" +
 " FROM fa_asset AS t" +
-" WHERE register_id=? {AND WHERE} {ORDER BY}",
-		new OdbcIdToJson(),
-		new OdbcStringToJson(IAsset.NAME),
-		new OdbcStringToJson(IAsset.REFERENCE),
-		new OdbcStringToJson(IAsset.LOCATION),
-		new OdbcStringToJson(IAsset.PURCHASE_INVOICE),
-		new OdbcStringToJson(IAsset.CATEGORY),
-		new OdbcIntToJson("balance_sheet"),
-		new OdbcIntToJson(IAsset.DEPRECIATION_PERIOD),
-		new OdbcDateToJson(IAsset.ACQUISITION_DATE),
-		new OdbcDateToJson(IAsset.DISPOSAL_DATE),
-		new OdbcIntToJson(IAsset.PROCEEDS)
+" WHERE register_id=? {AND WHERE} {ORDER BY}"
 	);
 
 	@Override

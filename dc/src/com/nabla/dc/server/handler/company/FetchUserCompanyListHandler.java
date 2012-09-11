@@ -20,14 +20,10 @@ import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.FetchUserCompanyList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IUser;
 
 /**
  * @author nabla
@@ -35,13 +31,10 @@ import com.nabla.wapp.shared.model.IUser;
  */
 public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserCompanyList> {
 
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT c.id, c.name, (l.company_id IS NOT NULL) AS 'active'" +
+	private static final SqlToJson	fetcher = new SqlToJson(
+"SELECT c.id, c.name, (l.company_id IS NOT NULL) AS 'isActive'" +
 " FROM company AS c LEFT JOIN company_user AS l ON c.id=l.company_id AND l.user_id=?" +
-" WHERE c.active=TRUE AND c.uname IS NOT NULL",
-		new OdbcIdToJson(),
-		new OdbcStringToJson(IUser.NAME),
-		new OdbcBooleanToJson(IUser.ACTIVE)
+" WHERE c.active=TRUE AND c.uname IS NOT NULL"
 	);
 
 	@Override

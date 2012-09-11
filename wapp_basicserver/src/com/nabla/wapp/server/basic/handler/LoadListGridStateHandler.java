@@ -31,8 +31,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class LoadListGridStateHandler extends AbstractHandler<LoadListGridState, StringResult> {
 
-	public LoadListGridStateHandler() {}
-
 	@Override
 	public StringResult execute(final LoadListGridState cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return UserPreference.load(ctx, "list_grid", cmd.getListGridName());

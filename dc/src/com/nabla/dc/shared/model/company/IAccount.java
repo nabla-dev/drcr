@@ -28,12 +28,12 @@ public interface IAccount {
 	static final RegexConstraint		CODE_CONSTRAINT = new RegexConstraint(1, 12, "([0-9])([0-9]|/)*");
 	static final String				NAME = "name";
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
-	static final String				ACTIVE = "active";
+	static final String				ACTIVE = "isActive";
 	static final String				COST_CENTRE = "cost_centre";
 	static final TextLengthConstraint	CC_CONSTRAINT = new TextLengthConstraint(1, 16);
 	static final String				DEPARTMENT = "department";
 	static final TextLengthConstraint	DEP_CONSTRAINT = new TextLengthConstraint(1, 16);
-	static final String				BALANCE_SHEET = "balance_sheet";
+	static final String				BALANCE_SHEET = "isBalance_sheet";
 
 	static final String				TABLE = "account";
 }

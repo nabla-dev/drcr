@@ -30,7 +30,7 @@ public interface ITaxRate {
 	static final String					RATE = "rate";
 	static final IntegerRangeConstraint	RATE_CONSTRAINT = new IntegerRangeConstraint(0, 9999);
 	static int							RATE_DEFAULT = 0;
-	static final String					ACTIVE = "active";
+	static final String					ACTIVE = "isActive";
 
 	static final String					TABLE = "tax_rate";
 }

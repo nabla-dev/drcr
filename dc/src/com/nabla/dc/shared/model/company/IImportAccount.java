@@ -25,7 +25,7 @@ public interface IImportAccount {
 	static final String	ROW_HEADER = "row_header";
 	static final String	OVERWRITE = "overwrite";
 
-	static final String	SUCCESS = "success";
+	static final String	SUCCESS = "isSuccess";
 
 	static final String	PREFERENCE_GROUP = "import_account";
 }

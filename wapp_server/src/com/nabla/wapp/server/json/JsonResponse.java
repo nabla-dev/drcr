@@ -22,8 +22,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.List;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -39,14 +37,6 @@ public class JsonResponse extends JSONArray {
 
 	private static final long 				serialVersionUID = 1L;
 	private static final SimpleDateFormat	format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-	public int putAll(final ResultSet rs, final List<IOdbcToJsonEncoder> encoders) throws SQLException {
-		Assert.argumentNotNull(rs);
-
-		while (rs.next())
-			add(writeRecord(rs, encoders));
-		return size();
-	}
 
 	public int putAll(final ResultSet rs, final int[] columnTypes) throws SQLException {
 		Assert.argumentNotNull(rs);
@@ -64,15 +54,6 @@ public class JsonResponse extends JSONArray {
 			} while (rs.next());
 		}
 		return size();
-	}
-
-	public boolean putNext(final ResultSet rs, final List<IOdbcToJsonEncoder> encoders) throws SQLException {
-		Assert.argumentNotNull(rs);
-
-		if (!rs.next())
-			return false;
-		add(writeRecord(rs, encoders));
-		return true;
 	}
 
 	public boolean putNext(final ResultSet rs, final int[] columnTypes) throws SQLException {
@@ -109,49 +90,6 @@ public class JsonResponse extends JSONArray {
 		add(record);
 	}
 
-	public static List<IOdbcToJsonEncoder> getEncoderList(final ResultSet rs) throws SQLException {
-		final List<IOdbcToJsonEncoder> encoders = new LinkedList<IOdbcToJsonEncoder>();
-		final ResultSetMetaData header = rs.getMetaData();
-		for (int c = 1; c <= header.getColumnCount(); ++c) {
-			final String label = header.getColumnLabel(c);
-			if (label.startsWith("is") || label.startsWith("can"))	// assume if label starts with "is" then it's a boolean
-				encoders.add(new OdbcBooleanToJson(label));
-			else {
-				switch (header.getColumnType(c)) {
-				case Types.BIGINT:
-				case Types.INTEGER:
-				case Types.SMALLINT:
-				case Types.TINYINT:
-					encoders.add(new OdbcIntToJson(label));
-					break;
-				case Types.BOOLEAN:
-				case Types.BIT:
-					encoders.add(new OdbcBooleanToJson(label));
-					break;
-				case Types.DATE:
-					encoders.add(new OdbcDateToJson(label));
-					break;
-				case Types.TIMESTAMP:
-					encoders.add(new OdbcTimeStampToJson(label));
-					break;
-				case Types.DOUBLE:
-					encoders.add(new OdbcDoubleToJson(label));
-					break;
-				case Types.FLOAT:
-					encoders.add(new OdbcFloatToJson(label));
-					break;
-				case Types.NULL:
-					encoders.add(new OdbcNullToJson(label));
-					break;
-				default:
-					encoders.add(new OdbcStringToJson(label));
-					break;
-				}
-			}
-		}
-		return encoders;
-	}
-
 	public static int[] getColumnTypes(final ResultSet rs) throws SQLException {
 		Assert.argumentNotNull(rs);
 
@@ -169,16 +107,6 @@ public class JsonResponse extends JSONArray {
 		if (label.startsWith("can") || label.startsWith("has"))
 			return label.length() > 3 && Character.isUpperCase(label.charAt(3));
 		return false;
-	}
-
-	private static JSONObject writeRecord(final ResultSet rs, final List<IOdbcToJsonEncoder> encoders) throws SQLException {
-		Assert.argumentNotNull(rs);
-		Assert.argumentNotNull(encoders);
-
-		final JSONObject record = new JSONObject();
-		for (int i = 0; i < encoders.size(); ++i)
-			encoders.get(i).encode(rs, i + 1, record);
-		return record;
 	}
 
 	private static JSONObject writeRecord(final ResultSet rs, final int[] columnTypes) throws SQLException {

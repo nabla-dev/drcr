@@ -20,10 +20,7 @@ import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.FetchCompanyTaxRateList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
@@ -34,13 +31,10 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchCompanyTaxRateListHandler extends AbstractFetchHandler<FetchCompanyTaxRateList> {
 
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT r.id, r.name, (c.company_id IS NOT NULL) AS 'active'" +
+	private static final SqlToJson	fetcher = new SqlToJson(
+"SELECT r.id, r.name, (c.company_id IS NOT NULL) AS 'isActive'" +
 " FROM tax_rate AS r LEFT JOIN company_tax_rate AS c ON r.id=c.tax_rate_id AND c.company_id=?" +
-" WHERE r.active=TRUE AND r.uname IS NOT NULL",
-		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active")
+" WHERE r.active=TRUE AND r.uname IS NOT NULL"
 	);
 
 	@Override

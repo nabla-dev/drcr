@@ -45,10 +45,10 @@ public class AddFixedAssetCategoryHandler extends AbstractAddHandler<AddFixedAss
 			final Integer id = sql.execute(ctx.getWriteConnection(), record);
 			if (id == null)
 				throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
-			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "type", record.getType());
-			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "min_depreciation_period", record.getMinDepreciationPeriod());
-			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "max_depreciation_period", record.getMaxDepreciationPeriod());
-			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, "active", record.getActive());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, IFixedAssetCategory.TYPE, record.getType());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, IFixedAssetCategory.MIN_DEPRECIATION_PERIOD, record.getMinDepreciationPeriod());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, IFixedAssetCategory.MAX_DEPRECIATION_PERIOD, record.getMaxDepreciationPeriod());
+			UserPreference.save(ctx, IFixedAssetCategory.PREFERENCE_GROUP, IFixedAssetCategory.ACTIVE, record.getActive());
 			guard.setSuccess();
 			return id;
 		} finally {

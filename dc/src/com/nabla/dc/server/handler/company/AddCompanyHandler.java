@@ -18,12 +18,11 @@ package com.nabla.dc.server.handler.company;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.List;
 
 import com.nabla.dc.shared.command.company.AddCompany;
 import com.nabla.dc.shared.model.company.ICompany;
@@ -32,10 +31,7 @@ import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
-import com.nabla.wapp.server.json.IOdbcToJsonEncoder;
 import com.nabla.wapp.server.json.JsonResponse;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIntToJson;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
@@ -48,25 +44,23 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public class AddCompanyHandler extends AbstractAddHandler<AddCompany> {
 
-	private static final List<IOdbcToJsonEncoder>	columns = new LinkedList<IOdbcToJsonEncoder>();
-
-	static {
-		columns.add(new OdbcIntToJson("id"));
-		columns.add(new OdbcBooleanToJson("active"));
-	}
-
 	@Override
 	public StringResult execute(final AddCompany record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		validate(record, ctx);
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active FROM company WHERE id=?;", add(record, ctx));
+"SELECT id, active AS 'isActive' FROM company WHERE id=?;", add(record, ctx));
 		try {
-			final JsonResponse json = new JsonResponse();
-			json.putNext(stmt.executeQuery(), columns);
-			return json.toStringResult();
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				final JsonResponse json = new JsonResponse();
+				json.putNext(rs);
+				return json.toStringResult();
+			} finally {
+				rs.close();
+			}
 		} finally {
-			Database.close(stmt);
+			stmt.close();
 		}
 	}
 

@@ -19,8 +19,7 @@ package com.nabla.wapp.server.basic.handler;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.command.FetchUserName;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -32,10 +31,8 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchUserNameHandler extends AbstractFetchHandler<FetchUserName> {
 
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT name FROM user WHERE id=?",
-		new OdbcStringToJson("name")
-	);
+	private static final SqlToJson	fetcher = new SqlToJson(
+"SELECT name FROM user WHERE id=?");
 
 	@Override
 	public FetchResult execute(final FetchUserName cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {

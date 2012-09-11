@@ -31,10 +31,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class LoadUserPreferenceHandler extends AbstractHandler<LoadUserPreference, StringResult> {
 
-	public LoadUserPreferenceHandler() {
-		super();
-	}
-
 	@Override
 	public StringResult execute(final LoadUserPreference cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return UserPreference.load(ctx, cmd.getGroup(), cmd.getName());

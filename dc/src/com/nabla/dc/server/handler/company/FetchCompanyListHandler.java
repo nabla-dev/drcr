@@ -19,16 +19,11 @@ package com.nabla.dc.server.handler.company;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.FetchCompanyList;
-import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
@@ -36,22 +31,23 @@ import com.nabla.wapp.shared.model.IFieldReservedNames;
  */
 public class FetchCompanyListHandler extends AbstractFetchHandler<FetchCompanyList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
-		new OdbcIdToJson(),
-		new OdbcStringToJson(ICompany.NAME),
-		new OdbcBooleanToJson(ICompany.ACTIVE)
+	private static final SqlToJson	rootSql = new SqlToJson(
+"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'isDeleted', id, name, active AS 'isActive'" +
+" FROM company"
+	);
+
+	private static final SqlToJson	sql = new SqlToJson(
+"SELECT FALSE AS 'isDeleted', id, name, active AS 'isActive'" +
+" FROM company" +
+" WHERE uname IS NOT NULL"
 	);
 
 	@Override
 	public FetchResult execute(final FetchCompanyList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
-" FROM company"
-	:
-"SELECT FALSE AS 'deleted', id, name, active" +
-" FROM company" +
-" WHERE uname IS NOT NULL");
+		return ctx.isRoot() ?
+			rootSql.fetch(cmd, ctx.getConnection())
+			:
+			sql.fetch(cmd, ctx.getConnection());
 	}
 
 }

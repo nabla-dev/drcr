@@ -19,8 +19,7 @@ package com.nabla.wapp.server.basic.handler;
 import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.OdbcStringToJson;
-import com.nabla.wapp.server.json.SimpleJsonFetch;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.command.FetchRoleName;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -32,9 +31,8 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  */
 public class FetchRoleNameHandler extends AbstractFetchHandler<FetchRoleName> {
 
-	private static final SimpleJsonFetch	fetcher = new SimpleJsonFetch(
-"SELECT name FROM role WHERE id=?",
-		new OdbcStringToJson("name")
+	private static final SqlToJson	fetcher = new SqlToJson(
+"SELECT name FROM role WHERE id=?"
 	);
 
 	@Override

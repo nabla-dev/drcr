@@ -20,14 +20,10 @@ import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.general.FetchECTermList;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.json.JsonFetch;
-import com.nabla.wapp.server.json.OdbcBooleanToJson;
-import com.nabla.wapp.server.json.OdbcIdToJson;
-import com.nabla.wapp.server.json.OdbcStringToJson;
+import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.model.IFieldReservedNames;
 
 /**
  * @author nabla
@@ -35,22 +31,23 @@ import com.nabla.wapp.shared.model.IFieldReservedNames;
  */
 public class FetchECTermListHandler extends AbstractFetchHandler<FetchECTermList> {
 
-	private static final JsonFetch	fetcher = new JsonFetch(
-		new OdbcBooleanToJson(IFieldReservedNames.RECORD_DELETED),
-		new OdbcIdToJson(),
-		new OdbcStringToJson("name"),
-		new OdbcBooleanToJson("active")
-		);
+	private static final SqlToJson	rootSql = new SqlToJson(
+"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'isDeleted', id, name, active AS 'isActive'" +
+" FROM ec_term"
+	);
+
+	private static final SqlToJson	sql = new SqlToJson(
+"SELECT FALSE AS 'isDeleted', id, name, active AS 'isActive'" +
+" FROM ec_term" +
+" WHERE uname IS NOT NULL"
+	);
 
 	@Override
 	public FetchResult execute(final FetchECTermList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.fetch(cmd, ctx.getConnection(), ctx.isRoot() ?
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'deleted', id, name, active" +
-" FROM ec_term"
+		return ctx.isRoot() ?
+			rootSql.fetch(cmd, ctx.getConnection())
 			:
-"SELECT FALSE AS 'deleted', id, name, active" +
-" FROM ec_term" +
-" WHERE uname IS NOT NULL");
+			sql.fetch(cmd, ctx.getConnection());
 	}
 
 }
