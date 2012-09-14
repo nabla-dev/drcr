@@ -16,13 +16,16 @@
 */
 package com.nabla.dc.client.presenter.fixed_asset;
 
+import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.fixed_asset.AssetListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
@@ -67,6 +70,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		WizardData get(final Record record);
 	}
 */
+	private final Integer			companyId;
 	private final ITabManager		tabs;
 /*	private final Integer			assetRegisterId;
 	private final String			assetRegisterName;
@@ -85,13 +89,14 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	@Inject private ViewAssetDialog.IFactory								viewAssetDialogFactory;
 	@Inject private TransactionList.IFactory								transactionListFactory;
 */
-	public AssetList(final IDisplay display, final ITabManager tabs) {
+	public AssetList(final Integer companyId, final IDisplay display, final ITabManager tabs) {
 		super(display);
+		this.companyId = companyId;
 		this.tabs = tabs;
 	}
 
 	public AssetList(final Integer companyId, final ITabManager tabs) {
-		this(new AssetListUi(companyId), tabs);
+		this(companyId, new AssetListUi(companyId), tabs);
 	}
 
 	@Override
@@ -102,6 +107,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 
 		registerSlot(cmd.addRecord(), onAddRecord);
+		registerSlot(cmd.edit(), onEditRecord);
 /*		registerSlot(cmd.removeRecord(), onRemoveRecord);
 		registerSlot(cmd.userReportList(), onUserReportList);
 		registerSlot(cmd.editAssetCategoryList(), onEditAssetCategoryList);
@@ -109,7 +115,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		registerSlot(cmd.importAssets(), onImportAsset);
 
 		final IRecordCommandSet rcmd = display.getRecordCommands();
-		registerSlot(rcmd.edit(), onEditRecord);
+
 		registerSlot(rcmd.view(), onViewRecord);
 		registerSlot(rcmd.disposal(), onDisposeAsset);
 		registerSlot(rcmd.split(), onSplitAsset);
@@ -123,12 +129,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-/*			wizardModelFactory.editNewRecord(assetRegisterId, new AbstractAsyncCallback<WizardData>() {
-				@Override
-				public void onSuccess(WizardData result) {
-					assetWizardFactory.get(result, onRecordAdded).revealDisplay();
-				}
-			});*/
+			AssetWizard.editNewRecord(companyId);
 		}
 	};
 
@@ -136,6 +137,16 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		@Override
 		public void invoke(final Record record) {
 			getDisplay().addRecord(record);
+		}
+	};
+
+	private final ISlot1<AssetRecord> onEditRecord = new ISlot1<AssetRecord>() {
+		@Override
+		public void invoke(AssetRecord asset) {
+			if (asset.isDisposed())
+				Application.getInstance().getMessageBox().info(Resource.strings.editDisposedFixedAssetNotAllowed());
+			else
+				AssetWizard.editRecord(companyId, asset.getId());
 		}
 	};
 /*
@@ -208,22 +219,6 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<Record> onEditRecord = new ISlot1<Record>() {
-		@Override
-		public void invoke(Record record) {
-			final AssetRecord asset = new AssetRecord(record);
-			if (asset.isDisposed())
-				msgBox.info(Resource.strings.editDisposedAssetNotAllowed());
-			else {
-				wizardModelFactory.editRecord(assetRegisterId, asset.getId(), new AbstractAsyncCallback<WizardData>() {
-					@Override
-					public void onSuccess(WizardData result) {
-						assetWizardFactory.get(result, onRecordUpdated).revealDisplay();
-					}
-				});
-			}
-		}
-	};
 
 	private final ISlot1<Record> onRecordUpdated = new ISlot1<Record>() {
 		@Override

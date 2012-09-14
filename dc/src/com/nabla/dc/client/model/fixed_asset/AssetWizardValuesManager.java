@@ -14,26 +14,22 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
+package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.client.model.WizardValuesManager;
 
 /**
- * The <code></code> object is used to
+ * @author nabla
  *
  */
-public class FetchAssetListRecord extends AbstractFetch {
+public class AssetWizardValuesManager extends WizardValuesManager {
 
-	private Integer	id;
-
-	FetchAssetListRecord() {}
-
-	public FetchAssetListRecord(Integer id) {
-		this.id = id;
+	public AssetWizardValuesManager(final Integer companyId, final Integer assetId) {
+		super(new AssetWizardModel(companyId, assetId));
 	}
 
-	public Integer getId() {
-		return id;
+	public AssetWizardValuesManager(final Integer companyId) {
+		this(companyId, null);
 	}
 
 }

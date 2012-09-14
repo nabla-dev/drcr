@@ -36,7 +36,7 @@ public abstract class AsyncGetDefaultValuesCallback extends AbstractAsyncCallbac
 	@Override
 	public void onSuccess(final StringResult result) {
 		if (result != null) {
-logger.fine("default values = \n" + result.get());
+			logger.fine("default values = \n" + result.get());
 			final Record[] records = CModel.jsonToRecords(result.get());
 			if (records.length == 1)
 				onDefaultValues(JSOHelper.convertToMap(records[0].getJsObj()));

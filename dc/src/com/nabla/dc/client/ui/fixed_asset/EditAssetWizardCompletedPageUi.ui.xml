@@ -1,0 +1,14 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+	
+	<wnd:Html title="Asset Wizard Completed">
+		<ui:attribute name="title" description="Edit asset wizard completed page caption"/>
+		<ui:msg>
+<p>Click Finish to save changes made to the selected asset.</p>
+		</ui:msg>
+	</wnd:Html>
+</ui:UiBinder> 

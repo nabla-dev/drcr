@@ -57,4 +57,14 @@ public interface ITextResource extends Constants {
 
 	@DefaultStringValue("You need to select a deleted BalanceSheet category to run this command")
 	String noDeletedBalanceSheetCategorySelected();
+
+	@DefaultStringValue("You are not allowed to edit an asset once it has been disposed of")
+	String editDisposedFixedAssetNotAllowed();
+
+	@DefaultStringValue("You don't access right to this asset register. Have you acquired authorisation from the relevant accountant?")
+	String confirmTransferFixedAsset();
+
+	@DefaultStringValue("This asset has already been disposed. Do you want to revert the disposal of this asset? Click 'No' to edit disposal details.")
+	String revertFixedAssetDisposal();
+
 }

@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,15 +14,13 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.ui;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import com.nabla.fixed_assets.client.presenter.AssetWizard;
-import com.nabla.fixed_assets.shared.AcquisitionTypes;
-import com.nabla.fixed_assets.shared.model.IAsset;
+import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
+import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
+import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -40,11 +38,10 @@ public class AssetWizardAcquisitionPageUi extends AssetWizardBasicPageUi impleme
 	interface Binder extends UiBinder<WizardPage, AssetWizardBasicPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	@Inject
-	public AssetWizardAcquisitionPageUi(@Assisted final ValuesManager model, @Assisted Integer maxDepPeriod) {
+	public AssetWizardAcquisitionPageUi(final ValuesManager model, Integer maxDepPeriod) {
 		super(model, uiBinder);
 		// limit initial depreciation period using asset category depreciation period range
-		final SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.INITIAL_DEP_PERIOD);
+		final SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.INITIAL_DEPRECIATION_PERIOD);
 		Assert.notNull(depPeriod);
 		depPeriod.setMin(0);
 		depPeriod.setMax(maxDepPeriod);
@@ -54,8 +51,8 @@ public class AssetWizardAcquisitionPageUi extends AssetWizardBasicPageUi impleme
 		else if (value < 0 || value > maxDepPeriod)
 			depPeriod.setValue(0);
 		// show / hide initial accumulated depreciation and period according to acquisition type
-		form.getItem(IAsset.INITIAL_ACCUM_DEP).setShowIfCondition(onAcquisitionTypeChanged);
-		form.getItem(IAsset.INITIAL_DEP_PERIOD).setShowIfCondition(onAcquisitionTypeChanged);
+		form.getItem(IAsset.INITIAL_ACCUM_DEPRECIATION).setShowIfCondition(onAcquisitionTypeChanged);
+		form.getItem(IAsset.INITIAL_DEPRECIATION_PERIOD).setShowIfCondition(onAcquisitionTypeChanged);
 	}
 
 	@Override
