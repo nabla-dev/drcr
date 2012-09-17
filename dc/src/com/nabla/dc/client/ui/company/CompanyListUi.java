@@ -26,6 +26,7 @@ import com.nabla.dc.client.presenter.company.CompanyList;
 import com.nabla.dc.client.presenter.company.CompanyList.ICommandSet;
 import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.general.Application;
+import com.nabla.wapp.client.model.UpdateModelCacheOperations;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
 import com.nabla.wapp.client.ui.ListGrid;
@@ -33,7 +34,6 @@ import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.smartgwt.client.data.Record;
-import com.smartgwt.client.types.DSOperationType;
 
 /**
  * @author nabla
@@ -59,7 +59,7 @@ public class CompanyListUi extends BindedTabDisplay<Tab> implements CompanyList.
 
 	@Override
 	public void addRecord(final Record record) {
-		model.updateCache(record, DSOperationType.ADD);
+		model.updateCache(record, UpdateModelCacheOperations.ADD);
 	}
 
 	@Override

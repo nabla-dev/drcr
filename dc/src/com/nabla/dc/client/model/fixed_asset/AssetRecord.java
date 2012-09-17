@@ -17,6 +17,7 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.dc.shared.command.fixed_asset.AddAsset;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.JSHelper;
@@ -86,4 +87,8 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 		return getAttributeAsString(IAsset.REFERENCE);
 	}
 
+	public AddAsset toAddAssetCommand() {
+
+		return null;
+	}
 }

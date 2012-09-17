@@ -18,25 +18,37 @@ package com.nabla.wapp.shared.command;
 
 import java.util.Collection;
 
+import com.nabla.wapp.shared.general.IntegerSet;
+
 
 /**
  * @author nabla
  *
  */
-public class FetchUserName extends AbstractFetchRecord {
+public abstract class AbstractFetchRecord extends AbstractFetch {
 
-	protected FetchUserName() {}	// for serialization only
+	private IntegerSet	ids;
 
-	public FetchUserName(final Integer id) {
-		super(id);
+	protected AbstractFetchRecord() {}	// for serialization only
+
+	protected AbstractFetchRecord(final Integer id) {
+		this.ids = new IntegerSet(id);
 	}
 
-	public FetchUserName(final Collection<Integer> ids) {
-		super(ids);
+	protected AbstractFetchRecord(final Collection<Integer> ids) {
+		this.ids = new IntegerSet(ids);
 	}
 
-	public FetchUserName(final Integer... ids) {
-		super(ids);
+	protected AbstractFetchRecord(final Integer... ids) {
+		this.ids = new IntegerSet(ids);
+	}
+
+	public IntegerSet getIds() {
+		return ids;
+	}
+
+	public Integer getId() {
+		return ids.isEmpty() ? null : ids.iterator().next();
 	}
 
 }

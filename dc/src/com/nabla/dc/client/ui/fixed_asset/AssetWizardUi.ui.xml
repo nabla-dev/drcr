@@ -13,13 +13,13 @@
 			font-family: Verdana, sans-serif;
 			font-size: 11px;
 			padding-left: 56px;
-			background: transparent url("public/images/asset_normal.png") no-repeat center left;
+			background: transparent url("public/images/fixed_asset/asset_normal.png") no-repeat center left;
 			min-height: 48px;
 			font-weight: bold;
 		}
 	</ui:style>
 	
-	<wnd:ModalDialog caption="Asset Wizard" icon="asset_small.png" width="400">
+	<wnd:ModalDialog caption="Asset Wizard" icon="fixed_asset/asset_small.png" width="400">
 		<ui:attribute name="caption" description="Asset wizard dialog caption"/>
 		<wnd:Html ui:field="pageTitle" styleName="{style.wizard-page-title}" height="48px"/>
 		<wnd:WizardClientArea ui:field="client" navigation="{cmd}"/>

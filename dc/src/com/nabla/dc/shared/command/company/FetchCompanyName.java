@@ -16,24 +16,18 @@
 */
 package com.nabla.dc.shared.command.company;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.command.AbstractFetchRecord;
 
 /**
  * @author FNorais
  *
  */
-public class FetchCompanyName extends AbstractFetch {
+public class FetchCompanyName extends AbstractFetchRecord {
 
-	private Integer		id;
-
-	public FetchCompanyName() {}	// for serialization only
+	FetchCompanyName() {}	// for serialization only
 
 	public FetchCompanyName(final Integer id) {
-		this.id = id;
-	}
-
-	public Integer getId() {
-		return id;
+		super(id);
 	}
 
 }

@@ -25,6 +25,7 @@ import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.presenter.options.UserList.ICommandSet;
 import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.general.Application;
+import com.nabla.wapp.client.model.UpdateModelCacheOperations;
 import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.DeletedRecordGridFormatter;
@@ -33,7 +34,6 @@ import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.smartgwt.client.data.Record;
-import com.smartgwt.client.types.DSOperationType;
 
 /**
  * @author nabla
@@ -59,7 +59,7 @@ public class UserListUi extends BindedTabDisplay<Tab> implements UserList.IDispl
 
 	@Override
 	public void addRecord(final Record record) {
-		model.updateCache(record, DSOperationType.ADD);
+		model.updateCache(record, UpdateModelCacheOperations.ADD);
 	}
 
 	@Override

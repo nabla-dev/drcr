@@ -29,9 +29,9 @@ import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
+import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
-import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
@@ -58,12 +58,12 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	}
 
 	public interface IDisplay extends ITabDisplay {
-//		void removeSelectedRecords(final IListGridConfirmAction confirmUi);
+		void removeSelectedRecords(final IListGridConfirmAction confirmUi);
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
-		void addRecord(final Record record);
-		void updateRecord(final Record record);
+		void addRecord(final Integer recordId);
+		void updateRecord(final Integer recordId);
 	}
 /*
 	public interface IWizardDataFactory {
@@ -133,10 +133,10 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<Record> onRecordAdded = new ISlot1<Record>() {
+	private final ISlot1<Integer> onRecordAdded = new ISlot1<Integer>() {
 		@Override
-		public void invoke(final Record record) {
-			getDisplay().addRecord(record);
+		public void invoke(final Integer recordId) {
+			getDisplay().addRecord(recordId);
 		}
 	};
 

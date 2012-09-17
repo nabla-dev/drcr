@@ -23,10 +23,11 @@ import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.fixed_asset.AssetListModel;
 import com.nabla.dc.client.presenter.fixed_asset.AssetList;
 import com.nabla.dc.client.presenter.fixed_asset.AssetList.ICommandSet;
+import com.nabla.wapp.client.model.UpdateModelCacheOperations;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
+import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
-import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
@@ -48,12 +49,12 @@ public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDis
 		this.model = new AssetListModel(companyId);
 		this.create(uiBinder, this);
 	}
-/*
+
 	@Override
 	public void removeSelectedRecords(final IListGridConfirmAction confirmUi) {
-		list.onRemove(confirmUi);
+		list.removeSelectedRecords(confirmUi);
 	}
-*/
+
 	@Override
 	public void reload() {
 		list.reload();
@@ -70,14 +71,13 @@ public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDis
 	}
 
 	@Override
-	public void addRecord(Record record) {
-		list.addData(record);
+	public void addRecord(Integer recordId) {
+		model.updateCache(recordId, UpdateModelCacheOperations.ADD);
 	}
 
 	@Override
-	public void updateRecord(Record record) {
-		model.setEnableUpdate(false);
-		list.updateData(record);
+	public void updateRecord(Integer recordId) {
+		model.updateCache(recordId);
 	}
 
 }

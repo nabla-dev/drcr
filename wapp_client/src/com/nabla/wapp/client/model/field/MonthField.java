@@ -37,9 +37,9 @@ public class MonthField extends EnumField {
 		setValueMap(values);
 	}
 
-	public MonthField(final String name, int defaultStartYear, final FieldAttributes... attributes) {
+	public MonthField(final String name, int defaultMonth, final FieldAttributes... attributes) {
 		this(name, attributes);
-		setAttribute(IFieldReservedNames.DEFAULT_VALUE, defaultStartYear);
+		setAttribute(IFieldReservedNames.DEFAULT_VALUE, defaultMonth);
 	}
 
 }

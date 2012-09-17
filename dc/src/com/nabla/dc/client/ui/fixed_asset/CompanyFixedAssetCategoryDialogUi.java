@@ -30,6 +30,7 @@ import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.UpdateModelCacheOperations;
 import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.TransferImgButton;
@@ -40,7 +41,6 @@ import com.nabla.wapp.shared.signal.Signal2;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 import com.nabla.wapp.shared.slot.ISlotManager2;
-import com.smartgwt.client.types.DSOperationType;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -153,12 +153,12 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedModalDialog impleme
 
 	@Override
 	public void removeCategory(CompanyFixedAssetCategoryRecord record) {
-		model.updateCache(record, DSOperationType.REMOVE);
+		model.updateCache(record, UpdateModelCacheOperations.REMOVE);
 	}
 
 	@Override
 	public void removeCategory(FixedAssetCategoryRecord record) {
-		availableModel.updateCache(record, DSOperationType.REMOVE);
+		availableModel.updateCache(record, UpdateModelCacheOperations.REMOVE);
 	}
 
 	@Override
@@ -169,12 +169,12 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedModalDialog impleme
 		// the next 2 lines only works because all data has been loaded at startup
 		// otherwise we would have to wait until data arrives and then add record!
 		t.openFolder(parent);
-		model.updateCache(record, DSOperationType.ADD);
+		model.updateCache(record, UpdateModelCacheOperations.ADD);
 	}
 
 	@Override
 	public void addCategory(FixedAssetCategoryRecord record) {
-		availableModel.updateCache(record, DSOperationType.ADD);
+		availableModel.updateCache(record, UpdateModelCacheOperations.ADD);
 	}
 
 	private void onAddCategory() {

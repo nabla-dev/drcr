@@ -14,28 +14,29 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.dc.shared.command.fixed_asset;
 
 import java.util.Collection;
 
+import com.nabla.wapp.shared.command.AbstractFetchRecord;
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public class FetchUserName extends AbstractFetchRecord {
+public class FetchAssetRecord extends AbstractFetchRecord {
 
-	protected FetchUserName() {}	// for serialization only
+	FetchAssetRecord() {}
 
-	public FetchUserName(final Integer id) {
+	public FetchAssetRecord(final Integer id) {
 		super(id);
 	}
 
-	public FetchUserName(final Collection<Integer> ids) {
+	public FetchAssetRecord(final Collection<Integer> ids) {
 		super(ids);
 	}
 
-	public FetchUserName(final Integer... ids) {
+	public FetchAssetRecord(final Integer... ids) {
 		super(ids);
 	}
 

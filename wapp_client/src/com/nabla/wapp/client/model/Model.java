@@ -35,7 +35,6 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.events.ErrorEvent;
 import com.smartgwt.client.data.events.HandleErrorHandler;
 import com.smartgwt.client.types.DSDataFormat;
-import com.smartgwt.client.types.DSOperationType;
 import com.smartgwt.client.types.DSProtocol;
 import com.smartgwt.client.util.JSOHelper;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -129,33 +128,6 @@ public abstract class Model extends DataSource {
 			JSOHelper.apply(newValues[i].getJsObj(), result[i].getJsObj());
 		}
 		return result;
-	}
-
-	public void updateCache(final Record record, final DSOperationType operation) {
-		Assert.argumentNotNull(record);
-
-		final Record[] records = new Record[1];
-		records[0] = record;
-		updateCache(records, operation);
-	}
-
-	public void updateCache(final Record record) {
-		updateCache(record, DSOperationType.UPDATE);
-	}
-
-	public void updateCache(final Record[] records, final DSOperationType operation) {
-		Assert.argumentNotNull(records);
-
-		final DSResponse response = new DSResponse();
-		response.setStatus(DSResponse.STATUS_SUCCESS);
-		response.setData(records);
-		final DSRequest request = new DSRequest();
-		request.setOperationType(operation);
-		updateCaches(response, request);
-	}
-
-	public void updateCache(final Record[] records) {
-		updateCache(records, DSOperationType.UPDATE);
 	}
 
 }

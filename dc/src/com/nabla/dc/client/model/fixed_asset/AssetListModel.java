@@ -17,7 +17,10 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 
+import java.util.Set;
+
 import com.nabla.dc.shared.command.fixed_asset.FetchAssetList;
+import com.nabla.dc.shared.command.fixed_asset.FetchAssetRecord;
 import com.nabla.dc.shared.command.fixed_asset.RemoveAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.model.CModel;
@@ -56,7 +59,6 @@ public class AssetListModel extends CModel<AssetRecord> {
 
 	private static final Fields	fields = new Fields();
 	private final Integer			companyId;
-	private boolean		enableUpdate = true;
 
 	public AssetListModel(final Integer companyId) {
 		super(AssetRecord.factory);
@@ -82,10 +84,6 @@ public class AssetListModel extends CModel<AssetRecord> {
 				);
 	}
 
-	public void setEnableUpdate(boolean enable) {
-		this.enableUpdate = enable;
-	}
-
 	public Fields fields() {
 		return fields;
 	}
@@ -93,6 +91,11 @@ public class AssetListModel extends CModel<AssetRecord> {
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
 		return new FetchAssetList(companyId);
+	}
+
+	@Override
+	public AbstractFetch getFetchRecordCommand(final Set<Integer> ids) {
+		return new FetchAssetRecord(ids);
 	}
 
 	@Override

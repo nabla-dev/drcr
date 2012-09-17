@@ -14,29 +14,25 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.client.model;
 
-import java.util.Collection;
-
+import com.smartgwt.client.types.DSOperationType;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class FetchUserName extends AbstractFetchRecord {
+public enum UpdateModelCacheOperations {
 
-	protected FetchUserName() {}	// for serialization only
+	ADD(DSOperationType.ADD), UPDATE(DSOperationType.UPDATE), REMOVE(DSOperationType.REMOVE);
 
-	public FetchUserName(final Integer id) {
-		super(id);
+	private final DSOperationType		operation;
+
+	UpdateModelCacheOperations(final DSOperationType operation) {
+		this.operation = operation;
 	}
 
-	public FetchUserName(final Collection<Integer> ids) {
-		super(ids);
+	public DSOperationType getDatasourceOperationType() {
+		return operation;
 	}
-
-	public FetchUserName(final Integer... ids) {
-		super(ids);
-	}
-
 }

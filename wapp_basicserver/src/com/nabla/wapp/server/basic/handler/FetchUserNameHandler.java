@@ -32,11 +32,11 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchUserNameHandler extends AbstractFetchHandler<FetchUserName> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT name FROM user WHERE id=?");
+"SELECT name FROM user WHERE id IN (?)");
 
 	@Override
 	public FetchResult execute(final FetchUserName cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getId());
+		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getIds());
 	}
 
 }

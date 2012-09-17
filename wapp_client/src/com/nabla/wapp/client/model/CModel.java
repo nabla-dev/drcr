@@ -16,6 +16,8 @@
 */
 package com.nabla.wapp.client.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +34,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.ArgumentList;
 import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.SortSpecifier;
@@ -72,6 +75,10 @@ public abstract class CModel<R extends Record> extends Model {
 	}
 
 	public IAction<StringResult> getUpdateCommand(@SuppressWarnings("unused") final R record) {
+		return null;
+	}
+
+	public AbstractFetch getFetchRecordCommand(@SuppressWarnings("unused") final Set<Integer> ids) {
 		return null;
 	}
 
@@ -179,7 +186,7 @@ logger.fine(request.getRequestId() + " response = \n" + result.getRecords());
 					@Override
 					public void onSuccess(final StringResult result) {
 						if (result != null) {
-	logger.fine(request.getRequestId() + " response = \n" + result.get());
+logger.fine(request.getRequestId() + " response = \n" + result.get());
 							onResponse(request, new Response(request, recordsFromJsonResponse(request, result.get())));
 						} else
 							onResponse(request, new Response(request, getEditedRecords(request)));
@@ -260,6 +267,73 @@ logger.fine(request.getRequestId() + " response = \n" + result.get());
 
 	protected Record[] recordsFromJson(final String jsonRecords) {
 		return jsonToRecords(jsonRecords);
+	}
+
+	public void updateCache(final Integer recordId, final UpdateModelCacheOperations operation) {
+		final Set<Integer> ids = new HashSet<Integer>();
+		ids.add(recordId);
+		updateCache(ids, operation);
+	}
+
+	public void updateCache(final Integer recordId) {
+		updateCache(recordId, UpdateModelCacheOperations.UPDATE);
+	}
+
+	public void updateCache(final Set<Integer> recordIds) {
+		updateCache(recordIds, UpdateModelCacheOperations.UPDATE);
+	}
+
+	public void updateCache(final Set<Integer> recordIds, final UpdateModelCacheOperations operation) {
+		Assert.argumentNotNull(recordIds);
+
+		final AbstractFetch cmd = getFetchRecordCommand(recordIds);
+		if (cmd == null) {
+			logger.warning("unimplemented data source operation 'refresh'");
+		} else {
+			getDispatcher().execute(cmd, new AsyncCallback<FetchResult>() {
+				@Override
+				public void onFailure(final Throwable caught) {
+					logger.log(Level.FINE, "failed to refresh records", caught);
+				}
+
+				@Override
+				public void onSuccess(final FetchResult result) {
+					if (result == null) {
+						logger.warning("'refresh' command returned 'null' string");
+					} else {
+						logger.fine("refreshRecords - response = \n" + result.getRecords());
+						updateCache(recordsFromJson(result.getRecords()), operation);
+					}
+				}
+			});
+		}
+	}
+
+	public void updateCache(final Record record, final UpdateModelCacheOperations operation) {
+		Assert.argumentNotNull(record);
+
+		final Record[] records = new Record[1];
+		records[0] = record;
+		updateCache(records, operation);
+	}
+
+	public void updateCache(final Record record) {
+		updateCache(record, UpdateModelCacheOperations.UPDATE);
+	}
+
+	public void updateCache(final Record[] records, final UpdateModelCacheOperations operation) {
+		Assert.argumentNotNull(records);
+
+		final DSResponse response = new DSResponse();
+		response.setStatus(DSResponse.STATUS_SUCCESS);
+		response.setData(records);
+		final DSRequest request = new DSRequest();
+		request.setOperationType(operation.getDatasourceOperationType());
+		updateCaches(response, request);
+	}
+
+	public void updateCache(final Record[] records) {
+		updateCache(records, UpdateModelCacheOperations.UPDATE);
 	}
 
 }

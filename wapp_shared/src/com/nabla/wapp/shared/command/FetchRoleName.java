@@ -16,22 +16,27 @@
 */
 package com.nabla.wapp.shared.command;
 
+import java.util.Collection;
+
+
 /**
  * @author nabla
  *
  */
-public class FetchRoleName extends AbstractFetch {
-
-	private Integer	id;
+public class FetchRoleName extends AbstractFetchRecord {
 
 	protected FetchRoleName() {}	// for serialization only
 
 	public FetchRoleName(final Integer id) {
-		this.id = id;
+		super(id);
 	}
 
-	public Integer getId() {
-		return id;
+	public FetchRoleName(final Collection<Integer> ids) {
+		super(ids);
+	}
+
+	public FetchRoleName(final Integer... ids) {
+		super(ids);
 	}
 
 }

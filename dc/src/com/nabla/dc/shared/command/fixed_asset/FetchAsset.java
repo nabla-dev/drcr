@@ -16,24 +16,18 @@
 */
 package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.command.AbstractFetchRecord;
 
 /**
  * The <code></code> object is used to
  *
  */
-public class FetchAssetListRecord extends AbstractFetch {
+public class FetchAsset extends AbstractFetchRecord {
 
-	private Integer	id;
+	FetchAsset() {}
 
-	FetchAssetListRecord() {}
-
-	public FetchAssetListRecord(Integer id) {
-		this.id = id;
-	}
-
-	public Integer getId() {
-		return id;
+	public FetchAsset(final Integer id) {
+		super(id);
 	}
 
 }
