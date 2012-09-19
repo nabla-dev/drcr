@@ -25,8 +25,4 @@ import com.nabla.wapp.shared.general.IntegerSet;
  *
  */
 @SuppressWarnings("serial")
-public abstract class AbstractRemove extends IntegerSet implements IAction<VoidResult> {
-
-	protected AbstractRemove() {}	// for serialization only
-
-}
+public abstract class AbstractRemove extends IntegerSet implements IAction<VoidResult> {}

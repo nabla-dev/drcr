@@ -37,7 +37,7 @@ public class SaveUserPreferenceHandler extends AbstractHandler<SaveUserPreferenc
 
 	@Override
 	public VoidResult execute(final SaveUserPreference cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		UserPreference.save(ctx, cmd.getGroup(), cmd.getName(), cmd.getState());
+		UserPreference.save(ctx, cmd.getObjectId(), cmd.getGroup(), cmd.getName(), cmd.getState());
 		return null;
 	}
 

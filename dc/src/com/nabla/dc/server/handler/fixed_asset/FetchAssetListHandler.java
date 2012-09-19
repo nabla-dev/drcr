@@ -37,8 +37,8 @@ public class FetchAssetListHandler extends AbstractFetchHandler<FetchAssetList> 
 " (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type IN ('OPENING','REVALUATION')) AS 'cost'" +
 ", t.depreciation_period, t.acquisition_date, t.disposal_date, t.proceeds" +
 " FROM fa_asset AS t INNER JOIN (" +
-" fa_company_asset_category AS l INNER JOIN fa_asset_category AS c ON l.fa_asset_category_id=c.id" +
-" ) ON t.fa_company_asset_category_id=l.id" +
+"fa_company_asset_category AS l INNER JOIN fa_asset_category AS c ON l.fa_asset_category_id=c.id" +
+") ON t.fa_company_asset_category_id=l.id" +
 " WHERE l.company_id=?"
 	);
 

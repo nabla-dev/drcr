@@ -53,7 +53,7 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 		public String acquisitionType() { return IAsset.ACQUISITION_TYPE; }
 		public String cost() { return IAsset.COST; }
 		public String pi() { return IAsset.PURCHASE_INVOICE; }
-		public String initialAccumDep() { return IAsset.INITIAL_ACCUM_DEPRECIATION; }
+		public String initialAccumDep() { return IAsset.INITIAL_ACCUMULATED_DEPRECIATION; }
 		public String initialDepPeriod() { return IAsset.INITIAL_DEPRECIATION_PERIOD; }
 
 		public String depPeriod() { return IAsset.DEPRECIATION_PERIOD; }
@@ -62,31 +62,33 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 		public String opening() { return IAsset.OPENING; }
 		public String openingMonth() { return IAsset.OPENING_MONTH; }
 		public String openingYear() { return IAsset.OPENING_YEAR; }
-		public String openingAccumDep() { return IAsset.OPENING_ACCUM_DEPRECIATION; }
+		public String openingAccumDep() { return IAsset.OPENING_ACCUMULATED_DEPRECIATION; }
 		public String openingDepPeriod() { return IAsset.OPENING_DEPRECIATION_PERIOD; }
 	}
 
 	private static final Fields	fields = new Fields();
+	private final Integer			companyId;
 	private final Integer			assetId;
 
 	public AssetWizardModel(final Integer companyId, final Integer assetId) {
 		super(AssetRecord.factory);
 
+		this.companyId = companyId;
 		this.assetId = assetId;
 		final JsDate today = JsDate.create();
 		setFields(
 			new IdField(),
 
 			new TextField(fields.name(), IAsset.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new SelectBoxField(fields.category(), new AvailableFixedAssetCategoryListModel(companyId), IdField.NAME, IFixedAssetCategory.NAME, FieldAttributes.REQUIRED),
+			new SelectBoxField(fields.category(), new CompanyFixedAssetCategoryListModel(companyId), IdField.NAME, IFixedAssetCategory.NAME, FieldAttributes.REQUIRED),
 			new TextField(fields.reference(), IAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
 			new TextField(fields.location(), IAsset.LOCATION_CONSTRAINT, FieldAttributes.OPTIONAL),
 
-			new DateField(fields.acquisitionDate(), FieldAttributes.OPTIONAL),
+			new DateField(fields.acquisitionDate(), FieldAttributes.REQUIRED),
 			new AcquisitionTypeField(fields.acquisitionType(), FieldAttributes.REQUIRED),
-			new PositiveIntegerField(fields.cost(), FieldAttributes.OPTIONAL),
+			new PositiveIntegerField(fields.cost(), FieldAttributes.REQUIRED),
 			new TextField(fields.pi(), IAsset.PURCHASE_INVOICE_CONSTRAINT, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.initialAccumDep(), IAsset.DEFAULT_INITIAL_ACCUM_DEPRECIATION, FieldAttributes.OPTIONAL),
+			new PositiveIntegerField(fields.initialAccumDep(), IAsset.DEFAULT_INITIAL_ACCUMULATED_DEPRECIATION, FieldAttributes.OPTIONAL),
 			new IntegerField(fields.initialDepPeriod(), 1, FieldAttributes.OPTIONAL),
 
 			new IntegerField(fields.depPeriod(), FieldAttributes.REQUIRED),
@@ -111,7 +113,7 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 
 	@Override
 	public IAction<StringResult> getAddCommand(final AssetRecord record) {
-		return record.toAddAssetCommand();
+		return record.toAddAssetCommand(companyId);
 	}
 /*
 	@Override

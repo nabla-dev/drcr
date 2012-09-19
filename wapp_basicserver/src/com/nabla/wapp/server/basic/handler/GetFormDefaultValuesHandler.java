@@ -32,7 +32,7 @@ public class GetFormDefaultValuesHandler extends AbstractGetDefaultValuesHandler
 
 	@Override
 	public StringResult execute(final GetFormDefaultValues cmd, IUserSessionContext ctx) throws DispatchException, SQLException {
-		return getDefaultValues(cmd.getGroup(), ctx);
+		return getDefaultValues(cmd.getObjectId(), cmd.getGroup(), ctx);
 	}
 
 }

@@ -23,5 +23,4 @@ import com.nabla.wapp.shared.dispatch.IAction;
  * @author nabla
  *
  */
-public class SimpleLoginUser implements IAction<BooleanResult> {
-}
+public class SimpleLoginUser implements IAction<BooleanResult> {}

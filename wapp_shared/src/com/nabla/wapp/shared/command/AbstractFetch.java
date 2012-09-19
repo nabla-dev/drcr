@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.dispatch.FetchResult;
 import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla
@@ -25,14 +26,14 @@ import com.nabla.wapp.shared.dispatch.IAction;
  */
 public abstract class AbstractFetch implements IAction<FetchResult> {
 
-	private Integer		startRow;
-	private Integer		endRow;
-	private String		orderBy;
-	private String		filter;
+	private @Nullable Integer	startRow;
+	private @Nullable Integer	endRow;
+	private @Nullable String	orderBy;
+	private @Nullable String	filter;
 
 	protected AbstractFetch() {}	// for serialization only
 
-	public boolean setRange(final Integer startRow, final Integer endRow) {
+	public boolean setRange(@Nullable final Integer startRow, @Nullable final Integer endRow) {
 		if (startRow != null && startRow >= 0 && endRow != null && endRow >= startRow) {
 			this.startRow = startRow;
 			this.endRow = endRow;
@@ -45,27 +46,27 @@ public abstract class AbstractFetch implements IAction<FetchResult> {
 		return startRow != null;
 	}
 
-	public Integer getStartRow() {
+	public @Nullable Integer getStartRow() {
 		return startRow;
 	}
 
-	public Integer getEndRow() {
+	public @Nullable Integer getEndRow() {
 		return endRow;
 	}
 
-	public String getOrderBy() {
+	public @Nullable String getOrderBy() {
 		return orderBy;
 	}
 
-	public void setOrderBy(final String orderBy) {
+	public void setOrderBy(@Nullable final String orderBy) {
 		this.orderBy = orderBy;
 	}
 
-	public void setFilter(final String filter) {
+	public void setFilter(@Nullable final String filter) {
 		this.filter = filter;
 	}
 
-	public String getFilter() {
+	public @Nullable String getFilter() {
 		return filter;
 	}
 

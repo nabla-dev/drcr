@@ -14,27 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
-
-import com.nabla.wapp.shared.general.Nullable;
-
+package com.nabla.dc.shared.model.fixed_asset;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractFetchTree extends AbstractFetch {
-
-	private @Nullable Integer	parentId;
-
-	protected AbstractFetchTree() {}	// for serialization only
-
-	protected AbstractFetchTree(@Nullable final Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public @Nullable Integer getParentId() {
-		return parentId;
-	}
-
+public enum TransactionTypes {
+	OPENING, CLOSING, CHARGE, REVALUATION
 }

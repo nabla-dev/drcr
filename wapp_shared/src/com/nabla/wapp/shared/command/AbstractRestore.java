@@ -26,8 +26,4 @@ import com.nabla.wapp.shared.general.IntegerSet;
  *
  */
 @SuppressWarnings("serial")
-public abstract class AbstractRestore extends IntegerSet implements IAction<VoidResult> {
-
-	protected AbstractRestore() {}	// for serialization only
-
-}
+public abstract class AbstractRestore extends IntegerSet implements IAction<VoidResult> {}

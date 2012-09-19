@@ -26,6 +26,7 @@ import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla
@@ -35,9 +36,11 @@ public class UserPreference {
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	public static StringResult load(final IUserSessionContext ctx, final String group, final String name) throws SQLException {
+	public static StringResult load(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name) throws SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT state FROM user_preference WHERE user_id=? AND category=? AND name=?;", ctx.getUserId(), group, name);
+"SELECT state" +
+" FROM user_preference" +
+" WHERE user_id=? AND objectId=? AND category=? AND name=?;", ctx.getUserId(), objectId, group, name);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
@@ -50,46 +53,47 @@ public class UserPreference {
 		}
 	}
 
-	public static void save(final IUserSessionContext ctx, final String group, final String name, final String state) throws SQLException {
+	public static void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final String state) throws SQLException {
 		if (state == null)
-			remove(ctx, group, name);
+			remove(ctx, objectId, group, name);
 		else
 			Database.executeUpdate(ctx.getWriteConnection(),
-"INSERT INTO user_preference (user_id,category,name,state) VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE state=?;",
-ctx.getUserId(), group, name, state, state);
+"INSERT INTO user_preference (user_id,object_id,category,name,state) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE state=?;",
+ctx.getUserId(), objectId, group, name, state, state);
 	}
 
-	public static void save(final IUserSessionContext ctx, final String group, final String name, final Integer state) throws SQLException {
+	public static void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final Integer state) throws SQLException {
 		if (state == null)
-			remove(ctx, group, name);
+			remove(ctx, objectId, group, name);
 		else
-			save(ctx, group, name, state.toString());
+			save(ctx, objectId, group, name, state.toString());
 	}
 
-	public static void save(final IUserSessionContext ctx, final String group, final String name, final Boolean state) throws SQLException {
+	public static void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final Boolean state) throws SQLException {
 		if (state == null)
-			remove(ctx, group, name);
+			remove(ctx, objectId, group, name);
 		else
-			save(ctx, group, name, state.toString());
+			save(ctx, objectId, group, name, state.toString());
 	}
 
-	public static <E extends Enum<E>> void save(final IUserSessionContext ctx, final String group, final String name, final E state) throws SQLException {
+	public static <E extends Enum<E>> void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final E state) throws SQLException {
 		if (state == null)
-			remove(ctx, group, name);
+			remove(ctx, objectId, group, name);
 		else
-			save(ctx, group, name, state.toString());
+			save(ctx, objectId, group, name, state.toString());
 	}
 
-	public static void save(final IUserSessionContext ctx, final String group, final String name, final Date state) throws SQLException {
+	public static void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final Date state) throws SQLException {
 		if (state == null)
-			remove(ctx, group, name);
+			remove(ctx, objectId, group, name);
 		else
-			save(ctx, group, name, dateFormat.format(state));
+			save(ctx, objectId, group, name, dateFormat.format(state));
 	}
 
-	public static void remove(final IUserSessionContext ctx, final String group, final String name) throws SQLException {
+	public static void remove(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name) throws SQLException {
 		Database.executeUpdate(ctx.getWriteConnection(),
-"DELETE FROM user_preference WHERE user_id=? AND category=? AND name=?;", ctx.getUserId(), group, name);
+"DELETE FROM user_preference WHERE user_id=? AND objectId=? AND category=? AND name=?;",
+ctx.getUserId(), objectId, group, name);
 	}
 
 }

@@ -114,8 +114,8 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 						} finally {
 							stmt.close();
 						}
-						UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.ROW_HEADER, cmd.isRowHeader());
-						UserPreference.save(ctx, IImportAccount.PREFERENCE_GROUP, IImportAccount.OVERWRITE, cmd.getOverwrite());
+						UserPreference.save(ctx, null, IImportAccount.PREFERENCE_GROUP, IImportAccount.ROW_HEADER, cmd.isRowHeader());
+						UserPreference.save(ctx, null, IImportAccount.PREFERENCE_GROUP, IImportAccount.OVERWRITE, cmd.getOverwrite());
 						guard.setSuccess();
 						return true;
 					} finally {

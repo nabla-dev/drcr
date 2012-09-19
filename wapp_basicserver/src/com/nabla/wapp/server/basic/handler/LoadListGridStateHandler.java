@@ -33,7 +33,7 @@ public class LoadListGridStateHandler extends AbstractHandler<LoadListGridState,
 
 	@Override
 	public StringResult execute(final LoadListGridState cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return UserPreference.load(ctx, "list_grid", cmd.getListGridName());
+		return UserPreference.load(ctx, null, "list_grid", cmd.getListGridName());
 	}
 
 }

@@ -16,14 +16,22 @@
 */
 package com.nabla.dc.client.ui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.core.client.GWT;
+import com.nabla.dc.shared.ServerErrors;
+import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.ui.Dialog;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 
 /**
  * @author nabla
  *
  */
 public class Resource {
+
+	private static final Logger					logger = LoggerFactory.getLog(Resource.class);
 
 	public static final IResource					bundle = GWT.create(IResource.class);
 	public static final ITextResource				strings = GWT.create(ITextResource.class);
@@ -35,5 +43,22 @@ public class Resource {
 	public Resource() {
 		bundle.style().ensureInjected();
 		Dialog.setDefaultMargin(bundle.style().DIALOG_MARGIN());
+		if (logger.isLoggable(Level.WARNING)) {
+			// check that all error strings have been defined
+			for (CommonServerErrors e : CommonServerErrors.values()) {
+				try {
+					Resource.serverErrors.getString(e.toString());
+				} catch (Exception x) {
+					logger.warning("error string '" + e + "' not defined");
+				}
+			}
+			for (ServerErrors e : ServerErrors.values()) {
+				try {
+					Resource.serverErrors.getString(e.toString());
+				} catch (Exception x) {
+					logger.warning("error string '" + e + "' not defined");
+				}
+			}
+		}
 	}
 }

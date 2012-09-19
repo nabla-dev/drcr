@@ -21,9 +21,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.shared.command.GetFormDefaultValues;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
@@ -42,10 +42,8 @@ public class WizardValuesManager extends ValuesManager {
 		setDataSource(model);
 	}
 
-	public void editNewRecord(final String defaultValuesGroup, final ISlot callback) {
-		Assert.argumentNotNull(callback);
-
-		Application.getInstance().getDispatcher().execute(new GetFormDefaultValues(defaultValuesGroup), new AsyncGetDefaultValuesCallback() {
+	public void editNewRecord(@Nullable final Integer objectId, final String defaultValuesGroup, final ISlot callback) {
+		Application.getInstance().getDispatcher().execute(new GetFormDefaultValues(objectId, defaultValuesGroup), new AsyncGetDefaultValuesCallback() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -68,8 +66,6 @@ public class WizardValuesManager extends ValuesManager {
 	}
 
 	public void editRecord(final ISlot callback) {
-		Assert.argumentNotNull(callback);
-
 		fetchData(null, new DSCallback() {
 			@Override
 			public void execute(DSResponse response, @SuppressWarnings("unused") Object rawData, @SuppressWarnings("unused") DSRequest request) {

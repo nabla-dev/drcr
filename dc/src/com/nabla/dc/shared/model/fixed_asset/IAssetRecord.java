@@ -14,27 +14,27 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.wapp.shared.general.Nullable;
-
+import java.util.Date;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractFetchTree extends AbstractFetch {
-
-	private @Nullable Integer	parentId;
-
-	protected AbstractFetchTree() {}	// for serialization only
-
-	protected AbstractFetchTree(@Nullable final Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public @Nullable Integer getParentId() {
-		return parentId;
-	}
-
+public interface IAssetRecord {
+//	Integer getId();
+	Integer getCompanyAssetCategoryId();
+	String getName();
+	Date getAcquisitionDate();
+	int getCost();
+	int getInitialAccumulatedDepreciation();
+	int getInitialDepreciationPeriod();
+	Integer getOpeningYear();
+	Integer getOpeningMonth();
+	Integer getOpeningAccumulatedDepreciation();	// only valid if opening date defined
+	Integer getOpeningDepreciationPeriod();	// only valid if opening date defined
+	int getDepreciationPeriod();
+	int getResidualValue();
+	Date getDisposalDate();
 }

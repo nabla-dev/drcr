@@ -37,7 +37,7 @@ public class SaveListGridStateHandler extends AbstractHandler<SaveListGridState,
 
 	@Override
 	public VoidResult execute(final SaveListGridState cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		UserPreference.save(ctx, "list_grid", cmd.getListGridName(), cmd.getState());
+		UserPreference.save(ctx, null, "list_grid", cmd.getListGridName(), cmd.getState());
 		return null;
 	}
 

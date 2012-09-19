@@ -24,16 +24,10 @@ import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
  */
 public class FetchCompanyFixedAssetCategoryList extends AbstractCompanyFetch {
 
-//	Integer		parentId;
-
 	protected FetchCompanyFixedAssetCategoryList() {}
 
-	public FetchCompanyFixedAssetCategoryList(Integer companyId/*, final Integer parentId*/) {
+	public FetchCompanyFixedAssetCategoryList(Integer companyId) {
 		super(companyId);
-//		this.parentId = parentId;
 	}
-/*
-	public Integer getParentId() {
-		return parentId;
-	}*/
+
 }

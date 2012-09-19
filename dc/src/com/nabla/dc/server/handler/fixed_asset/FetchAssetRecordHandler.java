@@ -32,11 +32,13 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchAssetRecordHandler extends AbstractFetchHandler<FetchAssetRecord> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT t.id, t.name, c.fa_asset_category_id AS 'asset_category_id', t.reference, t.location, t.purchase_invoice" +
+"SELECT t.id, t.name, c.name AS 'category', t.reference, t.location, t.purchase_invoice" +
 ", t.acquisition_date, t.acquisition_type," +
 " (SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING') AS 'cost'" +
 ", t.depreciation_period, t.disposal_date, t.proceeds" +
-" FROM fa_asset AS t INNER JOIN fa_company_asset_category AS c ON t.fa_company_asset_category_id=c.id" +
+" FROM fa_asset AS t INNER JOIN (" +
+"fa_company_asset_category AS r INNER JOIN fa_asset_category AS c ON r.fa_asset_category_id=c.id" +
+") ON t.fa_company_asset_category_id=r.id" +
 " WHERE t.id IN (?)"
 	);
 

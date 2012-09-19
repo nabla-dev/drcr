@@ -32,13 +32,16 @@ import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.LoggerFactory;
+import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.ui.IWizardPage;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
-import com.smartgwt.client.data.Record;
+import com.smartgwt.client.data.DSCallback;
+import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.DSResponse;
 
 /**
  * @author nabla
@@ -51,42 +54,40 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	public interface IGeneralPage extends IWizardPageDisplay {
 		Integer getAssetCategoryId();
 	}
-	public interface IAcquisitionPage extends IWizardPageDisplay {
-		boolean canCreateTransaction();
-	}
+	public interface IAcquisitionPage extends IWizardPageDisplay {}
 	public interface IDepreciationPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
 
 	private static final Logger				logger = LoggerFactory.getLog(AssetWizard.class);
-	private final AssetWizardValuesManager	data;
-	private final ISlot1<Record>			onSuccessHandler;
+	private final AssetWizardValuesManager		data;
+	private final ISlot1<Integer>				onSuccessHandler;
 
-	protected AssetWizard(final IDisplay ui, final AssetWizardValuesManager data, final ISlot1<Record> onSuccessHandler) {
+	protected AssetWizard(final IDisplay ui, final AssetWizardValuesManager data, final ISlot1<Integer> onSuccessHandler) {
 		super(ui);
 		this.data = data;
 		this.onSuccessHandler = onSuccessHandler;
 	}
 
-	protected AssetWizard(final AssetWizardValuesManager values) {
-		this(new AssetWizardUi(), values, null);
+	protected AssetWizard(final AssetWizardValuesManager values, final ISlot1<Integer> onSuccessHandler) {
+		this(new AssetWizardUi(), values, onSuccessHandler);
 	}
 
-	public static void editNewRecord(final Integer companyId) {
+	public static void editNewRecord(final Integer companyId, final ISlot1<Integer> onSuccessHandler) {
 		final AssetWizardValuesManager values = new AssetWizardValuesManager(companyId);
-		values.editNewRecord(IAsset.PREFERENCE_GROUP, new ISlot() {
+		values.editNewRecord(companyId, IAsset.PREFERENCE_GROUP, new ISlot() {
 			@Override
 			public void invoke() {
-				new AssetWizard(values).revealDisplay();
+				new AssetWizard(values, onSuccessHandler).revealDisplay();
 			}
 		});
 	}
 
-	public static void editRecord(final Integer companyId, final Integer assetId) {
+	public static void editRecord(final Integer companyId, final Integer assetId, final ISlot1<Integer> onSuccessHandler) {
 		final AssetWizardValuesManager values = new AssetWizardValuesManager(companyId, assetId);
 		values.editRecord(new ISlot() {
 			@Override
 			public void invoke() {
-				new AssetWizard(values).revealDisplay();
+				new AssetWizard(values, onSuccessHandler).revealDisplay();
 			}
 		});
 	}
@@ -130,16 +131,16 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	}
 
 	private void displayAcquisitionPage(final DepreciationPeriodRange depreciationPeriodRange) {
-		displayNextPage(new AssetWizardAcquisitionPageUi(data, depreciationPeriodRange.getMax()), new ISlot1<IWizardPage>() {
+		displayNextPage(new AssetWizardAcquisitionPageUi(data, depreciationPeriodRange.getMax()), new ISlot() {
 			@Override
-			public void invoke(final IWizardPage page) {
-				displayDepreciationPage(depreciationPeriodRange, ((IAcquisitionPage)page).canCreateTransaction());
+			public void invoke() {
+				displayDepreciationPage(depreciationPeriodRange);
 			}
 		});
 	}
 
-	private void displayDepreciationPage(DepreciationPeriodRange depreciationPeriodRange, boolean canCreateTransaction) {
-		displayNextPage(new AssetWizardDepreciationPageUi(data, depreciationPeriodRange, canCreateTransaction), new ISlot() {
+	private void displayDepreciationPage(final DepreciationPeriodRange depreciationPeriodRange) {
+		displayNextPage(new AssetWizardDepreciationPageUi(data, depreciationPeriodRange), new ISlot() {
 			@Override
 			public void invoke() {
 				displayCompletedPage();
@@ -151,28 +152,19 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 		displayFinishPage(new AssetWizardCompletedPageUi(data.isNewRecord()), new ISlot() {
 			@Override
 			public void invoke() {
-				data.saveData(/*onAssetSaved*/);
+				data.saveData(onAssetSaved);
 			}
 		});
 	}
-/*
-	@SuppressWarnings("hiding")
+
 	public final DSCallback onAssetSaved = new DSCallback() {
 		@Override
 		public void execute(DSResponse response, Object rawData, DSRequest request) {
-			if (response.getStatus() == DSResponse.STATUS_SUCCESS) {
-				Application.getInstance().getDispatcher().execute(new FetchAssetListRecord((Integer)data.getValue(IdField.NAME)), new AbstractAsyncCallback<StringResult>() {
-					@Override
-					public void onSuccess(StringResult result) {
-						logger.fine("asset = " + result.get());
-						Record[] records = data.getModel().recordsFromXml(result.get());
-						onSuccessHandler.invoke(records[0]);
-					}
-				});
-			}
+			if (response.getStatus() == DSResponse.STATUS_SUCCESS)
+				onSuccessHandler.invoke((Integer)data.getValue(IdField.NAME));
 			onSave.execute(response, rawData, request);
 		}
 	};
-*/
+
 }
 

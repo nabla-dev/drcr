@@ -19,6 +19,7 @@ package com.nabla.dc.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.nabla.dc.client.model.UserCompanyRecord;
 import com.nabla.dc.client.presenter.UserCompanyList;
 import com.nabla.dc.client.presenter.UserCompanyList.ICommandSet;
@@ -54,6 +55,14 @@ public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserComp
 				sigSelected.fire(UserCompanyRecord.factory.get(event.getRecord().getJsObj()));
 			}
 		});
+Timer t = new Timer() {
+	@Override
+      public void run() {
+		list.selectRecord(0);
+		sigSelected.fire(UserCompanyRecord.factory.get(list.getSelectedRecord().getJsObj()));
+      }
+};
+t.schedule(1000 * 3);
 	}
 
 	@Override

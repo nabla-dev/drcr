@@ -33,7 +33,7 @@ public class LoadUserPreferenceHandler extends AbstractHandler<LoadUserPreferenc
 
 	@Override
 	public StringResult execute(final LoadUserPreference cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return UserPreference.load(ctx, cmd.getGroup(), cmd.getName());
+		return UserPreference.load(ctx, cmd.getObjectId(), cmd.getGroup(), cmd.getName());
 	}
 
 }

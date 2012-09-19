@@ -38,7 +38,7 @@ public class AssetWizardDepreciationPageUi extends AssetWizardBasicPageUi implem
 	interface Binder extends UiBinder<WizardPage, AssetWizardBasicPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	public AssetWizardDepreciationPageUi(final ValuesManager model, final DepreciationPeriodRange range, boolean canCreateTransaction) {
+	public AssetWizardDepreciationPageUi(final ValuesManager model, final DepreciationPeriodRange range) {
 		super(model, uiBinder);
 		// limit depreciation period using asset category depreciation period range
 		final SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.DEPRECIATION_PERIOD);
@@ -50,12 +50,10 @@ public class AssetWizardDepreciationPageUi extends AssetWizardBasicPageUi implem
 			depPeriod.setValue(range.getMin());
 		else if (value < range.getMin() || value > range.getMax())
 			depPeriod.setValue(range.getMin());
-		if (!canCreateTransaction)
-			form.getItem(IAsset.CREATE_TRANSACTIONS).setVisible(false);
 		// show/hide opening details
 		form.getItem(IAsset.OPENING_YEAR).setShowIfCondition(onOpeningChanged);
 		form.getItem(IAsset.OPENING_MONTH).setShowIfCondition(onOpeningChanged);
-		form.getItem(IAsset.OPENING_ACCUM_DEPRECIATION).setShowIfCondition(onOpeningChanged);
+		form.getItem(IAsset.OPENING_ACCUMULATED_DEPRECIATION).setShowIfCondition(onOpeningChanged);
 		form.getItem(IAsset.OPENING_DEPRECIATION_PERIOD).setShowIfCondition(onOpeningChanged);
 	}
 

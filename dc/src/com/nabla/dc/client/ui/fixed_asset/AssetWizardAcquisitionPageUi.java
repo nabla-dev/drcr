@@ -50,14 +50,9 @@ public class AssetWizardAcquisitionPageUi extends AssetWizardBasicPageUi impleme
 			depPeriod.setValue(0);
 		else if (value < 0 || value > maxDepPeriod)
 			depPeriod.setValue(0);
-		// show / hide initial accumulated depreciation and period according to acquisition type
-		form.getItem(IAsset.INITIAL_ACCUM_DEPRECIATION).setShowIfCondition(onAcquisitionTypeChanged);
+		// show / hide initial accumulated depreciation and period if TRANSFER
+		form.getItem(IAsset.INITIAL_ACCUMULATED_DEPRECIATION).setShowIfCondition(onAcquisitionTypeChanged);
 		form.getItem(IAsset.INITIAL_DEPRECIATION_PERIOD).setShowIfCondition(onAcquisitionTypeChanged);
-	}
-
-	@Override
-	public boolean canCreateTransaction() {
-		return form.getValueAsString(IAsset.ACQUISITION_DATE) != null;
 	}
 
 	private final FormItemIfFunction onAcquisitionTypeChanged = new FormItemIfFunction() {

@@ -19,6 +19,7 @@ package com.nabla.wapp.shared.command;
 import java.util.Collection;
 
 import com.nabla.wapp.shared.general.IntegerSet;
+import com.nabla.wapp.shared.general.Nullable;
 
 
 /**
@@ -47,7 +48,7 @@ public abstract class AbstractFetchRecord extends AbstractFetch {
 		return ids;
 	}
 
-	public Integer getId() {
+	public @Nullable Integer getId() {
 		return ids.isEmpty() ? null : ids.iterator().next();
 	}
 

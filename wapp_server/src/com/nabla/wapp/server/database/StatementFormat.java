@@ -25,6 +25,9 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.server.xml.XmlDate;
 import com.nabla.wapp.server.xml.XmlInteger;
@@ -38,14 +41,18 @@ import com.nabla.wapp.shared.general.StringSet;
  */
 public class StatementFormat {
 
+	private static final Log							log = LogFactory.getLog(StatementFormat.class);
 	private static final Map<Class, IStatementSetter>	cache = new HashMap<Class, IStatementSetter>();
-	private static final DefaultSetter					defaultSetter = new DefaultSetter();
+	private static final DefaultSetter				defaultSetter = new DefaultSetter();
 
 	static {
 		cache.put(String.class, new VarcharSetter());
 		cache.put(Integer.class, new IntegerSetter());
+		cache.put(int.class, new IntegerSetter());	// Field class wraps primitives!!!
 		cache.put(Boolean.class, new BooleanSetter());
+		cache.put(boolean.class, new BooleanSetter());	// Field class wraps primitives!!!
 		cache.put(Date.class, new DateSetter());
+		cache.put(java.util.Date.class, new UtilDateSetter());
 		cache.put(IntegerSet.class, new IntegerSetSetter());
 		cache.put(StringSet.class, new StringSetSetter());
 		cache.put(InputStream.class, new InputStreamSetter());
@@ -54,13 +61,16 @@ public class StatementFormat {
 		cache.put(XmlDate.class, new XmlDateSetter());
 	}
 
-	public static IStatementSetter getSetter(Class parameterClass) {
-		while (parameterClass != null) {
-			final IStatementSetter writer = cache.get(parameterClass);
+	public static IStatementSetter getSetter(final Class parameterClass) {
+		Class c = parameterClass;
+		while (c != null) {
+			final IStatementSetter writer = cache.get(c);
 			if (writer != null)
 				return writer;
-			parameterClass = parameterClass.getSuperclass();
+			c = c.getSuperclass();
 		}
+		if (log.isDebugEnabled())
+			log.debug("found no SQL statement setter for type '" + parameterClass.getSimpleName() + "'");
 		return defaultSetter;
 	}
 

@@ -14,27 +14,28 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.server.database;
 
-import com.nabla.wapp.shared.general.Nullable;
-
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractFetchTree extends AbstractFetch {
+public class UtilDateSetter extends AbstractSimpleSetter {
 
-	private @Nullable Integer	parentId;
-
-	protected AbstractFetchTree() {}	// for serialization only
-
-	protected AbstractFetchTree(@Nullable final Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public @Nullable Integer getParentId() {
-		return parentId;
+	@Override
+	public int setValue(PreparedStatement stmt, int parameterIndex, Object value) throws SQLException {
+		if (value == null)
+			stmt.setNull(parameterIndex, Types.DATE);
+		else {
+			final java.util.Date dt = (java.util.Date)value;
+			stmt.setDate(parameterIndex, new Date(dt.getTime()));
+		}
+		return 1;
 	}
 
 }

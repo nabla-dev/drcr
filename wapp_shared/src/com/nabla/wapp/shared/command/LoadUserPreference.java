@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla
@@ -25,14 +26,24 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class LoadUserPreference implements IAction<StringResult> {
 
-	private String	group;
-	private String	name;
+	private @Nullable Integer	objectId;
+	private String				group;
+	private String				name;
 
 	public LoadUserPreference() {}
 
-	public LoadUserPreference(final String group, final String name) {
+	public LoadUserPreference(@Nullable final Integer ObjectId, final String group, final String name) {
+		this.objectId = ObjectId;
 		this.group = group;
 		this.name = name;
+	}
+
+	public LoadUserPreference(final String group, final String name) {
+		this(null, group, name);
+	}
+
+	public @Nullable Integer getObjectId() {
+		return objectId;
 	}
 
 	public String getGroup() {

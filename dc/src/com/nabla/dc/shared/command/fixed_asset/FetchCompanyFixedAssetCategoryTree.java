@@ -14,27 +14,20 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.wapp.shared.general.Nullable;
-
+import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
 
 /**
  * @author nabla
  *
  */
-public abstract class AbstractFetchTree extends AbstractFetch {
+public class FetchCompanyFixedAssetCategoryTree extends AbstractCompanyFetch {
 
-	private @Nullable Integer	parentId;
+	protected FetchCompanyFixedAssetCategoryTree() {}
 
-	protected AbstractFetchTree() {}	// for serialization only
-
-	protected AbstractFetchTree(@Nullable final Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public @Nullable Integer getParentId() {
-		return parentId;
+	public FetchCompanyFixedAssetCategoryTree(Integer companyId) {
+		super(companyId);
 	}
 
 }

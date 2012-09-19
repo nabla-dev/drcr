@@ -62,13 +62,13 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	String INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD();
 
 	@DefaultStringValue("Must be greater than initial accumulated")
-	String OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUM_DEPRECIATION();
+	String OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUMULATED_DEPRECIATION();
 
 	@DefaultStringValue("Must be less or equal to depreciation period")
 	String OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD();
 
 	@DefaultStringValue("Undefined asset category for current company")
-	String UNDEFINED_CATEGORY_FOR_COMPANY();
+	String UNDEFINED_ASSET_CATEGORY_FOR_COMPANY();
 
 	@DefaultStringValue("Cannot edit asset which has been disposed of")
 	String CANNOT_EDIT_DISPOSED_ASSET();

@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.nabla.wapp.server.general.Assert;
@@ -41,10 +42,14 @@ public class BatchInsertStatement<T> extends SqlStatement {
 		stmt = sql.prepareStatement(conn);
 	}
 
+	public BatchInsertStatement(final Connection conn, final Class<T> recordClass) throws SQLException {
+		this(conn, new SqlInsert<T>(recordClass));
+	}
+
 	public void close() {
 		Database.close(stmt);
 	}
-	
+
 	public void add(final T record) throws SQLException {
 		Assert.argumentNotNull(record);
 
@@ -52,6 +57,11 @@ public class BatchInsertStatement<T> extends SqlStatement {
 		for (IStatementParameter parameter : sql.getParameters())
 			parameter.write(stmt, i++, record);
 		stmt.addBatch();
+	}
+
+	public void add(Collection<T> records) throws SQLException {
+		for (T record : records)
+			add(record);
 	}
 
 	public List<Integer> execute() throws SQLException, InternalErrorException {

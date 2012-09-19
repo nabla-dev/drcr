@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.VoidResult;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla
@@ -25,25 +26,41 @@ import com.nabla.wapp.shared.dispatch.VoidResult;
  */
 public class SaveUserPreference implements IAction<VoidResult> {
 
-	private String		group;
-	private String		name;
-	private String		state;
+	private @Nullable Integer	objectId;
+	private String				group;
+	private String				name;
+	private String				state;
 
 	public SaveUserPreference() {}
 
-	protected SaveUserPreference(final String group, final String name) {
+	protected void commonConstructor(@Nullable final Integer ObjectId, final String group, final String name) {
+		this.objectId = ObjectId;
 		this.group = group;
 		this.name = name;
 	}
 
+	public SaveUserPreference(@Nullable final Integer ObjectId, final String group, final String name, final String state) {
+		commonConstructor(ObjectId, group, name);
+		this.state = state;
+	}
+
 	public SaveUserPreference(final String group, final String name, final String state) {
-		this(group, name);
+		commonConstructor(null, group, name);
 		this.state = state;
 	}
 
 	public SaveUserPreference(final String group, final String name, final Integer state) {
-		this(group, name);
+		commonConstructor(null, group, name);
 		this.state = state.toString();
+	}
+
+	public SaveUserPreference(@Nullable final Integer ObjectId, final String group, final String name, final Integer state) {
+		commonConstructor(ObjectId, group, name);
+		this.state = state.toString();
+	}
+
+	public @Nullable Integer getObjectId() {
+		return objectId;
 	}
 
 	public String getGroup() {

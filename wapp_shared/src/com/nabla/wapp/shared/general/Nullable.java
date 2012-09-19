@@ -14,27 +14,16 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.shared.general;
 
-import com.nabla.wapp.shared.general.Nullable;
-
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public abstract class AbstractFetchTree extends AbstractFetch {
-
-	private @Nullable Integer	parentId;
-
-	protected AbstractFetchTree() {}	// for serialization only
-
-	protected AbstractFetchTree(@Nullable final Integer parentId) {
-		this.parentId = parentId;
-	}
-
-	public @Nullable Integer getParentId() {
-		return parentId;
-	}
-
-}
+@Documented
+@Retention(value=RetentionPolicy.RUNTIME)
+public @interface Nullable {}

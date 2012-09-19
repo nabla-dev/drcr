@@ -27,5 +27,7 @@ public interface IPeriodEnd {
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 32);
 	static final String				END_DATE = "end_date";
 
+	static final String				NAME_FORMAT = "MMM yyyy";
+
 	static final String				TABLE = "period_end";
 }

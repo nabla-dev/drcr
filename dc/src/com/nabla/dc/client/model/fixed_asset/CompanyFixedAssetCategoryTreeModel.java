@@ -17,7 +17,7 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 
-import com.nabla.dc.shared.command.fixed_asset.FetchCompanyFixedAssetCategoryList;
+import com.nabla.dc.shared.command.fixed_asset.FetchCompanyFixedAssetCategoryTree;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.HeterogeneousTreeModel;
 import com.nabla.wapp.client.model.field.BooleanField;
@@ -61,7 +61,7 @@ public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<C
 
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchCompanyFixedAssetCategoryList(companyId/*, getParentId(request)*/);
+		return new FetchCompanyFixedAssetCategoryTree(companyId/*, getParentId(request)*/);
 	}
 
 }

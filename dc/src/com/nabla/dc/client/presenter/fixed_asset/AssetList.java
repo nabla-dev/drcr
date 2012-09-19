@@ -129,7 +129,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			AssetWizard.editNewRecord(companyId);
+			AssetWizard.editNewRecord(companyId, onRecordAdded);
 		}
 	};
 
@@ -146,9 +146,17 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 			if (asset.isDisposed())
 				Application.getInstance().getMessageBox().info(Resource.strings.editDisposedFixedAssetNotAllowed());
 			else
-				AssetWizard.editRecord(companyId, asset.getId());
+				AssetWizard.editRecord(companyId, asset.getId(), onRecordUpdated);
 		}
 	};
+
+	private final ISlot1<Integer> onRecordUpdated = new ISlot1<Integer>() {
+		@Override
+		public void invoke(final Integer recordId) {
+			getDisplay().updateRecord(recordId);
+		}
+	};
+
 /*
 	private final ISlot onRemoveRecord = new ISlot() {
 		@Override
@@ -219,13 +227,6 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-
-	private final ISlot1<Record> onRecordUpdated = new ISlot1<Record>() {
-		@Override
-		public void invoke(final Record record) {
-			display.updateRecord(record);
-		}
-	};
 
 	private final ISlot1<Record> onDisposeAsset = new ISlot1<Record>() {
 		@Override

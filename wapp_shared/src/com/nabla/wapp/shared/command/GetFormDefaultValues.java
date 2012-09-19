@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.command;
 
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla
@@ -25,12 +26,22 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class GetFormDefaultValues implements IAction<StringResult> {
 
-	private String	group;
+	private @Nullable Integer	objectId;
+	private String				group;
 
 	public GetFormDefaultValues() {}
 
-	public GetFormDefaultValues(final String group) {
+	public GetFormDefaultValues(@Nullable final Integer ObjectId, final String group) {
+		this.objectId = ObjectId;
 		this.group = group;
+	}
+
+	public GetFormDefaultValues(final String group) {
+		this(null, group);
+	}
+
+	public @Nullable Integer getObjectId() {
+		return objectId;
 	}
 
 	public String getGroup() {

@@ -37,7 +37,9 @@ public class GetFixedAssetCategoryDepreciationPeriodRangeHandler extends Abstrac
 	@Override
 	public DepreciationPeriodRange execute(GetFixedAssetCategoryDepreciationPeriodRange cmd, IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT min_depreciation_period, max_depreciation_period FROM fa_asset_category WHERE id=?;", cmd.getId());
+"SELECT c.min_depreciation_period, c.max_depreciation_period" +
+" FROM fa_asset_category AS c INNER JOIN fa_company_asset_category AS t ON t.fa_asset_category_id=c.id" +
+" WHERE t.id=?;", cmd.getId());
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {

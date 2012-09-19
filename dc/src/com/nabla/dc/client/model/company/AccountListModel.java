@@ -49,7 +49,7 @@ public class AccountListModel extends CModel<AccountRecord> {
 	}
 
 	private static final Fields	fields = new Fields();
-	private final Integer		companyId;
+	private final Integer			companyId;
 
 	public AccountListModel(final Integer companyId) {
 		super(AccountRecord.factory);

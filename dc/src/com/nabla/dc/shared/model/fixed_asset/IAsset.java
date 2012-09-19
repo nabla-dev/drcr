@@ -49,8 +49,8 @@ public interface IAsset {
 	static final String					ACQUISITION_TYPE = "acquisition_type";
 	static final String					COST = "cost";
 	// if Transfer
-	static final String					INITIAL_ACCUM_DEPRECIATION = "initial_accum_depreciation";
-	static final int						DEFAULT_INITIAL_ACCUM_DEPRECIATION = 0;
+	static final String					INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
+	static final int						DEFAULT_INITIAL_ACCUMULATED_DEPRECIATION = 0;
 	static final String					INITIAL_DEPRECIATION_PERIOD = "initial_depreciation_period";
 	static final int						DEFAULT_INITIAL_DEPRECIATION_PERIOD = 0;
 	static final IntegerRangeConstraint	INITIAL_DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(0, IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.getMaxValue());
@@ -59,7 +59,7 @@ public interface IAsset {
 	static final String					OPENING_YEAR = "opening_year";
 	static final IntegerRangeConstraint	OPENING_YEAR_CONSTRAINT = new IntegerRangeConstraint(1980, 2999);
 	static final String					OPENING_MONTH = "opening_month";
-	static final String					OPENING_ACCUM_DEPRECIATION = "opening_accum_depreciation";
+	static final String					OPENING_ACCUMULATED_DEPRECIATION = "opening_accumulated_depreciation";
 	static final String					OPENING_DEPRECIATION_PERIOD = "opening_depreciation_period";
 
 	static final String					PURCHASE_INVOICE = "purchase_invoice";

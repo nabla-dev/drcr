@@ -16,6 +16,8 @@
 */
 package com.nabla.dc.client.model.fixed_asset;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.command.fixed_asset.AddAsset;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
@@ -51,6 +53,82 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 		return getAttributeAsString(IAsset.NAME);
 	}
 
+	public String getCategory() {
+		return getAttributeAsString(IAsset.CATEGORY);
+	}
+
+	public Integer getCategoryId() {
+		return Integer.valueOf(getCategory());
+	}
+
+	public String getReference() {
+		return getAttributeAsString(IAsset.REFERENCE);
+	}
+
+	public String getLocation() {
+		return getAttributeAsString(IAsset.LOCATION);
+	}
+
+	public Date getAcquisitionDate() {
+		return getAttributeAsDate(IAsset.ACQUISITION_DATE);
+	}
+
+	public AcquisitionTypes getAcquisitionType() {
+		return AcquisitionTypes.valueOf(getAttributeAsString(IAsset.ACQUISITION_TYPE));
+	}
+
+	public boolean isTransfer() {
+		return getAcquisitionType() == AcquisitionTypes.TRANSFER;
+	}
+
+	public Integer getCost() {
+		return getAttributeAsInt(IAsset.COST);
+	}
+
+	public String getPurchaseInvoice() {
+		return getAttributeAsString(IAsset.PURCHASE_INVOICE);
+	}
+
+	public Integer getInitialAccumulatedDepreciation() {
+		return getAttributeAsInt(IAsset.INITIAL_ACCUMULATED_DEPRECIATION);
+	}
+
+	public Integer getInitialDepreciationPeriod() {
+		return getAttributeAsInt(IAsset.INITIAL_DEPRECIATION_PERIOD);
+	}
+
+	public Integer getDepreciationPeriod() {
+		return getAttributeAsInt(IAsset.DEPRECIATION_PERIOD);
+	}
+
+	public Integer getResidualValue() {
+		return getAttributeAsInt(IAsset.RESIDUAL_VALUE);
+	}
+
+	public boolean getCreateTransactions() {
+		return getAttributeAsBoolean(IAsset.CREATE_TRANSACTIONS);
+	}
+
+	public boolean isOpening() {
+		return getAttributeAsBoolean(IAsset.OPENING);
+	}
+
+	public Integer getOpeningYear() {
+		return getAttributeAsInt(IAsset.OPENING_YEAR);
+	}
+
+	public Integer getOpeningMonth() {
+		return getAttributeAsInt(IAsset.OPENING_MONTH);
+	}
+
+	public Integer getOpeningAccumulatedDepreciation() {
+		return getAttributeAsInt(IAsset.OPENING_ACCUMULATED_DEPRECIATION);
+	}
+
+	public Integer getOpeningDepreciationPeriod() {
+		return getAttributeAsInt(IAsset.OPENING_DEPRECIATION_PERIOD);
+	}
+
 	public Boolean isDisposed() {
 		String date = getAttributeAsString(IAsset.DISPOSAL_DATE);
 		return date != null && !date.isEmpty();
@@ -66,29 +144,16 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 		JSOHelper.deleteAttributeIfExists(getJsObj(), IAsset.PROCEEDS);
 	}
 
-	public AcquisitionTypes getAcquisitionType() {
-		return AcquisitionTypes.valueOf(getAttributeAsString(IAsset.ACQUISITION_TYPE));
+	public AddAsset toAddAssetCommand(final Integer companyId) {
+		final AddAsset cmd = new AddAsset(companyId, getName(), getCategoryId(), getReference(), getLocation(),
+				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
+				getDepreciationPeriod(), getResidualValue(),
+				getCreateTransactions());
+		if (isTransfer())
+			cmd.setInitialDepreciation(getInitialAccumulatedDepreciation(), getInitialDepreciationPeriod());
+		if (isOpening())
+			cmd.setOpeningDepreciation(getOpeningYear(), getOpeningMonth(), getOpeningAccumulatedDepreciation(), getOpeningDepreciationPeriod());
+		return cmd;
 	}
 
-	public boolean isTransfer() {
-		return getAcquisitionType() == AcquisitionTypes.TRANSFER;
-	}
-
-	public Integer getCost() {
-		return getAttributeAsInt(IAsset.COST);
-	}
-
-	public boolean hasCost() {
-		final Integer cost = getCost();
-		return cost != null && cost > 0;
-	}
-
-	public String getReference() {
-		return getAttributeAsString(IAsset.REFERENCE);
-	}
-
-	public AddAsset toAddAssetCommand() {
-
-		return null;
-	}
 }

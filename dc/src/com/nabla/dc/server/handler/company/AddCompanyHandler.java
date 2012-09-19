@@ -26,6 +26,7 @@ import java.util.GregorianCalendar;
 
 import com.nabla.dc.shared.command.company.AddCompany;
 import com.nabla.dc.shared.model.company.ICompany;
+import com.nabla.dc.shared.model.company.IPeriodEnd;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
@@ -82,11 +83,11 @@ companyId, record.getFinancialYear());
 				stmt.setInt(1, financialYearId);
 				final Calendar dt = new GregorianCalendar();
 				dt.setTime(record.getStartDate());
-				final SimpleDateFormat financialYearFormat = new SimpleDateFormat("MMM yyyy");
+				final SimpleDateFormat periodEndNameFormat = new SimpleDateFormat(IPeriodEnd.NAME_FORMAT);
 				for (int m = 0; m < 12; ++m) {
 					dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
 					final Date end = new Date(dt.getTime().getTime());
-					stmt.setString(2, financialYearFormat.format(end));
+					stmt.setString(2, periodEndNameFormat.format(end));
 					stmt.setDate(3, end);
 					stmt.addBatch();
 					dt.add(GregorianCalendar.MONTH, 1);

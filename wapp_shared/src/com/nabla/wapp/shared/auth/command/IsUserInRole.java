@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.auth.command;
 
 import com.nabla.wapp.shared.auth.RoleSetResult;
 import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.general.StringSet;
 
 
@@ -29,8 +30,8 @@ import com.nabla.wapp.shared.general.StringSet;
  */
 public class IsUserInRole implements IAction<RoleSetResult> {
 
-	Integer		objectId;
-	StringSet	roles;
+	@Nullable Integer	objectId;
+	StringSet			roles;
 
 	public IsUserInRole() {}	// for serialization only
 
@@ -39,7 +40,7 @@ public class IsUserInRole implements IAction<RoleSetResult> {
 	 * @param objectId	- object ID to which roles need to be applied to
 	 * @param roles	    - list of roles to query
 	 */
-	public IsUserInRole(final Integer objectId, final StringSet roles) {
+	public IsUserInRole(@Nullable final Integer objectId, final StringSet roles) {
 		this.objectId = objectId;
 		this.roles = roles;
 	}
@@ -48,7 +49,7 @@ public class IsUserInRole implements IAction<RoleSetResult> {
 	 * To get the object ID to which roles need to be applied to
 	 * @return this returns the object ID
 	 */
-	public Integer getObjectId() {
+	public @Nullable Integer getObjectId() {
 		return objectId;
 	}
 
