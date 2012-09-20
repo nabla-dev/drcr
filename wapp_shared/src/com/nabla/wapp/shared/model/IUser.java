@@ -32,7 +32,7 @@ public interface IUser {
 
 	static final String				CONFIRM_PASSWORD = "confirm";
 
-	static final String				ACTIVE = "isActive";
+	static final String				ACTIVE = "active";
 	static final String				CREATED = "created";
 	static final String				LAST_LOGIN = "last_login";
 

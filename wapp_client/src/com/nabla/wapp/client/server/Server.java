@@ -49,13 +49,13 @@ public class Server implements IServer {
 
 	public interface ILoginDialogUiProvider extends AsyncProvider<ILoginDialogUi, Throwable> {}
 
-	private static final Logger							logger = LoggerFactory.getLog(Server.class);
+	private static final Logger						logger = LoggerFactory.getLog(Server.class);
 
 	private final IDispatchRemoteServiceAsync			dispatcher;
 	private final ILoginUserRemoteServiceAsync			login;
 	private final ILoginDialogUiProvider				reLoginDialogUiFactory;
 	private UserSession									session = null;
-	private final Signal2<UserSession, UserSession>		sigUserSessionChanged = new Signal2<UserSession, UserSession>();
+	private final Signal2<UserSession, UserSession>	sigUserSessionChanged = new Signal2<UserSession, UserSession>();
 
 	public Server(final IDispatchRemoteServiceAsync dispatcher, final ILoginUserRemoteServiceAsync login, final ILoginDialogUiProvider reLoginDialogUiFactory) {
 		this.dispatcher = dispatcher;

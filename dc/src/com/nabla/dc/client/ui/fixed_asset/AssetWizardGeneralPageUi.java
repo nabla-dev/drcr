@@ -19,12 +19,8 @@ package com.nabla.dc.client.ui.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
-import com.nabla.dc.shared.model.fixed_asset.IAsset;
-import com.nabla.wapp.client.general.Assert;
-import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.smartgwt.client.widgets.form.ValuesManager;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
 
 /**
  * @author nabla
@@ -37,14 +33,6 @@ public class AssetWizardGeneralPageUi extends AssetWizardBasicPageUi implements 
 
 	public AssetWizardGeneralPageUi(final ValuesManager model) {
 		super(model, uiBinder);
-	}
-
-	@Override
-	public Integer getAssetCategoryId() {
-		final SelectItem categories = (SelectItem)form.getField(IAsset.CATEGORY);
-		Assert.notNull(categories);
-		final BasicRecord category = new BasicRecord(categories.getSelectedRecord());
-		return category.getId();
 	}
 
 }

@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchCompanyTaxRateListHandler extends AbstractFetchHandler<FetchCompanyTaxRateList> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT r.id, r.name, (c.company_id IS NOT NULL) AS 'isActive'" +
+"SELECT r.id, r.name, (c.company_id IS NOT NULL) AS 'b_active'" +
 " FROM tax_rate AS r LEFT JOIN company_tax_rate AS c ON r.id=c.tax_rate_id AND c.company_id=?" +
 " WHERE r.active=TRUE AND r.uname IS NOT NULL"
 	);

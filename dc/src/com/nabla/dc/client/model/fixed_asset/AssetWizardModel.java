@@ -18,7 +18,7 @@ package com.nabla.dc.client.model.fixed_asset;
 
 
 import com.google.gwt.core.client.JsDate;
-import com.nabla.dc.shared.command.fixed_asset.FetchAssetRecord;
+import com.nabla.dc.shared.command.fixed_asset.FetchAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.client.model.CModel;
@@ -108,12 +108,12 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchAssetRecord(assetId);
+		return new FetchAsset(assetId);
 	}
 
 	@Override
 	public IAction<StringResult> getAddCommand(final AssetRecord record) {
-		return record.toAddAssetCommand(companyId);
+		return record.toAddCommand(companyId);
 	}
 /*
 	@Override

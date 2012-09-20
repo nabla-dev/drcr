@@ -33,7 +33,7 @@ public interface IFixedAssetCategory {
 	static final String					NAME = "name";
 	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
 
-	static final String					ACTIVE = "isActive";
+	static final String					ACTIVE = "active";
 	static final String					TYPE = "type";
 
 	static final String					MIN_DEPRECIATION_PERIOD = "min_depreciation_period";

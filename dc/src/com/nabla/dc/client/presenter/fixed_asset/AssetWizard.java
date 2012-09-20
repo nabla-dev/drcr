@@ -36,7 +36,6 @@ import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
-import com.nabla.wapp.client.ui.IWizardPage;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.smartgwt.client.data.DSCallback;
@@ -51,9 +50,7 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 
 	public interface IDisplay extends IWizardDisplay {}
 	public interface IWelcomePage extends IWizardPageDisplay {}
-	public interface IGeneralPage extends IWizardPageDisplay {
-		Integer getAssetCategoryId();
-	}
+	public interface IGeneralPage extends IWizardPageDisplay {}
 	public interface IAcquisitionPage extends IWizardPageDisplay {}
 	public interface IDepreciationPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
@@ -109,10 +106,10 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	}
 
 	private void displayGeneralPage() {
-		displayNextPage(new AssetWizardGeneralPageUi(data), new ISlot1<IWizardPage>() {
+		displayNextPage(new AssetWizardGeneralPageUi(data), new ISlot() {
 			@Override
-			public void invoke(final IWizardPage page) {
-				Integer fixedAssetCategoryId = ((IGeneralPage)page).getAssetCategoryId();
+			public void invoke() {
+				Integer fixedAssetCategoryId = Integer.valueOf(data.getValueAsString(IAsset.CATEGORY));
 				Application.getInstance().getDispatcher().execute(new GetFixedAssetCategoryDepreciationPeriodRange(fixedAssetCategoryId), new AsyncCallback<DepreciationPeriodRange>() {
 					@Override
 					public void onFailure(Throwable caught) {

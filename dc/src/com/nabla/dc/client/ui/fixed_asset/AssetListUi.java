@@ -21,19 +21,22 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.fixed_asset.AssetListModel;
+import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.presenter.fixed_asset.AssetList;
 import com.nabla.dc.client.presenter.fixed_asset.AssetList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.model.UpdateModelCacheOperations;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
+import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDisplay {
+public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDisplay, ICurrentRecordProvider<AssetRecord> {
 
 	interface Binder extends UiBinder<Tab, AssetListUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
@@ -80,4 +83,14 @@ public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDis
 		model.updateCache(recordId);
 	}
 
+	@Override
+	public ICurrentRecordProvider<AssetRecord> getCurrentRecordProvider() {
+		return this;
+	}
+
+	@Override
+	public AssetRecord getCurrentRecord() {
+		final Record record = list.getCurrentRecord();
+		return (record == null) ? null : new AssetRecord(record);
+	}
 }

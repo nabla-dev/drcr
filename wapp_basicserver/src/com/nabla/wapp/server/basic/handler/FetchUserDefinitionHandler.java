@@ -32,29 +32,29 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchUserDefinitionHandler extends AbstractFetchHandler<FetchUserDefinition> {
 
 	private static final SqlToJson	userSql = new SqlToJson(
-"SELECT (privilege=FALSE) AS 'isFolder', isIncluded, TRUE AS 'isEnabled', id, -1 AS 'parentId', name FROM" +
-" (SELECT r.id, r.name, r.privilege, TRUE AS 'isIncluded'" +
+"SELECT (privilege=FALSE) AS 'b_folder', b_included, TRUE AS 'b_enabled', id, -1 AS 'i_parentId', name FROM" +
+" (SELECT r.id, r.name, r.privilege, TRUE AS 'b_included'" +
 " FROM role AS r INNER JOIN user_definition AS d ON r.id=d.role_id" +
 " WHERE d.user_id=? AND d.object_id IS NULL" +
 " UNION" +
-" SELECT r.id, r.name, r.privilege, FALSE AS 'isIncluded'" +
+" SELECT r.id, r.name, r.privilege, FALSE AS 'b_included'" +
 " FROM role AS r" +
 " WHERE r.id NOT IN (SELECT d.role_id FROM user_definition AS d WHERE d.user_id=? AND d.object_id IS NULL)" +
-") dt ORDER BY isIncluded DESC, privilege ASC, name ASC");
+") dt ORDER BY b_included DESC, privilege ASC, name ASC");
 
 	private static final SqlToJson	objectUserSql = new SqlToJson(
-"SELECT (privilege=FALSE) AS 'isFolder', isIncluded, TRUE AS 'isEnabled', id, -1 AS 'parentId', name FROM" +
-" (SELECT r.id, r.name, r.privilege, TRUE AS 'isIncluded'" +
+"SELECT (privilege=FALSE) AS 'b_folder', b_included, TRUE AS 'b_enabled', id, -1 AS 'parentId', name FROM" +
+" (SELECT r.id, r.name, r.privilege, TRUE AS 'b_included'" +
 " FROM role AS r INNER JOIN user_definition AS d ON r.id=d.role_id" +
 " WHERE d.user_id=? AND d.object_id=?" +
 " UNION" +
-" SELECT r.id, r.name, r.privilege, FALSE AS 'isIncluded'" +
+" SELECT r.id, r.name, r.privilege, FALSE AS 'b_included'" +
 " FROM role AS r" +
 " WHERE r.id NOT IN (SELECT d.role_id FROM user_definition AS d WHERE d.user_id=? AND d.object_id=?)" +
-") dt ORDER BY isIncluded DESC, privilege ASC, name ASC");
+") dt ORDER BY b_included DESC, privilege ASC, name ASC");
 
 	private static final SqlToJson parentSql = new SqlToJson(
-"SELECT (r.privilege=FALSE) as 'isFolder', FALSE AS 'isIncluded', FALSE AS 'isEnabled', r.id, d.role_id AS 'parentId', r.name" +
+"SELECT (r.privilege=FALSE) as 'b_folder', FALSE AS 'b_included', FALSE AS 'b_enabled', r.id, d.role_id AS 'parentId', r.name" +
 " FROM role_definition AS d INNER JOIN role AS r ON r.id=d.child_role_id" +
 " WHERE d.role_id=?" +
 " ORDER BY r.privilege ASC, r.name ASC");

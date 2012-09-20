@@ -20,6 +20,7 @@ import java.util.Date;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.command.fixed_asset.AddAsset;
+import com.nabla.dc.shared.command.fixed_asset.UpdateAssetField;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.JSHelper;
@@ -144,7 +145,7 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 		JSOHelper.deleteAttributeIfExists(getJsObj(), IAsset.PROCEEDS);
 	}
 
-	public AddAsset toAddAssetCommand(final Integer companyId) {
+	public AddAsset toAddCommand(final Integer companyId) {
 		final AddAsset cmd = new AddAsset(companyId, getName(), getCategoryId(), getReference(), getLocation(),
 				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
 				getDepreciationPeriod(), getResidualValue(),
@@ -154,6 +155,10 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 		if (isOpening())
 			cmd.setOpeningDepreciation(getOpeningYear(), getOpeningMonth(), getOpeningAccumulatedDepreciation(), getOpeningDepreciationPeriod());
 		return cmd;
+	}
+
+	public UpdateAssetField toUpdateFieldCommand() {
+		return new UpdateAssetField(getId(), getName(), getReference(), getLocation(), getPurchaseInvoice(), getDepreciationPeriod());
 	}
 
 }

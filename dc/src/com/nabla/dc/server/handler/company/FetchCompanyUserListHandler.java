@@ -33,7 +33,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchCompanyUserListHandler extends AbstractFetchHandler<FetchCompanyUserList> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT u.id, u.name, (c.company_id IS NOT NULL) AS 'isActive'" +
+"SELECT u.id, u.name, (c.company_id IS NOT NULL) AS 'b_active'" +
 " FROM user AS u LEFT JOIN company_user AS c ON u.id=c.user_id AND c.company_id=?" +
 " WHERE u.active=TRUE AND u.name NOT LIKE ? AND u.uname IS NOT NULL"
 	);

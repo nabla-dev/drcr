@@ -164,8 +164,7 @@ public class AssetDepreciation {
 		// opening cost
 		transactions.add(new Transaction(TransactionClasses.COST, TransactionTypes.OPENING, asset.getAcquisitionDate(), asset.getCost()));
 		// initial accumulated depreciation
-		if (asset.getInitialAccumulatedDepreciation() > 0)
-			transactions.add(new Transaction(TransactionClasses.DEP, TransactionTypes.OPENING, asset.getAcquisitionDate(), -1 * asset.getInitialAccumulatedDepreciation(), asset.getInitialDepreciationPeriod()));
+		transactions.add(new Transaction(TransactionClasses.DEP, TransactionTypes.OPENING, asset.getAcquisitionDate(), -1 * asset.getInitialAccumulatedDepreciation(), asset.getInitialDepreciationPeriod()));
 	}
 
 	public void getDepreciationTransactions(final List<Transaction> transactions) {

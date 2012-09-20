@@ -24,7 +24,7 @@ public interface IImportSettings {
 	static final String	FILE = "file_id";
 	static final String	OVERWRITE = "overwrite";
 
-	static final String	SUCCESS = "isSuccess";
+	static final String	SUCCESS = "success";
 
 	static final String	PREFERENCE_GROUP = "import_settings";
 }

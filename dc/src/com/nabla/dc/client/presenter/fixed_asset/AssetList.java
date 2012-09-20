@@ -24,6 +24,7 @@ import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
@@ -32,6 +33,7 @@ import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
  * @author nabla
@@ -62,6 +64,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
+		ICurrentRecordProvider<AssetRecord> getCurrentRecordProvider();
 		void addRecord(final Integer recordId);
 		void updateRecord(final Integer recordId);
 	}
@@ -108,8 +111,9 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.edit(), onEditRecord);
-/*		registerSlot(cmd.removeRecord(), onRemoveRecord);
-		registerSlot(cmd.userReportList(), onUserReportList);
+		cmd.edit().setRecordProvider(getDisplay().getCurrentRecordProvider());
+		registerSlot(cmd.removeRecord(), onRemoveRecord);
+/*		registerSlot(cmd.userReportList(), onUserReportList);
 		registerSlot(cmd.editAssetCategoryList(), onEditAssetCategoryList);
 		registerSlot(cmd.editBalanceSheetCategoryList(), onEditBalanceSheetCategoryList);
 		registerSlot(cmd.importAssets(), onImportAsset);
@@ -157,11 +161,11 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-/*
+
 	private final ISlot onRemoveRecord = new ISlot() {
 		@Override
 		public void invoke() {
-			display.removeSelectedRecords(onConfirmRemoveRecord);
+			getDisplay().removeSelectedRecords(onConfirmRemoveRecord);
 		}
 	};
 
@@ -169,10 +173,10 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		@Override
 		public void confirmRemoveRecords(final ListGridRecord[] records, final com.google.gwt.user.client.Command onSuccess) {
 			final AssetRecord asset = new AssetRecord(records[0]);
-			msgBox.ask(Resource.messages.confirmRemoveAssets(records.length, asset.getName()), onSuccess);
+			Application.getInstance().getMessageBox().ask(Resource.messages.confirmRemoveAssets(records.length, asset.getName()), onSuccess);
 		}
 	};
-*/
+
 	private final ISlot onReload = new ISlot() {
 		@Override
 		public void invoke() {

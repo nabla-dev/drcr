@@ -28,7 +28,7 @@ import com.smartgwt.client.widgets.form.fields.DateItem;
  */
 public class SmartGwtDateItem extends DateItem {
 
-	private static final Logger	logger = LoggerFactory.getLog(SmartGwtDateItem.class);
+	private static final Logger	log = LoggerFactory.getLog(SmartGwtDateItem.class);
 
 	@Override
 	public void setUseMask(Boolean useMask) {
@@ -49,10 +49,10 @@ public class SmartGwtDateItem extends DateItem {
 				}
 			}
 			if (inputFormat.length() == 3) {
-				logger.info("use input format '" + inputFormat + "' for date pattern '" + pattern + "'");
+				log.info("use input format '" + inputFormat + "' for date pattern '" + pattern + "'");
 				setInputFormat(inputFormat);
 			} else {
-				logger.warning("failed to find input format for date pattern '" + pattern + "'");
+				log.warning("failed to find input format for date pattern '" + pattern + "'");
 			}
 		}
 	}

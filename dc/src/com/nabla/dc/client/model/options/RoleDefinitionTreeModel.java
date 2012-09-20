@@ -34,7 +34,7 @@ import com.smartgwt.client.widgets.tree.TreeNode;
  */
 public class RoleDefinitionTreeModel extends HomogeneousTreeModel<TreeNode> {
 
-	static public final String	INCLUDE = "isIncluded";
+	static public final String	INCLUDE = "included";
 
 	static public class Fields {
 		public String name() { return "name"; }

@@ -14,18 +14,28 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.model;
+package com.nabla.wapp.server.json;
 
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
+import java.io.IOException;
+import java.sql.Date;
+
+import net.minidev.json.JSONStreamAware;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public interface IRole {
-	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
-	static final String				INTERNAL = "internal";
+public class JSonDate implements JSONStreamAware {
 
-	static final String				DEFINITION = "roles";
+	private final Date		value;
+
+	public JSonDate(final Date value) {
+		this.value = value;
+	}
+
+	@Override
+	public void writeJSONString(Appendable out) throws IOException {
+		out.append("new Date(" + value.getTime() + ")");
+	}
+
 }

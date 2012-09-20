@@ -37,16 +37,9 @@ public class SqlToJson {
 
 	private static final Log	log = LogFactory.getLog(SqlToJson.class);
 	private final String		baseSql;
-	private final int[]			columnTypes;
 
 	public SqlToJson(final String baseSql) {
 		this.baseSql = baseSql;
-		columnTypes = null;
-	}
-
-	public SqlToJson(final String baseSql, final int... columnTypes) {
-		this.baseSql = baseSql;
-		this.columnTypes = columnTypes;
 	}
 
 	public static String createSql(final AbstractFetch options, final String baseSql) {
@@ -91,7 +84,7 @@ public class SqlToJson {
 
 		final JsonResponse response = new JsonResponse();
 		Integer endRow = null;
-		int total = (columnTypes == null) ? response.putAll(stmt.executeQuery()) : response.putAll(stmt.executeQuery(), columnTypes);
+		int total = response.putAll(stmt.executeQuery());
 		if (options.isRange()) {
 			int lastRow = options.getStartRow() + total - 1;
 			endRow = (options.getEndRow() < lastRow) ? options.getEndRow() : lastRow;

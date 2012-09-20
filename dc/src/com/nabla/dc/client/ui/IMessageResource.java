@@ -75,4 +75,8 @@ public interface IMessageResource extends Messages {
 
 	@DefaultMessage("{0} - Companies")
 	String userCompanyListTitle(String userName);
+
+	@DefaultMessage("Are you sure you want to delete these {0} assets?")
+	@AlternateMessage({"one", "Are you sure you want to delete asset ''{1}''?"})
+	String confirmRemoveAssets(@PluralCount @Optional int count, @Optional String name);
 }

@@ -32,6 +32,8 @@ import com.nabla.wapp.client.model.field.PoundField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
+import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
 /**
@@ -102,12 +104,10 @@ public class AssetListModel extends CModel<AssetRecord> {
 	public AbstractRemove getRemoveCommand() {
 		return new RemoveAsset();
 	}
-/*
+
 	@Override
 	public IAction<StringResult> getUpdateCommand(final AssetRecord record) {
-		final IAction<StringResult> ret = enableUpdate ? new UpdateAssetField(record.getId()) : null;
-		enableUpdate = true;
-		return ret;
+		return record.toUpdateFieldCommand();
 	}
-*/
+
 }

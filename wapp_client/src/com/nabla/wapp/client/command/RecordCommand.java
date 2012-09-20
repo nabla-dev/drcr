@@ -31,7 +31,7 @@ import com.smartgwt.client.data.Record;
  */
 public class RecordCommand<R extends Record> extends SlotManager1<R> implements IRecordCommand<R> {
 
-	private static final Logger			logger = LoggerFactory.getLog(RecordCommand.class);
+	private static final Logger		log = LoggerFactory.getLog(RecordCommand.class);
 	private final CommandUiManager		manager = new CommandUiManager();
 	private ICurrentRecordProvider<R>	provider;
 
@@ -84,10 +84,10 @@ public class RecordCommand<R extends Record> extends SlotManager1<R> implements 
 				while (iter.hasNext())
 					iter.next().invoke(record);
 			} else {
-				logger.fine("no current record");
+				log.fine("no current record");
 			}
 		} else {
-			logger.log(Level.WARNING, "no current record provider defined");
+			log.log(Level.WARNING, "no current record provider defined");
 		}
 	}
 

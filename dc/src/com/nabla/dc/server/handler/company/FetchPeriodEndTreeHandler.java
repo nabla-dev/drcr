@@ -32,14 +32,14 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchPeriodEndTreeHandler extends AbstractFetchHandler<FetchPeriodEndTree> {
 
 	private static final SqlToJson	parentSql = new SqlToJson(
-"SELECT TRUE AS 'isFolder', CONCAT('f',t.id) AS 'id', NULL AS 'parentId', TRUE AS 'isEnabled', t.name, NULL AS 'end_date'" +
+"SELECT TRUE AS 'b_folder', CONCAT('f',t.id) AS 'id', NULL AS 'parentId', TRUE AS 'b_enabled', t.name, NULL AS 'end_date'" +
 " FROM financial_year AS t" +
 " WHERE t.company_id=?" +
 " ORDER BY (SELECT p.end_date FROM period_end AS p WHERE p.financial_year_id=t.id LIMIT 1) DESC"
 	);
 
 	private static final SqlToJson	childSql = new SqlToJson(
-"SELECT FALSE as 'isFolder', CONCAT('p',t.id) AS 'id', CONCAT('f',t.financial_year_id) AS 'parentId', FALSE AS 'isEnabled', t.name, t.end_date" +
+"SELECT FALSE as 'b_folder', CONCAT('p',t.id) AS 'id', CONCAT('f',t.financial_year_id) AS 'parentId', FALSE AS 'b_enabled', t.name, t.end_date" +
 " FROM period_end AS t" +
 " WHERE t.financial_year_id=?" +
 " ORDER BY t.end_date ASC"

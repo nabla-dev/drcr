@@ -34,22 +34,22 @@ import com.smartgwt.client.util.DateUtil;
  */
 public class DateField extends DataSourceDateField {
 
-	private static final Logger	logger = LoggerFactory.getLog(DateField.class);
+	private static final Logger	log = LoggerFactory.getLog(DateField.class);
 
 	static {
 		if (LogConfiguration.loggingIsEnabled()) {
-			logger.info("current locale = " + LocaleInfo.getCurrentLocale().getLocaleName());
-			logger.info("short date pattern = " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).getPattern());
+			log.info("current locale = " + LocaleInfo.getCurrentLocale().getLocaleName());
+			log.info("short date pattern = " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).getPattern());
 			final Date today = new Date();
-			logger.info("toString= " + today.toString());
-			logger.info("short= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).format(today));
-			logger.info("medium= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_MEDIUM).format(today));
-			logger.info("long= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_LONG).format(today));
-			logger.info("short time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.TIME_SHORT).format(today));
-			logger.info("long time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.TIME_LONG).format(today));
-			logger.info("short date time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).format(today));
-			logger.info("medium date time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_MEDIUM).format(today));
-			logger.info("long date time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_LONG).format(today));
+			log.info("toString= " + today.toString());
+			log.info("short= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).format(today));
+			log.info("medium= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_MEDIUM).format(today));
+			log.info("long= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_LONG).format(today));
+			log.info("short time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.TIME_SHORT).format(today));
+			log.info("long time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.TIME_LONG).format(today));
+			log.info("short date time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).format(today));
+			log.info("medium date time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_MEDIUM).format(today));
+			log.info("long date time= " + DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_LONG).format(today));
 		}
 		DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
 			@Override

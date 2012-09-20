@@ -44,7 +44,7 @@ public class CloneUserHandler extends AbstractAddHandler<CloneUser> {
 		validate(record, ctx);
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active AS 'isActive', created FROM user WHERE id=?;", add(record, ctx));
+"SELECT id, active AS 'b_active', created FROM user WHERE id=?;", add(record, ctx));
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {

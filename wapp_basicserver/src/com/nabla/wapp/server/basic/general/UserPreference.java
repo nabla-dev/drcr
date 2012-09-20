@@ -37,10 +37,18 @@ public class UserPreference {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public static StringResult load(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name) throws SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
+		final PreparedStatement stmt = (objectId == null) ?
+				StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT state" +
 " FROM user_preference" +
-" WHERE user_id=? AND objectId=? AND category=? AND name=?;", ctx.getUserId(), objectId, group, name);
+" WHERE user_id=? AND object_id IS NULL AND category=? AND name=?;",
+ctx.getUserId(), group, name)
+:
+				StatementFormat.prepare(ctx.getReadConnection(),
+"SELECT state" +
+" FROM user_preference" +
+" WHERE user_id=? AND object_id=? AND category=? AND name=?;",
+ctx.getUserId(), objectId, group, name);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
@@ -56,6 +64,10 @@ public class UserPreference {
 	public static void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final String state) throws SQLException {
 		if (state == null)
 			remove(ctx, objectId, group, name);
+		else if (objectId == null)
+			Database.executeUpdate(ctx.getWriteConnection(),
+"INSERT INTO user_preference (user_id,category,name,state) VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE state=?;",
+ctx.getUserId(), group, name, state, state);
 		else
 			Database.executeUpdate(ctx.getWriteConnection(),
 "INSERT INTO user_preference (user_id,object_id,category,name,state) VALUES(?,?,?,?,?) ON DUPLICATE KEY UPDATE state=?;",
@@ -91,8 +103,13 @@ ctx.getUserId(), objectId, group, name, state, state);
 	}
 
 	public static void remove(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name) throws SQLException {
-		Database.executeUpdate(ctx.getWriteConnection(),
-"DELETE FROM user_preference WHERE user_id=? AND objectId=? AND category=? AND name=?;",
+		if (objectId == null)
+			Database.executeUpdate(ctx.getWriteConnection(),
+"DELETE FROM user_preference WHERE user_id=? AND object_id IS NULL AND category=? AND name=?;",
+ctx.getUserId(), group, name);
+		else
+			Database.executeUpdate(ctx.getWriteConnection(),
+"DELETE FROM user_preference WHERE user_id=? AND object_id=? AND category=? AND name=?;",
 ctx.getUserId(), objectId, group, name);
 	}
 

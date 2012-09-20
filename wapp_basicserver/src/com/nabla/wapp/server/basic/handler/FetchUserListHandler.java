@@ -33,12 +33,12 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchUserListHandler extends AbstractFetchHandler<FetchUserList> {
 
 	private static final SqlToJson	rootSql = new SqlToJson(
-"SELECT (name NOT LIKE ?) AS 'isEnabled', (uname IS NULL) as 'isDeleted', id, name, active AS 'isActive', created, last_login" +
+"SELECT (name NOT LIKE ?) AS 'b_enabled', (uname IS NULL) as 'b_deleted', id, name, active AS 'b_active', created, last_login" +
 " FROM user"
 	);
 
 	private static final SqlToJson	sql = new SqlToJson(
-"SELECT TRUE AS 'isEnabled', FALSE AS 'isDeleted', id, name, active AS 'isActive', created, last_login" +
+"SELECT TRUE AS 'b_enabled', FALSE AS 'b_deleted', id, name, active AS 'b_active', created, last_login" +
 " FROM user" +
 " WHERE uname IS NOT NULL AND name NOT LIKE ?"
 	);

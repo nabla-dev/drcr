@@ -37,7 +37,14 @@ import com.nabla.wapp.shared.general.Nullable;
 public abstract class AbstractGetDefaultValuesHandler<A extends IAction<StringResult>> extends AbstractHandler<A, StringResult> {
 
 	protected StringResult getDefaultValues(@Nullable final Integer objectId, final String group, final IUserSessionContext ctx) throws SQLException {
-		return executeQuery(StatementFormat.prepare(ctx.getReadConnection(),
+		return executeQuery((objectId == null) ?
+			StatementFormat.prepare(ctx.getReadConnection(),
+"SELECT name AS 'field', state AS 'default'" +
+" FROM user_preference" +
+" WHERE object_id IS NULL AND user_id=? AND category=?;",
+ctx.getUserId(), group)
+			:
+			StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT name AS 'field', state AS 'default'" +
 " FROM user_preference" +
 " WHERE object_id=? AND user_id=? AND category=?;",

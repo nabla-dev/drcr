@@ -50,7 +50,7 @@ public class AddCompanyHandler extends AbstractAddHandler<AddCompany> {
 		validate(record, ctx);
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active AS 'isActive' FROM company WHERE id=?;", add(record, ctx));
+"SELECT id, active AS 'b_active' FROM company WHERE id=?;", add(record, ctx));
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
