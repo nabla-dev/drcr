@@ -23,6 +23,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -32,23 +33,20 @@ import com.nabla.wapp.shared.model.IErrorList;
 public class UpdateFinancialYear implements IRecordAction<StringResult>, IFinancialYear {
 
 	@IRecordField(id=true)
-	Integer		id;
+	int		id;
 	@IRecordField(unique=true)
-	String		name;
+	String	name;
 
-	protected UpdateFinancialYear() {}	// for serialization only
+	UpdateFinancialYear() {}	// for serialization only
 
-	public UpdateFinancialYear(final Integer id, final String name) {
+	public UpdateFinancialYear(final int id, final String name) {
 		this.id = id;
 		this.name = name;
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
-		return NAME_CONSTRAINT.validate(NAME, name, errors);
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
 	}
 
-	public Integer getId(){
-		return id;
-	}
 }

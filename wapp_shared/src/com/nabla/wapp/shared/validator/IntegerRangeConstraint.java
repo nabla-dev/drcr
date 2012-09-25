@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.validator;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -26,42 +27,55 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class IntegerRangeConstraint implements IValueConstraint<Integer> {
 
-	private final Integer	minValue;
-	private final Integer	maxValue;
+	private final boolean				nullableOnUpdate;
+	@Nullable private final Integer	minValue;
+	@Nullable private final Integer	maxValue;
 
-	public IntegerRangeConstraint(final Integer minValue, final Integer maxValue) {
+	public IntegerRangeConstraint(@Nullable final Integer minValue, @Nullable final Integer maxValue, final boolean nullableOnUpdate) {
+		this.nullableOnUpdate = nullableOnUpdate;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 	}
-
-	public IntegerRangeConstraint(final Integer minValue) {
-		this.minValue = minValue;
-		this.maxValue = null;
+/*
+	public IntegerRangeConstraint(final Integer minValue, final Integer maxValue) {
+		this(minValue, maxValue, true);
 	}
-
-	public Integer getMinValue() {
+*/
+	public IntegerRangeConstraint(@Nullable final Integer minValue, final boolean nullableOnUpdate) {
+		this(minValue, null, nullableOnUpdate);
+	}
+/*
+	public IntegerRangeConstraint(final Integer minValue) {
+		this(minValue, true);
+	}
+*/
+	public @Nullable Integer getMinValue() {
 		return minValue;
 	}
 
-	public Integer getMaxValue() {
+	public @Nullable Integer getMaxValue() {
 		return maxValue;
 	}
 
-	@Override
-	public boolean validate(final String field, final Integer value, final IErrorList errors) throws DispatchException {
-		return validate(field, value, CommonServerErrors.INVALID_VALUE, errors);
+	public boolean isNullableOnUpdate() {
+		return nullableOnUpdate;
 	}
 
-	public <E extends Enum<E>> boolean validate(final String field, final Integer value, final E error, final IErrorList errors) throws DispatchException {
+	@Override
+	public boolean validate(final String field, @Nullable final Integer value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		return validate(field, value, CommonServerErrors.INVALID_VALUE, errors, ctx);
+	}
+
+	public <E extends Enum<E>> boolean validate(final String field, @Nullable final Integer value, final E error, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		if (value == null) {
-			errors.add(field, CommonServerErrors.REQUIRED_VALUE);
-			return false;
-		}
-		if (minValue != null && value < minValue) {
+			if (ctx != ValidatorContext.UPDATE || !isNullableOnUpdate()) {
+				errors.add(field, CommonServerErrors.REQUIRED_VALUE);
+				return false;
+			}
+		} else if (getMinValue() != null && value < getMinValue()) {
 			errors.add(field, error);
 			return false;
-		}
-		if (maxValue != null && value > maxValue) {
+		} else 	if (getMaxValue() != null && value > getMaxValue()) {
 			errors.add(field, error);
 			return false;
 		}

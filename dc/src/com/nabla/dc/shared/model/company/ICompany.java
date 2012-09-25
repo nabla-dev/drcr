@@ -25,7 +25,7 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
 public interface ICompany {
 
 	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
+	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64, true);
 	static final String				ACTIVE = "active";
 
 	static final String				TABLE = "company";

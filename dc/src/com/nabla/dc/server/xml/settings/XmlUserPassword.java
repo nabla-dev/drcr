@@ -9,6 +9,7 @@ import org.simpleframework.xml.core.Validate;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 class XmlUserPassword {
@@ -30,7 +31,7 @@ class XmlUserPassword {
 
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		IUser.PASSWORD_CONSTRAINT.validate(FIELD, value, XmlNode.getErrorList(session));
+		IUser.PASSWORD_CONSTRAINT.validate(FIELD, value, XmlNode.getErrorList(session), ValidatorContext.ADD);
 	}
 
 }

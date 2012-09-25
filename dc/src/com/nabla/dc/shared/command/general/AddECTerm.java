@@ -23,6 +23,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -38,7 +39,7 @@ public class AddECTerm implements IRecordAction<StringResult>, IECTerm {
 	@IRecordField
 	Boolean				active;
 
-	protected AddECTerm() {}	// for serialization only
+	AddECTerm() {}	// for serialization only
 
 	public AddECTerm(final String name, final Boolean active) {
 		this.name = name;
@@ -46,11 +47,10 @@ public class AddECTerm implements IRecordAction<StringResult>, IECTerm {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
-		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
-			return false;
-		uname = name.toUpperCase();
-		return true;
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		if (name != null)
+			uname = name.toUpperCase();
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
 	}
 
 }

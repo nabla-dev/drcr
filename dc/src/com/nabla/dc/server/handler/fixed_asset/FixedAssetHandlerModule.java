@@ -44,6 +44,7 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 
 		bindHandler(FetchAssetListHandler.class);
 		bindHandler(AddAssetHandler.class);
+		bindHandler(UpdateAssetHandler.class);
 		bindHandler(UpdateAssetFieldHandler.class);
 		bindHandler(RemoveAssetHandler.class);
 		bindHandler(FetchAssetRecordHandler.class);

@@ -25,8 +25,8 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
 public interface IListGridFilter {
 
 	static final String					NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64);
+	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 64, false);
 	static final String					VALUE = "value";
-	static final TextLengthConstraint	VALUE_CONSTRAINT = new TextLengthConstraint(1, 1024);
+	static final TextLengthConstraint		VALUE_CONSTRAINT = new TextLengthConstraint(1, 1024, false);
 
 }

@@ -11,6 +11,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IRole;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 class XmlRoleName extends XmlString {
@@ -31,7 +32,7 @@ class XmlRoleName extends XmlString {
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
 			errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
 		else
-			IRole.NAME_CONSTRAINT.validate(FIELD, value, errors);
+			IRole.NAME_CONSTRAINT.validate(FIELD, value, errors, ValidatorContext.ADD);
 	}
 
 }

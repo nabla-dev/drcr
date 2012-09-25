@@ -20,6 +20,7 @@ import java.util.Date;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.command.fixed_asset.AddAsset;
+import com.nabla.dc.shared.command.fixed_asset.UpdateAsset;
 import com.nabla.dc.shared.command.fixed_asset.UpdateAssetField;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
@@ -147,6 +148,18 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 
 	public AddAsset toAddCommand(final Integer companyId) {
 		final AddAsset cmd = new AddAsset(companyId, getName(), getCategoryId(), getReference(), getLocation(),
+				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
+				getDepreciationPeriod(), getResidualValue(),
+				getCreateTransactions());
+		if (isTransfer())
+			cmd.setInitialDepreciation(getInitialAccumulatedDepreciation(), getInitialDepreciationPeriod());
+		if (isOpening())
+			cmd.setOpeningDepreciation(getOpeningYear(), getOpeningMonth(), getOpeningAccumulatedDepreciation(), getOpeningDepreciationPeriod());
+		return cmd;
+	}
+
+	public UpdateAsset toUpdateCommand(final Integer companyId) {
+		final UpdateAsset cmd = new UpdateAsset(getId(), companyId, getName(), getCategoryId(), getReference(), getLocation(),
 				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
 				getDepreciationPeriod(), getResidualValue(),
 				getCreateTransactions());

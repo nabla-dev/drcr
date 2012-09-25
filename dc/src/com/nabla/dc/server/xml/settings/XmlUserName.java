@@ -9,6 +9,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 class XmlUserName extends TXmlNode<ImportContext> {
@@ -32,7 +33,7 @@ class XmlUserName extends TXmlNode<ImportContext> {
 	protected void doValidate(final ImportContext ctx, final ICsvErrorList errors) throws DispatchException {
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
 			errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
-		else if (IUser.NAME_CONSTRAINT.validate(FIELD, value, errors) &&
+		else if (IUser.NAME_CONSTRAINT.validate(FIELD, value, errors, ValidatorContext.ADD) &&
 					!ctx.getNameList().add(value))
 			errors.add(FIELD, CommonServerErrors.DUPLICATE_ENTRY);
 	}

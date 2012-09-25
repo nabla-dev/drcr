@@ -25,6 +25,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -45,10 +46,10 @@ public class AddCompany implements IRecordAction<StringResult> {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
-		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors);
-		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors);
+		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors, ctx);
+		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors, ctx);
 		if (startDate == null)
 			errors.add("start_date", CommonServerErrors.REQUIRED_VALUE);
 		return n == errors.size();

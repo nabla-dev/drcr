@@ -19,33 +19,38 @@ package com.nabla.wapp.shared.command;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.model.IRole;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
  *
  */
 @IRecordTable(name="role")
-public class UpdateRole extends AddRole {
+public class UpdateRole implements IRecordAction<StringResult>, IRole {
 
 	@IRecordField(id=true)
-	Integer				id;
+	int					id;
+	@IRecordField(unique=true)
+	String				name;
 	@IRecordField
 	transient String	uname;
 
 	protected UpdateRole() {}	// for serialization only
 
-	public UpdateRole(final Integer id, final String name) {
-		super(name);
+	public UpdateRole(final int id, final String name) {
 		this.id = id;
+		this.name = name;
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
-		if (!super.validate(errors))
-			return false;
-		uname = name.toUpperCase();
-		return true;
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		if (name != null)
+			uname = name.toUpperCase();
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
 	}
 
 }

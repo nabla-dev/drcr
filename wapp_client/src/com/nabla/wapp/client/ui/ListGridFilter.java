@@ -31,6 +31,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.model.IListGridFilter;
 import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 import com.smartgwt.client.data.AdvancedCriteria;
 import com.smartgwt.client.util.JSON;
 import com.smartgwt.client.util.ValueCallback;
@@ -192,8 +193,8 @@ public class ListGridFilter extends VLayout {
 					final String value = JSON.encode(criteria.getJsObj());
 					final ValidationException x = new ValidationException();
 					try {
-						IListGridFilter.NAME_CONSTRAINT.validate(IListGridFilter.NAME, name, x);
-						IListGridFilter.VALUE_CONSTRAINT.validate(IListGridFilter.VALUE, value, x);
+						IListGridFilter.NAME_CONSTRAINT.validate(IListGridFilter.NAME, name, x, ValidatorContext.ADD);
+						IListGridFilter.VALUE_CONSTRAINT.validate(IListGridFilter.VALUE, value, x, ValidatorContext.ADD);
 					} catch (DispatchException _) {}
 					if (x.isEmpty()) {
 						saveFilter(name, value);

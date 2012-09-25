@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.validator;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -26,16 +27,22 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class TextLengthConstraint implements IValueConstraint<String> {
 
-	private final int	minLength;
-	private final int	maxLength;
+	private final boolean		nullableOnUpdate;
+	private final int			minLength;
+	private final int			maxLength;
 
-	public TextLengthConstraint(int minLength, int maxLength) {
+	public TextLengthConstraint(int minLength, int maxLength, boolean nullableOnUpdate) {
 		assert minLength <= maxLength;
 
+		this.nullableOnUpdate = nullableOnUpdate;
 		this.minLength = minLength;
 		this.maxLength = maxLength;
 	}
-
+/*
+	public TextLengthConstraint(int minLength, int maxLength) {
+		this(minLength, maxLength, true);
+	}
+*/
 	public int getMinLength() {
 		return minLength;
 	}
@@ -44,10 +51,14 @@ public class TextLengthConstraint implements IValueConstraint<String> {
 		return maxLength;
 	}
 
+	public boolean isNullableOnUpdate() {
+		return nullableOnUpdate;
+	}
+
 	@Override
-	public boolean validate(final String field, final String value, final IErrorList errors) throws DispatchException {
+	public boolean validate(final String field, @Nullable final String value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		if (value == null || value.isEmpty()) {
-			if (getMinLength() > 0) {
+			if ((ctx != ValidatorContext.UPDATE || !isNullableOnUpdate()) && getMinLength() > 0) {
 				errors.add(field, CommonServerErrors.REQUIRED_VALUE);
 				return false;
 			}
@@ -64,5 +75,6 @@ public class TextLengthConstraint implements IValueConstraint<String> {
 		}
 		return true;
 	}
+
 
 }

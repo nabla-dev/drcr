@@ -18,6 +18,7 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 @IRecordTable(name=IFixedAssetCategory.TABLE)
@@ -55,16 +56,16 @@ class XmlAssetCategory {
 		final ICsvErrorList errors = XmlNode.getErrorList(session);
 		errors.setLine(name.getRow());
 		final String n = name.getValue();
-		if (IFixedAssetCategory.NAME_CONSTRAINT.validate("name", n, errors)) {
+		if (IFixedAssetCategory.NAME_CONSTRAINT.validate("name", n, errors, ValidatorContext.ADD)) {
 			if (XmlNode.<ImportContext>getContext(session).getNameList().add(n))
 				uname = n.toUpperCase();
 			else
 				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
 		}
-		IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate("min_depreciation_period", min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors);
+		IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate("min_depreciation_period", min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ValidatorContext.ADD);
 		if (max_depreciation_period == null)
 			max_depreciation_period = min_depreciation_period;
-		else if (IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate("max_depreciation_period", max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors) &&
+		else if (IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate("max_depreciation_period", max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ValidatorContext.ADD) &&
 			max_depreciation_period < min_depreciation_period)
 			errors.add("max_depreciation_period", ServerErrors.INVALID_MAX_DEPRECIATION_PERIOD);
 		if (active == null)

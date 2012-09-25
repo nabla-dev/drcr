@@ -34,7 +34,7 @@ public interface ITransaction {
 	static final String					TYPE = "type";
 	static final String					AMOUNT = "amount";
 	static final String					DEPRECIATION_PERIOD = "depreciation_period";
-	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(1, 12 * 100);
+	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(1, 12 * 100, true);
 
 	static final String					REPORT = "FA_TRANSACTION_LIST";
 

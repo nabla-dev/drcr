@@ -27,6 +27,7 @@ import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 class XmlCompany {
@@ -63,11 +64,11 @@ class XmlCompany {
 	public void validate(Map session) throws DispatchException {
 		final ICsvErrorList errors = XmlNode.getErrorList(session);
 		errors.setLine(name.getRow());
-		if (ICompany.NAME_CONSTRAINT.validate("name", getName(), errors) &&
+		if (ICompany.NAME_CONSTRAINT.validate("name", getName(), errors, ValidatorContext.ADD) &&
 			!XmlNode.<ImportContext>getContext(session).getCompanyNameList().add(getName()))
 				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
 		errors.setLine(financial_year.getRow());
-		IFinancialYear.NAME_CONSTRAINT.validate("financial_year", financial_year.getValue(), errors);
+		IFinancialYear.NAME_CONSTRAINT.validate("financial_year", financial_year.getValue(), errors, ValidatorContext.ADD);
 		if (active == null)
 			active = false;
 	}

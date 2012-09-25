@@ -43,16 +43,16 @@ public class AddAsset implements IRecordAction<StringResult>, IAsset, IAssetReco
 	String				name;
 	@IRecordField
 	Integer				fa_company_asset_category_id;
-	@IRecordField
+	@IRecordField @Nullable
 	String				reference;
-	@IRecordField
+	@IRecordField @Nullable
 	String				location;
 	@IRecordField
 	Date				acquisition_date;
 	@IRecordField
 	AcquisitionTypes	acquisition_type;
 	int					cost;
-	@IRecordField
+	@IRecordField @Nullable
 	String				purchase_invoice;
 	Integer				initialAccumulatedDepreciation;	// if TRANSFER
 	Integer				initialDepreciationPeriod;	// if TRANSFER
@@ -69,8 +69,8 @@ public class AddAsset implements IRecordAction<StringResult>, IAsset, IAssetReco
 	AddAsset() {}	// for serialization only
 
 	public AddAsset(final Integer companyId, final String name, final Integer companyAssetCategoryId,
-			@Nullable final String reference, final String location,
-			final Date acquisitionDate, final AcquisitionTypes acquisitionType, int cost, final String pi,
+			@Nullable final String reference, @Nullable final String location,
+			final Date acquisitionDate, final AcquisitionTypes acquisitionType, int cost, @Nullable final String pi,
 			int depreciationPeriod, final Integer residualValue,
 			boolean createTransactions) {
 		this.companyId = companyId;

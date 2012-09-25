@@ -115,9 +115,10 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 	public IAction<StringResult> getAddCommand(final AssetRecord record) {
 		return record.toAddCommand(companyId);
 	}
-/*
+
 	@Override
 	public IAction<StringResult> getUpdateCommand(final AssetRecord record) {
-		return new UpdateAsset(record.getId(), record.getName(), record.getActive(), record.getType(), record.getMinDepreciationPeriod(), record.getMaxDepreciationPeriod());
-	}*/
+		return record.toUpdateCommand(companyId);
+	}
+
 }

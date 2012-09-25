@@ -16,6 +16,7 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 @IRecordTable(name=IFinancialStatementCategory.TABLE)
@@ -41,7 +42,7 @@ class XmlFinancialStatementCategory {
 		final ICsvErrorList errors = XmlNode.getErrorList(session);
 		errors.setLine(name.getRow());
 		final String n = name.getValue();
-		if (IFinancialStatementCategory.NAME_CONSTRAINT.validate("name", n, errors)) {
+		if (IFinancialStatementCategory.NAME_CONSTRAINT.validate("name", n, errors, ValidatorContext.ADD)) {
 			if (XmlNode.<ImportContext>getContext(session).getNameList().add(n))
 				uname = n.toUpperCase();
 			else

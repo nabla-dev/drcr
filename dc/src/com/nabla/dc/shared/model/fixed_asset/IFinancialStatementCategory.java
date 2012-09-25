@@ -29,7 +29,7 @@ public interface IFinancialStatementCategory {
 
 	static final String				SPEUDO_ID = "iid";
 	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
+	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128, true);
 	static final String				ACTIVE = "active";
 
 	static final String				REPORT = "FA_FS_CATEGORY_LIST";

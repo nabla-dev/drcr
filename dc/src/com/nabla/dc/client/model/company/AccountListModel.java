@@ -60,8 +60,8 @@ public class AccountListModel extends CModel<AccountRecord> {
 			new IdField(),
 			new TextField(fields.code(), IAccount.CODE_CONSTRAINT, FieldAttributes.REQUIRED),
 			new TextField(fields.name(), IAccount.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new TextField(fields.cc(), IAccount.CC_CONSTRAINT, FieldAttributes.OPTIONAL),
-			new TextField(fields.dep(), IAccount.DEP_CONSTRAINT, FieldAttributes.OPTIONAL),
+			new TextField(fields.cc(), IAccount.COST_CENTRE_CONSTRAINT, FieldAttributes.OPTIONAL),
+			new TextField(fields.dep(), IAccount.DEPARTMENT_CONSTRAINT, FieldAttributes.OPTIONAL),
 			new BooleanField(fields.bs()),
 			new BooleanField(fields.active())
 				);

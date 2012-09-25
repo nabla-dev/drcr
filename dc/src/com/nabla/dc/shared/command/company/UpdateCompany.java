@@ -23,6 +23,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -32,7 +33,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 public class UpdateCompany implements IRecordAction<StringResult>, ICompany {
 
 	@IRecordField(id=true)
-	Integer				id;
+	int					id;
 	@IRecordField(unique=true)
 	String				name;
 	@IRecordField
@@ -40,22 +41,19 @@ public class UpdateCompany implements IRecordAction<StringResult>, ICompany {
 	@IRecordField
 	Boolean				active;
 
-	protected UpdateCompany() {}	// for serialization only
+	UpdateCompany() {}	// for serialization only
 
-	public UpdateCompany(final Integer id, final String name, final Boolean active) {
+	public UpdateCompany(final int id, final String name, final Boolean active) {
 		this.id = id;
 		this.name = name;
 		this.active = active;
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
-		if (name == null)
-			return true;
-		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
-			return false;
-		uname = name.toUpperCase();
-		return true;
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		if (name != null)
+			uname = name.toUpperCase();
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
 	}
 
 }

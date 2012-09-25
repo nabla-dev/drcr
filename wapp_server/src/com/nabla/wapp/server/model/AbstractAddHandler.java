@@ -26,6 +26,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * The <code></code> object is used to
@@ -48,7 +49,7 @@ public abstract class AbstractAddHandler<A extends IRecordAction<StringResult>> 
 	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
 		final ValidationException x = new ValidationException();
 		try {
-			record.validate(x);
+			record.validate(x, ValidatorContext.ADD);
 		} catch (Exception e) {
 			Util.throwInternalErrorException(e);
 		}

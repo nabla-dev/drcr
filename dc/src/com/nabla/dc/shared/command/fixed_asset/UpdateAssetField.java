@@ -49,7 +49,7 @@ public class UpdateAssetField implements IRecordAction<StringResult>, IAsset {
 
 	public UpdateAssetField(int id, @Nullable final String name,
 			@Nullable final String reference, @Nullable final String location,
-			@Nullable final String pi, Integer depreciationPeriod) {
+			@Nullable final String pi, @Nullable Integer depreciationPeriod) {
 		this.id = id;
 		this.name = name;
 		this.reference = reference;
@@ -62,10 +62,14 @@ public class UpdateAssetField implements IRecordAction<StringResult>, IAsset {
 	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 
-		NAME_CONSTRAINT.validate(NAME, name, errors);
-		REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors);
-		LOCATION_CONSTRAINT.validate(LOCATION, location, errors);
-		PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchase_invoice, errors);
+		if (name != null)
+			NAME_CONSTRAINT.validate(NAME, name, errors);
+		if (reference != null)
+			REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors);
+		if (location != null)
+			LOCATION_CONSTRAINT.validate(LOCATION, location, errors);
+		if (purchase_invoice != null)
+			PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchase_invoice, errors);
 
 		return n == errors.size();
 	}

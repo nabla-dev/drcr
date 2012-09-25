@@ -31,14 +31,14 @@ public interface IFixedAssetCategory {
 
 	static final String					ID = IdField.NAME;
 	static final String					NAME = "name";
-	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128);
+	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128, true);
 
 	static final String					ACTIVE = "active";
 	static final String					TYPE = "type";
 
 	static final String					MIN_DEPRECIATION_PERIOD = "min_depreciation_period";
 	static final String					MAX_DEPRECIATION_PERIOD = "max_depreciation_period";
-	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(12, 12 * 100);
+	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(12, 12 * 100, true);
 	static final int						DEFAULT_DEPRECIATION_PERIOD = 5 * 12;
 
 	static final String					REPORT = "FA_ASSET_CATEGORY_LIST";

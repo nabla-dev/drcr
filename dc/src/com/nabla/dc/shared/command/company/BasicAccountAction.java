@@ -14,16 +14,15 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.general;
+package com.nabla.dc.shared.command.company;
 
-import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.model.ITaxRate;
+import com.nabla.dc.shared.model.company.IAccount;
+import com.nabla.wapp.shared.csv.ICsvField;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
@@ -31,34 +30,70 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
  * @author nabla
  *
  */
-@IRecordTable(name=ITaxRate.TABLE)
-public class AddTaxRate implements IRecordAction<StringResult>, ITaxRate {
+@IRecordTable(name=IAccount.TABLE)
+public class BasicAccountAction implements IRecordAction<StringResult>, IAccount {
 
 	@IRecordField(unique=true)
+	@ICsvField
+	String				code;
+	@IRecordField
+	@ICsvField(name="cc")
+	String				cost_centre;
+	@IRecordField
+	@ICsvField(name="dep")
+	String				department;
+	@IRecordField(unique=true)
+	@ICsvField
 	String				name;
 	@IRecordField
 	transient String	uname;
-	@IRecordField @Nullable
-	Integer				rate;
+	@IRecordField
+	@ICsvField(name="bs")
+	Boolean				balance_sheet;
 	@IRecordField
 	Boolean				active;
 
-	AddTaxRate() {}	// for serialization only
+	BasicAccountAction() {}	// for serialization only
 
-	public AddTaxRate(final String name, @Nullable final Integer rate, final Boolean active) {
+	public BasicAccountAction(final String code, final String name, final String cc, final String dep, final Boolean bs, final Boolean active) {
+		this.code = code;
 		this.name = name;
-		this.rate = rate;
+		this.cost_centre = cc;
+		this.department = dep;
+		this.balance_sheet = bs;
 		this.active = active;
 	}
 
 	@Override
 	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
+		CODE_CONSTRAINT.validate(CODE, code, errors, ctx);
 		if (name != null)
 			uname = name.toUpperCase();
 		NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
-		RATE_CONSTRAINT.validate(RATE, rate, ServerErrors.INVALID_TAX_CODE_RATE, errors, ValidatorContext.UPDATE);
+		if (cost_centre != null && cost_centre.isEmpty())
+			cost_centre = null;
+		COST_CENTRE_CONSTRAINT.validate(COST_CENTRE, cost_centre, errors, ctx);
+		if (department != null && department.isEmpty())
+			department = null;
+		DEPARTMENT_CONSTRAINT.validate(DEPARTMENT, department, errors, ctx);
 		return n == errors.size();
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

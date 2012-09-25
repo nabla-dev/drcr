@@ -14,19 +14,12 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model;
-
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
+package com.nabla.wapp.shared.validator;
 
 /**
- * The <code></code> object is used to
+ * @author nabla64
  *
  */
-public interface IECTerm {
-
-	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 128, true);
-	static final String				ACTIVE = "active";
-
-	static final String				TABLE = "ec_terms";
+public enum ValidatorContext {
+	ADD, UPDATE
 }

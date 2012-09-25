@@ -121,7 +121,7 @@ public class AssetDepreciation {
 	}
 
 	public void clearTransaction(final Connection conn, int  assetId) throws SQLException {
-		Database.executeUpdate(conn, "DELETE FROM transaction WHERE asset_id=?;", assetId);
+		Database.executeUpdate(conn, "DELETE FROM transaction WHERE fa_asset_id=?;", assetId);
 	}
 
 	public void createTransactions(final Connection conn, int assetId) throws SQLException, DispatchException {

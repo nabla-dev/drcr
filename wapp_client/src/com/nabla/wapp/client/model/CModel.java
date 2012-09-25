@@ -28,11 +28,14 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.ArgumentList;
+import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
@@ -46,7 +49,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public abstract class CModel<R extends Record> extends Model {
 
-	private static final Logger						logger = LoggerFactory.getLog(CModel.class);
+	private static final Logger						log = LoggerFactory.getLog(CModel.class);
 //	private static final IFilterOperatorSqlResource	operatorSql = GWT.create(IFilterOperatorSqlResource.class);
 	private final IRecordFactory<R>					recordFactory;
 
@@ -70,11 +73,11 @@ public abstract class CModel<R extends Record> extends Model {
 		return null;
 	}
 
-	public IAction<StringResult> getAddCommand(@SuppressWarnings("unused") final R record) {
+	public IRecordAction<StringResult> getAddCommand(@SuppressWarnings("unused") final R record) {
 		return null;
 	}
 
-	public IAction<StringResult> getUpdateCommand(@SuppressWarnings("unused") final R record) {
+	public IRecordAction<StringResult> getUpdateCommand(@SuppressWarnings("unused") final R record) {
 		return null;
 	}
 
@@ -86,10 +89,10 @@ public abstract class CModel<R extends Record> extends Model {
 	protected Object transformRequest(final DSRequest request) {
 		Assert.argumentNotNull(request);
 
-		logger.fine(request.getOperationType().toString() + " request ID = '" + request.getRequestId() + "'");
+		log.fine(request.getOperationType().toString() + " request ID = '" + request.getRequestId() + "'");
 		if (this.getClientOnly()) {
 			if (clientOnlyData != null && clientOnlyData.length > 0) {
-				logger.fine("spoofed response for client only");
+				log.fine("spoofed response for client only");
 				onResponse(request, getClientOnlyResponse(request, clientOnlyData));
 				return request.getData();
 			}
@@ -112,7 +115,7 @@ public abstract class CModel<R extends Record> extends Model {
 					break;
 			}
 		} catch (final Throwable caught) {
-			logger.log(Level.SEVERE,"error while dispatching " + request.getOperationType().toString() + " request", caught);
+			log.log(Level.SEVERE,"error while dispatching " + request.getOperationType().toString() + " request", caught);
 			onFailure(request, caught);
 		}
 		return request.getData();
@@ -121,7 +124,7 @@ public abstract class CModel<R extends Record> extends Model {
 	private void onFetch(final DSRequest request) {
 		AbstractFetch cmd = getFetchCommand(request);
 		if (cmd == null) {
-			logger.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
+			log.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
 			onResponse(request, new Response(request, Response.STATUS_SUCCESS));
 		} else {
 			cmd.setRange(request.getStartRow(), request.getEndRow());
@@ -147,7 +150,7 @@ public abstract class CModel<R extends Record> extends Model {
 				@Override
 				public void onSuccess(final FetchResult result) {
 					Assert.argumentNotNull(result);
-logger.fine(request.getRequestId() + " response = \n" + result.getRecords());
+log.fine(request.getRequestId() + " response = \n" + result.getRecords());
 					final Record[] records = recordsFromJson(result.getRecords());
 					final Response response = new Response(request, records);
 					if (result.isRange()) {
@@ -156,7 +159,7 @@ logger.fine(request.getRequestId() + " response = \n" + result.getRecords());
 					}
 					response.setTotalRows(result.getTotalRows());
 					if (getClientOnly()) {
-						logger.fine("client only: store response for future request");
+						log.fine("client only: store response for future request");
 						clientOnlyData = records;
 						onResponse(request, getClientOnlyResponse(request, clientOnlyData));
 					} else
@@ -168,30 +171,39 @@ logger.fine(request.getRequestId() + " response = \n" + result.getRecords());
 
 	private void onUpdate(final DSRequest request) {
 		if (recordFactory == null) {
-			logger.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
+			log.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
 			onResponse(request, new Response(request, Response.STATUS_SUCCESS));
 		} else {
-			final IAction<StringResult> cmd = getUpdateCommand(recordFactory.get(request.getData()));
+			final IRecordAction<StringResult> cmd = getUpdateCommand(recordFactory.get(request.getData()));
 			if (cmd == null) {
-				logger.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
+				log.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
 				onResponse(request, new Response(request, Response.STATUS_SUCCESS));
 			} else {
-				getDispatcher().execute(cmd, new AsyncCallback<StringResult>() {
+				final ValidationException errors = new ValidationException();
+				try {
+					if (cmd.validate(errors, ValidatorContext.UPDATE)) {
+						getDispatcher().execute(cmd, new AsyncCallback<StringResult>() {
 
-					@Override
-					public void onFailure(final Throwable caught) {
-						CModel.this.onFailure(request, caught);
-					}
+							@Override
+							public void onFailure(final Throwable caught) {
+								CModel.this.onFailure(request, caught);
+							}
 
-					@Override
-					public void onSuccess(final StringResult result) {
-						if (result != null) {
-logger.fine(request.getRequestId() + " response = \n" + result.get());
-							onResponse(request, new Response(request, recordsFromJsonResponse(request, result.get())));
-						} else
-							onResponse(request, new Response(request, getEditedRecords(request)));
-					}
-				});
+							@Override
+							public void onSuccess(final StringResult result) {
+								if (log.isLoggable(Level.FINE)) {
+									if (result != null)
+										log.fine(request.getRequestId() + " response = \n" + result.get());
+								}
+								final Record[] records = (result != null) ?  recordsFromJsonResponse(request, result.get()) : getEditedRecords(request);
+								onResponse(request, new Response(request, records));
+							}
+						});
+					} else
+						onFailure(request, errors);
+				} catch (final DispatchException x) {
+					onFailure(request, x);
+				}
 			}
 		}
 	}
@@ -199,34 +211,42 @@ logger.fine(request.getRequestId() + " response = \n" + result.get());
 	private void onAdd(final DSRequest request) {
 		Assert.notNull(recordFactory);
 
-		final IAction<StringResult> cmd = getAddCommand(recordFactory.get(request.getData()));
+		final IRecordAction<StringResult> cmd = getAddCommand(recordFactory.get(request.getData()));
 		if (cmd == null) {
-			logger.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
+			log.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
 			onResponse(request, new Response(request, Response.STATUS_SUCCESS));
 		} else {
-			getDispatcher().execute(cmd, new AsyncCallback<StringResult>() {
+			final ValidationException errors = new ValidationException();
+			try {
+				if (cmd.validate(errors, ValidatorContext.ADD)) {
+					getDispatcher().execute(cmd, new AsyncCallback<StringResult>() {
+						@Override
+						public void onSuccess(final StringResult result) {
+							if (log.isLoggable(Level.FINE)) {
+								if (result != null)
+									log.fine(request.getRequestId() + " response = \n" + result.get());
+							}
+							final Record[] records = (result != null) ?  recordsFromJsonResponse(request, result.get()) : getEditedRecords(request);
+							onResponse(request, new Response(request, records));
+						}
 
-				@Override
-				public void onSuccess(final StringResult result) {
-					if (result != null) {
-logger.fine(request.getRequestId() + " response = \n" + result.get());
-						onResponse(request, new Response(request, recordsFromJsonResponse(request, result.get())));
-					} else
-						onResponse(request, new Response(request, getEditedRecords(request)));
-				}
-
-				@Override
-				public void onFailure(final Throwable caught) {
-					CModel.this.onFailure(request, caught);
-				}
-			});
+						@Override
+						public void onFailure(final Throwable caught) {
+							CModel.this.onFailure(request, caught);
+						}
+					});
+				} else
+					onFailure(request, errors);
+			} catch (final DispatchException x) {
+				onFailure(request, x);
+			}
 		}
 	}
 
 	private void onRemove(final DSRequest request) {
 		AbstractRemove cmd = getRemoveCommand();
 		if (cmd == null) {
-			logger.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
+			log.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
 			onResponse(request, new Response(request, Response.STATUS_SUCCESS));
 		} else {
 			JavaScriptObject data = request.getData();
@@ -288,20 +308,20 @@ logger.fine(request.getRequestId() + " response = \n" + result.get());
 
 		final AbstractFetch cmd = getFetchRecordCommand(recordIds);
 		if (cmd == null) {
-			logger.warning("unimplemented data source operation 'refresh'");
+			log.warning("unimplemented data source operation 'refresh'");
 		} else {
 			getDispatcher().execute(cmd, new AsyncCallback<FetchResult>() {
 				@Override
 				public void onFailure(final Throwable caught) {
-					logger.log(Level.FINE, "failed to refresh records", caught);
+					log.log(Level.FINE, "failed to refresh records", caught);
 				}
 
 				@Override
 				public void onSuccess(final FetchResult result) {
 					if (result == null) {
-						logger.warning("'refresh' command returned 'null' string");
+						log.warning("'refresh' command returned 'null' string");
 					} else {
-						logger.fine("refreshRecords - response = \n" + result.getRecords());
+						log.fine("refreshRecords - response = \n" + result.getRecords());
 						updateCache(recordsFromJson(result.getRecords()), operation);
 					}
 				}

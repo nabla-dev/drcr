@@ -17,28 +17,21 @@
 package com.nabla.dc.shared.command.company;
 
 import com.nabla.wapp.shared.database.IRecordField;
-import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdateAccount extends AddAccount {
+public class UpdateAccount extends BasicAccountAction {
 
 	@IRecordField(id=true)
-	Integer		id;
+	int		id;
 
-	protected UpdateAccount() {}	// for serialization only
+	UpdateAccount() {}	// for serialization only
 
-	public UpdateAccount(final Integer id, final String code, final String name, final String cc, final String dep, final Boolean bs, final Boolean active) {
-		super(null, code, name, cc, dep, bs, active);
+	public UpdateAccount(final int id, final String code, final String name, final String cc, final String dep, final Boolean bs, final Boolean active) {
+		super(code, name, cc, dep, bs, active);
 		this.id = id;
-	}
-
-	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
-		return doValidate(false, errors);
 	}
 
 }

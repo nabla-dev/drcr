@@ -26,10 +26,10 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
 public interface ITaxRate {
 
 	static final String					NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 32);
+	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 32, true);
 	static final String					RATE = "rate";
-	static final IntegerRangeConstraint	RATE_CONSTRAINT = new IntegerRangeConstraint(0, 9999);
-	static int							RATE_DEFAULT = 0;
+	static final IntegerRangeConstraint	RATE_CONSTRAINT = new IntegerRangeConstraint(0, 9999, true);
+	static int								RATE_DEFAULT = 0;
 	static final String					ACTIVE = "active";
 
 	static final String					TABLE = "tax_rate";

@@ -23,6 +23,7 @@ import com.nabla.wapp.shared.auth.ILoginUserRemoteService;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.ValidationException;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -33,16 +34,14 @@ public class DummyLoginUserService extends RemoteServiceServlet implements ILogi
 
 	private static final long		serialVersionUID = 1L;
 
-	public DummyLoginUserService() {}
-
 	@Override
 	public String execute(String userName, String password) {
-		final ValidationException x = new ValidationException();
+		final ValidationException errors = new ValidationException();
 		try {
-			IUser.NAME_CONSTRAINT.validate("user name", userName, x);
-			IUser.PASSWORD_CONSTRAINT.validate("password", password, x);
+			IUser.NAME_CONSTRAINT.validate("user name", userName, errors, ValidatorContext.ADD);
+			IUser.PASSWORD_CONSTRAINT.validate("password", password, errors, ValidatorContext.ADD);
 		} catch (DispatchException e) {}
-		if (x.isEmpty())
+		if (errors.isEmpty())
 			return UserSession.save(this.getThreadLocalRequest(), 1, "root");
 		return null;
 	}

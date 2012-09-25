@@ -24,5 +24,5 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 public interface IValueConstraint<ValueType> {
-	boolean validate(final String field, final ValueType value, final IErrorList errors) throws DispatchException;
+	boolean validate(final String field, final ValueType value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException;
 }

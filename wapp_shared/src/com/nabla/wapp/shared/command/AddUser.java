@@ -22,6 +22,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -33,11 +34,7 @@ public class AddUser implements IRecordAction<StringResult>, IUser {
 	String	name;
 	String	password;
 
-	protected AddUser() {}	// for serialization only
-
-	public AddUser(final String name) {
-		this.name = name;
-	}
+	AddUser() {}	// for serialization only
 
 	public AddUser(final String name, final String password) {
 		this.name = name;
@@ -45,10 +42,10 @@ public class AddUser implements IRecordAction<StringResult>, IUser {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
-		NAME_CONSTRAINT.validate(NAME, name, errors);
-		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors);
+		NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors, ctx);
 		return n == errors.size();
 	}
 

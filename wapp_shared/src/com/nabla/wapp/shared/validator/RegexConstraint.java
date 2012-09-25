@@ -18,6 +18,7 @@ package com.nabla.wapp.shared.validator;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -28,21 +29,24 @@ public class RegexConstraint extends TextLengthConstraint {
 
 	private final String	expression;
 
-	public RegexConstraint(int minLength, int maxLength, String expression) {
-		super(minLength, maxLength);
-		assert expression != null;
+	public RegexConstraint(int minLength, int maxLength, String expression, boolean nullableOnUpdate) {
+		super(minLength, maxLength, nullableOnUpdate);
 		this.expression = expression;
 	}
-
+/*
+	public RegexConstraint(int minLength, int maxLength, String expression) {
+		this(minLength, maxLength, expression, true);
+	}
+*/
 	public String getExpression() {
 		return expression;
 	}
 
 	@Override
-	public boolean validate(final String field, final String value, final IErrorList errors) throws DispatchException {
-		if (!super.validate(field, value, errors))
+	public boolean validate(final String field, @Nullable final String value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		if (!super.validate(field, value, errors, ctx))
 			return false;
-		if (value != null && !value.matches(expression)) {
+		if (value != null && !value.matches(getExpression())) {
 			errors.add(field, CommonServerErrors.INVALID_CHARACTER);
 			return false;
 		}

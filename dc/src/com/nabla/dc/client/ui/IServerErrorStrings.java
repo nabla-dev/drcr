@@ -38,7 +38,7 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	String INVALID_MIN_DEPRECIATION_PERIOD();
 
 	@DefaultStringValue("Maximum depreciation period must be higher than the minimum")
-	String INVALID_MAX_DERECIATIONP_PERIOD();
+	String INVALID_MAX_DEPRECIATION_PERIOD();
 
 	@DefaultStringValue("Cannot be greater than the asset cost less residual value")
 	String INVALID_ACCUMULATED_DEPRECIATION();

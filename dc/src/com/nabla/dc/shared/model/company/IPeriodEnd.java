@@ -24,7 +24,7 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  */
 public interface IPeriodEnd {
 	static final String				NAME = "name";
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 32);
+	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 32, true);
 	static final String				END_DATE = "end_date";
 
 	static final String				NAME_FORMAT = "MMM yyyy";

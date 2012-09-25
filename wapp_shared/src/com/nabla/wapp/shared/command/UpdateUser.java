@@ -19,39 +19,42 @@ package com.nabla.wapp.shared.command;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
  *
  */
 @IRecordTable(name="user")
-public class UpdateUser extends AddUser {
+public class UpdateUser implements IRecordAction<StringResult>, IUser {
 
 	@IRecordField(id=true)
-	Integer				id;
-	@IRecordField
+	int					id;
+	@IRecordField(unique=true) @Nullable
+	String				name;
+	@IRecordField @Nullable
 	transient String	uname;
-	@IRecordField
+	@IRecordField @Nullable
 	Boolean				active;
 
 	protected UpdateUser() {}	// for serialization only
 
-	public UpdateUser(final Integer id, final String name, final Boolean active) {
-		super(name);
+	public UpdateUser(final int id, @Nullable final String name, @Nullable final Boolean active) {
 		this.id = id;
+		this.name = name;
 		this.active = active;
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
-		if (name != null) {
-			if (!IUser.NAME_CONSTRAINT.validate(NAME, name, errors))
-				return false;
+	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		if (name != null)
 			uname = name.toUpperCase();
-		}
-		return true;
+		return IUser.NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
 	}
 
 }

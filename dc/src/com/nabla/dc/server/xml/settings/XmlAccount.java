@@ -16,6 +16,7 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 @IRecordTable(name=IAccount.TABLE)
@@ -62,12 +63,12 @@ class XmlAccount {
 	public void validate(Map session) throws DispatchException {
 		final ICsvErrorList errors = XmlNode.getErrorList(session);
 		final ImportContext ctx = XmlNode.getContext(session);
-		if (IAccount.CODE_CONSTRAINT.validate("code", code.getValue(), errors) &&
+		if (IAccount.CODE_CONSTRAINT.validate("code", code.getValue(), errors, ValidatorContext.ADD) &&
 				!ctx.getAccountCodeList().add(code.getValue())) {
 			errors.setLine(code.getRow());
 			errors.add("code", CommonServerErrors.DUPLICATE_ENTRY);
 		}
-		if (IAccount.NAME_CONSTRAINT.validate("name", name.getValue(), errors)) {
+		if (IAccount.NAME_CONSTRAINT.validate("name", name.getValue(), errors, ValidatorContext.ADD)) {
 			if (ctx.getNameList().add(name.getValue()))
 				uname = name.getValue().toUpperCase();
 			else {
@@ -79,13 +80,13 @@ class XmlAccount {
 			if (cc.isEmpty())
 				cc = null;
 			else
-				IAccount.CC_CONSTRAINT.validate("cc", cc.getValue(), errors);
+				IAccount.COST_CENTRE_CONSTRAINT.validate("cc", cc.getValue(), errors, ValidatorContext.ADD);
 		}
 		if (dep != null) {
 			if (dep.isEmpty())
 				dep = null;
 			else
-				IAccount.DEP_CONSTRAINT.validate("dep", dep.getValue(), errors);
+				IAccount.DEPARTMENT_CONSTRAINT.validate("dep", dep.getValue(), errors, ValidatorContext.ADD);
 		}
 		if (visible == null)
 			visible = true;
