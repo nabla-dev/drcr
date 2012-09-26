@@ -22,6 +22,7 @@ import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
@@ -34,26 +35,26 @@ public class UpdateCompany implements IRecordAction<StringResult>, ICompany {
 
 	@IRecordField(id=true)
 	int					id;
-	@IRecordField(unique=true)
+	@IRecordField(unique=true) @Nullable
 	String				name;
 	@IRecordField
 	transient String	uname;
-	@IRecordField
+	@IRecordField @Nullable
 	Boolean				active;
 
 	UpdateCompany() {}	// for serialization only
 
-	public UpdateCompany(final int id, final String name, final Boolean active) {
+	public UpdateCompany(final int id, @Nullable final String name, @Nullable final Boolean active) {
 		this.id = id;
 		this.name = name;
 		this.active = active;
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (name != null)
 			uname = name.toUpperCase();
-		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 
 }

@@ -30,6 +30,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -89,12 +90,16 @@ public class AddAsset implements IRecordAction<StringResult>, IAsset, IAssetReco
 
 	@Override
 	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.ADD);
+	}
+
+	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
 
-		NAME_CONSTRAINT.validate(NAME, name, errors);
-		REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors);
-		LOCATION_CONSTRAINT.validate(LOCATION, location, errors);
-		PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchase_invoice, errors);
+		NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+		REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors, ctx);
+		LOCATION_CONSTRAINT.validate(LOCATION, location, errors, ctx);
+		PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchase_invoice, errors, ctx);
 
 		if (cost < 0)
 			errors.add(COST, CommonServerErrors.INVALID_VALUE);

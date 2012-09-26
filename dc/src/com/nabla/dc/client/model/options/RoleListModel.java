@@ -29,7 +29,7 @@ import com.nabla.wapp.shared.command.AddRole;
 import com.nabla.wapp.shared.command.FetchRoleList;
 import com.nabla.wapp.shared.command.RemoveRole;
 import com.nabla.wapp.shared.command.UpdateRole;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.DSRequest;
@@ -72,12 +72,12 @@ public class RoleListModel extends CModel<RoleRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final RoleRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final RoleRecord record) {
 		return new AddRole(record.getName());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final RoleRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final RoleRecord record) {
 		return new UpdateRole(record.getId(), record.getName());
 	}
 

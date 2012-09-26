@@ -26,7 +26,7 @@ import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UserNameField;
 import com.nabla.wapp.client.model.field.UserPasswordField;
 import com.nabla.wapp.shared.command.AddUser;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IUser;
 
@@ -61,7 +61,7 @@ public class AddUserModel extends CModel<UserRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final UserRecord user) {
+	public IRecordAction<StringResult> getAddCommand(final UserRecord user) {
 		return new AddUser(user.getName(), user.getPassword());
 	}
 

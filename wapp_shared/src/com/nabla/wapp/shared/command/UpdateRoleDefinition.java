@@ -16,15 +16,17 @@
 */
 package com.nabla.wapp.shared.command;
 
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdateRoleDefinition implements IAction<StringResult> {
+public class UpdateRoleDefinition implements IRecordAction<StringResult> {
 
 	Integer			roleId;
 	SelectionDelta	selectionDelta;
@@ -42,6 +44,11 @@ public class UpdateRoleDefinition implements IAction<StringResult> {
 
 	public SelectionDelta getSelectionDelta() {
 		return selectionDelta;
+	}
+
+	@Override
+	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+		return true;
 	}
 
 }

@@ -26,7 +26,7 @@ import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IUser;
 import com.smartgwt.client.data.DSRequest;
@@ -66,7 +66,7 @@ public class CompanyUserListModel extends CModel<UserRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final UserRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final UserRecord record) {
 		return new UpdateCompanyUser(companyId, record.getId(), record.getActive());
 	}
 

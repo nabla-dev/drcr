@@ -22,6 +22,7 @@ import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
@@ -34,19 +35,19 @@ public class UpdatePeriodEnd implements IRecordAction<StringResult>, IPeriodEnd 
 
 	@IRecordField(id=true)
 	int		id;
-	@IRecordField(unique=true)
+	@IRecordField(unique=true) @Nullable
 	String	name;
 
 	UpdatePeriodEnd() {}	// for serialization only
 
-	public UpdatePeriodEnd(final int id, final String name) {
+	public UpdatePeriodEnd(final int id, @Nullable final String name) {
 		this.id = id;
 		this.name = name;
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
-		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 
 }

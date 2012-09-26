@@ -35,7 +35,6 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.ArgumentList;
 import com.nabla.wapp.shared.model.ValidationException;
-import com.nabla.wapp.shared.validator.ValidatorContext;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
@@ -181,7 +180,7 @@ log.fine(request.getRequestId() + " response = \n" + result.getRecords());
 			} else {
 				final ValidationException errors = new ValidationException();
 				try {
-					if (cmd.validate(errors, ValidatorContext.UPDATE)) {
+					if (cmd.validate(errors)) {
 						getDispatcher().execute(cmd, new AsyncCallback<StringResult>() {
 
 							@Override
@@ -218,7 +217,7 @@ log.fine(request.getRequestId() + " response = \n" + result.getRecords());
 		} else {
 			final ValidationException errors = new ValidationException();
 			try {
-				if (cmd.validate(errors, ValidatorContext.ADD)) {
+				if (cmd.validate(errors)) {
 					getDispatcher().execute(cmd, new AsyncCallback<StringResult>() {
 						@Override
 						public void onSuccess(final StringResult result) {

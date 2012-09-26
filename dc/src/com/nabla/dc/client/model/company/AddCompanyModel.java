@@ -26,7 +26,7 @@ import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
@@ -61,7 +61,7 @@ public class AddCompanyModel extends CModel<AddCompanyRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final AddCompanyRecord r) {
+	public IRecordAction<StringResult> getAddCommand(final AddCompanyRecord r) {
 		return new AddCompany(r.getName(), r.getFinancialYear(), r.getStartDate());
 	}
 

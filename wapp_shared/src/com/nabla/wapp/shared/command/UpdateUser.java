@@ -51,10 +51,10 @@ public class UpdateUser implements IRecordAction<StringResult>, IUser {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (name != null)
 			uname = name.toUpperCase();
-		return IUser.NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+		return IUser.NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 
 }

@@ -40,10 +40,10 @@ public class ChangeUserPassword implements IRecordAction<StringResult>, IUser {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
-		NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
-		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors, ctx);
+		NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.ADD);
+		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors, ValidatorContext.ADD);
 		return n == errors.size();
 	}
 

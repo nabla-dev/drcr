@@ -33,7 +33,7 @@ import com.nabla.wapp.client.model.field.PositiveIntegerField;
 import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -112,12 +112,12 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final AssetRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final AssetRecord record) {
 		return record.toAddCommand(companyId);
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final AssetRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final AssetRecord record) {
 		return record.toUpdateCommand(companyId);
 	}
 

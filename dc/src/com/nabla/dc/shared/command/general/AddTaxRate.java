@@ -52,7 +52,11 @@ public class AddTaxRate implements IRecordAction<StringResult>, ITaxRate {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.ADD);
+	}
+
+	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
 		if (name != null)
 			uname = name.toUpperCase();

@@ -17,7 +17,10 @@
 package com.nabla.dc.shared.command.general;
 
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -33,6 +36,11 @@ public class UpdateTaxRate extends AddTaxRate {
 	public UpdateTaxRate(final int id, @Nullable final String name, @Nullable final Integer rate, @Nullable final Boolean active) {
 		super(name, rate, active);
 		this.id = id;
+	}
+
+	@Override
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.UPDATE);
 	}
 
 }

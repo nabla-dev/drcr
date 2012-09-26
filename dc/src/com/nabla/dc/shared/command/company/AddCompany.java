@@ -37,7 +37,7 @@ public class AddCompany implements IRecordAction<StringResult> {
 	String	financialYear;
 	Date	startDate;
 
-	protected AddCompany() {}	// for serialization only
+	AddCompany() {}	// for serialization only
 
 	public AddCompany(final String name, final String financialYear, final Date startDate) {
 		this.name = name;
@@ -46,10 +46,10 @@ public class AddCompany implements IRecordAction<StringResult> {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
-		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors, ctx);
-		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors, ctx);
+		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors, ValidatorContext.ADD);
+		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors, ValidatorContext.ADD);
 		if (startDate == null)
 			errors.add("start_date", CommonServerErrors.REQUIRED_VALUE);
 		return n == errors.size();

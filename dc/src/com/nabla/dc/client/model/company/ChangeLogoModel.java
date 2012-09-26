@@ -25,7 +25,7 @@ import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UploadFileField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -64,12 +64,12 @@ public class ChangeLogoModel extends CModel<LogoRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final LogoRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final LogoRecord record) {
 		return new ChangeCompanyLogo(companyId, record.getFileId());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final LogoRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final LogoRecord record) {
 		return new ChangeCompanyLogo(companyId, record.getFileId());
 	}
 

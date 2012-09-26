@@ -17,12 +17,11 @@
 package com.nabla.wapp.shared.dispatch;
 
 import com.nabla.wapp.shared.model.IErrorList;
-import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author FNorais
  *
  */
 public interface IRecordAction<R extends IResult> extends IAction<R> {
-	boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException;
+	boolean validate(final IErrorList errors) throws DispatchException;
 }

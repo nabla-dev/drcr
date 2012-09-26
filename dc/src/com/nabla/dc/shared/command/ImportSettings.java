@@ -17,8 +17,10 @@
 package com.nabla.dc.shared.command;
 
 import com.nabla.wapp.shared.database.SqlInsertOptions;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 
 
 
@@ -26,7 +28,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  * @author nabla
  *
  */
-public class ImportSettings implements IAction<StringResult> {
+public class ImportSettings implements IRecordAction<StringResult> {
 
 	private Integer				batchId;
 	private SqlInsertOptions	overwrite;
@@ -44,5 +46,10 @@ public class ImportSettings implements IAction<StringResult> {
 
 	public SqlInsertOptions getOverwrite() {
 		return overwrite;
+	}
+
+	@Override
+	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+		return true;
 	}
 }

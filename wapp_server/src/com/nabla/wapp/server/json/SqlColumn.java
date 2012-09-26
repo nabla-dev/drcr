@@ -95,7 +95,7 @@ public class SqlColumn {
 				s = "STRING";
 				break;
 			}
-			log.debug("column '" + this.label + "' type = " + s);
+			log.debug("column '" + this.label + "' " + s);
 		}
 	}
 

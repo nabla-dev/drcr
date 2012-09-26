@@ -47,10 +47,10 @@ public class UpdateRole implements IRecordAction<StringResult>, IRole {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public boolean validate(final IErrorList errors) throws DispatchException {
 		if (name != null)
 			uname = name.toUpperCase();
-		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 
 }

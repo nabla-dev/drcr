@@ -29,7 +29,7 @@ import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -82,12 +82,12 @@ public class AccountListModel extends CModel<AccountRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final AccountRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final AccountRecord record) {
 		return new UpdateAccount(record.getId(), record.getCode(), record.getName(), record.getCostCentre(), record.getDepartment(), record.isBalanceSheet(), record.getActive());
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final AccountRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final AccountRecord record) {
 		return new AddAccount(companyId, record.getCode(), record.getName(), record.getCostCentre(), record.getDepartment(), record.isBalanceSheet(), record.getActive());
 	}
 }

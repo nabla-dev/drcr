@@ -19,6 +19,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -27,27 +28,18 @@ import com.nabla.wapp.shared.model.IErrorList;
 public class UpdateFinancialStatementCategory extends AddFinancialStatementCategory {
 
 	@IRecordField(id=true)
-	Integer		id;
+	int		id;
 
 	protected UpdateFinancialStatementCategory() {}	// for serialization only
 
-	public UpdateFinancialStatementCategory(final Integer id, final String name, final Boolean active) {
+	public UpdateFinancialStatementCategory(final int id, final String name, final Boolean active) {
 		super(name, active);
 		this.id = id;
 	}
 
 	@Override
 	public boolean validate(final IErrorList errors) throws DispatchException {
-		if (name != null) {
-			if (!NAME_CONSTRAINT.validate(NAME, name, errors))
-				return false;
-			uname = name.toUpperCase();
-		}
-		return true;
-	}
-
-	public Integer getId() {
-		return id;
+		return doValidate(errors, ValidatorContext.UPDATE);
 	}
 
 }

@@ -24,6 +24,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -62,14 +63,10 @@ public class UpdateAssetField implements IRecordAction<StringResult>, IAsset {
 	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();
 
-		if (name != null)
-			NAME_CONSTRAINT.validate(NAME, name, errors);
-		if (reference != null)
-			REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors);
-		if (location != null)
-			LOCATION_CONSTRAINT.validate(LOCATION, location, errors);
-		if (purchase_invoice != null)
-			PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchase_invoice, errors);
+		NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
+		REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors, ValidatorContext.UPDATE);
+		LOCATION_CONSTRAINT.validate(LOCATION, location, errors, ValidatorContext.UPDATE);
+		PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchase_invoice, errors, ValidatorContext.UPDATE);
 
 		return n == errors.size();
 	}

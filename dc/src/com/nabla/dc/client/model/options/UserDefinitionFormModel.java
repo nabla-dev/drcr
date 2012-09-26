@@ -20,7 +20,7 @@ package com.nabla.dc.client.model.options;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.FetchUserName;
 import com.nabla.wapp.shared.command.UpdateUserDefinition;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
 import com.smartgwt.client.data.DSRequest;
@@ -53,7 +53,7 @@ public class UserDefinitionFormModel extends RoleDefinitionFormModel {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final RoleDefinitionRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final RoleDefinitionRecord record) {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
 			return null;	// save a round trip to the server

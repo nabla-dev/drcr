@@ -16,15 +16,17 @@
 */
 package com.nabla.wapp.shared.command;
 
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdateUserDefinition implements IAction<StringResult> {
+public class UpdateUserDefinition implements IRecordAction<StringResult> {
 
 	Integer			objectId;
 	Integer			userId;
@@ -48,6 +50,11 @@ public class UpdateUserDefinition implements IAction<StringResult> {
 
 	public Integer getObjectId() {
 		return objectId;
+	}
+
+	@Override
+	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+		return true;
 	}
 
 }

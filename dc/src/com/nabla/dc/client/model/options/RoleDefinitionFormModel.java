@@ -21,7 +21,7 @@ import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.FetchRoleName;
 import com.nabla.wapp.shared.command.UpdateRoleDefinition;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
 import com.nabla.wapp.shared.model.IRole;
@@ -60,7 +60,7 @@ public class RoleDefinitionFormModel extends CModel<RoleDefinitionRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final RoleDefinitionRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final RoleDefinitionRecord record) {
 		final SelectionDelta delta = record.getDefinitionDelta();
 		if (delta == null || delta.isEmpty())
 			return null;	// save a round trip to the server

@@ -40,11 +40,12 @@ public class AddRole implements IRecordAction<StringResult>, IRole {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
-		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.ADD);
 	}
 
 	public String getName() {
 		return name;
 	}
+
 }

@@ -14,30 +14,21 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.options;
+package com.nabla.dc.client.model.fixed_asset;
 
-
-import com.nabla.wapp.client.model.data.UserRecord;
-import com.nabla.wapp.shared.command.CloneUser;
-import com.nabla.wapp.shared.dispatch.IRecordAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.dc.client.ui.Resource;
+import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
+import com.nabla.wapp.client.model.field.EnumField;
+import com.nabla.wapp.client.model.field.FieldAttributes;
 
 /**
  * @author nabla
  *
  */
-public class CloneUserModel extends AddUserModel {
+public class DisposalTypeField extends EnumField {
 
-	private final Integer	fromUserId;
-
-	public CloneUserModel(final Integer fromUserId) {
-		super();
-		this.fromUserId = fromUserId;
+	public DisposalTypeField(final String name, final FieldAttributes... attributes) {
+		super(name, DisposalTypes.values(), Resource.strings.fixedAssetDisposalTypes(), attributes);
+		this.setDefaultValue(DisposalTypes.SOLD);
 	}
-
-	@Override
-	public IRecordAction<StringResult> getAddCommand(final UserRecord user) {
-		return new CloneUser(fromUserId, user.getName(), user.getPassword());
-	}
-
 }

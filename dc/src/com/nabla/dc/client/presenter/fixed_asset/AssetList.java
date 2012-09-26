@@ -52,9 +52,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		@IRequiredRole(IPrivileges.FA_ASSET_VIEW) AssetRecordCommand transaction();
 		@IRequiredRole(IPrivileges.FA_ASSET_EDIT) AssetRecordCommand disposal();
 		@IRequiredRole(IPrivileges.FA_ASSET_EDIT) AssetRecordCommand split();
-		/*		@IRequiredRole(IPrivileges.ASSET_EDIT) HideableCommand editAssetCategoryList();
-		@IRequiredRole(IPrivileges.ASSET_EDIT) HideableCommand editBalanceSheetCategoryList();
-
+/*
 		Command userReportList();
 */
 	}
@@ -68,29 +66,11 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		void addRecord(final Integer recordId);
 		void updateRecord(final Integer recordId);
 	}
+
+	private final Integer		companyId;
+	private final ITabManager	tabs;
 /*
-	public interface IWizardDataFactory {
-		WizardData get(final Record record);
-	}
-*/
-	private final Integer			companyId;
-	private final ITabManager		tabs;
-/*	private final Integer			assetRegisterId;
-	private final String			assetRegisterName;
-	private final ITabManager		workspace;
-	@Inject private IMessageBox		msgBox;
 	@Inject private PrintManager	printerManager;
-	@Inject private IServer			server;
-	@Inject private AssetRegisterAssetCategoryListDialog.IFactory			assetCategoryListDialogFactory;
-	@Inject private AssetRegisterBalanceSheetCategoryListDialog.IFactory	bsCategoryListDialogFactory;
-	@Inject private AssetWizard.IModelFactory								wizardModelFactory;
-	@Inject private AssetWizard.IFactory									assetWizardFactory;
-	@Inject private AssetDisposalDialog.IFactory							assetDisposalWizardFactory;
-	@Inject private AssetSplitWizard.IFactory								assetSplitWizardFactory;
-	@Inject private ImportAssetWizard.IFactory								importAssetWizardFactory;
-	@Inject private UserReportList.IFactory									userReportListFactory;
-	@Inject private ViewAssetDialog.IFactory								viewAssetDialogFactory;
-	@Inject private TransactionList.IFactory								transactionListFactory;
 */
 	public AssetList(final Integer companyId, final IDisplay display, final ITabManager tabs) {
 		super(display);
@@ -113,6 +93,8 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		registerSlot(cmd.edit(), onEditRecord);
 		cmd.edit().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.removeRecord(), onRemoveRecord);
+		registerSlot(cmd.view(), onViewRecord);
+		cmd.view().setRecordProvider(getDisplay().getCurrentRecordProvider());
 /*		registerSlot(cmd.userReportList(), onUserReportList);
 		registerSlot(cmd.editAssetCategoryList(), onEditAssetCategoryList);
 		registerSlot(cmd.editBalanceSheetCategoryList(), onEditBalanceSheetCategoryList);
@@ -120,7 +102,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 
 		final IRecordCommandSet rcmd = display.getRecordCommands();
 
-		registerSlot(rcmd.view(), onViewRecord);
+
 		registerSlot(rcmd.disposal(), onDisposeAsset);
 		registerSlot(rcmd.split(), onSplitAsset);
 		registerSlot(rcmd.transaction(), onTransactionList);
@@ -161,7 +143,6 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-
 	private final ISlot onRemoveRecord = new ISlot() {
 		@Override
 		public void invoke() {
@@ -190,25 +171,19 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 			getDisplay().savePreferences();
 		}
 	};
-/*
+
+	private final ISlot1<AssetRecord> onViewRecord = new ISlot1<AssetRecord>() {
+		@Override
+		public void invoke(AssetRecord record) {
+
+		}
+	};
+
+	/*
 	private final ISlot onUserReportList = new ISlot() {
 		@Override
 		public void invoke() {
 			workspace.addTab(userReportListFactory.get(assetRegisterId, assetRegisterName));
-		}
-	};
-
-	private final ISlot onEditAssetCategoryList = new ISlot() {
-		@Override
-		public void invoke() {
-			assetCategoryListDialogFactory.get(assetRegisterId, assetRegisterName).revealDisplay();
-		}
-	};
-
-	private final ISlot onEditBalanceSheetCategoryList = new ISlot() {
-		@Override
-		public void invoke() {
-			bsCategoryListDialogFactory.get(assetRegisterId, assetRegisterName).revealDisplay();
 		}
 	};
 
@@ -221,13 +196,6 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 					display.reload();
 				}
 			}).revealDisplay();
-		}
-	};
-
-	private final ISlot1<Record> onViewRecord = new ISlot1<Record>() {
-		@Override
-		public void invoke(Record record) {
-			viewAssetDialogFactory.get(new AssetRecord(record), assetRegisterId).revealDisplay();
 		}
 	};
 

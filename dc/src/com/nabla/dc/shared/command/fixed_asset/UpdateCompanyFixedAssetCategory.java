@@ -17,14 +17,16 @@
 package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.dc.shared.model.fixed_asset.CompanyFixedAssetCategoryTree;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdateCompanyFixedAssetCategory implements IAction<StringResult> {
+public class UpdateCompanyFixedAssetCategory implements IRecordAction<StringResult> {
 
 	Integer							company_id;
 	CompanyFixedAssetCategoryTree	categories;
@@ -42,5 +44,10 @@ public class UpdateCompanyFixedAssetCategory implements IAction<StringResult> {
 
 	public CompanyFixedAssetCategoryTree getCategories() {
 		return categories;
+	}
+
+	@Override
+	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+		return true;
 	}
 }

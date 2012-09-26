@@ -27,7 +27,7 @@ import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -66,7 +66,7 @@ public class TaxRateListModel extends CModel<TaxRateRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final TaxRateRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final TaxRateRecord record) {
 		return new UpdateCompanyTaxRate(companyId, record.getId(), record.getActive());
 	}
 

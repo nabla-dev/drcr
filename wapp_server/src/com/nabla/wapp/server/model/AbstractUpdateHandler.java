@@ -20,12 +20,9 @@ import java.sql.SQLException;
 
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
-import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.model.ValidationException;
-import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * The <code></code> object is used to
@@ -44,15 +41,15 @@ public abstract class AbstractUpdateHandler<A extends IRecordAction<StringResult
 		return null;
 	}
 
-	protected void validate(final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
-		final ValidationException x = new ValidationException();
+	protected void validate(@SuppressWarnings("unused") final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
+/*		final ValidationException x = new ValidationException();
 		try {
-			record.validate(x, ValidatorContext.UPDATE);
+			record.validate(x);
 		} catch (Exception e) {
 			Util.throwInternalErrorException(e);
 		}
 		if (!x.isEmpty())
-			throw x;
+			throw x;*/
 	}
 
 	abstract protected void update(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;

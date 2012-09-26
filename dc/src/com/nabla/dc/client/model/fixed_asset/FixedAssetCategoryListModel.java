@@ -31,7 +31,7 @@ import com.nabla.wapp.client.model.field.IntegerSpinnerField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.AbstractRemove;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -80,12 +80,12 @@ public class FixedAssetCategoryListModel extends CModel<FixedAssetCategoryRecord
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final FixedAssetCategoryRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final FixedAssetCategoryRecord record) {
 		return new AddFixedAssetCategory(record.getName(), record.getActive(), record.getType(), record.getMinDepreciationPeriod(), record.getMaxDepreciationPeriod());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final FixedAssetCategoryRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final FixedAssetCategoryRecord record) {
 		return new UpdateFixedAssetCategory(record.getId(), record.getName(), record.getActive(), record.getType(), record.getMinDepreciationPeriod(), record.getMaxDepreciationPeriod());
 	}
 

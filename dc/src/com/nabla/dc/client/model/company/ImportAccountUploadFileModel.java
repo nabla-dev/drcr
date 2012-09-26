@@ -23,7 +23,7 @@ import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UploadFileField;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
@@ -40,10 +40,10 @@ public class ImportAccountUploadFileModel extends CModel<ImportAccountRecord> {
 
 	private static final Fields	fields = new Fields();
 	private final Integer		companyId;
-	
+
 	public ImportAccountUploadFileModel(final Integer companyId) {
 		super(ImportAccountRecord.factory);
-		
+
 		this.companyId = companyId;
 		setFields(
 			new UploadFileField(fields.file(), FieldAttributes.REQUIRED),
@@ -55,14 +55,14 @@ public class ImportAccountUploadFileModel extends CModel<ImportAccountRecord> {
 	public Fields fields() {
 		return fields;
 	}
-	
+
 	@Override
-	public IAction<StringResult> getAddCommand(final ImportAccountRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final ImportAccountRecord record) {
 		return new ImportAccountList(companyId, record.getFileId(), record.isRowHeader(), record.getOverwrite());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final ImportAccountRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final ImportAccountRecord record) {
 		return getAddCommand(record);
 	}
 }

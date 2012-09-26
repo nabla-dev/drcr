@@ -25,6 +25,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -58,19 +59,27 @@ public class AddFixedAssetCategory implements IRecordAction<StringResult>, IFixe
 
 	@Override
 	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.ADD);
+	}
+
+	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
-		if (NAME_CONSTRAINT.validate(NAME, name, errors))
+		if (name != null)
 			uname = name.toUpperCase();
-		DEPRECIATION_PERIOD_CONSTRAINT.validate(MIN_DEPRECIATION_PERIOD, min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors);
-		if (max_depreciation_period == null)
-			max_depreciation_period = min_depreciation_period;
-		else if (DEPRECIATION_PERIOD_CONSTRAINT.validate(MAX_DEPRECIATION_PERIOD, max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors) &&
-			max_depreciation_period < min_depreciation_period)
+		NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
+		DEPRECIATION_PERIOD_CONSTRAINT.validate(MIN_DEPRECIATION_PERIOD, min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ctx);
+		if (ctx == ValidatorContext.ADD) {
+			if (max_depreciation_period == null)
+				max_depreciation_period = min_depreciation_period;
+			else if (DEPRECIATION_PERIOD_CONSTRAINT.validate(MAX_DEPRECIATION_PERIOD, max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ctx) &&
+					max_depreciation_period < min_depreciation_period)
 				errors.add(MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_MAX_DEPRECIATION_PERIOD);
-		if (active == null)
-			active = false;
-		if (type == null)
-			type = FixedAssetCategoryTypes.TANGIBLE;
+		} else {
+			DEPRECIATION_PERIOD_CONSTRAINT.validate(MAX_DEPRECIATION_PERIOD, max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ctx);
+			if (min_depreciation_period != null && max_depreciation_period == null &&
+					max_depreciation_period < min_depreciation_period)
+				errors.add(MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_MAX_DEPRECIATION_PERIOD);
+		}
 		return n == errors.size();
 	}
 

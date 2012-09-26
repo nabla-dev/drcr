@@ -17,7 +17,10 @@
 package com.nabla.dc.shared.command.general;
 
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -30,9 +33,14 @@ public class UpdateECTerm extends AddECTerm {
 
 	UpdateECTerm() {}	// for serialization only
 
-	public UpdateECTerm(final Integer id, @Nullable final String name, @Nullable final Boolean active) {
+	public UpdateECTerm(final int id, @Nullable final String name, @Nullable final Boolean active) {
 		super(name, active);
 		this.id = id;
+	}
+
+	@Override
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.UPDATE);
 	}
 
 }

@@ -14,30 +14,20 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.options;
+package com.nabla.dc.shared.command.fixed_asset;
 
-
-import com.nabla.wapp.client.model.data.UserRecord;
-import com.nabla.wapp.shared.command.CloneUser;
-import com.nabla.wapp.shared.dispatch.IRecordAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.command.AbstractFetchRecord;
 
 /**
  * @author nabla
  *
  */
-public class CloneUserModel extends AddUserModel {
+public class FetchAssetDisposal extends AbstractFetchRecord {
 
-	private final Integer	fromUserId;
+	FetchAssetDisposal() {}
 
-	public CloneUserModel(final Integer fromUserId) {
-		super();
-		this.fromUserId = fromUserId;
-	}
-
-	@Override
-	public IRecordAction<StringResult> getAddCommand(final UserRecord user) {
-		return new CloneUser(fromUserId, user.getName(), user.getPassword());
+	public FetchAssetDisposal(final Integer id) {
+		super(id);
 	}
 
 }

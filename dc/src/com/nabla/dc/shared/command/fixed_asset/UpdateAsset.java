@@ -20,7 +20,10 @@ import java.util.Date;
 
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -45,4 +48,10 @@ public class UpdateAsset extends AddAsset {
 	public int getId() {
 		return id;
 	}
+
+	@Override
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.ADD);
+	}
+
 }

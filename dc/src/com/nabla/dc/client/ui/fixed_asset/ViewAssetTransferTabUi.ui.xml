@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
+	
+	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.AssetTransferModel" />
+
+	<wnd:Tab title="Transfer">
+	<ui:attribute name="title" description="Transfer tab title"/>
+		<form:Form model="{model}" autoFetchData="true">
+			<form:Control name="{model.fields.initialAccumulatedDepreciation}" width="100" readOnly="true"><ui:msg>*Accum dep (£)</ui:msg></form:Control>
+			<form:Control name="{model.fields.initialDepreciationPeriod}" width="100" readOnly="true"><ui:msg>*Dep period (month)</ui:msg></form:Control>
+		</form:Form>
+	</wnd:Tab>
+</ui:UiBinder> 

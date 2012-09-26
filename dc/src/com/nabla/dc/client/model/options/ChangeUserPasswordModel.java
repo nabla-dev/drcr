@@ -21,7 +21,7 @@ import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.model.field.UserNameField;
 import com.nabla.wapp.client.model.field.UserPasswordField;
 import com.nabla.wapp.shared.command.ChangeUserPassword;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IUser;
 
@@ -44,7 +44,7 @@ public class ChangeUserPasswordModel extends CModel<UserRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final UserRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final UserRecord record) {
 		return new ChangeUserPassword(record.getName(), record.getPassword());
 	}
 

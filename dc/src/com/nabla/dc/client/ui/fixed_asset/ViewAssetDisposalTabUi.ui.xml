@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
+	
+	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.AssetDisposalModel" />
+
+	<wnd:Tab title="Disposal">
+	<ui:attribute name="title" description="Disposal tab title"/>
+		<form:Form model="{model}" autoFetchData="true">
+			<form:Control name="{model.fields.disposalDate}" readOnly="true"><ui:msg>*Date</ui:msg></form:Control>
+			<form:Control name="{model.fields.disposalType}" width="*" readOnly="true"><ui:msg>*Type</ui:msg></form:Control>
+			<form:Control name="{model.fields.proceeds}" width="100" readOnly="true"><ui:msg>P*roceeds (£)</ui:msg></form:Control>
+		</form:Form>
+	</wnd:Tab>
+</ui:UiBinder> 

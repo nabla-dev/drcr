@@ -14,21 +14,17 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.company;
+package com.nabla.dc.client.model.fixed_asset;
 
 
-import com.nabla.dc.shared.command.company.FetchCompanyList;
-import com.nabla.dc.shared.command.company.RemoveCompany;
-import com.nabla.dc.shared.command.company.UpdateCompany;
-import com.nabla.dc.shared.model.company.ICompany;
+import com.nabla.dc.shared.command.fixed_asset.FetchAssetDisposal;
+import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.field.BooleanField;
-import com.nabla.wapp.client.model.field.DeletedRecordField;
+import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
-import com.nabla.wapp.client.model.field.TextField;
+import com.nabla.wapp.client.model.field.PositiveIntegerField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.command.AbstractRemove;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
@@ -37,24 +33,27 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class CompanyListModel extends CModel<CompanyRecord> {
+public class AssetDisposalModel extends CModel<AssetRecord> {
 
 	static public class Fields {
-		public String name() { return ICompany.NAME; }
-		public String active() { return ICompany.ACTIVE; }
+		public String disposalDate() { return IAsset.DISPOSAL_DATE; }
+		public String disposalType() { return IAsset.DISPOSAL_TYPE; }
+		public String proceeds() { return IAsset.PROCEEDS; }
 	}
 
 	private static final Fields	fields = new Fields();
+	private final int			assetId;
 
-	public CompanyListModel() {
-		super(CompanyRecord.factory);
+	public AssetDisposalModel(final int assetId) {
+		super(AssetRecord.factory);
+		this.assetId = assetId;
 
 		setFields(
-			new DeletedRecordField(),
 			new IdField(),
-			new TextField(fields.name(), ICompany.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new BooleanField(fields.active())
-				);
+			new DateField(fields.disposalDate(), FieldAttributes.REQUIRED),
+			new DisposalTypeField(fields.disposalType(), FieldAttributes.REQUIRED),
+			new PositiveIntegerField(fields.proceeds(), FieldAttributes.OPTIONAL)
+		);
 	}
 
 	public Fields fields() {
@@ -62,18 +61,13 @@ public class CompanyListModel extends CModel<CompanyRecord> {
 	}
 
 	@Override
-	public AbstractRemove getRemoveCommand() {
-		return new RemoveCompany();
-	}
-
-	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchCompanyList();
+		return new FetchAssetDisposal(assetId);
 	}
 
 	@Override
-	public IRecordAction<StringResult> getUpdateCommand(final CompanyRecord record) {
-		return new UpdateCompany(record.getId(), record.getName(), record.getActive());
+	public IRecordAction<StringResult> getUpdateCommand(final AssetRecord record) {
+		return null/*new UpdateAssetDisposal()*/;
 	}
 
 }

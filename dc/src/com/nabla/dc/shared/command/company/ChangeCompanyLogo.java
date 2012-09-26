@@ -19,15 +19,17 @@ package com.nabla.dc.shared.command.company;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
 @IRecordTable(name=ICompany.TABLE)
-public class ChangeCompanyLogo implements IAction<StringResult> {
+public class ChangeCompanyLogo implements IRecordAction<StringResult> {
 
 	@IRecordField(name="id", id=true)
 	Integer				companyId;
@@ -35,7 +37,7 @@ public class ChangeCompanyLogo implements IAction<StringResult> {
 	@IRecordField
 	transient Integer	logo_id;
 
-	protected ChangeCompanyLogo() {}	// for serialization only
+	ChangeCompanyLogo() {}	// for serialization only
 
 	public ChangeCompanyLogo(final Integer companyId, final Integer fileId) {
 		this.companyId = companyId;
@@ -48,6 +50,11 @@ public class ChangeCompanyLogo implements IAction<StringResult> {
 
 	public void setLogoId(final Integer id) {
 		logo_id = id;
+	}
+
+	@Override
+	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+		return true;
 	}
 
 }

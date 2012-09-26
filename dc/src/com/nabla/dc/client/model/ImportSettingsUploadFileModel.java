@@ -22,7 +22,7 @@ import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UploadFileField;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
 /**
@@ -52,12 +52,12 @@ public class ImportSettingsUploadFileModel extends CModel<ImportSettingsRecord> 
 	}
 
 	@Override
-	public IAction<StringResult> getAddCommand(final ImportSettingsRecord record) {
+	public IRecordAction<StringResult> getAddCommand(final ImportSettingsRecord record) {
 		return new ImportSettings(record.getFileId(), record.getOverwrite());
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final ImportSettingsRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final ImportSettingsRecord record) {
 		return getAddCommand(record);
 	}
 }

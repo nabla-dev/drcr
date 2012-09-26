@@ -22,7 +22,7 @@ import com.nabla.dc.shared.command.fixed_asset.UpdateCompanyFixedAssetCategory;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -64,7 +64,7 @@ public class CompanyFixedAssetCategoryFormModel extends CModel<CompanyFixedAsset
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final CompanyFixedAssetCategoryFormRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final CompanyFixedAssetCategoryFormRecord record) {
 		return new UpdateCompanyFixedAssetCategory(companyId, record.getCategories());
 	}
 

@@ -21,8 +21,6 @@ import com.nabla.wapp.shared.csv.ICsvField;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.IRecordAction;
-import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
@@ -31,7 +29,7 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
  *
  */
 @IRecordTable(name=IAccount.TABLE)
-public class BasicAccountAction implements IRecordAction<StringResult>, IAccount {
+public class BasicAccountAction implements IAccount {
 
 	@IRecordField(unique=true)
 	@ICsvField
@@ -64,8 +62,7 @@ public class BasicAccountAction implements IRecordAction<StringResult>, IAccount
 		this.active = active;
 	}
 
-	@Override
-	public boolean validate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
 		CODE_CONSTRAINT.validate(CODE, code, errors, ctx);
 		if (name != null)

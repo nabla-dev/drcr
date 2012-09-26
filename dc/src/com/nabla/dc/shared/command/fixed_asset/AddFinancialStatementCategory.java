@@ -23,6 +23,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
@@ -38,7 +39,7 @@ public class AddFinancialStatementCategory implements IRecordAction<StringResult
 	@IRecordField
 	Boolean				active;
 
-	protected AddFinancialStatementCategory() {}	// for serialization only
+	AddFinancialStatementCategory() {}	// for serialization only
 
 	public AddFinancialStatementCategory(final String name, final Boolean active) {
 		this.name = name;
@@ -47,16 +48,13 @@ public class AddFinancialStatementCategory implements IRecordAction<StringResult
 
 	@Override
 	public boolean validate(final IErrorList errors) throws DispatchException {
-		if (!NAME_CONSTRAINT.validate(NAME, name, errors))
-			return false;
-		uname = name.toUpperCase();
-		if (active == null)
-			active = false;
-		return true;
+		return doValidate(errors, ValidatorContext.ADD);
 	}
 
-	public Boolean getActive() {
-		return active;
+	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+		if (name != null)
+			uname = name.toUpperCase();
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
 	}
 
 }

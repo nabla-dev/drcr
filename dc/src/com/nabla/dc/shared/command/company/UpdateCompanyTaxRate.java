@@ -16,14 +16,16 @@
 */
 package com.nabla.dc.shared.command.company;
 
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class UpdateCompanyTaxRate implements IAction<StringResult> {
+public class UpdateCompanyTaxRate implements IRecordAction<StringResult> {
 
 	private Integer		companyId;
 	private Integer		taxRateId;
@@ -47,6 +49,11 @@ public class UpdateCompanyTaxRate implements IAction<StringResult> {
 
 	public Boolean getActive() {
 		return active;
+	}
+
+	@Override
+	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+		return true;
 	}
 
 }

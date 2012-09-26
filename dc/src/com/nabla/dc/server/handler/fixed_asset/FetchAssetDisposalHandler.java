@@ -18,7 +18,8 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.FetchAsset;
+import com.nabla.dc.shared.command.fixed_asset.FetchAssetDisposal;
+import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
@@ -29,21 +30,21 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchAssetHandler extends AbstractFetchHandler<FetchAsset> {
+public class FetchAssetDisposalHandler extends AbstractFetchHandler<FetchAssetDisposal> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT t.id, t.name, t.fa_company_asset_category_id AS 'category', t.reference, t.location" +
-", t.acquisition_date, t.acquisition_type, t.purchase_invoice" +
-", (SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING') AS 'i_cost'" +
-", o.amount AS 'initial_accumulated_depreciation', o.depreciation_period AS 'initial_depreciation_period'" +
-", t.depreciation_period" +
-", (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id) AS 'i_residual_value'" +
-" FROM fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +
+"SELECT t.id" +
+", IFNULL(t.disposal_date, (SELECT p.state FROM user_preference AS p WHERE p.role_id=? AND p.category=? AND p.object_id=c.company_id AND p.name='disposal_date')) AS 'd_disposal_date'" +
+", IFNULL(t.disposal_type, (SELECT p.state FROM user_preference AS p WHERE p.role_id=? AND p.category=? AND p.object_id=c.company_id  AND p.name='disposal_type')) AS 'disposal_type'" +
+", t.proceeds" +
+" FROM fa_asset AS t INNER JOIN fa_company_asset_category AS c ON c.id=t.fa_company_asset_category_id" +
 " WHERE t.id=?"
 	);
 
 	@Override
-	public FetchResult execute(final FetchAsset cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getId());
+	public FetchResult execute(final FetchAssetDisposal cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		return fetcher.serialize(cmd, ctx.getConnection(),
+ctx.getUserId(), IAsset.DISPOSAL_PREFERENCE_GROUP, ctx.getUserId(), IAsset.DISPOSAL_PREFERENCE_GROUP, cmd.getId());
 	}
+
 }

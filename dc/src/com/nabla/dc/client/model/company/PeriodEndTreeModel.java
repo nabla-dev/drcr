@@ -27,7 +27,7 @@ import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.TreeStringIdField;
 import com.nabla.wapp.client.model.field.TreeStringParentIdField;
 import com.nabla.wapp.shared.command.AbstractFetch;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
@@ -67,7 +67,7 @@ public class PeriodEndTreeModel extends HeterogeneousTreeModel<PeriodEndTreeReco
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final PeriodEndTreeRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final PeriodEndTreeRecord record) {
 		return new UpdateFinancialYear(record.getId(), record.getName());
 	}
 

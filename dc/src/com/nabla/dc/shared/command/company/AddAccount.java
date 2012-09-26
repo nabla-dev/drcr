@@ -17,12 +17,17 @@
 package com.nabla.dc.shared.command.company;
 
 import com.nabla.wapp.shared.database.IRecordField;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
  *
  */
-public class AddAccount extends BasicAccountAction {
+public class AddAccount extends BasicAccountAction implements IRecordAction<StringResult> {
 
 	@IRecordField
 	int		company_id;
@@ -32,6 +37,11 @@ public class AddAccount extends BasicAccountAction {
 	public AddAccount(final int companyId, final String code, final String name, final String cc, final String dep, final Boolean bs, final Boolean active) {
 		super(code, name, cc, dep, bs, active);
 		this.company_id = companyId;
+	}
+
+	@Override
+	public boolean validate(final IErrorList errors) throws DispatchException {
+		return doValidate(errors, ValidatorContext.ADD);
 	}
 
 	public int getCompanyId() {

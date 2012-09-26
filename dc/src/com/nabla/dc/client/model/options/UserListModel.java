@@ -31,7 +31,7 @@ import com.nabla.wapp.shared.command.AbstractRemove;
 import com.nabla.wapp.shared.command.FetchUserList;
 import com.nabla.wapp.shared.command.RemoveUser;
 import com.nabla.wapp.shared.command.UpdateUser;
-import com.nabla.wapp.shared.dispatch.IAction;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IUser;
 import com.smartgwt.client.data.DSRequest;
@@ -80,7 +80,7 @@ public class UserListModel extends CModel<UserRecord> {
 	}
 
 	@Override
-	public IAction<StringResult> getUpdateCommand(final UserRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final UserRecord record) {
 		return new UpdateUser(record.getId(), record.getName(), record.getActive());
 	}
 
