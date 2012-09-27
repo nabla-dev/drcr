@@ -45,37 +45,41 @@ public class RevertAssetDisposalHandler extends AbstractHandler<RevertAssetDispo
 
 	@Override
 	public VoidResult execute(final RevertAssetDisposal cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final Connection conn = ctx.getWriteConnection();
-		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
+		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 		try {
-			if (!Database.executeUpdate(conn,
-"UPDATE fa_asset SET disposal_date=NULL, disposal_type=NULL, proceeds=NULL WHERE id=?;", cmd.getId()))
-				throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
-			final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT command FROM fa_transaction_redo WHERE fa_asset_id=?;", cmd.getId());
-			try {
-				final Statement redo = conn.createStatement();
-				try {
-					final ResultSet rs = stmt.executeQuery();
-					try {
-						while (rs.next())
-							redo.execute(rs.getString(1));
-					} finally {
-						rs.close();
-					}
-				} finally {
-					redo.close();
-				}
-			} finally {
-				stmt.close();
-			}
-			Database.executeUpdate(conn,
-"DELETE FROM fa_transaction_redo WHERE fa_asset_id=?;", cmd.getId());
+			revertDisposal(guard.getConnection(), cmd.getId());
 			guard.setSuccess();
 		} finally {
 			guard.close();
 		}
 		return null;
+	}
+
+	public static void revertDisposal(final Connection conn, int assetId) throws ActionException, SQLException {
+		if (!Database.executeUpdate(conn,
+"UPDATE fa_asset SET disposal_date=NULL, disposal_type=NULL, proceeds=NULL WHERE id=?;",
+assetId))
+			throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT command FROM fa_transaction_redo WHERE fa_asset_id=?;", assetId);
+		try {
+			final Statement redo = conn.createStatement();
+			try {
+				final ResultSet rs = stmt.executeQuery();
+				try {
+					while (rs.next())
+						redo.execute(rs.getString(1));
+				} finally {
+					rs.close();
+				}
+			} finally {
+				redo.close();
+			}
+		} finally {
+			stmt.close();
+		}
+		Database.executeUpdate(conn,
+"DELETE FROM fa_transaction_redo WHERE fa_asset_id=?;", assetId);
 	}
 
 }

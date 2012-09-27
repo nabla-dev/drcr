@@ -102,6 +102,13 @@ ctx.getUserId(), objectId, group, name, state, state);
 			save(ctx, objectId, group, name, dateFormat.format(state));
 	}
 
+	public static void save(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name, final java.util.Date state) throws SQLException {
+		if (state == null)
+			remove(ctx, objectId, group, name);
+		else
+			save(ctx, objectId, group, name, dateFormat.format(state));
+	}
+
 	public static void remove(final IUserSessionContext ctx, @Nullable final Integer objectId, final String group, final String name) throws SQLException {
 		if (objectId == null)
 			Database.executeUpdate(ctx.getWriteConnection(),

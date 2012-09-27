@@ -16,11 +16,11 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.MessageFormat;
 
 import org.apache.commons.logging.Log;
@@ -37,8 +37,10 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
+import com.nabla.wapp.shared.dispatch.ActionException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 
 /**
  * @author nabla
@@ -51,100 +53,57 @@ public class UpdateAssetDisposalHandler extends AbstractUpdateHandler<UpdateAsse
 
 	@Override
 	protected void update(final UpdateAssetDisposal record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-
-		final Date oldDisposalDate = asset.getOldDisposalDate();
+		Date oldDisposalDate;
+		Integer companyId;
+		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
+"SELECT t.disposal_date, c.company_id" +
+" FROM fa_asset AS t INNER JOIN fa_company_asset_category AS c ON c.id=t.fa_company_asset_category_id" +
+" WHERE t.id=?;", record.getId());
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (!rs.next())
+					throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+				oldDisposalDate = rs.getDate(1);
+				companyId = rs.getInt(2);
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 		try {
 			// update asset record
-			sql.execute(ctx.getWriteConnection(), asset);
-			if (oldDisposalDate != null && asset.disposal_date != oldDisposalDate) {
+			sql.execute(guard.getConnection(), record);
+			if (oldDisposalDate != null && record.getDisposalDate() != oldDisposalDate) {
 				if (log.isDebugEnabled())
 					log.debug("reverting old disposal data");
-				asset.revertOldDisposal();
+				RevertAssetDisposalHandler.revertDisposal(guard.getConnection(), record.getId());
 			}
-			if (oldDisposalDate == null || asset.disposal_date != oldDisposalDate) {
+			if (oldDisposalDate == null || record.getDisposalDate() != oldDisposalDate) {
 				if (log.isDebugEnabled())
 					log.debug("disposing asset...");
-				asset.dispose();
-				UserPreference.save(ctx, IAsset.DISPOSAL_PREFERENCE_GROUP, "disposal_date", asset.disposal_date);
-				UserPreference.save(ctx, IAsset.DISPOSAL_PREFERENCE_GROUP, "disposal_type", asset.disposal_type);
+				dispose(guard.getConnection(), record);
+				UserPreference.save(ctx, companyId, IAsset.DISPOSAL_PREFERENCE_GROUP, "disposal_date", record.getDisposalDate());
+				UserPreference.save(ctx, companyId, IAsset.DISPOSAL_PREFERENCE_GROUP, "disposal_type", record.getDisposalType());
 			}
 			guard.setSuccess();
 		} finally {
 			guard.close();
 		}
-		// in case value is modified here, tell client side so that it will be displayed correctly in listgrid
-		return "<data><proceeds>" + asset.proceeds.toString() + "</proceeds></data>";
 	}
 
-	public Date getOldDisposalDate() throws SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT date FROM transaction WHERE asset_id=? AND class='COST' AND type='CLOSING';", id);
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			return rs.next() ? rs.getDate(1) : null;
-		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
-		}
-	}
-
-	public void revertOldDisposal() throws SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT command FROM redo WHERE asset_id=?;", id);
-		try {
-			final Statement redo = conn.createStatement();
-			try {
-				final ResultSet rs = stmt.executeQuery();
-				while (rs.next())
-					redo.execute(rs.getString(1));
-			} finally {
-				try { redo.close(); } catch (final SQLException e) {}
-			}
-		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
-		}
-		Database.executeUpdate(conn, "DELETE FROM redo WHERE asset_id=?;", id);
-	}
-
-	public int getCost() throws SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT SUM(amount) FROM transaction WHERE asset_id=? AND class='COST';", id);
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			return rs.next() ? rs.getInt(1) : 0;
-		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
-		}
-	}
-
-	public int getDepreciation() throws SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT SUM(amount) FROM transaction WHERE asset_id=? AND class='DEP';", id);
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			return rs.next() ? rs.getInt(1) : 0;
-		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
-		}
-	}
-
-	public String addDisposalTransaction(int amount, TransactionClasses clazz, TransactionTypes type) throws SQLException {
-		return MessageFormat.format("DELETE FROM transaction WHERE id={0,number,0};",
-				Database.addRecord(conn,
-"INSERT INTO transaction (asset_id,date,amount,class,type) VALUES(?,?,?,?,?)",
-			id, disposal_date, amount, clazz.toString(), type.toString()));
-	}
-
-	public void dispose() throws SQLException, DispatchException {
+	private void dispose(final Connection conn, final UpdateAssetDisposal record) throws SQLException, DispatchException {
 		final PreparedStatement redo = conn.prepareStatement(
-"INSERT INTO redo (asset_id, command) VALUES(?,?);");
+"INSERT INTO fa_transaction_redo (fa_asset_id, command) VALUES(?,?);");
 		try {
-			redo.setInt(1, id);
+			redo.setInt(1, record.getId());
 			// backup transaction after disposal if any
 			if (log.isDebugEnabled())
 				log.debug("backing up transactions after disposal");
 			final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT * FROM transaction WHERE asset_id=? AND date>=?;", id, disposal_date);
+"SELECT * FROM fa_transaction WHERE fa_asset_id=? AND date>=?;", record.getId(), disposal_date);
 			try {
 				final ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {
@@ -186,4 +145,34 @@ public class UpdateAssetDisposalHandler extends AbstractUpdateHandler<UpdateAsse
 			try { redo.close(); } catch (final SQLException e) {}
 		}
 	}
+
+	public int getCost() throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT SUM(amount) FROM transaction WHERE asset_id=? AND class='COST';", id);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			return rs.next() ? rs.getInt(1) : 0;
+		} finally {
+			try { stmt.close(); } catch (final SQLException e) {}
+		}
+	}
+
+	public int getDepreciation() throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT SUM(amount) FROM transaction WHERE asset_id=? AND class='DEP';", id);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			return rs.next() ? rs.getInt(1) : 0;
+		} finally {
+			try { stmt.close(); } catch (final SQLException e) {}
+		}
+	}
+
+	public String addDisposalTransaction(int amount, TransactionClasses clazz, TransactionTypes type) throws SQLException {
+		return MessageFormat.format("DELETE FROM transaction WHERE id={0,number,0};",
+				Database.addRecord(conn,
+"INSERT INTO transaction (asset_id,date,amount,class,type) VALUES(?,?,?,?,?)",
+			id, disposal_date, amount, clazz.toString(), type.toString()));
+	}
+
 }

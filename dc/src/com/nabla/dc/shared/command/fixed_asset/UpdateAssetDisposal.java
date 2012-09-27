@@ -16,9 +16,7 @@
 */
 package com.nabla.dc.shared.command.fixed_asset;
 
-import java.sql.Date;
-
-import org.simpleframework.xml.Element;
+import java.util.Date;
 
 import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
@@ -29,7 +27,6 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -38,19 +35,23 @@ import com.nabla.wapp.shared.model.ValidationException;
 @IRecordTable(name="asset")
 public class UpdateAssetDisposal implements IRecordAction<StringResult> {
 
-	@Element
 	@IRecordField(id=true)
-	public Integer			id;
-	@Element
-	public Date				disposal_date;
-	@Element
+	int				id;
 	@IRecordField
-	public DisposalTypes	disposal_type;
-	@Element(required=false)
+	Date			disposal_date;
 	@IRecordField
-	public Integer			proceeds;
+	DisposalTypes	disposal_type;
+	@IRecordField
+	Integer			proceeds;
 
 	UpdateAssetDisposal() {}	// for serialization only
+
+	public UpdateAssetDisposal(int id, final Date dt, final DisposalTypes type, int proceeds) {
+		this.id = id;
+		this.disposal_date = dt;
+		this.disposal_type = type;
+		this.proceeds = proceeds;
+	}
 
 	@Override
 	public boolean validate(IErrorList errors) throws DispatchException {
@@ -59,13 +60,29 @@ public class UpdateAssetDisposal implements IRecordAction<StringResult> {
 			if (proceeds == null)
 				proceeds = 0;
 			else if (proceeds < 0)
-				throw new ValidationException(IAsset.PROCEEDS, CommonServerErrors.INVALID_VALUE);
+				errors.add(IAsset.PROCEEDS, CommonServerErrors.INVALID_VALUE);
 			break;
 		default:
 			proceeds = 0;
 			break;
 		}
 		return false;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Date getDisposalDate() {
+		return disposal_date;
+	}
+
+	public DisposalTypes getDisposalType() {
+		return disposal_type;
+	}
+
+	public Integer getProceeds() {
+		return proceeds;
 	}
 
 }

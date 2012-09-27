@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,51 +14,48 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.model;
+package com.nabla.dc.client.model.fixed_asset;
 
-
-import com.nabla.fixed_assets.shared.command.FetchAssetDisposal;
-import com.nabla.fixed_assets.shared.command.UpdateAssetDisposal;
-import com.nabla.fixed_assets.shared.model.IAsset;
-import com.nabla.wapp.client.model.AbstractBasicModel;
+import com.nabla.dc.shared.command.fixed_asset.FetchAssetDisposal;
 import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.PositiveIntegerField;
-import com.nabla.wapp.shared.model.AbstractOperationAction;
-import com.smartgwt.client.types.DSOperationType;
+import com.nabla.wapp.client.model.field.TextField;
+import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
+import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-public class AssetDisposalModel extends AbstractBasicModel {
+public class AssetDisposalModel extends BasicAssetModel {
 
-	static public class Fields {
-		public String disposalDate() { return IAsset.DISPOSAL_DATE; }
-		public String disposalType() { return IAsset.DISPOSAL_TYPE; }
-		public String proceeds() { return IAsset.PROCEEDS; }
-	}
+	private final Integer	assetId;
 
-	public AssetDisposalModel() {
+	public AssetDisposalModel(final Integer assetId) {
+		super();
+
+		this.assetId = assetId;
 		setFields(
 			new IdField(),
-			new DateField(IAsset.DISPOSAL_DATE, FieldAttributes.REQUIRED),
-			new DisposalTypeField(IAsset.DISPOSAL_TYPE, FieldAttributes.REQUIRED),
-			new PositiveIntegerField(IAsset.PROCEEDS, FieldAttributes.OPTIONAL)
-				);
+			new TextField(fields.name(), FieldAttributes.READ_ONLY),
+			new DateField(fields.disposalDate(), FieldAttributes.REQUIRED),
+			new DisposalTypeField(fields.disposalType(), FieldAttributes.REQUIRED),
+			new PositiveIntegerField(fields.proceeds(), FieldAttributes.OPTIONAL)
+		);
 	}
 
 	@Override
-	public AbstractOperationAction getCommand(final DSOperationType op) {
-		switch (op) {
-		case FETCH:
-			return new FetchAssetDisposal();
-		case UPDATE:
-			return new UpdateAssetDisposal();
-		default:
-			return null;
-		}
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchAssetDisposal(assetId);
+	}
+
+	@Override
+	public IRecordAction<StringResult> getUpdateCommand(final AssetRecord record) {
+		return record.toDisposalCommand();
 	}
 
 }
