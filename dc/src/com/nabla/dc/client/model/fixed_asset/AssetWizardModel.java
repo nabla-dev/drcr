@@ -16,12 +16,10 @@
 */
 package com.nabla.dc.client.model.fixed_asset;
 
-
 import com.google.gwt.core.client.JsDate;
 import com.nabla.dc.shared.command.fixed_asset.FetchAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
@@ -41,37 +39,13 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class AssetWizardModel extends CModel<AssetRecord> {
+public class AssetWizardModel extends BasicAssetModel {
 
-	static public class Fields {
-		public String name() { return IAsset.NAME; }
-		public String category() { return IAsset.CATEGORY; }
-		public String reference() { return IAsset.REFERENCE; }
-		public String location() { return IAsset.LOCATION; }
-
-		public String acquisitionDate() { return IAsset.ACQUISITION_DATE; }
-		public String acquisitionType() { return IAsset.ACQUISITION_TYPE; }
-		public String cost() { return IAsset.COST; }
-		public String pi() { return IAsset.PURCHASE_INVOICE; }
-		public String initialAccumDep() { return IAsset.INITIAL_ACCUMULATED_DEPRECIATION; }
-		public String initialDepPeriod() { return IAsset.INITIAL_DEPRECIATION_PERIOD; }
-
-		public String depPeriod() { return IAsset.DEPRECIATION_PERIOD; }
-		public String residualValue() { return IAsset.RESIDUAL_VALUE; }
-		public String createTransactions() { return IAsset.CREATE_TRANSACTIONS; }
-		public String opening() { return IAsset.OPENING; }
-		public String openingMonth() { return IAsset.OPENING_MONTH; }
-		public String openingYear() { return IAsset.OPENING_YEAR; }
-		public String openingAccumDep() { return IAsset.OPENING_ACCUMULATED_DEPRECIATION; }
-		public String openingDepPeriod() { return IAsset.OPENING_DEPRECIATION_PERIOD; }
-	}
-
-	private static final Fields	fields = new Fields();
-	private final Integer			companyId;
-	private final Integer			assetId;
+	private final Integer	companyId;
+	private final Integer	assetId;
 
 	public AssetWizardModel(final Integer companyId, final Integer assetId) {
-		super(AssetRecord.factory);
+		super();
 
 		this.companyId = companyId;
 		this.assetId = assetId;
@@ -100,10 +74,6 @@ public class AssetWizardModel extends CModel<AssetRecord> {
 			new PositiveIntegerField(fields.openingAccumDep(), FieldAttributes.OPTIONAL),
 			new IntegerField(fields.openingDepPeriod(), 1, FieldAttributes.OPTIONAL)
 				);
-	}
-
-	public Fields fields() {
-		return fields;
 	}
 
 	@Override

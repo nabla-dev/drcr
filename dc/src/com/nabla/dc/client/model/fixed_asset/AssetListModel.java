@@ -23,7 +23,6 @@ import com.nabla.dc.shared.command.fixed_asset.FetchAssetList;
 import com.nabla.dc.shared.command.fixed_asset.FetchAssetRecord;
 import com.nabla.dc.shared.command.fixed_asset.RemoveAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
-import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
@@ -40,30 +39,12 @@ import com.smartgwt.client.data.DSRequest;
  * @author nabla
  *
  */
-public class AssetListModel extends CModel<AssetRecord> {
+public class AssetListModel extends BasicAssetModel {
 
-	static public class Fields {
-		public String name() { return IAsset.NAME; }
-		public String category() { return IAsset.CATEGORY; }
-		public String reference() { return IAsset.REFERENCE; }
-		public String location() { return IAsset.LOCATION; }
-		public String pi() { return IAsset.PURCHASE_INVOICE; }
-
-		public String cost() { return IAsset.COST; }
-		public String depPeriod() { return IAsset.DEPRECIATION_PERIOD; }
-
-		public String acquisitionDate() { return IAsset.ACQUISITION_DATE; }
-		public String acquisitionType() { return IAsset.ACQUISITION_TYPE; }
-
-		public String disposalDate() { return IAsset.DISPOSAL_DATE; }
-		public String proceeds() { return IAsset.PROCEEDS; }
-	}
-
-	private static final Fields	fields = new Fields();
-	private final Integer			companyId;
+	private final Integer	companyId;
 
 	public AssetListModel(final Integer companyId) {
-		super(AssetRecord.factory);
+		super();
 
 		this.companyId = companyId;
 		setFields(
@@ -84,10 +65,6 @@ public class AssetListModel extends CModel<AssetRecord> {
 			new DateField(fields.disposalDate(), FieldAttributes.OPTIONAL),
 			new PoundField(fields.proceeds(), FieldAttributes.OPTIONAL)
 				);
-	}
-
-	public Fields fields() {
-		return fields;
 	}
 
 	@Override

@@ -3,17 +3,17 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default"
-    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
-	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.AssetTransferModel" />
+	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager" />
+	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetFields" />
 
 	<wnd:Tab title="Transfer">
 	<ui:attribute name="title" description="Transfer tab title"/>
-		<form:Form model="{model}" autoFetchData="true">
-			<form:Control name="{model.fields.initialAccumulatedDepreciation}" width="100" readOnly="true"><ui:msg>*Accum dep (£)</ui:msg></form:Control>
-			<form:Control name="{model.fields.initialDepreciationPeriod}" width="100" readOnly="true"><ui:msg>*Dep period (month)</ui:msg></form:Control>
+		<form:Form valuesManager="{model}">
+			<form:Control name="{fields.initialAccumDep}" width="100" readOnly="true"><ui:msg>*Accum dep (£)</ui:msg></form:Control>
+			<form:Control name="{fields.initialDepPeriod}" width="100" readOnly="true"><ui:msg>*Dep period (month)</ui:msg></form:Control>
 		</form:Form>
 	</wnd:Tab>
 </ui:UiBinder> 

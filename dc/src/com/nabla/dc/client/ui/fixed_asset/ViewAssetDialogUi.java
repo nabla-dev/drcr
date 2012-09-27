@@ -19,17 +19,13 @@ package com.nabla.dc.client.ui.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.presenter.fixed_asset.ViewAssetDialog;
-import com.nabla.dc.client.ui.IResource;
-import com.nabla.dc.client.ui.Resource;
-import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.TabSet;
-import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.shared.slot.ISlotManager;
+import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
@@ -40,22 +36,14 @@ public class ViewAssetDialogUi extends BindedModalDialog implements ViewAssetDia
 	interface Binder extends UiBinder<ModalDialog, ViewAssetDialogUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
-	@UiField(provided=true)
-	static final IResource		res = Resource.bundle;
 	@UiField
-	TabSet						tabs;
+	TabSet					tabs;
 	@UiField(provided=true)
-	final Model					model;
-	@UiField
-	Form						generalForm;
-	@UiField(provided=true)
-	final AssetAcquisitionModel					acquisitionModel;
+	final ValuesManager		model;
 
-	public ViewAssetDialogUi(AssetRecord asset, Integer assetRegisterId) {
-		this.model = modelFactory.get(assetRegisterId);
-		this.acquisitionModel = acquisitionModel;
+	public ViewAssetDialogUi(final ValuesManager model) {
+		this.model = model;
 		this.create(uiBinder, this);
-		generalForm.editRecord(asset.getImpl());
 	}
 
 	@Override

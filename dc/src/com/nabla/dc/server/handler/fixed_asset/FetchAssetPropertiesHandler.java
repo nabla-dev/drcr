@@ -18,7 +18,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
 
-import com.nabla.dc.shared.command.fixed_asset.FetchAssetTransfer;
+import com.nabla.dc.shared.command.fixed_asset.FetchAssetProperties;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.json.SqlToJson;
 import com.nabla.wapp.server.model.AbstractFetchHandler;
@@ -29,16 +29,22 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
  * @author nabla
  *
  */
-public class FetchAssetTransferHandler extends AbstractFetchHandler<FetchAssetTransfer> {
+public class FetchAssetPropertiesHandler extends AbstractFetchHandler<FetchAssetProperties> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT t.amount AS 'initial_accumulated_depreciation', t.depreciation_period AS 'initial_depreciation_period'" +
-" FROM fa_transaction AS t" +
-" WHERE o.fa_asset_id=? AND t.class='DEP' AND t.type='OPENING'"
+"SELECT t.id, t.name, t.fa_company_asset_category_id AS 'category', t.reference, t.location" +
+", t.acquisition_date, t.acquisition_type, t.purchase_invoice" +
+", (SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING') AS 'i_cost'" +
+", o.amount AS 'initial_accumulated_depreciation', o.depreciation_period AS 'initial_depreciation_period'" +
+", t.depreciation_period" +
+", (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id) AS 'i_residual_value'" +
+", t.disposal_date, t.disposal_type, t.proceeds" +
+" FROM fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +
+" WHERE t.id=?"
 	);
 
 	@Override
-	public FetchResult execute(final FetchAssetTransfer cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public FetchResult execute(final FetchAssetProperties cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		return fetcher.serialize(cmd, ctx.getConnection(), cmd.getId());
 	}
 

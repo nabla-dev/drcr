@@ -22,11 +22,11 @@ import com.nabla.wapp.shared.command.AbstractFetchRecord;
  * @author nabla
  *
  */
-public class FetchAssetAcquisition extends AbstractFetchRecord {
+public class FetchAssetProperties extends AbstractFetchRecord {
 
-	FetchAssetAcquisition() {}
+	FetchAssetProperties() {}
 
-	public FetchAssetAcquisition(final Integer id) {
+	public FetchAssetProperties(final Integer id) {
 		super(id);
 	}
 

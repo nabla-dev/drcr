@@ -3,34 +3,32 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default"
-    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
-	<ui:with field="res" type="com.nabla.dc.client.ui.IResource"/>
-	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.AssetListModel" />
-	<ui:with field="acquisitionModel" type="com.nabla.dc.client.model.fixed_asset.AssetAcquisitionModel" />
+	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager"/>
+	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetFields" />
 
 	<wnd:ModalDialog caption="Asset Properties" icon="properties_small.png" autoClose="true" width="500" height="250">
 		<ui:attribute name="caption" description="View asset properties caption"/>
 		<wnd:TabSet ui:field="tabs" width="100%" height="190">
 			<wnd:Tab title="General">
 			<ui:attribute name="title" description="General tab title"/>
-				<form:Form ui:field="generalForm" model="{model}">
-					<form:Control name="{model.fields.name}" width="*" required="false"><ui:msg>N*ame</ui:msg></form:Control>
-					<form:Control name="{model.fields.category}" width="*" readOnly="true"><ui:msg>Cate*gory</ui:msg></form:Control>
-					<form:Control name="{model.fields.reference}" width="*" readOnly="true"><ui:msg>*Reference</ui:msg></form:Control>
-					<form:Control name="{model.fields.location}" width="*" readOnly="true"><ui:msg>*Location</ui:msg></form:Control>
-					<form:Control name="{model.fields.depPeriod}" width="100" readOnly="true"><ui:msg>*Dep period (month)</ui:msg></form:Control>
+				<form:Form valuesManager="{model}">
+					<form:Control name="{fields.name}" width="300"><ui:msg>N*ame</ui:msg></form:Control>
+					<form:Control name="{fields.category}" width="300"><ui:msg>Cate*gory</ui:msg></form:Control>
+					<form:Control name="{fields.reference}" width="300"><ui:msg>*Reference</ui:msg></form:Control>
+					<form:Control name="{fields.location}" width="300"><ui:msg>*Location</ui:msg></form:Control>
+					<form:Control name="{fields.depPeriod}" width="100"><ui:msg>*Dep period (month)</ui:msg></form:Control>
 				</form:Form>
 			</wnd:Tab>
 			<wnd:Tab title="Acquisition">
 			<ui:attribute name="title" description="Acquisition tab title"/>
-				<form:Form ui:field="acquisitionForm" model="{acquisitionModel}" autoFetchData="true">
-					<form:Control name="{acquisitionFields.acquisitionDate}" readOnly="true"><ui:msg>*Date</ui:msg></form:Control>
-					<form:Control name="{acquisitionFields.acquisitionType}" width="*" readOnly="true"><ui:msg>*Type</ui:msg></form:Control>
-					<form:Control name="{acquisitionFields.cost}" width="100" readOnly="true"><ui:msg>C*ost (£)</ui:msg></form:Control>
-					<form:Control name="{acquisitionFields.pi}" width="*" readOnly="true"><ui:msg>P*I</ui:msg></form:Control>
+				<form:Form valuesManager="{model}">
+					<form:Control name="{fields.acquisitionDate}" readOnly="true"><ui:msg>*Date</ui:msg></form:Control>
+					<form:Control name="{fields.acquisitionType}" width="300"><ui:msg>*Type</ui:msg></form:Control>
+					<form:Control name="{fields.cost}" width="100"><ui:msg>C*ost (£)</ui:msg></form:Control>
+					<form:Control name="{fields.pi}" width="300"><ui:msg>P*I</ui:msg></form:Control>
 				</form:Form>
 			</wnd:Tab>
 		</wnd:TabSet>

@@ -17,11 +17,15 @@
 package com.nabla.dc.client.presenter.fixed_asset;
 
 import com.nabla.dc.client.model.fixed_asset.AssetRecord;
+import com.nabla.dc.client.model.fixed_asset.ViewAssetValuesManager;
+import com.nabla.dc.client.ui.fixed_asset.ViewAssetDialogUi;
 import com.nabla.dc.client.ui.fixed_asset.ViewAssetDisposalTabUi;
 import com.nabla.dc.client.ui.fixed_asset.ViewAssetTransferTabUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.ITopDisplay;
+import com.nabla.wapp.shared.slot.ISlot;
+import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
@@ -33,28 +37,39 @@ public class ViewAssetDialog extends AbstractTopPresenter<ViewAssetDialog.IDispl
 		void addTab(final ITabDisplay tab);
 	}
 
+	public interface IAcquisitionTabDisplay extends ITabDisplay {}
 	public interface IDisposalTabDisplay extends ITabDisplay {}
 	public interface ITransferTabDisplay extends ITabDisplay {}
 
-	private final AssetRecord	asset;
+	private final ValuesManager	model;
 
-	public ViewAssetDialog(final IDisplay ui, final AssetRecord asset) {
+	public ViewAssetDialog(final IDisplay ui, final ValuesManager model) {
 		super(ui);
-		this.asset = asset;
+		this.model = model;
 	}
 
-	public ViewAssetDialog(final AssetRecord asset) {
-		super(new ViewAssetUi());
-		this.asset = asset;
+	public ViewAssetDialog(final ValuesManager model) {
+		this(new ViewAssetDialogUi(model), model);
+	}
+
+	public static void viewRecord(final Integer assetId) {
+		final ViewAssetValuesManager values = new ViewAssetValuesManager(assetId);
+		values.editRecord(new ISlot() {
+			@Override
+			public void invoke() {
+				new ViewAssetDialog(values).revealDisplay();
+			}
+		});
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
+		final AssetRecord asset = new AssetRecord(model.rememberValues());
 		if (asset.isTransfer())
-			getDisplay().addTab(new ViewAssetTransferTabUi(asset.getId()));
+			getDisplay().addTab(new ViewAssetTransferTabUi(model));
 		if (asset.isDisposed())
-			getDisplay().addTab(new ViewAssetDisposalTabUi(asset.getId()));
+			getDisplay().addTab(new ViewAssetDisposalTabUi(model));
 	}
 
 }

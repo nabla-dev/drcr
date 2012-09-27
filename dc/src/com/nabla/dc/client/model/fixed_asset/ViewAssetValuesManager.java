@@ -14,20 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
+package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.wapp.shared.command.AbstractFetchRecord;
+import com.nabla.wapp.client.model.WizardValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class FetchAssetTransfer extends AbstractFetchRecord {
+public class ViewAssetValuesManager extends WizardValuesManager {
 
-	FetchAssetTransfer() {}
-
-	public FetchAssetTransfer(final Integer id) {
-		super(id);
+	public ViewAssetValuesManager(final Integer assetId) {
+		super(new ViewAssetModel(assetId));
 	}
 
 }

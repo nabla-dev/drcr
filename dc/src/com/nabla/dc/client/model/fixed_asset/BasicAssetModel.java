@@ -14,27 +14,24 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
+package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.nabla.wapp.shared.dispatch.VoidResult;
+import com.nabla.wapp.client.model.CModel;
 
 /**
  * @author nabla
  *
  */
-public class RevertAssetDisposal implements IAction<VoidResult> {
+public class BasicAssetModel extends CModel<AssetRecord> {
 
-	private Integer	id;
+	protected static final AssetFields	fields = new AssetFields();
 
-	RevertAssetDisposal() {}	// for serialization only
-
-	public RevertAssetDisposal(final Integer assetId) {
-		this.id = assetId;
+	public BasicAssetModel() {
+		super(AssetRecord.factory);
 	}
 
-	public Integer getId() {
-		return id;
+	public AssetFields fields() {
+		return fields;
 	}
 
 }

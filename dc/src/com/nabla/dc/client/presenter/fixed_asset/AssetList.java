@@ -21,18 +21,22 @@ import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.fixed_asset.AssetListUi;
 import com.nabla.dc.shared.IPrivileges;
+import com.nabla.dc.shared.command.fixed_asset.RevertAssetDisposal;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.general.AbstractAsyncCallback;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
+import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
@@ -88,22 +92,17 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
-
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.edit(), onEditRecord);
 		cmd.edit().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.removeRecord(), onRemoveRecord);
 		registerSlot(cmd.view(), onViewRecord);
 		cmd.view().setRecordProvider(getDisplay().getCurrentRecordProvider());
-/*		registerSlot(cmd.userReportList(), onUserReportList);
-		registerSlot(cmd.editAssetCategoryList(), onEditAssetCategoryList);
-		registerSlot(cmd.editBalanceSheetCategoryList(), onEditBalanceSheetCategoryList);
+		registerSlot(cmd.disposal(), onDisposeAsset);
+		cmd.disposal().setRecordProvider(getDisplay().getCurrentRecordProvider());
+		/*
+	  	registerSlot(cmd.userReportList(), onUserReportList);
 		registerSlot(cmd.importAssets(), onImportAsset);
-
-		final IRecordCommandSet rcmd = display.getRecordCommands();
-
-
-		registerSlot(rcmd.disposal(), onDisposeAsset);
 		registerSlot(rcmd.split(), onSplitAsset);
 		registerSlot(rcmd.transaction(), onTransactionList);
 	*/
@@ -175,9 +174,41 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	private final ISlot1<AssetRecord> onViewRecord = new ISlot1<AssetRecord>() {
 		@Override
 		public void invoke(AssetRecord record) {
-
+			ViewAssetDialog.viewRecord(record.getId());
 		}
 	};
+
+	private final ISlot1<AssetRecord> onDisposeAsset = new ISlot1<AssetRecord>() {
+		@Override
+		public void invoke(AssetRecord record) {
+			if (record.isDisposed())
+				revertAssetDisposal(record);
+			else
+				disposeAsset(record);
+		}
+	};
+
+	private void revertAssetDisposal(final AssetRecord asset) {
+		Application.getInstance().getMessageBox().ask(Resource.strings.revertFixedAssetDisposal(), new BooleanCallback() {
+			@Override
+			public void execute(Boolean value) {
+				if (value) {
+					Application.getInstance().getDispatcher().execute(new RevertAssetDisposal(asset.getId()), new AbstractAsyncCallback<VoidResult>() {
+						@Override
+						public void onSuccess(@SuppressWarnings("unused") final VoidResult __) {
+							getDisplay().updateRecord(asset.getId());
+						}
+					});
+				} else {
+					disposeAsset(asset);
+				}
+			}
+		});
+	}
+
+	private void disposeAsset(final AssetRecord asset) {
+		AssetDisposalWizardFactory.get(asset.getId(), asset.getName(), onRecordUpdated).revealDisplay();
+	}
 
 	/*
 	private final ISlot onUserReportList = new ISlot() {
@@ -198,46 +229,6 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 			}).revealDisplay();
 		}
 	};
-
-
-	private final ISlot1<Record> onDisposeAsset = new ISlot1<Record>() {
-		@Override
-		public void invoke(Record record) {
-			final AssetRecord asset = new AssetRecord(record);
-			if (asset.isDisposed()) {
-				msgBox.ask(Resource.strings.revertAssetDisposal(), new BooleanCallback() {
-					@Override
-					public void execute(Boolean value) {
-						if (value) {
-							server.execute(new RevertAssetDisposal(asset.getId()), new AbstractAsyncCallback<VoidResult>() {
-								@Override
-								public void onSuccess(@SuppressWarnings("unused") final VoidResult __) {
-									asset.clearDisposal();
-									display.updateRecord(asset.getImpl());
-								}
-							});
-						} else {
-							disposeAsset(asset);
-						}
-					}
-				});
-			} else {
-				disposeAsset(asset);
-			}
-		}
-	};
-
-	private void disposeAsset(final AssetRecord asset) {
-		final AssetDisposalDialog dlg = assetDisposalWizardFactory.get(asset.getId(), asset.getName());
-		dlg.getSuccessSlots().connect(new ISlot1<Record>() {
-			@Override
-			public void invoke(Record disposal) {
-				asset.setDisposal(disposal);
-				display.updateRecord(asset.getImpl());
-			}
-		});
-		dlg.revealDisplay();
-	}
 
 	private final ISlot1<Record> onSplitAsset = new ISlot1<Record>() {
 		@Override

@@ -20,10 +20,10 @@ package com.nabla.dc.client.ui.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.model.fixed_asset.AssetTransferModel;
 import com.nabla.dc.client.presenter.fixed_asset.ViewAssetDialog;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
+import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
@@ -35,10 +35,10 @@ public class ViewAssetTransferTabUi extends BindedTabDisplay<Tab> implements Vie
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final AssetTransferModel	model;
+	final ValuesManager		model;
 
-	public ViewAssetTransferTabUi(final int assetId) {
-		this.model = new AssetTransferModel(assetId);
+	public ViewAssetTransferTabUi(final ValuesManager model) {
+		this.model = model;
 		this.create(uiBinder, this);
 	}
 

@@ -3,12 +3,11 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default"
-    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
 	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager" />
-	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetWizardModel.Fields" />
+	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetFields" />
 		
 	<wnd:WizardPage title="Enter asset name and other general information.">
 		<ui:attribute name="title" description="Asset wizard - general page caption"/>
