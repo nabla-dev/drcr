@@ -22,10 +22,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.command.fixed_asset.UpdateAssetDisposal;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.TransactionClasses;
@@ -41,6 +44,8 @@ import com.nabla.wapp.shared.dispatch.ActionException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.IntegerSet;
+import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -53,6 +58,15 @@ public class UpdateAssetDisposalHandler extends AbstractUpdateHandler<UpdateAsse
 
 	@Override
 	protected void update(final UpdateAssetDisposal record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		// validate disposal date: must be at least in following month!
+		final Calendar dt = new GregorianCalendar();
+		dt.setTime(getAssetAcqisitionDate(ctx.getReadConnection(), record.getId()));
+		dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
+		final Calendar dtDisposal = new GregorianCalendar();
+		dtDisposal.setTime(record.getDisposalDate());
+		if (!dt.before(dtDisposal))
+			throw new ValidationException(IAsset.DISPOSAL_DATE, ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
+		// retrieve current disposal date if any and company ID for this asset
 		Date oldDisposalDate;
 		Integer companyId;
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
@@ -101,78 +115,117 @@ public class UpdateAssetDisposalHandler extends AbstractUpdateHandler<UpdateAsse
 			redo.setInt(1, record.getId());
 			// backup transaction after disposal if any
 			if (log.isDebugEnabled())
-				log.debug("backing up transactions after disposal");
+				log.debug("backing up transactions after disposal date");
+			// charge monthly depreciation in disposal month if disposal is after 15
+			final Calendar dt = new GregorianCalendar();
+			dt.setTime(record.getDisposalDate());
+			if (dt.get(GregorianCalendar.DAY_OF_MONTH) >= dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)/2)
+				dt.add(GregorianCalendar.MONTH, 1);
+			dt.set(GregorianCalendar.DAY_OF_MONTH, 1);
+			final Date from = new Date(dt.getTime().getTime());
+			// get list of transactions to backup before we delete them
+			final IntegerSet transIds = new IntegerSet();
 			final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT * FROM fa_transaction WHERE fa_asset_id=? AND date>=?;", record.getId(), disposal_date);
+"SELECT t.*" +
+" FROM fa_transaction AS t INNER JOIN period_end AS p ON t.period_end_id=p.id" +
+" WHERE t.fa_asset_id=? AND p.end_date>?;",
+record.getId(), from);
 			try {
 				final ResultSet rs = stmt.executeQuery();
-				while (rs.next()) {
-					final String command = MessageFormat.format(
-"INSERT INTO transaction (id,asset_id,date,amount,class,type,dep_period) VALUES({0,number,0},{1,number,0},''{2,date,yyyy-MM-dd}'',{3,number,0},''{4}'',''{5}'',{6,number,0});",
+				try {
+					while (rs.next()) {
+						transIds.add(rs.getInt("id"));
+						final String command = MessageFormat.format(
+"INSERT INTO fa_transaction" +
+" (id,fa_asset_id,period_end_id,amount,class,type,depreciation_period)" +
+" VALUES({0,number,0},{1,number,0},{2,number,0},{3,number,0},''{4}'',''{5}'',{6,number,0});",
 							rs.getInt("id"),
-							id,
-							rs.getDate("date"),
+							rs.getInt("fa_asset_id"),
+							rs.getInt("period_end_id"),
 							rs.getInt("amount"),
 							rs.getString("class"),
 							rs.getString("type"),
-							Database.getInteger(rs, "dep_period"));
-					if (log.isTraceEnabled())
-						log.trace("redo = " + command);
-					redo.setString(2, command);
-					redo.addBatch();
+							Database.getInteger(rs, "depreciation_period"));
+						if (log.isTraceEnabled())
+							log.trace("redo = " + command);
+						redo.setString(2, command);
+						redo.addBatch();
+					}
+				} finally {
+					rs.close();
 				}
 			} finally {
-				try { stmt.close(); } catch (final SQLException e) {}
+				stmt.close();
 			}
 			// remove any transaction after disposal date
 			if (log.isDebugEnabled())
-				log.debug("removing transactions after disposal");
+				log.debug("removing transactions after disposal date");
 			Database.executeUpdate(conn,
-"DELETE FROM transaction WHERE asset_id=? AND date>=?;", id, disposal_date);
+"DELETE FROM fa_transaction WHERE id IN (?);", transIds);
 			// add disposal transactions
 			if (log.isDebugEnabled())
-				log.debug("removing transactions after disposal");
-			redo.setString(2, addDisposalTransaction(-1 * getCost(), TransactionClasses.COST, TransactionTypes.CLOSING));
-			redo.addBatch();
-			redo.setString(2, addDisposalTransaction(-1 * getDepreciation(), TransactionClasses.DEP, TransactionTypes.CLOSING));
-			redo.addBatch();
-			if (!Database.isBatchCompleted(redo.executeBatch())) {
-				if (log.isDebugEnabled())
-					log.debug("fail to save disposal transactions");
-				throw new InternalErrorException("failed to add disposal transactions");
+				log.debug("adding transactions for disposal");
+			final TransactionList transactions = new TransactionList(record.getId());
+			// closing cost
+			transactions.add(new Transaction(TransactionClasses.COST, TransactionTypes.CLOSING, record.getDisposalDate(), -1 * getAssetCost(conn, record.getId())));
+			// closing accumulated depreciation
+			transactions.add(new Transaction(TransactionClasses.DEP, TransactionTypes.CLOSING, record.getDisposalDate(), -1 * getAssetDepreciation(conn, record.getId())));
+			for (Integer newTransId : transactions.save(conn, true)) {
+				redo.setString(2,
+MessageFormat.format("DELETE FROM transaction WHERE id={0,number,0};", newTransId));
+				redo.addBatch();
+			}
+			if (!Database.isBatchCompleted(redo.executeBatch()))
+				throw new InternalErrorException("failed to save disposal transactions");
+		} finally {
+			redo.close();
+		}
+	}
+
+	private int getAssetCost(final Connection conn, int assetId) throws SQLException {
+		final PreparedStatement stmt = StatementFormat.prepare(conn,
+"SELECT SUM(amount) FROM fa_transaction WHERE fa_asset_id=? AND class='COST';", assetId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+				rs.close();
 			}
 		} finally {
-			try { redo.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 	}
 
-	public int getCost() throws SQLException {
+	private int getAssetDepreciation(final Connection conn, int assetId) throws SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT SUM(amount) FROM transaction WHERE asset_id=? AND class='COST';", id);
+"SELECT SUM(amount) FROM ta_transaction WHERE fa_asset_id=? AND class='DEP';", assetId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
-			return rs.next() ? rs.getInt(1) : 0;
+			try {
+				return rs.next() ? rs.getInt(1) : 0;
+			} finally {
+				rs.close();
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 	}
 
-	public int getDepreciation() throws SQLException {
+	private Date getAssetAcqisitionDate(final Connection conn, int assetId) throws SQLException, ActionException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT SUM(amount) FROM transaction WHERE asset_id=? AND class='DEP';", id);
+"SELECT acquisition_date FROM fa_asset WHERE id=?;", assetId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
-			return rs.next() ? rs.getInt(1) : 0;
+			try {
+				if (!rs.next())
+					throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+				return rs.getDate(1);
+			} finally {
+				rs.close();
+			}
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			stmt.close();
 		}
 	}
-
-	public String addDisposalTransaction(int amount, TransactionClasses clazz, TransactionTypes type) throws SQLException {
-		return MessageFormat.format("DELETE FROM transaction WHERE id={0,number,0};",
-				Database.addRecord(conn,
-"INSERT INTO transaction (asset_id,date,amount,class,type) VALUES(?,?,?,?,?)",
-			id, disposal_date, amount, clazz.toString(), type.toString()));
-	}
-
 }

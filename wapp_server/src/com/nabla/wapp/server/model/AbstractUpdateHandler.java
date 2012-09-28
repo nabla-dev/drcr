@@ -18,6 +18,8 @@ package com.nabla.wapp.server.model;
 
 import java.sql.SQLException;
 
+import javax.validation.constraints.Null;
+
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -35,21 +37,9 @@ public abstract class AbstractUpdateHandler<A extends IRecordAction<StringResult
 	}
 
 	@Override
-	public StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		validate(record, ctx);
+	public @Null StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		update(record, ctx);
 		return null;
-	}
-
-	protected void validate(@SuppressWarnings("unused") final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
-/*		final ValidationException x = new ValidationException();
-		try {
-			record.validate(x);
-		} catch (Exception e) {
-			Util.throwInternalErrorException(e);
-		}
-		if (!x.isEmpty())
-			throw x;*/
 	}
 
 	abstract protected void update(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;

@@ -21,25 +21,18 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.model.company.IFinancialYear;
-import com.nabla.dc.shared.model.company.IPeriodEnd;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
 import com.nabla.dc.shared.model.fixed_asset.TransactionClasses;
 import com.nabla.dc.shared.model.fixed_asset.TransactionTypes;
-import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
@@ -125,39 +118,10 @@ public class AssetDepreciation {
 	}
 
 	public void createTransactions(final Connection conn, int assetId) throws SQLException, DispatchException {
-		final LinkedList<Transaction> transactions = new LinkedList<Transaction>();
+		final TransactionList transactions = new TransactionList(assetId);
 		getAcquisitionTransactions(transactions);
 		getDepreciationTransactions(transactions);
-		int companyId = getCompanyId(conn, assetId);
-		confirmPeriodEnd(conn, companyId, transactions.getFirst().getPeriodEndDate(), transactions.getLast().getPeriodEndDate());
-		// convert period end date to id
-		final PreparedStatement stmt = conn.prepareStatement(
-"SELECT p.id" +
-" FROM period_end AS p INNER JOIN financial_year AS y ON p.financial_year_id=y.id" +
-" WHERE y.company_id=? AND p.end_date=?;");
-		try {
-			stmt.setInt(1, companyId);
-			for (Transaction t : transactions) {
-				t.setAssetId(assetId);
-				stmt.setDate(2, t.getPeriodEndDate());
-				final ResultSet rs = stmt.executeQuery();
-				try {
-					rs.next();
-					t.setPeriodEndId(rs.getInt(1));
-				} finally {
-					rs.close();
-				}
-			}
-		} finally {
-			stmt.close();
-		}
-		final BatchInsertStatement<Transaction> batch = new BatchInsertStatement<Transaction>(conn, Transaction.class);
-		try {
-			batch.add(transactions);
-			batch.execute();
-		} finally {
-			batch.close();
-		}
+		transactions.save(conn);
 	}
 
 	public void getAcquisitionTransactions(final List<Transaction> transactions) {
@@ -203,124 +167,4 @@ public class AssetDepreciation {
 		}
 	}
 
-	private static void confirmPeriodEnd(final Connection conn, int companyId, final Date firstPeriodEndDate, final Date lastPeriodEndDate) throws SQLException, InternalErrorException {
-		final Calendar first = new GregorianCalendar();
-		first.setTime(firstPeriodEndDate);
-		final Calendar last = new GregorianCalendar();
-		last.setTime(lastPeriodEndDate);
-		// find first period end date defined for company
-		final Calendar dt = new GregorianCalendar();
-		{
-			final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT p.end_date" +
-" FROM period_end AS p INNER JOIN financial_year AS y ON p.financial_year_id=y.id" +
-" WHERE y.company_id=?" +
-" ORDER BY p.end_date ASC LIMIT 1;", companyId);
-			try {
-				final ResultSet rs = stmt.executeQuery();
-				try {
-					if (!rs.next())
-						Util.throwInternalErrorException("company definition has not been finalised");
-					dt.setTime(rs.getDate(1));
-				} finally {
-					rs.close();
-				}
-			} finally {
-				stmt.close();
-			}
-		}
-		if (first.before(dt)) {
-			final SimpleDateFormat financialYearNameFormat = new SimpleDateFormat(IFinancialYear.NAME_FORMAT);
-			final SimpleDateFormat periodEndNameFormat = new SimpleDateFormat(IPeriodEnd.NAME_FORMAT);
-			dt.add(GregorianCalendar.MONTH, -1);
-			dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-			final PreparedStatement stmt = conn.prepareStatement(
-"INSERT IGNORE INTO period_end (financial_year_id,name,end_date) VALUES(?,?,?);");
-			try {
-				do {
-				// ok we are in trouble because this is before time began!
-				// so assume 12 month year
-					final Integer financialYearId = Database.addUniqueRecord(conn,
-"INSERT INTO financial_year (company_id, name) VALUES(?,?);",
-companyId, financialYearNameFormat.format(new Date(dt.getTime().getTime())));
-					if (financialYearId == null)
-						Util.throwInternalErrorException("cannot create previous financial year: name duplicate");
-					stmt.setInt(1, financialYearId);
-					for (int m = 0; m < 12; ++m) {
-						final Date end = new Date(dt.getTime().getTime());
-						stmt.setString(2, periodEndNameFormat.format(end));
-						stmt.setDate(3, end);
-						stmt.addBatch();
-						dt.add(GregorianCalendar.MONTH, -1);
-						dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-					}
-				} while (first.before(dt));
-				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException("fail to add period ends");
-			} finally {
-				stmt.close();
-			}
-		}
-		// find last period end date defined for company
-		Integer financialYearId;
-		{
-			final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT p.end_date, p.financial_year_id" +
-" FROM period_end AS p INNER JOIN financial_year AS y ON p.financial_year_id=y.id" +
-" WHERE y.company_id=?" +
-" ORDER BY p.end_date DESC LIMIT 1;", companyId);
-			try {
-				final ResultSet rs = stmt.executeQuery();
-				try {
-					if (!rs.next())
-						Util.throwInternalErrorException("company definition has not been finalised");
-					dt.setTime(rs.getDate(1));
-					financialYearId = rs.getInt(2);
-				} finally {
-					rs.close();
-				}
-			} finally {
-				stmt.close();
-			}
-		}
-		if (dt.before(last)) {
-			final PreparedStatement stmt = conn.prepareStatement(
-"INSERT IGNORE INTO period_end (financial_year_id,name,end_date) VALUES(?,?,?);");
-			try {
-				stmt.setInt(1, financialYearId);
-				final SimpleDateFormat periodEndNameFormat = new SimpleDateFormat(IPeriodEnd.NAME_FORMAT);
-				do {
-					dt.add(GregorianCalendar.MONTH, 1);
-					dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-					final Date end = new Date(dt.getTime().getTime());
-					stmt.setString(2, periodEndNameFormat.format(end));
-					stmt.setDate(3, end);
-					stmt.addBatch();
-				} while (dt.before(last));
-				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException("fail to add period ends");
-			} finally {
-				stmt.close();
-			}
-		}
-	}
-
-	private static int getCompanyId(final Connection conn, int assetId) throws SQLException, InternalErrorException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT t.company_id" +
-" FROM fa_asset AS a INNER JOIN fa_company_asset_category AS t ON a.fa_company_asset_category_id=t.id" +
-" WHERE a.id=?;", assetId);
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			try {
-				if (!rs.next())
-					Util.throwInternalErrorException("asset has been removed");
-				return rs.getInt(1);
-			} finally {
-				rs.close();
-			}
-		} finally {
-			stmt.close();
-		}
-	}
 }

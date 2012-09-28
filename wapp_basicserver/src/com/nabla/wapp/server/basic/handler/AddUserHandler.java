@@ -27,8 +27,8 @@ import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.command.AddUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
@@ -38,32 +38,28 @@ import com.nabla.wapp.shared.model.ValidationException;
 public class AddUserHandler extends AbstractAddHandler<AddUser> {
 
 	@Override
-	public StringResult execute(final AddUser record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		validate(record, ctx);
+	protected int add(AddUser record, IUserSessionContext ctx) throws DispatchException, SQLException {
+		final Integer id = new UserManager(ctx.getWriteConnection()).addUser(record.getName(), record.getPassword());
+		if (id == null)
+			throw new ValidationException(IUser.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		return id;
+	}
+
+	@Override
+	protected void generateResponse(final JsonResponse json, @SuppressWarnings("unused") final AddUser record, int recordId, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active AS 'b_active', created FROM user WHERE id=?;", add(record, ctx));
+"SELECT id, active AS 'b_active', created FROM user WHERE id=?;", recordId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
-				final JsonResponse json = new JsonResponse();
 				json.putNext(rs);
-				return json.toStringResult();
 			} finally {
 				rs.close();
 			}
 		} finally {
 			stmt.close();
 		}
-	}
-
-	@SuppressWarnings("static-access")
-	@Override
-	protected int add(AddUser record, IUserSessionContext ctx) throws DispatchException, SQLException {
-		final Integer id = new UserManager(ctx.getWriteConnection()).addUser(record.getName(), record.getPassword());
-		if (id == null)
-			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
-		return id;
 	}
 
 }

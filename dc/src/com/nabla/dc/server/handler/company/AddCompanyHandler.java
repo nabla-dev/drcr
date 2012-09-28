@@ -35,7 +35,6 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
@@ -44,26 +43,6 @@ import com.nabla.wapp.shared.model.ValidationException;
  *
  */
 public class AddCompanyHandler extends AbstractAddHandler<AddCompany> {
-
-	@Override
-	public StringResult execute(final AddCompany record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		validate(record, ctx);
-		// return more info than just ID
-		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active AS 'b_active' FROM company WHERE id=?;", add(record, ctx));
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			try {
-				final JsonResponse json = new JsonResponse();
-				json.putNext(rs);
-				return json.toStringResult();
-			} finally {
-				rs.close();
-			}
-		} finally {
-			stmt.close();
-		}
-	}
 
 	@Override
 	protected int add(AddCompany record, IUserSessionContext ctx) throws DispatchException, SQLException {
@@ -104,4 +83,20 @@ companyId, record.getFinancialYear());
 		}
 	}
 
+	@Override
+	protected void generateResponse(final JsonResponse json, @SuppressWarnings("unused") final AddCompany record, int recordId, final IUserSessionContext ctx) throws DispatchException, SQLException {
+		// return more info than just ID
+		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
+"SELECT id, active AS 'b_active' FROM company WHERE id=?;", recordId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				json.putNext(rs);
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
+	}
 }

@@ -46,6 +46,10 @@ public class BatchInsertStatement<T> extends SqlStatement {
 		this(conn, new SqlInsert<T>(recordClass));
 	}
 
+	public BatchInsertStatement(final Connection conn, final Class<T> recordClass, boolean autoGenerateKeys) throws SQLException {
+		this(conn, new SqlInsert<T>(recordClass, autoGenerateKeys));
+	}
+
 	public void close() {
 		Database.close(stmt);
 	}
@@ -67,7 +71,7 @@ public class BatchInsertStatement<T> extends SqlStatement {
 	public List<Integer> execute() throws SQLException, InternalErrorException {
 		if (!Database.isBatchCompleted(stmt.executeBatch()))
 			Util.throwInternalErrorException("failed to insert list of records");
-		if (!sql.getGenerateKeys())
+		if (!sql.getAutoGenerateKeys())
 			return null;
 		final ResultSet rs = stmt.getGeneratedKeys();
 		try {

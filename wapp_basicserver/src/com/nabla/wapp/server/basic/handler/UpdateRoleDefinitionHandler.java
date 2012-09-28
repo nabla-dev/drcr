@@ -18,6 +18,8 @@ package com.nabla.wapp.server.basic.handler;
 
 import java.sql.SQLException;
 
+import javax.validation.constraints.Null;
+
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
@@ -36,7 +38,7 @@ public class UpdateRoleDefinitionHandler extends AbstractHandler<UpdateRoleDefin
 	}
 
 	@Override
-	public StringResult execute(final UpdateRoleDefinition record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public @Null StringResult execute(final UpdateRoleDefinition record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		new UserManager(ctx.getWriteConnection()).updateRoleDefinition(record.getRoleId(), record.getSelectionDelta());
 		return null;
 	}

@@ -37,23 +37,15 @@ public abstract class AbstractAddHandler<A extends IRecordAction<StringResult>> 
 
 	@Override
 	public StringResult execute(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		validate(record, ctx);
 		final JsonResponse json = new JsonResponse();
-		json.putId(add(record, ctx));
+		generateResponse(json, record, add(record, ctx), ctx);
 		return json.toStringResult();
 	}
 
-	protected void validate(@SuppressWarnings("unused") final A record, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException {
-/*		final ValidationException x = new ValidationException();
-		try {
-			record.validate(x);
-		} catch (Exception e) {
-			Util.throwInternalErrorException(e);
-		}
-		if (!x.isEmpty())
-			throw x;*/
-	}
-
 	abstract protected int add(final A record, final IUserSessionContext ctx) throws DispatchException, SQLException;
+
+	protected void generateResponse(final JsonResponse json, @SuppressWarnings("unused") final A record, int recordId, @SuppressWarnings("unused") final IUserSessionContext ctx) throws DispatchException, SQLException {
+		json.putId(recordId);
+	}
 
 }
