@@ -48,9 +48,12 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 		bindHandler(UpdateAssetFieldHandler.class);
 		bindHandler(RemoveAssetHandler.class);
 		bindHandler(FetchAssetRecordHandler.class);
+
 		bindHandler(FetchAssetDisposalHandler.class);
 		bindHandler(RevertAssetDisposalHandler.class);
 		bindHandler(UpdateAssetDisposalHandler.class);
+
+		bindHandler(FetchSplitAssetHandler.class);
 
 		bindHandler(FetchAssetHandler.class);
 		bindHandler(FetchCompanyFixedAssetCategoryListHandler.class);
@@ -59,39 +62,6 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 		bindHandler(FetchAssetPropertiesHandler.class);
 
 		bindHandler(RemoveTransactionHandler.class);
-
-/*
-  bindHandler(GetAssetCategoryDepreciationPeriodRangeHandler.class);
-
-		bindHandler(FetchAssetRegisterActiveAssetCategoryListHandler.class);
-		bindHandler(FetchAssetListHandler.class);
-		bindHandler(AddAssetHandler.class);
-		bindHandler(UpdateAssetFieldHandler.class);
-		bindHandler(UpdateAssetHandler.class);
-
-		bindHandler(FetchAssetListRecordHandler.class);
-
-		bindHandler(FetchAssetDisposalHandler.class);
-		bindHandler(UpdateAssetDisposalHandler.class);
-		bindHandler(RevertAssetDisposalHandler.class);
-
-		bindHandler(FetchAssetRecordHandler.class);
-
-		bindHandler(FetchAssetAcquisitionHandler.class);
-		bindHandler(FetchAssetTransferHandler.class);
-
-		bindHandler(SplitAssetHandler.class);
-
-		bindHandler(ImportAssetListHandler.class);
-		bindHandler(ImportSettingsHandler.class);
-		bindHandler(FetchImportErrorListHandler.class);
-
-		bindHandler(FetchTransactionListHandler.class);
-		bindHandler(AddTransactionHandler.class);
-		bindHandler(UpdateTransactionHandler.class);
-
-		bindHandler(GetNewTransactionDefaultValuesHandler.class);
-		*/
 	}
 
 }

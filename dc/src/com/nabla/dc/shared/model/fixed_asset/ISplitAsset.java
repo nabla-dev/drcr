@@ -37,5 +37,6 @@ public interface ISplitAsset {
 
 	static final String					COST_A = "costA";
 	static final String					COST_B = "costB";
+	static final String					TOTAL = "total";
 
 }

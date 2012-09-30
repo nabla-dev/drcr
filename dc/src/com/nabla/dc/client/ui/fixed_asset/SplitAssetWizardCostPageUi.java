@@ -52,20 +52,19 @@ public class SplitAssetWizardCostPageUi extends BindedBasicWizardPageDisplay imp
 		super(model);
 		create(uiBinder, this);
 
+		totalValue = form.getIntegerField(fields.total()).getValue();
 		valueB = form.getIntegerField(fields.costB());
 		valueB.setValue(DEFAULT_COST_B);
 
 		final IntegerItem valueA = (IntegerItem)form.getItem(fields.costA());
 		Assert.notNull(valueA);
+		valueA.setValue(totalValue - DEFAULT_COST_B);
 		valueA.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				onValueChanged(event.getValue());
 			}
 		});
-		totalValue = (Integer)valueA.getValue() + DEFAULT_COST_B;
-		form.setValue(fields.total(), totalValue);
-
 	}
 
 	private void onValueChanged(final Object value) {

@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.shared.command.GetFormDefaultValues;
@@ -79,7 +80,12 @@ public class WizardValuesManager<T extends Record> extends ValuesManager {
 	public T getRecord() {
 		@SuppressWarnings("unchecked")
 		CModel<T> model = (CModel<T>) this.getDataSource();
-		return model.getRecordFactory().get(this.getJsObj());
+		return model.getRecordFactory().get(this.getCurrentValues());
 	}
+
+    public native JavaScriptObject getCurrentValues() /*-{
+    	var self = this.@com.smartgwt.client.core.BaseClass::getOrCreateJsObj()();
+    	return self.getValues();
+	}-*/;
 
 }

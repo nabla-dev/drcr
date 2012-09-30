@@ -28,9 +28,9 @@ import com.smartgwt.client.widgets.form.ValuesManager;
 public class BindedBasicWizardPageDisplay extends BindedWizardPageDisplay<WizardPage> {
 
 	@UiField(provided=true)
-	protected final ValuesManager		model;
+	public final ValuesManager		model;
 	@UiField
-	protected Form						form;
+	public Form						form;
 
 	protected BindedBasicWizardPageDisplay(final ValuesManager model) {
 		this.model = model;

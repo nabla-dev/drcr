@@ -18,14 +18,10 @@ package com.nabla.dc.client.model.fixed_asset;
 
 import com.nabla.wapp.client.model.WizardValuesManager;
 
-public class SplitAssetValuesManager extends WizardValuesManager {
+public class SplitAssetValuesManager extends WizardValuesManager<SplitAssetRecord> {
 
 	public SplitAssetValuesManager(final int assetId) {
 		super(new SplitAssetModel(assetId));
-	}
-
-	public AssetRecord getAsset() {
-		return getModel().getAsset();
 	}
 
 }

@@ -32,7 +32,6 @@ import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.LoggerFactory;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
@@ -109,7 +108,7 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 		displayNextPage(new AssetWizardGeneralPageUi(data), new ISlot() {
 			@Override
 			public void invoke() {
-				Integer fixedAssetCategoryId = Integer.valueOf(data.getValueAsString(IAsset.CATEGORY));
+				Integer fixedAssetCategoryId = data.getRecord().getCategoryId();
 				Application.getInstance().getDispatcher().execute(new GetFixedAssetCategoryDepreciationPeriodRange(fixedAssetCategoryId), new AsyncCallback<DepreciationPeriodRange>() {
 					@Override
 					public void onFailure(Throwable caught) {
@@ -158,7 +157,7 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 		@Override
 		public void execute(DSResponse response, Object rawData, DSRequest request) {
 			if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-				onSuccessHandler.invoke((Integer)data.getValue(IdField.NAME));
+				onSuccessHandler.invoke(data.getRecord().getId());
 			onSave.execute(response, rawData, request);
 		}
 	};

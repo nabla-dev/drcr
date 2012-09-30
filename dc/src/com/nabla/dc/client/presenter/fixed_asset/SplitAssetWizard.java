@@ -75,7 +75,7 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 	@Override
 	protected void onBind() {
 		super.onBind();
-		displayNextPage(new SplitAssetWizardWelcomePageUi(data.getAsset().getName()), new ISlot() {
+		displayNextPage(new SplitAssetWizardWelcomePageUi(data.getRecord().getNameA()), new ISlot() {
 			@Override
 			public void invoke() {
 				displayGeneralPage();

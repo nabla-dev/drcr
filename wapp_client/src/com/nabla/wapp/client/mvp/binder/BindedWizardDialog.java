@@ -33,9 +33,9 @@ import com.smartgwt.client.widgets.Canvas;
 public class BindedWizardDialog extends BindedModalDialog {
 
 	@UiField
-	WizardClientArea	client;
+	public WizardClientArea		client;
 	@UiField
-	Html				pageTitle;
+	public Html					pageTitle;
 
 	@Override
 	protected <D> void create(final UiBinder<ModalDialog, D> uiBinder, final D instance) {

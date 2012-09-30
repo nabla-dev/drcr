@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,39 +14,21 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.server.handler;
+package com.nabla.dc.server.handler.fixed_asset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
-
-import com.nabla.fixed_assets.shared.IPrivileges;
-import com.nabla.fixed_assets.shared.TransactionClasses;
-import com.nabla.fixed_assets.shared.TransactionTypes;
-import com.nabla.fixed_assets.shared.command.SplitAsset;
-import com.nabla.fixed_assets.shared.model.IAsset;
+import com.nabla.dc.shared.command.fixed_asset.SplitAsset;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.database.ConnectionTransactionGuard;
-import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.model.AbstractOperationHandler;
+import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.InternalErrorException;
-import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.general.SimpleString;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
  *
  */
-public class SplitAssetHandler extends AbstractOperationHandler<SplitAsset, SplitAssetHandler.Record> {
-
+public class SplitAssetHandler extends AbstractUpdateHandler<SplitAsset> {
+/*
 	@Root(name="data")
 	static class Record {
 
@@ -89,12 +71,12 @@ public class SplitAssetHandler extends AbstractOperationHandler<SplitAsset, Spli
 		}
 
 	}
-
-	public SplitAssetHandler() {
-		super(true, IPrivileges.ASSET_EDIT);
-	}
-
+*/
 	@Override
+	protected void update(final SplitAsset record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+
+	}
+/*	@Override
 	protected String execute(final Record request, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final UpdateAssetFieldHandler.Record assetA = new UpdateAssetFieldHandler.Record();
 		assetA.id = request.id;
@@ -175,5 +157,5 @@ public class SplitAssetHandler extends AbstractOperationHandler<SplitAsset, Spli
 			guard.close();
 		}
 	}
-
+*/
 }

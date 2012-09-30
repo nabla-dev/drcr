@@ -22,7 +22,7 @@ import com.nabla.wapp.client.model.WizardValuesManager;
  * @author nabla
  *
  */
-public class AssetWizardValuesManager extends WizardValuesManager {
+public class AssetWizardValuesManager extends WizardValuesManager<AssetRecord> {
 
 	public AssetWizardValuesManager(final Integer companyId, final Integer assetId) {
 		super(new AssetWizardModel(companyId, assetId));

@@ -16,20 +16,25 @@
 */
 package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.dc.shared.command.fixed_asset.SplitAsset;
+import com.nabla.dc.shared.command.fixed_asset.FetchSplitAsset;
 import com.nabla.dc.shared.model.fixed_asset.ISplitAsset;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.PositiveIntegerField;
 import com.nabla.wapp.client.model.field.TextField;
-import com.smartgwt.client.types.DSOperationType;
+import com.nabla.wapp.client.model.validator.TextLengthValidator;
+import com.nabla.wapp.client.model.validator.ValidatorList;
+import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
+import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-public class SplitAssetModel extends CModel<AssetRecord> {
+public class SplitAssetModel extends CModel<SplitAssetRecord> {
 
 	static public class Fields implements ISplitAsset {
 		public String nameA() { return NAME_A; }
@@ -40,23 +45,25 @@ public class SplitAssetModel extends CModel<AssetRecord> {
 		public String costA() { return COST_A; }
 		public String costB() { return COST_B; }
 
-		public String total() { return "total"; }
+		public String total() { return TOTAL; }
 	}
 
 	private static final Fields	fields = new Fields();
 	private final int				assetId;
 
 	public SplitAssetModel(final int assetId) {
-		super();
+		super(SplitAssetRecord.factory);
 
 		this.assetId = assetId;
 		setFields(
 			new IdField(),
 			new TextField(fields.nameA(), ISplitAsset.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new TextField(fields.nameB(), ISplitAsset.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new TextField(fields.nameB(), new ValidatorList(new TextLengthValidator(ISplitAsset.NAME_CONSTRAINT)), FieldAttributes.REQUIRED),
 			new TextField(fields.referenceA(), ISplitAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
 			new TextField(fields.referenceB(), ISplitAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.costA(), FieldAttributes.REQUIRED)
+			new PositiveIntegerField(fields.costA(), FieldAttributes.REQUIRED),
+			new PositiveIntegerField(fields.costB(), FieldAttributes.REQUIRED),
+			new PositiveIntegerField(fields.total(), FieldAttributes.REQUIRED)
 		);
 	}
 
@@ -65,8 +72,13 @@ public class SplitAssetModel extends CModel<AssetRecord> {
 	}
 
 	@Override
-	public AbstractOperationAction getCommand(@SuppressWarnings("unused") final DSOperationType op) {
-		return (op == DSOperationType.UPDATE) ? new SplitAsset() : null;
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchSplitAsset(assetId);
+	}
+
+	@Override
+	public IRecordAction<StringResult> getUpdateCommand(final SplitAssetRecord record) {
+		return null/*new SplitAsset()*/;
 	}
 
 }
