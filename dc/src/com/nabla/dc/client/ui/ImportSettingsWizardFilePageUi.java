@@ -21,7 +21,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.presenter.ImportSettingsWizard;
 import com.nabla.dc.shared.model.company.IImportAccount;
-import com.nabla.wapp.client.mvp.binder.bindedWizardPageDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.Form.Operations;
@@ -33,7 +33,7 @@ import com.nabla.wapp.shared.slot.ISlot;
  * @author nabla
  *
  */
-public class ImportSettingsWizardFilePageUi extends bindedWizardPageDisplay<WizardPage> implements ImportSettingsWizard.IUploadFilePage {
+public class ImportSettingsWizardFilePageUi extends BindedWizardPageDisplay<WizardPage> implements ImportSettingsWizard.IUploadFilePage {
 
 	interface Binder extends UiBinder<WizardPage, ImportSettingsWizardFilePageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

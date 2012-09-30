@@ -41,27 +41,27 @@ public class ViewAssetModel extends BasicAssetModel {
 		setFields(
 			new IdField(),
 
-			new TextField(fields.name()),
-			new TextField(fields.category()),
-			new TextField(fields.reference(), FieldAttributes.OPTIONAL),
-			new TextField(fields.location(), FieldAttributes.OPTIONAL),
+			new TextField(fields.name(), FieldAttributes.READ_ONLY),
+			new TextField(fields.category(), FieldAttributes.READ_ONLY),
+			new TextField(fields.reference(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new TextField(fields.location(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 
-			new DateField(fields.acquisitionDate(), FieldAttributes.OPTIONAL),
-			new TextField(fields.acquisitionType(), FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.cost(), FieldAttributes.OPTIONAL),
-			new TextField(fields.pi(), FieldAttributes.OPTIONAL),
+			new DateField(fields.acquisitionDate(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new TextField(fields.acquisitionType(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new PositiveIntegerField(fields.cost(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new TextField(fields.pi(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new PositiveIntegerField(fields.initialAccumDep(), FieldAttributes.OPTIONAL),
 			new IntegerField(fields.initialDepPeriod(), FieldAttributes.OPTIONAL),
 
-			new IntegerField(fields.depPeriod(), FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.residualValue(), FieldAttributes.OPTIONAL),
+			new IntegerField(fields.depPeriod(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new PositiveIntegerField(fields.residualValue(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 
-			new PositiveIntegerField(fields.openingAccumDep(), FieldAttributes.OPTIONAL),
-			new IntegerField(fields.openingDepPeriod(), FieldAttributes.OPTIONAL),
+			new PositiveIntegerField(fields.openingAccumDep(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new IntegerField(fields.openingDepPeriod(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 
-			new DateField(fields.disposalDate(), FieldAttributes.OPTIONAL),
-			new DisposalTypeField(fields.disposalType(), FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.proceeds(), FieldAttributes.OPTIONAL)
+			new DateField(fields.disposalDate(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new TextField(fields.disposalType(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new PositiveIntegerField(fields.proceeds(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL)
 		);
 	}
 

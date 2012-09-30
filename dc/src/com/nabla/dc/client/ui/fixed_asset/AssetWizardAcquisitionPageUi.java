@@ -22,6 +22,7 @@ import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.FormItemIfFunction;
@@ -33,13 +34,14 @@ import com.smartgwt.client.widgets.form.fields.SpinnerItem;
  * @author nabla
  *
  */
-public class AssetWizardAcquisitionPageUi extends AssetWizardBasicPageUi implements AssetWizard.IAcquisitionPage {
+public class AssetWizardAcquisitionPageUi extends BindedBasicWizardPageDisplay implements AssetWizard.IAcquisitionPage {
 
-	interface Binder extends UiBinder<WizardPage, AssetWizardBasicPageUi> {}
+	interface Binder extends UiBinder<WizardPage, AssetWizardAcquisitionPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	public AssetWizardAcquisitionPageUi(final ValuesManager model, Integer maxDepPeriod) {
-		super(model, uiBinder);
+		super(model);
+		create(uiBinder, this);
 		// limit initial depreciation period using asset category depreciation period range
 		final SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.INITIAL_DEPRECIATION_PERIOD);
 		Assert.notNull(depPeriod);

@@ -25,7 +25,7 @@
 			<wnd:Tab title="Acquisition">
 			<ui:attribute name="title" description="Acquisition tab title"/>
 				<form:Form valuesManager="{model}">
-					<form:Control name="{fields.acquisitionDate}" readOnly="true"><ui:msg>*Date</ui:msg></form:Control>
+					<form:Control name="{fields.acquisitionDate}"><ui:msg>*Date</ui:msg></form:Control>
 					<form:Control name="{fields.acquisitionType}" width="300"><ui:msg>*Type</ui:msg></form:Control>
 					<form:Control name="{fields.cost}" width="100"><ui:msg>C*ost (£)</ui:msg></form:Control>
 					<form:Control name="{fields.pi}" width="300"><ui:msg>P*I</ui:msg></form:Control>

@@ -40,8 +40,7 @@ public class UpdateAssetFieldHandler extends AbstractUpdateHandler<UpdateAssetFi
 	public static final UpdateStatement<UpdateAssetField>	sql = new UpdateStatement<UpdateAssetField>(UpdateAssetField.class);
 
 	@Override
-	protected void validate(final UpdateAssetField record, final IUserSessionContext ctx) throws DispatchException {
-		super.validate(record, ctx);
+	protected void update(final UpdateAssetField record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (record.getDepreciationPeriod() != null) {
 			try {
 				final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
@@ -67,10 +66,6 @@ public class UpdateAssetFieldHandler extends AbstractUpdateHandler<UpdateAssetFi
 				Util.throwInternalErrorException(e);
 			}
 		}
-	}
-
-	@Override
-	protected void update(final UpdateAssetField record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		sql.execute(ctx.getConnection(), record);
 	}
 

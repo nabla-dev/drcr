@@ -18,13 +18,12 @@ package com.nabla.wapp.server.model;
 
 import java.sql.SQLException;
 
-import javax.validation.constraints.Null;
-
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Null;
 
 /**
  * The <code></code> object is used to

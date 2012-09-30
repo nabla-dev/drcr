@@ -16,42 +16,25 @@
 */
 package com.nabla.dc.client.ui.fixed_asset;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.nabla.wapp.client.mvp.binder.bindedWizardPageDisplay;
+import com.nabla.dc.client.presenter.fixed_asset.SplitAssetWizard;
+import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
-import com.nabla.wapp.client.ui.form.Form;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class AssetWizardBasicPageUi extends bindedWizardPageDisplay<WizardPage> {
+public class SplitAssetWizardGeneralPageUi extends BindedBasicWizardPageDisplay implements SplitAssetWizard.IGeneralPage {
 
-	@UiField(provided=true)
-	final ValuesManager		model;
-	@UiField
-	Form					form;
+	interface Binder extends UiBinder<WizardPage, SplitAssetWizardGeneralPageUi> {}
+	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	protected AssetWizardBasicPageUi(final ValuesManager model, final UiBinder<WizardPage, AssetWizardBasicPageUi> uiBinder) {
-		this.model = model;
-		this.create(uiBinder, this);
-	}
-
-	@Override
-	public void unbind() {
-		model.removeMember(form);
-	}
-
-	@Override
-	public boolean validate() {
-		return form.validate();
-	}
-
-	@Override
-	public boolean hasErrors() {
-		return form.hasErrors();
+	public SplitAssetWizardGeneralPageUi(final ValuesManager model) {
+		super(model);
+		create(uiBinder, this);
 	}
 
 }

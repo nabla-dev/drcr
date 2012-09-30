@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,67 +14,60 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.ui;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import com.nabla.fixed_assets.client.model.AssetDisposalModel.Fields;
-import com.nabla.fixed_assets.client.presenter.AssetDisposalDialog;
-import com.nabla.fixed_assets.shared.DisposalTypes;
-import com.nabla.wapp.client.model.DataParameter;
+import com.nabla.dc.client.model.fixed_asset.AssetDisposalModel;
+import com.nabla.dc.client.model.fixed_asset.AssetFields;
+import com.nabla.dc.client.presenter.fixed_asset.AssetDisposalDialog;
+import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.wapp.client.model.Model;
-import com.nabla.wapp.client.mvp.binder.BindedTopDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
-import com.nabla.wapp.shared.signal.Signal1;
 import com.nabla.wapp.shared.slot.ISlot;
+import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager;
-import com.nabla.wapp.shared.slot.ISlotManager1;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.FormItemIfFunction;
 import com.smartgwt.client.widgets.form.fields.FormItem;
+
 /**
  * @author nabla
  *
  */
-public class AssetDisposalDialogUi extends BindedTopDisplay<ModalDialog> implements AssetDisposalDialog.IDisplay {
+public class AssetDisposalDialogUi extends BindedModalDialog implements AssetDisposalDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, AssetDisposalDialogUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	final String	recordName;
-	@UiField(provided=true)
 	final Model		model;
 	@UiField
-	Fields			fields;
+	AssetFields		fields;
 	@UiField
 	Form			form;
 
-	private final Signal1<Record>	sigSuccess = new Signal1<Record>();
-
-	@Inject
-	public AssetDisposalDialogUi(@AssetDisposalDialog.IModel final Model model, @Assisted Integer assetId, @Assisted String assetName) {
-		this.recordName = assetName;
-		this.model = model;
+	public AssetDisposalDialogUi(final int assetId, final ISlot1<Integer> onSuccessSlot) {
+		this.model = new AssetDisposalModel(assetId);
 		create(uiBinder, this);
-		form.setDataParameter(new DataParameter<Integer>("recordId", assetId));
 		final FormItem proceeds = form.getItem(fields.proceeds());
 		proceeds.setShowIfCondition(new FormItemIfFunction() {
             @Override
 			public boolean execute(@SuppressWarnings("unused") FormItem item, @SuppressWarnings("unused") Object value, @SuppressWarnings("unused") DynamicForm f) {
-        		DisposalTypes disposalType = DisposalTypes.valueOf(form.getValueAsString(fields.disposalType()));
+            	final String s = form.getValueAsString(fields.disposalType());
+            	if (s == null || s.isEmpty())
+            		return false;
+        		DisposalTypes disposalType = DisposalTypes.valueOf(s);
             	return disposalType == DisposalTypes.SOLD;
             }
         });
 		form.getSuccessSlots(Form.Operations.UPDATE).connect(new ISlot() {
 			@Override
 			public void invoke() {
-				sigSuccess.fire(form.getValuesAsRecord());
+				onSuccessSlot.invoke(assetId);
 			}
 		});
 	}
@@ -82,11 +75,6 @@ public class AssetDisposalDialogUi extends BindedTopDisplay<ModalDialog> impleme
 	@Override
 	public ISlotManager getHideSlots() {
 		return impl.getCloseSlots();
-	}
-
-	@Override
-	public ISlotManager1<Record> getSuccessSlots() {
-		return sigSuccess;
 	}
 
 }

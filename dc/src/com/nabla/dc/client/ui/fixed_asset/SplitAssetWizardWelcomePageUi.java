@@ -14,25 +14,27 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.company;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.company.ImportAccountWizard;
-import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
-import com.nabla.wapp.client.ui.ModalDialog;
+import com.nabla.dc.client.presenter.fixed_asset.SplitAssetWizard;
+import com.nabla.dc.client.ui.Resource;
+import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
+import com.nabla.wapp.client.ui.Html;
 
 /**
  * @author nabla
  *
  */
-public class ImportAccountWizardUi extends BindedWizardDialog implements ImportAccountWizard.IDisplay {
+public class SplitAssetWizardWelcomePageUi extends BindedStaticWizardPageDisplay implements SplitAssetWizard.IWelcomePage {
 
-	interface Binder extends UiBinder<ModalDialog, ImportAccountWizardUi> {}
+	interface Binder extends UiBinder<Html, SplitAssetWizardWelcomePageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	public ImportAccountWizardUi() {
+	public SplitAssetWizardWelcomePageUi(final String assetName) {
 		create(uiBinder, this);
+		impl.setHTML(Resource.messages.splitAssetWelcomeMessage(assetName));
 	}
 
 }

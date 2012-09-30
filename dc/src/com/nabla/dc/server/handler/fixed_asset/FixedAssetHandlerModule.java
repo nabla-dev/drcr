@@ -50,6 +50,7 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 		bindHandler(FetchAssetRecordHandler.class);
 		bindHandler(FetchAssetDisposalHandler.class);
 		bindHandler(RevertAssetDisposalHandler.class);
+		bindHandler(UpdateAssetDisposalHandler.class);
 
 		bindHandler(FetchAssetHandler.class);
 		bindHandler(FetchCompanyFixedAssetCategoryListHandler.class);

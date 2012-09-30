@@ -101,8 +101,9 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 		}
 		Boolean can = FieldAttributes.getCanEdit(field);
 		if ((readOnly != null && readOnly) || (can != null && !can)) {
-			impl.setDisabled(true);
-			impl.setShowDisabled(false);
+		//	impl.setDisabled(true);
+		//	impl.setShowDisabled(false);
+			impl.setCanEdit(false);
 		}
 		return impl;
 	}

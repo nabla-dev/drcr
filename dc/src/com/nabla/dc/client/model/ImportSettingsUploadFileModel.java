@@ -31,9 +31,9 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  */
 public class ImportSettingsUploadFileModel extends CModel<ImportSettingsRecord> {
 
-	static public class Fields {
-		public String file() { return IImportSettings.FILE; }
-		public String overwrite() { return IImportSettings.OVERWRITE; }
+	static public class Fields implements IImportSettings {
+		public String file() { return FILE; }
+		public String overwrite() { return OVERWRITE; }
 	}
 
 	private static final Fields	fields = new Fields();

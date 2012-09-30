@@ -14,24 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui;
+package com.nabla.dc.client.model.fixed_asset;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.ImportSettingsWizard;
-import com.nabla.wapp.client.ui.ModalDialog;
+import com.nabla.wapp.client.model.WizardValuesManager;
 
-/**
- * @author nabla
- *
- */
-public class ImportSettingsWizardUi extends WizardDialog implements ImportSettingsWizard.IDisplay {
+public class SplitAssetValuesManager extends WizardValuesManager {
 
-	interface Binder extends UiBinder<ModalDialog, ImportSettingsWizardUi> {}
-	private static final Binder	uiBinder = GWT.create(Binder.class);
+	public SplitAssetValuesManager(final int assetId) {
+		super(new SplitAssetModel(assetId));
+	}
 
-	public ImportSettingsWizardUi() {
-		create(uiBinder, this);
+	public AssetRecord getAsset() {
+		return getModel().getAsset();
 	}
 
 }

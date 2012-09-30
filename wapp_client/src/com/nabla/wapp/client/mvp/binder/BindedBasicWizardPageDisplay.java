@@ -14,27 +14,41 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.fixed_asset;
+package com.nabla.wapp.client.mvp.binder;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
-import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
+import com.google.gwt.uibinder.client.UiField;
 import com.nabla.wapp.client.ui.WizardPage;
+import com.nabla.wapp.client.ui.form.Form;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class AssetWizardGeneralPageUi extends BindedBasicWizardPageDisplay implements AssetWizard.IGeneralPage {
+public class BindedBasicWizardPageDisplay extends BindedWizardPageDisplay<WizardPage> {
 
-	interface Binder extends UiBinder<WizardPage, AssetWizardGeneralPageUi> {}
-	private static final Binder	uiBinder = GWT.create(Binder.class);
+	@UiField(provided=true)
+	protected final ValuesManager		model;
+	@UiField
+	protected Form						form;
 
-	public AssetWizardGeneralPageUi(final ValuesManager model) {
-		super(model);
-		create(uiBinder, this);
+	protected BindedBasicWizardPageDisplay(final ValuesManager model) {
+		this.model = model;
+	}
+
+	@Override
+	public void unbind() {
+		model.removeMember(form);
+	}
+
+	@Override
+	public boolean validate() {
+		return form.validate();
+	}
+
+	@Override
+	public boolean hasErrors() {
+		return form.hasErrors();
 	}
 
 }

@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,20 +14,12 @@
 * the License.
 *
 */
-package com.nabla.fixed_assets.client.presenter;
+package com.nabla.dc.client.presenter.fixed_asset;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import com.google.inject.BindingAnnotation;
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
+import com.nabla.dc.client.ui.fixed_asset.AssetDisposalDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
-import com.nabla.wapp.shared.slot.ISlotManager1;
-import com.smartgwt.client.data.Record;
+import com.nabla.wapp.shared.slot.ISlot1;
 
 /**
  * @author nabla
@@ -35,29 +27,14 @@ import com.smartgwt.client.data.Record;
  */
 public class AssetDisposalDialog extends AbstractTopPresenter<AssetDisposalDialog.IDisplay> {
 
-	public interface IFactory {
-		AssetDisposalDialog get(Integer assetId, String assetName);
+	public interface IDisplay extends ITopDisplay {}
+
+	public AssetDisposalDialog(IDisplay ui) {
+		super(ui);
 	}
 
-	@BindingAnnotation
-	@Target({ElementType.FIELD, ElementType.PARAMETER})
-	@Retention(RetentionPolicy.RUNTIME)
-	public @interface IModel {}
-
-	public interface IDisplay extends ITopDisplay {
-		interface IFactory {
-			IDisplay get(Integer assetId, String assetName);
-		}
-		ISlotManager1<Record> getSuccessSlots();
-	}
-
-	@Inject
-	public AssetDisposalDialog(IDisplay.IFactory uiFactory, @Assisted Integer assetId, @Assisted String assetName) {
-		super(uiFactory.get(assetId, assetName));
-	}
-
-	public ISlotManager1<Record> getSuccessSlots() {
-		return display.getSuccessSlots();
+	public AssetDisposalDialog(final int assetId, final ISlot1<Integer> onSuccessSlot) {
+		this(new AssetDisposalDialogUi(assetId, onSuccessSlot));
 	}
 
 }

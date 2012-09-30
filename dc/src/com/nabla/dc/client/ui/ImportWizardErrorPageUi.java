@@ -21,14 +21,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.ImportErrorListModel;
 import com.nabla.dc.client.presenter.company.ImportAccountWizard;
-import com.nabla.wapp.client.mvp.binder.bindedWizardPageDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 
 /**
  * @author nabla
  *
  */
-public class ImportWizardErrorPageUi extends bindedWizardPageDisplay<WizardPage> implements ImportAccountWizard.IErrorPage {
+public class ImportWizardErrorPageUi extends BindedWizardPageDisplay<WizardPage> implements ImportAccountWizard.IErrorPage {
 
 	interface Binder extends UiBinder<WizardPage, ImportWizardErrorPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

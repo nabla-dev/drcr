@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
-@IRecordTable(name="asset")
+@IRecordTable(name=IAsset.TABLE)
 public class UpdateAssetDisposal implements IRecordAction<StringResult> {
 
 	@IRecordField(id=true)
@@ -59,14 +59,16 @@ public class UpdateAssetDisposal implements IRecordAction<StringResult> {
 		case SOLD:
 			if (proceeds == null)
 				proceeds = 0;
-			else if (proceeds < 0)
+			else if (proceeds < 0) {
 				errors.add(IAsset.PROCEEDS, CommonServerErrors.INVALID_VALUE);
+				return false;
+			}
 			break;
 		default:
 			proceeds = 0;
 			break;
 		}
-		return false;
+		return true;
 	}
 
 	public int getId() {

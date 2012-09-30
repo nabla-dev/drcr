@@ -33,17 +33,18 @@ import com.smartgwt.client.data.Record;
  */
 public class ImportErrorListModel extends CModel<Record> {
 
-	static public class Fields {
-		public String lineNo() { return IImportError.LINE; }
-		public String field() { return IImportError.FIELD; }
-		public String error() { return IImportError.ERROR; }
+	static public class Fields implements IImportError {
+		public String lineNo() { return LINE; }
+		public String field() { return FIELD; }
+		public String error() { return ERROR; }
 	}
 
 	private static final Fields	fields = new Fields();
-	private final Integer		batchId;
+	private final Integer			batchId;
 
 	public ImportErrorListModel(final Integer batchId) {
 		super();
+
 		this.batchId = batchId;
 		setFields(
 			new IntegerField(fields.lineNo()),

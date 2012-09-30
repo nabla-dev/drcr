@@ -34,8 +34,8 @@ public class FetchAssetDisposalHandler extends AbstractFetchHandler<FetchAssetDi
 
 	private static final SqlToJson	sql = new SqlToJson(
 "SELECT t.id, t.name" +
-", IFNULL(t.disposal_date, (SELECT p.state FROM user_preference AS p WHERE p.role_id=? AND p.object_id=c.company_id AND p.category=? AND p.name='disposal_date')) AS 'd_disposal_date'" +
-", IFNULL(t.disposal_type, (SELECT p.state FROM user_preference AS p WHERE p.role_id=? AND p.object_id=c.company_id AND p.category=? AND p.name='disposal_type')) AS 'disposal_type'" +
+", IFNULL(t.disposal_date, (SELECT p.state FROM user_preference AS p WHERE p.user_id=? AND p.object_id=c.company_id AND p.category=? AND p.name='disposal_date')) AS 'd_disposal_date'" +
+", IFNULL(t.disposal_type, (SELECT p.state FROM user_preference AS p WHERE p.user_id=? AND p.object_id=c.company_id AND p.category=? AND p.name='disposal_type')) AS 'disposal_type'" +
 ", proceeds" +
 " FROM fa_company_asset_category AS c INNER JOIN (" +
 "fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +

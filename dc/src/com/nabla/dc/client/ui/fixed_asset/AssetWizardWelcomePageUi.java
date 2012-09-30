@@ -19,20 +19,20 @@ package com.nabla.dc.client.ui.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
-import com.nabla.dc.client.ui.StaticWizardPageUi;
+import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 
 /**
  * @author nabla
  *
  */
-public class AssetWizardWelcomePageUi extends StaticWizardPageUi implements AssetWizard.IWelcomePage {
+public class AssetWizardWelcomePageUi extends BindedStaticWizardPageDisplay implements AssetWizard.IWelcomePage {
 
-	interface Binder extends UiBinder<Html, StaticWizardPageUi> {}
+	interface Binder extends UiBinder<Html, AssetWizardWelcomePageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	public AssetWizardWelcomePageUi() {
-		super(uiBinder);
+		create(uiBinder, this);
 	}
 
 }

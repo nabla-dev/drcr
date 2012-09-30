@@ -29,11 +29,11 @@ import com.smartgwt.client.widgets.Canvas;
  * @author nabla
  *
  */
-public class bindedWizardPageDisplay<U extends Canvas & IPostCreateProcessing> extends BindedCanvasDisplay<U> {
+public class BindedWizardPageDisplay<U extends Canvas & IPostCreateProcessing> extends BindedCanvasDisplay<U> {
 
 	private final Map<WizardPageNavigations, Signal1<IWizardPage>>	buttons = new HashMap<WizardPageNavigations, Signal1<IWizardPage>>();
 
-	protected bindedWizardPageDisplay(final WizardPageNavigations... buttons) {
+	protected BindedWizardPageDisplay(final WizardPageNavigations... buttons) {
 		if (buttons == null || buttons.length == 0) {
 			for (final WizardPageNavigations e : WizardPageNavigations.values())
 				this.buttons.put(e, new Signal1<IWizardPage>());

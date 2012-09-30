@@ -84,6 +84,10 @@ public abstract class CModel<R extends Record> extends Model {
 		return null;
 	}
 
+	public IRecordFactory<R> getRecordFactory() {
+		return recordFactory;
+	}
+
 	@Override
 	protected Object transformRequest(final DSRequest request) {
 		Assert.argumentNotNull(request);

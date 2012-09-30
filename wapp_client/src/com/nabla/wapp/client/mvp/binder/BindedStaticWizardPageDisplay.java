@@ -14,25 +14,19 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.company;
+package com.nabla.wapp.client.mvp.binder;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.company.ImportAccountWizard;
-import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
-import com.nabla.wapp.client.ui.ModalDialog;
+import com.nabla.wapp.client.ui.Html;
+import com.nabla.wapp.client.ui.WizardPageNavigations;
 
 /**
  * @author nabla
  *
  */
-public class ImportAccountWizardUi extends BindedWizardDialog implements ImportAccountWizard.IDisplay {
+public class BindedStaticWizardPageDisplay extends BindedWizardPageDisplay<Html> {
 
-	interface Binder extends UiBinder<ModalDialog, ImportAccountWizardUi> {}
-	private static final Binder	uiBinder = GWT.create(Binder.class);
-
-	public ImportAccountWizardUi() {
-		create(uiBinder, this);
+	protected BindedStaticWizardPageDisplay(final WizardPageNavigations... buttons) {
+		super(buttons);
 	}
 
 }

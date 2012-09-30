@@ -20,25 +20,25 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
-import com.nabla.dc.client.ui.StaticWizardPageUi;
+import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 
 /**
  * @author nabla
  *
  */
-public class AssetWizardCompletedPageUi extends StaticWizardPageUi implements AssetWizard.ICompletedPage {
+public class AssetWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements AssetWizard.ICompletedPage {
 
 	@UiTemplate("NewAssetWizardCompletedPageUi.ui.xml")
-	interface NewBinder extends UiBinder<Html, StaticWizardPageUi> {}
+	interface NewBinder extends UiBinder<Html, AssetWizardCompletedPageUi> {}
 	private static final NewBinder	newBinder = GWT.create(NewBinder.class);
 
 	@UiTemplate("EditAssetWizardCompletedPageUi.ui.xml")
-	interface EditBinder extends UiBinder<Html, StaticWizardPageUi> {}
+	interface EditBinder extends UiBinder<Html, AssetWizardCompletedPageUi> {}
 	private static final EditBinder	editBinder = GWT.create(EditBinder.class);
 
 	public AssetWizardCompletedPageUi(boolean isNewRecord) {
-		super(isNewRecord ? newBinder : editBinder);
+		create(isNewRecord ? newBinder : editBinder, this);
 	}
 
 }

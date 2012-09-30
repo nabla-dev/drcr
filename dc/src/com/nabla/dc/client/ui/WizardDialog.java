@@ -14,25 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.company;
+package com.nabla.dc.client.ui;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.company.ImportAccountWizard;
+import com.google.gwt.uibinder.client.UiField;
 import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
-import com.nabla.wapp.client.ui.ModalDialog;
 
 /**
  * @author nabla
  *
  */
-public class ImportAccountWizardUi extends BindedWizardDialog implements ImportAccountWizard.IDisplay {
+public class WizardDialog extends BindedWizardDialog {
 
-	interface Binder extends UiBinder<ModalDialog, ImportAccountWizardUi> {}
-	private static final Binder	uiBinder = GWT.create(Binder.class);
-
-	public ImportAccountWizardUi() {
-		create(uiBinder, this);
-	}
+	@UiField(provided=true)
+	static public final IResource	res = Resource.bundle;
 
 }

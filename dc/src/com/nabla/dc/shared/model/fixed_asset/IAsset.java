@@ -31,15 +31,11 @@ public interface IAsset {
 	static final String					COMPANY_ID = "company_id";
 
 	static final String					NAME = "name";
-	static final String					NAME_A = "nameA";
-	static final String					NAME_B = "nameB";
 	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128, true);
 
 	static final String					CATEGORY = "category";
 
 	static final String					REFERENCE = "reference";
-	static final String					REFERENCE_A = "referenceA";
-	static final String					REFERENCE_B = "referenceB";
 	static final TextLengthConstraint		REFERENCE_CONSTRAINT = new TextLengthConstraint(0, 32, true);
 
 	static final String					LOCATION = "location";

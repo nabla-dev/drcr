@@ -12,9 +12,9 @@
 	<wnd:Tab title="Disposal">
 	<ui:attribute name="title" description="Disposal tab title"/>
 		<form:Form valuesManager="{model}">
-			<form:Control name="{fields.disposalDate}" readOnly="true"><ui:msg>*Date</ui:msg></form:Control>
-			<form:Control name="{fields.disposalType}" width="*" readOnly="true"><ui:msg>*Type</ui:msg></form:Control>
-			<form:Control name="{fields.proceeds}" width="100" readOnly="true"><ui:msg>P*roceeds (£)</ui:msg></form:Control>
+			<form:Control name="{fields.disposalDate}"><ui:msg>*Date</ui:msg></form:Control>
+			<form:Control name="{fields.disposalType}" width="300"><ui:msg>*Type</ui:msg></form:Control>
+			<form:Control name="{fields.proceeds}" width="100"><ui:msg>P*roceeds (£)</ui:msg></form:Control>
 		</form:Form>
 	</wnd:Tab>
 </ui:UiBinder> 

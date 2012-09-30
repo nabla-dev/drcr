@@ -100,10 +100,11 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		cmd.view().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.disposal(), onDisposeAsset);
 		cmd.disposal().setRecordProvider(getDisplay().getCurrentRecordProvider());
+		registerSlot(cmd.split(), onSplitAsset);
+		cmd.split().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		/*
 	  	registerSlot(cmd.userReportList(), onUserReportList);
 		registerSlot(cmd.importAssets(), onImportAsset);
-		registerSlot(rcmd.split(), onSplitAsset);
 		registerSlot(rcmd.transaction(), onTransactionList);
 	*/
 		cmd.updateUi();
@@ -207,8 +208,18 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	}
 
 	private void disposeAsset(final AssetRecord asset) {
-		AssetDisposalWizardFactory.get(asset.getId(), asset.getName(), onRecordUpdated).revealDisplay();
+		new AssetDisposalDialog(asset.getId(), onRecordUpdated).revealDisplay();
 	}
+
+	private final ISlot1<AssetRecord> onSplitAsset = new ISlot1<AssetRecord>() {
+		@Override
+		public void invoke(final AssetRecord record) {
+			if (record.isDisposed())
+				Application.getInstance().getMessageBox().info(Resource.strings.editDisposedFixedAssetNotAllowed());
+			else
+				SplitAssetWizard.editRecord(record.getId(), onRecordUpdated, onRecordAdded);
+		}
+	};
 
 	/*
 	private final ISlot onUserReportList = new ISlot() {
@@ -227,24 +238,6 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 					display.reload();
 				}
 			}).revealDisplay();
-		}
-	};
-
-	private final ISlot1<Record> onSplitAsset = new ISlot1<Record>() {
-		@Override
-		public void invoke(final Record record) {
-			final AssetRecord asset = new AssetRecord(record);
-			if (asset.isDisposed())
-				msgBox.info(Resource.strings.editDisposedAssetNotAllowed());
-			else {
-				assetSplitWizardFactory.get(asset, new ISlot2<ListGridRecord, ListGridRecord>() {
-					@Override
-					public void invoke(final ListGridRecord assetA, final ListGridRecord assetB) {
-						display.updateRecord(assetA);
-						display.addRecord(assetB);
-					}
-				}).revealDisplay();
-			}
 		}
 	};
 

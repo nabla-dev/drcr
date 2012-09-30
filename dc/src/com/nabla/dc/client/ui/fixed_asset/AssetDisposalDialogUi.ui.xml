@@ -3,20 +3,18 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default"
-    xmlns:ctrl="urn:import:com.nabla.wapp.client.ui"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 	
-	<ui:with field="recordName" type="java.lang.String"/>
 	<ui:with field="model" type="com.nabla.wapp.client.model.Model" />
-	<ui:with field="fields" type="com.nabla.fixed_assets.client.model.AssetDisposalModel.Fields" />
+	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetFields" />
 		
-	<wnd:ModalDialog caption="Asset Disposal" icon="asset_disposal_small.png" autoClose="true">
+	<wnd:ModalDialog caption="Asset Disposal" icon="fixed_asset/asset_disposal_small.png" autoClose="true">
 		<ui:attribute name="caption"/>
 		<form:Form ui:field="form" model="{model}" autoFetchData="true">
-			<form:StaticText value="{recordName}" width="*"><ui:msg>Asset</ui:msg></form:StaticText>
+			<form:Control name="{fields.name}" width="300"><ui:msg>Asset</ui:msg></form:Control>
 			<form:Control name="{fields.disposalDate}"><ui:msg>*Date</ui:msg></form:Control>
-			<form:Control name="{fields.disposalType}" width="100" redrawOnChange="true"><ui:msg>*Type</ui:msg></form:Control>
+			<form:Control name="{fields.disposalType}" width="200" redrawOnChange="true"><ui:msg>*Type</ui:msg></form:Control>
 			<form:Control name="{fields.proceeds}" visible="false" width="100"><ui:msg>P*roceeds (£)</ui:msg></form:Control>
 			<form:ButtonBar>
 				<wnd:SubmitButton><ui:msg>*OK</ui:msg></wnd:SubmitButton>

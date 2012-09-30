@@ -79,4 +79,8 @@ public interface IMessageResource extends Messages {
 	@DefaultMessage("Are you sure you want to delete these {0} assets?")
 	@AlternateMessage({"one", "Are you sure you want to delete asset ''{1}''?"})
 	String confirmRemoveAssets(@PluralCount @Optional int count, @Optional String name);
+
+	@DefaultMessage("<p>This wizard will help you split asset ''{0}'' into two assets. Overwhole no change will occur with the total cost and monthly depreciation remaining the same.<br/>Click 'Next' to continue or 'Cancel' to exit this wizard.</p>")
+	String splitAssetWelcomeMessage(String assetName);
+
 }

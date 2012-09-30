@@ -172,7 +172,7 @@ record.getId(), from);
 			transactions.add(new Transaction(TransactionClasses.DEP, TransactionTypes.CLOSING, record.getDisposalDate(), -1 * getAssetDepreciation(conn, record.getId())));
 			for (Integer newTransId : transactions.save(conn, true)) {
 				redo.setString(2,
-MessageFormat.format("DELETE FROM transaction WHERE id={0,number,0};", newTransId));
+MessageFormat.format("DELETE FROM fa_transaction WHERE id={0,number,0};", newTransId));
 				redo.addBatch();
 			}
 			if (!Database.isBatchCompleted(redo.executeBatch()))
@@ -199,7 +199,7 @@ MessageFormat.format("DELETE FROM transaction WHERE id={0,number,0};", newTransI
 
 	private int getAssetDepreciation(final Connection conn, int assetId) throws SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT SUM(amount) FROM ta_transaction WHERE fa_asset_id=? AND class='DEP';", assetId);
+"SELECT SUM(amount) FROM fa_transaction WHERE fa_asset_id=? AND class='DEP';", assetId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {

@@ -14,22 +14,16 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui;
+package com.nabla.wapp.shared.general;
 
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.wapp.client.mvp.binder.bindedWizardPageDisplay;
-import com.nabla.wapp.client.ui.Html;
-import com.nabla.wapp.client.ui.WizardPageNavigations;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class StaticWizardPageUi extends bindedWizardPageDisplay<Html> {
-
-	protected StaticWizardPageUi(final UiBinder<Html, StaticWizardPageUi> uiBinder, final WizardPageNavigations... buttons) {
-		super(buttons);
-		this.create(uiBinder, this);
-	}
-
-}
+@Documented
+@Retention(value=RetentionPolicy.RUNTIME)
+public @interface Null {}

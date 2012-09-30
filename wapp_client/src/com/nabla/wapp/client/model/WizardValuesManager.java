@@ -28,17 +28,18 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.smartgwt.client.data.DSCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class WizardValuesManager extends ValuesManager {
+public class WizardValuesManager<T extends Record> extends ValuesManager {
 
-	private static final Logger	logger = LoggerFactory.getLog(WizardValuesManager.class);
+	private static final Logger	log = LoggerFactory.getLog(WizardValuesManager.class);
 
-	public WizardValuesManager(final Model model) {
+	public WizardValuesManager(final CModel<T> model) {
 		setDataSource(model);
 	}
 
@@ -47,7 +48,7 @@ public class WizardValuesManager extends ValuesManager {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.WARNING, "fail to load '" + defaultValuesGroup + "' default values", caught);
+				log.log(Level.WARNING, "fail to load '" + defaultValuesGroup + "' default values", caught);
 				editNewRecord();
 				callback.invoke();
 			}
@@ -57,7 +58,7 @@ public class WizardValuesManager extends ValuesManager {
 				if (values != null)
 					editNewRecord(values);
 				else {
-					logger.log(Level.FINE, "no asset default values");
+					log.log(Level.FINE, "no asset default values");
 					editNewRecord();
 				}
 				callback.invoke();
@@ -73,6 +74,12 @@ public class WizardValuesManager extends ValuesManager {
 					callback.invoke();
 			}
 		});
+	}
+
+	public T getRecord() {
+		@SuppressWarnings("unchecked")
+		CModel<T> model = (CModel<T>) this.getDataSource();
+		return model.getRecordFactory().get(this.getJsObj());
 	}
 
 }

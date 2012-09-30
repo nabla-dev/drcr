@@ -32,9 +32,9 @@ import com.smartgwt.client.data.Record;
  */
 public class UserCompanyListModel extends CModel<Record> {
 
-	static public class Fields {
-		public String name() { return IUserCompany.NAME; }
-		public String logo() { return IUserCompany.LOGO; }
+	static public class Fields implements IUserCompany {
+		public String name() { return NAME; }
+		public String logo() { return LOGO; }
 	}
 
 	private static final Fields	fields = new Fields();

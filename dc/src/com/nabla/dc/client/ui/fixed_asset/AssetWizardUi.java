@@ -19,20 +19,20 @@ package com.nabla.dc.client.ui.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
-import com.nabla.dc.client.ui.WizardUi;
+import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 
 /**
  * @author nabla
  *
  */
-public class AssetWizardUi extends WizardUi implements AssetWizard.IDisplay {
+public class AssetWizardUi extends BindedWizardDialog implements AssetWizard.IDisplay {
 
-	interface Binder extends UiBinder<ModalDialog, WizardUi> {}
+	interface Binder extends UiBinder<ModalDialog, AssetWizardUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	public AssetWizardUi() {
-		super(uiBinder);
+		create(uiBinder, this);
 	}
 
 }

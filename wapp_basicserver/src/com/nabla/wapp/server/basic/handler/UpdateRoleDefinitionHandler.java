@@ -18,14 +18,13 @@ package com.nabla.wapp.server.basic.handler;
 
 import java.sql.SQLException;
 
-import javax.validation.constraints.Null;
-
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.auth.UserManager;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.command.UpdateRoleDefinition;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.Null;
 
 /**
  * @author nabla

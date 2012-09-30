@@ -19,7 +19,7 @@ package com.nabla.dc.client.ui.company;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.dc.client.presenter.company.ImportAccountWizard;
-import com.nabla.dc.client.ui.StaticWizardPageUi;
+import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
 
@@ -27,13 +27,14 @@ import com.nabla.wapp.client.ui.WizardPageNavigations;
  * @author nabla
  *
  */
-public class ImportAccountWizardCompletedPageUi extends StaticWizardPageUi implements ImportAccountWizard.ICompletedPage {
+public class ImportAccountWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements ImportAccountWizard.ICompletedPage {
 
-	interface Binder extends UiBinder<Html, StaticWizardPageUi> {}
+	interface Binder extends UiBinder<Html, ImportAccountWizardCompletedPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	public ImportAccountWizardCompletedPageUi() {
-		super(uiBinder, WizardPageNavigations.FINISH);
+		super(WizardPageNavigations.FINISH);
+		create(uiBinder, this);
 	}
 
 }
