@@ -17,6 +17,8 @@
 package com.nabla.dc.client.presenter.fixed_asset;
 
 import com.nabla.dc.client.ui.ImportWizardErrorPageUi;
+import com.nabla.dc.client.ui.fixed_asset.ImportAssetWizardCompletedPageUi;
+import com.nabla.dc.client.ui.fixed_asset.ImportAssetWizardFilePageUi;
 import com.nabla.dc.client.ui.fixed_asset.ImportAssetWizardUi;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
@@ -34,19 +36,19 @@ public class ImportAssetWizard extends AbstractWizardPresenter<ImportAssetWizard
 	public interface IUploadFilePage extends IWizardPageDisplay {
 		void cleanup();
 		void save();
-		Integer getBatchId();
+		int getFileId();
 		boolean isSuccess();
 	}
 	public interface IErrorPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
 
-	private final ISlot				onSuccess;
+	private final ISlot			onSuccessHandler;
 	private final IUploadFilePage	uploadFilePage;
 
-	public ImportAssetWizard(final IDisplay ui, final int companyId, final ISlot onSuccess) {
+	public ImportAssetWizard(final IDisplay ui, final int companyId, final ISlot onSuccessHandler) {
 		super(ui);
-		this.onSuccess = onSuccess;
-		uploadFilePage = null/*new ImportSettingsWizardFilePageUi(onFileUploaded)*/;
+		this.onSuccessHandler = onSuccessHandler;
+		uploadFilePage = new ImportAssetWizardFilePageUi(companyId, onFileUploaded);
 	}
 
 	public ImportAssetWizard(final int companyId, final ISlot successSlot) {
@@ -56,20 +58,12 @@ public class ImportAssetWizard extends AbstractWizardPresenter<ImportAssetWizard
 	@Override
 	protected void onBind() {
 		super.onBind();
-/*
-		uploadFilePage.getButton(WizardPageNavigations.NEXT).connect(new ISlot() {
+		displayNextPage(uploadFilePage, new ISlot() {
 			@Override
 			public void invoke() {
 				uploadFilePage.save();	// do actually import assets
 			}
 		});
-		completedPage.getButton(WizardPageNavigations.FINISH).connect(new ISlot() {
-			@Override
-			public void invoke() {
-				getDisplay().hide();
-			}
-		});
-		getDisplay().displayNextPage(uploadFilePage);*/
 	}
 
 	@Override
@@ -82,12 +76,24 @@ public class ImportAssetWizard extends AbstractWizardPresenter<ImportAssetWizard
 		@Override
 		public void invoke() {
 			if (uploadFilePage.isSuccess()) {
-				displayFinishPage(completedPage);
-				onSuccess.invoke();
-			} else {
-				displayNextPage(new ImportWizardErrorPageUi(uploadFilePage.getBatchId()));
-			}
+				displayCompletedPage();
+				onSuccessHandler.invoke();
+			} else
+				displayErrorPage();
 		}
 	};
+
+	private void displayErrorPage() {
+		getDisplay().displayNextPage(new ImportWizardErrorPageUi(uploadFilePage.getFileId()));
+	}
+
+	private void displayCompletedPage() {
+		displayFinishPage(new ImportAssetWizardCompletedPageUi(), new ISlot() {
+			@Override
+			public void invoke() {
+				getDisplay().hide();
+			}
+		});
+	}
 
 }

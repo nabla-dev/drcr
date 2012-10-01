@@ -14,13 +14,14 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.presenter.ImportSettingsWizard;
-import com.nabla.dc.shared.model.IImportSettings;
+import com.nabla.dc.client.model.fixed_asset.ImportAssetUploadFileModel;
+import com.nabla.dc.client.presenter.fixed_asset.ImportAssetWizard;
+import com.nabla.dc.shared.model.fixed_asset.IImportAsset;
 import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.client.ui.form.Form;
@@ -33,19 +34,22 @@ import com.nabla.wapp.shared.slot.ISlot;
  * @author nabla
  *
  */
-public class ImportSettingsWizardFilePageUi extends BindedWizardPageDisplay<WizardPage> implements ImportSettingsWizard.IUploadFilePage {
+public class ImportAssetWizardFilePageUi extends BindedWizardPageDisplay<WizardPage> implements ImportAssetWizard.IUploadFilePage {
 
-	interface Binder extends UiBinder<WizardPage, ImportSettingsWizardFilePageUi> {}
+	interface Binder extends UiBinder<WizardPage, ImportAssetWizardFilePageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
+	@UiField(provided=true)
+	final ImportAssetUploadFileModel	model;
 	@UiField
-	Form			form;
+	Form								form;
 	@UiField
-	UploadEditBox	file;
+	UploadEditBox						file;
 
-	public ImportSettingsWizardFilePageUi(final ISlot onSuccessHandler) {
+	public ImportAssetWizardFilePageUi(final int companyId, final ISlot onSuccessHandler) {
+		this.model = new ImportAssetUploadFileModel(companyId);
 		this.create(uiBinder, this);
-		form.editNewRecordWithDefault(new GetFormDefaultValues(IImportSettings.PREFERENCE_GROUP));
+		form.editNewRecordWithDefault(new GetFormDefaultValues(IImportAsset.PREFERENCE_GROUP));
 		form.getSuccessSlots(Operations.ADD).connect(onSuccessHandler);
 		form.getSuccessSlots(Operations.UPDATE).connect(onSuccessHandler);
 	}
@@ -72,12 +76,12 @@ public class ImportSettingsWizardFilePageUi extends BindedWizardPageDisplay<Wiza
 
 	@Override
 	public boolean isSuccess() {
-		return (Boolean)form.getValue(IImportSettings.SUCCESS);
+		return (Boolean)form.getValue(model.fields().success());
 	}
 
 	@Override
-	public Integer getBatchId() {
-		return Integer.valueOf(form.getValueAsString(IImportSettings.FILE));
+	public int getFileId() {
+		return Integer.valueOf(form.getValueAsString(model.fields().file()));
 	}
 
 }
