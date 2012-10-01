@@ -59,6 +59,10 @@ public class UpdateAssetField implements IRecordAction<StringResult>, IAsset {
 		this.depreciation_period = depreciationPeriod;
 	}
 
+	public UpdateAssetField(int id, @Nullable final String name, @Nullable final String reference) {
+		this(id, name, reference, null, null, null);
+	}
+
 	@Override
 	public boolean validate(final IErrorList errors) throws DispatchException {
 		int n = errors.size();

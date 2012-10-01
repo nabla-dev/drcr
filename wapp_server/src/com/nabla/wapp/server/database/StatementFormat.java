@@ -59,6 +59,7 @@ public class StatementFormat {
 		cache.put(XmlString.class, new XmlStringSetter());
 		cache.put(XmlInteger.class, new XmlIntegerSetter());
 		cache.put(XmlDate.class, new XmlDateSetter());
+		cache.put(NullableParameter.class, new NullableParameterSetter());
 	}
 
 	public static IStatementSetter getSetter(final Class parameterClass) {

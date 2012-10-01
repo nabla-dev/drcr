@@ -62,17 +62,12 @@ public class SplitAssetRecord extends BasicListGridRecord implements ISplitAsset
 	public Integer getCostA() {
 		return getAttributeAsInt(COST_A);
 	}
-/*
-	public UpdateAsset toUpdateCommand(final Integer companyId) {
-		final UpdateAsset cmd = new UpdateAsset(getId(), companyId, getName(), getCategoryId(), getReference(), getLocation(),
-				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
-				getDepreciationPeriod(), getResidualValue(),
-				getCreateTransactions());
-		if (isTransfer())
-			cmd.setInitialDepreciation(getInitialAccumulatedDepreciation(), getInitialDepreciationPeriod());
-		if (isOpening())
-			cmd.setOpeningDepreciation(getOpeningYear(), getOpeningMonth(), getOpeningAccumulatedDepreciation(), getOpeningDepreciationPeriod());
-		return cmd;
+
+	public Integer getTotal() {
+		return getAttributeAsInt(TOTAL);
 	}
-*/
+
+	public Integer getIdB() {
+		return getAttributeAsInt(ID_B);
+	}
 }

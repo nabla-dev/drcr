@@ -17,6 +17,7 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.nabla.dc.shared.command.fixed_asset.FetchSplitAsset;
+import com.nabla.dc.shared.command.fixed_asset.SplitAsset;
 import com.nabla.dc.shared.model.fixed_asset.ISplitAsset;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
@@ -78,7 +79,7 @@ public class SplitAssetModel extends CModel<SplitAssetRecord> {
 
 	@Override
 	public IRecordAction<StringResult> getUpdateCommand(final SplitAssetRecord record) {
-		return null/*new SplitAsset()*/;
+		return new SplitAsset(record.getId(), record.getNameA(), record.getNameB(), record.getReferenceA(), record.getReferenceB(), record.getCostA(), record.getTotal());
 	}
 
 }

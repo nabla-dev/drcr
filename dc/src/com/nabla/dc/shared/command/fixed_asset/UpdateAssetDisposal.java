@@ -26,6 +26,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -41,12 +42,12 @@ public class UpdateAssetDisposal implements IRecordAction<StringResult> {
 	Date			disposal_date;
 	@IRecordField
 	DisposalTypes	disposal_type;
-	@IRecordField
+	@IRecordField @Nullable
 	Integer			proceeds;
 
 	UpdateAssetDisposal() {}	// for serialization only
 
-	public UpdateAssetDisposal(int id, final Date dt, final DisposalTypes type, int proceeds) {
+	public UpdateAssetDisposal(int id, final Date dt, final DisposalTypes type, @Nullable Integer proceeds) {
 		this.id = id;
 		this.disposal_date = dt;
 		this.disposal_type = type;

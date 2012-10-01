@@ -5,9 +5,9 @@
     ui:generateLocales="default"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
 
-	<wnd:Html title="Import settings wizard completed">
-		<ui:attribute name="title" description="Import settings wizard completed page caption"/>
+	<wnd:Html title="Import assets wizard completed">
+		<ui:attribute name="title" description="Import assets wizard completed page caption"/>
 		<ui:msg>
-<p>All settings have been imported successfully.<br/>Click Finish to exit this wizard.</p></ui:msg>
+<p>All assets have been imported into this company successfully.<br/>Click Finish to exit this wizard.</p></ui:msg>
 	</wnd:Html>
 </ui:UiBinder> 

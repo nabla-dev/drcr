@@ -25,8 +25,6 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  */
 public interface ISplitAsset {
 
-	static final String					TABLE = IAsset.TABLE;
-
 	static final String					NAME_A = "nameA";
 	static final String					NAME_B = "nameB";
 	static final TextLengthConstraint		NAME_CONSTRAINT = IAsset.NAME_CONSTRAINT;
@@ -39,4 +37,5 @@ public interface ISplitAsset {
 	static final String					COST_B = "costB";
 	static final String					TOTAL = "total";
 
+	static final String					ID_B = "idB";
 }

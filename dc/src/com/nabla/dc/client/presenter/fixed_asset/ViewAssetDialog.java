@@ -25,7 +25,6 @@ import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
-import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
@@ -41,14 +40,14 @@ public class ViewAssetDialog extends AbstractTopPresenter<ViewAssetDialog.IDispl
 	public interface IDisposalTabDisplay extends ITabDisplay {}
 	public interface ITransferTabDisplay extends ITabDisplay {}
 
-	private final ValuesManager	model;
+	private final ViewAssetValuesManager	model;
 
-	public ViewAssetDialog(final IDisplay ui, final ValuesManager model) {
+	public ViewAssetDialog(final IDisplay ui, final ViewAssetValuesManager model) {
 		super(ui);
 		this.model = model;
 	}
 
-	public ViewAssetDialog(final ValuesManager model) {
+	public ViewAssetDialog(final ViewAssetValuesManager model) {
 		this(new ViewAssetDialogUi(model), model);
 	}
 
@@ -65,7 +64,7 @@ public class ViewAssetDialog extends AbstractTopPresenter<ViewAssetDialog.IDispl
 	@Override
 	protected void onBind() {
 		super.onBind();
-		final AssetRecord asset = new AssetRecord(model.rememberValues());
+		final AssetRecord asset = model.getRecord();
 		if (asset.isTransfer())
 			getDisplay().addTab(new ViewAssetTransferTabUi(model));
 		if (asset.isDisposed())

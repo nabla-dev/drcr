@@ -100,4 +100,6 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	@DefaultStringValue("undefined Financial Statement category")
 	String UNDEFINED_FS_CATEGORY();
 
+	@DefaultStringValue("Names cannot be the same")
+	String FA_SPLIT_ASSET_NOT_SAME_NAME();
 }

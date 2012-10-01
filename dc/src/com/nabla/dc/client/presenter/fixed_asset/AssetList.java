@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.client.presenter.fixed_asset;
 
+import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.ui.Resource;
@@ -28,6 +29,7 @@ import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
 import com.nabla.wapp.client.general.AbstractAsyncCallback;
+import com.nabla.wapp.client.general.AbstractRunAsyncCallback;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
@@ -102,9 +104,10 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		cmd.disposal().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.split(), onSplitAsset);
 		cmd.split().setRecordProvider(getDisplay().getCurrentRecordProvider());
+		registerSlot(cmd.importAssets(), onImportAsset);
 		/*
 	  	registerSlot(cmd.userReportList(), onUserReportList);
-		registerSlot(cmd.importAssets(), onImportAsset);
+
 		registerSlot(rcmd.transaction(), onTransactionList);
 	*/
 		cmd.updateUi();
@@ -221,23 +224,23 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
+	private final ISlot onImportAsset = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					new ImportAssetWizard(companyId, onReload).revealDisplay();
+				}
+			});
+		}
+	};
+
 	/*
 	private final ISlot onUserReportList = new ISlot() {
 		@Override
 		public void invoke() {
 			workspace.addTab(userReportListFactory.get(assetRegisterId, assetRegisterName));
-		}
-	};
-
-	private final ISlot onImportAsset = new ISlot() {
-		@Override
-		public void invoke() {
-			importAssetWizardFactory.get(assetRegisterId, new ISlot() {
-				@Override
-				public void invoke() {
-					display.reload();
-				}
-			}).revealDisplay();
 		}
 	};
 

@@ -22,7 +22,6 @@ import com.nabla.dc.client.ui.fixed_asset.SplitAssetWizardCostPageUi;
 import com.nabla.dc.client.ui.fixed_asset.SplitAssetWizardGeneralPageUi;
 import com.nabla.dc.client.ui.fixed_asset.SplitAssetWizardUi;
 import com.nabla.dc.client.ui.fixed_asset.SplitAssetWizardWelcomePageUi;
-import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
@@ -48,12 +47,12 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 	private final ISlot1<Integer>				onRecordUpdatedSlot;
 	private final ISlot1<Integer>				onRecordAddedSlot;
 	private final SplitAssetValuesManager		data;
-	private final Integer						updatedRecordId;
+	private final Integer						assetId;
 
 	public SplitAssetWizard(final IDisplay ui, final SplitAssetValuesManager data, final ISlot1<Integer> onRecordUpdatedSlot, final ISlot1<Integer> onRecordAddedSlot) {
 		super(ui);
 		this.data = data;
-		updatedRecordId = (Integer)data.getValue(IdField.NAME);
+		assetId = data.getRecord().getId();
 		this.onRecordUpdatedSlot = onRecordUpdatedSlot;
 		this.onRecordAddedSlot = onRecordAddedSlot;
 	}
@@ -114,8 +113,8 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 		@Override
 		public void execute(DSResponse response, Object rawData, DSRequest request) {
 			if (response.getStatus() == DSResponse.STATUS_SUCCESS) {
-				onRecordUpdatedSlot.invoke(updatedRecordId);
-
+				onRecordUpdatedSlot.invoke(assetId);
+				onRecordAddedSlot.invoke(data.getRecord().getIdB());
 			}
 			onSave.execute(response, rawData, request);
 		}

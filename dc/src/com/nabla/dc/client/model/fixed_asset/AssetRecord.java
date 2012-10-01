@@ -26,8 +26,10 @@ import com.nabla.dc.shared.command.fixed_asset.UpdateAssetField;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
+import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
+import com.nabla.wapp.shared.general.Nullable;
 import com.smartgwt.client.data.Record;
 
 /**
@@ -144,8 +146,8 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 		return DisposalTypes.valueOf(getAttributeAsString(DISPOSAL_TYPE));
 	}
 
-	public Integer getProceeds() {
-		return getAttributeAsInt(PROCEEDS);
+	public @Nullable Integer getProceeds() {
+		return JSHelper.isAttribute(this.getJsObj(), PROCEEDS) ? getAttributeAsInt(PROCEEDS) : null;
 	}
 
 	public AddAsset toAddCommand(final Integer companyId) {
