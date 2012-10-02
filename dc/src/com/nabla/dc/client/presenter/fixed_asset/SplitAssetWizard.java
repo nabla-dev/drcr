@@ -27,9 +27,6 @@ import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
-import com.smartgwt.client.data.DSCallback;
-import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.data.DSResponse;
 
 /**
  * @author nabla
@@ -43,6 +40,15 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 	static public interface IGeneralPage extends IWizardPageDisplay {}
 	static public interface ICostPage extends IWizardPageDisplay {}
 	static public interface ICompletedPage extends IWizardPageDisplay {}
+
+	public class SaveHandler extends SaveValuesHandler {
+		@Override
+		public void onSuccess() {
+			onRecordUpdatedSlot.invoke(assetId);
+			onRecordAddedSlot.invoke(data.getRecord().getIdB());
+			super.onSuccess();
+		}
+	};
 
 	private final ISlot1<Integer>				onRecordUpdatedSlot;
 	private final ISlot1<Integer>				onRecordAddedSlot;
@@ -104,20 +110,10 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 		displayFinishPage(new SplitAssetWizardCompletedPageUi(), new ISlot() {
 			@Override
 			public void invoke() {
-				data.saveData(onSplit);
+				data.save(new SaveHandler());
 			}
 		});
 	}
 
-	private final DSCallback onSplit = new DSCallback() {
-		@Override
-		public void execute(DSResponse response, Object rawData, DSRequest request) {
-			if (response.getStatus() == DSResponse.STATUS_SUCCESS) {
-				onRecordUpdatedSlot.invoke(assetId);
-				onRecordAddedSlot.invoke(data.getRecord().getIdB());
-			}
-			onSave.execute(response, rawData, request);
-		}
-	};
 }
 

@@ -88,4 +88,15 @@ public class WizardValuesManager<T extends Record> extends ValuesManager {
     	return self.getValues();
 	}-*/;
 
+    public void save(final ISaveWizardValuesCallback callback) {
+    	this.saveData(new DSCallback() {
+			@Override
+			public void execute(DSResponse response, @SuppressWarnings("unused") Object rawData, @SuppressWarnings("unused") DSRequest request) {
+				if (response.getStatus() == DSResponse.STATUS_SUCCESS)
+					callback.onSuccess();
+				else
+					callback.onFailure();
+			}
+		});
+    }
 }

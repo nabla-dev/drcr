@@ -29,7 +29,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  * @author nabla
  *
  */
-public class ImportSettingsUploadFileModel extends CModel<ImportSettingsRecord> {
+public class ImportSettingsModel extends CModel<ImportSettingsRecord> {
 
 	static public class Fields implements IImportSettings {
 		public String file() { return FILE; }
@@ -38,7 +38,7 @@ public class ImportSettingsUploadFileModel extends CModel<ImportSettingsRecord> 
 
 	private static final Fields	fields = new Fields();
 
-	public ImportSettingsUploadFileModel() {
+	public ImportSettingsModel() {
 		super(ImportSettingsRecord.factory);
 
 		setFields(

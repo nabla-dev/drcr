@@ -37,9 +37,6 @@ import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
-import com.smartgwt.client.data.DSCallback;
-import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.data.DSResponse;
 
 /**
  * @author nabla
@@ -53,6 +50,14 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 	public interface IAcquisitionPage extends IWizardPageDisplay {}
 	public interface IDepreciationPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
+
+	public class SaveHandler extends SaveValuesHandler {
+		@Override
+		public void onSuccess() {
+			onSuccessHandler.invoke(data.getRecord().getId());
+			super.onSuccess();
+		}
+	};
 
 	private static final Logger				logger = LoggerFactory.getLog(AssetWizard.class);
 	private final AssetWizardValuesManager		data;
@@ -148,19 +153,10 @@ public class AssetWizard extends AbstractWizardPresenter<AssetWizard.IDisplay> {
 		displayFinishPage(new AssetWizardCompletedPageUi(data.isNewRecord()), new ISlot() {
 			@Override
 			public void invoke() {
-				data.saveData(onAssetSaved);
+				data.save(new SaveHandler());
 			}
 		});
 	}
-
-	public final DSCallback onAssetSaved = new DSCallback() {
-		@Override
-		public void execute(DSResponse response, Object rawData, DSRequest request) {
-			if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-				onSuccessHandler.invoke(data.getRecord().getId());
-			onSave.execute(response, rawData, request);
-		}
-	};
 
 }
 

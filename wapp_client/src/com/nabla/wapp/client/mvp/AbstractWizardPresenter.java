@@ -17,13 +17,11 @@
 package com.nabla.wapp.client.mvp;
 
 import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.client.model.ISaveWizardValuesCallback;
 import com.nabla.wapp.client.ui.IWizardPage;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
-import com.smartgwt.client.data.DSCallback;
-import com.smartgwt.client.data.DSRequest;
-import com.smartgwt.client.data.DSResponse;
 
 
 /**
@@ -31,6 +29,18 @@ import com.smartgwt.client.data.DSResponse;
  *
  */
 public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends AbstractTopPresenter<D> {
+
+	public class SaveValuesHandler implements ISaveWizardValuesCallback {
+		@Override
+		public void onFailure() {
+			getDisplay().displayErroneousPage();
+		}
+
+		@Override
+		public void onSuccess() {
+			getDisplay().hide();
+		}
+	};
 
 	protected AbstractWizardPresenter(D display) {
 		super(display);
@@ -65,15 +75,5 @@ public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends 
 		ui.getButton(page).connect(nextHandler);
 		getDisplay().displayNextPage(ui);
 	}
-
-	public final DSCallback onSave = new DSCallback() {
-		@Override
-		public void execute(DSResponse response, @SuppressWarnings("unused") Object rawData, @SuppressWarnings("unused") DSRequest request) {
-			if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-				getDisplay().hide();
-			else
-				getDisplay().displayErroneousPage();
-		}
-	};
 
 }

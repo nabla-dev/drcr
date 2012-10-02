@@ -16,15 +16,15 @@
 */
 package com.nabla.dc.client.presenter;
 
-import com.nabla.dc.client.ui.ImportSettingsWizardCompletedPageUi;
-import com.nabla.dc.client.ui.ImportSettingsWizardFilePageUi;
+import com.nabla.dc.client.model.ImportSettingsValuesManager;
 import com.nabla.dc.client.ui.ImportSettingsWizardUi;
 import com.nabla.dc.client.ui.ImportWizardErrorPageUi;
+import com.nabla.wapp.client.model.WizardValuesManager;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
+import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
-import com.nabla.wapp.shared.signal.Signal;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.slot.ISlotManager;
  * @author nabla
  *
  */
-public class ImportSettingsWizard extends AbstractTopPresenter<ImportSettingsWizard.IDisplay> {
+public class ImportSettingsWizard extends AbstractWizardPresenter<ImportSettingsWizard.IDisplay> {
 
 	public interface IDisplay extends IWizardDisplay {}
 
@@ -45,32 +45,25 @@ public class ImportSettingsWizard extends AbstractTopPresenter<ImportSettingsWiz
 	public interface IErrorPage extends IWizardPageDisplay {}
 	public interface ICompletedPage extends IWizardPageDisplay {}
 
-	private final Signal				sigSuccess = new Signal();
-	private final IUploadFilePage		uploadFilePage;
-	private final ICompletedPage		completedPage = new ImportSettingsWizardCompletedPageUi();
+	private final ISlot					onSuccessHandler;
+	private final WizardValuesManager	data = new ImportSettingsValuesManager();
 
-	public ImportSettingsWizard(final IDisplay ui) {
-		super(ui);
-		uploadFilePage = new ImportSettingsWizardFilePageUi(onFileUploaded);
-	}
-
-	public ImportSettingsWizard(final IDisplay ui, final ISlot successSlot) {
-		this(ui);
-		sigSuccess.connect(successSlot);
-	}
-
-	public ImportSettingsWizard(final ISlot successSlot) {
-		this(new ImportSettingsWizardUi(), successSlot);
-	}
-
-	public ISlotManager getSuccessSlots() {
-		return sigSuccess;
+	public ImportSettingsWizard(final ISlot onSuccessHandler) {
+		super(new ImportSettingsWizardUi());
+		this.onSuccessHandler = onSuccessHandler;
 	}
 
 	@Override
 	protected void onBind() {
 		super.onBind();
 
+		displayNextPage(new ImportSettingsWizardFilePageUi(data), new ISlot() {
+			@Override
+			public void invoke() {
+				data.save(callback)
+
+			}
+		});
 		uploadFilePage.getButton(WizardPageNavigations.NEXT).connect(new ISlot() {
 			@Override
 			public void invoke() {
