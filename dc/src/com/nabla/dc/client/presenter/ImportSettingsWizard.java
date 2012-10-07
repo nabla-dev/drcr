@@ -72,12 +72,12 @@ public class ImportSettingsWizard extends AbstractWizardPresenter<IWizardDisplay
 	}
 
 	private void displayCompletedPage() {
-		onSuccessHandler.invoke();
-		displayNextPage(new ImportSettingsWizardCompletedPageUi(), new ISlot() {
+		displayFinishPage(new ImportSettingsWizardCompletedPageUi(), new ISlot() {
 			@Override
 			public void invoke() {
 				getDisplay().hide();
 			}
 		});
+		onSuccessHandler.invoke();
 	}
 }

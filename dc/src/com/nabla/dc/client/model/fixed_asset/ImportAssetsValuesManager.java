@@ -25,7 +25,11 @@ import com.nabla.wapp.client.model.WizardValuesManager;
 public class ImportAssetsValuesManager extends WizardValuesManager<ImportAssetsRecord> {
 
 	public ImportAssetsValuesManager(final Integer companyId) {
-		super(new ImportAssetsModel(companyId));
+		super(new ImportCompanyAssetsModel(companyId));
+	}
+
+	public ImportAssetsValuesManager() {
+		super(new ImportAssetsModel());
 	}
 
 }

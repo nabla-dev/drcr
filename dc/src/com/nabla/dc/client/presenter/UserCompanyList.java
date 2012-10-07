@@ -23,6 +23,7 @@ import com.nabla.dc.client.presenter.company.Company;
 import com.nabla.dc.client.presenter.company.CompanyList;
 import com.nabla.dc.client.presenter.fixed_asset.FinancialStatementCategoryList;
 import com.nabla.dc.client.presenter.fixed_asset.FixedAssetCategoryList;
+import com.nabla.dc.client.presenter.fixed_asset.ImportAssetsWizard;
 import com.nabla.dc.client.presenter.general.TaxRateList;
 import com.nabla.dc.client.presenter.options.ChangeUserPasswordDialog;
 import com.nabla.dc.client.presenter.options.RoleList;
@@ -59,6 +60,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.FA_ASSET_CATEGORY_VIEW) HideableCommand fixedAssetCategoryList();
 		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand financialStatementCategoryList();
 		@IRequiredRole(IPrivileges.IMPORT_SETTINGS) HideableCommand importSettings();
+		@IRequiredRole(IPrivileges.FA_ASSET_ADD) HideableCommand importAssets();
 		Command exportSettings();
 		// OPTIONS
 		Command changePassword();
@@ -101,6 +103,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.financialStatementCategoryList(), onFinancialStatementCategoryList);
 		registerSlot(cmd.importSettings(), onImportSettings);
 		registerSlot(cmd.exportSettings(), onExportSettings);
+		registerSlot(cmd.importAssets(), onImportAssets);
 
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
@@ -240,4 +243,15 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		}
 	};
 
+	private final ISlot onImportAssets = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					new ImportAssetsWizard(onReload).revealDisplay();
+				}
+			});
+		}
+	};
 }

@@ -28,15 +28,15 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla
  *
  */
-public class ImportAssets implements IRecordAction<StringResult> {
+public class ImportCompanyAssets implements IRecordAction<StringResult> {
 
 	private int				companyId;
 	private int				fileId;
 	private SqlInsertOptions	overwrite;
 
-	ImportAssets() {}	// for serialization only
+	ImportCompanyAssets() {}	// for serialization only
 
-	public ImportAssets(final int companyId, final int fileId, final SqlInsertOptions overwrite) {
+	public ImportCompanyAssets(final int companyId, final int fileId, final SqlInsertOptions overwrite) {
 		this.companyId = companyId;
 		this.fileId = fileId;
 		this.overwrite = overwrite;

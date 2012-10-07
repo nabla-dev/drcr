@@ -1,0 +1,28 @@
+<dc-assets>
+	<companies>
+	<company name="">
+		<asset>
+			<name></name>
+			<category></category>
+			<reference></reference>
+			<location></location>
+			<acquisition_date></acquisition_date>
+			<acquisition_type></acquisition_type>
+			<cost></cost>
+			<purchase_invoice></purchase_invoice>
+						
+	Integer				initialAccumulatedDepreciation;	// if TRANSFER
+	Integer				initialDepreciationPeriod;	// if TRANSFER
+	@IRecordField
+	int					depreciation_period;
+	int					residualValue;
+	boolean				createTransactions;
+	boolean				opening = false;	// to agree NBV at given period
+	Integer				openingYear;
+	Integer				openingMonth;	// 0-based
+	Integer				openingAccumulatedDepreciation;
+	Integer				openingDepreciationPeriod;
+	</asset>
+		</company>
+	</companies>
+</dc-assets>

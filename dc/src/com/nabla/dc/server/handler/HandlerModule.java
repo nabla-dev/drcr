@@ -67,6 +67,8 @@ public class HandlerModule extends AbstractHandlerModule {
 
 		bindHandler(ImportSettingsHandler.class);
 		bindHandler(ExportSettingsHandler.class);
+
+		bindHandler(ImportAssetsHandler.class);
 /*
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);
@@ -75,7 +77,6 @@ public class HandlerModule extends AbstractHandlerModule {
 
 		bindHandler(LoadUserPreferenceHandler.class);
 		bindHandler(SaveUserPreferenceHandler.class);
-		bindHandler(GetFormDefaultValuesHandler.class);
 
 		bindHandler(FetchReportListHandler.class);
 		bindHandler(FetchUserReportListHandler.class);

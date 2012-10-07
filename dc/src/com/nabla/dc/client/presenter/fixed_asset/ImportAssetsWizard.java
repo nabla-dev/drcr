@@ -35,6 +35,12 @@ public class ImportAssetsWizard extends AbstractWizardPresenter<IWizardDisplay> 
 	private final ISlot						onSuccessHandler;
 	private final ImportAssetsValuesManager	data;
 
+	public ImportAssetsWizard(final ISlot onSuccessHandler) {
+		super(new ImportAssetsWizardUi());
+		this.onSuccessHandler = onSuccessHandler;
+		this.data = new ImportAssetsValuesManager();
+	}
+
 	public ImportAssetsWizard(final int companyId, final ISlot onSuccessHandler) {
 		super(new ImportAssetsWizardUi());
 		this.onSuccessHandler = onSuccessHandler;
@@ -73,13 +79,13 @@ public class ImportAssetsWizard extends AbstractWizardPresenter<IWizardDisplay> 
 	}
 
 	private void displayCompletedPage() {
-		onSuccessHandler.invoke();
-		displayNextPage(new ImportAssetsWizardCompletedPageUi(), new ISlot() {
+		displayFinishPage(new ImportAssetsWizardCompletedPageUi(), new ISlot() {
 			@Override
 			public void invoke() {
 				getDisplay().hide();
 			}
 		});
+		onSuccessHandler.invoke();
 	}
 
 }

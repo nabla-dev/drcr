@@ -20,6 +20,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.model.ISaveWizardValuesCallback;
 import com.nabla.wapp.client.ui.IWizardPage;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
+import com.nabla.wapp.shared.signal.Signal1;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
@@ -78,7 +79,9 @@ public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends 
 	public void displayNextPage(final IWizardPageDisplay ui, final ISlot nextHandler, final WizardPageNavigations page) {
 		Assert.argumentNotNull(ui);
 
-		ui.getButton(page).connect(nextHandler);
+		Signal1<IWizardPage> button = ui.getButton(page);
+		Assert.notNull(button, "have you created a wizard page with a '" + page.toString() + "' button?");
+		button.connect(nextHandler);
 		getDisplay().displayNextPage(ui);
 	}
 

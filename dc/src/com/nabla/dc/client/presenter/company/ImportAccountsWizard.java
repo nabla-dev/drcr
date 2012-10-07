@@ -74,7 +74,7 @@ public class ImportAccountsWizard extends AbstractWizardPresenter<IWizardDisplay
 
 	private void displayCompletedPage() {
 		onSuccessHandler.invoke();
-		displayNextPage(new ImportAccountsWizardCompletedPageUi(), new ISlot() {
+		displayFinishPage(new ImportAccountsWizardCompletedPageUi(), new ISlot() {
 			@Override
 			public void invoke() {
 				getDisplay().hide();

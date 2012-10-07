@@ -14,55 +14,61 @@
 * the License.
 *
 */
-package com.nabla.dc.server.xml.settings;
+package com.nabla.dc.server.xml.assets;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.Map;
 
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
+import com.nabla.dc.server.xml.settings.ImportContext;
 import com.nabla.dc.shared.model.company.IAccount;
+import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
+import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.xml.XmlNode;
-import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-@IRecordTable(name=IAccount.TABLE)
-class XmlAccount {
+@IRecordTable(name=IAsset.TABLE)
+class XmlAsset {
+	Integer				companyId;
 	@IRecordField
-	Integer		company_id;
-	@Element
+	String				name;
 	@IRecordField
-	XmlString	code;
-	@Element
+	Integer				fa_company_asset_category_id;
+	@IRecordField @Nullable
+	String				reference;
+	@IRecordField @Nullable
+	String				location;
 	@IRecordField
-	XmlString	name;
+	Date				acquisition_date;
 	@IRecordField
-	String		uname;
-	@Element(required=false)
-	@IRecordField(name="active")
-	Boolean		visible;
-	@Element(required=false)
-	@IRecordField(name="cost_centre")
-	XmlString	cc;
-	@Element(required=false)
-	@IRecordField(name="department")
-	XmlString	dep;
-	@Element
-	@IRecordField(name="balance_sheet")
-	Boolean		bs;
+	AcquisitionTypes	acquisition_type;
+	int					cost;
+	@IRecordField @Nullable
+	String				purchase_invoice;
+	Integer				initialAccumulatedDepreciation;	// if TRANSFER
+	Integer				initialDepreciationPeriod;	// if TRANSFER
+	@IRecordField
+	int					depreciation_period;
+	int					residualValue;
+	boolean				createTransactions;
+	boolean				opening = false;	// to agree NBV at given period
+	Integer				openingYear;
+	Integer				openingMonth;	// 0-based
+	Integer				openingAccumulatedDepreciation;
+	Integer				openingDepreciationPeriod;
 
-	public XmlAccount() {}
-
-	public XmlAccount(final ResultSet rs) throws SQLException {
+	public XmlAsset() {}
+/*
+	public XmlAsset(final ResultSet rs) throws SQLException {
 		code = new XmlString(rs.getString(1));
 		name = new XmlString(rs.getString(2));
 		visible = rs.getBoolean(3);
@@ -74,7 +80,7 @@ class XmlAccount {
 			dep = new XmlString(s);
 		bs = rs.getBoolean(6);
 	}
-
+*/
 	@Validate
 	public void validate(Map session) throws DispatchException {
 		final ICsvErrorList errors = XmlNode.getErrorList(session);

@@ -16,7 +16,7 @@
 */
 package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.dc.shared.command.ImportAssets;
+import com.nabla.dc.shared.command.fixed_asset.ImportCompanyAssets;
 import com.nabla.dc.shared.model.fixed_asset.IImportAssets;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
@@ -29,7 +29,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  * @author nabla
  *
  */
-public class ImportAssetsModel extends CModel<ImportAssetsRecord> {
+public class ImportCompanyAssetsModel extends CModel<ImportAssetsRecord> {
 
 	static public class Fields implements IImportAssets {
 		public String file() { return FILE_ID; }
@@ -37,10 +37,12 @@ public class ImportAssetsModel extends CModel<ImportAssetsRecord> {
 	}
 
 	private static final Fields	fields = new Fields();
+	private final int				companyId;
 
-	public ImportAssetsModel() {
+	public ImportCompanyAssetsModel(final int companyId) {
 		super(ImportAssetsRecord.factory);
 
+		this.companyId = companyId;
 		setFields(
 			new UploadFileField(fields.file(), FieldAttributes.REQUIRED),
 			new TextField(fields.overwrite(), FieldAttributes.REQUIRED)
@@ -53,7 +55,7 @@ public class ImportAssetsModel extends CModel<ImportAssetsRecord> {
 
 	@Override
 	public IRecordAction<StringResult> getAddCommand(final ImportAssetsRecord record) {
-		return new ImportAssets(record.getFileId(), record.getOverwrite());
+		return new ImportCompanyAssets(companyId, record.getFileId(), record.getOverwrite());
 	}
 
 	@Override

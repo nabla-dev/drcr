@@ -14,12 +14,11 @@
 * the License.
 *
 */
-package com.nabla.dc.server.xml.settings;
+package com.nabla.dc.server.xml.assets;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,18 +27,19 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
+import com.nabla.dc.server.xml.settings.ImportContext;
+import com.nabla.dc.server.xml.settings.SaveContext;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.dc.shared.model.company.IFinancialYear;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.xml.XmlNode;
-import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
@@ -49,31 +49,21 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
 class XmlCompany {
 	private static final Log	log = LogFactory.getLog(XmlCompany.class);
 
+	@Attribute
+	String			name;
 	@Element
-	XmlString					name;
-	@Element(name="visible", required=false)
-	Boolean						active;
-	@Element
-	XmlString					financial_year;
-	@Element
-	Date						start_date;
-	@Element(required=false)
-	XmlCompanyAssetCategoryList	asset_categories;
-	@Element(required=false)
-	XmlAccountList				accounts;
-	@Element(required=false)
-	XmlCompanyUserList			users;
+	XmlAssetList	assets;
 
 	public XmlCompany() {}
-
+/*
 	public XmlCompany(final ResultSet rs) throws SQLException {
 		name = new XmlString(rs.getString(2));
 		active = rs.getBoolean(3);
 		load(rs.getStatement().getConnection(), rs.getInt(1));
 	}
-
+*/
 	public String getName() {
-		return name.getValue();
+		return name;
 	}
 
 	@Validate
@@ -142,7 +132,7 @@ getName(), getName().toUpperCase(), active);
 		return (asset_categories == null || asset_categories.save(conn, companyId, ctx)) &&
 				(users == null || users.save(conn, companyId, ctx));
 	}
-
+/*
 	public void load(final Connection conn, final Integer id) throws SQLException {
 		asset_categories = new XmlCompanyAssetCategoryList(conn, id);
 		accounts = new XmlAccountList(conn, id);
@@ -170,5 +160,5 @@ getName(), getName().toUpperCase(), active);
 		} finally {
 			stmt.close();
 		}
-	}
+	}*/
 }
