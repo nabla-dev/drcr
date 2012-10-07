@@ -61,7 +61,8 @@ public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		registerHandler(getDisplay().getSubmitSlots().connect(new ISlot() {
 			@Override
 			public void invoke() {

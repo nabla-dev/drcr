@@ -58,7 +58,8 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		Application.getInstance().getUserSessionManager().getUserSessionChangedSlots().connect(onUserSessionChanged);
 		registerHandler(getDisplay().getTabClosedSlots().connect(tabs.getTabClosedSlot()));
 
@@ -74,9 +75,9 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 	}
 
 	@Override
-	protected void onUnbind() {
+	public void unbind() {
 		tabs.clear();
-		super.onUnbind();
+		super.unbind();
 	}
 
 	@Override

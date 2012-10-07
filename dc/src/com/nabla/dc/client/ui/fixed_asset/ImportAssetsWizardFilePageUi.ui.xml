@@ -6,13 +6,14 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 
-	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.ImportAssetUploadFileModel" />
+	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager" />
+	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.ImportAssetsModel.Fields" />
 	
 	<wnd:WizardPage title="Select the XML file to upload to the server.">
 		<ui:attribute name="title" description="Import assets wizard file page caption"/>
-		<form:Form ui:field="form" model="{model}">
-			<form:UploadEditBox ui:field="file" name="{model.fields.file}" validFileExtensions="xml" maximumFiles="1" width="240"><ui:msg>XML *file</ui:msg></form:UploadEditBox>
-			<form:RadioGroup name="{model.fields.overwrite}" defaultValue="APPEND">
+		<form:Form ui:field="form" valuesManager="{model}">
+			<form:UploadEditBox ui:field="file" name="{fields.file}" validFileExtensions="xml" maximumFiles="1" width="240"><ui:msg>XML *file</ui:msg></form:UploadEditBox>
+			<form:RadioGroup name="{fields.overwrite}" defaultValue="APPEND">
 				<form:RadioItem key="REPLACE">Replace all existing assets</form:RadioItem>
 				<form:RadioItem key="OVERWRITE">Overwrite existing assets</form:RadioItem>
 				<form:RadioItem key="APPEND">Append only new assets</form:RadioItem>

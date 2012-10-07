@@ -19,6 +19,7 @@ package com.nabla.dc.client.model;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.IWizardRecord;
 import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.smartgwt.client.data.Record;
@@ -27,7 +28,7 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class ImportSettingsRecord extends BasicRecord implements IImportSettings {
+public class ImportSettingsRecord extends BasicRecord implements IImportSettings, IWizardRecord {
 
 	public static final IRecordFactory<ImportSettingsRecord>	factory = new IRecordFactory<ImportSettingsRecord>() {
 		@Override
@@ -52,4 +53,8 @@ public class ImportSettingsRecord extends BasicRecord implements IImportSettings
 		return SqlInsertOptions.valueOf(getAttributeAsString(OVERWRITE));
 	}
 
+	@Override
+	public boolean getSuccess() {
+		return getBoolean(SUCCESS);
+	}
 }

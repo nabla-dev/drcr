@@ -19,65 +19,33 @@ package com.nabla.dc.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.nabla.dc.client.presenter.ImportSettingsWizard;
-import com.nabla.dc.shared.model.IImportSettings;
-import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
-import com.nabla.wapp.client.ui.form.Form;
-import com.nabla.wapp.client.ui.form.Form.Operations;
 import com.nabla.wapp.client.ui.form.UploadEditBox;
-import com.nabla.wapp.shared.command.GetFormDefaultValues;
-import com.nabla.wapp.shared.slot.ISlot;
+import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class ImportSettingsWizardFilePageUi extends BindedWizardPageDisplay<WizardPage> implements ImportSettingsWizard.IUploadFilePage {
+public class ImportSettingsWizardFilePageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, ImportSettingsWizardFilePageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField
-	Form			form;
-	@UiField
 	UploadEditBox	file;
 
-	public ImportSettingsWizardFilePageUi(final ISlot onSuccessHandler) {
+	public ImportSettingsWizardFilePageUi(final ValuesManager model) {
+		super(model);
 		this.create(uiBinder, this);
-		form.editNewRecordWithDefault(new GetFormDefaultValues(IImportSettings.PREFERENCE_GROUP));
-		form.getSuccessSlots(Operations.ADD).connect(onSuccessHandler);
-		form.getSuccessSlots(Operations.UPDATE).connect(onSuccessHandler);
 	}
 
 	@Override
-	public boolean validate() {
-		return form.validate();
-	}
-
-	@Override
-	public boolean hasErrors() {
-		return form.hasErrors();
-	}
-
-	@Override
-	public void save() {
-		form.saveData();
-	}
-
-	@Override
-	public void cleanup() {
+	public void unbind() {
 		file.cleanup();
-	}
-
-	@Override
-	public boolean isSuccess() {
-		return (Boolean)form.getValue(IImportSettings.SUCCESS);
-	}
-
-	@Override
-	public Integer getBatchId() {
-		return Integer.valueOf(form.getValueAsString(IImportSettings.FILE));
+		super.unbind();
 	}
 
 }

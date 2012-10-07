@@ -18,14 +18,14 @@ package com.nabla.dc.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.ImportSettingsWizard;
+import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 
 /**
  * @author nabla
  *
  */
-public class ImportSettingsWizardUi extends WizardDialog implements ImportSettingsWizard.IDisplay {
+public class ImportSettingsWizardUi extends WizardDialog implements IWizardDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ImportSettingsWizardUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

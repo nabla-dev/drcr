@@ -19,7 +19,7 @@ package com.nabla.dc.client.ui.fixed_asset;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 
@@ -27,7 +27,7 @@ import com.nabla.wapp.client.ui.Html;
  * @author nabla
  *
  */
-public class AssetWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements AssetWizard.ICompletedPage {
+public class AssetWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements IWizardPageDisplay {
 
 	@UiTemplate("NewAssetWizardCompletedPageUi.ui.xml")
 	interface NewBinder extends UiBinder<Html, AssetWizardCompletedPageUi> {}

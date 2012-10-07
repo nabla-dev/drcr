@@ -19,6 +19,7 @@ package com.nabla.dc.client.model.fixed_asset;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.dc.shared.model.fixed_asset.ISplitAsset;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.IWizardRecord;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.smartgwt.client.data.Record;
 
@@ -26,7 +27,7 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class SplitAssetRecord extends BasicListGridRecord implements ISplitAsset {
+public class SplitAssetRecord extends BasicListGridRecord implements ISplitAsset, IWizardRecord {
 
 	public static final IRecordFactory<SplitAssetRecord>	factory = new IRecordFactory<SplitAssetRecord>() {
 		@Override
@@ -69,5 +70,10 @@ public class SplitAssetRecord extends BasicListGridRecord implements ISplitAsset
 
 	public Integer getIdB() {
 		return getAttributeAsInt(ID_B);
+	}
+
+	@Override
+	public boolean getSuccess() {
+		return true;
 	}
 }

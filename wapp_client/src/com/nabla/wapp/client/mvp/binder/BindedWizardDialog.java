@@ -54,6 +54,10 @@ public class BindedWizardDialog extends BindedModalDialog {
 		return impl.getCloseSlots();
 	}
 
+	public void unbind() {
+		client.unbind();
+	}
+
 	public void displayNextPage(final IWizardPage page) {
 		client.displayNextPage(page);
 	}

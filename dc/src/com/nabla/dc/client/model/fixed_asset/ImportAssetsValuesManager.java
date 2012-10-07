@@ -14,17 +14,18 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.mvp;
+package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.wapp.client.ui.IWizardPage;
+import com.nabla.wapp.client.model.WizardValuesManager;
 
 /**
  * @author nabla
  *
  */
-public interface IWizardDisplay extends ITopDisplay {
-	void displayNextPage(final IWizardPage page);
-	void displayErroneousPage();
-	void setNavigationEnabled(boolean enabled);
-	void unbind();
+public class ImportAssetsValuesManager extends WizardValuesManager<ImportAssetsRecord> {
+
+	public ImportAssetsValuesManager(final Integer companyId) {
+		super(new ImportAssetsModel(companyId));
+	}
+
 }

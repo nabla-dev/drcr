@@ -17,8 +17,9 @@
 package com.nabla.dc.client.model.fixed_asset;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.dc.shared.model.fixed_asset.IImportAsset;
+import com.nabla.dc.shared.model.fixed_asset.IImportAssets;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.IWizardRecord;
 import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.smartgwt.client.data.Record;
@@ -27,20 +28,20 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class ImportAssetRecord extends BasicRecord implements IImportAsset {
+public class ImportAssetsRecord extends BasicRecord implements IImportAssets, IWizardRecord {
 
-	public static final IRecordFactory<ImportAssetRecord>	factory = new IRecordFactory<ImportAssetRecord>() {
+	public static final IRecordFactory<ImportAssetsRecord>	factory = new IRecordFactory<ImportAssetsRecord>() {
 		@Override
-		public ImportAssetRecord get(final JavaScriptObject data) {
-			return new ImportAssetRecord(data);
+		public ImportAssetsRecord get(final JavaScriptObject data) {
+			return new ImportAssetsRecord(data);
 		}
 	};
 
-	public ImportAssetRecord(final Record impl) {
+	public ImportAssetsRecord(final Record impl) {
 		super(impl);
 	}
 
-	public ImportAssetRecord(final JavaScriptObject js) {
+	public ImportAssetsRecord(final JavaScriptObject js) {
 		super(js);
 	}
 
@@ -50,6 +51,11 @@ public class ImportAssetRecord extends BasicRecord implements IImportAsset {
 
 	public SqlInsertOptions getOverwrite() {
 		return SqlInsertOptions.valueOf(getAttributeAsString(OVERWRITE));
+	}
+
+	@Override
+	public boolean getSuccess() {
+		return getBoolean(SUCCESS);
 	}
 
 }

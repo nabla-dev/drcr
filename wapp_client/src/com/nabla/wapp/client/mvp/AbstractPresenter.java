@@ -54,27 +54,21 @@ public abstract class AbstractPresenter<D extends IDisplay> implements IPresente
 	}
 
 	@Override
-	final public void bind() {
+	public void bind() {
 		logger.info("binding " + Util.getClassSimpleName(this.getClass()));
-		onBind();
 	}
 
 	@Override
-	final public void unbind() {
+	public void unbind() {
 		logger.info("un-binding " + Util.getClassSimpleName(this.getClass()));
 		for (HandlerRegistration handler : handlers)
 			handler.removeHandler();
 		handlers.clear();
-		onUnbind();
 	}
 
 	@Override
 	public D getDisplay() {
 		return display;
 	}
-
-	protected abstract void onBind();
-
-	protected void onUnbind() {}
 
 }

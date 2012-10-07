@@ -73,7 +73,8 @@ public class CompanyUserList extends AbstractTabPresenter<CompanyUserList.IDispl
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);

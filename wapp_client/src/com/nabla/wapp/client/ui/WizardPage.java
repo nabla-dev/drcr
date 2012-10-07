@@ -16,11 +16,8 @@
 */
 package com.nabla.wapp.client.ui;
 
-
 /**
  * @author nabla
  *
  */
-public class WizardPage extends VLayout {
-
-}
+public class WizardPage extends VLayout {}

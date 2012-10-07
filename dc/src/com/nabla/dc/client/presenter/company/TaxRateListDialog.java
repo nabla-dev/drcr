@@ -40,7 +40,8 @@ public class TaxRateListDialog extends AbstractTopPresenter<TaxRateListDialog.ID
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		getDisplay().getHideSlots().connect(new ISlot() {
 			@Override
 			public void invoke() {

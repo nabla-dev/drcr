@@ -37,6 +37,12 @@ public class WizardPageStack {
 		return pages.size();
 	}
 
+	void clear() {
+		for (IWizardPage page : pages)
+			page.unbind();
+		pages.clear();
+	}
+
 	public void push(final IWizardPage page) {
 		Assert.argumentNotNull(page);
 

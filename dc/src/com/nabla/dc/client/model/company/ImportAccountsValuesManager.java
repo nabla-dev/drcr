@@ -14,25 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.fixed_asset;
+package com.nabla.dc.client.model.company;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.fixed_asset.ImportAssetWizard;
-import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
-import com.nabla.wapp.client.ui.ModalDialog;
+import com.nabla.wapp.client.model.WizardValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class ImportAssetWizardUi extends BindedWizardDialog implements ImportAssetWizard.IDisplay {
+public class ImportAccountsValuesManager extends WizardValuesManager<ImportAccountsRecord> {
 
-	interface Binder extends UiBinder<ModalDialog, ImportAssetWizardUi> {}
-	private static final Binder	uiBinder = GWT.create(Binder.class);
-
-	public ImportAssetWizardUi() {
-		create(uiBinder, this);
+	public ImportAccountsValuesManager(final Integer companyId) {
+		super(new ImportAccountsModel(companyId));
 	}
 
 }

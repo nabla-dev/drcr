@@ -14,19 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.mvp;
-
-import com.nabla.wapp.client.general.AbstractAsyncCallback;
+package com.nabla.wapp.client.model;
 
 /**
- * The <code></code> object is used to
+ * @author nabla64
  *
  */
-public class AsyncTopPresenter<T extends ITopPresenter> extends AbstractAsyncCallback<T> {
-
-	@Override
-	public void onSuccess(T result) {
-		result.revealDisplay();
-	}
-
+public interface IWizardRecord {
+	boolean getSuccess();
 }

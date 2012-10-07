@@ -38,6 +38,7 @@ public class BindedBasicWizardPageDisplay extends BindedWizardPageDisplay<Wizard
 
 	@Override
 	public void unbind() {
+		super.unbind();
 		model.removeMember(form);
 	}
 

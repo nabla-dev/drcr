@@ -12,14 +12,14 @@
       	<dependency org="com.google.inject.extensions" name="guice-servlet" rev="${guice.version}" conf="compile->default;runtime->default"/>
       
       	<dependency org="commons-logging" name="commons-logging" rev="${commons-logging.version}" conf="runtime->default" />
-      	<dependency org="log4j" name="log4j" rev="${log4j.version}" conf="runtime->default" />
+      	<dependency org="log4j" name="log4j" rev="${log4j.version}" />
       
       	<dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default;runtime->default"/>
       	<dependency org="com.smartgwt" name="smartgwt-skins" rev="${smartgwt.version}" conf="compile->default;runtime->default"/>
         
         <dependency org="com.googlecode.gwtupload" name="gwtupload" rev="${gwtupload.version}" conf="compile->default;runtime->default" />
        
-        <dependency org="mysql" name="mysql-connector-java" rev="${mysql.version}" conf="runtime->default"/>
+        <dependency org="mysql" name="mysql-connector-java" rev="${mysql.version}"/>
         
         <dependency org="net.sourceforge.supercsv" name="supercsv" rev="latest.release" conf="compile->default;runtime->default" />
         

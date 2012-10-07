@@ -20,8 +20,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.fixed_asset.SplitAssetModel.Fields;
-import com.nabla.dc.client.presenter.fixed_asset.SplitAssetWizard;
 import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.shared.general.IHasValue;
@@ -34,7 +34,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
  * @author nabla
  *
  */
-public class SplitAssetWizardCostPageUi extends BindedBasicWizardPageDisplay implements SplitAssetWizard.ICostPage {
+public class SplitAssetWizardCostPageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, SplitAssetWizardCostPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

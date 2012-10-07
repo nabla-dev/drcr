@@ -28,6 +28,7 @@ import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.IWizardRecord;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.nabla.wapp.shared.general.Nullable;
 import com.smartgwt.client.data.Record;
@@ -36,7 +37,7 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class AssetRecord extends BasicListGridRecord implements IAsset {
+public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardRecord {
 
 	public static final IRecordFactory<AssetRecord>	factory = new IRecordFactory<AssetRecord>() {
 		@Override
@@ -180,5 +181,10 @@ public class AssetRecord extends BasicListGridRecord implements IAsset {
 
 	public UpdateAssetDisposal toDisposalCommand() {
 		return new UpdateAssetDisposal(getId(), getDisposalDate(), getDisposalType(), getProceeds());
+	}
+
+	@Override
+	public boolean getSuccess() {
+		return true;
 	}
 }

@@ -55,16 +55,17 @@ public class MainWindow extends AbstractMainPresenter<MainWindow.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		sessionManager.getUserSessionChangedSlots().connect(onUserSessionChanged);
 		login();
 	}
 
 	@Override
-	protected void onUnbind() {
+	public void unbind() {
 		if (this.client != null)
 			this.client.unbind();
-		super.onUnbind();
+		super.unbind();
 	}
 
 	private void login() {

@@ -17,8 +17,9 @@
 package com.nabla.dc.client.model.company;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.nabla.dc.shared.model.company.IImportAccount;
+import com.nabla.dc.shared.model.company.IImportAccounts;
 import com.nabla.wapp.client.model.IRecordFactory;
+import com.nabla.wapp.client.model.IWizardRecord;
 import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.smartgwt.client.data.Record;
@@ -27,20 +28,20 @@ import com.smartgwt.client.data.Record;
  * @author nabla
  *
  */
-public class ImportAccountRecord extends BasicRecord implements IImportAccount {
+public class ImportAccountsRecord extends BasicRecord implements IImportAccounts, IWizardRecord {
 
-	public static final IRecordFactory<ImportAccountRecord>	factory = new IRecordFactory<ImportAccountRecord>() {
+	public static final IRecordFactory<ImportAccountsRecord>	factory = new IRecordFactory<ImportAccountsRecord>() {
 		@Override
-		public ImportAccountRecord get(final JavaScriptObject data) {
-			return new ImportAccountRecord(data);
+		public ImportAccountsRecord get(final JavaScriptObject data) {
+			return new ImportAccountsRecord(data);
 		}
 	};
 
-	public ImportAccountRecord(final Record impl) {
+	public ImportAccountsRecord(final Record impl) {
 		super(impl);
 	}
 
-	public ImportAccountRecord(final JavaScriptObject js) {
+	public ImportAccountsRecord(final JavaScriptObject js) {
 		super(js);
 	}
 
@@ -56,4 +57,8 @@ public class ImportAccountRecord extends BasicRecord implements IImportAccount {
 		return SqlInsertOptions.valueOf(getAttributeAsString(OVERWRITE));
 	}
 
+	@Override
+	public boolean getSuccess() {
+		return getBoolean(SUCCESS);
+	}
 }

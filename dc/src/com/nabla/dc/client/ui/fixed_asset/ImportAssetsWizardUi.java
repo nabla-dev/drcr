@@ -14,26 +14,24 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.company;
+package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.company.ImportAccountWizard;
-import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
-import com.nabla.wapp.client.ui.Html;
-import com.nabla.wapp.client.ui.WizardPageNavigations;
+import com.nabla.wapp.client.mvp.IWizardDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
+import com.nabla.wapp.client.ui.ModalDialog;
 
 /**
  * @author nabla
  *
  */
-public class ImportAccountWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements ImportAccountWizard.ICompletedPage {
+public class ImportAssetsWizardUi extends BindedWizardDialog implements IWizardDisplay {
 
-	interface Binder extends UiBinder<Html, ImportAccountWizardCompletedPageUi> {}
+	interface Binder extends UiBinder<ModalDialog, ImportAssetsWizardUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	public ImportAccountWizardCompletedPageUi() {
-		super(WizardPageNavigations.FINISH);
+	public ImportAssetsWizardUi() {
 		create(uiBinder, this);
 	}
 

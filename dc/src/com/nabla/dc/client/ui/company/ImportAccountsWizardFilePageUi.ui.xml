@@ -6,14 +6,15 @@
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	xmlns:form="urn:import:com.nabla.wapp.client.ui.form">
 
-	<ui:with field="model" type="com.nabla.dc.client.model.company.ImportAccountUploadFileModel" />
+	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager" />
+	<ui:with field="fields" type="com.nabla.dc.client.model.company.ImportAccountsModel.Fields" />
 		
 	<wnd:WizardPage title="Select the CSV file to upload to the server.">
 		<ui:attribute name="title" description="Import accounts wizard file page caption"/>
-		<form:Form ui:field="form" model="{model}">
-			<form:UploadEditBox ui:field="file" name="{model.fields.file}" validFileExtensions="csv" maximumFiles="1" width="240"><ui:msg>CSV *file</ui:msg></form:UploadEditBox>
-			<form:CheckBox name="{model.fields.rowHeader}"><ui:msg>F*irst row represents column labels</ui:msg></form:CheckBox>
-			<form:RadioGroup name="{model.fields.overwrite}" defaultValue="APPEND">
+		<form:Form ui:field="form" valuesManager="{model}">
+			<form:UploadEditBox ui:field="file" name="{fields.file}" validFileExtensions="csv" maximumFiles="1" width="240"><ui:msg>CSV *file</ui:msg></form:UploadEditBox>
+			<form:CheckBox name="{fields.rowHeader}"><ui:msg>F*irst row represents column labels</ui:msg></form:CheckBox>
+			<form:RadioGroup name="{fields.overwrite}" defaultValue="APPEND">
 				<form:RadioItem key="REPLACE">Replace all existing accounts</form:RadioItem>
 				<form:RadioItem key="OVERWRITE">Overwrite existing accounts if same account code</form:RadioItem>
 				<form:RadioItem key="APPEND">Append only new accounts</form:RadioItem>

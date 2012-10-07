@@ -14,17 +14,18 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_asset;
+package com.nabla.dc.shared.model.company;
 
 /**
  * @author FNorais
  *
  */
-public interface IImportAsset {
-	static final String	FILE_ID = "file_id";
+public interface IImportAccounts {
+	static final String	FILE = "file_id";
+	static final String	ROW_HEADER = "row_header";
 	static final String	OVERWRITE = "overwrite";
 
 	static final String	SUCCESS = "success";
 
-	static final String	PREFERENCE_GROUP = "import_assets";
+	static final String	PREFERENCE_GROUP = "import_account";
 }

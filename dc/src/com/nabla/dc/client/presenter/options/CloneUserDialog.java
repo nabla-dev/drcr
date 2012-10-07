@@ -45,8 +45,8 @@ public class CloneUserDialog extends AbstractTopPresenter<CloneUserDialog.IDispl
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
+	public void bind() {
+		super.bind();
 		registerSlot(getDisplay().getFailureSlots(), onFailure);
 	}
 

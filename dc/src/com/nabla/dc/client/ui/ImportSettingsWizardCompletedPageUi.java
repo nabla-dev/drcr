@@ -18,7 +18,7 @@ package com.nabla.dc.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.ImportSettingsWizard;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
@@ -27,7 +27,7 @@ import com.nabla.wapp.client.ui.WizardPageNavigations;
  * @author nabla
  *
  */
-public class ImportSettingsWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements ImportSettingsWizard.ICompletedPage {
+public class ImportSettingsWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<Html, ImportSettingsWizardCompletedPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

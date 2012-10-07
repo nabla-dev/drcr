@@ -39,9 +39,9 @@ public class ChangeLogoDialog extends AbstractTopPresenter<ChangeLogoDialog.IDis
 	}
 
 	@Override
-	protected void onUnbind() {
+	public void unbind() {
 		getDisplay().cleanup();
-		super.onUnbind();
+		super.unbind();
 	}
 
 }

@@ -36,7 +36,8 @@ public abstract class AbstractTopPresenter<D extends ITopDisplay> extends Abstra
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		registerSlot(getDisplay().getHideSlots(), new ISlot() {
 			@Override
 			public void invoke() {

@@ -28,7 +28,7 @@ import com.google.inject.Inject;
 import com.nabla.dc.server.ImportErrorManager;
 import com.nabla.dc.shared.command.company.AddAccount;
 import com.nabla.dc.shared.command.company.ImportAccountList;
-import com.nabla.dc.shared.model.company.IImportAccount;
+import com.nabla.dc.shared.model.company.IImportAccounts;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.BatchInsertStatement;
@@ -67,7 +67,7 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 		final ImportErrorManager errors = new ImportErrorManager(writeDb, cmd.getBatchId());
 		try {
 			final JsonResponse json = new JsonResponse();
-			json.put(IImportAccount.SUCCESS, add(cmd, errors, ctx));
+			json.put(IImportAccounts.SUCCESS, add(cmd, errors, ctx));
 			return json.toStringResult();
 		} catch (Throwable e) {
 			if (log.isErrorEnabled())
@@ -114,8 +114,8 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 						} finally {
 							stmt.close();
 						}
-						UserPreference.save(ctx, null, IImportAccount.PREFERENCE_GROUP, IImportAccount.ROW_HEADER, cmd.isRowHeader());
-						UserPreference.save(ctx, null, IImportAccount.PREFERENCE_GROUP, IImportAccount.OVERWRITE, cmd.getOverwrite());
+						UserPreference.save(ctx, null, IImportAccounts.PREFERENCE_GROUP, IImportAccounts.ROW_HEADER, cmd.isRowHeader());
+						UserPreference.save(ctx, null, IImportAccounts.PREFERENCE_GROUP, IImportAccounts.OVERWRITE, cmd.getOverwrite());
 						guard.setSuccess();
 						return true;
 					} finally {

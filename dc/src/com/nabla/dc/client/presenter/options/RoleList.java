@@ -74,7 +74,8 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveSelectedRecords);

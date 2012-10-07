@@ -56,7 +56,8 @@ public class PeriodEndList extends AbstractTabPresenter<PeriodEndList.IDisplay> 
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.reload(), onReload);
 		cmd.updateUi();

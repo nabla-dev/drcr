@@ -62,8 +62,8 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
+	public void bind() {
+		super.bind();
 		registerSlot(getDisplay().getCategoryDropSlots(), onCategoryDrop);
 		registerSlot(getDisplay().getCategoryReparentSlots(), onCategoryReparent);
 		registerSlot(getDisplay().getAvailableCategoryDropSlots(), onAvailableCategoryDrop);

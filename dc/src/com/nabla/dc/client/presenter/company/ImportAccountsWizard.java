@@ -14,13 +14,13 @@
 * the License.
 *
 */
-package com.nabla.dc.client.presenter;
+package com.nabla.dc.client.presenter.company;
 
-import com.nabla.dc.client.model.ImportSettingsValuesManager;
-import com.nabla.dc.client.ui.ImportSettingsWizardCompletedPageUi;
-import com.nabla.dc.client.ui.ImportSettingsWizardFilePageUi;
-import com.nabla.dc.client.ui.ImportSettingsWizardUi;
+import com.nabla.dc.client.model.company.ImportAccountsValuesManager;
 import com.nabla.dc.client.ui.ImportWizardErrorPageUi;
+import com.nabla.dc.client.ui.company.ImportAccountWizardUi;
+import com.nabla.dc.client.ui.company.ImportAccountsWizardCompletedPageUi;
+import com.nabla.dc.client.ui.company.ImportAccountsWizardFilePageUi;
 import com.nabla.wapp.client.model.ISaveWizardValuesCallback;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
@@ -30,14 +30,15 @@ import com.nabla.wapp.shared.slot.ISlot;
  * @author nabla
  *
  */
-public class ImportSettingsWizard extends AbstractWizardPresenter<IWizardDisplay> {
+public class ImportAccountsWizard extends AbstractWizardPresenter<IWizardDisplay> {
 
 	private final ISlot						onSuccessHandler;
-	private final ImportSettingsValuesManager	data = new ImportSettingsValuesManager();
+	private final ImportAccountsValuesManager	data;
 
-	public ImportSettingsWizard(final ISlot onSuccessHandler) {
-		super(new ImportSettingsWizardUi());
+	public ImportAccountsWizard(final Integer companyId, final ISlot onSuccessHandler) {
+		super(new ImportAccountWizardUi());
 		this.onSuccessHandler = onSuccessHandler;
+		data = new ImportAccountsValuesManager(companyId);
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class ImportSettingsWizard extends AbstractWizardPresenter<IWizardDisplay
 	}
 
 	private void displayFilePage() {
-		displayNextPage(new ImportSettingsWizardFilePageUi(data), new ISlot() {
+		displayNextPage(new ImportAccountsWizardFilePageUi(data), new ISlot() {
 			@Override
 			public void invoke() {
 				data.save(onFileUploaded);
@@ -73,7 +74,7 @@ public class ImportSettingsWizard extends AbstractWizardPresenter<IWizardDisplay
 
 	private void displayCompletedPage() {
 		onSuccessHandler.invoke();
-		displayNextPage(new ImportSettingsWizardCompletedPageUi(), new ISlot() {
+		displayNextPage(new ImportAccountsWizardCompletedPageUi(), new ISlot() {
 			@Override
 			public void invoke() {
 				getDisplay().hide();

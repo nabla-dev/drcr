@@ -24,7 +24,6 @@ import com.nabla.dc.client.ui.fixed_asset.SplitAssetWizardUi;
 import com.nabla.dc.client.ui.fixed_asset.SplitAssetWizardWelcomePageUi;
 import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
-import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
@@ -32,14 +31,7 @@ import com.nabla.wapp.shared.slot.ISlot1;
  * @author nabla
  *
  */
-public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.IDisplay> {
-
-	public interface IDisplay extends IWizardDisplay {}
-
-	static public interface IWelcomePage extends IWizardPageDisplay {}
-	static public interface IGeneralPage extends IWizardPageDisplay {}
-	static public interface ICostPage extends IWizardPageDisplay {}
-	static public interface ICompletedPage extends IWizardPageDisplay {}
+public class SplitAssetWizard extends AbstractWizardPresenter<IWizardDisplay> {
 
 	public class SaveHandler extends SaveValuesHandler {
 		@Override
@@ -55,16 +47,12 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 	private final SplitAssetValuesManager		data;
 	private final Integer						assetId;
 
-	public SplitAssetWizard(final IDisplay ui, final SplitAssetValuesManager data, final ISlot1<Integer> onRecordUpdatedSlot, final ISlot1<Integer> onRecordAddedSlot) {
-		super(ui);
+	public SplitAssetWizard(final SplitAssetValuesManager data, final ISlot1<Integer> onRecordUpdatedSlot, final ISlot1<Integer> onRecordAddedSlot) {
+		super(new SplitAssetWizardUi());
 		this.data = data;
 		assetId = data.getRecord().getId();
 		this.onRecordUpdatedSlot = onRecordUpdatedSlot;
 		this.onRecordAddedSlot = onRecordAddedSlot;
-	}
-
-	public SplitAssetWizard(final SplitAssetValuesManager data, final ISlot1<Integer> onRecordUpdatedSlot, final ISlot1<Integer> onRecordAddedSlot) {
-		this(new SplitAssetWizardUi(), data, onRecordUpdatedSlot, onRecordAddedSlot);
 	}
 
 	public static void editRecord(final int assetId, final ISlot1<Integer> onRecordUpdatedSlot, final ISlot1<Integer> onRecordAddedSlot) {
@@ -78,8 +66,9 @@ public class SplitAssetWizard extends AbstractWizardPresenter<SplitAssetWizard.I
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
+	public void bind() {
+		super.bind();
+
 		displayNextPage(new SplitAssetWizardWelcomePageUi(data.getRecord().getNameA()), new ISlot() {
 			@Override
 			public void invoke() {

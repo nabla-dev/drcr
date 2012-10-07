@@ -77,7 +77,8 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveRecord);
@@ -138,7 +139,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 	private final ISlot onImport = new ISlot() {
 		@Override
 		public void invoke() {
-			new ImportAccountWizard(companyId, onReload).revealDisplay();
+			new ImportAccountsWizard(companyId, onReload).revealDisplay();
 		}
 	};
 }

@@ -35,11 +35,10 @@ public class WizardClientArea extends VLayout {
 	private IWizardNavigationCommandSet		navigation;
 	private final List<Connection<ISlot>>	slots = new LinkedList<Connection<ISlot>>();
 	private final WizardPageStack			pages = new WizardPageStack();
-	private boolean							enabled = true;
+	private boolean						enabled = true;
 	private final Signal1<IWizardPage>		sigPageChanged = new Signal1<IWizardPage>();
 
-	public WizardClientArea() {
-	}
+	public WizardClientArea() {	}
 
 	public void setNavigation(final IWizardNavigationCommandSet navigation) {
 		for (final Connection<ISlot> slot : slots)
@@ -56,6 +55,10 @@ public class WizardClientArea extends VLayout {
 				}));
 			}
 		}
+	}
+
+	public void unbind() {
+		pages.clear();
 	}
 
 	public IWizardNavigationCommandSet getNavigation() {

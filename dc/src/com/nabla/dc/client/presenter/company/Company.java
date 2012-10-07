@@ -69,7 +69,8 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		registerHandler(getDisplay().getTabClosedSlots().connect(tabs.getTabClosedSlot()));
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.changeLogo(), onChangeLogo);
@@ -89,9 +90,9 @@ Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 	}
 
 	@Override
-	protected void onUnbind() {
+	public void unbind() {
 		tabs.clear();
-		super.onUnbind();
+		super.unbind();
 	}
 
 	@Override

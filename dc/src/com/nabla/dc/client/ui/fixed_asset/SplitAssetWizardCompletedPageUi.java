@@ -18,7 +18,7 @@ package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.fixed_asset.SplitAssetWizard;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 
@@ -26,7 +26,7 @@ import com.nabla.wapp.client.ui.Html;
  * @author nabla
  *
  */
-public class SplitAssetWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements SplitAssetWizard.ICompletedPage {
+public class SplitAssetWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<Html, SplitAssetWizardCompletedPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

@@ -46,6 +46,12 @@ public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends 
 		super(display);
 	}
 
+	@Override
+	public void unbind() {
+		super.unbind();
+		getDisplay().unbind();
+	}
+
 	public void displayNextPage(final IWizardPageDisplay ui, final ISlot1<IWizardPage> nextHandler) {
 		displayNextPage(ui, nextHandler, WizardPageNavigations.NEXT);
 	}

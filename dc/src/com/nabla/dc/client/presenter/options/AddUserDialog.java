@@ -45,8 +45,8 @@ public class AddUserDialog extends AbstractTopPresenter<AddUserDialog.IDisplay> 
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
+	public void bind() {
+		super.bind();
 		registerSlot(getDisplay().getFailureSlots(), onFailure);
 	}
 

@@ -36,7 +36,7 @@ import com.smartgwt.client.widgets.form.ValuesManager;
  * @author nabla
  *
  */
-public class WizardValuesManager<T extends Record> extends ValuesManager {
+public abstract class WizardValuesManager<T extends Record & IWizardRecord> extends ValuesManager {
 
 	private static final Logger	log = LoggerFactory.getLog(WizardValuesManager.class);
 
@@ -92,9 +92,12 @@ public class WizardValuesManager<T extends Record> extends ValuesManager {
     	this.saveData(new DSCallback() {
 			@Override
 			public void execute(DSResponse response, @SuppressWarnings("unused") Object rawData, @SuppressWarnings("unused") DSRequest request) {
-				if (response.getStatus() == DSResponse.STATUS_SUCCESS)
-					callback.onSuccess();
-				else
+				if (response.getStatus() == DSResponse.STATUS_SUCCESS) {
+					if (getRecord().getSuccess())
+						callback.onSuccess();
+					else
+						callback.onFailure();
+				} else
 					callback.onFailure();
 			}
 		});

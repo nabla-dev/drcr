@@ -1,6 +1,6 @@
 <ivysettings>
 	<include url="../wapp_common/ivysettings.xml" />
 	<property name="log4j.version" value="latest.release" />
-	<property name="mysql.version" value="5.1.19" />
+	<property name="mysql.version" value="latest.release" />
 	
 </ivysettings>

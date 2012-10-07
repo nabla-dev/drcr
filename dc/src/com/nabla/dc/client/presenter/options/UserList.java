@@ -87,7 +87,8 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveRecord);

@@ -14,27 +14,38 @@
 * the License.
 *
 */
-package com.nabla.dc.client.ui.fixed_asset;
+package com.nabla.dc.client.ui.company;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.ui.Resource;
+import com.google.gwt.uibinder.client.UiField;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
-import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
-import com.nabla.wapp.client.ui.Html;
+import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
+import com.nabla.wapp.client.ui.WizardPage;
+import com.nabla.wapp.client.ui.form.UploadEditBox;
+import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * @author nabla
  *
  */
-public class SplitAssetWizardWelcomePageUi extends BindedStaticWizardPageDisplay implements IWizardPageDisplay {
+public class ImportAccountsWizardFilePageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
-	interface Binder extends UiBinder<Html, SplitAssetWizardWelcomePageUi> {}
+	interface Binder extends UiBinder<WizardPage, ImportAccountsWizardFilePageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	public SplitAssetWizardWelcomePageUi(final String assetName) {
-		create(uiBinder, this);
-		impl.setHTML(Resource.messages.splitAssetWelcomeMessage(assetName));
+	@UiField
+	UploadEditBox	file;
+
+	public ImportAccountsWizardFilePageUi(final ValuesManager model) {
+		super(model);
+		this.create(uiBinder, this);
+	}
+
+	@Override
+	public void unbind() {
+		file.cleanup();
+		super.unbind();
 	}
 
 }

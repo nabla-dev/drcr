@@ -23,5 +23,4 @@ import com.nabla.wapp.client.ui.Tab;
  * @author nabla
  *
  */
-public interface ITabDisplay extends IBasicDisplay<Tab> {
-}
+public interface ITabDisplay extends IBasicDisplay<Tab> {}

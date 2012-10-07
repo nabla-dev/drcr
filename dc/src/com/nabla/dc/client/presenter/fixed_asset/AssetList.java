@@ -89,7 +89,8 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 
 		registerSlot(cmd.reload(), onReload);
@@ -230,7 +231,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 			GWT.runAsync(new AbstractRunAsyncCallback() {
 				@Override
 				public void onSuccess() {
-					new ImportAssetWizard(companyId, onReload).revealDisplay();
+					new ImportAssetsWizard(companyId, onReload).revealDisplay();
 				}
 			});
 		}

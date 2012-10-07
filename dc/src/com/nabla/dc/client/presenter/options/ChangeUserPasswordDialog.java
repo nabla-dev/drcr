@@ -42,8 +42,8 @@ public class ChangeUserPasswordDialog extends AbstractTopPresenter<ChangeUserPas
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
+	public void bind() {
+		super.bind();
 		registerSlot(getDisplay().getFailureSlots(), onFailure);
 	}
 

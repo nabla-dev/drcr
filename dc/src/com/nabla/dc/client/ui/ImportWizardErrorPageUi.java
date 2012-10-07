@@ -20,7 +20,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.ImportErrorListModel;
-import com.nabla.dc.client.presenter.company.ImportAccountWizard;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 
@@ -28,7 +28,7 @@ import com.nabla.wapp.client.ui.WizardPage;
  * @author nabla
  *
  */
-public class ImportWizardErrorPageUi extends BindedWizardPageDisplay<WizardPage> implements ImportAccountWizard.IErrorPage {
+public class ImportWizardErrorPageUi extends BindedWizardPageDisplay<WizardPage> implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, ImportWizardErrorPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
@@ -36,8 +36,8 @@ public class ImportWizardErrorPageUi extends BindedWizardPageDisplay<WizardPage>
 	@UiField(provided=true)
 	final ImportErrorListModel	model;
 
-	public ImportWizardErrorPageUi(final Integer batchId) {
-		this.model = new ImportErrorListModel(batchId);
+	public ImportWizardErrorPageUi(final Integer fileId) {
+		this.model = new ImportErrorListModel(fileId);
 		this.create(uiBinder, this);
 	}
 

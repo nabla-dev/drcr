@@ -14,12 +14,11 @@
 * the License.
 *
 */
-package com.nabla.dc.client.model.company;
+package com.nabla.dc.client.model.fixed_asset;
 
-import com.nabla.dc.shared.command.company.ImportAccountList;
-import com.nabla.dc.shared.model.company.IImportAccount;
+import com.nabla.dc.shared.command.fixed_asset.ImportAssets;
+import com.nabla.dc.shared.model.fixed_asset.IImportAssets;
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.client.model.field.BooleanField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UploadFileField;
@@ -30,24 +29,22 @@ import com.nabla.wapp.shared.dispatch.StringResult;
  * @author nabla
  *
  */
-public class ImportAccountUploadFileModel extends CModel<ImportAccountRecord> {
+public class ImportAssetsModel extends CModel<ImportAssetsRecord> {
 
-	static public class Fields {
-		public String file() { return IImportAccount.FILE; }
-		public String rowHeader() { return IImportAccount.ROW_HEADER; }
-		public String overwrite() { return IImportAccount.OVERWRITE; }
+	static public class Fields implements IImportAssets {
+		public String file() { return FILE_ID; }
+		public String overwrite() { return OVERWRITE; }
 	}
 
 	private static final Fields	fields = new Fields();
-	private final Integer		companyId;
+	private final int				companyId;
 
-	public ImportAccountUploadFileModel(final Integer companyId) {
-		super(ImportAccountRecord.factory);
+	public ImportAssetsModel(final int companyId) {
+		super(ImportAssetsRecord.factory);
 
 		this.companyId = companyId;
 		setFields(
 			new UploadFileField(fields.file(), FieldAttributes.REQUIRED),
-			new BooleanField(fields.rowHeader(), FieldAttributes.REQUIRED),
 			new TextField(fields.overwrite(), FieldAttributes.REQUIRED)
 				);
 	}
@@ -57,12 +54,12 @@ public class ImportAccountUploadFileModel extends CModel<ImportAccountRecord> {
 	}
 
 	@Override
-	public IRecordAction<StringResult> getAddCommand(final ImportAccountRecord record) {
-		return new ImportAccountList(companyId, record.getFileId(), record.isRowHeader(), record.getOverwrite());
+	public IRecordAction<StringResult> getAddCommand(final ImportAssetsRecord record) {
+		return new ImportAssets(companyId, record.getFileId(), record.getOverwrite());
 	}
 
 	@Override
-	public IRecordAction<StringResult> getUpdateCommand(final ImportAccountRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(final ImportAssetsRecord record) {
 		return getAddCommand(record);
 	}
 }

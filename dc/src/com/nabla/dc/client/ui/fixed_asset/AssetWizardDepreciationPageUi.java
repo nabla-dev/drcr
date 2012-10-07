@@ -18,10 +18,10 @@ package com.nabla.dc.client.ui.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.nabla.dc.client.presenter.fixed_asset.AssetWizard;
 import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -34,7 +34,7 @@ import com.smartgwt.client.widgets.form.fields.SpinnerItem;
  * @author nabla
  *
  */
-public class AssetWizardDepreciationPageUi extends BindedBasicWizardPageDisplay implements AssetWizard.IDepreciationPage {
+public class AssetWizardDepreciationPageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, AssetWizardDepreciationPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);

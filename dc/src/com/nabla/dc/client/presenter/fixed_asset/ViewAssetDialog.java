@@ -62,8 +62,8 @@ public class ViewAssetDialog extends AbstractTopPresenter<ViewAssetDialog.IDispl
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
+	public void bind() {
+		super.bind();
 		final AssetRecord asset = model.getRecord();
 		if (asset.isTransfer())
 			getDisplay().addTab(new ViewAssetTransferTabUi(model));

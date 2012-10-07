@@ -73,7 +73,8 @@ public class TaxRateList extends AbstractTabPresenter<TaxRateList.IDisplay> {
 	}
 
 	@Override
-	protected void onBind() {
+	public void bind() {
+		super.bind();
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveRecord);
