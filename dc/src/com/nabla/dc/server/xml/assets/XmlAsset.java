@@ -19,6 +19,7 @@ package com.nabla.dc.server.xml.assets;
 import java.util.Date;
 import java.util.Map;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
@@ -28,6 +29,7 @@ import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.xml.XmlNode;
+import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -38,14 +40,19 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
 @Root
 @IRecordTable(name=IAsset.TABLE)
 class XmlAsset {
+
 	Integer				companyId;
+	@Element
 	@IRecordField
-	String				name;
+	XmlString			name;
+	@Element
+	XmlString			category;
 	@IRecordField
 	Integer				fa_company_asset_category_id;
-	@IRecordField @Nullable
+	@Element(required=false)
+	@IRecordField
 	String				reference;
-	@IRecordField @Nullable
+	@IRecordField
 	String				location;
 	@IRecordField
 	Date				acquisition_date;
