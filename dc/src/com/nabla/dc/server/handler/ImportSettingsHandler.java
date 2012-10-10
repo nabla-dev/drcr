@@ -31,7 +31,6 @@ import com.nabla.dc.shared.command.ImportSettings;
 import com.nabla.dc.shared.model.IImportSettings;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
@@ -42,6 +41,7 @@ import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -75,7 +75,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 		return null;
 	}
 
-	private boolean add(final ImportSettings cmd, final ICsvErrorList errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	private boolean add(final ImportSettings cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, null, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
 		final XmlSettings settings = new Importer(ctx.getReadConnection(), errors, new ImportContext()).read(XmlSettings.class, cmd.getBatchId());
 		if (settings == null || !errors.isEmpty())

@@ -29,12 +29,12 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author FNorais
@@ -42,6 +42,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlCompanyAssetCategoryList {
+
 	@ElementList(entry="asset_category", inline=true, required=false)
 	List<XmlCompanyAssetCategory>	list;
 
@@ -68,23 +69,21 @@ public class XmlCompanyAssetCategoryList {
 "SELECT id, name FROM fa_fs_category WHERE uname IS NOT NULL;");
 		final PreparedStatement stmt = conn.prepareStatement(
 "INSERT INTO fa_company_asset_category (company_id, fa_asset_category_id, fa_fs_category_id) VALUES(?,?,?);");
-		final ICsvErrorList errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrors();
 		try {
 			stmt.setInt(1, companyId);
 			boolean success = true;
 			for (XmlCompanyAssetCategory e : list) {
 				Integer id = assetCategories.get(e.getAssetCategory());
 				if (id == null) {
-					errors.setLine(e.getRow());
-					errors.add("asset_category", ServerErrors.UNDEFINED_ASSET_CATEGORY);
+					errors.add(e.getRow(), "asset_category", ServerErrors.UNDEFINED_ASSET_CATEGORY);
 					success = false;
 					continue;
 				}
 				stmt.setInt(2, id);
 				id = fsCategories.get(e.getFinancialStatementCategory());
 				if (id == null) {
-					errors.setLine(e.getRow());
-					errors.add("financial_statement_category", ServerErrors.UNDEFINED_FS_CATEGORY);
+					errors.add(e.getRow(), "financial_statement_category", ServerErrors.UNDEFINED_FS_CATEGORY);
 					success = false;
 					continue;
 				}

@@ -20,8 +20,8 @@ import java.util.Map;
 
 import org.simpleframework.xml.core.Validate;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
@@ -37,5 +37,6 @@ public abstract class TXmlNode<T> extends XmlNode {
 		doValidate(ctx, getErrorList(session));
 	}
 
-	protected abstract void doValidate(final T ctx, final ICsvErrorList errors) throws DispatchException;
+	protected abstract void doValidate(final T ctx, final IErrorList<Integer> errors) throws DispatchException;
+
 }

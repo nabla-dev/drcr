@@ -14,32 +14,25 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.command.fixed_asset;
+package com.nabla.wapp.server.xml;
 
-import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.IValueConstraint;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class UpdateFinancialStatementCategory extends AddFinancialStatementCategory {
+public abstract class XmlValue<T> extends XmlNode implements IXmlValue<T> {
 
-	@IRecordField(id=true)
-	int		id;
-
-	protected UpdateFinancialStatementCategory() {}	// for serialization only
-
-	public UpdateFinancialStatementCategory(final int id, final String name, final Boolean active) {
-		super(name, active);
-		this.id = id;
+	public boolean validate(final String field, final IValueConstraint<T> constraint, final IErrorList<Integer> errors) throws DispatchException {
+		return validate(field, constraint, errors, ValidatorContext.ADD);
 	}
 
-	@Override
-	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
-		return doValidate(errors, ValidatorContext.UPDATE);
+	public boolean validate(final String field, final IValueConstraint<T> constraint, final IErrorList<Integer> errors, final ValidatorContext ctx) throws DispatchException {
+		return constraint.validate(this.getRow(), field, this.getValue(), errors, ctx);
 	}
 
 }

@@ -40,7 +40,7 @@ public class AddAccount extends BasicAccountAction implements IRecordAction<Stri
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		return doValidate(errors, ValidatorContext.ADD);
 	}
 

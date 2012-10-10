@@ -8,8 +8,8 @@ import org.simpleframework.xml.strategy.VisitorStrategy;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.NodeMap;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.general.Assert;
+import com.nabla.wapp.shared.model.IErrorList;
 
 class ImportVisitorStrategy extends VisitorStrategy {
 
@@ -17,11 +17,11 @@ class ImportVisitorStrategy extends VisitorStrategy {
 	private static final String	KEY_ERROR_LIST = "wapp_errors";
 	private static final String	KEY_CTX = "wapp_ctx";
 
-	private boolean				sessionInitialized = false;
-	private final ICsvErrorList	errors;
-	private final Object			ctx;
+	private boolean					sessionInitialized = false;
+	private final IErrorList<Integer>	errors;
+	private final Object				ctx;
 
-	public ImportVisitorStrategy(final ICsvErrorList errors, final Object ctx) {
+	public ImportVisitorStrategy(final IErrorList<Integer> errors, final Object ctx) {
 		super(null);
 		Assert.argumentNotNull(errors);
 		this.errors = errors;
@@ -38,7 +38,6 @@ class ImportVisitorStrategy extends VisitorStrategy {
 		}
 		final Integer row = node.getNode().getPosition().getLine();
 		session.put(KEY_ROW, row);
-		errors.setLine(row);
 		return super.read(type, node, session);
 	}
 
@@ -47,9 +46,10 @@ class ImportVisitorStrategy extends VisitorStrategy {
 		return (Integer)session.get(KEY_ROW);
 	}
 
-	public static ICsvErrorList getErrorList(final Map session) {
+	@SuppressWarnings("unchecked")
+	public static IErrorList<Integer> getErrorList(final Map session) {
 		Assert.argumentNotNull(session);
-		return (ICsvErrorList)session.get(KEY_ERROR_LIST);
+		return (IErrorList<Integer>)session.get(KEY_ERROR_LIST);
 	}
 
 	@SuppressWarnings("unchecked")

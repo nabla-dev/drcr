@@ -41,6 +41,7 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
  */
 @Root
 public class XmlFinancialStatementCategoryList {
+
 	@ElementList(entry="financial_statement_category", inline=true, required=false)
 	List<XmlFinancialStatementCategory>		list;
 

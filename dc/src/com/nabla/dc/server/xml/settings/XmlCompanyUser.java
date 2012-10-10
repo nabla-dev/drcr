@@ -27,15 +27,16 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
 class XmlCompanyUser {
+
 	@Element
 	XmlUserName				name;
 	@Element(required=false)
@@ -58,11 +59,10 @@ class XmlCompanyUser {
 	}
 
 	public boolean save(final Connection conn, final Integer companyId, final SaveContext ctx) throws SQLException, DispatchException {
-		final ICsvErrorList errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrors();
 		final Integer userId = ctx.getUserIds().get(name.getValue());
 		if (userId == null) {
-			errors.setLine(name.getRow());
-			errors.add("name", CommonServerErrors.INVALID_VALUE);
+			errors.add(name.getRow(), "name", CommonServerErrors.INVALID_VALUE);
 			return false;
 		}
 		if (active)
@@ -79,8 +79,7 @@ class XmlCompanyUser {
 			for (XmlRoleName role : roles) {
 				final Integer id = ctx.getRoleIds().get(role.getValue());
 				if (id == null) {
-					errors.setLine(role.getRow());
-					errors.add(XmlRoleName.FIELD, CommonServerErrors.INVALID_VALUE);
+					errors.add(role.getRow(), XmlRoleName.FIELD, CommonServerErrors.INVALID_VALUE);
 					success = false;
 				} else {
 					stmt.setInt(3, id);

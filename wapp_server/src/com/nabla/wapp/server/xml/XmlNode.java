@@ -20,8 +20,8 @@ import java.util.Map;
 
 import org.simpleframework.xml.core.Validate;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
@@ -44,7 +44,7 @@ public class XmlNode {
 		return ImportVisitorStrategy.getRow(session);
 	}
 
-	public static ICsvErrorList getErrorList(Map session) {
+	public static IErrorList<Integer> getErrorList(Map session) {
 		return ImportVisitorStrategy.getErrorList(session);
 	}
 

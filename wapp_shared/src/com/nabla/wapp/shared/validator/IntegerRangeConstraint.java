@@ -36,19 +36,11 @@ public class IntegerRangeConstraint implements IValueConstraint<Integer> {
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 	}
-/*
-	public IntegerRangeConstraint(final Integer minValue, final Integer maxValue) {
-		this(minValue, maxValue, true);
-	}
-*/
+
 	public IntegerRangeConstraint(@Nullable final Integer minValue, final boolean nullableOnUpdate) {
 		this(minValue, null, nullableOnUpdate);
 	}
-/*
-	public IntegerRangeConstraint(final Integer minValue) {
-		this(minValue, true);
-	}
-*/
+
 	public @Nullable Integer getMinValue() {
 		return minValue;
 	}
@@ -62,24 +54,32 @@ public class IntegerRangeConstraint implements IValueConstraint<Integer> {
 	}
 
 	@Override
-	public boolean validate(final String field, @Nullable final Integer value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
-		return validate(field, value, CommonServerErrors.INVALID_VALUE, errors, ctx);
+	public <P> boolean validate(final P position, final String field, @Nullable final Integer value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
+		return validate(position, field, value, CommonServerErrors.INVALID_VALUE, errors, ctx);
 	}
 
-	public <E extends Enum<E>> boolean validate(final String field, @Nullable final Integer value, final E error, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public <E extends Enum<E>, P> boolean validate(final P position, final String field, @Nullable final Integer value, final E error, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
 		if (value == null) {
 			if (ctx != ValidatorContext.UPDATE || !isNullableOnUpdate()) {
-				errors.add(field, CommonServerErrors.REQUIRED_VALUE);
+				errors.add(position, field, CommonServerErrors.REQUIRED_VALUE);
 				return false;
 			}
 		} else if (getMinValue() != null && value < getMinValue()) {
-			errors.add(field, error);
+			errors.add(position, field, error);
 			return false;
 		} else 	if (getMaxValue() != null && value > getMaxValue()) {
-			errors.add(field, error);
+			errors.add(position, field, error);
 			return false;
 		}
 		return true;
 	}
 
+	@Override
+	public <P> boolean validate(final String field, @Nullable final Integer value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
+		return validate(null, field, value, errors, ctx);
+	}
+
+	public <E extends Enum<E>, P> boolean validate(final String field, @Nullable final Integer value, final E error, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
+		return validate(null, field, value, error, errors, ctx);
+	}
 }

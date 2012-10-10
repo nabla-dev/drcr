@@ -22,7 +22,7 @@ import org.simpleframework.xml.Text;
  * @author nabla64
  *
  */
-public class XmlString extends XmlNode {
+public class XmlString extends XmlValue<String> {
 
 	@Text
 	protected String	value;
@@ -33,6 +33,7 @@ public class XmlString extends XmlNode {
 		this.value = value;
 	}
 
+	@Override
 	public String getValue() {
 		return value;
 	}

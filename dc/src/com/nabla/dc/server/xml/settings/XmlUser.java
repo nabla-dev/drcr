@@ -30,16 +30,17 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
 import com.nabla.wapp.server.auth.UserManager;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
 class XmlUser {
+
 	private static final Log	log = LogFactory.getLog(XmlUser.class);
 
 	@Element
@@ -97,7 +98,7 @@ getName(), getName().toUpperCase(), active, UserManager.getPasswordEncryptor().e
 			return true;
 		if (log.isDebugEnabled())
 			log.debug("saving user definition for '" + getName() + "'");
-		final ICsvErrorList errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrors();
 		final PreparedStatement stmt = conn.prepareStatement(
 "INSERT INTO user_definition (user_id, role_id) VALUES(?,?);");
 		try {
@@ -106,8 +107,7 @@ getName(), getName().toUpperCase(), active, UserManager.getPasswordEncryptor().e
 			for (XmlRoleName role : roles) {
 				final Integer id = ctx.getRoleIds().get(role.getValue());
 				if (id == null) {
-					errors.setLine(role.getRow());
-					errors.add(XmlRoleName.FIELD, CommonServerErrors.INVALID_VALUE);
+					errors.add(role.getRow(), XmlRoleName.FIELD, CommonServerErrors.INVALID_VALUE);
 					success = false;
 				} else {
 					stmt.setInt(2, id);

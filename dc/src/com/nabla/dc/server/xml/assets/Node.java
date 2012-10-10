@@ -14,15 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.csv;
+package com.nabla.dc.server.xml.assets;
 
-import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.server.xml.TXmlNode;
 
 /**
  * @author nabla64
  *
  */
-public interface ICsvErrorList extends IErrorList {
-	void setLine(Integer line);
-	Integer getLine();
-}
+public abstract class Node extends TXmlNode<ImportContext> {}

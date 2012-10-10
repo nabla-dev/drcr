@@ -55,7 +55,7 @@ public class UpdateAssetDisposal implements IRecordAction<StringResult> {
 	}
 
 	@Override
-	public boolean validate(IErrorList errors) throws DispatchException {
+	public boolean validate(IErrorList<Void> errors) throws DispatchException {
 		switch (disposal_type) {
 		case SOLD:
 			if (proceeds == null)

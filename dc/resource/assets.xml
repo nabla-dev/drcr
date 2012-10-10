@@ -1,19 +1,20 @@
 <dc-assets>
 	<companies>
-	<company name="">
-		<asset>
+		<company name="">
+			<assets>
+			<asset>
 			<name></name>
 			<category></category>
 			<reference></reference>
 			<location></location>
 			<acquisition_date></acquisition_date>
 			<acquisition_type></acquisition_type>
+			<linear_depreciation>
 			<cost></cost>
 			<purchase_invoice></purchase_invoice>
-						
-	Integer				initialAccumulatedDepreciation;	// if TRANSFER
-	Integer				initialDepreciationPeriod;	// if TRANSFER
-	@IRecordField
+			<initial_accumulated_depreciation>
+			<initial_depreciation_period>
+			</linear_depreciation>
 	int					depreciation_period;
 	int					residualValue;
 	boolean				createTransactions;
@@ -22,7 +23,11 @@
 	Integer				openingMonth;	// 0-based
 	Integer				openingAccumulatedDepreciation;
 	Integer				openingDepreciationPeriod;
-	</asset>
+				</asset>
+			</assets>
 		</company>
 	</companies>
+	<assets>
+	
+	</assets>
 </dc-assets>

@@ -31,11 +31,11 @@ import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.core.ValueRequiredException;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
@@ -46,27 +46,27 @@ public class Importer {
 	private static final Log		log = LogFactory.getLog(Importer.class);
 	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
 
-	private final Connection		conn;
-	private final String			sql;
-	private final ICsvErrorList	errors;
-	private final Persister		impl;
+	private final Connection			conn;
+	private final String				sql;
+	private final IErrorList<Integer>	errors;
+	private final Persister			impl;
 
-	public <T> Importer(final Connection conn, final String sql, final ICsvErrorList errors, final T ctx) {
+	public <T> Importer(final Connection conn, final String sql, final IErrorList<Integer> errors, final T ctx) {
 		this.conn = conn;
 		this.sql = sql;
 		this.errors = errors;
 		impl = new Persister(new ImportVisitorStrategy(errors, ctx), new SimpleMatcher());
 	}
 
-	public Importer(final Connection conn, final String sql, final ICsvErrorList errors) {
+	public Importer(final Connection conn, final String sql, final IErrorList<Integer> errors) {
 		this(conn, sql, errors, null);
 	}
 
-	public <T> Importer(final Connection conn, final ICsvErrorList errors, final T ctx) {
+	public <T> Importer(final Connection conn, final IErrorList<Integer> errors, final T ctx) {
 		this(conn, DEFAULT_SQL, errors, ctx);
 	}
 
-	public Importer(final Connection conn, final ICsvErrorList errors) {
+	public Importer(final Connection conn, final IErrorList<Integer> errors) {
 		this(conn, DEFAULT_SQL, errors);
 	}
 
@@ -87,26 +87,21 @@ public class Importer {
 				} catch (final ValueRequiredException e) {
 					if (log.isDebugEnabled())
 						log.debug("required value", e);
-					extractCurrentLine(e);
-					errors.add(Util.extractFieldName(e), CommonServerErrors.REQUIRED_VALUE);
+					errors.add(Util.extractLine(e), Util.extractFieldName(e), CommonServerErrors.REQUIRED_VALUE);
 				} catch (final ElementException e) {
-					extractCurrentLine(e);
 					errors.add(Util.extractFieldName(e), e.getLocalizedMessage());
 				} catch (final PersistenceException e) {
 					if (log.isDebugEnabled())
 						log.debug("deserialization error", e);
-					extractCurrentLine(e);
-					errors.add(Util.extractFieldName(e), CommonServerErrors.INVALID_VALUE);
+					errors.add(Util.extractLine(e), Util.extractFieldName(e), CommonServerErrors.INVALID_VALUE);
 				} catch (final XMLStreamException e) {
 					if (log.isDebugEnabled())
 						log.debug("XML error", e);
-					extractCurrentLine(e);
-					errors.add(e.getLocalizedMessage());
+					errors.add(Util.extractLine(e), e.getLocalizedMessage());
 				} catch (final Exception e) {
 					if (log.isDebugEnabled())
 						log.debug("error", e);
-					extractCurrentLine(e);
-					errors.add(e.getLocalizedMessage());
+					errors.add(Util.extractLine(e), e.getLocalizedMessage());
 				}
 				return null;
 			} finally {
@@ -117,9 +112,4 @@ public class Importer {
 		}
 	}
 
-	protected void extractCurrentLine(final Exception e) {
-		final Integer value = Util.extractLine(e);
-		if (value != null)
-			errors.setLine(value);
-	}
 }

@@ -62,7 +62,7 @@ public class BasicAccountAction implements IAccount {
 		this.active = active;
 	}
 
-	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	protected boolean doValidate(final IErrorList<Void> errors, final ValidatorContext ctx) throws DispatchException {
 		int n = errors.size();
 		CODE_CONSTRAINT.validate(CODE, code, errors, ctx);
 		if (name != null)

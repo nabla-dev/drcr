@@ -21,13 +21,14 @@ import java.util.Map;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.nabla.wapp.shared.dispatch.ActionException;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 
 
 /**
  * @author nabla
  *
  */
-public class ValidationException extends ActionException implements IErrorList {
+public class ValidationException extends ActionException implements IErrorList<Void> {
 
 	private static final long		serialVersionUID = 1L;
 	public static final String	ERROR_CODE = "VALIDATION_ERROR";
@@ -59,9 +60,20 @@ public class ValidationException extends ActionException implements IErrorList {
 	}
 
 	@Override
+	public void add(@SuppressWarnings("unused") Void position, final String field, final String error) throws DispatchException {
+		add(field, error);
+	}
+
+	@Override
 	public void add(final String field, final String error) {
 		errors.put(field, error);
 	}
+
+	@Override
+	public void add(@SuppressWarnings("unused") Void position, String error) throws DispatchException {
+		add(error);
+	}
+
 
 	@Override
 	public void add(final String error) {
@@ -69,8 +81,18 @@ public class ValidationException extends ActionException implements IErrorList {
 	}
 
 	@Override
+	public <E extends Enum<E>> void add(@SuppressWarnings("unused") Void position, final String field, final E error) {
+		add(field, error);
+	}
+
+	@Override
 	public <E extends Enum<E>> void add(final String field, final E error) {
 		add(field, error.toString());
+	}
+
+	@Override
+	public <E extends Enum<E>> void add(@SuppressWarnings("unused") Void position, final E error) {
+		add(error);
 	}
 
 	@Override

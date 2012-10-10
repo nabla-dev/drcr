@@ -46,7 +46,7 @@ public class AddCompany implements IRecordAction<StringResult> {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		int n = errors.size();
 		ICompany.NAME_CONSTRAINT.validate(ICompany.NAME, name, errors, ValidatorContext.ADD);
 		IFinancialYear.NAME_CONSTRAINT.validate(IFinancialYear.NAME, financialYear, errors, ValidatorContext.ADD);

@@ -21,13 +21,12 @@ import java.util.Map;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IRole;
-import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 class XmlRoleName extends XmlString {
@@ -44,11 +43,11 @@ class XmlRoleName extends XmlString {
 	@Validate
 	public void validate(final Map session) throws DispatchException {
 		super.validate(session);
-		final ICsvErrorList errors = getErrorList(session);
+		final IErrorList<Integer> errors = getErrorList(session);
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
-			errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
+			errors.add(getRow(), FIELD, CommonServerErrors.INVALID_VALUE);
 		else
-			IRole.NAME_CONSTRAINT.validate(FIELD, value, errors, ValidatorContext.ADD);
+			this.validate(FIELD, IRole.NAME_CONSTRAINT, errors);
 	}
 
 }

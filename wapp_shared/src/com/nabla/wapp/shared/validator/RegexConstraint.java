@@ -33,24 +33,25 @@ public class RegexConstraint extends TextLengthConstraint {
 		super(minLength, maxLength, nullableOnUpdate);
 		this.expression = expression;
 	}
-/*
-	public RegexConstraint(int minLength, int maxLength, String expression) {
-		this(minLength, maxLength, expression, true);
-	}
-*/
+
 	public String getExpression() {
 		return expression;
 	}
 
 	@Override
-	public boolean validate(final String field, @Nullable final String value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
-		if (!super.validate(field, value, errors, ctx))
+	public <P> boolean validate(final P position, final String field, @Nullable final String value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
+		if (!super.validate(position, field, value, errors, ctx))
 			return false;
 		if (value != null && !value.matches(getExpression())) {
-			errors.add(field, CommonServerErrors.INVALID_CHARACTER);
+			errors.add(position, field, CommonServerErrors.INVALID_CHARACTER);
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public <P> boolean validate(final String field, @Nullable final String value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
+		return validate(null, field, value, errors, ctx);
 	}
 
 }

@@ -14,16 +14,13 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.validator;
-
-import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.model.IErrorList;
+package com.nabla.wapp.server.xml;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public interface IValueConstraint<ValueType> {
-	<P> boolean validate(final P position, final String field, final ValueType value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException;
-	<P> boolean validate(final String field, final ValueType value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException;
+public interface IXmlValue<T> {
+	Integer getRow();
+	T getValue();
 }

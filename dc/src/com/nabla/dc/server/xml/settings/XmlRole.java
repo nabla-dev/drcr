@@ -21,26 +21,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-class XmlRole {
+class XmlRole extends Node {
+
 	private static final Log	log = LogFactory.getLog(XmlRole.class);
 
 	@Element
@@ -59,22 +57,19 @@ class XmlRole {
 		return name.getValue();
 	}
 
-	@Validate
-	public void validate(final Map session) throws DispatchException {
-		if (!XmlNode.<ImportContext>getContext(session).getNameList().add(getName())) {
-			final ICsvErrorList errors = XmlNode.getErrorList(session);
-			errors.setLine(name.getRow());
-			errors.add(XmlRoleName.FIELD, CommonServerErrors.DUPLICATE_ENTRY);
-		}
+
+	@Override
+	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+		if (!ctx.getNameList().add(getName()))
+			errors.add(name.getRow(), XmlRoleName.FIELD, CommonServerErrors.DUPLICATE_ENTRY);
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
-		final ICsvErrorList errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrors();
 		if (ctx.getPrivilegeIds().containsKey(getName())) {
 			if (log.isDebugEnabled())
 				log.debug("role '" + getName() + "' is already defined as a privilege");
-			errors.setLine(name.getRow());
-			errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
+			errors.add(name.getRow(), "name", CommonServerErrors.DUPLICATE_ENTRY);
 			return false;
 		}
 		Integer roleId = ctx.getRoleIds().get(getName());
@@ -109,8 +104,7 @@ class XmlRole {
 			for (XmlRoleName role : definition) {
 				final Integer id = ctx.getRoleIds().get(role.getValue());
 				if (id == null) {
-					errors.setLine(role.getRow());
-					errors.add(XmlRoleName.FIELD, CommonServerErrors.INVALID_VALUE);
+					errors.add(role.getRow(), XmlRoleName.FIELD, CommonServerErrors.INVALID_VALUE);
 					success = false;
 				} else {
 					stmt.setInt(2, id);

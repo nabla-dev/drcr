@@ -39,6 +39,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlCompanyUserList {
+
 	@ElementList(entry="user", inline=true, required=false)
 	List<XmlCompanyUser>	list;
 

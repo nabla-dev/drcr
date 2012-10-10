@@ -55,14 +55,14 @@ public class CsvReader<T> implements ICsvReader<T> {
 		*/
 	}
 
-	protected final ICsvErrorList			errors;
+	protected final IErrorList	<Integer>	errors;
 //	private final Class<T>					recordClass;
 	private final Map<String, ICsvColumn>	expectedColumns = new HashMap<String, ICsvColumn>();
 	private final ICsvListReader			impl;
 	private final ArrayList<ICsvColumn>	columns = new ArrayList<ICsvColumn>();
 	private Method							validate;
 
-	public CsvReader(final Reader reader, final Class<T> recordClass, final ICsvErrorList errors) {
+	public CsvReader(final Reader reader, final Class<T> recordClass, final IErrorList<Integer> errors) {
 		Assert.argumentNotNull(recordClass);
 		Assert.argumentNotNull(errors);
 
@@ -77,14 +77,13 @@ public class CsvReader<T> implements ICsvReader<T> {
 		}
 	}
 
-	public ICsvErrorList getErrors() {
+	public IErrorList<Integer> getErrors() {
 		return errors;
 	}
 
 	@Override
 	public boolean readHeader() throws FullErrorListException {
 		try {
-			errors.setLine(1);
 			String[] labels;
 			try {
 				labels = impl.getCSVHeader(true);
@@ -103,7 +102,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 				labels[i] = labels[i].toLowerCase();
 				final ICsvColumn column = expectedColumns.get(labels[i]);
 				if (column == null) {
-					errors.add(labels[i], CommonServerErrors.UNSUPPORTED_FIELD);
+					errors.add(1, labels[i], CommonServerErrors.UNSUPPORTED_FIELD);
 				} else
 					columns.add(column);
 			}
@@ -115,7 +114,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 		}
 	}
 
-	public int getLineNumber() {
+	public Integer getLineNumber() {
 		return impl.getLineNumber();
 	}
 
@@ -130,15 +129,13 @@ public class CsvReader<T> implements ICsvReader<T> {
 			} catch (IOException e) {
 				if (log.isErrorEnabled())
 					log.error("error while reading next csv line", e);
-				errors.setLine(getLineNumber());
-				errors.add(CommonServerErrors.INTERNAL_ERROR);
+				errors.add(getLineNumber(), CommonServerErrors.INTERNAL_ERROR);
 				return Status.ERROR;
 			}
 			if (values == null)
 				return Status.EOF;
-			errors.setLine(getLineNumber());
 			if (columns.size() != values.size()) {
-				errors.add(CommonServerErrors.INVALID_FIELD_COUNT);
+				errors.add(getLineNumber(), CommonServerErrors.INVALID_FIELD_COUNT);
 				return Status.ERROR;
 			}
 			for (int c = 0; c < columns.size(); ++c) {
@@ -147,7 +144,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 				} catch (Throwable e) {
 					if (log.isErrorEnabled())
 						log.error("error while reading next csv line", e);
-					errors.add(columns.get(c).getName(), CommonServerErrors.INVALID_VALUE);
+					errors.add(getLineNumber(), columns.get(c).getName(), CommonServerErrors.INVALID_VALUE);
 				}
 			}
 			try {
@@ -160,7 +157,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 				if (ee != null && ee.getClass().equals(FullErrorListException.class))
 					throw new FullErrorListException();
 				else {
-					errors.add(CommonServerErrors.INTERNAL_ERROR);
+					errors.add(getLineNumber(), CommonServerErrors.INTERNAL_ERROR);
 					return Status.ERROR;
 				}
 			}

@@ -46,7 +46,7 @@ public class UpdatePeriodEnd implements IRecordAction<StringResult>, IPeriodEnd 
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 

@@ -29,6 +29,7 @@ import com.nabla.wapp.shared.model.FullErrorListException;
 
 @Root(name="dc-settings",strict=false)
 public class XmlSettings {
+
 	private static final Log	log = LogFactory.getLog(XmlSettings.class);
 
 	@Element(required=false)

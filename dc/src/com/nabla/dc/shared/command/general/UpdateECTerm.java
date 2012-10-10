@@ -39,7 +39,7 @@ public class UpdateECTerm extends AddECTerm {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		return doValidate(errors, ValidatorContext.UPDATE);
 	}
 

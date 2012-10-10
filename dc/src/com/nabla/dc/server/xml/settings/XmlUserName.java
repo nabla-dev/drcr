@@ -19,16 +19,15 @@ package com.nabla.dc.server.xml.settings;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
-import com.nabla.wapp.server.xml.TXmlNode;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlUserName extends TXmlNode<ImportContext> {
+class XmlUserName extends Node {
 
 	public static final String FIELD = "name";
 
@@ -46,12 +45,12 @@ class XmlUserName extends TXmlNode<ImportContext> {
 	}
 
 	@Override
-	protected void doValidate(final ImportContext ctx, final ICsvErrorList errors) throws DispatchException {
+	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
-			errors.add(FIELD, CommonServerErrors.INVALID_VALUE);
-		else if (IUser.NAME_CONSTRAINT.validate(FIELD, value, errors, ValidatorContext.ADD) &&
+			errors.add(getRow(), FIELD, CommonServerErrors.INVALID_VALUE);
+		else if (IUser.NAME_CONSTRAINT.validate(getRow(), FIELD, value, errors, ValidatorContext.ADD) &&
 					!ctx.getNameList().add(value))
-			errors.add(FIELD, CommonServerErrors.DUPLICATE_ENTRY);
+			errors.add(getRow(), FIELD, CommonServerErrors.DUPLICATE_ENTRY);
 	}
 
 }

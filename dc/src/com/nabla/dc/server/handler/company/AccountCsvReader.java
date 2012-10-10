@@ -26,12 +26,12 @@ import java.util.TreeSet;
 
 import com.nabla.dc.shared.command.company.AddAccount;
 import com.nabla.wapp.server.csv.CsvReader;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
@@ -43,7 +43,7 @@ public class AccountCsvReader extends CsvReader<AddAccount> {
 	private final Set<String>	names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 	private final Integer		companyId;
 
-	public AccountCsvReader(final Reader reader, final Connection conn, final Integer companyId, final ICsvErrorList errors) throws SQLException {
+	public AccountCsvReader(final Reader reader, final Connection conn, final Integer companyId, final IErrorList<Integer> errors) throws SQLException {
 		super(reader, AddAccount.class, errors);
 		this.companyId = companyId;
 		final PreparedStatement stmt = StatementFormat.prepare(conn,
@@ -76,9 +76,9 @@ public class AccountCsvReader extends CsvReader<AddAccount> {
 					break;
 				case SUCCESS:
 					if (codes.contains(record.getCode()))
-						errors.add(AddAccount.CODE, CommonServerErrors.DUPLICATE_ENTRY);
+						errors.add(getLineNumber(), AddAccount.CODE, CommonServerErrors.DUPLICATE_ENTRY);
 					else if (names.contains(record.getName()))
-						errors.add(AddAccount.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+						errors.add(getLineNumber(), AddAccount.NAME, CommonServerErrors.DUPLICATE_ENTRY);
 					else {
 						codes.add(record.getCode());
 						names.add(record.getName());

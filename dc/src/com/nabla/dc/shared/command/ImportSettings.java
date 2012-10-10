@@ -49,7 +49,7 @@ public class ImportSettings implements IRecordAction<StringResult> {
 	}
 
 	@Override
-	public boolean validate(@SuppressWarnings("unused") IErrorList errors) throws DispatchException {
+	public boolean validate(@SuppressWarnings("unused") IErrorList<Void> errors) throws DispatchException {
 		return true;
 	}
 }

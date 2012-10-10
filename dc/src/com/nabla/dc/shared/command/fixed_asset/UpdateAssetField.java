@@ -64,7 +64,7 @@ public class UpdateAssetField implements IRecordAction<StringResult>, IAsset {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		int n = errors.size();
 
 		NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);

@@ -22,11 +22,18 @@ import org.simpleframework.xml.Text;
  * @author nabla64
  *
  */
-public class XmlInteger extends XmlNode {
+public class XmlInteger extends XmlValue<Integer> {
 
 	@Text
 	protected Integer	value;
 
+	public XmlInteger() {}
+
+	public XmlInteger(final Integer value) {
+		this.value = value;
+	}
+
+	@Override
 	public Integer getValue() {
 		return value;
 	}

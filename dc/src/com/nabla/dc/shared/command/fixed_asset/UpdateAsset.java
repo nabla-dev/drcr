@@ -50,7 +50,7 @@ public class UpdateAsset extends AddAsset {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		return doValidate(errors, ValidatorContext.ADD);
 	}
 

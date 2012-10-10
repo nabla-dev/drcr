@@ -30,23 +30,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
 
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.dc.shared.model.company.IFinancialYear;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.validator.ValidatorContext;
+import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-class XmlCompany {
+class XmlCompany extends Node {
+
 	private static final Log	log = LogFactory.getLog(XmlCompany.class);
 
 	@Element
@@ -76,15 +74,12 @@ class XmlCompany {
 		return name.getValue();
 	}
 
-	@Validate
-	public void validate(Map session) throws DispatchException {
-		final ICsvErrorList errors = XmlNode.getErrorList(session);
-		errors.setLine(name.getRow());
-		if (ICompany.NAME_CONSTRAINT.validate("name", getName(), errors, ValidatorContext.ADD) &&
-			!XmlNode.<ImportContext>getContext(session).getCompanyNameList().add(getName()))
-				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
-		errors.setLine(financial_year.getRow());
-		IFinancialYear.NAME_CONSTRAINT.validate("financial_year", financial_year.getValue(), errors, ValidatorContext.ADD);
+	@Override
+	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+		if (name.validate("name", ICompany.NAME_CONSTRAINT, errors) &&
+			!ctx.getCompanyNameList().add(getName()))
+				errors.add(name.getRow(), "name", CommonServerErrors.DUPLICATE_ENTRY);
+		financial_year.validate("financial_year", IFinancialYear.NAME_CONSTRAINT, errors);
 		if (active == null)
 			active = false;
 	}

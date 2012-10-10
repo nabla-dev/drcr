@@ -43,6 +43,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlAccountList {
+
 	private static final Log	log = LogFactory.getLog(XmlAccountList.class);
 
 	@ElementList(entry="account", inline=true, required=false)

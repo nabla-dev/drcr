@@ -25,19 +25,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.FullErrorListException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
-public class ImportErrorManager implements ICsvErrorList {
+public class ImportErrorManager implements IErrorList<Integer> {
 
 	private static final int		MAX_ERROR_MESSAGE = 255;
 	private static final int		MAX_FIELD_NAME = 32;
@@ -52,7 +53,6 @@ public class ImportErrorManager implements ICsvErrorList {
 	private final Connection		conn;
 	private PreparedStatement		stmt;
 	private final Integer			batchId;
-	private Integer					line;
 	private int					maxErrors;
 	private int					size;
 
@@ -117,31 +117,14 @@ public class ImportErrorManager implements ICsvErrorList {
 	}
 
 	/**
-	 * Set current line number
-	 * @param lineNo - line number of error
-	 * */
-	@Override
-	public void setLine(Integer line) {
-		this.line = line;
-	}
-
-	/**
-	 * Get current line number
-	 * @return line number of error
-	 * */
-	@Override
-	public Integer getLine() {
-		return line;
-	}
-
-	/**
 	 * Add error
+	 * @param position	- row number
 	 * @param fieldName - field name
 	 * @param error - error message
 	 * @throws SQLException
 	 */
 	@Override
-	public void add(String fieldName, String error) throws DispatchException {
+	public void add(@Nullable final Integer position, @Nullable String fieldName, String error) throws DispatchException {
 		if (isFull())
 			throw new FullErrorListException();
 		if (fieldName != null && fieldName.length() > MAX_FIELD_NAME)
@@ -151,7 +134,7 @@ public class ImportErrorManager implements ICsvErrorList {
 		if (error.length() > MAX_ERROR_MESSAGE)
 			error = error.substring(0, MAX_ERROR_MESSAGE);
 		if (log.isTraceEnabled())
-			log.trace("[" + getLine() + "] " + fieldName + ":" + error);
+			log.trace("[" + position + "] " + fieldName + ":" + error);
 		try {
 			if (stmt == null) {
 				Database.executeUpdate(conn,
@@ -160,10 +143,10 @@ public class ImportErrorManager implements ICsvErrorList {
 "INSERT INTO import_error(import_data_id,line_no,field,error) VALUES(?,?,?,?);");
 				stmt.setInt(COL_ID, batchId);
 			}
-			if (getLine() == null)
+			if (position == null)
 				stmt.setNull(COL_LINE_NO, Types.INTEGER);
 			else
-				stmt.setInt(COL_LINE_NO, getLine());
+				stmt.setInt(COL_LINE_NO, position);
 			if (fieldName == null)
 				stmt.setNull(COL_FIELD, Types.VARCHAR);
 			else
@@ -181,17 +164,37 @@ public class ImportErrorManager implements ICsvErrorList {
 
 	@Override
 	public void add(final String error) throws DispatchException {
-		add(null, error);
+		add(null, null, error);
 	}
 
 	@Override
-	public <E extends Enum<E>> void add(final String columnName, final E error) throws DispatchException {
-		add(columnName, error.toString());
+	public <E extends Enum<E>> void add(final String field, final E error) throws DispatchException {
+		add(null, field, error);
 	}
 
 	@Override
 	public <E extends Enum<E>> void add(final E error) throws DispatchException {
-		add(null, error);
+		add(null, null, error);
+	}
+
+	@Override
+	public void add(@Nullable final String field, final String error) throws DispatchException {
+		add(null, field, error);
+	}
+
+	@Override
+	public void add(@Nullable final Integer position, final String error) throws DispatchException {
+		add(position, null, error);
+	}
+
+	@Override
+	public <E extends Enum<E>> void add(@Nullable final Integer position, @Nullable final String field, final E error) throws DispatchException {
+		add(position, field, error.toString());
+	}
+
+	@Override
+	public <E extends Enum<E>> void add(@Nullable final Integer position, final E error) throws DispatchException {
+		add(position, null, error);
 	}
 
 }

@@ -53,7 +53,7 @@ public class SplitAsset implements IRecordAction<StringResult>, ISplitAsset {
 	}
 
 	@Override
-	public boolean validate(IErrorList errors) throws DispatchException {
+	public boolean validate(IErrorList<Void> errors) throws DispatchException {
 		int n = errors.size();
 
 		NAME_CONSTRAINT.validate(NAME_A, nameA, errors, ValidatorContext.ADD);

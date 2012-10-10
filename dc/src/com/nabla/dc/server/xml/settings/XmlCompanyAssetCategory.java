@@ -25,14 +25,14 @@ import org.simpleframework.xml.Text;
 
 import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.server.csv.ICsvErrorList;
-import com.nabla.wapp.server.xml.TXmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlCompanyAssetCategory extends TXmlNode<ImportContext> {
+class XmlCompanyAssetCategory extends Node {
+
 	@Attribute
 	String		financial_statement_category;
 	@Text
@@ -46,11 +46,11 @@ class XmlCompanyAssetCategory extends TXmlNode<ImportContext> {
 	}
 
 	@Override
-	protected void doValidate(final ImportContext ctx, final ICsvErrorList errors) throws DispatchException {
-		if (IFixedAssetCategory.NAME_CONSTRAINT.validate("asset_category", asset_category, errors, ValidatorContext.ADD) &&
+	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+		if (IFixedAssetCategory.NAME_CONSTRAINT.validate(getRow(), "asset_category", asset_category, errors, ValidatorContext.ADD) &&
 			!ctx.getNameList().add(asset_category))
-			errors.add("asset_category", CommonServerErrors.DUPLICATE_ENTRY);
-		IFinancialStatementCategory.NAME_CONSTRAINT.validate("financial_statement_category", financial_statement_category, errors, ValidatorContext.ADD);
+			errors.add(getRow(), "asset_category", CommonServerErrors.DUPLICATE_ENTRY);
+		IFinancialStatementCategory.NAME_CONSTRAINT.validate(getRow(), "financial_statement_category", financial_statement_category, errors, ValidatorContext.ADD);
 	}
 
 	public String getFinancialStatementCategory() {

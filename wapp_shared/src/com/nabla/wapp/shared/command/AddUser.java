@@ -42,7 +42,7 @@ public class AddUser implements IRecordAction<StringResult>, IUser {
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		int n = errors.size();
 		NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.ADD);
 		PASSWORD_CONSTRAINT.validate(PASSWORD, password, errors, ValidatorContext.ADD);

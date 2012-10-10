@@ -23,8 +23,8 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
@@ -36,9 +36,9 @@ public class SaveContext {
 	private final Map<String, Integer>		roleIds;
 	private final Map<String, Integer>		userIds;
 	private final SqlInsertOptions			option;
-	private final ICsvErrorList			errors;
+	private final IErrorList<Integer>		errors;
 
-	public SaveContext(final Connection conn, final SqlInsertOptions option, final ICsvErrorList errors) throws SQLException {
+	public SaveContext(final Connection conn, final SqlInsertOptions option, final IErrorList<Integer> errors) throws SQLException {
 		privilegeIds = getIdList(conn, "SELECT id, name FROM role WHERE uname IS NOT NULL AND privilege=TRUE;");
 		roleIds = getIdList(conn, "SELECT id, name FROM role WHERE uname IS NOT NULL AND privilege=FALSE;");
 		userIds = getIdList(conn, "SELECT id, name FROM user WHERE uname IS NOT NULL;");
@@ -79,7 +79,7 @@ public class SaveContext {
 		return option;
 	}
 
-	public ICsvErrorList getErrors() {
+	public IErrorList<Integer> getErrors() {
 		return errors;
 	}
 }

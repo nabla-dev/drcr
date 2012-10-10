@@ -30,7 +30,6 @@ import com.nabla.dc.shared.command.fixed_asset.ImportCompanyAssets;
 import com.nabla.dc.shared.model.fixed_asset.IImportAssets;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
@@ -41,6 +40,7 @@ import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
@@ -74,7 +74,7 @@ public class ImportCompanyAssetsHandler extends AbstractHandler<ImportCompanyAss
 		return null;
 	}
 
-	private boolean add(final ImportCompanyAssets cmd, final ICsvErrorList errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	private boolean add(final ImportCompanyAssets cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, null, IImportAssets.PREFERENCE_GROUP, IImportAssets.OVERWRITE, cmd.getOverwrite());
 		final XmlCompanyAssets assets = new Importer(ctx.getReadConnection(), errors, new ImportContext(cmd.getCompanyId())).read(XmlCompanyAssets.class, cmd.getFileId());
 		if (assets == null || !errors.isEmpty())

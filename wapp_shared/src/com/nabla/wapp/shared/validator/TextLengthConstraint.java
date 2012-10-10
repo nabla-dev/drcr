@@ -38,11 +38,7 @@ public class TextLengthConstraint implements IValueConstraint<String> {
 		this.minLength = minLength;
 		this.maxLength = maxLength;
 	}
-/*
-	public TextLengthConstraint(int minLength, int maxLength) {
-		this(minLength, maxLength, true);
-	}
-*/
+
 	public int getMinLength() {
 		return minLength;
 	}
@@ -56,25 +52,29 @@ public class TextLengthConstraint implements IValueConstraint<String> {
 	}
 
 	@Override
-	public boolean validate(final String field, @Nullable final String value, final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	public <P> boolean validate(final P position, final String field, @Nullable final String value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
 		if (value == null || value.isEmpty()) {
 			if ((ctx != ValidatorContext.UPDATE || !isNullableOnUpdate()) && getMinLength() > 0) {
-				errors.add(field, CommonServerErrors.REQUIRED_VALUE);
+				errors.add(position, field, CommonServerErrors.REQUIRED_VALUE);
 				return false;
 			}
 		} else {
 			int length = value.length();
 			if (length < getMinLength()) {
-				errors.add(field, CommonServerErrors.TEXT_TOO_SHORT);
+				errors.add(position, field, CommonServerErrors.TEXT_TOO_SHORT);
 				return false;
 			}
 			if (length > getMaxLength()) {
-				errors.add(field, CommonServerErrors.TEXT_TOO_LONG);
+				errors.add(position, field, CommonServerErrors.TEXT_TOO_LONG);
 				return false;
 			}
 		}
 		return true;
 	}
 
+	@Override
+	public <P> boolean validate(final String field, @Nullable final String value, final IErrorList<P> errors, final ValidatorContext ctx) throws DispatchException {
+		return validate(null, field, value, errors, ctx);
+	}
 
 }

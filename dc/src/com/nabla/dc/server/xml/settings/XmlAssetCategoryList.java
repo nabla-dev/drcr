@@ -41,6 +41,7 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
  */
 @Root
 public class XmlAssetCategoryList {
+
 	@ElementList(entry="asset_category", inline=true, required=false)
 	List<XmlAssetCategory>	list;
 

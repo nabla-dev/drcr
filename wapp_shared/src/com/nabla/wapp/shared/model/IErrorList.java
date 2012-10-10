@@ -17,16 +17,21 @@
 package com.nabla.wapp.shared.model;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla64
  *
  */
-public interface IErrorList {
+public interface IErrorList<P> {
 	boolean isEmpty();
 	int size();
-	void add(final String field, final String error) throws DispatchException;
+	void add(@Nullable final P position, @Nullable final String field, final String error) throws DispatchException;
+	void add(@Nullable final String field, final String error) throws DispatchException;
+	void add(@Nullable final P position, final String error) throws DispatchException;
 	void add(final String error) throws DispatchException;
-	<E extends Enum<E>> void add(final String field, final E error) throws DispatchException;
+	<E extends Enum<E>> void add(@Nullable final P position, @Nullable final String field, final E error) throws DispatchException;
+	<E extends Enum<E>> void add(@Nullable final String field, final E error) throws DispatchException;
+	<E extends Enum<E>> void add(@Nullable final P position, final E error) throws DispatchException;
 	<E extends Enum<E>> void add(final E error) throws DispatchException;
 }

@@ -46,7 +46,7 @@ public class UpdateFinancialYear implements IRecordAction<StringResult>, IFinanc
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 

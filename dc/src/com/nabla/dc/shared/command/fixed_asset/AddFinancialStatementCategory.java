@@ -47,11 +47,11 @@ public class AddFinancialStatementCategory implements IRecordAction<StringResult
 	}
 
 	@Override
-	public boolean validate(final IErrorList errors) throws DispatchException {
+	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		return doValidate(errors, ValidatorContext.ADD);
 	}
 
-	protected boolean doValidate(final IErrorList errors, final ValidatorContext ctx) throws DispatchException {
+	protected boolean doValidate(final IErrorList<Void> errors, final ValidatorContext ctx) throws DispatchException {
 		if (name != null)
 			uname = name.toUpperCase();
 		return NAME_CONSTRAINT.validate(NAME, name, errors, ctx);

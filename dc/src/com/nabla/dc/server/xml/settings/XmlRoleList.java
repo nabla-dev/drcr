@@ -38,6 +38,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlRoleList {
+
 	@ElementList(entry="role", inline=true, required=false)
 	List<XmlRole>	list;
 

@@ -24,11 +24,12 @@ import org.simpleframework.xml.Text;
  * @author nabla64
  *
  */
-public class XmlDate extends XmlNode {
+public class XmlDate extends XmlValue<Date> {
 
 	@Text
 	protected Date	value;
 
+	@Override
 	public Date getValue() {
 		return value;
 	}
