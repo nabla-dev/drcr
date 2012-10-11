@@ -30,28 +30,23 @@ import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
 
-import com.nabla.dc.server.xml.settings.ImportContext;
-import com.nabla.dc.server.xml.settings.SaveContext;
-import com.nabla.dc.shared.model.company.ICompany;
-import com.nabla.dc.shared.model.company.IFinancialYear;
-import com.nabla.wapp.server.csv.ICsvErrorList;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.general.Util;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.validator.ValidatorContext;
+import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-class XmlCompany {
+class XmlCompany extends Node {
+
 	private static final Log	log = LogFactory.getLog(XmlCompany.class);
+	public static final String	NAME = "name";
 
 	@Attribute
 	String			name;
-	@Element
+	@Element(required=false)
 	XmlAssetList	assets;
 
 	public XmlCompany() {}
@@ -66,17 +61,15 @@ class XmlCompany {
 		return name;
 	}
 
-	@Validate
-	public void validate(Map session) throws DispatchException {
-		final ICsvErrorList errors = XmlNode.getErrorList(session);
-		errors.setLine(name.getRow());
-		if (ICompany.NAME_CONSTRAINT.validate("name", getName(), errors, ValidatorContext.ADD) &&
-			!XmlNode.<ImportContext>getContext(session).getCompanyNameList().add(getName()))
-				errors.add("name", CommonServerErrors.DUPLICATE_ENTRY);
-		errors.setLine(financial_year.getRow());
-		IFinancialYear.NAME_CONSTRAINT.validate("financial_year", financial_year.getValue(), errors, ValidatorContext.ADD);
-		if (active == null)
-			active = false;
+	@Override
+	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+		final ImportContext.Company company = ctx.getCompany(name);
+		if (company == null)
+			errors.add(getRow(), NAME, CommonServerErrors.INVALID_VALUE);
+		else if (!ctx.getCompanyNameList().add(getName()))
+			errors.add(getRow(), NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		else if (assets != null)
+			assets.postValidate(company, errors);
 	}
 
 	public boolean save(final Connection conn, final Map<String, Integer> companyIds, final SaveContext ctx) throws SQLException, DispatchException {

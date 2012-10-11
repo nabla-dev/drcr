@@ -20,9 +20,9 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -31,77 +31,53 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 @Root
 public class StraightLineDepreciation extends Node {
-	@Element
+
+	public static final String	COST = "cost";
+	public static final String	INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
+	public static final String	OPENING_ACCUMULATED_DEPRECAITION = "opening_accumulated_depreciation";
+	public static final String	RESIDUAL_VALUE = "residual_value";
+
+	@Element(name=COST)
 	Integer				cost;
-	@Element(required=false)
-	InitialDepreciation	initial_accumulated_depreciation;	// if TRANSFER
-	@Element(required=false)
-	OpeningTransaction	opening_accumulated_depreciation;	// to agree NBV at given period
-	@Element(required=false)
-	Integer				residual_value;
+	@Element(name=INITIAL_ACCUMULATED_DEPRECIATION,required=false)
+	InitialDepreciation	initialDepreciation;	// if TRANSFER
+	@Element(name=OPENING_ACCUMULATED_DEPRECAITION,required=false)
+	OpeningDepreciation	openingDepreciation;	// to agree NBV at given period
+	@Element(name=RESIDUAL_VALUE,required=false)
+	Integer				residualValue;
 
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
 		if (cost < 0)
-			errors.add(COST, CommonServerErrors.INVALID_VALUE);
-		if (residualValue < 0)
-			errors.add(RESIDUAL_VALUE, CommonServerErrors.INVALID_VALUE);
+			errors.add(getRow(), COST, CommonServerErrors.INVALID_VALUE);
+		if (residualValue == null)
+			residualValue = 0;
+		else if (residualValue < 0)
+			errors.add(getRow(), RESIDUAL_VALUE, CommonServerErrors.INVALID_VALUE);
 		else if (residualValue > cost)
-			errors.add(RESIDUAL_VALUE, ServerErrors.INVALID_RESIDUAL_VALUE);
+			errors.add(getRow(), RESIDUAL_VALUE, ServerErrors.INVALID_RESIDUAL_VALUE);
+	}
 
-		if (acquisition_type == AcquisitionTypes.TRANSFER) {
-			if (initialAccumulatedDepreciation == null) {
-				if (initialDepreciationPeriod != null)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-			} else {
-				if (initialAccumulatedDepreciation < 0)
-					errors.add(INITIAL_ACCUMULATED_DEPRECIATION, CommonServerErrors.INVALID_VALUE);
-				else if (initialAccumulatedDepreciation > (cost - residualValue))
-					errors.add(INITIAL_ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
+	public void postValidate(final XmlAsset asset, final IErrorList<Integer> errors) throws DispatchException {
+		if (initialDepreciation != null)
+			initialDepreciation.postValidate(asset.getDepreciationPeriod(), this, errors);
+		if (openingDepreciation != null)
+			openingDepreciation.postValidate(asset, errors);
+	}
 
-				if (initialDepreciationPeriod == null)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, CommonServerErrors.REQUIRED_VALUE);
-				else if (initialDepreciationPeriod < 0)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-				else if (initialDepreciationPeriod > depreciation_period)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
-				else if (initialDepreciationPeriod == depreciation_period) {
-					if (initialAccumulatedDepreciation < (cost - residualValue))
-						errors.add(INITIAL_DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
-				} if (initialAccumulatedDepreciation == (cost - residualValue))
-					errors.add(INITIAL_DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
-			}
-		}
+	public Integer getCost() {
+		return cost;
+	}
 
-		if (opening) {
-			if (openingYear == null)
-				errors.add(OPENING_YEAR, CommonServerErrors.REQUIRED_VALUE);
-			if (openingMonth == null)
-				errors.add(OPENING_MONTH, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingMonth < 0 || openingMonth > 11)
-				errors.add(OPENING_MONTH, CommonServerErrors.INVALID_VALUE);
-			if (openingAccumulatedDepreciation == null)
-				errors.add(OPENING_ACCUMULATED_DEPRECIATION, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingAccumulatedDepreciation <= getInitialAccumulatedDepreciation())
-				errors.add(OPENING_ACCUMULATED_DEPRECIATION, ServerErrors.OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUMULATED_DEPRECIATION);
-			else if (openingAccumulatedDepreciation > (cost - residualValue))
-				errors.add(OPENING_ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
+	public @Nullable InitialDepreciation getInitialAccumulatedDepreciation() {
+		return initialDepreciation;
+	}
 
-			if (openingDepreciationPeriod == null)
-				errors.add(OPENING_DEPRECIATION_PERIOD, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingDepreciationPeriod < 1)
-				errors.add(OPENING_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-			else if (openingDepreciationPeriod > depreciation_period)
-				errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-			else if (openingDepreciationPeriod <= getInitialDepreciationPeriod())
-				errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
-			else if (openingAccumulatedDepreciation != null) {
-				if (openingDepreciationPeriod == depreciation_period) {
-					if (openingAccumulatedDepreciation < (cost - residualValue))
-						errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-				} if (openingAccumulatedDepreciation == (cost - residualValue))
-					errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-			}
-		}
+	public @Nullable OpeningDepreciation getOpeningAccumulatedDepreciation() {
+		return openingDepreciation;
+	}
+
+	public Integer getResidualValue() {
+		return residualValue;
 	}
 }

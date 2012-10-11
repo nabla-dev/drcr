@@ -43,7 +43,7 @@ public class XmlAssets {
 	public void clear(final Connection conn) throws SQLException {
 		if (companies != null) {
 			if (log.isDebugEnabled())
-				log.debug("deleting all assets of all companies");
+				log.debug("deleting all assets of included companies");
 			companies.clear(conn);
 		}
 	}

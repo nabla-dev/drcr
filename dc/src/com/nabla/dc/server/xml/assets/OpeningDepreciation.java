@@ -16,6 +16,10 @@
 */
 package com.nabla.dc.server.xml.assets;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -29,43 +33,52 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 @Root
-public class InitialDepreciation extends Node {
+public class OpeningDepreciation extends Node {
 
+	public static final String	DATE = "date";
 	public static final String	ACCUMULATED_DEPRECIATION = "accumulated_depreciation";
 	public static final String	DEPRECIATION_PERIOD = "depreciation_period";
 
+	@Element(name=DATE)
+	Date		date;
 	@Element(name=ACCUMULATED_DEPRECIATION)
-	Integer	value;
+	Integer		value;
 	@Element(name=DEPRECIATION_PERIOD)
-	Integer	periodCount;
+	Integer		periodCount;
 
 	@Override
 	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (value < 1)
+		if (value <= 0)
 			errors.add(getRow(), ACCUMULATED_DEPRECIATION, CommonServerErrors.INVALID_VALUE);
 		if (periodCount < 1)
 			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
 	}
 
-	public void postValidate(final Integer depreciationPeriod, final StraightLineDepreciation m, final IErrorList<Integer> errors) throws DispatchException {
+	public void postValidate(final XmlAsset asset, final IErrorList<Integer> errors) throws DispatchException {
+		final Calendar dtOpening = new GregorianCalendar();
+		dtOpening.setTime(date);
+		final Calendar dtAcquisition = new GregorianCalendar();
+		dtAcquisition.setTime(asset.getAcquisitionDate());
+		if (!dtAcquisition.before(dtOpening))
+			errors.add(getRow(), DATE, ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
+
+		final StraightLineDepreciation m = asset.getStraightLineDepreciation();
+		if (m.getInitialAccumulatedDepreciation() != null &&
+				value <= m.getInitialAccumulatedDepreciation().getValue())
+			errors.add(getRow(), ACCUMULATED_DEPRECIATION, ServerErrors.OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUMULATED_DEPRECIATION);
 		if (value > (m.getCost() - m.getResidualValue()))
 			errors.add(getRow(), ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
 
-		if (periodCount >  depreciationPeriod)
+		if (value < 1)
+			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
+		else if (value > asset.getDepreciationPeriod())
+			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
+		else if (m.getInitialAccumulatedDepreciation() != null &&
+					value <= m.getInitialAccumulatedDepreciation().getPeriodCount())
 			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
-		else if (periodCount == depreciationPeriod) {
-			if (value < (m.getCost() - m.getResidualValue()))
-				errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
-		} if (value == (m.getCost() - m.getResidualValue()))
-			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
+		else if (value < (m.getCost() - m.getResidualValue()))
+			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
+		else if (value == (m.getCost() - m.getResidualValue()))
+			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
 	}
-
-	public Integer getValue() {
-		return value;
-	}
-
-	public Integer getPeriodCount() {
-		return periodCount;
-	}
-
 }

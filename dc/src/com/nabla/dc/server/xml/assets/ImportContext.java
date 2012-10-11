@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.nabla.wapp.shared.general.Nullable;
+
 /**
  * @author nabla64
  *
@@ -93,12 +95,12 @@ public class ImportContext {
 		}
 	}
 
-	public Company getCompany(final String name) {
+	public @Nullable Company getCompany(final String name) {
 		return companies.get(name);
 	}
 
-	public Company getCompany() {
-		return companies.entrySet().iterator().next().getValue();
+	public @Nullable Company getCompany() {
+		return (companies == null) ? null : companies.entrySet().iterator().next().getValue();
 	}
 
 	public Set<String> getNameList() {

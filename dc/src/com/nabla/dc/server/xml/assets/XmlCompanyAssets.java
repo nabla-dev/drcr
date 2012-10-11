@@ -18,17 +18,21 @@ package com.nabla.dc.server.xml.assets;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.core.Validate;
 
+import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.FullErrorListException;
 
-@Root(name="dc-assets",strict=false)
+@Root(name="dc-assets")
 public class XmlCompanyAssets {
+
 	private static final Log	log = LogFactory.getLog(XmlCompanyAssets.class);
 
 	@Element(required=false)
@@ -40,6 +44,14 @@ public class XmlCompanyAssets {
 		load(conn);
 	}
 */
+	@Validate
+	public void validate(Map session) throws DispatchException {
+		if (assets != null) {
+			final ImportContext ctx = XmlNode.getContext(session);
+			assets.postValidate(ctx.getCompany(), XmlNode.getErrorList(session));
+		}
+	}
+
 	public void clear(final Connection conn) throws SQLException {
 		if (assets != null) {
 			if (log.isDebugEnabled())

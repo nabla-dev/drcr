@@ -30,40 +30,50 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
 @IRecordTable(name=IAsset.TABLE)
 class XmlAsset extends Node implements IAsset {
 
-	Integer						companyId;
-	@Element
+	public static final String	NAME = "name";
+	public static final String	CATEGORY = "category";
+	public static final String	REFERENCE = "reference";
+	public static final String	LOCATION = "location";
+	public static final String	PURCHASE_INVOICE = "purchase_invoice";
+	public static final String	ACQUISITION_DATE = "acquisition_date";
+	public static final String	ACQUISITION_TYPE = "acquisition_type";
+	public static final String	DEPRECIATION_PERIOD = "depreciation_period";
+	public static final String	STRAIGHT_LINE_DEPRECIATION = "straight_line_depreciation";
+
+	@Element(name=NAME)
 	@IRecordField
 	XmlString					name;
-	@Element
+	@Element(name=CATEGORY)
 	XmlString					category;
 	@IRecordField
 	Integer						fa_company_asset_category_id;
-	@Element(required=false)
+	@Element(name=REFERENCE,required=false)
 	@IRecordField
 	XmlString					reference;
-	@Element(required=false)
+	@Element(name=LOCATION,required=false)
 	@IRecordField
 	XmlString					location;
-	@Element(required=false)
+	@Element(name=PURCHASE_INVOICE,required=false)
 	@IRecordField
-	XmlString					purchase_invoice;
-	@Element
+	XmlString					purchaseInvoice;
+	@Element(name=ACQUISITION_DATE)
 	@IRecordField
-	Date						acquisition_date;
-	@Element
+	Date						acquisitionDate;
+	@Element(name=ACQUISITION_TYPE)
 	@IRecordField
-	AcquisitionTypes			acquisition_type;
-	@Element
+	AcquisitionTypes			acquisitionType;
+	@Element(name=DEPRECIATION_PERIOD)
 	@IRecordField
-	Integer						depreciation_period;
-	@Element(required=false)
-	StraightLineDepreciation	straight_line_depreciation;
+	Integer						depreciationPeriod;
+	@Element(name=STRAIGHT_LINE_DEPRECIATION,required=false)
+	StraightLineDepreciation	depreciation;
 
 	public XmlAsset() {}
 /*
@@ -82,77 +92,48 @@ class XmlAsset extends Node implements IAsset {
 */
 	@Override
 	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (name.validate("name", NAME_CONSTRAINT, errors) &&
+		if (name.validate(NAME, NAME_CONSTRAINT, errors) &&
 				!ctx.getNameList().add(name.getValue())) {
-			errors.add(name.getRow(), "name", CommonServerErrors.DUPLICATE_ENTRY);
+			errors.add(name.getRow(), NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		}
-		category.validate("category", IFixedAssetCategory.NAME_CONSTRAINT, errors);
+		category.validate(CATEGORY, IFixedAssetCategory.NAME_CONSTRAINT, errors);
 		if (reference != null)
-			reference.validate("reference", REFERENCE_CONSTRAINT, errors);
+			reference.validate(REFERENCE, REFERENCE_CONSTRAINT, errors);
 		if (location != null)
-			location.validate("location", LOCATION_CONSTRAINT, errors);
-		if (purchase_invoice != null)
-			purchase_invoice.validate("purchase_invoice", PURCHASE_INVOICE_CONSTRAINT, errors);
-
-		if (acquisition_type == AcquisitionTypes.TRANSFER) {
-			if (initialAccumulatedDepreciation == null) {
-				if (initialDepreciationPeriod != null)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-			} else {
-				if (initialAccumulatedDepreciation < 0)
-					errors.add(INITIAL_ACCUMULATED_DEPRECIATION, CommonServerErrors.INVALID_VALUE);
-				else if (initialAccumulatedDepreciation > (cost - residualValue))
-					errors.add(INITIAL_ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
-
-				if (initialDepreciationPeriod == null)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, CommonServerErrors.REQUIRED_VALUE);
-				else if (initialDepreciationPeriod < 0)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-				else if (initialDepreciationPeriod > depreciation_period)
-					errors.add(INITIAL_DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
-				else if (initialDepreciationPeriod == depreciation_period) {
-					if (initialAccumulatedDepreciation < (cost - residualValue))
-						errors.add(INITIAL_DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
-				} if (initialAccumulatedDepreciation == (cost - residualValue))
-					errors.add(INITIAL_DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
-			}
-		}
-
-		if (opening) {
-			if (openingYear == null)
-				errors.add(OPENING_YEAR, CommonServerErrors.REQUIRED_VALUE);
-			if (openingMonth == null)
-				errors.add(OPENING_MONTH, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingMonth < 0 || openingMonth > 11)
-				errors.add(OPENING_MONTH, CommonServerErrors.INVALID_VALUE);
-			if (openingAccumulatedDepreciation == null)
-				errors.add(OPENING_ACCUMULATED_DEPRECIATION, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingAccumulatedDepreciation <= getInitialAccumulatedDepreciation())
-				errors.add(OPENING_ACCUMULATED_DEPRECIATION, ServerErrors.OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUMULATED_DEPRECIATION);
-			else if (openingAccumulatedDepreciation > (cost - residualValue))
-				errors.add(OPENING_ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
-
-			if (openingDepreciationPeriod == null)
-				errors.add(OPENING_DEPRECIATION_PERIOD, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingDepreciationPeriod < 1)
-				errors.add(OPENING_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-			else if (openingDepreciationPeriod > depreciation_period)
-				errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-			else if (openingDepreciationPeriod <= getInitialDepreciationPeriod())
-				errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
-			else if (openingAccumulatedDepreciation != null) {
-				if (openingDepreciationPeriod == depreciation_period) {
-					if (openingAccumulatedDepreciation < (cost - residualValue))
-						errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-				} if (openingAccumulatedDepreciation == (cost - residualValue))
-					errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-			}
-		}
-
+			location.validate(LOCATION, LOCATION_CONSTRAINT, errors);
+		if (purchaseInvoice != null)
+			purchaseInvoice.validate(PURCHASE_INVOICE, PURCHASE_INVOICE_CONSTRAINT, errors);
+		if (depreciationPeriod < 1)
+			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
 	}
 
-	public void setCompanyId(final Integer companyId) {
-		company_id = companyId;
+	public void postValidate(@Nullable final ImportContext.Company company, final IErrorList<Integer> errors) throws DispatchException {
+		if (company == null)
+			errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
+		else {
+			final ImportContext.Category cat = company.get(category);
+			if (cat == null)
+				errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
+			else {
+				fa_company_asset_category_id = cat.getId();
+				if (cat.getMinDepreciationPeriod() > depreciationPeriod || cat.getMaxDepreciationPeriod() < depreciationPeriod)
+					errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
+				if (depreciation != null)
+					depreciation.postValidate(this, errors);
+			}
+		}
+	}
+
+	public Integer getDepreciationPeriod() {
+		return depreciationPeriod;
+	}
+
+	public @Nullable StraightLineDepreciation getStraightLineDepreciation() {
+		return depreciation;
+	}
+
+	public Date getAcquisitionDate() {
+		return acquisitionDate;
 	}
 
 }

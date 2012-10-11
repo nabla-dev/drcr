@@ -27,12 +27,12 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
-import com.nabla.dc.server.xml.settings.ImportContext;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.SqlInsert;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author FNorais
@@ -40,9 +40,9 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlAssetList {
+
 	private static final Log	log = LogFactory.getLog(XmlAssetList.class);
 
-	Integer			companyId;
 	@ElementList(entry="asset", inline=true, required=false)
 	List<XmlAsset>	list;
 
@@ -56,9 +56,15 @@ public class XmlAssetList {
 	public void commit(Map session) {
 		final ImportContext ctx = XmlNode.getContext(session);
 		ctx.getNameList().clear();
-		ctx.getAccountCodeList().clear();
 		if (log.isDebugEnabled())
 			log.debug("clearing name and code list for company accounts");
+	}
+
+	public void postValidate(final ImportContext.Company company, final IErrorList<Integer> errors) throws DispatchException {
+		if (list != null) {
+			for (XmlAsset e : list)
+				e.postValidate(company, errors);
+		}
 	}
 
 	public void clear(final Connection conn) throws SQLException {
@@ -71,15 +77,14 @@ public class XmlAssetList {
 			final SqlInsert<XmlAsset> sql = new SqlInsert<XmlAsset>(XmlAsset.class);
 			final BatchInsertStatement<XmlAsset> batch = new BatchInsertStatement<XmlAsset>(conn, sql);
 			try {
-				for (XmlAsset e : list) {
-					e.setCompanyId(companyId);
+				for (XmlAsset e : list)
 					batch.add(e);
-				}
 				batch.execute();
 			} finally {
 				batch.close();
 			}
 		}
+		return true;
 	}
 /*
 	public void load(final Connection conn) throws SQLException {

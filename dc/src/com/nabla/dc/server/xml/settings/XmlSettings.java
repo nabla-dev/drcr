@@ -72,7 +72,7 @@ public class XmlSettings {
 		}
 		if (roles != null) {
 			if (log.isDebugEnabled())
-				log.debug("deleting all user defined roles");
+				log.debug("deleting all user-defined roles");
 			roles.clear(conn);
 		}
 	}
