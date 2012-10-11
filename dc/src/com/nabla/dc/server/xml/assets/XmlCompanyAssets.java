@@ -26,15 +26,19 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Validate;
 
+import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
+import com.nabla.wapp.shared.model.IErrorList;
 
 @Root(name="dc-assets")
 public class XmlCompanyAssets {
 
 	private static final Log	log = LogFactory.getLog(XmlCompanyAssets.class);
 
+	Integer			companyId;
 	@Element(required=false)
 	XmlAssetList	assets;
 
@@ -46,18 +50,26 @@ public class XmlCompanyAssets {
 */
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		if (assets != null) {
-			final ImportContext ctx = XmlNode.getContext(session);
-			assets.postValidate(ctx.getCompany(), XmlNode.getErrorList(session));
+		final ImportContext ctx = XmlNode.getContext(session);
+		final IErrorList<Integer> errors =  XmlNode.getErrorList(session);
+		final Company company = ctx.getCompany();
+		if (company == null)
+			errors.add(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
+		else {
+			companyId = company.getId();
+			if (assets != null)
+				assets.postValidate(company, errors);
 		}
 	}
 
 	public void clear(final Connection conn) throws SQLException {
-		if (assets != null) {
-			if (log.isDebugEnabled())
-				log.debug("deleting all assets for company");
-			assets.clear(conn);
-		}
+		if (log.isDebugEnabled())
+			log.debug("deleting all assets for company");
+		Database.executeUpdate(conn,
+"DELETE fa_asset" +
+" FROM fa_asset AS a INNER JOIN fa_company_asset_category AS c ON a.fa_company_asset_category_id=c.id" +
+" WHERE a.company_id=?;", companyId);
+
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {

@@ -16,28 +16,19 @@
 */
 package com.nabla.dc.server.xml.assets;
 
-import com.nabla.wapp.shared.database.SqlInsertOptions;
-import com.nabla.wapp.shared.model.IErrorList;
+import java.util.HashMap;
 
-/**
- * @author nabla64
- *
- */
-public class SaveContext {
+public class Company extends HashMap<String, Category> {
 
-	private final SqlInsertOptions			option;
-	private final IErrorList<Integer>		errors;
+	private static final long		serialVersionUID = 1L;
+	private final int				id;
 
-	public SaveContext(final SqlInsertOptions option, final IErrorList<Integer> errors) {
-		this.option = option;
-		this.errors = errors;
+	public Company(int id) {
+		this.id = id;
 	}
 
-	public SqlInsertOptions getOption() {
-		return option;
+	public int getId() {
+		return id;
 	}
 
-	public IErrorList<Integer> getErrors() {
-		return errors;
-	}
 }

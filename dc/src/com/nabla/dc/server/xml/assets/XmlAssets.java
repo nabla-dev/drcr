@@ -27,8 +27,9 @@ import org.simpleframework.xml.Root;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.FullErrorListException;
 
-@Root(name="dc-assets",strict=false)
+@Root(name="dc-assets")
 public class XmlAssets {
+
 	private static final Log	log = LogFactory.getLog(XmlAssets.class);
 
 	@Element(required=false)

@@ -27,11 +27,9 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
-import com.nabla.wapp.server.database.BatchInsertStatement;
-import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.database.SqlInsert;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -60,31 +58,20 @@ public class XmlAssetList {
 			log.debug("clearing name and code list for company accounts");
 	}
 
-	public void postValidate(final ImportContext.Company company, final IErrorList<Integer> errors) throws DispatchException {
+	public void postValidate(@Nullable final Company company, final IErrorList<Integer> errors) throws DispatchException {
 		if (list != null) {
 			for (XmlAsset e : list)
 				e.postValidate(company, errors);
 		}
 	}
 
-	public void clear(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn,
-"DELETE FROM account WHERE company_id=?;", companyId);
-	}
-
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
-		if (list != null && !list.isEmpty()) {
-			final SqlInsert<XmlAsset> sql = new SqlInsert<XmlAsset>(XmlAsset.class);
-			final BatchInsertStatement<XmlAsset> batch = new BatchInsertStatement<XmlAsset>(conn, sql);
-			try {
-				for (XmlAsset e : list)
-					batch.add(e);
-				batch.execute();
-			} finally {
-				batch.close();
-			}
-		}
-		return true;
+		if (list == null)
+			return true;
+		boolean success = true;
+		for (XmlAsset e : list)
+			success = e.save(conn, ctx) && success;
+		return success;
 	}
 /*
 	public void load(final Connection conn) throws SQLException {

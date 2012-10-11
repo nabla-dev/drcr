@@ -25,7 +25,6 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
-import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
@@ -35,6 +34,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  */
 @Root
 public class XmlCompanyList {
+
 	@ElementList(entry="company", inline=true, required=false)
 	List<XmlCompany>	list;
 
@@ -50,17 +50,18 @@ public class XmlCompanyList {
 	}
 
 	public void clear(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn, "DELETE FROM fa_asset;");
+		if (list != null) {
+			for (XmlCompany e : list)
+				e.clear(conn);
+		}
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
-		if (list == null || list.isEmpty())
+		if (list == null)
 			return true;
-		final Map<String, Integer> companyIds = SaveContext.getIdList(conn,
-"SELECT id, name FROM company WHERE uname IS NOT NULL;");
 		boolean success = true;
 		for (XmlCompany e : list)
-			success = e.save(conn, companyIds, ctx) && success;
+			success = e.save(conn, ctx) && success;
 		return success;
 	}
 /*

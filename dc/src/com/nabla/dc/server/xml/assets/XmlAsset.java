@@ -16,6 +16,8 @@
 */
 package com.nabla.dc.server.xml.assets;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.simpleframework.xml.Element;
@@ -107,11 +109,11 @@ class XmlAsset extends Node implements IAsset {
 			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
 	}
 
-	public void postValidate(@Nullable final ImportContext.Company company, final IErrorList<Integer> errors) throws DispatchException {
+	public void postValidate(@Nullable final Company company, final IErrorList<Integer> errors) throws DispatchException {
 		if (company == null)
 			errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 		else {
-			final ImportContext.Category cat = company.get(category);
+			final Category cat = company.get(category);
 			if (cat == null)
 				errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 			else {
@@ -122,6 +124,10 @@ class XmlAsset extends Node implements IAsset {
 					depreciation.postValidate(this, errors);
 			}
 		}
+	}
+
+	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
+
 	}
 
 	public Integer getDepreciationPeriod() {

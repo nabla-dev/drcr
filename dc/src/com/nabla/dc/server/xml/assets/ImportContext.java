@@ -33,42 +33,13 @@ import com.nabla.wapp.shared.general.Nullable;
  */
 public class ImportContext {
 
-	public static class Category {
-		private final int		id;	// i.e. fa_company_asset_category.id
-		private final int		minDepreciationPeriod;
-		private final int		maxDepreciationPeriod;
-
-		public Category(final ResultSet rs) throws SQLException {
-			this.id = rs.getInt("id");
-			this.minDepreciationPeriod = rs.getInt("min_depreciation_period");
-			this.maxDepreciationPeriod = rs.getInt("max_depreciation_period");
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public int getMinDepreciationPeriod() {
-			return minDepreciationPeriod;
-		}
-
-		public int getMaxDepreciationPeriod() {
-			return maxDepreciationPeriod;
-		}
-
-	}
-
-	public static class Company extends HashMap<String, Category>{
-		private static final long serialVersionUID = 1L;
-	}
-
 	private final Set<String>				names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<String, Company>		companies = new HashMap<String, Company>();
 	private final Set<String>				companyNames = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 
 	public ImportContext(final Connection conn) throws SQLException {
 		final PreparedStatement stmt = conn.prepareStatement(
-"SELECT company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
+"SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
 " fa_company_asset_category AS t INNER JOIN fa_asset_cateogry AS c ON t.fa_asset_cateogry_id=c.id" +
 ") ON company.id=t.company_id" +
@@ -82,7 +53,7 @@ public class ImportContext {
 
 	public ImportContext(final Connection conn, final Integer companyId) throws SQLException {
 		final PreparedStatement stmt = conn.prepareStatement(
-"SELECT company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
+"SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
 " fa_company_asset_category AS t INNER JOIN fa_asset_cateogry AS c ON t.fa_asset_cateogry_id=c.id" +
 ") ON company.id=t.company_id" +
@@ -118,7 +89,7 @@ public class ImportContext {
 				final String companyName = rs.getString("company");
 				Company company = companies.get(companyName);
 				if (company == null) {
-					company = new Company();
+					company = new Company(rs.getInt("companyId"));
 					companies.put(companyName, company);
 				}
 				company.put(rs.getString("name"), new Category(rs));
