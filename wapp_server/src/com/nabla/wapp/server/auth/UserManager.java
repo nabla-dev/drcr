@@ -39,6 +39,7 @@ import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.SelectionDelta;
+import com.nabla.wapp.shared.model.IRoleTable;
 
 /**
  * @author nabla
@@ -65,7 +66,7 @@ public class UserManager {
 
 		final LockTableGuard lock = new LockTableGuard(conn, LOCK_USER_TABLES);
 		try {
-			if (!Database.isTableEmpty(conn, "role"))
+			if (!Database.isTableEmpty(conn, IRoleTable.TABLE))
 				return true;
 			if (log.isDebugEnabled())
 				log.debug("initializing role tables");

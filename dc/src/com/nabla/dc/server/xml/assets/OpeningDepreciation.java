@@ -35,9 +35,9 @@ import com.nabla.wapp.shared.model.IErrorList;
 @Root
 public class OpeningDepreciation extends Node {
 
-	public static final String	DATE = "date";
-	public static final String	ACCUMULATED_DEPRECIATION = "accumulated_depreciation";
-	public static final String	DEPRECIATION_PERIOD = "depreciation_period";
+	static final String	DATE = "date";
+	static final String	ACCUMULATED_DEPRECIATION = "accumulated_depreciation";
+	static final String	DEPRECIATION_PERIOD = "depreciation_period";
 
 	@Element(name=DATE)
 	Date		date;
@@ -80,5 +80,17 @@ public class OpeningDepreciation extends Node {
 			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
 		else if (value == (m.getCost() - m.getResidualValue()))
 			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public Integer getValue() {
+		return value;
+	}
+
+	public Integer getPeriodCount() {
+		return periodCount;
 	}
 }

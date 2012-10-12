@@ -16,15 +16,14 @@
 */
 package com.nabla.wapp.shared.model;
 
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
-
 /**
  * @author nabla
  *
  */
-public interface IUser extends IUserTable {
-	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64, true);
-	static final TextLengthConstraint	PASSWORD_CONSTRAINT = new TextLengthConstraint(8, 32, false);
+public interface IRoleTable {
+	static final String		TABLE = "role";
 
-	static final String				CONFIRM_PASSWORD = "confirm";
+	static final String		NAME = "name";
+	static final String		INTERNAL = "internal";
+	static final String		PRIVILEGE = "privilege";
 }

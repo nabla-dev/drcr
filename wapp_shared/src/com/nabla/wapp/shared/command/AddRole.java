@@ -22,6 +22,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IRole;
+import com.nabla.wapp.shared.model.IRoleTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
@@ -30,7 +31,7 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
  */
 public class AddRole implements IRecordAction<StringResult>, IRole {
 
-	@IRecordField(unique=true)
+	@IRecordField(name=IRoleTable.NAME,unique=true)
 	String	name;
 
 	AddRole() {}	// for serialization only

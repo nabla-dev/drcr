@@ -88,7 +88,7 @@ public class ImportAssetsHandler extends AbstractHandler<ImportAssets, StringRes
 				assets.clear(guard.getConnection());
 				option = SqlInsertOptions.INSERT;
 			}
-			return guard.setSuccess(assets.save(guard.getConnection(), new SaveContext(guard.getConnection(), option, errors)));
+			return guard.setSuccess(assets.save(guard.getConnection(), new SaveContext(option, errors)));
 		} finally {
 			guard.close();
 		}

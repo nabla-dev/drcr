@@ -94,23 +94,6 @@ public class AssetDepreciation {
 			if (!dtAcquisition.before(dtOpening))
 				throw new ValidationException(IAsset.OPENING_MONTH, ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
 		}
-/*
-		if (asset.getDisposalDate() != null) {
-			// validate disposal date: must be at least in following month!
-			final Calendar dt = new GregorianCalendar();
-			dt.setTime(asset.getAcquisitionDate());
-			dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-			final Calendar dtDisposal = new GregorianCalendar();
-			dtDisposal.setTime(asset.getDisposalDate());
-			if (!dt.before(dtDisposal))
-				throw new ValidationException(IAsset.DISPOSAL_DATE, ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
-			if (openingDate != null) {
-				dt.setTime(openingDate);
-				dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-				if (dtDisposal.before(dt))
-					throw new ValidationException(IAsset.DISPOSAL_DATE, ServerErrors.MUST_BE_AFTER_OPENING_DATE);
-			}
-		}*/
 	}
 
 	public void clearTransaction(final Connection conn, int  assetId) throws SQLException {

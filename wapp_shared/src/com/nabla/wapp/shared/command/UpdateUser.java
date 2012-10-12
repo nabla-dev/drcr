@@ -24,22 +24,23 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.model.IUserTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
  *
  */
-@IRecordTable(name="user")
+@IRecordTable(name=IUserTable.TABLE)
 public class UpdateUser implements IRecordAction<StringResult>, IUser {
 
 	@IRecordField(id=true)
 	int					id;
-	@IRecordField(unique=true) @Nullable
+	@IRecordField(name=IUserTable.NAME,unique=true) @Nullable
 	String				name;
 	@IRecordField @Nullable
 	transient String	uname;
-	@IRecordField @Nullable
+	@IRecordField(name=IUserTable.ACTIVE) @Nullable
 	Boolean				active;
 
 	protected UpdateUser() {}	// for serialization only
@@ -54,7 +55,7 @@ public class UpdateUser implements IRecordAction<StringResult>, IUser {
 	public boolean validate(final IErrorList<Void> errors) throws DispatchException {
 		if (name != null)
 			uname = name.toUpperCase();
-		return IUser.NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
+		return NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.UPDATE);
 	}
 
 }

@@ -21,8 +21,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
@@ -39,9 +37,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 @Root
 public class XmlAssetList {
 
-	private static final Log	log = LogFactory.getLog(XmlAssetList.class);
-
-	@ElementList(entry="asset", inline=true, required=false)
+	@ElementList(entry="asset", inline=true, required=false,empty=false)
 	List<XmlAsset>	list;
 
 	public XmlAssetList() {}
@@ -54,20 +50,14 @@ public class XmlAssetList {
 	public void commit(Map session) {
 		final ImportContext ctx = XmlNode.getContext(session);
 		ctx.getNameList().clear();
-		if (log.isDebugEnabled())
-			log.debug("clearing name and code list for company accounts");
 	}
 
 	public void postValidate(@Nullable final Company company, final IErrorList<Integer> errors) throws DispatchException {
-		if (list != null) {
-			for (XmlAsset e : list)
-				e.postValidate(company, errors);
-		}
+		for (XmlAsset e : list)
+			e.postValidate(company, errors);
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
-		if (list == null)
-			return true;
 		boolean success = true;
 		for (XmlAsset e : list)
 			success = e.save(conn, ctx) && success;

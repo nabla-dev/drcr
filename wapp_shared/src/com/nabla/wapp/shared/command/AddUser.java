@@ -22,6 +22,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
+import com.nabla.wapp.shared.model.IUserTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
@@ -30,7 +31,7 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
  */
 public class AddUser implements IRecordAction<StringResult>, IUser {
 
-	@IRecordField(unique=true)
+	@IRecordField(name=IUserTable.NAME,unique=true)
 	String	name;
 	String	password;
 

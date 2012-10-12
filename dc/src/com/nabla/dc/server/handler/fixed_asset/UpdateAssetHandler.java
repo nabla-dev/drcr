@@ -17,9 +17,12 @@
 package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import com.nabla.dc.shared.command.fixed_asset.UpdateAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
+import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
@@ -48,14 +51,17 @@ public class UpdateAssetHandler extends AbstractUpdateHandler<UpdateAsset> {
 			if (record.isCreateTransactions()) {
 				depreciation.clearTransaction(guard.getConnection(), record.getId());
 				depreciation.createTransactions(guard.getConnection(), record.getId());
+				final IStraightLineDepreciation d = record.getDepreciation();
+				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, d.getResidualValue());
+				final IOpeningDepreciation opening = d.getOpeningDepreciation();
+				if (opening != null) {
+					final Calendar dt = opening.getDate();
+					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_year", dt.get(Calendar.YEAR));
+					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_month", dt.get(Calendar.MONTH));
+				}
 			}
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.CATEGORY, record.getCompanyAssetCategoryId());
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.LOCATION, record.getLocation());
-			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, record.getResidualValue());
-			if (record.isOpeningDepreciation()) {
-				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_year", record.getOpeningYear());
-				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_month", record.getOpeningMonth());
-			}
 			guard.setSuccess();
 		} finally {
 			guard.close();

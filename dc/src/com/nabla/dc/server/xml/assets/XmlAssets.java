@@ -18,22 +18,22 @@ package com.nabla.dc.server.xml.assets;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.core.Commit;
 
+import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.FullErrorListException;
 
 @Root(name="dc-assets")
 public class XmlAssets {
 
-	private static final Log	log = LogFactory.getLog(XmlAssets.class);
-
-	@Element(required=false)
-	XmlCompanyList		companies;
+	@ElementList(entry="company", inline=true, required=false,empty=false)
+	List<XmlCompany>	companies;
 
 	public XmlAssets() {}
 /*
@@ -41,17 +41,22 @@ public class XmlAssets {
 		load(conn);
 	}
 */
+	@Commit
+	public void commit(Map session) {
+		XmlNode.<ImportContext>getContext(session).getCompanyNameList().clear();
+	}
+
 	public void clear(final Connection conn) throws SQLException {
-		if (companies != null) {
-			if (log.isDebugEnabled())
-				log.debug("deleting all assets of included companies");
-			companies.clear(conn);
-		}
+		for (XmlCompany e : companies)
+			e.clear(conn);
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
 		try {
-			return companies == null || companies.save(conn, ctx);
+			boolean success = true;
+			for (XmlCompany e : companies)
+				success = e.save(conn, ctx) && success;
+			return success;
 		} catch (FullErrorListException _) {}
 		return false;
 	}

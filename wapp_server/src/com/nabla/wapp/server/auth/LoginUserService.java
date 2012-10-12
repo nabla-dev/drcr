@@ -56,8 +56,8 @@ public class LoginUserService extends RemoteServiceServlet implements ILoginUser
 	public String execute(String userName, String password) {
 		final ValidationException errors = new ValidationException();
 		try {
-			IUser.NAME_CONSTRAINT.validate("user name", userName, errors, ValidatorContext.ADD);
-			IUser.PASSWORD_CONSTRAINT.validate("password", password, errors, ValidatorContext.ADD);
+			IUser.NAME_CONSTRAINT.validate(IUser.NAME, userName, errors, ValidatorContext.ADD);
+			IUser.PASSWORD_CONSTRAINT.validate(IUser.PASSWORD, password, errors, ValidatorContext.ADD);
 		} catch (DispatchException __) {}
 		if (errors.isEmpty()) {
 			try {

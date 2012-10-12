@@ -23,18 +23,19 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IRole;
+import com.nabla.wapp.shared.model.IRoleTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 /**
  * @author nabla
  *
  */
-@IRecordTable(name="role")
+@IRecordTable(name=IRoleTable.TABLE)
 public class UpdateRole implements IRecordAction<StringResult>, IRole {
 
 	@IRecordField(id=true)
 	int					id;
-	@IRecordField(unique=true)
+	@IRecordField(name=IRoleTable.NAME,unique=true)
 	String				name;
 	@IRecordField
 	transient String	uname;

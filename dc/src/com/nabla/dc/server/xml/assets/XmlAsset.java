@@ -23,10 +23,15 @@ import java.util.Date;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import com.nabla.dc.server.handler.fixed_asset.AssetDepreciation;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
+import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
+import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
+import com.nabla.dc.shared.model.fixed_asset.IAssetTable;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
+import com.nabla.wapp.server.database.InsertStatement;
 import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
@@ -36,46 +41,57 @@ import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-@IRecordTable(name=IAsset.TABLE)
-class XmlAsset extends Node implements IAsset {
+@IRecordTable(name=IAssetTable.TABLE)
+class XmlAsset extends Node implements IAssetRecord {
 
-	public static final String	NAME = "name";
-	public static final String	CATEGORY = "category";
-	public static final String	REFERENCE = "reference";
-	public static final String	LOCATION = "location";
-	public static final String	PURCHASE_INVOICE = "purchase_invoice";
-	public static final String	ACQUISITION_DATE = "acquisition_date";
-	public static final String	ACQUISITION_TYPE = "acquisition_type";
-	public static final String	DEPRECIATION_PERIOD = "depreciation_period";
-	public static final String	STRAIGHT_LINE_DEPRECIATION = "straight_line_depreciation";
+	static final String	NAME = "name";
+	static final String	CATEGORY = "category";
+	static final String	REFERENCE = "reference";
+	static final String	LOCATION = "location";
+	static final String	PURCHASE_INVOICE = "purchase_invoice";
+	static final String	ACQUISITION_DATE = "acquisition_date";
+	static final String	ACQUISITION_TYPE = "acquisition_type";
+	static final String	DEPRECIATION_PERIOD = "depreciation_period";
+	static final String	STRAIGHT_LINE_DEPRECIATION = "straight_line_depreciation";
+	static final String	DISPOSAL = "disposal";
+
+	public static final InsertStatement<XmlAsset>	sql = new InsertStatement<XmlAsset>(XmlAsset.class);
 
 	@Element(name=NAME)
-	@IRecordField
+	@IRecordField(name=IAssetTable.NAME)
 	XmlString					name;
 	@Element(name=CATEGORY)
 	XmlString					category;
-	@IRecordField
+	@IRecordField(name=IAssetTable.CATEGORY_ID)
 	Integer						fa_company_asset_category_id;
 	@Element(name=REFERENCE,required=false)
-	@IRecordField
+	@IRecordField(name=IAssetTable.REFERENCE)
 	XmlString					reference;
 	@Element(name=LOCATION,required=false)
-	@IRecordField
+	@IRecordField(name=IAssetTable.LOCATION)
 	XmlString					location;
 	@Element(name=PURCHASE_INVOICE,required=false)
-	@IRecordField
+	@IRecordField(name=IAssetTable.PURCHASE_INVOICE)
 	XmlString					purchaseInvoice;
 	@Element(name=ACQUISITION_DATE)
-	@IRecordField
+	@IRecordField(name=IAssetTable.ACQUISITION_DATE)
 	Date						acquisitionDate;
 	@Element(name=ACQUISITION_TYPE)
-	@IRecordField
+	@IRecordField(name=IAssetTable.ACQUISITION_TYPE)
 	AcquisitionTypes			acquisitionType;
 	@Element(name=DEPRECIATION_PERIOD)
-	@IRecordField
+	@IRecordField(name=IAssetTable.DEPRECIATION_PERIOD)
 	Integer						depreciationPeriod;
 	@Element(name=STRAIGHT_LINE_DEPRECIATION,required=false)
 	StraightLineDepreciation	depreciation;
+	@Element(name=DISPOSAL,required=false)
+	Disposal					disposal;
+	@IRecordField(name=IAssetTable.DISPOSAL_DATE)
+	Date						disposalDate;
+	@IRecordField(name=IAssetTable.DISPOSAL_TYPE)
+	DisposalTypes				disposalType;
+	@IRecordField(name=IAssetTable.PROCEEDS)
+	Integer						proceeds;
 
 	public XmlAsset() {}
 /*
@@ -94,17 +110,17 @@ class XmlAsset extends Node implements IAsset {
 */
 	@Override
 	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (name.validate(NAME, NAME_CONSTRAINT, errors) &&
+		if (name.validate(NAME, IAsset.NAME_CONSTRAINT, errors) &&
 				!ctx.getNameList().add(name.getValue())) {
 			errors.add(name.getRow(), NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		}
 		category.validate(CATEGORY, IFixedAssetCategory.NAME_CONSTRAINT, errors);
 		if (reference != null)
-			reference.validate(REFERENCE, REFERENCE_CONSTRAINT, errors);
+			reference.validate(REFERENCE, IAsset.REFERENCE_CONSTRAINT, errors);
 		if (location != null)
-			location.validate(LOCATION, LOCATION_CONSTRAINT, errors);
+			location.validate(LOCATION, IAsset.LOCATION_CONSTRAINT, errors);
 		if (purchaseInvoice != null)
-			purchaseInvoice.validate(PURCHASE_INVOICE, PURCHASE_INVOICE_CONSTRAINT, errors);
+			purchaseInvoice.validate(PURCHASE_INVOICE, IAsset.PURCHASE_INVOICE_CONSTRAINT, errors);
 		if (depreciationPeriod < 1)
 			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
 	}
@@ -122,24 +138,102 @@ class XmlAsset extends Node implements IAsset {
 					errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
 				if (depreciation != null)
 					depreciation.postValidate(this, errors);
+				if (disposal != null) {
+					disposal.postValidate(this, errors);
+					disposalDate = disposal.getDate();
+					disposalType = disposal.getType();
+					proceeds = disposal.getProceeds();
+				}
 			}
 		}
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
+		// final validation
+		int assetId = sql.execute(conn, this);
+		if (depreciation != null) {
+			new AssetDepreciation(this).createTransactions(conn, assetId);
+			if (disposal != null) {
 
-	}
-
-	public Integer getDepreciationPeriod() {
-		return depreciationPeriod;
+			}
+		}
+		return true;
 	}
 
 	public @Nullable StraightLineDepreciation getStraightLineDepreciation() {
 		return depreciation;
 	}
 
+	@Override
+	public int getDepreciationPeriod() {
+		return depreciationPeriod;
+	}
+
+	@Override
 	public Date getAcquisitionDate() {
 		return acquisitionDate;
+	}
+
+	@Override
+	public Integer getCompanyAssetCategoryId() {
+		return fa_company_asset_category_id;
+	}
+
+	@Override
+	public String getName() {
+		return name.getValue();
+	}
+
+	@Override
+	public int getCost() {
+		return depreciation.getCost();
+	}
+
+	@Override
+	public int getInitialAccumulatedDepreciation() {
+		return 0;
+	}
+
+	@Override
+	public int getInitialDepreciationPeriod() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Integer getOpeningYear() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOpeningMonth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOpeningAccumulatedDepreciation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getOpeningDepreciationPeriod() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getResidualValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Date getDisposalDate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

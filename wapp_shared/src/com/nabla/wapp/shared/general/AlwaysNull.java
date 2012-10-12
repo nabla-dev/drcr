@@ -26,4 +26,4 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(value=RetentionPolicy.RUNTIME)
-public @interface Null {}
+public @interface AlwaysNull {}

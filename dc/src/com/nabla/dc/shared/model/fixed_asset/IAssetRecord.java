@@ -18,23 +18,17 @@ package com.nabla.dc.shared.model.fixed_asset;
 
 import java.util.Date;
 
+import com.nabla.wapp.shared.general.Nullable;
+
 /**
  * @author nabla
  *
  */
 public interface IAssetRecord {
-//	Integer getId();
 	Integer getCompanyAssetCategoryId();
 	String getName();
 	Date getAcquisitionDate();
-	int getCost();
-	int getInitialAccumulatedDepreciation();
-	int getInitialDepreciationPeriod();
-	Integer getOpeningYear();
-	Integer getOpeningMonth();
-	Integer getOpeningAccumulatedDepreciation();	// only valid if opening date defined
-	Integer getOpeningDepreciationPeriod();	// only valid if opening date defined
 	int getDepreciationPeriod();
-	int getResidualValue();
-	Date getDisposalDate();
+	@Nullable IStraightLineDepreciation getDepreciation();
+	@Nullable IDisposal getDisposal();
 }

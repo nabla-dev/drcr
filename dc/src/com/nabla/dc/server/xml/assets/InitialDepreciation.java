@@ -31,8 +31,8 @@ import com.nabla.wapp.shared.model.IErrorList;
 @Root
 public class InitialDepreciation extends Node {
 
-	public static final String	ACCUMULATED_DEPRECIATION = "accumulated_depreciation";
-	public static final String	DEPRECIATION_PERIOD = "depreciation_period";
+	static final String	ACCUMULATED_DEPRECIATION = "accumulated_depreciation";
+	static final String	DEPRECIATION_PERIOD = "depreciation_period";
 
 	@Element(name=ACCUMULATED_DEPRECIATION)
 	Integer	value;

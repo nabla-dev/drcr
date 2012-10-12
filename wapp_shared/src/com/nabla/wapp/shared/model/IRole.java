@@ -22,10 +22,8 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  * @author nabla
  *
  */
-public interface IRole {
-	static final String				NAME = "name";
+public interface IRole extends IRoleTable {
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64, true);
-	static final String				INTERNAL = "internal";
 
 	static final String				DEFINITION = "roles";
 }

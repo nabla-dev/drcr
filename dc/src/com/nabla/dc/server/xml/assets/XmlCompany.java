@@ -31,10 +31,10 @@ import com.nabla.wapp.shared.model.IErrorList;
 @Root
 class XmlCompany extends Node {
 
-	public static final String	NAME = "name";
+	static final String	NAME = "name";
 
 	Integer			companyId;
-	@Attribute
+	@Attribute(name=NAME)
 	String			name;
 	@Element(required=false)
 	XmlAssetList	assets;

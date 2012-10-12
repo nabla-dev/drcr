@@ -24,25 +24,17 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  * @author nabla
  *
  */
-public interface IAsset {
-
-	static final String					TABLE = "fa_asset";
+public interface IAsset extends IAssetTable {
 
 	static final String					COMPANY_ID = "company_id";
-
-	static final String					NAME = "name";
-	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128, true);
-
 	static final String					CATEGORY = "category";
 
-	static final String					REFERENCE = "reference";
+	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 128, true);
 	static final TextLengthConstraint		REFERENCE_CONSTRAINT = new TextLengthConstraint(0, 32, true);
-
-	static final String					LOCATION = "location";
 	static final TextLengthConstraint		LOCATION_CONSTRAINT = new TextLengthConstraint(0, 128, true);
+	static final TextLengthConstraint		PURCHASE_INVOICE_CONSTRAINT = new TextLengthConstraint(0, 64, true);
+	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT;
 
-	static final String					ACQUISITION_DATE = "acquisition_date";
-	static final String					ACQUISITION_TYPE = "acquisition_type";
 	static final String					COST = "cost";
 	// if Transfer
 	static final String					INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
@@ -58,18 +50,8 @@ public interface IAsset {
 	static final String					OPENING_ACCUMULATED_DEPRECIATION = "opening_accumulated_depreciation";
 	static final String					OPENING_DEPRECIATION_PERIOD = "opening_depreciation_period";
 
-	static final String					PURCHASE_INVOICE = "purchase_invoice";
-	static final TextLengthConstraint		PURCHASE_INVOICE_CONSTRAINT = new TextLengthConstraint(0, 64, true);
-
-	static final String					DEPRECIATION_PERIOD = "depreciation_period";
-	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT;
-
 	static final String					RESIDUAL_VALUE = "residual_value";
 	static final int						DEFAULT_RESIDUAL_VALUE = 1;
-
-	static final String					DISPOSAL_DATE = "disposal_date";
-	static final String					DISPOSAL_TYPE = "disposal_type";
-	static final String					PROCEEDS = "proceeds";
 
 	static final String					CREATE_TRANSACTIONS = "createTransactions";
 

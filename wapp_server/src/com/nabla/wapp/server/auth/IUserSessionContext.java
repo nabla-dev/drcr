@@ -24,20 +24,12 @@ import java.sql.Connection;
  *
  */
 public interface IUserSessionContext {
-
 	void close();
 
 	Integer getUserId();
 	boolean isRoot();
-/*
-	boolean isInRole(final String role);
-	boolean isInRoles(final StringSet roles);
 
-	boolean isUserInRole(final Integer userId, final String role);
-	Set<String> isUserInRoles(final Integer userId, final StringSet roles);
-*/
 	Connection getWriteConnection();
 	Connection getReadConnection();
 	Connection getConnection();
-
 }

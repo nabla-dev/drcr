@@ -16,11 +16,8 @@
 */
 package com.nabla.wapp.shared.dispatch;
 
-
 /**
  * @author nabla
  *
  */
-public class VoidResult implements IResult {
-
-}
+public class VoidResult implements IResult {}

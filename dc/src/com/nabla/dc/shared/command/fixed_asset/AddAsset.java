@@ -16,17 +16,25 @@
 */
 package com.nabla.dc.shared.command.fixed_asset;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
+import com.nabla.dc.shared.model.fixed_asset.IAssetTable;
+import com.nabla.dc.shared.model.fixed_asset.IDisposal;
+import com.nabla.dc.shared.model.fixed_asset.IInitialDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
+import com.nabla.wapp.shared.general.AlwaysNull;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -36,7 +44,7 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
  * @author nabla
  *
  */
-@IRecordTable(name=IAsset.TABLE)
+@IRecordTable(name=IAssetTable.TABLE)
 public class AddAsset implements IRecordAction<StringResult>, IAsset, IAssetRecord {
 
 	Integer				companyId;
@@ -139,20 +147,22 @@ public class AddAsset implements IRecordAction<StringResult>, IAsset, IAssetReco
 				errors.add(OPENING_MONTH, CommonServerErrors.REQUIRED_VALUE);
 			else if (openingMonth < 0 || openingMonth > 11)
 				errors.add(OPENING_MONTH, CommonServerErrors.INVALID_VALUE);
+			int initialDepreciation = (initialAccumulatedDepreciation == null) ? 0 : initialAccumulatedDepreciation;
 			if (openingAccumulatedDepreciation == null)
 				errors.add(OPENING_ACCUMULATED_DEPRECIATION, CommonServerErrors.REQUIRED_VALUE);
-			else if (openingAccumulatedDepreciation <= getInitialAccumulatedDepreciation())
+			else if (openingAccumulatedDepreciation <= initialDepreciation)
 				errors.add(OPENING_ACCUMULATED_DEPRECIATION, ServerErrors.OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUMULATED_DEPRECIATION);
 			else if (openingAccumulatedDepreciation > (cost - residualValue))
 				errors.add(OPENING_ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
 
+			int initialPeriod = (initialDepreciationPeriod == null) ? 0 : initialDepreciationPeriod;
 			if (openingDepreciationPeriod == null)
 				errors.add(OPENING_DEPRECIATION_PERIOD, CommonServerErrors.REQUIRED_VALUE);
 			else if (openingDepreciationPeriod < 1)
 				errors.add(OPENING_DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
 			else if (openingDepreciationPeriod > depreciation_period)
 				errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.OPENING_MUST_BE_LESS_OR_EQUAL_THAN_DEPRECIATION_PERIOD);
-			else if (openingDepreciationPeriod <= getInitialDepreciationPeriod())
+			else if (openingDepreciationPeriod <= initialPeriod)
 				errors.add(OPENING_DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
 			else if (openingAccumulatedDepreciation != null) {
 				if (openingDepreciationPeriod == depreciation_period) {
@@ -211,52 +221,74 @@ public class AddAsset implements IRecordAction<StringResult>, IAsset, IAssetReco
 	}
 
 	@Override
-	public int getCost() {
-		return cost;
-	}
-
-	@Override
-	public int getInitialAccumulatedDepreciation() {
-		return (initialAccumulatedDepreciation == null) ? 0 : initialAccumulatedDepreciation;
-	}
-
-	@Override
-	public int getInitialDepreciationPeriod() {
-		return (initialDepreciationPeriod == null) ? 0 : initialDepreciationPeriod;
-	}
-
-	@Override
-	public Integer getOpeningYear() {
-		return openingYear;
-	}
-
-	@Override
-	public Integer getOpeningMonth() {
-		return openingMonth;
-	}
-
-	@Override
-	public Integer getOpeningAccumulatedDepreciation() {
-		return openingAccumulatedDepreciation;
-	}
-
-	@Override
-	public Integer getOpeningDepreciationPeriod() {
-		return openingDepreciationPeriod;
-	}
-
-	@Override
 	public int getDepreciationPeriod() {
 		return depreciation_period;
 	}
 
 	@Override
-	public int getResidualValue() {
-		return residualValue;
+	@Nullable
+	public IStraightLineDepreciation getDepreciation() {
+		return createTransactions ?
+				new IStraightLineDepreciation() {
+			@Override
+			public Integer getCost() {
+				return cost;
+			}
+
+			@Override
+			public @Nullable IInitialDepreciation getInitialDepreciation() {
+
+				return (initialAccumulatedDepreciation == null) ?
+						null
+						:
+						new IInitialDepreciation() {
+							@Override
+							public Integer getValue() {
+								return initialAccumulatedDepreciation;
+							}
+
+							@Override
+							public Integer getPeriodCount() {
+								return initialDepreciationPeriod;
+							}
+				};
+			}
+
+			@Override
+			public @Nullable IOpeningDepreciation getOpeningDepreciation() {
+				return opening ?
+					new IOpeningDepreciation() {
+						@Override
+						public Calendar getDate() {
+							final Calendar dt = new GregorianCalendar();
+							dt.set(openingYear, openingMonth, 1);
+							return dt;
+						}
+
+						@Override
+						public Integer getValue() {
+							return openingAccumulatedDepreciation;
+						}
+
+						@Override
+						public Integer getPeriodCount() {
+							return openingDepreciationPeriod;
+						}
+				}
+					: null;
+			}
+
+			@Override
+			public Integer getResidualValue() {
+				return residualValue;
+			}
+
+		}
+			: null;
 	}
 
 	@Override
-	public Date getDisposalDate() {
+	public @AlwaysNull IDisposal getDisposal() {
 		return null;
 	}
 

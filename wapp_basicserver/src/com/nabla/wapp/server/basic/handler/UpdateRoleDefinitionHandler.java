@@ -24,7 +24,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.command.UpdateRoleDefinition;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
-import com.nabla.wapp.shared.general.Null;
+import com.nabla.wapp.shared.general.AlwaysNull;
 
 /**
  * @author nabla
@@ -37,7 +37,7 @@ public class UpdateRoleDefinitionHandler extends AbstractHandler<UpdateRoleDefin
 	}
 
 	@Override
-	public @Null StringResult execute(final UpdateRoleDefinition record, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public @AlwaysNull StringResult execute(final UpdateRoleDefinition record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		new UserManager(ctx.getWriteConnection()).updateRoleDefinition(record.getRoleId(), record.getSelectionDelta());
 		return null;
 	}

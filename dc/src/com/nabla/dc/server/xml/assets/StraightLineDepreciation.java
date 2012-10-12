@@ -32,10 +32,10 @@ import com.nabla.wapp.shared.model.IErrorList;
 @Root
 public class StraightLineDepreciation extends Node {
 
-	public static final String	COST = "cost";
-	public static final String	INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
-	public static final String	OPENING_ACCUMULATED_DEPRECAITION = "opening_accumulated_depreciation";
-	public static final String	RESIDUAL_VALUE = "residual_value";
+	static final String	COST = "cost";
+	static final String	INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
+	static final String	OPENING_ACCUMULATED_DEPRECAITION = "opening_accumulated_depreciation";
+	static final String	RESIDUAL_VALUE = "residual_value";
 
 	@Element(name=COST)
 	Integer				cost;
