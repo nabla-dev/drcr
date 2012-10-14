@@ -57,7 +57,7 @@ public class TransactionList extends LinkedList<Transaction> {
 	}
 
 	public void clearTable(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn, "DELETE FROM transaction WHERE fa_asset_id=?;", assetId);
+		Database.executeUpdate(conn, "DELETE FROM fa_transaction WHERE fa_asset_id=?;", assetId);
 	}
 
 	public void createTransactions(final IAssetRecord asset) throws DispatchException {

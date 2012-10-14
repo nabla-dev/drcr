@@ -170,15 +170,14 @@ class XmlAsset extends Node implements IAssetRecord {
 		}
 	}
 
-	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
+	public boolean save(final Connection conn, @SuppressWarnings("unused") final SaveContext ctx) throws SQLException, DispatchException {
 		// final validation
 		int assetId = sql.execute(conn, this);
 		final TransactionList transactions = new TransactionList(assetId);
 		transactions.createTransactions(this);
 		transactions.save(conn);
-		if (disposal != null) {
-
-		}
+		if (disposal != null)
+			Asset.dispose(conn, assetId, disposal);
 		return true;
 	}
 

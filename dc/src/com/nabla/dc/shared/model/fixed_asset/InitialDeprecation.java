@@ -22,6 +22,8 @@ import com.nabla.wapp.shared.model.IErrorList;
 
 public class InitialDeprecation extends AccumulatedDepreciation implements IInitialDepreciation {
 
+	InitialDeprecation() {}	// for serialization only
+
 	public InitialDeprecation(final Integer value, final Integer periodCount) {
 		super(value, periodCount);
 	}

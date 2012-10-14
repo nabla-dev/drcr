@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -23,11 +24,11 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla64
  *
  */
-public class StraightlineDepreciation implements IStraightLineDepreciation{
+public class StraightlineDepreciation implements IsSerializable, IStraightLineDepreciation{
 
 	Integer		residualValue;
 
-	StraightlineDepreciation() {}
+	StraightlineDepreciation() {}	// for serialization only
 
 	public StraightlineDepreciation(final Integer residualValue) {
 		this.residualValue = (residualValue == null) ? 0 : residualValue;

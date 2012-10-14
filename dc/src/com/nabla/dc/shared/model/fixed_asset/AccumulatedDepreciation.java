@@ -16,9 +16,14 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
-public abstract class AccumulatedDepreciation {
-	protected final Integer	value;
-	protected final Integer	periodCount;
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public abstract class AccumulatedDepreciation implements IsSerializable {
+
+	protected Integer	value;
+	protected Integer	periodCount;
+
+	AccumulatedDepreciation() {}	// for serialization only
 
 	public AccumulatedDepreciation(final Integer value, final Integer periodCount) {
 		this.value = value;

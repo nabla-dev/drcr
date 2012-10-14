@@ -17,7 +17,6 @@
 package com.nabla.dc.server.xml.assets;
 
 import com.nabla.wapp.shared.database.SqlInsertOptions;
-import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
@@ -26,18 +25,12 @@ import com.nabla.wapp.shared.model.IErrorList;
 public class SaveContext {
 
 	private final SqlInsertOptions			option;
-	private final IErrorList<Integer>		errors;
 
-	public SaveContext(final SqlInsertOptions option, final IErrorList<Integer> errors) {
+	public SaveContext(final SqlInsertOptions option) {
 		this.option = option;
-		this.errors = errors;
 	}
 
 	public SqlInsertOptions getOption() {
 		return option;
-	}
-
-	public IErrorList<Integer> getErrors() {
-		return errors;
 	}
 }

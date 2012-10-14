@@ -22,7 +22,10 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 public class OpeningDepreciation extends AccumulatedDepreciation implements IOpeningDepreciation {
-	final Date		date;
+
+	Date		date;
+
+	OpeningDepreciation() {}	// for serialization only
 
 	public OpeningDepreciation(final Date date, final Integer value, final Integer periodCount) {
 		super(value, periodCount);
