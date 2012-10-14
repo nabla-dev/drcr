@@ -18,17 +18,42 @@ package com.nabla.dc.shared.model.fixed_asset;
 
 import java.util.Date;
 
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla
  *
  */
 public interface IAssetRecord {
+	static class Validator {
+		public static <P> boolean execute(final IAssetRecord t, final P pos, final IErrorList<P> errors) throws DispatchException {
+			int n = errors.size();
+
+			if (t.getCost() == null)
+				errors.add(pos, t.getCostField(), CommonServerErrors.REQUIRED_VALUE);
+			else if (t.getCost() < 0)
+				errors.add(pos, t.getCostField(), CommonServerErrors.INVALID_VALUE);
+
+			return n == errors.size();
+		}
+	}
+
 	Integer getCompanyAssetCategoryId();
 	String getName();
 	Date getAcquisitionDate();
-	int getDepreciationPeriod();
-	@Nullable IStraightLineDepreciation getDepreciation();
+	Integer getDepreciationPeriod();
+	Integer getCost();
+	Integer getTotalDepreciation();	// i.e. Cost - ResidualValue
+
+	@Nullable IInitialDepreciation getInitialDepreciation();
+	@Nullable IOpeningDepreciation getOpeningDepreciation();
+	@Nullable IStraightLineDepreciation getDepreciationMethod();
 	@Nullable IDisposal getDisposal();
+
+	String getCostField();
+	String getCategoryField();
+	String getDepreciationPeriodField();
 }

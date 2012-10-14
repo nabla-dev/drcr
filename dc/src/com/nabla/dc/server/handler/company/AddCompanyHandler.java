@@ -72,7 +72,7 @@ companyId, record.getFinancialYear());
 					dt.add(GregorianCalendar.MONTH, 1);
 				}
 				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException(CommonServerErrors.INTERNAL_ERROR.toString());
+					Util.throwInternalErrorException("failed to create period ends");
 			} finally {
 				Database.close(stmt);
 			}

@@ -21,6 +21,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -91,4 +94,13 @@ public abstract class Util {
 		throw new InternalErrorException(Thread.currentThread().getStackTrace()[2].toString() + ": " + cause);
 	}
 
+	public static Calendar dateToCalendar(final Date dt) {
+		final Calendar ret = new GregorianCalendar();
+		ret.setTime(dt);
+		return ret;
+	}
+
+	public static java.sql.Date calendarToSqlDate(final Calendar dt) {
+		return new java.sql.Date(dt.getTime().getTime());
+	}
 }

@@ -57,8 +57,7 @@ public class RevertAssetDisposalHandler extends AbstractHandler<RevertAssetDispo
 
 	public static void revertDisposal(final Connection conn, int assetId) throws ActionException, SQLException {
 		if (!Database.executeUpdate(conn,
-"UPDATE fa_asset SET disposal_date=NULL, disposal_type=NULL, proceeds=NULL WHERE id=?;",
-assetId))
+"UPDATE fa_asset SET disposal_date=NULL, disposal_type=NULL, proceeds=NULL WHERE id=?;", assetId))
 			throw new ActionException(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
 		final PreparedStatement stmt = StatementFormat.prepare(conn,
 "SELECT command FROM fa_transaction_redo WHERE fa_asset_id=?;", assetId);

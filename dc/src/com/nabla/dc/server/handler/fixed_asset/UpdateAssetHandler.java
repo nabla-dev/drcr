@@ -17,7 +17,6 @@
 package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 
 import com.nabla.dc.shared.command.fixed_asset.UpdateAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
@@ -29,6 +28,7 @@ import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -41,23 +41,26 @@ public class UpdateAssetHandler extends AbstractUpdateHandler<UpdateAsset> {
 	@Override
 	protected void update(final UpdateAsset record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		// final validation
-		final AssetDepreciation depreciation = new AssetDepreciation(record);
-		depreciation.validateDepreciationPeriod(ctx.getReadConnection());
-		if (record.isCreateTransactions())
-			depreciation.validate();
+		final ValidationException errors = new ValidationException();
+		Asset.validateDepreciationPeriod(ctx.getReadConnection(), record, null, errors);
+		if (record.getOpeningDepreciation() != null)
+			Asset.validate(record.getOpeningDepreciation(), record.getAcquisitionDate(), null, errors);
+		if (!errors.isEmpty())
+			throw errors;
+
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 		try {
 			sql.execute(guard.getConnection(), record);
 			if (record.isCreateTransactions()) {
 				depreciation.clearTransaction(guard.getConnection(), record.getId());
 				depreciation.createTransactions(guard.getConnection(), record.getId());
-				final IStraightLineDepreciation d = record.getDepreciation();
+				final IStraightLineDepreciation d = record.getDepreciationMethod();
 				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, d.getResidualValue());
 				final IOpeningDepreciation opening = d.getOpeningDepreciation();
 				if (opening != null) {
-					final Calendar dt = opening.getDate();
-					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_year", dt.get(Calendar.YEAR));
-					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_month", dt.get(Calendar.MONTH));
+//					final Calendar dt = opening.getDate();
+//					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_year", dt.get(Calendar.YEAR));
+//					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_month", dt.get(Calendar.MONTH));
 				}
 			}
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.CATEGORY, record.getCompanyAssetCategoryId());

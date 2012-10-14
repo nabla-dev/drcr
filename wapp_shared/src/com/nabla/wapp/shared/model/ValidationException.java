@@ -115,8 +115,6 @@ public class ValidationException extends ActionException implements IErrorList<V
 	}
 
 	public Map<String, String> getErrorMessages(final ConstantsWithLookup resource) {
-		if (resource == null)
-			throw new IllegalArgumentException("resource");
 		final Map<String, String> ret = new HashMap<String, String>();
 		for (final Map.Entry<String, String> e : errors.entrySet())
 				ret.put(e.getKey(), resource.getString(e.getValue()));

@@ -16,12 +16,15 @@
 */
 package com.nabla.dc.server.xml.assets;
 
+import java.util.Date;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import com.nabla.dc.shared.ServerErrors;
+import com.nabla.dc.server.handler.fixed_asset.Asset;
+import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
+import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -29,43 +32,56 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 @Root
-public class InitialDepreciation extends Node {
+public class XmlOpeningDepreciation extends Node implements IOpeningDepreciation {
 
+	static final String	DATE = "date";
 	static final String	ACCUMULATED_DEPRECIATION = "accumulated_depreciation";
 	static final String	DEPRECIATION_PERIOD = "depreciation_period";
 
+	@Element(name=DATE)
+	Date		date;
 	@Element(name=ACCUMULATED_DEPRECIATION)
-	Integer	value;
+	Integer		value;
 	@Element(name=DEPRECIATION_PERIOD)
-	Integer	periodCount;
+	Integer		periodCount;
 
 	@Override
 	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (value < 1)
-			errors.add(getRow(), ACCUMULATED_DEPRECIATION, CommonServerErrors.INVALID_VALUE);
-		if (periodCount < 1)
-			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
+		Validator.execute(this, getRow(), errors);
 	}
 
-	public void postValidate(final Integer depreciationPeriod, final StraightLineDepreciation m, final IErrorList<Integer> errors) throws DispatchException {
-		if (value > (m.getCost() - m.getResidualValue()))
-			errors.add(getRow(), ACCUMULATED_DEPRECIATION, ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
-
-		if (periodCount >  depreciationPeriod)
-			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.DEPRECIATION_PERIOD_LESS_THAN_INITIAL);
-		else if (periodCount == depreciationPeriod) {
-			if (value < (m.getCost() - m.getResidualValue()))
-				errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
-		} if (value == (m.getCost() - m.getResidualValue()))
-			errors.add(getRow(), DEPRECIATION_PERIOD, ServerErrors.INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
+	public boolean postValidate(final IAssetRecord asset, final IErrorList<Integer> errors) throws DispatchException {
+		return Validator.postExecute(this, asset, getRow(), errors) &&
+				Asset.validate(this, asset.getAcquisitionDate(), getRow(), errors);
 	}
 
+	@Override
+	public Date getDate() {
+		return date;
+	}
+
+	@Override
 	public Integer getValue() {
 		return value;
 	}
 
+	@Override
 	public Integer getPeriodCount() {
 		return periodCount;
 	}
 
+	@Override
+	public String getValueField() {
+		return ACCUMULATED_DEPRECIATION;
+	}
+
+	@Override
+	public String getPeriodCountField() {
+		return DEPRECIATION_PERIOD;
+	}
+
+	@Override
+	public String getDateField() {
+		return DATE;
+	}
 }

@@ -18,6 +18,7 @@ package com.nabla.dc.shared.command.general;
 
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.ITaxRate;
+import com.nabla.dc.shared.model.ITaxRateTable;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -31,21 +32,21 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
  * @author nabla
  *
  */
-@IRecordTable(name=ITaxRate.TABLE)
-public class AddTaxRate implements IRecordAction<StringResult>, ITaxRate {
+@IRecordTable(name=ITaxRateTable.TABLE)
+public class AddTaxRate implements IRecordAction<StringResult> {
 
-	@IRecordField(unique=true)
+	@IRecordField(name=ITaxRateTable.NAME,unique=true) @Nullable
 	String				name;
 	@IRecordField
 	transient String	uname;
-	@IRecordField @Nullable
+	@IRecordField(name=ITaxRateTable.RATE) @Nullable
 	Integer				rate;
-	@IRecordField
+	@IRecordField(name=ITaxRateTable.ACTIVE) @Nullable
 	Boolean				active;
 
 	AddTaxRate() {}	// for serialization only
 
-	public AddTaxRate(final String name, @Nullable final Integer rate, final Boolean active) {
+	public AddTaxRate(@Nullable final String name, @Nullable final Integer rate, @Nullable final Boolean active) {
 		this.name = name;
 		this.rate = rate;
 		this.active = active;
@@ -60,8 +61,8 @@ public class AddTaxRate implements IRecordAction<StringResult>, ITaxRate {
 		int n = errors.size();
 		if (name != null)
 			uname = name.toUpperCase();
-		NAME_CONSTRAINT.validate(NAME, name, errors, ctx);
-		RATE_CONSTRAINT.validate(RATE, rate, ServerErrors.INVALID_TAX_CODE_RATE, errors, ValidatorContext.UPDATE);
+		ITaxRate.NAME_CONSTRAINT.validate(ITaxRate.NAME, name, errors, ctx);
+		ITaxRate.RATE_CONSTRAINT.validate(ITaxRate.RATE, rate, ServerErrors.INVALID_TAX_CODE_RATE, errors, ValidatorContext.UPDATE);
 		return n == errors.size();
 	}
 

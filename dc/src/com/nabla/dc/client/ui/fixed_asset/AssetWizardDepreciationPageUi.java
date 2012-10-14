@@ -52,12 +52,21 @@ public class AssetWizardDepreciationPageUi extends BindedBasicWizardPageDisplay 
 			depPeriod.setValue(range.getMin());
 		else if (value < range.getMin() || value > range.getMax())
 			depPeriod.setValue(range.getMin());
+		// show/hide residual value depending on create transactions
+		form.getItem(IAsset.RESIDUAL_VALUE).setShowIfCondition(onCreateTransactionChanged);
 		// show/hide opening details
 		form.getItem(IAsset.OPENING_YEAR).setShowIfCondition(onOpeningChanged);
 		form.getItem(IAsset.OPENING_MONTH).setShowIfCondition(onOpeningChanged);
 		form.getItem(IAsset.OPENING_ACCUMULATED_DEPRECIATION).setShowIfCondition(onOpeningChanged);
 		form.getItem(IAsset.OPENING_DEPRECIATION_PERIOD).setShowIfCondition(onOpeningChanged);
 	}
+
+	private final FormItemIfFunction onCreateTransactionChanged = new FormItemIfFunction() {
+        @Override
+		public boolean execute(@SuppressWarnings("unused") FormItem item, @SuppressWarnings("unused") Object value, @SuppressWarnings("unused") DynamicForm f) {
+        	return (Boolean)form.getValue(IAsset.CREATE_TRANSACTIONS);
+        }
+    };
 
 	private final FormItemIfFunction onOpeningChanged = new FormItemIfFunction() {
         @Override

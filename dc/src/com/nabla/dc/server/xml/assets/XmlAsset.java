@@ -23,6 +23,7 @@ import java.util.Date;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import com.nabla.dc.server.handler.fixed_asset.Asset;
 import com.nabla.dc.server.handler.fixed_asset.AssetDepreciation;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
@@ -30,7 +31,11 @@ import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
 import com.nabla.dc.shared.model.fixed_asset.IAssetTable;
+import com.nabla.dc.shared.model.fixed_asset.IDisposal;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
+import com.nabla.dc.shared.model.fixed_asset.IInitialDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.wapp.server.database.InsertStatement;
 import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.database.IRecordField;
@@ -52,6 +57,9 @@ class XmlAsset extends Node implements IAssetRecord {
 	static final String	ACQUISITION_DATE = "acquisition_date";
 	static final String	ACQUISITION_TYPE = "acquisition_type";
 	static final String	DEPRECIATION_PERIOD = "depreciation_period";
+	static final String	COST = "cost";
+	static final String	INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
+	static final String	OPENING_ACCUMULATED_DEPRECAITION = "opening_accumulated_depreciation";
 	static final String	STRAIGHT_LINE_DEPRECIATION = "straight_line_depreciation";
 	static final String	DISPOSAL = "disposal";
 
@@ -82,10 +90,17 @@ class XmlAsset extends Node implements IAssetRecord {
 	@Element(name=DEPRECIATION_PERIOD)
 	@IRecordField(name=IAssetTable.DEPRECIATION_PERIOD)
 	Integer						depreciationPeriod;
+	@Element(name=COST)
+	Integer						cost;
+	@Element(name=INITIAL_ACCUMULATED_DEPRECIATION,required=false)
+	XmlInitialDepreciation		initialDepreciation;	// if TRANSFER
+	@Element(name=OPENING_ACCUMULATED_DEPRECAITION,required=false)
+	XmlOpeningDepreciation		openingDepreciation;	// to agree NBV at given period
 	@Element(name=STRAIGHT_LINE_DEPRECIATION,required=false)
-	StraightLineDepreciation	depreciation;
+	XmlStraightLineDepreciation	depreciationMethod;
 	@Element(name=DISPOSAL,required=false)
-	Disposal					disposal;
+	XmlDisposal					disposal;
+
 	@IRecordField(name=IAssetTable.DISPOSAL_DATE)
 	Date						disposalDate;
 	@IRecordField(name=IAssetTable.DISPOSAL_TYPE)
@@ -121,25 +136,27 @@ class XmlAsset extends Node implements IAssetRecord {
 			location.validate(LOCATION, IAsset.LOCATION_CONSTRAINT, errors);
 		if (purchaseInvoice != null)
 			purchaseInvoice.validate(PURCHASE_INVOICE, IAsset.PURCHASE_INVOICE_CONSTRAINT, errors);
-		if (depreciationPeriod < 1)
-			errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
+		Validator.execute(this, getRow(), errors);
+		if (disposal != null)
+			Asset.<Integer>validate(disposal, acquisitionDate, disposal.getRow(), errors);
 	}
 
 	public void postValidate(@Nullable final Company company, final IErrorList<Integer> errors) throws DispatchException {
 		if (company == null)
 			errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 		else {
-			final Category cat = company.get(category);
-			if (cat == null)
+			fa_company_asset_category_id = company.get(category);
+			if (fa_company_asset_category_id == null)
 				errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 			else {
-				fa_company_asset_category_id = cat.getId();
-				if (cat.getMinDepreciationPeriod() > depreciationPeriod || cat.getMaxDepreciationPeriod() < depreciationPeriod)
-					errors.add(getRow(), DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-				if (depreciation != null)
-					depreciation.postValidate(this, errors);
+				if (initialDepreciation != null)
+					initialDepreciation.postValidate(this, errors);
+				if (openingDepreciation != null)
+					openingDepreciation.postValidate(this, errors);
+				if (depreciationMethod != null)
+					depreciationMethod.postValidate(this, errors);
 				if (disposal != null) {
-					disposal.postValidate(this, errors);
+					disposal.postValidate(acquisitionDate, errors);
 					disposalDate = disposal.getDate();
 					disposalType = disposal.getType();
 					proceeds = disposal.getProceeds();
@@ -160,12 +177,8 @@ class XmlAsset extends Node implements IAssetRecord {
 		return true;
 	}
 
-	public @Nullable StraightLineDepreciation getStraightLineDepreciation() {
-		return depreciation;
-	}
-
 	@Override
-	public int getDepreciationPeriod() {
+	public Integer getDepreciationPeriod() {
 		return depreciationPeriod;
 	}
 
@@ -175,65 +188,59 @@ class XmlAsset extends Node implements IAssetRecord {
 	}
 
 	@Override
-	public Integer getCompanyAssetCategoryId() {
-		return fa_company_asset_category_id;
-	}
-
-	@Override
 	public String getName() {
 		return name.getValue();
 	}
 
 	@Override
-	public int getCost() {
-		return depreciation.getCost();
+	public Integer getCost() {
+		return cost;
 	}
 
 	@Override
-	public int getInitialAccumulatedDepreciation() {
-		return 0;
+	public @Nullable IStraightLineDepreciation getDepreciationMethod() {
+		return depreciationMethod;
 	}
 
 	@Override
-	public int getInitialDepreciationPeriod() {
-		// TODO Auto-generated method stub
-		return 0;
+	public @Nullable IDisposal getDisposal() {
+		return disposal;
 	}
 
 	@Override
-	public Integer getOpeningYear() {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getTotalDepreciation() {
+		return (depreciationMethod == null) ? cost : (cost - depreciationMethod.getResidualValue());
 	}
 
 	@Override
-	public Integer getOpeningMonth() {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable IInitialDepreciation getInitialDepreciation() {
+		return initialDepreciation;
 	}
 
 	@Override
-	public Integer getOpeningAccumulatedDepreciation() {
-		// TODO Auto-generated method stub
-		return null;
+	public @Nullable IOpeningDepreciation getOpeningDepreciation() {
+		return openingDepreciation;
 	}
 
 	@Override
-	public Integer getOpeningDepreciationPeriod() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getCostField() {
+		return COST;
 	}
 
 	@Override
-	public int getResidualValue() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Integer getCompanyAssetCategoryId() {
+		return fa_company_asset_category_id;
 	}
 
 	@Override
-	public Date getDisposalDate() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getCategoryField() {
+		return CATEGORY;
 	}
+
+	@Override
+	public String getDepreciationPeriodField() {
+		return DEPRECIATION_PERIOD;
+	}
+
 
 }

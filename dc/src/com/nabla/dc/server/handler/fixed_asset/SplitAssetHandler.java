@@ -81,7 +81,7 @@ public class SplitAssetHandler extends AbstractAddHandler<SplitAsset> {
 								final TransactionClasses clazz = TransactionClasses.valueOf(rs.getString(ITransaction.CLASS));
 								final TransactionTypes type = TransactionTypes.valueOf(rs.getString(ITransaction.TYPE));
 								if (clazz == TransactionClasses.COST && type == TransactionTypes.OPENING) {
-									// split cost as user inputted
+									// split cost as user inputed
 									stmtA.setInt(1, record.getCostA());
 									stmtA.addBatch();
 									stmtB.setInt(5, record.getCostB());

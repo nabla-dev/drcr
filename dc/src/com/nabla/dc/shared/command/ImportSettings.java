@@ -30,8 +30,8 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class ImportSettings implements IRecordAction<StringResult> {
 
-	private Integer				batchId;
-	private SqlInsertOptions	overwrite;
+	Integer				batchId;
+	SqlInsertOptions	overwrite;
 
 	ImportSettings() {}	// for serialization only
 

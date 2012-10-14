@@ -27,6 +27,7 @@ import com.nabla.wapp.shared.command.AbstractRestore;
 import com.nabla.wapp.shared.dispatch.ActionException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
+import com.nabla.wapp.shared.general.AlwaysNull;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
 /**
@@ -43,7 +44,7 @@ public abstract class AbstractRestoreHandler<A extends AbstractRestore> extends 
 	}
 
 	@Override
-	public VoidResult execute(final A cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public @AlwaysNull VoidResult execute(final A cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		try {
 			Database.executeUpdate(ctx.getWriteConnection(), sql, cmd);
 		} catch (final SQLException e) {

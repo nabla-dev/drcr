@@ -16,17 +16,15 @@
 */
 package com.nabla.dc.server.xml.assets;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import com.nabla.dc.shared.ServerErrors;
+import com.nabla.dc.server.handler.fixed_asset.Asset;
 import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
+import com.nabla.dc.shared.model.fixed_asset.IDisposal;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -35,7 +33,7 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 @Root
-public class Disposal extends Node {
+public class XmlDisposal extends Node implements IDisposal {
 
 	static final String	DATE = "date";
 	static final String	TYPE = "type";
@@ -52,48 +50,41 @@ public class Disposal extends Node {
 	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
 		if (type == null)
 			type = DisposalTypes.SOLD;
-		switch (type) {
-		case SOLD:
-			if (proceeds == null)
-				proceeds = 0;
-			else if (proceeds < 0)
-				errors.add(getRow(), PROCEEDS, CommonServerErrors.INVALID_VALUE);
-			break;
-		default:
-			proceeds = null;
-			break;
-		}
+		Validator.execute(this, getRow(), errors);
 	}
 
-	public void postValidate(final XmlAsset asset, final IErrorList<Integer> errors) throws DispatchException {
-		// validate disposal date: must be at least in following month of acquisition!
-		final Calendar dt = new GregorianCalendar();
-		dt.setTime(asset.getAcquisitionDate());
-		dt.set(GregorianCalendar.DAY_OF_MONTH, dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-		final Calendar dtDisposal = new GregorianCalendar();
-		dtDisposal.setTime(date);
-		if (!dt.before(dtDisposal))
-			errors.add(getRow(), DATE, ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
-		// same with opening date
-		final StraightLineDepreciation depreciation = asset.getStraightLineDepreciation();
-		if (depreciation != null && depreciation.getOpeningAccumulatedDepreciation() != null) {
-			dt.setTime(depreciation.getOpeningAccumulatedDepreciation().getDate());
-			dt.set(GregorianCalendar.DAY_OF_MONTH, 1);
-			if (dtDisposal.before(dt))
-				errors.add(getRow(), DATE, ServerErrors.MUST_BE_AFTER_OPENING_DATE);
-		}
+	public void postValidate(final Date dtAcquisition, final IErrorList<Integer> errors) throws DispatchException {
+		Asset.validate(this, dtAcquisition, getRow(), errors);
 	}
 
+	@Override
 	public Date getDate() {
 		return date;
 	}
 
+	@Override
 	public DisposalTypes getType() {
 		return type;
 	}
 
+	@Override
 	public @Nullable Integer getProceeds() {
 		return proceeds;
+	}
+
+	@Override
+	public void setProceeds(@Nullable Integer value) {
+		proceeds = value;
+	}
+
+	@Override
+	public String getDateField() {
+		return DATE;
+	}
+
+	@Override
+	public String getProceedsField() {
+		return PROCEEDS;
 	}
 
 }

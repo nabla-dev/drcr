@@ -16,15 +16,38 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.dc.shared.ServerErrors;
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author FNorais
  *
  */
 public interface IStraightLineDepreciation {
-	Integer getCost();
-	@Nullable IInitialDepreciation getInitialDepreciation();
-	@Nullable IOpeningDepreciation getOpeningDepreciation();
+	public static class Validator {
+		public static <P> boolean execute(final IStraightLineDepreciation t, final P pos, final IErrorList<P> errors) throws DispatchException {
+			int n = errors.size();
+
+			if (t.getResidualValue() == null)
+				errors.add(pos, t.getResidualValueField(), CommonServerErrors.REQUIRED_VALUE);
+			else if (t.getResidualValue() < 0)
+				errors.add(pos, t.getResidualValueField(), CommonServerErrors.INVALID_VALUE);
+
+			return n == errors.size();
+		}
+		public static <P> boolean postExecute(final IStraightLineDepreciation t, final IAssetRecord asset, final P pos, final IErrorList<P> errors) throws DispatchException {
+			int n = errors.size();
+
+			if (t.getResidualValue() > asset.getCost())
+				errors.add(pos, t.getResidualValueField(), ServerErrors.INVALID_RESIDUAL_VALUE);
+
+			return n == errors.size();
+		}
+	}
+
 	Integer getResidualValue();
+
+	String getResidualValueField();
 }

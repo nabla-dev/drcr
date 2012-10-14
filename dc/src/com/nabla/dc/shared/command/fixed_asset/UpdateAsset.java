@@ -39,9 +39,8 @@ public class UpdateAsset extends AddAsset {
 	public UpdateAsset(int id, final Integer companyId, final String name, final Integer companyAssetCategoryId,
 			@Nullable final String reference, @Nullable final String location,
 			final Date acquisitionDate, final AcquisitionTypes acquisitionType, int cost, @Nullable final String pi,
-			int depreciationPeriod, final Integer residualValue,
-			boolean createTransactions) {
-		super(companyId, name, companyAssetCategoryId, reference, location, acquisitionDate, acquisitionType, cost, pi, depreciationPeriod, residualValue, createTransactions);
+			int depreciationPeriod) {
+		super(companyId, name, companyAssetCategoryId, reference, location, acquisitionDate, acquisitionType, cost, pi, depreciationPeriod);
 		this.id = id;
 	}
 

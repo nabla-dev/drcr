@@ -18,14 +18,40 @@ package com.nabla.dc.shared.model.fixed_asset;
 
 import java.util.Date;
 
+import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author FNorais
  *
  */
 public interface IDisposal {
+	public static class Validator {
+		public static <P> boolean execute(final IDisposal t, final P pos, final IErrorList<P> errors) throws DispatchException {
+			switch (t.getType()) {
+			case SOLD:
+				if (t.getProceeds() == null)
+					t.setProceeds(0);
+				else if (t.getProceeds() < 0) {
+					errors.add(pos, t.getProceedsField(), CommonServerErrors.INVALID_VALUE);
+					return false;
+				}
+				break;
+			default:
+				t.setProceeds(0);
+				break;
+			}
+			return true;
+		}
+	}
+
 	Date getDate();
 	DisposalTypes getType();
 	@Nullable Integer getProceeds();
+	void setProceeds(@Nullable final Integer value);
+
+	String getDateField();
+	String getProceedsField();
 }

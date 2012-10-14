@@ -19,6 +19,7 @@ package com.nabla.dc.server.handler.general;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.general.AddTaxRate;
+import com.nabla.dc.shared.model.ITaxRate;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.InsertStatement;
 import com.nabla.wapp.server.model.AbstractAddHandler;
@@ -34,12 +35,11 @@ public class AddTaxRateHandler extends AbstractAddHandler<AddTaxRate> {
 
 	private static final InsertStatement<AddTaxRate>	sql = new InsertStatement<AddTaxRate>(AddTaxRate.class);
 
-	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddTaxRate record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final Integer id = sql.execute(ctx.getWriteConnection(), record);
 		if (id == null)
-			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+			throw new ValidationException(ITaxRate.NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		return id;
 	}
 

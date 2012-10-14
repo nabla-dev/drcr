@@ -25,6 +25,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.command.AbstractRemove;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
+import com.nabla.wapp.shared.general.AlwaysNull;
 
 /**
  * @author nabla
@@ -40,7 +41,7 @@ public abstract class AbstractSoftRemoveHandler<A extends AbstractRemove> extend
 	}
 
 	@Override
-	public VoidResult execute(final A cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
+	public @AlwaysNull VoidResult execute(final A cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		Database.executeUpdate(ctx.getWriteConnection(), sql, cmd);
 		return null;
 	}

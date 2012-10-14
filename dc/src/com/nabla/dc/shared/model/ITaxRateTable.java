@@ -16,16 +16,15 @@
 */
 package com.nabla.dc.shared.model;
 
-import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 /**
  * The <code></code> object is used to
  *
  */
-public interface ITaxRate extends ITaxRateTable {
-	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 32, true);
+public interface ITaxRateTable {
+	static final String	TABLE = "tax_rate";
 
-	static final IntegerRangeConstraint	RATE_CONSTRAINT = new IntegerRangeConstraint(0, 9999, true);
-	static int								RATE_DEFAULT = 0;
+	static final String	NAME = "name";
+	static final String	RATE = "rate";
+	static final String	ACTIVE = "active";
 }

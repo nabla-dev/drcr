@@ -19,6 +19,7 @@ package com.nabla.dc.server.handler.company;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.company.AddAccount;
+import com.nabla.dc.shared.model.company.IAccount;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.database.InsertStatement;
 import com.nabla.wapp.server.model.AbstractAddHandler;
@@ -34,12 +35,11 @@ public class AddAccountHandler extends AbstractAddHandler<AddAccount> {
 
 	private static final InsertStatement<AddAccount>	sql = new InsertStatement<AddAccount>(AddAccount.class);
 
-	@SuppressWarnings("static-access")
 	@Override
 	protected int add(final AddAccount record, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final Integer id = sql.execute(ctx.getWriteConnection(), record);
 		if (id == null)
-			throw new ValidationException(record.NAME, CommonServerErrors.DUPLICATE_ENTRY);
+			throw new ValidationException(IAccount.NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		return id;
 	}
 

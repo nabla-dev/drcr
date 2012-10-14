@@ -18,23 +18,17 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.nabla.dc.shared.ServerErrors;
-import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
+import com.nabla.dc.shared.model.fixed_asset.IInitialDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.dc.shared.model.fixed_asset.TransactionClasses;
 import com.nabla.dc.shared.model.fixed_asset.TransactionTypes;
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.model.ValidationException;
 
 /**
  * @author nabla
@@ -42,18 +36,22 @@ import com.nabla.wapp.shared.model.ValidationException;
  */
 public class AssetDepreciation {
 
-	private final IAssetRecord		asset;
-	private final Date				openingDate;
-	private int					accumulatedDepreciation;
-	private int					monthCount;
+	private final IAssetRecord					asset;
+	private final IStraightLineDepreciation	method;
+	private final IInitialDepreciation			initial;
+	private final IOpeningDepreciation			opening;
+	private final Date							openingDate;
+	private int								accumulatedDepreciation;
+	private int								monthCount;
 
 	public AssetDepreciation(final IAssetRecord record) {
 		this.asset = record;
-		if (record.getOpeningYear() != null) {
-			final Calendar dt = new GregorianCalendar();
-			dt.set(record.getOpeningYear(), record.getOpeningMonth(), 1);
-			openingDate = new Date(dt.getTime().getTime());
-		} else
+		this.method = asset.getDepreciationMethod();
+		this.initial = method.getInitialDepreciation();
+		this.opening = method.getOpeningDepreciation();
+		if (opening != null)
+			openingDate = new Date(opening.getDate().getTime());
+		else
 			openingDate = null;
 	}
 
@@ -63,37 +61,6 @@ public class AssetDepreciation {
 
 	public int getMonthCount() {
 		return monthCount;
-	}
-
-	public void validateDepreciationPeriod(final Connection conn) throws ValidationException, SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(conn,
-"SELECT t.min_depreciation_period, t.max_depreciation_period" +
-" FROM fa_asset_category AS t INNER JOIN fa_company_asset_category AS r ON r.fa_asset_category_id=t.id" +
-" WHERE r.id=?;", asset.getCompanyAssetCategoryId());
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			try {
-				if (!rs.next())
-					throw new ValidationException(IAsset.CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY_FOR_COMPANY);
-				if (rs.getInt("min_depreciation_period") > asset.getDepreciationPeriod() || rs.getInt("max_depreciation_period") < asset.getDepreciationPeriod())
-					throw new ValidationException(IAsset.DEPRECIATION_PERIOD, CommonServerErrors.INVALID_VALUE);
-			} finally {
-				rs.close();
-			}
-		} finally {
-			stmt.close();
-		}
-	}
-
-	public void validate() throws ValidationException {
-		if (openingDate != null) {
-			final Calendar dtOpening = new GregorianCalendar();
-			dtOpening.setTime(openingDate);
-			final Calendar dtAcquisition = new GregorianCalendar();
-			dtAcquisition.setTime(asset.getAcquisitionDate());
-			if (!dtAcquisition.before(dtOpening))
-				throw new ValidationException(IAsset.OPENING_MONTH, ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
-		}
 	}
 
 	public void clearTransaction(final Connection conn, int  assetId) throws SQLException {
@@ -109,13 +76,13 @@ public class AssetDepreciation {
 
 	public void getAcquisitionTransactions(final List<Transaction> transactions) {
 		// opening cost
-		transactions.add(new Transaction(TransactionClasses.COST, TransactionTypes.OPENING, asset.getAcquisitionDate(), asset.getCost()));
+		transactions.add(new Transaction(TransactionClasses.COST, TransactionTypes.OPENING, asset.getAcquisitionDate(), method.getCost()));
 		// initial accumulated depreciation
-		transactions.add(new Transaction(TransactionClasses.DEP, TransactionTypes.OPENING, asset.getAcquisitionDate(), -1 * asset.getInitialAccumulatedDepreciation(), asset.getInitialDepreciationPeriod()));
+//		transactions.add(new Transaction(TransactionClasses.DEP, TransactionTypes.OPENING, asset.getAcquisitionDate(), -1 * asset.getInitialAccumulatedDepreciation(), asset.getInitialDepreciationPeriod()));
 	}
 
 	public void getDepreciationTransactions(final List<Transaction> transactions) {
-		accumulatedDepreciation = asset.getInitialAccumulatedDepreciation();
+/*		accumulatedDepreciation = asset.getInitialAccumulatedDepreciation();
 		monthCount = asset.getInitialDepreciationPeriod();
 		if (accumulatedDepreciation >= (asset.getCost() - asset.getResidualValue()))
 			return;	// nothing to do
@@ -147,7 +114,7 @@ public class AssetDepreciation {
 			}
 			transactions.add(new Transaction(dt, depreciation * -1));
 			accumulatedDepreciation += depreciation;
-		}
+		}*/
 	}
 
 }

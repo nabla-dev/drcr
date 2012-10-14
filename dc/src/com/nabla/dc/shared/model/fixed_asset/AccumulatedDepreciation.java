@@ -14,18 +14,23 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model;
+package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
-import com.nabla.wapp.shared.validator.TextLengthConstraint;
+public abstract class AccumulatedDepreciation {
+	protected final Integer	value;
+	protected final Integer	periodCount;
 
-/**
- * The <code></code> object is used to
- *
- */
-public interface ITaxRate extends ITaxRateTable {
-	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 32, true);
+	public AccumulatedDepreciation(final Integer value, final Integer periodCount) {
+		this.value = value;
+		this.periodCount = periodCount;
+	}
 
-	static final IntegerRangeConstraint	RATE_CONSTRAINT = new IntegerRangeConstraint(0, 9999, true);
-	static int								RATE_DEFAULT = 0;
+	public Integer getValue() {
+		return value;
+	}
+
+	public Integer getPeriodCount() {
+		return periodCount;
+	}
+
 }
