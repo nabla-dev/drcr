@@ -51,12 +51,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 public abstract class Asset {
 
 	private static final Log		log = LogFactory.getLog(Asset.class);
-/*
-	static public <P> boolean validate(final IErrorList<P> errors) {
 
-		return false;
-	}
-*/
 	static public <P> boolean validateDepreciationPeriod(final Connection conn, final IAssetRecord asset, @Nullable final P pos, final IErrorList<P> errors) throws SQLException, DispatchException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn,
 "SELECT t.min_depreciation_period, t.max_depreciation_period" +

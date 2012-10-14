@@ -24,7 +24,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.nabla.dc.server.handler.fixed_asset.Asset;
-import com.nabla.dc.server.handler.fixed_asset.AssetDepreciation;
+import com.nabla.dc.server.handler.fixed_asset.TransactionList;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
@@ -137,6 +137,8 @@ class XmlAsset extends Node implements IAssetRecord {
 		if (purchaseInvoice != null)
 			purchaseInvoice.validate(PURCHASE_INVOICE, IAsset.PURCHASE_INVOICE_CONSTRAINT, errors);
 		Validator.execute(this, getRow(), errors);
+		if (openingDepreciation != null)
+			Asset.validate(openingDepreciation, acquisitionDate, openingDepreciation.getRow(), errors);
 		if (disposal != null)
 			Asset.<Integer>validate(disposal, acquisitionDate, disposal.getRow(), errors);
 	}
@@ -145,10 +147,13 @@ class XmlAsset extends Node implements IAssetRecord {
 		if (company == null)
 			errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 		else {
-			fa_company_asset_category_id = company.get(category);
-			if (fa_company_asset_category_id == null)
+			final Category cat = company.get(category);
+			if (cat == null)
 				errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 			else {
+				fa_company_asset_category_id = cat.getId();
+				if (cat.getMinDepreciationPeriod() > depreciationPeriod || cat.getMaxDepreciationPeriod() < depreciationPeriod)
+					errors.add(getRow(), getDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
 				if (initialDepreciation != null)
 					initialDepreciation.postValidate(this, errors);
 				if (openingDepreciation != null)
@@ -168,11 +173,11 @@ class XmlAsset extends Node implements IAssetRecord {
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
 		// final validation
 		int assetId = sql.execute(conn, this);
-		if (depreciation != null) {
-			new AssetDepreciation(this).createTransactions(conn, assetId);
-			if (disposal != null) {
+		final TransactionList transactions = new TransactionList(assetId);
+		transactions.createTransactions(this);
+		transactions.save(conn);
+		if (disposal != null) {
 
-			}
 		}
 		return true;
 	}

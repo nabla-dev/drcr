@@ -17,6 +17,7 @@
 package com.nabla.dc.server.handler.fixed_asset;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import com.nabla.dc.shared.command.fixed_asset.AddAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
@@ -26,6 +27,7 @@ import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.basic.general.UserPreference;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.InsertStatement;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.ValidationException;
@@ -47,20 +49,20 @@ public class AddAssetHandler extends AbstractAddHandler<AddAsset> {
 			Asset.validate(record.getOpeningDepreciation(), record.getAcquisitionDate(), null, errors);
 		if (!errors.isEmpty())
 			throw errors;
-
-		final AssetDepreciation depreciation = new AssetDepreciation(record);
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
 		try {
 			int assetId = sql.execute(guard.getConnection(), record);
-			if (record.isCreateTransactions()) {
-				depreciation.createTransactions(guard.getConnection(), assetId);
-				final IStraightLineDepreciation d = record.getDepreciationMethod();
-				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, d.getResidualValue());
-				final IOpeningDepreciation opening = d.getOpeningDepreciation();
-				if (opening != null) {
-//					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_year", opening.getYear());
-//					UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_month", opening.getMonth());
-				}
+			final TransactionList transactions = new TransactionList(assetId);
+			transactions.createTransactions(record);
+			transactions.save(guard.getConnection());
+			final IStraightLineDepreciation method = record.getDepreciationMethod();
+			if (method != null)
+				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
+			final IOpeningDepreciation opening = record.getOpeningDepreciation();
+			if (opening != null) {
+				final Calendar dt = Util.dateToCalendar(opening.getDate());
+				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_year", dt.get(Calendar.YEAR));
+				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, "opening_month", dt.get(Calendar.MONTH));
 			}
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.CATEGORY, record.getCompanyAssetCategoryId());
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.LOCATION, record.getLocation());

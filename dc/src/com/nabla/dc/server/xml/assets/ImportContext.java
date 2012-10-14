@@ -39,7 +39,7 @@ public class ImportContext {
 
 	public ImportContext(final Connection conn) throws SQLException {
 		final PreparedStatement stmt = conn.prepareStatement(
-"SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name" +
+"SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
 " fa_company_asset_category AS t INNER JOIN fa_asset_cateogry AS c ON t.fa_asset_cateogry_id=c.id" +
 ") ON company.id=t.company_id" +
@@ -53,7 +53,7 @@ public class ImportContext {
 
 	public ImportContext(final Connection conn, final Integer companyId) throws SQLException {
 		final PreparedStatement stmt = conn.prepareStatement(
-"SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name" +
+"SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
 " fa_company_asset_category AS t INNER JOIN fa_asset_cateogry AS c ON t.fa_asset_cateogry_id=c.id" +
 ") ON company.id=t.company_id" +
@@ -92,7 +92,7 @@ public class ImportContext {
 					company = new Company(rs.getInt("companyId"));
 					companies.put(companyName, company);
 				}
-				company.put(rs.getString("name"), rs.getInt("id"));
+				company.put(rs.getString("name"), new Category(rs));
 			}
 		} finally {
 			rs.close();

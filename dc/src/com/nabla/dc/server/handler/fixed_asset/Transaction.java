@@ -24,6 +24,7 @@ import com.nabla.dc.shared.model.fixed_asset.ITransaction;
 import com.nabla.dc.shared.model.fixed_asset.TransactionClasses;
 import com.nabla.dc.shared.model.fixed_asset.TransactionTypes;
 import com.nabla.wapp.server.general.Assert;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.general.Nullable;
@@ -54,8 +55,8 @@ public class Transaction {
 		this.clazz = clazz;
 		this.type = type;
 		date.set(GregorianCalendar.DAY_OF_MONTH, date.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
-		this.date = new Date(date.getTime().getTime());
-		this.amount =value;
+		this.date = Util.calendarToSqlDate(date);
+		this.amount = value;
 		this.depreciation_period = depreciationPeriod;
 	}
 
@@ -72,21 +73,15 @@ public class Transaction {
 	}
 
 	public Transaction(final TransactionClasses clazz, final TransactionTypes type, final java.util.Date date, int value, @Nullable final Integer depreciationPeriod) {
-		this(clazz, type, dateToCalendar(date), value, depreciationPeriod);
+		this(clazz, type, Util.dateToCalendar(date), value, depreciationPeriod);
 	}
 
 	public Transaction(final TransactionClasses clazz, final TransactionTypes type, final java.util.Date date, int value) {
-		this(clazz, type, dateToCalendar(date), value);
+		this(clazz, type, Util.dateToCalendar(date), value);
 	}
 
 	public Transaction(final java.util.Date date, int value) {
-		this(dateToCalendar(date), value);
-	}
-
-	private static Calendar dateToCalendar(final java.util.Date dt) {
-		final Calendar ret = new GregorianCalendar();
-		ret.setTime(dt);
-		return ret;
+		this(Util.dateToCalendar(date), value);
 	}
 
 	public Date getPeriodEndDate() {

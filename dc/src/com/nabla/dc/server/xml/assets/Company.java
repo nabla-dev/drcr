@@ -18,7 +18,7 @@ package com.nabla.dc.server.xml.assets;
 
 import java.util.HashMap;
 
-public class Company extends HashMap<String, Integer> {
+public class Company extends HashMap<String, Category> {
 
 	private static final long		serialVersionUID = 1L;
 	private final int				id;
