@@ -121,7 +121,7 @@ public class AssetWizard extends AbstractWizardPresenter<IWizardDisplay> {
 	}
 
 	private void displayAcquisitionPage(final DepreciationPeriodRange depreciationPeriodRange) {
-		displayNextPage(new AssetWizardAcquisitionPageUi(data, depreciationPeriodRange.getMax()), new ISlot() {
+		displayNextPage(new AssetWizardAcquisitionPageUi(data), new ISlot() {
 			@Override
 			public void invoke() {
 				displayDepreciationPage(depreciationPeriodRange);
@@ -130,7 +130,7 @@ public class AssetWizard extends AbstractWizardPresenter<IWizardDisplay> {
 	}
 
 	private void displayDepreciationPage(final DepreciationPeriodRange depreciationPeriodRange) {
-		displayNextPage(new AssetWizardDepreciationPageUi(data, depreciationPeriodRange), new ISlot() {
+		displayNextPage(new AssetWizardDepreciationPageUi(data, depreciationPeriodRange, data.getRecord().getAcquisitionDate()), new ISlot() {
 			@Override
 			public void invoke() {
 				displayCompletedPage();

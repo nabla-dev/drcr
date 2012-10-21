@@ -23,11 +23,7 @@ import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
 import com.nabla.dc.shared.model.fixed_asset.IAssetTable;
 import com.nabla.dc.shared.model.fixed_asset.IDisposal;
-import com.nabla.dc.shared.model.fixed_asset.IInitialDepreciation;
-import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
 import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
-import com.nabla.dc.shared.model.fixed_asset.InitialDeprecation;
-import com.nabla.dc.shared.model.fixed_asset.OpeningDepreciation;
 import com.nabla.dc.shared.model.fixed_asset.StraightlineDepreciation;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
@@ -64,8 +60,6 @@ public class AddAsset implements IRecordAction<StringResult>, IAssetRecord {
 	@IRecordField(name=IAssetTable.DEPRECIATION_PERIOD)
 	Integer								depreciation_period;
 	Integer								cost;
-	@Nullable InitialDeprecation		initialDepreciation;
-	@Nullable OpeningDepreciation		openingDepreciation;
 	@Nullable StraightlineDepreciation	depreciationMethod;
 
 	AddAsset() {}	// for serialization only
@@ -99,11 +93,6 @@ public class AddAsset implements IRecordAction<StringResult>, IAssetRecord {
 		IAsset.LOCATION_CONSTRAINT.validate(IAsset.LOCATION, location, errors, ctx);
 		IAsset.PURCHASE_INVOICE_CONSTRAINT.validate(IAsset.PURCHASE_INVOICE, purchase_invoice, errors, ctx);
 		Validator.execute(this, null, errors);
-
-		if (initialDepreciation != null)
-			initialDepreciation.validate(this, errors);
-		if (openingDepreciation != null)
-			openingDepreciation.validate(this, errors);
 		if (depreciationMethod != null)
 			depreciationMethod.validate(this, errors);
 
@@ -112,14 +101,6 @@ public class AddAsset implements IRecordAction<StringResult>, IAssetRecord {
 
 	public void setDepreciationMethod(final StraightlineDepreciation method) {
 		this.depreciationMethod = method;
-	}
-
-	public void setInitialDepreciation(final InitialDeprecation initialDepreciation) {
-		this.initialDepreciation = initialDepreciation;
-	}
-
-	public void setOpeningDepreciation(final OpeningDepreciation openingDepreciation) {
-		this.openingDepreciation = openingDepreciation;
 	}
 
 	public Integer getCompanyId() {
@@ -162,17 +143,7 @@ public class AddAsset implements IRecordAction<StringResult>, IAssetRecord {
 
 	@Override
 	public Integer getTotalDepreciation() {
-		return (depreciationMethod == null) ? cost : (cost - depreciationMethod.getResidualValue());
-	}
-
-	@Override
-	public @Nullable IInitialDepreciation getInitialDepreciation() {
-		return initialDepreciation;
-	}
-
-	@Override
-	public @Nullable IOpeningDepreciation getOpeningDepreciation() {
-		return openingDepreciation;
+		return (depreciationMethod == null) ? cost : cost - depreciationMethod.getResidualValue();
 	}
 
 	@Override

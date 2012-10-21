@@ -16,6 +16,8 @@
 */
 package com.nabla.dc.client.ui.fixed_asset;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
@@ -24,11 +26,13 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.FormItemIfFunction;
 import com.smartgwt.client.widgets.form.ValuesManager;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
 /**
  * @author nabla
@@ -39,40 +43,53 @@ public class AssetWizardDepreciationPageUi extends BindedBasicWizardPageDisplay 
 	interface Binder extends UiBinder<WizardPage, AssetWizardDepreciationPageUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
-	public AssetWizardDepreciationPageUi(final ValuesManager model, final DepreciationPeriodRange range) {
+	public AssetWizardDepreciationPageUi(final ValuesManager model, final DepreciationPeriodRange range, final Date acquisitionDate) {
 		super(model);
 		create(uiBinder, this);
 		// limit depreciation period using asset category depreciation period range
-		final SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.DEPRECIATION_PERIOD);
+		SpinnerItem depPeriod = (SpinnerItem)form.getField(IAsset.DEPRECIATION_PERIOD);
 		Assert.notNull(depPeriod);
 		depPeriod.setMin(range.getMin());
 		depPeriod.setMax(range.getMax());
-		final Integer value = (Integer)depPeriod.getValue();
+		Integer value = (Integer)depPeriod.getValue();
 		if (value == null)
 			depPeriod.setValue(range.getMin());
 		else if (value < range.getMin() || value > range.getMax())
 			depPeriod.setValue(range.getMin());
-		// show/hide residual value depending on create transactions
-		form.getItem(IAsset.RESIDUAL_VALUE).setShowIfCondition(onCreateTransactionChanged);
-		// show/hide opening details
-		form.getItem(IAsset.OPENING_YEAR).setShowIfCondition(onOpeningChanged);
-		form.getItem(IAsset.OPENING_MONTH).setShowIfCondition(onOpeningChanged);
-		form.getItem(IAsset.OPENING_ACCUMULATED_DEPRECIATION).setShowIfCondition(onOpeningChanged);
-		form.getItem(IAsset.OPENING_DEPRECIATION_PERIOD).setShowIfCondition(onOpeningChanged);
+		// limit opening depreciation period using asset category depreciation period range
+		depPeriod = (SpinnerItem)form.getField(IAsset.OPENING_DEPRECIATION_PERIOD);
+		Assert.notNull(depPeriod);
+		depPeriod.setMin(0);
+		depPeriod.setMax(range.getMax());
+		value = (Integer)depPeriod.getValue();
+		if (value != null && (value < 0 || value > range.getMax()))
+			depPeriod.setValue(0);
+		// limit From date to acquisition date
+		final DateItem dt = (DateItem)form.getField(IAsset.DEPRECIATION_FROM_DATE);
+		dt.setStartDate(acquisitionDate);
+		// show/hide depreciation details
+		final CheckboxItem create = (CheckboxItem)form.getItem(IAsset.CREATE_TRANSACTIONS);
+		create.addChangedHandler(new ChangedHandler() {
+			@Override
+			public void onChanged(ChangedEvent event) {
+				onCreateTransactionsChanged((Boolean)event.getValue());
+			}
+		});
+		onCreateTransactionsChanged(create.getValueAsBoolean());
 	}
 
-	private final FormItemIfFunction onCreateTransactionChanged = new FormItemIfFunction() {
-        @Override
-		public boolean execute(@SuppressWarnings("unused") FormItem item, @SuppressWarnings("unused") Object value, @SuppressWarnings("unused") DynamicForm f) {
-        	return (Boolean)form.getValue(IAsset.CREATE_TRANSACTIONS);
-        }
-    };
+	private void onCreateTransactionsChanged(Boolean show) {
+		showItem(IAsset.DEPRECIATION_FROM_DATE, show);
+		showItem(IAsset.OPENING_ACCUMULATED_DEPRECIATION, show);
+		showItem(IAsset.OPENING_DEPRECIATION_PERIOD, show);
+		showItem(IAsset.RESIDUAL_VALUE, show);
+	}
 
-	private final FormItemIfFunction onOpeningChanged = new FormItemIfFunction() {
-        @Override
-		public boolean execute(@SuppressWarnings("unused") FormItem item, @SuppressWarnings("unused") Object value, @SuppressWarnings("unused") DynamicForm f) {
-        	return (Boolean)form.getValue(IAsset.OPENING);
-        }
-    };
-
+	private void showItem(final String name, Boolean show) {
+		final FormItem item = form.getItem(name);
+		if (show)
+			item.show();
+		else
+			item.hide();
+	}
 }

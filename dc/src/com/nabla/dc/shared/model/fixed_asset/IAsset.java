@@ -36,24 +36,14 @@ public interface IAsset extends IAssetTable {
 	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT;
 
 	static final String					COST = "cost";
-	// if Transfer
-	static final String					INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
-	static final int						DEFAULT_INITIAL_ACCUMULATED_DEPRECIATION = 0;
-	static final String					INITIAL_DEPRECIATION_PERIOD = "initial_depreciation_period";
-	static final int						DEFAULT_INITIAL_DEPRECIATION_PERIOD = 0;
-	static final IntegerRangeConstraint	INITIAL_DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(0, IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.getMaxValue(), true);
-	// if import asset
-	static final String					OPENING = "opening";
-	static final String					OPENING_YEAR = "opening_year";
-	static final IntegerRangeConstraint	OPENING_YEAR_CONSTRAINT = new IntegerRangeConstraint(1980, 2999, true);
-	static final String					OPENING_MONTH = "opening_month";
+	// if create depreciation transactions
+	static final String					CREATE_TRANSACTIONS = "createTransactions";
+
 	static final String					OPENING_ACCUMULATED_DEPRECIATION = "opening_accumulated_depreciation";
 	static final String					OPENING_DEPRECIATION_PERIOD = "opening_depreciation_period";
-
+	static final String					DEPRECIATION_FROM_DATE = "depreciationFromDate";
 	static final String					RESIDUAL_VALUE = "residual_value";
 	static final int						DEFAULT_RESIDUAL_VALUE = 1;
-
-	static final String					CREATE_TRANSACTIONS = "createTransactions";
 
 	static final String					REPORT = "FA_ASSET_LIST";
 

@@ -91,8 +91,6 @@ public class TransactionList extends LinkedList<Transaction> {
 				dt.add(GregorianCalendar.MONTH, -1);
 		}
 		final IStraightLineDepreciation method = asset.getDepreciationMethod();
-		if (method == null)
-			return;	// user don't want to generate depreciation transactions
 		dt.set(GregorianCalendar.DAY_OF_MONTH, 1);
 		int monthly_depreciation = (asset.getCost() - accumulatedDepreciation - method.getResidualValue()) / (asset.getDepreciationPeriod() - monthCount);
 		int rem_depreciation = asset.getCost() - accumulatedDepreciation - method.getResidualValue() - monthly_depreciation * (asset.getDepreciationPeriod() - monthCount);

@@ -16,9 +16,12 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
+import java.util.Date;
+
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -30,15 +33,29 @@ public interface IStraightLineDepreciation {
 		public static <P> boolean execute(final IStraightLineDepreciation t, final P pos, final IErrorList<P> errors) throws DispatchException {
 			int n = errors.size();
 
-			if (t.getResidualValue() == null)
-				errors.add(pos, t.getResidualValueField(), CommonServerErrors.REQUIRED_VALUE);
-			else if (t.getResidualValue() < 0)
+			if (t.getOpeningAccumulatedDepreciation() < 0)
+				errors.add(pos, t.getOpeningAccumulatedDepreciationField(), CommonServerErrors.INVALID_VALUE);
+
+			if (t.getOpeningDepreciationPeriodCount() < 1)
+				errors.add(pos, t.getOpeningDepreciationPeriodCountField(), CommonServerErrors.INVALID_VALUE);
+
+			if (t.getResidualValue() < 0)
 				errors.add(pos, t.getResidualValueField(), CommonServerErrors.INVALID_VALUE);
 
 			return n == errors.size();
 		}
 		public static <P> boolean postExecute(final IStraightLineDepreciation t, final IAssetRecord asset, final P pos, final IErrorList<P> errors) throws DispatchException {
 			int n = errors.size();
+
+			if (t.getOpeningAccumulatedDepreciation() > asset.getTotalDepreciation())
+				errors.add(pos, t.getOpeningAccumulatedDepreciationField(), ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
+			else if (t.getOpeningAccumulatedDepreciation() < asset.getTotalDepreciation()) {
+				if (t.getOpeningDepreciationPeriodCount() >= asset.getDepreciationPeriod())
+					errors.add(pos, t.getOpeningDepreciationPeriodCountField(), ServerErrors.INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
+			} else /*if (t.getValue() == asset.getTotalDepreciation())*/ {
+				if (t.getOpeningDepreciationPeriodCount() != asset.getDepreciationPeriod())
+					errors.add(pos, t.getOpeningDepreciationPeriodCountField(), ServerErrors.INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
+			}
 
 			if (t.getResidualValue() > asset.getCost())
 				errors.add(pos, t.getResidualValueField(), ServerErrors.INVALID_RESIDUAL_VALUE);
@@ -47,7 +64,15 @@ public interface IStraightLineDepreciation {
 		}
 	}
 
-	Integer getResidualValue();
+	@Nullable Date getFromDate();
+	String getFromDateField();
 
+	Integer getOpeningAccumulatedDepreciation();
+	Integer getOpeningDepreciationPeriodCount();
+
+	String getOpeningAccumulatedDepreciationField();
+	String getOpeningDepreciationPeriodCountField();
+
+	Integer getResidualValue();
 	String getResidualValueField();
 }

@@ -56,8 +56,7 @@ public class AddAssetHandler extends AbstractAddHandler<AddAsset> {
 			transactions.createTransactions(record);
 			transactions.save(guard.getConnection());
 			final IStraightLineDepreciation method = record.getDepreciationMethod();
-			if (method != null)
-				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
+			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
 			final IOpeningDepreciation opening = record.getOpeningDepreciation();
 			if (opening != null) {
 				final Calendar dt = Util.dateToCalendar(opening.getDate());

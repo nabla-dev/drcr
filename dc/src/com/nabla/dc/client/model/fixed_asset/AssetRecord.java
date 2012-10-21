@@ -26,8 +26,6 @@ import com.nabla.dc.shared.command.fixed_asset.UpdateAssetField;
 import com.nabla.dc.shared.model.fixed_asset.AcquisitionTypes;
 import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
-import com.nabla.dc.shared.model.fixed_asset.InitialDeprecation;
-import com.nabla.dc.shared.model.fixed_asset.OpeningDepreciation;
 import com.nabla.dc.shared.model.fixed_asset.StraightlineDepreciation;
 import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.model.IRecordFactory;
@@ -85,21 +83,12 @@ public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardR
 		return AcquisitionTypes.valueOf(getAttributeAsString(ACQUISITION_TYPE));
 	}
 
-	public boolean isTransfer() {
-		return getAcquisitionType() == AcquisitionTypes.TRANSFER;
-	}
-
 	public Integer getCost() {
 		return getAttributeAsInt(COST);
 	}
 
 	public String getPurchaseInvoice() {
 		return getAttributeAsString(PURCHASE_INVOICE);
-	}
-
-	public InitialDeprecation getInitialDepreciation() {
-		return new InitialDeprecation(getAttributeAsInt(INITIAL_ACCUMULATED_DEPRECIATION),
-				getAttributeAsInt(INITIAL_DEPRECIATION_PERIOD));
 	}
 
 	public Integer getDepreciationPeriod() {
@@ -110,19 +99,16 @@ public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardR
 		return getAttributeAsInt(RESIDUAL_VALUE);
 	}
 
-	public boolean isCreateTransactions() {
+	public boolean isCreateTransaction() {
 		return getAttributeAsBoolean(CREATE_TRANSACTIONS);
 	}
 
-	public boolean isOpening() {
-		return getAttributeAsBoolean(OPENING);
-	}
-
-	@SuppressWarnings("deprecation")
-	public OpeningDepreciation getOpeningDepreciation() {
-		return new OpeningDepreciation(new Date(getAttributeAsInt(OPENING_YEAR), getAttributeAsInt(OPENING_MONTH), 1),
-							getAttributeAsInt(OPENING_ACCUMULATED_DEPRECIATION),
-							getAttributeAsInt(OPENING_DEPRECIATION_PERIOD));
+	public StraightlineDepreciation getDepreciationMethod() {
+		return new StraightlineDepreciation(
+						getAttributeAsInt(OPENING_ACCUMULATED_DEPRECIATION),
+						getAttributeAsInt(OPENING_DEPRECIATION_PERIOD),
+						getAttributeAsDate(DEPRECIATION_FROM_DATE),
+						getResidualValue());
 	}
 
 	public Boolean isDisposed() {
@@ -146,12 +132,8 @@ public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardR
 		final AddAsset cmd = new AddAsset(companyId, getName(), getCategoryId(), getReference(), getLocation(),
 				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
 				getDepreciationPeriod());
-		if (isCreateTransactions())
-			cmd.setDepreciationMethod(new StraightlineDepreciation(getResidualValue()));
-		if (isTransfer())
-			cmd.setInitialDepreciation(getInitialDepreciation());
-		if (isOpening())
-			cmd.setOpeningDepreciation(getOpeningDepreciation());
+		if (isCreateTransaction())
+			cmd.setDepreciationMethod(getDepreciationMethod());
 		return cmd;
 	}
 
@@ -159,12 +141,8 @@ public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardR
 		final UpdateAsset cmd = new UpdateAsset(getId(), companyId, getName(), getCategoryId(), getReference(), getLocation(),
 				getAcquisitionDate(), getAcquisitionType(), getCost(), getPurchaseInvoice(),
 				getDepreciationPeriod());
-		if (isCreateTransactions())
-			cmd.setDepreciationMethod(new StraightlineDepreciation(getResidualValue()));
-		if (isTransfer())
-			cmd.setInitialDepreciation(getInitialDepreciation());
-		if (isOpening())
-			cmd.setOpeningDepreciation(getOpeningDepreciation());
+		if (isCreateTransaction())
+			cmd.setDepreciationMethod(getDepreciationMethod());
 		return cmd;
 	}
 

@@ -13,13 +13,11 @@
 		<ui:attribute name="title" description="Asset wizard - depreciation page caption"/>
 		<form:Form ui:field="form" valuesManager="{model}">
 			<form:IntegerSpinnerBox name="{fields.depPeriod}" width="100"><ui:msg>*Dep period (month)</ui:msg></form:IntegerSpinnerBox>
-			<form:Control name="{fields.createTransactions}" width="100" redrawOnChange="true"><ui:msg>Create *transactions</ui:msg></form:Control>
-			<form:Control name="{fields.residualValue}" width="100" visible="false"><ui:msg>*Residual value (£)</ui:msg></form:Control>
-			<form:Control name="{fields.opening}" width="100" redrawOnChange="true"><ui:msg>Opening *values</ui:msg></form:Control>
-			<form:Control name="{fields.openingMonth}"><ui:msg>*Beginning of</ui:msg></form:Control>
-			<form:Control name="{fields.openingYear}" width="100"><ui:msg>*Year</ui:msg></form:Control>
+			<form:Control name="{fields.createTransaction}" width="100"><ui:msg>*Calculare depreciation transactions</ui:msg></form:Control>
 			<form:Control name="{fields.openingAccumDep}" width="100"><ui:msg>Opening *accum dep (£)</ui:msg></form:Control>
 			<form:IntegerSpinnerBox name="{fields.openingDepPeriod}" width="100"><ui:msg>Opening Dep *period (month)</ui:msg></form:IntegerSpinnerBox>
+			<form:Control name="{fields.depreciationFromDate}"><ui:msg>*From</ui:msg></form:Control>
+			<form:Control name="{fields.residualValue}" width="100"><ui:msg>*Residual value (£)</ui:msg></form:Control>
 		</form:Form>
 	</wnd:WizardPage>
 </ui:UiBinder> 

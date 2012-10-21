@@ -16,8 +16,11 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -26,11 +29,17 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class StraightlineDepreciation implements IsSerializable, IStraightLineDepreciation{
 
-	Integer		residualValue;
+	Integer			openingAccumulatedDepreciation;
+	Integer			openingDepreciationPeriodCount;
+	@Nullable Date	fromDate;
+	Integer			residualValue;
 
 	StraightlineDepreciation() {}	// for serialization only
 
-	public StraightlineDepreciation(final Integer residualValue) {
+	public StraightlineDepreciation(final Integer openingAccumulatedDepreciation, final Integer openingDepreciationPeriodCount, final Date fromDate, final Integer residualValue) {
+		this.openingAccumulatedDepreciation = (openingAccumulatedDepreciation == null) ? 0 : openingAccumulatedDepreciation;
+		this.openingDepreciationPeriodCount = (openingDepreciationPeriodCount == null) ? 0 : openingDepreciationPeriodCount;
+		this.fromDate = fromDate;
 		this.residualValue = (residualValue == null) ? 0 : residualValue;
 	}
 
@@ -47,5 +56,35 @@ public class StraightlineDepreciation implements IsSerializable, IStraightLineDe
 	@Override
 	public String getResidualValueField() {
 		return IAsset.RESIDUAL_VALUE;
+	}
+
+	@Override
+	public @Nullable Date getFromDate() {
+		return fromDate;
+	}
+
+	@Override
+	public String getFromDateField() {
+		return IAsset.DEPRECIATION_FROM_DATE;
+	}
+
+	@Override
+	public Integer getOpeningAccumulatedDepreciation() {
+		return openingAccumulatedDepreciation;
+	}
+
+	@Override
+	public Integer getOpeningDepreciationPeriodCount() {
+		return openingDepreciationPeriodCount;
+	}
+
+	@Override
+	public String getOpeningAccumulatedDepreciationField() {
+		return IAsset.OPENING_ACCUMULATED_DEPRECIATION;
+	}
+
+	@Override
+	public String getOpeningDepreciationPeriodCountField() {
+		return IAsset.OPENING_DEPRECIATION_PERIOD;
 	}
 }

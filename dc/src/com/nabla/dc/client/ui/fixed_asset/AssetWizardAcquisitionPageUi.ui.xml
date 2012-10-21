@@ -13,11 +13,9 @@
 		<ui:attribute name="title" description="Asset wizard - acquisition page caption"/>
 		<form:Form ui:field="form" valuesManager="{model}">
 			<form:Control name="{fields.acquisitionDate}"><ui:msg>*Date</ui:msg></form:Control>
-			<form:Control name="{fields.acquisitionType}" width="*" redrawOnChange="true"><ui:msg>*Type</ui:msg></form:Control>
+			<form:Control name="{fields.acquisitionType}" width="*"><ui:msg>*Type</ui:msg></form:Control>
 			<form:Control name="{fields.cost}" width="100"><ui:msg>C*ost (£)</ui:msg></form:Control>
 			<form:Control name="{fields.pi}" width="150"><ui:msg>P*I</ui:msg></form:Control>
-			<form:Control name="{fields.initialAccumDep}" width="100" visible="false"><ui:msg>*Accum dep (£)</ui:msg></form:Control>
-			<form:IntegerSpinnerBox name="{fields.initialDepPeriod}" width="100" visible="false"><ui:msg>D*ep period (month)</ui:msg></form:IntegerSpinnerBox>
 		</form:Form>
 	</wnd:WizardPage>
 </ui:UiBinder> 

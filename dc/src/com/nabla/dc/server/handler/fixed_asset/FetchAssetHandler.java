@@ -37,6 +37,7 @@ public class FetchAssetHandler extends AbstractFetchHandler<FetchAsset> {
 ", (SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING') AS 'i_cost'" +
 ", o.amount AS 'initial_accumulated_depreciation', o.depreciation_period AS 'initial_depreciation_period'" +
 ", t.depreciation_period" +
+", YEAR(t.opening_date) AS 'opening_year', MONTH(t.opening_date) AS 'opening_month', t.opening_accumulated_depreciation, t.opening_depreciation_period" +
 ", (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id) AS 'i_residual_value'" +
 " FROM fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +
 " WHERE t.id=?"

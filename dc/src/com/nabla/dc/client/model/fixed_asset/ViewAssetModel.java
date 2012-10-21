@@ -50,8 +50,8 @@ public class ViewAssetModel extends BasicAssetModel {
 			new TextField(fields.acquisitionType(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new PositiveIntegerField(fields.cost(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new TextField(fields.pi(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.initialAccumDep(), FieldAttributes.OPTIONAL),
-			new IntegerField(fields.initialDepPeriod(), FieldAttributes.OPTIONAL),
+		/*	new PositiveIntegerField(fields.initialAccumDep(), FieldAttributes.OPTIONAL),
+			new IntegerField(fields.initialDepPeriod(), FieldAttributes.OPTIONAL),*/
 
 			new IntegerField(fields.depPeriod(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new PositiveIntegerField(fields.residualValue(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),

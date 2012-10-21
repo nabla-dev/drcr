@@ -96,7 +96,7 @@ class XmlAsset extends Node implements IAssetRecord {
 	XmlInitialDepreciation		initialDepreciation;	// if TRANSFER
 	@Element(name=OPENING_ACCUMULATED_DEPRECAITION,required=false)
 	XmlOpeningDepreciation		openingDepreciation;	// to agree NBV at given period
-	@Element(name=STRAIGHT_LINE_DEPRECIATION,required=false)
+	@Element(name=STRAIGHT_LINE_DEPRECIATION)
 	XmlStraightLineDepreciation	depreciationMethod;
 	@Element(name=DISPOSAL,required=false)
 	XmlDisposal					disposal;
@@ -158,8 +158,7 @@ class XmlAsset extends Node implements IAssetRecord {
 					initialDepreciation.postValidate(this, errors);
 				if (openingDepreciation != null)
 					openingDepreciation.postValidate(this, errors);
-				if (depreciationMethod != null)
-					depreciationMethod.postValidate(this, errors);
+				depreciationMethod.postValidate(this, errors);
 				if (disposal != null) {
 					disposal.postValidate(acquisitionDate, errors);
 					disposalDate = disposal.getDate();
@@ -202,7 +201,7 @@ class XmlAsset extends Node implements IAssetRecord {
 	}
 
 	@Override
-	public @Nullable IStraightLineDepreciation getDepreciationMethod() {
+	public IStraightLineDepreciation getDepreciationMethod() {
 		return depreciationMethod;
 	}
 
@@ -213,7 +212,7 @@ class XmlAsset extends Node implements IAssetRecord {
 
 	@Override
 	public Integer getTotalDepreciation() {
-		return (depreciationMethod == null) ? cost : (cost - depreciationMethod.getResidualValue());
+		return cost - depreciationMethod.getResidualValue();
 	}
 
 	@Override

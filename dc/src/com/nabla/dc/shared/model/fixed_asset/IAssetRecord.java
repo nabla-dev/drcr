@@ -48,8 +48,6 @@ public interface IAssetRecord {
 	Integer getCost();
 	Integer getTotalDepreciation();	// i.e. Cost - ResidualValue
 
-	@Nullable IInitialDepreciation getInitialDepreciation();
-	@Nullable IOpeningDepreciation getOpeningDepreciation();
 	@Nullable IStraightLineDepreciation getDepreciationMethod();
 	@Nullable IDisposal getDisposal();
 
