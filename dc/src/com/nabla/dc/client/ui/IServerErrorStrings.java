@@ -43,13 +43,10 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	@DefaultStringValue("Cannot be greater than the asset cost less residual value")
 	String INVALID_ACCUMULATED_DEPRECIATION();
 
-	@DefaultStringValue("Cannot be before acquisition date or same month")
+	@DefaultStringValue("Must be after acquisition date")
 	String MUST_BE_AFTER_ACQUISITION_DATE();
 
-	@DefaultStringValue("Cannot be before opening date")
-	String MUST_BE_AFTER_OPENING_DATE();
-
-	@DefaultStringValue("Cannot be greater or equal than the asset cost")
+s	@DefaultStringValue("Cannot be greater or equal than the asset cost")
 	String INVALID_RESIDUAL_VALUE();
 
 	@DefaultStringValue("Must be equal to depreciation period")

@@ -65,6 +65,7 @@ public interface IStraightLineDepreciation {
 	}
 
 	@Nullable Date getFromDate();
+	void setFromDate(final Date dt);
 	String getFromDateField();
 
 	Integer getOpeningAccumulatedDepreciation();

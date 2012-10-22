@@ -31,7 +31,7 @@ import org.apache.commons.logging.LogFactory;
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
 import com.nabla.dc.shared.model.fixed_asset.IDisposal;
-import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
+import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.dc.shared.model.fixed_asset.TransactionClasses;
 import com.nabla.dc.shared.model.fixed_asset.TransactionTypes;
 import com.nabla.wapp.server.database.Database;
@@ -77,10 +77,14 @@ public abstract class Asset {
 		return true;
 	}
 
-	static public <P> boolean validate(final IOpeningDepreciation opening, final java.util.Date dtAcquisition, @Nullable final P pos, final IErrorList<P> errors) throws DispatchException {
-		if (Util.dateToCalendar(dtAcquisition).before(Util.dateToCalendar(opening.getDate())))
+	static public <P> boolean validate(final IStraightLineDepreciation method, final java.util.Date dtAcquisition, @Nullable final P pos, final IErrorList<P> errors) throws DispatchException {
+		if (method.getFromDate() == null) {
+			method.setFromDate(dtAcquisition);
 			return true;
-		errors.add(pos, opening.getDateField(), ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
+		}
+		if (Util.dateToCalendar(dtAcquisition).before(Util.dateToCalendar(method.getFromDate())))
+			return true;
+		errors.add(pos, method.getFromDateField(), ServerErrors.MUST_BE_AFTER_ACQUISITION_DATE);
 		return false;
 	}
 

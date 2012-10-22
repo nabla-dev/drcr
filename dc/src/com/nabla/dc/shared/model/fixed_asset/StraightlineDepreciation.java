@@ -64,6 +64,11 @@ public class StraightlineDepreciation implements IsSerializable, IStraightLineDe
 	}
 
 	@Override
+	public void setFromDate(Date dt) {
+		this.fromDate = dt;
+	}
+
+	@Override
 	public String getFromDateField() {
 		return IAsset.DEPRECIATION_FROM_DATE;
 	}
@@ -87,4 +92,5 @@ public class StraightlineDepreciation implements IsSerializable, IStraightLineDe
 	public String getOpeningDepreciationPeriodCountField() {
 		return IAsset.OPENING_DEPRECIATION_PERIOD;
 	}
+
 }
