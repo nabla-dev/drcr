@@ -55,7 +55,13 @@ public class TransactionList extends LinkedList<Transaction> {
 	}
 
 	public void clearTable(final Connection conn) throws SQLException {
-		Database.executeUpdate(conn, "DELETE FROM fa_transaction WHERE fa_asset_id=?;", assetId);
+		Database.executeUpdate(conn,
+"DELETE FROM fa_transaction WHERE fa_asset_id=?;", assetId);
+	}
+
+	public void clearCost(final Connection conn) throws SQLException {
+		Database.executeUpdate(conn,
+"DELETE FROM fa_transaction WHERE fa_asset_id=? AND class='COST' AND type='OPENING';", assetId);
 	}
 
 	public void createTransactions(final IAssetRecord asset) throws DispatchException {
@@ -80,7 +86,6 @@ public class TransactionList extends LinkedList<Transaction> {
 			if (dt.get(GregorianCalendar.DAY_OF_MONTH) < dt.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)/2)
 				dt.add(GregorianCalendar.MONTH, -1);
 		}
-		final IStraightLineDepreciation method = asset.getDepreciationMethod();
 		dt.set(GregorianCalendar.DAY_OF_MONTH, 1);
 		int monthly_depreciation = (asset.getCost() - accumulatedDepreciation - method.getResidualValue()) / (asset.getDepreciationPeriod() - monthCount);
 		int rem_depreciation = asset.getCost() - accumulatedDepreciation - method.getResidualValue() - monthly_depreciation * (asset.getDepreciationPeriod() - monthCount);
@@ -88,7 +93,7 @@ public class TransactionList extends LinkedList<Transaction> {
 			++monthCount;
 			dt.add(GregorianCalendar.MONTH, 1);
 			if (monthly_depreciation == 0 && rem_depreciation == 0)
-				continue;
+				break;
 			int depreciation = monthly_depreciation;
 			if (rem_depreciation > 0) {
 				++depreciation;

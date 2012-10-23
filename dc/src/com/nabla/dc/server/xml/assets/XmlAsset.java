@@ -33,8 +33,6 @@ import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
 import com.nabla.dc.shared.model.fixed_asset.IAssetTable;
 import com.nabla.dc.shared.model.fixed_asset.IDisposal;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.dc.shared.model.fixed_asset.IInitialDepreciation;
-import com.nabla.dc.shared.model.fixed_asset.IOpeningDepreciation;
 import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.wapp.server.database.InsertStatement;
 import com.nabla.wapp.server.xml.XmlString;
@@ -58,8 +56,6 @@ class XmlAsset extends Node implements IAssetRecord {
 	static final String	ACQUISITION_TYPE = "acquisition_type";
 	static final String	DEPRECIATION_PERIOD = "depreciation_period";
 	static final String	COST = "cost";
-	static final String	INITIAL_ACCUMULATED_DEPRECIATION = "initial_accumulated_depreciation";
-	static final String	OPENING_ACCUMULATED_DEPRECAITION = "opening_accumulated_depreciation";
 	static final String	STRAIGHT_LINE_DEPRECIATION = "straight_line_depreciation";
 	static final String	DISPOSAL = "disposal";
 
@@ -92,11 +88,7 @@ class XmlAsset extends Node implements IAssetRecord {
 	Integer						depreciationPeriod;
 	@Element(name=COST)
 	Integer						cost;
-	@Element(name=INITIAL_ACCUMULATED_DEPRECIATION,required=false)
-	XmlInitialDepreciation		initialDepreciation;	// if TRANSFER
-	@Element(name=OPENING_ACCUMULATED_DEPRECAITION,required=false)
-	XmlOpeningDepreciation		openingDepreciation;	// to agree NBV at given period
-	@Element(name=STRAIGHT_LINE_DEPRECIATION)
+	@Element(name=STRAIGHT_LINE_DEPRECIATION,required=false)
 	XmlStraightLineDepreciation	depreciationMethod;
 	@Element(name=DISPOSAL,required=false)
 	XmlDisposal					disposal;
@@ -137,8 +129,8 @@ class XmlAsset extends Node implements IAssetRecord {
 		if (purchaseInvoice != null)
 			purchaseInvoice.validate(PURCHASE_INVOICE, IAsset.PURCHASE_INVOICE_CONSTRAINT, errors);
 		Validator.execute(this, getRow(), errors);
-		if (openingDepreciation != null)
-			Asset.validate(openingDepreciation, acquisitionDate, openingDepreciation.getRow(), errors);
+		if (depreciationMethod != null)
+			Asset.validate(depreciationMethod, acquisitionDate, depreciationMethod.getRow(), errors);
 		if (disposal != null)
 			Asset.<Integer>validate(disposal, acquisitionDate, disposal.getRow(), errors);
 	}
@@ -154,11 +146,8 @@ class XmlAsset extends Node implements IAssetRecord {
 				fa_company_asset_category_id = cat.getId();
 				if (cat.getMinDepreciationPeriod() > depreciationPeriod || cat.getMaxDepreciationPeriod() < depreciationPeriod)
 					errors.add(getRow(), getDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
-				if (initialDepreciation != null)
-					initialDepreciation.postValidate(this, errors);
-				if (openingDepreciation != null)
-					openingDepreciation.postValidate(this, errors);
-				depreciationMethod.postValidate(this, errors);
+				if (depreciationMethod != null)
+					depreciationMethod.postValidate(this, errors);
 				if (disposal != null) {
 					disposal.postValidate(acquisitionDate, errors);
 					disposalDate = disposal.getDate();
@@ -201,7 +190,7 @@ class XmlAsset extends Node implements IAssetRecord {
 	}
 
 	@Override
-	public IStraightLineDepreciation getDepreciationMethod() {
+	public @Nullable IStraightLineDepreciation getDepreciationMethod() {
 		return depreciationMethod;
 	}
 
@@ -212,17 +201,7 @@ class XmlAsset extends Node implements IAssetRecord {
 
 	@Override
 	public Integer getTotalDepreciation() {
-		return cost - depreciationMethod.getResidualValue();
-	}
-
-	@Override
-	public @Nullable IInitialDepreciation getInitialDepreciation() {
-		return initialDepreciation;
-	}
-
-	@Override
-	public @Nullable IOpeningDepreciation getOpeningDepreciation() {
-		return openingDepreciation;
+		return (depreciationMethod == null) ? cost : (cost - depreciationMethod.getResidualValue());
 	}
 
 	@Override

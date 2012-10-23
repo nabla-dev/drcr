@@ -41,7 +41,7 @@ public class ImportContext {
 		final PreparedStatement stmt = conn.prepareStatement(
 "SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
-" fa_company_asset_category AS t INNER JOIN fa_asset_cateogry AS c ON t.fa_asset_cateogry_id=c.id" +
+" fa_company_asset_category AS t INNER JOIN fa_asset_category AS c ON t.fa_asset_category_id=c.id" +
 ") ON company.id=t.company_id" +
 " WHERE company.uname IS NOT NULL AND t.active=TRUE AND c.uname IS NOT NULL;");
 		try {
@@ -55,7 +55,7 @@ public class ImportContext {
 		final PreparedStatement stmt = conn.prepareStatement(
 "SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
-" fa_company_asset_category AS t INNER JOIN fa_asset_cateogry AS c ON t.fa_asset_cateogry_id=c.id" +
+" fa_company_asset_category AS t INNER JOIN fa_asset_category AS c ON t.fa_asset_category_id=c.id" +
 ") ON company.id=t.company_id" +
 " WHERE company.id=? AND t.active=TRUE AND c.uname IS NOT NULL;");
 		try {

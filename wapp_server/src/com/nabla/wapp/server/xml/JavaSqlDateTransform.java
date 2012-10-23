@@ -27,7 +27,7 @@ import org.simpleframework.xml.transform.Transform;
  * @author nabla
  *
  */
-public class SimpleDateTransform implements Transform<Date> {
+public class JavaSqlDateTransform implements Transform<Date> {
 
 	static final DateFormat		dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 

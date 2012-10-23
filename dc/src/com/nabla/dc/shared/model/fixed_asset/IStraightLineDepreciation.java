@@ -36,7 +36,9 @@ public interface IStraightLineDepreciation {
 			if (t.getOpeningAccumulatedDepreciation() < 0)
 				errors.add(pos, t.getOpeningAccumulatedDepreciationField(), CommonServerErrors.INVALID_VALUE);
 
-			if (t.getOpeningDepreciationPeriodCount() < 1)
+			if (t.getOpeningDepreciationPeriodCount() < 0)
+				errors.add(pos, t.getOpeningDepreciationPeriodCountField(), CommonServerErrors.INVALID_VALUE);
+			if (t.getOpeningAccumulatedDepreciation() > 0 && t.getOpeningDepreciationPeriodCount() < 1)
 				errors.add(pos, t.getOpeningDepreciationPeriodCountField(), CommonServerErrors.INVALID_VALUE);
 
 			if (t.getResidualValue() < 0)

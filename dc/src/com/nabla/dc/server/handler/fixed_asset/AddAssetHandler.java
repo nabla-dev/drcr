@@ -42,8 +42,9 @@ public class AddAssetHandler extends AbstractAddHandler<AddAsset> {
 		// final validation
 		final ValidationException errors = new ValidationException();
 		Asset.validateDepreciationPeriod(ctx.getReadConnection(), record, null, errors);
-		if (record.getDepreciationMethod() != null)
-			Asset.validate(record.getDepreciationMethod(), record.getAcquisitionDate(), null, errors);
+		final IStraightLineDepreciation method = record.getDepreciationMethod();
+		if (method != null)
+			Asset.validate(method, record.getAcquisitionDate(), null, errors);
 		if (!errors.isEmpty())
 			throw errors;
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
@@ -52,10 +53,10 @@ public class AddAssetHandler extends AbstractAddHandler<AddAsset> {
 			final TransactionList transactions = new TransactionList(assetId);
 			transactions.createTransactions(record);
 			transactions.save(guard.getConnection());
-			final IStraightLineDepreciation method = record.getDepreciationMethod();
-			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.CATEGORY, record.getCompanyAssetCategoryId());
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.LOCATION, record.getLocation());
+			if (method != null)
+				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
 			guard.setSuccess();
 			return assetId;
 		} finally {

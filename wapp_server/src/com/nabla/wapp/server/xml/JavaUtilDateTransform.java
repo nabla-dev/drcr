@@ -16,28 +16,33 @@
 */
 package com.nabla.wapp.server.xml;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.simpleframework.xml.transform.Matcher;
+import org.simpleframework.xml.core.PersistenceException;
 import org.simpleframework.xml.transform.Transform;
 
 /**
  * @author nabla
  *
  */
-public class SimpleMatcher implements Matcher  {
+public class JavaUtilDateTransform implements Transform<Date> {
+
+	static final DateFormat		dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Override
-	public Transform match(Class type) throws Exception {
-		if (type != null) {
-			if (type.equals(java.sql.Date.class))
-				return new JavaSqlDateTransform();
-			if (type.equals(java.util.Date.class))
-				return new JavaUtilDateTransform();
-			if (type.equals(Timestamp.class))
-				return new SimpleTimestampTransform();
+	public Date read(String arg) throws PersistenceException {
+		try {
+			return new Date(dateFormatter.parse(arg).getTime());
+		} catch (final Exception e) {
+			throw new PersistenceException("unsupported date format: " + arg);
 		}
-		return null;
+	}
+
+	@Override
+	public String write(Date arg) {
+		return arg.toString();
 	}
 
 }

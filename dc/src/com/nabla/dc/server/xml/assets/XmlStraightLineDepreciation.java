@@ -16,12 +16,16 @@
 */
 package com.nabla.dc.server.xml.assets;
 
+import java.util.Date;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import com.nabla.dc.server.handler.fixed_asset.Asset;
 import com.nabla.dc.shared.model.fixed_asset.IAssetRecord;
 import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -31,13 +35,26 @@ import com.nabla.wapp.shared.model.IErrorList;
 @Root
 public class XmlStraightLineDepreciation extends Node implements IStraightLineDepreciation {
 
+	static final String	OPENING_ACCUMULATED_DEPRECIATION = "opening_accumulated_depreciation";
+	static final String	OPENING_DEPRECIATION_PERIOD = "opening_depreciation_period";
+	static final String	DATE = "from_date";
 	static final String	RESIDUAL_VALUE = "residual_value";
 
+	@Element(name=OPENING_ACCUMULATED_DEPRECIATION,required=false)
+	Integer		openingAccumulatedDepreciation;
+	@Element(name=OPENING_DEPRECIATION_PERIOD,required=false)
+	Integer		openingDepreciationPeriod;
+	@Element(name=DATE,required=false)
+	Date		fromDate;
 	@Element(name=RESIDUAL_VALUE,required=false)
 	Integer		residualValue;
 
 	@Override
 	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+		if (openingAccumulatedDepreciation == null)
+			openingAccumulatedDepreciation = 0;
+		if (openingDepreciationPeriod == null)
+			openingDepreciationPeriod = 0;
 		if (residualValue == null)
 			residualValue = 0;
 		IStraightLineDepreciation.Validator.execute(this, getRow(), errors);
@@ -45,6 +62,7 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 
 	public void postValidate(final IAssetRecord asset, final IErrorList<Integer> errors) throws DispatchException {
 		IStraightLineDepreciation.Validator.postExecute(this, asset, getRow(), errors);
+		Asset.validate(this, asset.getAcquisitionDate(), getRow(), errors);
 	}
 
 	@Override
@@ -55,5 +73,40 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 	@Override
 	public String getResidualValueField() {
 		return RESIDUAL_VALUE;
+	}
+
+	@Override
+	public @Nullable Date getFromDate() {
+		return fromDate;
+	}
+
+	@Override
+	public void setFromDate(Date dt) {
+		fromDate = dt;
+	}
+
+	@Override
+	public String getFromDateField() {
+		return DATE;
+	}
+
+	@Override
+	public Integer getOpeningAccumulatedDepreciation() {
+		return openingAccumulatedDepreciation;
+	}
+
+	@Override
+	public Integer getOpeningDepreciationPeriodCount() {
+		return openingDepreciationPeriod;
+	}
+
+	@Override
+	public String getOpeningAccumulatedDepreciationField() {
+		return OPENING_ACCUMULATED_DEPRECIATION;
+	}
+
+	@Override
+	public String getOpeningDepreciationPeriodCountField() {
+		return OPENING_DEPRECIATION_PERIOD;
 	}
 }

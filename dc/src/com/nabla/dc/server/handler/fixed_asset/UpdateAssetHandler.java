@@ -16,6 +16,9 @@
 */
 package com.nabla.dc.server.handler.fixed_asset;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.nabla.dc.shared.command.fixed_asset.UpdateAsset;
@@ -27,6 +30,7 @@ import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
 /**
@@ -42,8 +46,9 @@ public class UpdateAssetHandler extends AbstractUpdateHandler<UpdateAsset> {
 		// final validation
 		final ValidationException errors = new ValidationException();
 		Asset.validateDepreciationPeriod(ctx.getReadConnection(), record, null, errors);
-		if (record.getDepreciationMethod() != null)
-			Asset.validate(record.getDepreciationMethod(), record.getAcquisitionDate(), null, errors);
+		final IStraightLineDepreciation method = record.getDepreciationMethod();
+		if (method != null)
+			Asset.validate(method, record.getAcquisitionDate(), null, errors);
 		if (!errors.isEmpty())
 			throw errors;
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());
@@ -51,16 +56,41 @@ public class UpdateAssetHandler extends AbstractUpdateHandler<UpdateAsset> {
 			sql.execute(guard.getConnection(), record);
 			final TransactionList transactions = new TransactionList(record.getId());
 			transactions.createTransactions(record);
-transactions.clearTable(guard.getConnection());
+			if (method != null)
+				transactions.clearTable(guard.getConnection());
+			else
+				transactions.clearCost(guard.getConnection());
 			transactions.save(guard.getConnection());
-			final IStraightLineDepreciation method = record.getDepreciationMethod();
-			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
+			if (method == null && getResidualValue(guard.getConnection(), record.getId()) < 0) {
+				errors.add(IAsset.COST, CommonServerErrors.INVALID_VALUE);
+				throw errors;
+			}
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.CATEGORY, record.getCompanyAssetCategoryId());
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.LOCATION, record.getLocation());
+			if (method != null)
+				UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.RESIDUAL_VALUE, method.getResidualValue());
 			guard.setSuccess();
 		} finally {
 			guard.close();
 		}
 	}
 
+	private int getResidualValue(final Connection conn, int assetId) throws SQLException {
+		final PreparedStatement stmt = conn.prepareStatement(
+"SELECT SUM(t.amount)" +
+" FROM fa_transaction AS t" +
+" WHERE t.fa_asset_id=?;");
+		try {
+			stmt.setInt(1, assetId);
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				rs.next();
+				return rs.getInt(1);
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
+	}
 }

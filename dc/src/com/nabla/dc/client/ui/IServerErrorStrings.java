@@ -46,7 +46,7 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	@DefaultStringValue("Must be after acquisition date")
 	String MUST_BE_AFTER_ACQUISITION_DATE();
 
-s	@DefaultStringValue("Cannot be greater or equal than the asset cost")
+	@DefaultStringValue("Cannot be greater or equal than the asset cost")
 	String INVALID_RESIDUAL_VALUE();
 
 	@DefaultStringValue("Must be equal to depreciation period")
@@ -54,12 +54,6 @@ s	@DefaultStringValue("Cannot be greater or equal than the asset cost")
 
 	@DefaultStringValue("Must be less than depreciation period")
 	String INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD();
-
-	@DefaultStringValue("Must be greater than initial accumulated")
-	String OPENING_MUST_BE_GREATER_THAN_INITIAL_ACCUMULATED_DEPRECIATION();
-
-	@DefaultStringValue("Must be greater than initial depreciation period")
-	String OPENING_MUST_BE_GREATER_THAN_INITIAL_DEPRECIATION_PERIOD();
 
 	@DefaultStringValue("Must be equal to depreciation period")
 	String OPENING_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD();
