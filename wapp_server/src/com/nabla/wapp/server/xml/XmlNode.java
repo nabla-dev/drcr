@@ -18,9 +18,8 @@ package com.nabla.wapp.server.xml;
 
 import java.util.Map;
 
-import org.simpleframework.xml.core.Validate;
+import org.simpleframework.xml.Attribute;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -29,19 +28,11 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public class XmlNode {
 
-	Integer	row;
+	@Attribute
+	Integer	xml_row;
 
 	public Integer getRow() {
-		return row;
-	}
-
-	@Validate
-	public void validate(Map session) throws DispatchException {
-		row = getRow(session);
-	}
-
-	public static Integer getRow(final Map session) {
-		return ImportVisitorStrategy.getRow(session);
+		return xml_row;
 	}
 
 	public static IErrorList<Integer> getErrorList(Map session) {

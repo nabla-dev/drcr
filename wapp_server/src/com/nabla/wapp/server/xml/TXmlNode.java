@@ -29,10 +29,8 @@ import com.nabla.wapp.shared.model.IErrorList;
  */
 public abstract class TXmlNode<T> extends XmlNode {
 
-	@Override
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		super.validate(session);
 		final T ctx = getContext(session);
 		doValidate(ctx, getErrorList(session));
 	}

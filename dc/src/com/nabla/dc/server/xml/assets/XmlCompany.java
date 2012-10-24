@@ -24,7 +24,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
@@ -35,8 +34,10 @@ class XmlCompany extends Node {
 	static final String	NAME = "name";
 
 	Integer			companyId;
+	@Attribute
+	Integer			xml_row;
 	@Attribute(name=NAME)
-	XmlString		name;
+	String			name;
 	@Element(required=false)
 	XmlAssetList	assets;
 
@@ -49,16 +50,16 @@ class XmlCompany extends Node {
 	}
 */
 	public String getName() {
-		return name.getValue();
+		return name;
 	}
 
 	@Override
 	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
 		final Company company = ctx.getCompany(getName());
 		if (company == null)
-			errors.add(name.getRow(), NAME, CommonServerErrors.INVALID_VALUE);
+			errors.add(xml_row, NAME, CommonServerErrors.INVALID_VALUE);
 		else if (!ctx.getCompanyNameList().add(getName()))
-			errors.add(name.getRow(), NAME, CommonServerErrors.DUPLICATE_ENTRY);
+			errors.add(xml_row, NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		else {
 			companyId = company.getId();
 			if (assets != null)
