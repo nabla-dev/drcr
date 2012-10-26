@@ -85,12 +85,11 @@ class ImportVisitorStrategy<C extends IImportContext> extends VisitorStrategy {
 	}
 
 	private static Field getClassField(final Class clazz, final String name) {
-		if (clazz == null)
+		if (clazz == null || clazz.isPrimitive())
 			return null;
 		try {
-			return clazz.getDeclaredField(ROW_MAP_ID_FIELD);
-		} catch (Throwable _) {
-		}
+			return clazz.getDeclaredField(name);
+		} catch (Throwable _) {}
 		return getClassField(clazz.getSuperclass(), name);
 	}
 }

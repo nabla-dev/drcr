@@ -28,6 +28,10 @@ public class TreeGridItem extends TreeGrid {
 	private int		colSpan = 2;
 	private boolean	endRow = true;
 
+	public TreeGridItem() {
+		super();
+	}
+
 	public void setColSpan(int colSpan) {
 		this.colSpan = colSpan;
 	}

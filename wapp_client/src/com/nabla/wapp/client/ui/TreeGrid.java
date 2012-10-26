@@ -46,6 +46,7 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 
 	private static final Logger	logger = LoggerFactory.getLog(TreeGrid.class);
 	private List<TreeGridColumn>	children = new LinkedList<TreeGridColumn>();
+	private Tree					defaultProperties;
 
 	public TreeGrid() {
 		setAlternateRecordStyles(true);
@@ -59,6 +60,7 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 		setAttribute("selectionProperty", IFieldReservedNames.RECORD_SELECTED, true);
 		this.setRecordEnabledProperty(IFieldReservedNames.RECORD_ENABLED);
 //		this.setRecordDeletedProperty(IFieldReservedNames.RECORD_DELETED);
+		setIsFolderProperty(IFieldReservedNames.TREEGRID_IS_FOLDER);
 	}
 
 	public void setModel(final DataSource model) {
@@ -103,9 +105,10 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 	public void setModelType(final TreeModelType type) {
 		Tree tree = getTree();
 		if (tree == null) {
-			tree = new Tree();
-			tree.setModelType(type);
-			setDataProperties(tree);
+			if (defaultProperties == null)
+				defaultProperties = new Tree();
+			defaultProperties.setModelType(type);
+			setDataProperties(defaultProperties);
 		} else
 			tree.setModelType(type);
 	}
@@ -113,9 +116,10 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 	public void setIsFolderProperty(final String name) {
 		Tree tree = getTree();
 		if (tree == null) {
-			tree = new Tree();
-			tree.setIsFolderProperty(name);
-			setDataProperties(tree);
+			if (defaultProperties == null)
+				defaultProperties = new Tree();
+			defaultProperties.setIsFolderProperty(name);
+			setDataProperties(defaultProperties);
 		} else
 			tree.setIsFolderProperty(name);
 	}

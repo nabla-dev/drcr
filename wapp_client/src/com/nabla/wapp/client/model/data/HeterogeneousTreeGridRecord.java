@@ -69,7 +69,10 @@ public class HeterogeneousTreeGridRecord extends TreeNode {
 	}
 
 	public boolean isFolder() {
-		return getBoolean(IFieldReservedNames.TREEGRID_IS_FOLDER);
+		return JSHelper.isAttribute(getJsObj(), IFieldReservedNames.TREEGRID_IS_FOLDER) ?
+				getAttributeAsBoolean(IFieldReservedNames.TREEGRID_IS_FOLDER)
+				:
+				false;
 	}
 
 	public void setIsFolder(Boolean value) {
