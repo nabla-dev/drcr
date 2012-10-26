@@ -19,13 +19,14 @@ package com.nabla.dc.server.xml.settings;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.nabla.dc.shared.ServerErrors;
 import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
-import com.nabla.wapp.server.xml.XmlString;
+import com.nabla.wapp.server.xml.IRowMap;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
@@ -35,11 +36,17 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 @IRecordTable(name=IFixedAssetCategory.TABLE)
-class XmlAssetCategory extends XmlElement {
+class XmlAssetCategory extends Node {
 
-	@Element
+	static final String	NAME = "name";
+	static final String MIN_DEPRECIATION_PERIOD = "min_depreciation_period";
+	static final String MAX_DEPRECIATION_PERIOD = "max_depreciation_period";
+
+	@Attribute
+	Integer					xmlRowMapId;
+	@Element(name=NAME)
 	@IRecordField
-	XmlString				name;
+	String					name;
 	@IRecordField
 	String					uname;
 	@Element(name="visible", required=false)
@@ -48,38 +55,40 @@ class XmlAssetCategory extends XmlElement {
 	@Element(required=false)
 	@IRecordField
 	FixedAssetCategoryTypes	type;
-	@Element
+	@Element(name=MIN_DEPRECIATION_PERIOD)
 	@IRecordField
 	Integer					min_depreciation_period;
-	@Element(required=false)
+	@Element(name=MAX_DEPRECIATION_PERIOD,required=false)
 	@IRecordField
 	Integer					max_depreciation_period;
 
 	public XmlAssetCategory() {}
 
 	public XmlAssetCategory(final ResultSet rs) throws SQLException {
-		name = new XmlString(rs.getString(1));
+		name = rs.getString(1);
 		active = rs.getBoolean(2);
 		type = FixedAssetCategoryTypes.valueOf(rs.getString(3));
 		min_depreciation_period = rs.getInt(4);
 		max_depreciation_period = rs.getInt(5);
 	}
 
-
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (name.validate("name", IFixedAssetCategory.NAME_CONSTRAINT, errors)) {
-			if (ctx.getNameList().add(name.getValue()))
-				uname = name.getValue().toUpperCase();
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+		final IRowMap rows = ctx.getRowMap(xmlRowMapId);
+
+		if (IFixedAssetCategory.NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.ADD)) {
+			if (ctx.getNameList().add(name))
+				uname = name.toUpperCase();
 			else
-				errors.add(name.getRow(), "name", CommonServerErrors.DUPLICATE_ENTRY);
+				errors.add(rows.get(NAME), NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		}
-		IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate(getRow(), "min_depreciation_period", min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ValidatorContext.ADD);
+		IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate(rows.get(MIN_DEPRECIATION_PERIOD), MIN_DEPRECIATION_PERIOD, min_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ValidatorContext.ADD);
 		if (max_depreciation_period == null)
 			max_depreciation_period = min_depreciation_period;
-		else if (IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate(getRow(), "max_depreciation_period", max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ValidatorContext.ADD) &&
+		else if (IFixedAssetCategory.DEPRECIATION_PERIOD_CONSTRAINT.validate(rows.get(MAX_DEPRECIATION_PERIOD), MAX_DEPRECIATION_PERIOD, max_depreciation_period, ServerErrors.INVALID_DEPRECIATION_PERIOD, errors, ValidatorContext.ADD) &&
 			max_depreciation_period < min_depreciation_period)
-			errors.add(getRow(), "max_depreciation_period", ServerErrors.INVALID_MAX_DEPRECIATION_PERIOD);
+			errors.add(rows.get(MAX_DEPRECIATION_PERIOD), MAX_DEPRECIATION_PERIOD, ServerErrors.INVALID_MAX_DEPRECIATION_PERIOD);
 		if (active == null)
 			active = false;
 		if (type == null)

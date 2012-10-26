@@ -26,11 +26,11 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
  * @author nabla64
  *
  */
-public abstract class XmlElement<C extends IImportContext> extends XmlNode {
+public abstract class XmlElement<C extends IImportContext> {
 
 	@Validate
 	public void validate(Map session) throws DispatchException {
-		final C ctx = getContext(session);
+		final C ctx = Importer.getContext(session);
 		doValidate(ctx);
 	}
 

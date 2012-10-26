@@ -29,7 +29,6 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
@@ -40,7 +39,9 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 @Root
 public class XmlUserList {
 
-	@ElementList(entry="user", inline=true, required=false)
+	static final String	USER = "user";
+
+	@ElementList(entry=USER, inline=true, required=false)
 	List<XmlUser>	list;
 
 	public XmlUserList() {}
@@ -51,7 +52,7 @@ public class XmlUserList {
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getNameList().clear();
+		ImportContext.getInstance(session).getNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {

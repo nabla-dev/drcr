@@ -37,13 +37,15 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-class XmlRole extends XmlElement {
+class XmlRole extends Node {
 
 	private static final Log	log = LogFactory.getLog(XmlRole.class);
 
+	static public final String	ROLE = "role";
+
 	@Element
 	XmlRoleName				name;
-	@ElementList(entry="role", required=false)
+	@ElementList(entry=ROLE, required=false)
 	LinkedList<XmlRoleName>	definition;
 
 	public XmlRole() {}
@@ -57,15 +59,14 @@ class XmlRole extends XmlElement {
 		return name.getValue();
 	}
 
-
 	@Override
 	protected void doValidate(final ImportContext ctx) throws DispatchException {
 		if (!ctx.getNameList().add(getName()))
-			ctx.getErrors().add(name.getRow(), XmlRoleName.FIELD, CommonServerErrors.DUPLICATE_ENTRY);
+			ctx.getErrorList().add(name.getRow(), XmlRoleName.FIELD, CommonServerErrors.DUPLICATE_ENTRY);
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
-		final IErrorList<Integer> errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrorList();
 		if (ctx.getPrivilegeIds().containsKey(getName())) {
 			if (log.isDebugEnabled())
 				log.debug("role '" + getName() + "' is already defined as a privilege");

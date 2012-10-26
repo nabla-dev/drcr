@@ -49,7 +49,7 @@ class XmlUser {
 	XmlUserPassword			password;
 	@Element(required=false)
 	Boolean					active;
-	@ElementList(entry="role", required=false)
+	@ElementList(entry=XmlRole.ROLE, required=false)
 	LinkedList<XmlRoleName>	roles;
 
 	public XmlUser() {}
@@ -98,7 +98,7 @@ getName(), getName().toUpperCase(), active, UserManager.getPasswordEncryptor().e
 			return true;
 		if (log.isDebugEnabled())
 			log.debug("saving user definition for '" + getName() + "'");
-		final IErrorList<Integer> errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrorList();
 		final PreparedStatement stmt = conn.prepareStatement(
 "INSERT INTO user_definition (user_id, role_id) VALUES(?,?);");
 		try {

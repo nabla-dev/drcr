@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -35,13 +36,14 @@ import com.nabla.dc.shared.model.fixed_asset.IDisposal;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.dc.shared.model.fixed_asset.IStraightLineDepreciation;
 import com.nabla.wapp.server.database.InsertStatement;
-import com.nabla.wapp.server.xml.XmlString;
+import com.nabla.wapp.server.xml.IRowMap;
 import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 @IRecordTable(name=IAssetTable.TABLE)
@@ -61,22 +63,26 @@ class XmlAsset extends Node implements IAssetRecord {
 
 	public static final InsertStatement<XmlAsset>	sql = new InsertStatement<XmlAsset>(XmlAsset.class);
 
+	@Attribute
+	Integer			xmlRow;
+	@Attribute
+	Integer			xmlRowMapId;
 	@Element(name=NAME)
 	@IRecordField(name=IAssetTable.NAME)
-	XmlString					name;
+	String					name;
 	@Element(name=CATEGORY)
-	XmlString					category;
+	String					category;
 	@IRecordField(name=IAssetTable.CATEGORY_ID)
 	Integer						fa_company_asset_category_id;
 	@Element(name=REFERENCE,required=false)
 	@IRecordField(name=IAssetTable.REFERENCE)
-	XmlString					reference;
+	String					reference;
 	@Element(name=LOCATION,required=false)
 	@IRecordField(name=IAssetTable.LOCATION)
-	XmlString					location;
+	String					location;
 	@Element(name=PURCHASE_INVOICE,required=false)
 	@IRecordField(name=IAssetTable.PURCHASE_INVOICE)
-	XmlString					purchaseInvoice;
+	String					purchaseInvoice;
 	@Element(name=ACQUISITION_DATE)
 	@IRecordField(name=IAssetTable.ACQUISITION_DATE)
 	Date						acquisitionDate;
@@ -115,19 +121,23 @@ class XmlAsset extends Node implements IAssetRecord {
 		bs = rs.getBoolean(6);
 	}
 */
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (name.validate(NAME, IAsset.NAME_CONSTRAINT, errors) &&
-				!ctx.getNameList().add(name.getValue())) {
-			errors.add(name.getRow(), NAME, CommonServerErrors.DUPLICATE_ENTRY);
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+		final IRowMap rows = ctx.getRowMap(xmlRowMapId);
+
+		if (IAsset.NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.ADD) &&
+				!ctx.getNameList().add(name)) {
+			errors.add(rows.get(NAME), NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		}
-		category.validate(CATEGORY, IFixedAssetCategory.NAME_CONSTRAINT, errors);
-		if (reference != null)
-			reference.validate(REFERENCE, IAsset.REFERENCE_CONSTRAINT, errors);
-		if (location != null)
-			location.validate(LOCATION, IAsset.LOCATION_CONSTRAINT, errors);
-		if (purchaseInvoice != null)
-			purchaseInvoice.validate(PURCHASE_INVOICE, IAsset.PURCHASE_INVOICE_CONSTRAINT, errors);
+		IFixedAssetCategory.NAME_CONSTRAINT.validate(CATEGORY, category, errors, ValidatorContext.ADD);
+		IAsset.REFERENCE_CONSTRAINT.validate(REFERENCE, reference, errors, ValidatorContext.UPDATE);
+		IAsset.LOCATION_CONSTRAINT.validate(LOCATION, location, errors, ValidatorContext.UPDATE);
+		IAsset.PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchaseInvoice, errors, ValidatorContext.UPDATE);
 		Validator.execute(this, getRow(), errors);
 		if (depreciationMethod != null)
 			Asset.validate(depreciationMethod, acquisitionDate, depreciationMethod.getRow(), errors);
@@ -135,17 +145,20 @@ class XmlAsset extends Node implements IAssetRecord {
 			Asset.<Integer>validate(disposal, acquisitionDate, disposal.getRow(), errors);
 	}
 
-	public void postValidate(@Nullable final Company company, final IErrorList<Integer> errors) throws DispatchException {
+	public void postValidate(@Nullable final Company company, final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+		final IRowMap rows = ctx.getRowMap(xmlRowMapId);
+
 		if (company == null)
-			errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
+			errors.add(rows.get(CATEGORY), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 		else {
 			final Category cat = company.get(category);
 			if (cat == null)
-				errors.add(category.getRow(), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
+				errors.add(rows.get(CATEGORY), CATEGORY, ServerErrors.UNDEFINED_ASSET_CATEGORY);
 			else {
 				fa_company_asset_category_id = cat.getId();
 				if (cat.getMinDepreciationPeriod() > depreciationPeriod || cat.getMaxDepreciationPeriod() < depreciationPeriod)
-					errors.add(getRow(), getDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
+					errors.add(rows.get(DEPRECIATION_PERIOD), getDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
 				if (depreciationMethod != null)
 					depreciationMethod.postValidate(this, errors);
 				if (disposal != null) {
@@ -181,7 +194,7 @@ class XmlAsset extends Node implements IAssetRecord {
 
 	@Override
 	public String getName() {
-		return name.getValue();
+		return name;
 	}
 
 	@Override

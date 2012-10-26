@@ -25,7 +25,6 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.FullErrorListException;
 
@@ -43,7 +42,7 @@ public class XmlAssets {
 */
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getCompanyNameList().clear();
+		ImportContext.getInstance(session).getCompanyNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {

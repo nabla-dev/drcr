@@ -29,7 +29,6 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
@@ -39,7 +38,9 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 @Root
 public class XmlRoleList {
 
-	@ElementList(entry="role", inline=true, required=false)
+	static final String	ROLE = "role";
+
+	@ElementList(entry=ROLE, inline=true, required=false)
 	List<XmlRole>	list;
 
 	public XmlRoleList() {}
@@ -50,7 +51,7 @@ public class XmlRoleList {
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getNameList().clear();
+		ImportContext.getInstance(session).getNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {

@@ -28,6 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -36,23 +37,29 @@ import com.nabla.dc.shared.model.company.IFinancialYear;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
-import com.nabla.wapp.server.xml.XmlString;
+import com.nabla.wapp.server.xml.IRowMap;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlCompany extends XmlElement {
+class XmlCompany extends Node {
 
 	private static final Log	log = LogFactory.getLog(XmlCompany.class);
 
-	@Element
-	XmlString					name;
+	static final String	NAME = "name";
+	static final String FINANCIAL_YEAR = "financial_year";
+
+	@Attribute
+	Integer					xmlRowMapId;
+	@Element(name=NAME)
+	String					name;
 	@Element(name="visible", required=false)
 	Boolean						active;
-	@Element
-	XmlString					financial_year;
+	@Element(name=FINANCIAL_YEAR)
+	String					financial_year;
 	@Element
 	Date						start_date;
 	@Element(required=false)
@@ -65,21 +72,24 @@ class XmlCompany extends XmlElement {
 	public XmlCompany() {}
 
 	public XmlCompany(final ResultSet rs) throws SQLException {
-		name = new XmlString(rs.getString(2));
+		name = rs.getString(2);
 		active = rs.getBoolean(3);
 		load(rs.getStatement().getConnection(), rs.getInt(1));
 	}
 
 	public String getName() {
-		return name.getValue();
+		return name;
 	}
 
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (name.validate("name", ICompany.NAME_CONSTRAINT, errors) &&
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+		final IRowMap rows = ctx.getRowMap(xmlRowMapId);
+
+		if (ICompany.NAME_CONSTRAINT.validate(NAME, name, errors, ValidatorContext.ADD) &&
 			!ctx.getCompanyNameList().add(getName()))
-				errors.add(name.getRow(), "name", CommonServerErrors.DUPLICATE_ENTRY);
-		financial_year.validate("financial_year", IFinancialYear.NAME_CONSTRAINT, errors);
+				errors.add(rows.get(NAME), NAME, CommonServerErrors.DUPLICATE_ENTRY);
+		IFinancialYear.NAME_CONSTRAINT.validate(FINANCIAL_YEAR, financial_year, errors, ValidatorContext.ADD);
 		if (active == null)
 			active = false;
 	}
@@ -111,7 +121,7 @@ getName(), getName().toUpperCase(), active);
 			companyIds.put(getName(), companyId);
 		}
 		final Integer financialYearId = Database.addRecord(conn,
-"INSERT INTO financial_year (company_id, name) VALUES(?,?);", companyId, financial_year.getValue());
+"INSERT INTO financial_year (company_id, name) VALUES(?,?);", companyId, financial_year);
 		final PreparedStatement stmt = conn.prepareStatement(
 "INSERT INTO period_end (financial_year_id,name,end_date) VALUES(?,?,?);");
 		try {
@@ -152,11 +162,11 @@ getName(), getName().toUpperCase(), active);
 			try {
 				final Calendar dt = new GregorianCalendar();	// i.e. today
 				if (rs.next()) {
-					financial_year = new XmlString(rs.getString(1));
+					financial_year = rs.getString(1);
 					dt.setTime(rs.getDate(2));
 					dt.set(GregorianCalendar.DAY_OF_MONTH, 1);
 				} else {
-					financial_year = new XmlString(new Integer(dt.get(GregorianCalendar.YEAR)).toString());
+					financial_year = new Integer(dt.get(GregorianCalendar.YEAR)).toString();
 				}
 				start_date = new Date(dt.getTime().getTime());
 			} finally {

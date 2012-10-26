@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.server.xml.settings;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
@@ -27,10 +28,12 @@ import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlUserName extends XmlElement {
+class XmlUserName extends Node {
 
 	public static final String FIELD = "name";
 
+	@Attribute
+	Integer	xmlRow;
 	@Text
 	String	value;
 
@@ -44,8 +47,13 @@ class XmlUserName extends XmlElement {
 		return value;
 	}
 
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
 			errors.add(getRow(), FIELD, CommonServerErrors.INVALID_VALUE);
 		else if (IUser.NAME_CONSTRAINT.validate(getRow(), FIELD, value, errors, ValidatorContext.ADD) &&

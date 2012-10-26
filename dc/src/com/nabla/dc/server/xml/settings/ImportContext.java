@@ -16,10 +16,12 @@
 */
 package com.nabla.dc.server.xml.settings;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.nabla.wapp.server.xml.BasicImportContext;
+import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.model.IErrorList;
 
 /**
@@ -48,4 +50,7 @@ public class ImportContext extends BasicImportContext {
 		return accountCodes;
 	}
 
+	public static ImportContext getInstance(final Map session) {
+		return Importer.<ImportContext>getContext(session);
+	}
 }

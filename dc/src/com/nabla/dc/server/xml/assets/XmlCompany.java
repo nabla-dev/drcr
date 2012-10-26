@@ -33,6 +33,8 @@ class XmlCompany extends Node {
 
 	static final String	NAME = "name";
 
+	@Attribute
+	Integer			xmlRow;
 	Integer			companyId;
 	@Attribute(name=NAME)
 	String			name;
@@ -51,8 +53,14 @@ class XmlCompany extends Node {
 		return name;
 	}
 
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+
 		final Company company = ctx.getCompany(getName());
 		if (company == null)
 			errors.add(getRow(), NAME, CommonServerErrors.INVALID_VALUE);
@@ -61,7 +69,7 @@ class XmlCompany extends Node {
 		else {
 			companyId = company.getId();
 			if (assets != null)
-				assets.postValidate(company, errors);
+				assets.postValidate(company, ctx);
 		}
 	}
 

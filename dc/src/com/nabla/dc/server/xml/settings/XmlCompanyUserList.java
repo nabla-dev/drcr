@@ -30,7 +30,6 @@ import org.simpleframework.xml.core.Commit;
 
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
@@ -51,7 +50,7 @@ public class XmlCompanyUserList {
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getNameList().clear();
+		ImportContext.getInstance(session).getNameList().clear();
 	}
 
 	public void clear(final Connection conn, final Integer companyId) throws SQLException {

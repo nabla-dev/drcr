@@ -18,23 +18,20 @@ package com.nabla.dc.server.xml.assets;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
 
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
 
 @Root(name="dc-assets")
-public class XmlCompanyAssets {
+public class XmlCompanyAssets extends Node {
 
 	private static final Log	log = LogFactory.getLog(XmlCompanyAssets.class);
 
@@ -48,17 +45,17 @@ public class XmlCompanyAssets {
 		load(conn);
 	}
 */
-	@Validate
-	public void validate(Map session) throws DispatchException {
-		final ImportContext ctx = XmlNode.getContext(session);
-		final IErrorList<Integer> errors =  XmlNode.getErrorList(session);
+	@Override
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+
 		final Company company = ctx.getCompany();
 		if (company == null)
 			errors.add(CommonServerErrors.RECORD_HAS_BEEN_REMOVED);
 		else {
 			companyId = company.getId();
 			if (assets != null)
-				assets.postValidate(company, errors);
+				assets.postValidate(company, ctx);
 		}
 	}
 

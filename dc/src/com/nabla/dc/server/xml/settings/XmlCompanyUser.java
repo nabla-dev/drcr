@@ -59,7 +59,7 @@ class XmlCompanyUser {
 	}
 
 	public boolean save(final Connection conn, final Integer companyId, final SaveContext ctx) throws SQLException, DispatchException {
-		final IErrorList<Integer> errors = ctx.getErrors();
+		final IErrorList<Integer> errors = ctx.getErrorList();
 		final Integer userId = ctx.getUserIds().get(name.getValue());
 		if (userId == null) {
 			errors.add(name.getRow(), "name", CommonServerErrors.INVALID_VALUE);

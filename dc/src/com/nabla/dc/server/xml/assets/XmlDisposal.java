@@ -18,6 +18,7 @@ package com.nabla.dc.server.xml.assets;
 
 import java.util.Date;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -39,6 +40,8 @@ public class XmlDisposal extends Node implements IDisposal {
 	static final String	TYPE = "type";
 	static final String	PROCEEDS = "proceeds";
 
+	@Attribute
+	Integer			xmlRow;
 	@Element(name=DATE)
 	Date			date;
 	@Element(name=TYPE, required=false)
@@ -46,11 +49,15 @@ public class XmlDisposal extends Node implements IDisposal {
 	@Element(name=PROCEEDS, required=false) @Nullable
 	Integer			proceeds;
 
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
 		if (type == null)
 			type = DisposalTypes.SOLD;
-		Validator.execute(this, getRow(), errors);
+		Validator.execute(this, getRow(), ctx.getErrorList());
 	}
 
 	public void postValidate(final Date dtAcquisition, final IErrorList<Integer> errors) throws DispatchException {

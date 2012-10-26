@@ -18,6 +18,7 @@ package com.nabla.dc.server.xml.assets;
 
 import java.util.Date;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -40,6 +41,8 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 	static final String	DATE = "from_date";
 	static final String	RESIDUAL_VALUE = "residual_value";
 
+	@Attribute
+	Integer		xmlRow;
 	@Element(name=OPENING_ACCUMULATED_DEPRECIATION,required=false)
 	Integer		openingAccumulatedDepreciation;
 	@Element(name=OPENING_DEPRECIATION_PERIOD,required=false)
@@ -49,15 +52,19 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 	@Element(name=RESIDUAL_VALUE,required=false)
 	Integer		residualValue;
 
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
 		if (openingAccumulatedDepreciation == null)
 			openingAccumulatedDepreciation = 0;
 		if (openingDepreciationPeriod == null)
 			openingDepreciationPeriod = 0;
 		if (residualValue == null)
 			residualValue = 0;
-		IStraightLineDepreciation.Validator.execute(this, getRow(), errors);
+		IStraightLineDepreciation.Validator.execute(this, getRow(), ctx.getErrorList());
 	}
 
 	public void postValidate(final IAssetRecord asset, final IErrorList<Integer> errors) throws DispatchException {

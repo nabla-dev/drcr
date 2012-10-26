@@ -76,7 +76,7 @@ public class ImportCompanyAssetsHandler extends AbstractHandler<ImportCompanyAss
 
 	private boolean add(final ImportCompanyAssets cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, null, IImportAssets.PREFERENCE_GROUP, IImportAssets.OVERWRITE, cmd.getOverwrite());
-		final XmlCompanyAssets assets = new Importer(ctx.getReadConnection(), errors, new ImportContext(ctx.getReadConnection(), cmd.getCompanyId())).read(XmlCompanyAssets.class, cmd.getFileId());
+		final XmlCompanyAssets assets = new Importer<ImportContext>(ctx.getReadConnection(), new ImportContext(ctx.getReadConnection(), cmd.getCompanyId(), errors)).read(XmlCompanyAssets.class, cmd.getFileId());
 		if (assets == null || !errors.isEmpty())
 			return false;
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());

@@ -79,7 +79,7 @@ public class SaveContext {
 		return option;
 	}
 
-	public IErrorList<Integer> getErrors() {
+	public IErrorList<Integer> getErrorList() {
 		return errors;
 	}
 }

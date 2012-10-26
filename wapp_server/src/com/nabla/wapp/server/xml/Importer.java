@@ -55,7 +55,7 @@ public class Importer<C extends IImportContext> {
 	public <T> Importer(final Connection conn, final String sql, final C ctx) {
 		this.conn = conn;
 		this.sql = sql;
-		this.errors = ctx.getErrors();
+		this.errors = ctx.getErrorList();
 		impl = new Persister(new ImportVisitorStrategy<C>(ctx), new SimpleMatcher());
 	}
 

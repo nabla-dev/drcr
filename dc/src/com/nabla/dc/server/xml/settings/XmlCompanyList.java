@@ -29,7 +29,6 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
 import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
@@ -39,7 +38,9 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 @Root
 public class XmlCompanyList {
 
-	@ElementList(entry="company", inline=true, required=false)
+	static final String	ENTRY = "company";
+
+	@ElementList(entry=ENTRY, inline=true, required=false)
 	List<XmlCompany>	list;
 
 	public XmlCompanyList() {}
@@ -50,7 +51,7 @@ public class XmlCompanyList {
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getCompanyNameList().clear();
+		ImportContext.getInstance(session).getCompanyNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {

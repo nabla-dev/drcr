@@ -23,6 +23,6 @@ import com.nabla.wapp.shared.model.IErrorList;
  *
  */
 public interface IImportContext {
-	IErrorList<Integer> getErrors();
+	IErrorList<Integer> getErrorList();
 	IRowMap getRowMap(final Integer id);
 }

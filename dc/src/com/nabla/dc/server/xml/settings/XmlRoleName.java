@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.server.xml.settings;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
@@ -24,15 +25,17 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IRole;
+import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlRoleName extends XmlElement {
+class XmlRoleName extends Node {
 
 	public static final String FIELD = "name";
 
+	@Attribute
+	Integer	xmlRow;
 	@Text
 	String	value;
-	private Integer	row;
 
 	public XmlRoleName() {}
 
@@ -45,17 +48,16 @@ class XmlRoleName extends XmlElement {
 	}
 
 	public Integer getRow() {
-		return row;
+		return xmlRow;
 	}
 
 	@Override
 	protected void doValidate(final ImportContext ctx) throws DispatchException {
-		row = ctx.getRowMap(getRowMapId());
-		final IErrorList<Integer> errors = getErrorList(session);
+		final IErrorList<Integer> errors = ctx.getErrorList();
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
 			errors.add(getRow(), FIELD, CommonServerErrors.INVALID_VALUE);
 		else
-			this.validate(FIELD, IRole.NAME_CONSTRAINT, errors);
+			IRole.NAME_CONSTRAINT.validate(getRow(), FIELD, value, errors, ValidatorContext.ADD);
 	}
 
 }

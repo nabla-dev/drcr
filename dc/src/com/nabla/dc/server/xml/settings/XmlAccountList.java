@@ -34,7 +34,6 @@ import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.SqlInsert;
 import com.nabla.wapp.server.database.StatementFormat;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
@@ -57,7 +56,7 @@ public class XmlAccountList {
 
 	@Commit
 	public void commit(Map session) {
-		final ImportContext ctx = XmlNode.getContext(session);
+		final ImportContext ctx = ImportContext.getInstance(session);
 		ctx.getNameList().clear();
 		ctx.getAccountCodeList().clear();
 		if (log.isDebugEnabled())

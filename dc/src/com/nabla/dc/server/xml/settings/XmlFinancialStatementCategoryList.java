@@ -31,7 +31,6 @@ import org.simpleframework.xml.core.Commit;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.SqlInsert;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
@@ -42,7 +41,9 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
 @Root
 public class XmlFinancialStatementCategoryList {
 
-	@ElementList(entry="financial_statement_category", inline=true, required=false)
+	static final String	ENTRY = "financial_statement_category";
+
+	@ElementList(entry=ENTRY, inline=true, required=false)
 	List<XmlFinancialStatementCategory>		list;
 
 	public XmlFinancialStatementCategoryList() {}
@@ -53,7 +54,7 @@ public class XmlFinancialStatementCategoryList {
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getNameList().clear();
+		ImportContext.getInstance(session).getNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {

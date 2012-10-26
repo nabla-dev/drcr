@@ -25,19 +25,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.nabla.wapp.server.xml.BasicImportContext;
+import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author nabla64
  *
  */
-public class ImportContext {
+public class ImportContext extends BasicImportContext {
 
 	private final Set<String>				names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 	private final Map<String, Company>		companies = new HashMap<String, Company>();
 	private final Set<String>				companyNames = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 
-	public ImportContext(final Connection conn) throws SQLException {
+	public ImportContext(final Connection conn, final IErrorList<Integer> errors) throws SQLException {
+		super(errors);
+
 		final PreparedStatement stmt = conn.prepareStatement(
 "SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
@@ -51,7 +56,9 @@ public class ImportContext {
 		}
 	}
 
-	public ImportContext(final Connection conn, final Integer companyId) throws SQLException {
+	public ImportContext(final Connection conn, final Integer companyId, final IErrorList<Integer> errors) throws SQLException {
+		super(errors);
+
 		final PreparedStatement stmt = conn.prepareStatement(
 "SELECT company.id AS 'companyId', company.name AS 'company', t.id, c.name, c.min_depreciation_period, c.max_depreciation_period" +
 " FROM company INNER JOIN (" +
@@ -97,5 +104,9 @@ public class ImportContext {
 		} finally {
 			rs.close();
 		}
+	}
+
+	public static ImportContext getInstance(final Map session) {
+		return Importer.<ImportContext>getContext(session);
 	}
 }

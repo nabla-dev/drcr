@@ -31,7 +31,6 @@ import org.simpleframework.xml.core.Commit;
 import com.nabla.wapp.server.database.BatchInsertStatement;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.SqlInsert;
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
@@ -53,7 +52,7 @@ public class XmlAssetCategoryList {
 
 	@Commit
 	public void commit(Map session) {
-		XmlNode.<ImportContext>getContext(session).getNameList().clear();
+		ImportContext.getInstance(session).getNameList().clear();
 	}
 
 	public void clear(final Connection conn) throws SQLException {

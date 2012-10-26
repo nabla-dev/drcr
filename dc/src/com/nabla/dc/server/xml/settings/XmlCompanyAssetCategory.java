@@ -31,8 +31,13 @@ import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlCompanyAssetCategory extends XmlElement {
+class XmlCompanyAssetCategory extends Node {
 
+	public static final String	ASSET_CATEGORY = "asset_category";
+	public static final String	FINANCIAL_STATEMENT_CATEGORY = "financial_statement_category";
+
+	@Attribute
+	Integer		xmlRow;
 	@Attribute
 	String		financial_statement_category;
 	@Text
@@ -45,12 +50,17 @@ class XmlCompanyAssetCategory extends XmlElement {
 		asset_category = rs.getString(2);
 	}
 
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		if (IFixedAssetCategory.NAME_CONSTRAINT.validate(getRow(), "asset_category", asset_category, errors, ValidatorContext.ADD) &&
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		final IErrorList<Integer> errors = ctx.getErrorList();
+		if (IFixedAssetCategory.NAME_CONSTRAINT.validate(getRow(), ASSET_CATEGORY, asset_category, errors, ValidatorContext.ADD) &&
 			!ctx.getNameList().add(asset_category))
 			errors.add(getRow(), "asset_category", CommonServerErrors.DUPLICATE_ENTRY);
-		IFinancialStatementCategory.NAME_CONSTRAINT.validate(getRow(), "financial_statement_category", financial_statement_category, errors, ValidatorContext.ADD);
+		IFinancialStatementCategory.NAME_CONSTRAINT.validate(getRow(), FINANCIAL_STATEMENT_CATEGORY, financial_statement_category, errors, ValidatorContext.ADD);
 	}
 
 	public String getFinancialStatementCategory() {

@@ -16,19 +16,21 @@
 */
 package com.nabla.dc.server.xml.settings;
 
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlUserPassword extends XmlElement {
+class XmlUserPassword extends Node {
 
 	public static final String FIELD = "password";
 
+	@Attribute
+	Integer	xmlRow;
 	@Text
 	String	value;
 
@@ -42,9 +44,13 @@ class XmlUserPassword extends XmlElement {
 		return value;
 	}
 
+	public Integer getRow() {
+		return xmlRow;
+	}
+
 	@Override
-	protected void doValidate(@SuppressWarnings("unused") final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
-		IUser.PASSWORD_CONSTRAINT.validate(getRow(), FIELD, value, errors, ValidatorContext.ADD);
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		IUser.PASSWORD_CONSTRAINT.validate(getRow(), FIELD, value, ctx.getErrorList(), ValidatorContext.ADD);
 	}
 
 }

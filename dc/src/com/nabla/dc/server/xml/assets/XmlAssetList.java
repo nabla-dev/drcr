@@ -25,10 +25,8 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.core.Commit;
 
-import com.nabla.wapp.server.xml.XmlNode;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
-import com.nabla.wapp.shared.model.IErrorList;
 
 /**
  * @author FNorais
@@ -48,13 +46,12 @@ public class XmlAssetList {
 */
 	@Commit
 	public void commit(Map session) {
-		final ImportContext ctx = XmlNode.getContext(session);
-		ctx.getNameList().clear();
+		ImportContext.getInstance(session).getNameList().clear();
 	}
 
-	public void postValidate(@Nullable final Company company, final IErrorList<Integer> errors) throws DispatchException {
+	public void postValidate(@Nullable final Company company, final ImportContext ctx) throws DispatchException {
 		for (XmlAsset e : list)
-			e.postValidate(company, errors);
+			e.postValidate(company, ctx);
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {
