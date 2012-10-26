@@ -9,30 +9,32 @@ import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.strategy.Type;
 import org.simpleframework.xml.strategy.Value;
+import org.simpleframework.xml.strategy.Visitor;
 import org.simpleframework.xml.strategy.VisitorStrategy;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.NodeMap;
 
-import com.nabla.wapp.server.general.Assert;
-import com.nabla.wapp.shared.model.IErrorList;
+class ImportVisitorStrategy<C extends IImportContext> extends VisitorStrategy {
 
-class ImportVisitorStrategy extends VisitorStrategy {
+	private static final Log					log = LogFactory.getLog(ImportVisitorStrategy.class);
 
-	private static final Log			log = LogFactory.getLog(ImportVisitorStrategy.class);
+	public static final String					KEY_CTX = "wapp_ctx";
+	private static final String					ROW_FIELD = "xmlRow";
+	private static final String					ROW_MAP_ID_FIELD = "xmlRowMapId";
 
-	private static final String			KEY_ERROR_LIST = "wapp_errors";
-	private static final String			KEY_CTX = "wapp_ctx";
+	private boolean								sessionInitialized = false;
+	private final C								ctx;
+	private static final Map<Class, Boolean>	rowFieldCache = new HashMap<Class, Boolean>();
+	private static final Map<Class, Boolean>	rowMapIdFieldCache = new HashMap<Class, Boolean>();
+	private final Map<InputNode, Integer>		nodeIds = new HashMap<InputNode, Integer>();
+	private int									nextId = 0;
 
-	private static final String			ROW_FIELD = "xml_row";
+	public ImportVisitorStrategy(final C ctx) {
+		this(null, ctx);
+	}
 
-	private boolean						sessionInitialized = false;
-	private final IErrorList<Integer>	errors;
-	private final Object				ctx;
-	private final Map<Class, Boolean>	rowFieldCache = new HashMap<Class, Boolean>();
-
-	public ImportVisitorStrategy(final IErrorList<Integer> errors, final Object ctx) {
-		super(null);
-		this.errors = errors;
+	public ImportVisitorStrategy(final Visitor visitor, final C ctx) {
+		super(visitor);
 		this.ctx = ctx;
 	}
 
@@ -40,41 +42,55 @@ class ImportVisitorStrategy extends VisitorStrategy {
 	@Override
 	public Value read(Type type, NodeMap<InputNode> node, Map session) throws Exception {
 		if (!sessionInitialized) {
-			session.put(KEY_ERROR_LIST, errors);
 			session.put(KEY_CTX, ctx);
 			sessionInitialized = true;
 		}
 		final Class clazz = type.getType();
-		Boolean hasRow = rowFieldCache.get(clazz);
-		if (hasRow == null) {
-			try {
-				final Field rowField = clazz.getDeclaredField(ROW_FIELD);
-				hasRow = (rowField.getType() == Integer.class) &&
-							(rowField.getAnnotation(Attribute.class) != null);
-			} catch (Throwable _) {
-				hasRow = false;
-			}
+		final InputNode n = node.getNode();
+		Boolean hasRowField = rowFieldCache.get(clazz);
+		if (hasRowField == null) {
+			final Field field = getClassField(clazz, ROW_FIELD);
+			hasRowField = field != null &&
+						(field.getType() == Integer.class) &&
+						(field.getAnnotation(Attribute.class) != null);
 			if (log.isDebugEnabled())
-				log.debug(clazz.getName() + " has row field: " + hasRow);
-			rowFieldCache.put(clazz, hasRow);
+				log.debug(clazz.getName() + " has row field: " + hasRowField);
+			rowFieldCache.put(clazz, hasRowField);
 		}
-		if (hasRow) {
-			final Integer row = node.getNode().getPosition().getLine();
-			node.getNode().getAttributes().put(ROW_FIELD, row.toString());
+		if (hasRowField) {
+			final Integer row = n.getPosition().getLine();
+			n.getAttributes().put(ROW_FIELD, row.toString());
+		}
+		Boolean hasRowMapIdField = rowMapIdFieldCache.get(clazz);
+		if (hasRowMapIdField == null) {
+			final Field field = getClassField(clazz, ROW_MAP_ID_FIELD);
+			hasRowMapIdField = field != null &&
+						(field.getType() == Integer.class) &&
+						(field.getAnnotation(Attribute.class) != null);
+			if (log.isDebugEnabled())
+				log.debug(clazz.getName() + " has row map id field: " + hasRowMapIdField);
+			rowMapIdFieldCache.put(clazz, hasRowMapIdField);
+		}
+		if (hasRowMapIdField) {
+			final Integer id = ++nextId;
+			nodeIds.put(n, id);	// store link between node and id
+			n.getAttributes().put(ROW_MAP_ID_FIELD, id.toString());	// tell class instance of its row map id
+		}
+		if (!n.isRoot()) {
+			final Integer parentId = nodeIds.get(n.getParent());
+			if (parentId != null)
+				ctx.getRowMap(parentId).put(n.getName(), n.getPosition().getLine());
 		}
 		return super.read(type, node, session);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static IErrorList<Integer> getErrorList(final Map session) {
-		Assert.argumentNotNull(session);
-		return (IErrorList<Integer>)session.get(KEY_ERROR_LIST);
+	private static Field getClassField(final Class clazz, final String name) {
+		if (clazz == null)
+			return null;
+		try {
+			return clazz.getDeclaredField(ROW_MAP_ID_FIELD);
+		} catch (Throwable _) {
+		}
+		return getClassField(clazz.getSuperclass(), name);
 	}
-
-	@SuppressWarnings("unchecked")
-	public static <T> T getContext(final Map session) {
-		Assert.argumentNotNull(session);
-		return (T)session.get(KEY_CTX);
-	}
-
 }

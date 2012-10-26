@@ -35,7 +35,7 @@ import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
 @IRecordTable(name=IFixedAssetCategory.TABLE)
-class XmlAssetCategory extends Node {
+class XmlAssetCategory extends XmlElement {
 
 	@Element
 	@IRecordField

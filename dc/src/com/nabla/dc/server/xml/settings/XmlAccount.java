@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
 @IRecordTable(name=IAccount.TABLE)
-class XmlAccount extends Node {
+class XmlAccount extends XmlElement {
 
 	@IRecordField
 	Integer		company_id;

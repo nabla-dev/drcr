@@ -19,15 +19,22 @@ package com.nabla.dc.server.xml.settings;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.nabla.wapp.server.xml.BasicImportContext;
+import com.nabla.wapp.shared.model.IErrorList;
+
 /**
  * @author nabla64
  *
  */
-public class ImportContext {
+public class ImportContext extends BasicImportContext {
 
 	private final Set<String>		names = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 	private final Set<String>		companyNames = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
 	private final Set<String>		accountCodes = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+
+	public ImportContext(final IErrorList<Integer> errors) {
+		super(errors);
+	}
 
 	public Set<String> getNameList() {
 		return names;

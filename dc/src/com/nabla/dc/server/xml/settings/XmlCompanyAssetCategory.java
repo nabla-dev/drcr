@@ -31,7 +31,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlCompanyAssetCategory extends Node {
+class XmlCompanyAssetCategory extends XmlElement {
 
 	@Attribute
 	String		financial_statement_category;

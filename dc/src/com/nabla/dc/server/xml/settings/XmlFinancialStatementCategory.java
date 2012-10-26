@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
 @IRecordTable(name=IFinancialStatementCategory.TABLE)
-class XmlFinancialStatementCategory extends Node {
+class XmlFinancialStatementCategory extends XmlElement {
 
 	@Element
 	@IRecordField

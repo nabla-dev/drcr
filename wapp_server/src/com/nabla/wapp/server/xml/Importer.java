@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -41,33 +42,25 @@ import com.nabla.wapp.shared.model.IErrorList;
  * @author nabla64
  *
  */
-public class Importer {
+public class Importer<C extends IImportContext> {
 
-	private static final Log		log = LogFactory.getLog(Importer.class);
-	public static final String	DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
+	private static final Log			log = LogFactory.getLog(Importer.class);
+	public static final String			DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
 
 	private final Connection			conn;
 	private final String				sql;
 	private final IErrorList<Integer>	errors;
-	private final Persister			impl;
+	private final Persister				impl;
 
-	public <T> Importer(final Connection conn, final String sql, final IErrorList<Integer> errors, final T ctx) {
+	public <T> Importer(final Connection conn, final String sql, final C ctx) {
 		this.conn = conn;
 		this.sql = sql;
-		this.errors = errors;
-		impl = new Persister(new ImportVisitorStrategy(errors, ctx), new SimpleMatcher());
+		this.errors = ctx.getErrors();
+		impl = new Persister(new ImportVisitorStrategy<C>(ctx), new SimpleMatcher());
 	}
 
-	public Importer(final Connection conn, final String sql, final IErrorList<Integer> errors) {
-		this(conn, sql, errors, null);
-	}
-
-	public <T> Importer(final Connection conn, final IErrorList<Integer> errors, final T ctx) {
-		this(conn, DEFAULT_SQL, errors, ctx);
-	}
-
-	public Importer(final Connection conn, final IErrorList<Integer> errors) {
-		this(conn, DEFAULT_SQL, errors);
+	public <T> Importer(final Connection conn, final C ctx) {
+		this(conn, DEFAULT_SQL, ctx);
 	}
 
 	public <T> T read(final Class<T> clazz, final Integer dataId)  throws DispatchException, SQLException {
@@ -112,4 +105,8 @@ public class Importer {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T> T getContext(final Map session) {
+		return (T)session.get(ImportVisitorStrategy.KEY_CTX);
+	}
 }

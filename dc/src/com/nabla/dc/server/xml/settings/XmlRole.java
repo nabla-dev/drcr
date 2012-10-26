@@ -37,7 +37,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-class XmlRole extends Node {
+class XmlRole extends XmlElement {
 
 	private static final Log	log = LogFactory.getLog(XmlRole.class);
 
@@ -59,9 +59,9 @@ class XmlRole extends Node {
 
 
 	@Override
-	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
 		if (!ctx.getNameList().add(getName()))
-			errors.add(name.getRow(), XmlRoleName.FIELD, CommonServerErrors.DUPLICATE_ENTRY);
+			ctx.getErrors().add(name.getRow(), XmlRoleName.FIELD, CommonServerErrors.DUPLICATE_ENTRY);
 	}
 
 	public boolean save(final Connection conn, final SaveContext ctx) throws SQLException, DispatchException {

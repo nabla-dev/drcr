@@ -16,26 +16,24 @@
 */
 package com.nabla.wapp.server.xml;
 
-import org.simpleframework.xml.Text;
+import java.util.Map;
+
+import org.simpleframework.xml.core.Validate;
+
+import com.nabla.wapp.shared.dispatch.DispatchException;
 
 /**
  * @author nabla64
  *
  */
-public class XmlInteger extends XmlValue<Integer> {
+public abstract class XmlElement<C extends IImportContext> extends XmlNode {
 
-	@Text
-	protected Integer	value;
-
-	public XmlInteger() {}
-
-	public XmlInteger(final Integer value) {
-		this.value = value;
+	@Validate
+	public void validate(Map session) throws DispatchException {
+		final C ctx = getContext(session);
+		doValidate(ctx);
 	}
 
-	@Override
-	public Integer getValue() {
-		return value;
-	}
+	protected abstract void doValidate(final C ctx) throws DispatchException;
 
 }

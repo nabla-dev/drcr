@@ -43,7 +43,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
 @Root
-class XmlCompany extends Node {
+class XmlCompany extends XmlElement {
 
 	private static final Log	log = LogFactory.getLog(XmlCompany.class);
 

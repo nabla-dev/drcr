@@ -20,8 +20,6 @@ import java.util.Map;
 
 import org.simpleframework.xml.Attribute;
 
-import com.nabla.wapp.shared.model.IErrorList;
-
 /**
  * @author nabla64
  *
@@ -29,18 +27,14 @@ import com.nabla.wapp.shared.model.IErrorList;
 public class XmlNode {
 
 	@Attribute
-	Integer	xml_row;
+	Integer	xmlRow;
 
 	public Integer getRow() {
-		return xml_row;
-	}
-
-	public static IErrorList<Integer> getErrorList(Map session) {
-		return ImportVisitorStrategy.getErrorList(session);
+		return xmlRow;
 	}
 
 	public static <T> T getContext(Map session) {
-		return ImportVisitorStrategy.getContext(session);
+		return Importer.getContext(session);
 	}
 
 }

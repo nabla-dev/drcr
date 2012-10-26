@@ -16,12 +16,9 @@
 */
 package com.nabla.dc.server.xml.settings;
 
-import java.util.Map;
-
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.core.Validate;
+import org.simpleframework.xml.Text;
 
-import com.nabla.wapp.server.xml.XmlString;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
@@ -29,20 +26,31 @@ import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.model.IRole;
 
 @Root
-class XmlRoleName extends XmlString {
+class XmlRoleName extends XmlElement {
 
 	public static final String FIELD = "name";
+
+	@Text
+	String	value;
+	private Integer	row;
 
 	public XmlRoleName() {}
 
 	public XmlRoleName(final String value) {
-		super(value);
+		this.value = value;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public Integer getRow() {
+		return row;
 	}
 
 	@Override
-	@Validate
-	public void validate(final Map session) throws DispatchException {
-		super.validate(session);
+	protected void doValidate(final ImportContext ctx) throws DispatchException {
+		row = ctx.getRowMap(getRowMapId());
 		final IErrorList<Integer> errors = getErrorList(session);
 		if (IRootUser.NAME.equalsIgnoreCase(value))	// ROOT name not allowed
 			errors.add(getRow(), FIELD, CommonServerErrors.INVALID_VALUE);

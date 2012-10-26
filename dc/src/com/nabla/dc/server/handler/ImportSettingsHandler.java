@@ -77,7 +77,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 
 	private boolean add(final ImportSettings cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, null, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
-		final XmlSettings settings = new Importer(ctx.getReadConnection(), errors, new ImportContext()).read(XmlSettings.class, cmd.getBatchId());
+		final XmlSettings settings = new Importer<ImportContext>(ctx.getReadConnection(), new ImportContext(errors)).read(XmlSettings.class, cmd.getBatchId());
 		if (settings == null || !errors.isEmpty())
 			return false;
 		final Connection conn = ctx.getWriteConnection();

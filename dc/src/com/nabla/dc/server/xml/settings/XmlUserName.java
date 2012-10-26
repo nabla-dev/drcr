@@ -27,7 +27,7 @@ import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlUserName extends Node {
+class XmlUserName extends XmlElement {
 
 	public static final String FIELD = "name";
 

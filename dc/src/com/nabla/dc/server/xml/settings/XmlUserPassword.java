@@ -25,7 +25,7 @@ import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 @Root
-class XmlUserPassword extends Node {
+class XmlUserPassword extends XmlElement {
 
 	public static final String FIELD = "password";
 

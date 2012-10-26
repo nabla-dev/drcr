@@ -14,27 +14,10 @@
 * the License.
 *
 */
-package com.nabla.wapp.server.database;
-
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
-
-import com.nabla.wapp.server.xml.XmlString;
+package com.nabla.dc.server.xml.settings;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class XmlStringSetter extends AbstractSimpleSetter {
-
-	@Override
-	public int setValue(PreparedStatement stmt, int parameterIndex, Object value) throws SQLException {
-		if (value == null)
-			stmt.setNull(parameterIndex, Types.VARCHAR);
-		else
-			stmt.setString(parameterIndex, ((XmlString)value).getValue());
-		return 1;
-	}
-
-}
+public abstract class XmlElement extends com.nabla.wapp.server.xml.XmlElement<ImportContext> {}

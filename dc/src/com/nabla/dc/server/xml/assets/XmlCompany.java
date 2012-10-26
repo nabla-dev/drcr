@@ -34,8 +34,6 @@ class XmlCompany extends Node {
 	static final String	NAME = "name";
 
 	Integer			companyId;
-	@Attribute
-	Integer			xml_row;
 	@Attribute(name=NAME)
 	String			name;
 	@Element(required=false)
@@ -57,9 +55,9 @@ class XmlCompany extends Node {
 	protected void doValidate(final ImportContext ctx, final IErrorList<Integer> errors) throws DispatchException {
 		final Company company = ctx.getCompany(getName());
 		if (company == null)
-			errors.add(xml_row, NAME, CommonServerErrors.INVALID_VALUE);
+			errors.add(getRow(), NAME, CommonServerErrors.INVALID_VALUE);
 		else if (!ctx.getCompanyNameList().add(getName()))
-			errors.add(xml_row, NAME, CommonServerErrors.DUPLICATE_ENTRY);
+			errors.add(getRow(), NAME, CommonServerErrors.DUPLICATE_ENTRY);
 		else {
 			companyId = company.getId();
 			if (assets != null)

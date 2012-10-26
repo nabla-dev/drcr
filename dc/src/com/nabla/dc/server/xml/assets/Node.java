@@ -16,10 +16,10 @@
 */
 package com.nabla.dc.server.xml.assets;
 
-import com.nabla.wapp.server.xml.TXmlNode;
+import com.nabla.wapp.server.xml.XmlElement;
 
 /**
  * @author nabla64
  *
  */
-public abstract class Node extends TXmlNode<ImportContext> {}
+public abstract class Node extends XmlElement<ImportContext> {}
