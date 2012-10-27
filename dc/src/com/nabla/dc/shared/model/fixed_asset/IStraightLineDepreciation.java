@@ -36,10 +36,12 @@ public interface IStraightLineDepreciation {
 			if (t.getOpeningAccumulatedDepreciation() < 0)
 				errors.add(pos, t.getOpeningAccumulatedDepreciationField(), CommonServerErrors.INVALID_VALUE);
 
-			if (t.getOpeningDepreciationPeriodCount() < 0)
-				errors.add(pos, t.getOpeningDepreciationPeriodCountField(), CommonServerErrors.INVALID_VALUE);
-			if (t.getOpeningAccumulatedDepreciation() > 0 && t.getOpeningDepreciationPeriodCount() < 1)
-				errors.add(pos, t.getOpeningDepreciationPeriodCountField(), CommonServerErrors.INVALID_VALUE);
+			if (t.getOpeningDepreciationPeriod() < 0)
+				errors.add(pos, t.getOpeningDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
+			if (t.getOpeningAccumulatedDepreciation() > 0 && t.getOpeningDepreciationPeriod() < 1)
+				errors.add(pos, t.getOpeningDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
+			if (t.getOpeningAccumulatedDepreciation() == 0 && t.getOpeningDepreciationPeriod() > 0)
+				errors.add(pos, t.getOpeningDepreciationPeriodField(), CommonServerErrors.INVALID_VALUE);
 
 			if (t.getResidualValue() < 0)
 				errors.add(pos, t.getResidualValueField(), CommonServerErrors.INVALID_VALUE);
@@ -49,16 +51,17 @@ public interface IStraightLineDepreciation {
 		public static <P> boolean postExecute(final IStraightLineDepreciation t, final IAssetRecord asset, final P pos, final IErrorList<P> errors) throws DispatchException {
 			int n = errors.size();
 
-			if (t.getOpeningAccumulatedDepreciation() > asset.getTotalDepreciation())
-				errors.add(pos, t.getOpeningAccumulatedDepreciationField(), ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
-			else if (t.getOpeningAccumulatedDepreciation() < asset.getTotalDepreciation()) {
-				if (t.getOpeningDepreciationPeriodCount() >= asset.getDepreciationPeriod())
-					errors.add(pos, t.getOpeningDepreciationPeriodCountField(), ServerErrors.INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
-			} else /*if (t.getValue() == asset.getTotalDepreciation())*/ {
-				if (t.getOpeningDepreciationPeriodCount() != asset.getDepreciationPeriod())
-					errors.add(pos, t.getOpeningDepreciationPeriodCountField(), ServerErrors.INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
+			if (t.getOpeningAccumulatedDepreciation() > 0) {
+				if (t.getOpeningAccumulatedDepreciation() > asset.getTotalDepreciation())
+					errors.add(pos, t.getOpeningAccumulatedDepreciationField(), ServerErrors.INVALID_ACCUMULATED_DEPRECIATION);
+				else if (t.getOpeningAccumulatedDepreciation() < asset.getTotalDepreciation()) {
+					if (t.getOpeningDepreciationPeriod() >= asset.getDepreciationPeriod())
+						errors.add(pos, t.getOpeningDepreciationPeriodField(), ServerErrors.OPENING_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD);
+				} else /*if (t.getOpeningAccumulatedDepreciation() == asset.getTotalDepreciation())*/ {
+					if (t.getOpeningDepreciationPeriod() != asset.getDepreciationPeriod())
+						errors.add(pos, t.getOpeningDepreciationPeriodField(), ServerErrors.OPENING_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD);
+				}
 			}
-
 			if (t.getResidualValue() > asset.getCost())
 				errors.add(pos, t.getResidualValueField(), ServerErrors.INVALID_RESIDUAL_VALUE);
 
@@ -70,12 +73,12 @@ public interface IStraightLineDepreciation {
 	void setFromDate(final Date dt);
 	String getFromDateField();
 
-	Integer getOpeningAccumulatedDepreciation();
-	Integer getOpeningDepreciationPeriodCount();
+	int getOpeningAccumulatedDepreciation();
+	int getOpeningDepreciationPeriod();
 
 	String getOpeningAccumulatedDepreciationField();
-	String getOpeningDepreciationPeriodCountField();
+	String getOpeningDepreciationPeriodField();
 
-	Integer getResidualValue();
+	int getResidualValue();
 	String getResidualValueField();
 }

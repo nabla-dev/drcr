@@ -71,7 +71,7 @@ public class TransactionList extends LinkedList<Transaction> {
 		if (method == null)
 			return;	// nothing else to do
 		int accumulatedDepreciation = method.getOpeningAccumulatedDepreciation();
-		int monthCount = method.getOpeningDepreciationPeriodCount();
+		int monthCount = method.getOpeningDepreciationPeriod();
 		// opening depreciation
 		add(new Transaction(TransactionClasses.DEP, TransactionTypes.OPENING, asset.getAcquisitionDate(), -1 * accumulatedDepreciation, monthCount));
 		if (accumulatedDepreciation >= asset.getTotalDepreciation())

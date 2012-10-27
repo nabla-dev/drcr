@@ -139,10 +139,6 @@ class XmlAsset extends Node implements IAssetRecord {
 		IAsset.LOCATION_CONSTRAINT.validate(LOCATION, location, errors, ValidatorContext.UPDATE);
 		IAsset.PURCHASE_INVOICE_CONSTRAINT.validate(PURCHASE_INVOICE, purchaseInvoice, errors, ValidatorContext.UPDATE);
 		Validator.execute(this, getRow(), errors);
-		if (depreciationMethod != null)
-			Asset.validate(depreciationMethod, acquisitionDate, depreciationMethod.getRow(), errors);
-		if (disposal != null)
-			Asset.<Integer>validate(disposal, acquisitionDate, disposal.getRow(), errors);
 	}
 
 	public void postValidate(@Nullable final Company company, final ImportContext ctx) throws DispatchException {

@@ -73,7 +73,7 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 	}
 
 	@Override
-	public Integer getResidualValue() {
+	public int getResidualValue() {
 		return residualValue;
 	}
 
@@ -98,12 +98,12 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 	}
 
 	@Override
-	public Integer getOpeningAccumulatedDepreciation() {
+	public int getOpeningAccumulatedDepreciation() {
 		return openingAccumulatedDepreciation;
 	}
 
 	@Override
-	public Integer getOpeningDepreciationPeriodCount() {
+	public int getOpeningDepreciationPeriod() {
 		return openingDepreciationPeriod;
 	}
 
@@ -113,7 +113,7 @@ public class XmlStraightLineDepreciation extends Node implements IStraightLineDe
 	}
 
 	@Override
-	public String getOpeningDepreciationPeriodCountField() {
+	public String getOpeningDepreciationPeriodField() {
 		return OPENING_DEPRECIATION_PERIOD;
 	}
 }

@@ -50,12 +50,6 @@ public interface IServerErrorStrings extends ICommonServerErrorStrings {
 	String INVALID_RESIDUAL_VALUE();
 
 	@DefaultStringValue("Must be equal to depreciation period")
-	String INITIAL_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD();
-
-	@DefaultStringValue("Must be less than depreciation period")
-	String INITIAL_MUST_BE_LESS_THAN_DEPRECIATION_PERIOD();
-
-	@DefaultStringValue("Must be equal to depreciation period")
 	String OPENING_MUST_BE_EQUAL_TO_DEPRECIATION_PERIOD();
 
 	@DefaultStringValue("Must be less than depreciation period")

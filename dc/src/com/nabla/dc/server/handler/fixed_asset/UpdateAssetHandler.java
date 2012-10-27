@@ -56,14 +56,16 @@ public class UpdateAssetHandler extends AbstractUpdateHandler<UpdateAsset> {
 			sql.execute(guard.getConnection(), record);
 			final TransactionList transactions = new TransactionList(record.getId());
 			transactions.createTransactions(record);
-			if (method != null)
+			if (method != null) {
 				transactions.clearTable(guard.getConnection());
-			else
+				transactions.save(guard.getConnection());
+			} else {
 				transactions.clearCost(guard.getConnection());
-			transactions.save(guard.getConnection());
-			if (method == null && getResidualValue(guard.getConnection(), record.getId()) < 0) {
-				errors.add(IAsset.COST, CommonServerErrors.INVALID_VALUE);
-				throw errors;
+				transactions.save(guard.getConnection());
+				if (getResidualValue(guard.getConnection(), record.getId()) < 0) {
+					errors.add(IAsset.COST, CommonServerErrors.INVALID_VALUE);
+					throw errors;
+				}
 			}
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.CATEGORY, record.getCompanyAssetCategoryId());
 			UserPreference.save(ctx, record.getCompanyId(), IAsset.PREFERENCE_GROUP, IAsset.LOCATION, record.getLocation());
