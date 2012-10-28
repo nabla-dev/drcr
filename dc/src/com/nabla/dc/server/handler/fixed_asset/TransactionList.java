@@ -79,6 +79,7 @@ public class TransactionList extends LinkedList<Transaction> {
 		final Calendar dt = new GregorianCalendar();
 		if (method.getFromDate() != null) {
 			dt.setTime(method.getFromDate());
+			dt.add(GregorianCalendar.MONTH, -1);
 		} else {
 			// if no starting date specified use acquisition date
 			dt.setTime(asset.getAcquisitionDate());

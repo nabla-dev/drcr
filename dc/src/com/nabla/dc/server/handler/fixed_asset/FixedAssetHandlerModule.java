@@ -65,6 +65,8 @@ public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 		bindHandler(RemoveTransactionHandler.class);
 
 		bindHandler(ImportCompanyAssetsHandler.class);
+
+		bindHandler(FetchTransactionListHandler.class);
 	}
 
 }

@@ -9,9 +9,9 @@
 	<ui:with field="model" type="com.smartgwt.client.widgets.form.ValuesManager"/>
 	<ui:with field="fields" type="com.nabla.dc.client.model.fixed_asset.AssetFields" />
 
-	<wnd:ModalDialog caption="Asset Properties" icon="properties_small.png" autoClose="true" width="500" height="250">
+	<wnd:ModalDialog caption="Asset Properties" icon="properties_small.png" autoClose="true" width="500" height="240">
 		<ui:attribute name="caption" description="View asset properties caption"/>
-		<wnd:TabSet ui:field="tabs" width="100%" height="190">
+		<wnd:TabSet ui:field="tabs" width="100%" height="180">
 			<wnd:Tab title="General">
 			<ui:attribute name="title" description="General tab title"/>
 				<form:Form valuesManager="{model}">

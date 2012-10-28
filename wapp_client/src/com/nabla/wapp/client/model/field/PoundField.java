@@ -19,6 +19,7 @@ package com.nabla.wapp.client.model.field;
 import com.nabla.wapp.client.model.PoundType;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.fields.DataSourceSimpleTypeField;
+import com.smartgwt.client.types.FieldType;
 
 /**
  * @author nabla64
@@ -33,5 +34,10 @@ public class PoundField extends DataSourceSimpleTypeField {
 
 	public void setDefaultValue(Integer value) {
 		setAttribute(IFieldReservedNames.DEFAULT_VALUE, value);
+	}
+
+	@Override
+	public FieldType getType() {
+		return FieldType.INTEGER;
 	}
 }

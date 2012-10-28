@@ -1,0 +1,38 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
+	>
+
+	<ui:with field="tabTitle" type="java.lang.String" />
+	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.TransactionListModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.fixed_asset.TransactionList.ICommandSet"/>
+	
+	<wnd:Tab title="{tabTitle}" canClose="true" icon="fixed_asset/transaction_small.png">
+		<wnd:VLayout>
+			<wnd:Toolbar width="100%">
+				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
+				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
+				<wnd:ToolbarSeparator />
+				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
+				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>
+			</wnd:Toolbar>
+			<wnd:ListGrid ui:field="list" viewStateReference="fa_transaction_list" model="{model}" canSort="true">
+				<wnd:ListGridField name="{model.fields.period}" canGroupBy="false" width="150"><ui:msg>Period</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.clazz}" width="60"><ui:msg>Class</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.type}" width="100"><ui:msg>Type</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.amount}" width="80" canGroupBy="false"><ui:msg>Amount (£)</ui:msg></wnd:ListGridField>
+				<wnd:ListGridField name="{model.fields.depreciationPeriod}" width="150" canGroupBy="false" emptyCellValue="--"><ui:msg>Dep period (month)</ui:msg></wnd:ListGridField>
+				<wnd:Menu>
+					<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg>Export as CSV</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.print}" icon="print.png"><ui:msg>Print</ui:msg></wnd:MenuItem>
+					<wnd:MenuItemSeparator/>
+					<wnd:MenuItem command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:MenuItem>					
+				</wnd:Menu>
+			</wnd:ListGrid>
+		</wnd:VLayout>
+	</wnd:Tab>
+	
+</ui:UiBinder> 

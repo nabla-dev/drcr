@@ -41,7 +41,7 @@ public class AccountListUi extends BindedTabDisplay<Tab> implements AccountList.
 	private static Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
-	String				tabTitle;
+	final String		tabTitle;
 	@UiField(provided=true)
 	AccountListModel	model;
 	@UiField

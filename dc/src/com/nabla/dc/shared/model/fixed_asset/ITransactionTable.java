@@ -16,19 +16,20 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
-import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 
 /**
  * @author nabla
  *
  */
-public interface ITransaction extends ITransactionTable {
-	static final String					PERIOD = "period";
+public interface ITransactionTable {
+	static final String	TABLE = "fa_transaction";
 
-	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(1, 12 * 100, true);
-
-	static final String					REPORT = "FA_TRANSACTION_LIST";
-
-	static final String					PREFERENCE_GROUP = "fa_transaction";
+	static final String	ID = "id";
+	static final String	ASSET_ID = "fa_asset_id";
+	static final String	PERIOD_END_ID = "period_end_id";
+	static final String	AMOUNT = "amount";
+	static final String	DEPRECIATION_PERIOD = "depreciation_period";
+	static final String	CLASS = "class";
+	static final String	TYPE = "type";
 
 }

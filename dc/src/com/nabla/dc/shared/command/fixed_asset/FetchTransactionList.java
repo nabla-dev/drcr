@@ -14,21 +14,26 @@
 * the License.
 *
 */
-package com.nabla.dc.shared.model.fixed_asset;
+package com.nabla.dc.shared.command.fixed_asset;
 
-import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
+import com.nabla.wapp.shared.command.AbstractFetch;
 
 /**
  * @author nabla
  *
  */
-public interface ITransaction extends ITransactionTable {
-	static final String					PERIOD = "period";
+public class FetchTransactionList extends AbstractFetch {
 
-	static final IntegerRangeConstraint	DEPRECIATION_PERIOD_CONSTRAINT = new IntegerRangeConstraint(1, 12 * 100, true);
+	private Integer		assetId;
 
-	static final String					REPORT = "FA_TRANSACTION_LIST";
+	FetchTransactionList() {}
 
-	static final String					PREFERENCE_GROUP = "fa_transaction";
+	public FetchTransactionList(final Integer assetId) {
+		this.assetId = assetId;
+	}
+
+	public Integer getAssetId() {
+		return assetId;
+	}
 
 }

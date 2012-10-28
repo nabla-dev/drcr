@@ -27,6 +27,7 @@ import com.smartgwt.client.data.SimpleType;
 import com.smartgwt.client.data.SimpleTypeFormatter;
 import com.smartgwt.client.types.FieldType;
 import com.smartgwt.client.widgets.DataBoundComponent;
+import com.smartgwt.client.widgets.form.fields.IntegerItem;
 
 /**
  * @author nabla
@@ -36,7 +37,7 @@ public class PoundType extends SimpleType implements SimpleTypeFormatter {
 
 	public static final PoundType		instance = new PoundType();
 
-	private static final Logger			logger = LoggerFactory.getLog(PoundType.class);
+	private static final Logger		logger = LoggerFactory.getLog(PoundType.class);
 	private static final NumberFormat	format = NumberFormat.getFormat("#,##0;(#,##0);0");
 
 	public PoundType() {
@@ -44,6 +45,7 @@ public class PoundType extends SimpleType implements SimpleTypeFormatter {
 		this.setValidators(new PoundValidator(true));
 		this.setNormalDisplayFormatter(this);
 		this.setShortDisplayFormatter(this);
+		this.setReadOnlyEditorType(new IntegerItem());
 		this.register();
 	}
 

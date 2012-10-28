@@ -21,7 +21,7 @@ import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.IntegerField;
-import com.nabla.wapp.client.model.field.PositiveIntegerField;
+import com.nabla.wapp.client.model.field.PoundField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
@@ -45,23 +45,21 @@ public class ViewAssetModel extends BasicAssetModel {
 			new TextField(fields.category(), FieldAttributes.READ_ONLY),
 			new TextField(fields.reference(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new TextField(fields.location(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new IntegerField(fields.depPeriod(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 
 			new DateField(fields.acquisitionDate(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new TextField(fields.acquisitionType(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.cost(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new PoundField(fields.cost(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new TextField(fields.pi(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
-		/*	new PositiveIntegerField(fields.initialAccumDep(), FieldAttributes.OPTIONAL),
-			new IntegerField(fields.initialDepPeriod(), FieldAttributes.OPTIONAL),*/
 
-			new IntegerField(fields.depPeriod(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.residualValue(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
-
-			new PositiveIntegerField(fields.openingAccumDep(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new TextField(fields.depreciationFromDate(), FieldAttributes.READ_ONLY),
+			new PoundField(fields.openingAccumDep(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new IntegerField(fields.openingDepPeriod(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
+			new PoundField(fields.residualValue(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 
 			new DateField(fields.disposalDate(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
 			new TextField(fields.disposalType(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.proceeds(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL)
+			new PoundField(fields.proceeds(), FieldAttributes.READ_ONLY, FieldAttributes.OPTIONAL)
 		);
 	}
 

@@ -29,15 +29,15 @@ import com.smartgwt.client.widgets.form.ValuesManager;
  * @author nabla
  *
  */
-public class ViewAssetDisposalTabUi extends BindedTabDisplay<Tab> implements ITabDisplay {
+public class ViewAssetDepreciationTabUi extends BindedTabDisplay<Tab> implements ITabDisplay {
 
-	interface Binder extends UiBinder<Tab, ViewAssetDisposalTabUi> {}
+	interface Binder extends UiBinder<Tab, ViewAssetDepreciationTabUi> {}
 	private static final Binder	uiBinder = GWT.create(Binder.class);
 
 	@UiField(provided=true)
 	final ValuesManager		model;
 
-	public ViewAssetDisposalTabUi(final ValuesManager model) {
+	public ViewAssetDepreciationTabUi(final ValuesManager model) {
 		this.model = model;
 		this.create(uiBinder, this);
 	}

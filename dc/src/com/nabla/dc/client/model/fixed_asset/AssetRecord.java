@@ -111,7 +111,12 @@ public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardR
 						getResidualValue());
 	}
 
-	public Boolean isDisposed() {
+	public boolean isDepreciation() {
+		String date = getAttributeAsString(DEPRECIATION_FROM_DATE);
+		return date != null && !date.isEmpty();
+	}
+
+	public boolean isDisposed() {
 		String date = getAttributeAsString(DISPOSAL_DATE);
 		return date != null && !date.isEmpty();
 	}

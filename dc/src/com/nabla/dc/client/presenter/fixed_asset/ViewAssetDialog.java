@@ -18,6 +18,7 @@ package com.nabla.dc.client.presenter.fixed_asset;
 
 import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.model.fixed_asset.ViewAssetValuesManager;
+import com.nabla.dc.client.ui.fixed_asset.ViewAssetDepreciationTabUi;
 import com.nabla.dc.client.ui.fixed_asset.ViewAssetDialogUi;
 import com.nabla.dc.client.ui.fixed_asset.ViewAssetDisposalTabUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
@@ -34,9 +35,6 @@ public class ViewAssetDialog extends AbstractTopPresenter<ViewAssetDialog.IDispl
 	public interface IDisplay extends ITopDisplay {
 		void addTab(final ITabDisplay tab);
 	}
-
-	public interface IAcquisitionTabDisplay extends ITabDisplay {}
-	public interface IDisposalTabDisplay extends ITabDisplay {}
 
 	private final ViewAssetValuesManager	model;
 
@@ -63,6 +61,8 @@ public class ViewAssetDialog extends AbstractTopPresenter<ViewAssetDialog.IDispl
 	public void bind() {
 		super.bind();
 		final AssetRecord asset = model.getRecord();
+		if (asset.isDepreciation())
+			getDisplay().addTab(new ViewAssetDepreciationTabUi(model));
 		if (asset.isDisposed())
 			getDisplay().addTab(new ViewAssetDisposalTabUi(model));
 	}

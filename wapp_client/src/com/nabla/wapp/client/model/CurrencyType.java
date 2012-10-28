@@ -27,7 +27,7 @@ import com.smartgwt.client.types.FieldType;
  */
 public class CurrencyType extends SimpleType {
 
-	public static final String			EDITOR_CLASSNAME = "CurrencyItem";
+	public static final String		EDITOR_CLASSNAME = "CurrencyItem";
 	public static final CurrencyType	instance = new CurrencyType();
 
 	protected CurrencyType() {

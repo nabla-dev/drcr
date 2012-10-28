@@ -83,4 +83,6 @@ public interface IMessageResource extends Messages {
 	@DefaultMessage("<p>This wizard will help you split asset ''{0}'' into two assets. Overwhole no change will occur with the total cost and monthly depreciation remaining the same.<br/>Click 'Next' to continue or 'Cancel' to exit this wizard.</p>")
 	String splitAssetWelcomeMessage(String assetName);
 
+	@DefaultMessage("{0} - Transactions")
+	String assetTransactionListTitle(String assetName);
 }

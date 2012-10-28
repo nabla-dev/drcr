@@ -80,7 +80,7 @@ public enum ControlTypes {
 	},*/
 	;
 
-	private static final Logger	logger = LoggerFactory.getLog(ControlTypes.class);
+	private static final Logger	log = LoggerFactory.getLog(ControlTypes.class);
 
 	abstract FormItem create(final DataSourceField field);
 
@@ -88,32 +88,37 @@ public enum ControlTypes {
 		Assert.argumentNotNull(field);
 
 		try {
-			final FormItem impl = fromClassName(field.getAttribute("editorType")).create(field);
+			ControlTypes type = fromClassName(field.getAttribute("editorType"));
+			if (type == null)
+				type = valueOf(field.getType());
+			final FormItem impl = type.create(field);
 			JSOHelper.addProperties(impl.getJsObj(), field.getAttributeAsJavaScriptObject("editorProperties"));
 			return impl;
-		} catch (Exception __) {
-//			logger.warning("failed to get editor type for field '" + field.getName() + "'. assume default editor");
-//			logger.warning(JSHelper.dump(field.getJsObj()));
-			return valueOf(field.getType()).create(field);
-		}
+		} catch (Throwable __) {}
+		log.warning("failed to get editor type for field '" + field.getName() + "'. assume default editor");
+		return valueOf(field.getType()).create(field);
 	}
 
 	static ControlTypes valueOf(final FieldType type) {
-		switch (type) {
-			case TEXT:
-				return ControlTypes.TEXT_EDIT_BOX;
-			case INTEGER:
-				return ControlTypes.INTEGER_EDIT_BOX;
-			case ENUM:
-				return ControlTypes.ENUM_SELECT_BOX;
-			case DATE:
-				return ControlTypes.DATE_EDIT_BOX;
-			case BOOLEAN:
-				return ControlTypes.CHECK_BOX;
-			default:
-				logger.log(Level.SEVERE,"unsupported control field type '" + type.toString() + "'");
-				return null;
+		if (type != null) {
+			switch (type) {
+				case TEXT:
+					return ControlTypes.TEXT_EDIT_BOX;
+				case INTEGER:
+					return ControlTypes.INTEGER_EDIT_BOX;
+				case ENUM:
+					return ControlTypes.ENUM_SELECT_BOX;
+				case DATE:
+					return ControlTypes.DATE_EDIT_BOX;
+				case BOOLEAN:
+					return ControlTypes.CHECK_BOX;
+				default:
+					log.log(Level.SEVERE,"unsupported control field type '" + type.toString() + "'");
+			}
+		} else {
+			log.log(Level.SEVERE,"unsupported control field type: NULL!");
 		}
+		return ControlTypes.TEXT_EDIT_BOX;
 	}
 
 	static ControlTypes fromClassName(final String className) {
@@ -125,7 +130,7 @@ public enum ControlTypes {
 			return ControlTypes.SELECT_BOX;
 	/*	if (className.equals("ComboBoxItem"))
 			return ControlTypes.COMBOX_BOX;*/
-		logger.log(Level.SEVERE,"unsupported control class name '" + className + "'");
+		log.log(Level.SEVERE, "unsupported control class name '" + className + "'");
 		return null;
 	}
 }

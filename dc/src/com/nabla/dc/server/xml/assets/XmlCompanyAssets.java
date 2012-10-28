@@ -63,9 +63,9 @@ public class XmlCompanyAssets extends Node {
 		if (log.isDebugEnabled())
 			log.debug("deleting all assets for company");
 		Database.executeUpdate(conn,
-"DELETE fa_asset" +
+"DELETE a" +
 " FROM fa_asset AS a INNER JOIN fa_company_asset_category AS c ON a.fa_company_asset_category_id=c.id" +
-" WHERE a.company_id=?;", companyId);
+" WHERE c.company_id=?;", companyId);
 
 	}
 

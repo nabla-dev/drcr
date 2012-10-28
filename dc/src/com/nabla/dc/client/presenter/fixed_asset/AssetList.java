@@ -106,10 +106,12 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		registerSlot(cmd.split(), onSplitAsset);
 		cmd.split().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		registerSlot(cmd.importAssets(), onImportAsset);
+		registerSlot(cmd.transaction(), onTransactionList);
+		cmd.transaction().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		/*
 	  	registerSlot(cmd.userReportList(), onUserReportList);
 
-		registerSlot(rcmd.transaction(), onTransactionList);
+
 	*/
 		cmd.updateUi();
 
@@ -237,7 +239,12 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-	/*
+	private final ISlot1<AssetRecord> onTransactionList = new ISlot1<AssetRecord>() {
+		@Override
+		public void invoke(final AssetRecord record) {
+			tabs.addTab(new TransactionList(record.getId(), record.getName()));
+		}
+	};	/*
 	private final ISlot onUserReportList = new ISlot() {
 		@Override
 		public void invoke() {
@@ -245,11 +252,5 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		}
 	};
 
-	private final ISlot1<Record> onTransactionList = new ISlot1<Record>() {
-		@Override
-		public void invoke(final Record record) {
-			final AssetRecord asset = new AssetRecord(record);
-			workspace.addTab(transactionListFactory.get(asset.getId(), asset.getName(), asset.isDisposed()));
-		}
-	};*/
+*/
 }

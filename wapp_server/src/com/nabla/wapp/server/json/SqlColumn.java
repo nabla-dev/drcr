@@ -47,8 +47,8 @@ public class SqlColumn {
 		} else if (label.startsWith("i_")) {
 			this.label = label.substring(2);
 			this.type = Types.INTEGER;
-		} else if (label.startsWith("d_")) {
-			this.label = label.substring(2);
+		} else if (label.startsWith("dt_")) {
+			this.label = label.substring(3);
 			this.type = Types.DATE;
 		} else if (label.startsWith("s_")) {
 			this.label = label.substring(2);
