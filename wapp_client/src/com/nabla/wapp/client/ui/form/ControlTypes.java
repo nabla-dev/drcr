@@ -30,6 +30,7 @@ import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
+import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
 /**
@@ -38,6 +39,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
  */
 public enum ControlTypes {
 
+	READ_ONLY_TEXT_EDIT_BOX { @Override FormItem create(@SuppressWarnings("unused") final DataSourceField field) { return new StaticTextItem(); } },
 	TEXT_EDIT_BOX { @Override FormItem create(@SuppressWarnings("unused") final DataSourceField field) { return new TextItem(); } },
 	INTEGER_EDIT_BOX {
 		@Override FormItem create(final DataSourceField field) {
@@ -87,38 +89,35 @@ public enum ControlTypes {
 	public static FormItem createEditor(final DataSourceField field) {
 		Assert.argumentNotNull(field);
 
-		try {
-			ControlTypes type = fromClassName(field.getAttribute("editorType"));
-			if (type == null)
-				type = valueOf(field.getType());
-			final FormItem impl = type.create(field);
-			JSOHelper.addProperties(impl.getJsObj(), field.getAttributeAsJavaScriptObject("editorProperties"));
-			return impl;
-		} catch (Throwable __) {}
-		log.warning("failed to get editor type for field '" + field.getName() + "'. assume default editor");
-		return valueOf(field.getType()).create(field);
+		boolean readOnly = field.getCanEdit();
+		ControlTypes type = fromClassName(field.getAttribute(readOnly ? "readOnlyEditorType" : "editorType"));
+		if (type == null)
+			type = valueOf(field.getType(), readOnly);
+		final FormItem impl = type.create(field);
+		JSOHelper.addProperties(impl.getJsObj(), field.getAttributeAsJavaScriptObject("editorProperties"));
+		return impl;
 	}
 
-	static ControlTypes valueOf(final FieldType type) {
-		if (type != null) {
-			switch (type) {
-				case TEXT:
-					return ControlTypes.TEXT_EDIT_BOX;
-				case INTEGER:
-					return ControlTypes.INTEGER_EDIT_BOX;
-				case ENUM:
-					return ControlTypes.ENUM_SELECT_BOX;
-				case DATE:
-					return ControlTypes.DATE_EDIT_BOX;
-				case BOOLEAN:
-					return ControlTypes.CHECK_BOX;
-				default:
-					log.log(Level.SEVERE,"unsupported control field type '" + type.toString() + "'");
-			}
-		} else {
+	static ControlTypes valueOf(FieldType type, boolean readOnly) {
+		if (type == null) {
 			log.log(Level.SEVERE,"unsupported control field type: NULL!");
+			type = FieldType.TEXT;
 		}
-		return ControlTypes.TEXT_EDIT_BOX;
+		switch (type) {
+			case INTEGER:
+				return readOnly ? ControlTypes.READ_ONLY_TEXT_EDIT_BOX : ControlTypes.INTEGER_EDIT_BOX;
+			case ENUM:
+				return ControlTypes.ENUM_SELECT_BOX;
+			case DATE:
+				return readOnly ? ControlTypes.READ_ONLY_TEXT_EDIT_BOX : ControlTypes.DATE_EDIT_BOX;
+			case BOOLEAN:
+				return ControlTypes.CHECK_BOX;
+			case TEXT:
+				return readOnly ? ControlTypes.READ_ONLY_TEXT_EDIT_BOX : ControlTypes.TEXT_EDIT_BOX;
+			default:
+				log.log(Level.SEVERE,"unsupported control field type '" + type.toString() + "'");
+				return readOnly ? ControlTypes.READ_ONLY_TEXT_EDIT_BOX : ControlTypes.TEXT_EDIT_BOX;
+		}
 	}
 
 	static ControlTypes fromClassName(final String className) {

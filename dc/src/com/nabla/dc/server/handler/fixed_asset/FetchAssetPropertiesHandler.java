@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchAssetPropertiesHandler extends AbstractFetchHandler<FetchAssetProperties> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT t.id, t.name, t.fa_company_asset_category_id AS 'category', t.reference, t.location" +
+"SELECT t.id, t.name, c.name AS 'category', t.reference, t.location" +
 ", t.acquisition_date, t.acquisition_type, t.purchase_invoice" +
 ", (SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING') AS 'i_cost'" +
 ", (-1 * o.amount) AS 'opening_accumulated_depreciation', o.depreciation_period AS 'opening_depreciation_period'" +
@@ -40,7 +40,11 @@ public class FetchAssetPropertiesHandler extends AbstractFetchHandler<FetchAsset
 ", (SELECT p.name FROM fa_transaction AS tt INNER JOIN period_end AS p ON tt.period_end_id=p.id WHERE tt.fa_asset_id=t.id AND tt.class='DEP' AND tt.type='CHARGE' ORDER BY p.end_date LIMIT 1) AS 'depreciationFromDate'" +
 ", (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id) AS 'i_residual_value'" +
 ", t.disposal_date, t.disposal_type, t.proceeds" +
-" FROM fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +
+" FROM fa_asset_category AS c INNER JOIN (" +
+" fa_company_asset_category AS l INNER JOIN (" +
+" fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +
+") ON l.id = t.fa_company_asset_category_id" +
+") ON l.fa_asset_category_id=c.id" +
 " WHERE t.id=?"
 	);
 

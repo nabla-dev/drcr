@@ -17,18 +17,23 @@
 package com.nabla.wapp.client.model.field;
 
 import com.nabla.wapp.client.model.PoundType;
+import com.nabla.wapp.client.model.validator.PoundRangeValidator;
+import com.nabla.wapp.client.model.validator.PoundValidator;
+import com.nabla.wapp.client.model.validator.ValidatorList;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
-import com.smartgwt.client.data.fields.DataSourceSimpleTypeField;
-import com.smartgwt.client.types.FieldType;
+import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
+import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.widgets.form.validator.Validator;
 
 /**
  * @author nabla64
  *
  */
-public class PoundField extends DataSourceSimpleTypeField {
+public class PoundField extends DataSourceField {
 
 	public PoundField(final String name, final FieldAttributes... attributes) {
-		super(name, PoundType.instance);
+		setName(name);
+		setType(PoundType.instance);
 		FieldAttributes.applyAll(this, attributes);
 	}
 
@@ -36,8 +41,26 @@ public class PoundField extends DataSourceSimpleTypeField {
 		setAttribute(IFieldReservedNames.DEFAULT_VALUE, value);
 	}
 
-	@Override
-	public FieldType getType() {
-		return FieldType.INTEGER;
+	public PoundField(final String name, final ValidatorList validators, final FieldAttributes... attributes) {
+		this(name, attributes);
+		if (!validators.isEmpty()) {
+			final ValidatorList tmp = new ValidatorList();
+			tmp.addAll(validators);
+			tmp.add(new PoundValidator(true));
+			this.setValidators(tmp.asArray());
+		}
 	}
+
+	public PoundField(final String name, final Validator validator, final FieldAttributes... attributes) {
+		this(name, attributes);
+		final ValidatorList validators = new ValidatorList();
+		validators.add(validator);
+		validators.add(new PoundValidator(true));
+		this.setValidators(validators.asArray());
+	}
+
+	public PoundField(final String name, final IntegerRangeConstraint validator, final FieldAttributes... attributes) {
+		this(name, new PoundRangeValidator(validator), attributes);
+	}
+
 }

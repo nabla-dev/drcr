@@ -25,6 +25,7 @@ import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.IntegerField;
 import com.nabla.wapp.client.model.field.PositiveIntegerField;
+import com.nabla.wapp.client.model.field.PoundField;
 import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
@@ -56,7 +57,8 @@ public class AssetWizardModel extends BasicAssetModel {
 
 			new DateField(fields.acquisitionDate(), FieldAttributes.REQUIRED),
 			new AcquisitionTypeField(fields.acquisitionType(), FieldAttributes.REQUIRED),
-			new PositiveIntegerField(fields.cost(), FieldAttributes.REQUIRED),
+		//	new PositiveIntegerField(fields.cost(), FieldAttributes.REQUIRED),
+			new PoundField(fields.cost(), FieldAttributes.REQUIRED),
 			new TextField(fields.pi(), IAsset.PURCHASE_INVOICE_CONSTRAINT, FieldAttributes.OPTIONAL),
 
 			new IntegerField(fields.depPeriod(), FieldAttributes.REQUIRED),

@@ -16,7 +16,6 @@
 */
 package com.nabla.wapp.client.model.field;
 
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.model.CurrencyType;
 import com.nabla.wapp.client.model.validator.CurrencyRangeValidator;
 import com.nabla.wapp.client.model.validator.CurrencyValidator;
@@ -40,7 +39,6 @@ public class CurrencyField extends DataSourceField {
 
 	public CurrencyField(final String name, final ValidatorList validators, final FieldAttributes... attributes) {
 		this(name, attributes);
-		Assert.argumentNotNull(validators);
 		if (!validators.isEmpty()) {
 			final ValidatorList tmp = new ValidatorList();
 			tmp.addAll(validators);
@@ -51,7 +49,6 @@ public class CurrencyField extends DataSourceField {
 
 	public CurrencyField(final String name, final Validator validator, final FieldAttributes... attributes) {
 		this(name, attributes);
-		Assert.argumentNotNull(validator);
 		final ValidatorList validators = new ValidatorList();
 		validators.add(validator);
 		validators.add(new CurrencyValidator(true));
@@ -60,7 +57,6 @@ public class CurrencyField extends DataSourceField {
 
 	public CurrencyField(final String name, final IntegerRangeConstraint validator, final FieldAttributes... attributes) {
 		this(name, attributes);
-		Assert.argumentNotNull(validator);
 		final ValidatorList validators = new ValidatorList();
 		validators.add(new CurrencyRangeValidator(validator));
 		validators.add(new CurrencyValidator(true));

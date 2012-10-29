@@ -60,6 +60,8 @@ public class UiBinderFormItemSpeudoWidget<C extends FormItem> extends Widget imp
 		if (model != null && !isReadOnly() && !impl.getRequired()) {
 			// update item status with associated model field if any
 			final DataSourceField field = model.getField(impl.getName());
+			if (field.getCanEdit())
+
 			impl.setRequired(field != null && field.getRequired());
 		}
 		if (impl.getRequired() && !impl.getDisabled()) {

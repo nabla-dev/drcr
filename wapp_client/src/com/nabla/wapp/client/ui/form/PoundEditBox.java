@@ -14,21 +14,24 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.ui;
+package com.nabla.wapp.client.ui.form;
 
-import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
-import com.google.gwt.i18n.client.Messages;
+import com.nabla.wapp.client.model.PoundFormatter;
+import com.nabla.wapp.client.model.PoundType;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.form.fields.TextItem;
 
 /**
  * @author nabla
  *
  */
-@DefaultLocale("en")
-public interface IMessageResource extends Messages {
+public class PoundEditBox extends UiBinderFormTextItemSpeudoWidget<TextItem> {
 
-	@DefaultMessage("value must be between {0} and {1}")
-	String currencyRangeErrorMessage(String min, String max);
+	public PoundEditBox() {
+		super(new TextItem(), true);
+		impl.setType(PoundType.instance.getName());
+		impl.setTextAlign(Alignment.RIGHT);
+		setValueFormatter(new PoundFormatter());
+	}
 
-	@DefaultMessage("value must be between {0} and {1}")
-	String poundRangeErrorMessage(String min, String max);
 }

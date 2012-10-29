@@ -35,21 +35,21 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
  * The <code></code> object is used to
  *
  */
-public class CurrencyFormatter implements CellFormatter, SimpleTypeFormatter, FormItemValueFormatter {
+public class PoundFormatter implements CellFormatter, SimpleTypeFormatter, FormItemValueFormatter {
 
-	public static final String	FORMAT_ACCOUNTING_WITH_ZERO = "#,##0.00;(#,##0.00);0.00";
-	public static final String	FORMAT_ACCOUNTING_WITHOUT_ZERO = "#,##0.00;(#,##0.00);";
+	public static final String	FORMAT_ACCOUNTING_WITH_ZERO = "#,##0;(#,##0);0";
+	public static final String	FORMAT_ACCOUNTING_WITHOUT_ZERO = "#,##0;(#,##0);";
 
-	private static final Logger	logger = LoggerFactory.getLog(CurrencyFormatter.class);
-	private final NumberFormat	format;
-	private final String		zeroPattern;
+	private static final Logger	log = LoggerFactory.getLog(PoundFormatter.class);
+	private final NumberFormat		format;
+	private final String			zeroPattern;
 
-	public CurrencyFormatter(final NumberFormat format, final String zeroPattern) {
+	public PoundFormatter(final NumberFormat format, final String zeroPattern) {
 		this.format = format;
 		this.zeroPattern = zeroPattern;
 	}
 
-	public CurrencyFormatter(final String format) {
+	public PoundFormatter(final String format) {
 		if (format == null || format.isEmpty()) {
 			this.format = null;
 			this.zeroPattern = null;
@@ -68,12 +68,12 @@ public class CurrencyFormatter implements CellFormatter, SimpleTypeFormatter, Fo
 		}
 	}
 
-	public CurrencyFormatter(final String format, final String zeroPattern) {
+	public PoundFormatter(final String format, final String zeroPattern) {
 		this.format = NumberFormat.getFormat(format);
 		this.zeroPattern = zeroPattern;
 	}
 
-	public CurrencyFormatter() {
+	public PoundFormatter() {
 		this(FORMAT_ACCOUNTING_WITH_ZERO);
 	}
 
@@ -100,10 +100,9 @@ public class CurrencyFormatter implements CellFormatter, SimpleTypeFormatter, Fo
 			final Integer nValue = (Integer)value;
 			if (nValue == 0 && zeroPattern != null)
 				return zeroPattern;
-			final Float fValue = new Float(nValue) / 100;
-			return format.format(fValue);
+			return format.format(nValue);
 		} catch (Throwable e) {
-			logger.log(Level.WARNING, "failed to format currency = " + value.toString(), e);
+			log.log(Level.WARNING, "failed to format pound = " + value.toString(), e);
 			return value.toString();
 		}
 	}

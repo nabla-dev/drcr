@@ -16,49 +16,67 @@
 */
 package com.nabla.wapp.client.model;
 
-import java.util.logging.Logger;
-
-import com.google.gwt.i18n.client.NumberFormat;
-import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.model.validator.PoundValidator;
-import com.smartgwt.client.core.DataClass;
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.SimpleType;
-import com.smartgwt.client.data.SimpleTypeFormatter;
 import com.smartgwt.client.types.FieldType;
-import com.smartgwt.client.widgets.DataBoundComponent;
-import com.smartgwt.client.widgets.form.fields.IntegerItem;
 
 /**
  * @author nabla
  *
  */
-public class PoundType extends SimpleType implements SimpleTypeFormatter {
+public class PoundType extends SimpleType {
 
+	public static final String		EDITOR_CLASSNAME = "PoundItem";
 	public static final PoundType		instance = new PoundType();
 
-	private static final Logger		logger = LoggerFactory.getLog(PoundType.class);
-	private static final NumberFormat	format = NumberFormat.getFormat("#,##0;(#,##0);0");
-
-	public PoundType() {
+	protected PoundType() {
 		super("poundUK", FieldType.INTEGER);
-		this.setValidators(new PoundValidator(true));
-		this.setNormalDisplayFormatter(this);
-		this.setShortDisplayFormatter(this);
-		this.setReadOnlyEditorType(new IntegerItem());
-		this.register();
+
+		createEditor(EDITOR_CLASSNAME);
+		setAttribute("editorType", EDITOR_CLASSNAME, false);
+		setValidators(new PoundValidator(true));
+		final PoundFormatter defaultFormat = new PoundFormatter();
+		setNormalDisplayFormatter(defaultFormat);
+		setShortDisplayFormatter(defaultFormat);
 	}
 
-	@Override
-	public String format(Object value, @SuppressWarnings("unused") DataClass field, @SuppressWarnings("unused") DataBoundComponent component, @SuppressWarnings("unused") Record record) {
-		if(value == null)
-			return null;
-		final String s = value.toString();
+	private static native void createEditor(String name) /*-{
+		$wnd.isc.ClassFactory.defineClass(name, "TextItem");
+
+		$wnd.isc.ClassFactory.getClass(name).addProperties( {
+	        mapDisplayToValue : function(displayValue) {
+	            return @com.nabla.wapp.client.model.PoundType::displayToValue(Ljava/lang/String;)(displayValue);
+	        },
+	    	mapValueToDisplay : function(value) {
+	        	if (value == null)
+	            	return "";
+	        	else if (isNaN(value))
+	            	return @com.nabla.wapp.client.model.PoundType::anyValueToDisplay(Ljava/lang/String;)(value);
+	        	else {
+					return @com.nabla.wapp.client.model.PoundType::valueToDisplay(I)(value);
+	        	}
+	    	}
+		});
+	}-*/;
+
+	private static int displayToValue(String value) {
 		try {
-			return format.format(Integer.valueOf(s));
-		} catch (Throwable __) {
-			logger.warning("failed to format pound = " + s);
-			return s;
+			if (value == null)
+				return 0;
+			final Integer nValue = Integer.valueOf(value);
+			return nValue.intValue();
+		} catch (NumberFormatException __) {
+			return 0;
 		}
 	}
+
+	private static String anyValueToDisplay(String value) {
+		return value;
+	}
+
+	private static String valueToDisplay(int nValue) {
+		final Integer value = new Integer(nValue);
+		return value.toString();
+	}
+
 }
