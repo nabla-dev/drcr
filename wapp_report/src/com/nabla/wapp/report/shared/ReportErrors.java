@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.shared;
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public enum ReportErrors {
+	INVALID_REPORT_PARAMETER_MODEL
+}

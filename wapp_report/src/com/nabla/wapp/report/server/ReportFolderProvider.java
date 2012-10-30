@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2011 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,24 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.server;
+
+import javax.servlet.ServletContext;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.nabla.wapp.report.shared.IReport;
+import com.nabla.wapp.server.general.ServerParameterProvider;
 
 /**
- * @author nabla
+ * The <code></code> object is used to
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public class ReportFolderProvider extends ServerParameterProvider implements Provider<String> {
+
+	@Inject
+	ReportFolderProvider(final ServletContext serverContext) {
+		super(serverContext, IReport.REPORT_FOLDER);
+	}
+
+}

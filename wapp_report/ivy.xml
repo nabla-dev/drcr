@@ -1,0 +1,16 @@
+<ivy-module version="2.0">
+	<info organisation="com.nabla.wapp" module="wapp_report" revision="1.0.0">
+		<extends organisation="com.nabla.wapp" module="wapp_common" revision="1.0.0" />
+	</info>
+	<publications>
+      <artifact name="wapp_report" type="jar" ext="jar"/>      
+    </publications>
+    <dependencies>
+    <!--
+    	<dependency org="com.nabla.wapp" name="wapp_shared" rev="${wapp.version}" conf="compile" />
+    -->
+      	<dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default" />
+      <dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime->default" /> 
+	  
+    </dependencies>
+</ivy-module>

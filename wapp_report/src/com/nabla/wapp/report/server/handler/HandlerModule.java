@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,21 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.server.handler;
+
+import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
 /**
  * @author nabla
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public class HandlerModule extends AbstractHandlerSubModule {
+
+	@Override
+	protected void configure() {
+		bindHandler(FetchReportListHandler.class);
+		bindHandler(FetchUserReportListHandler.class);
+		bindHandler(FetchReportPermissionsComboBoxHandler.class);
+	}
+
+}

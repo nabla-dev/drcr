@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2011 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,24 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.client.model;
+
+import com.nabla.wapp.client.model.BasicRecordWrapper;
+import com.nabla.wapp.report.shared.IReport;
+import com.smartgwt.client.data.Record;
 
 /**
  * @author nabla
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public class ReportRecord extends BasicRecordWrapper {
+
+	public ReportRecord(Record impl) {
+		super(impl);
+	}
+
+	public String getName() {
+		return impl.getAttribute(IReport.NAME);
+	}
+
+}

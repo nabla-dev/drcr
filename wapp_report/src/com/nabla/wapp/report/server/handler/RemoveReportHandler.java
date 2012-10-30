@@ -14,10 +14,21 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.server.handler;
+
+import com.nabla.wapp.report.shared.IReportTable;
+import com.nabla.wapp.report.shared.command.RemoveReport;
+import com.nabla.wapp.server.model.AbstractRemoveHandler;
+
 
 /**
  * @author nabla
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public class RemoveReportHandler extends AbstractRemoveHandler<RemoveReport> {
+
+	public RemoveReportHandler() {
+		super(IReportTable.TABLE);
+	}
+
+}

@@ -14,10 +14,12 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.shared;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public interface IReportTable {
+	static final String	TABLE = "report";
+}

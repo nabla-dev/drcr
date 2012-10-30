@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2010 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,16 @@
 * the License.
 *
 */
-package com.nabla.wapp.shared.command;
+package com.nabla.wapp.report.server;
+
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 /**
- * @author nabla
+ * The <code>ExportReportToPdf</code> object is used to export Jasper report to PDF
  *
  */
-public class FetchRoleList extends AbstractFetch {}
+public class ExportReportToPdf extends JRPdfExporter {
+
+	public ExportReportToPdf() {}
+
+}
