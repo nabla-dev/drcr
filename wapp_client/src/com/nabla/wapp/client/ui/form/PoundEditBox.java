@@ -19,6 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.nabla.wapp.client.model.PoundFormatter;
 import com.nabla.wapp.client.model.PoundType;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
 /**
@@ -34,4 +35,12 @@ public class PoundEditBox extends UiBinderFormTextItemSpeudoWidget<TextItem> {
 		setValueFormatter(new PoundFormatter());
 	}
 
+	static public FormItem createInstance(boolean readOnly) {
+		final FormItem impl = new TextItem();
+		impl.setType(PoundType.instance.getName());
+		impl.setTextAlign(Alignment.RIGHT);
+		if (readOnly)
+			impl.setEditorValueFormatter(new PoundFormatter());
+		return impl;
+	}
 }

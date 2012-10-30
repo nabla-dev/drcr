@@ -43,7 +43,6 @@ public interface IAsset extends IAssetTable {
 	static final String					OPENING_DEPRECIATION_PERIOD = "opening_depreciation_period";
 	static final String					DEPRECIATION_FROM_DATE = "depreciationFromDate";
 	static final String					RESIDUAL_VALUE = "residual_value";
-	static final int						DEFAULT_RESIDUAL_VALUE = 1;
 
 	static final String					REPORT = "FA_ASSET_LIST";
 

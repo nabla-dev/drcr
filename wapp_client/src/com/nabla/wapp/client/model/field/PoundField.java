@@ -32,35 +32,41 @@ import com.smartgwt.client.widgets.form.validator.Validator;
 public class PoundField extends DataSourceField {
 
 	public PoundField(final String name, final FieldAttributes... attributes) {
-		setName(name);
-		setType(PoundType.instance);
-		FieldAttributes.applyAll(this, attributes);
+		commonConstructor(name, attributes);
+		if (!getIsReadOnly())
+			setValidators(new PoundValidator(true));
+	}
+
+	public PoundField(final String name, final ValidatorList validators, final FieldAttributes... attributes) {
+		commonConstructor(name, attributes);
+		if (!getIsReadOnly()) {
+			final ValidatorList tmp = new ValidatorList();
+			tmp.addAll(validators);
+			tmp.add(new PoundValidator(true));
+			setValidators(tmp.asArray());
+		}
+	}
+
+	public PoundField(final String name, final Validator validator, final FieldAttributes... attributes) {
+		this(name, new ValidatorList(validator), attributes);
+	}
+
+	public PoundField(final String name, final IntegerRangeConstraint validator, final FieldAttributes... attributes) {
+		this(name, new PoundRangeValidator(validator), attributes);
 	}
 
 	public void setDefaultValue(Integer value) {
 		setAttribute(IFieldReservedNames.DEFAULT_VALUE, value);
 	}
 
-	public PoundField(final String name, final ValidatorList validators, final FieldAttributes... attributes) {
-		this(name, attributes);
-		if (!validators.isEmpty()) {
-			final ValidatorList tmp = new ValidatorList();
-			tmp.addAll(validators);
-			tmp.add(new PoundValidator(true));
-			this.setValidators(tmp.asArray());
-		}
+	public boolean getIsReadOnly() {
+		return FieldAttributes.getIsReadOnly(this);
 	}
 
-	public PoundField(final String name, final Validator validator, final FieldAttributes... attributes) {
-		this(name, attributes);
-		final ValidatorList validators = new ValidatorList();
-		validators.add(validator);
-		validators.add(new PoundValidator(true));
-		this.setValidators(validators.asArray());
-	}
-
-	public PoundField(final String name, final IntegerRangeConstraint validator, final FieldAttributes... attributes) {
-		this(name, new PoundRangeValidator(validator), attributes);
+	protected void commonConstructor(final String name, final FieldAttributes... attributes) {
+		setName(name);
+		setType(PoundType.instance);
+		FieldAttributes.applyAll(this, attributes);
 	}
 
 }

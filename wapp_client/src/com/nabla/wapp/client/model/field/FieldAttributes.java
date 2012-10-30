@@ -16,8 +16,8 @@
 */
 package com.nabla.wapp.client.model.field;
 
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.JSHelper;
+import com.nabla.wapp.shared.general.Nullable;
 import com.smartgwt.client.data.DataSourceField;
 
 /**
@@ -41,9 +41,7 @@ public enum FieldAttributes {
 
 	abstract void apply(final DataSourceField field);
 
-	public static void applyAll(final DataSourceField field, final FieldAttributes... attributes) {
-		Assert.argumentNotNull(field);
-
+	public static void applyAll(final DataSourceField field, @Nullable final FieldAttributes... attributes) {
 		if (attributes != null) {
 			for (final FieldAttributes attribute : attributes)
 				attribute.apply(field);
@@ -57,9 +55,7 @@ public enum FieldAttributes {
      * @param attribute - name of attribute
      * @return null or value
      */
-	public static Boolean getAttribute(final DataSourceField field, final String attribute) {
-		Assert.argumentNotNull(field);
-
+	public static @Nullable Boolean getAttribute(final DataSourceField field, final String attribute) {
 		return JSHelper.getAttributeAsBoolean(field.getJsObj(), attribute);
 	}
 
@@ -69,7 +65,7 @@ public enum FieldAttributes {
      * @param field	- model field
      * @return null or value
      */
-	public static Boolean getHidden(final DataSourceField field) {
+	public static @Nullable Boolean getHidden(final DataSourceField field) {
 		return getAttribute(field, "hidden");
 	}
 
@@ -79,7 +75,7 @@ public enum FieldAttributes {
      * @param field	- model field
      * @return null or value
      */
-	public static Boolean getRequired(final DataSourceField field) {
+	public static @Nullable Boolean getRequired(final DataSourceField field) {
 		return getAttribute(field, "required");
 	}
 
@@ -89,7 +85,7 @@ public enum FieldAttributes {
      * @param field	- model field
      * @return null or value
      */
-	public static Boolean getCanSave(final DataSourceField field) {
+	public static @Nullable Boolean getCanSave(final DataSourceField field) {
 		return getAttribute(field, "canSave");
 	}
 
@@ -99,8 +95,24 @@ public enum FieldAttributes {
      * @param field	- model field
      * @return null or value
      */
-	public static Boolean getCanEdit(final DataSourceField field) {
+	public static @Nullable Boolean getCanEdit(final DataSourceField field) {
 		return getAttribute(field, "canEdit");
 	}
 
+
+	/**
+     *  Whether this field is read only
+     *
+     * @param field	- model field
+     * @return value
+     */
+	public static boolean getIsReadOnly(final DataSourceField field) {
+		Boolean canEdit = getCanEdit(field);
+		if (canEdit == null)
+			canEdit = true;
+		Boolean canSave = getCanSave(field);
+		if (canSave == null)
+			canSave = true;
+		return !canEdit && !canSave;
+	}
 }

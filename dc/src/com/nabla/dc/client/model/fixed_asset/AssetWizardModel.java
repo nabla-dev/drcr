@@ -24,7 +24,6 @@ import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.IntegerField;
-import com.nabla.wapp.client.model.field.PositiveIntegerField;
 import com.nabla.wapp.client.model.field.PoundField;
 import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.nabla.wapp.client.model.field.TextField;
@@ -64,9 +63,9 @@ public class AssetWizardModel extends BasicAssetModel {
 			new IntegerField(fields.depPeriod(), FieldAttributes.REQUIRED),
 			new BooleanField(fields.createTransaction(), FieldAttributes.REQUIRED),
 			new DateField(fields.depreciationFromDate(), FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.openingAccumDep(), FieldAttributes.OPTIONAL),
+			new PoundField(fields.openingAccumDep(), FieldAttributes.OPTIONAL),
 			new IntegerField(fields.openingDepPeriod(), FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.residualValue(), IAsset.DEFAULT_RESIDUAL_VALUE, FieldAttributes.OPTIONAL)
+			new PoundField(fields.residualValue(), FieldAttributes.OPTIONAL)
 				);
 	}
 

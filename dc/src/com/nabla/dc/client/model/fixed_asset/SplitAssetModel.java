@@ -22,7 +22,7 @@ import com.nabla.dc.shared.model.fixed_asset.ISplitAsset;
 import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
-import com.nabla.wapp.client.model.field.PositiveIntegerField;
+import com.nabla.wapp.client.model.field.PoundField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.validator.TextLengthValidator;
 import com.nabla.wapp.client.model.validator.ValidatorList;
@@ -62,9 +62,9 @@ public class SplitAssetModel extends CModel<SplitAssetRecord> {
 			new TextField(fields.nameB(), new ValidatorList(new TextLengthValidator(ISplitAsset.NAME_CONSTRAINT)), FieldAttributes.REQUIRED),
 			new TextField(fields.referenceA(), ISplitAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
 			new TextField(fields.referenceB(), ISplitAsset.REFERENCE_CONSTRAINT, FieldAttributes.OPTIONAL),
-			new PositiveIntegerField(fields.costA(), FieldAttributes.REQUIRED),
-			new PositiveIntegerField(fields.costB(), FieldAttributes.REQUIRED),
-			new PositiveIntegerField(fields.total(), FieldAttributes.REQUIRED)
+			new PoundField(fields.costA(), FieldAttributes.REQUIRED),
+			new PoundField(fields.costB(), FieldAttributes.REQUIRED),
+			new PoundField(fields.total(), FieldAttributes.REQUIRED)
 		);
 	}
 

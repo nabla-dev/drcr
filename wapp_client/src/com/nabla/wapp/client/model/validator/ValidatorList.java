@@ -29,8 +29,7 @@ public class ValidatorList extends LinkedList<Validator> {
 
 	private static final long serialVersionUID = 1L;
 
-	public ValidatorList() {
-	}
+	public ValidatorList() {}
 
 	public ValidatorList(Validator... validators) {
 		this.addAll(Arrays.asList(validators));

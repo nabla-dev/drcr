@@ -19,9 +19,10 @@ package com.nabla.wapp.client.ui.form;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
+import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.PositiveIntegerField;
+import com.nabla.wapp.client.model.field.PoundField;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.types.FieldType;
 import com.smartgwt.client.util.JSOHelper;
@@ -87,13 +88,18 @@ public enum ControlTypes {
 	abstract FormItem create(final DataSourceField field);
 
 	public static FormItem createEditor(final DataSourceField field) {
-		Assert.argumentNotNull(field);
-
-		boolean readOnly = field.getCanEdit();
-		ControlTypes type = fromClassName(field.getAttribute(readOnly ? "readOnlyEditorType" : "editorType"));
-		if (type == null)
-			type = valueOf(field.getType(), readOnly);
-		final FormItem impl = type.create(field);
+		boolean readOnly = FieldAttributes.getIsReadOnly(field);
+		final FieldType type = field.getType();
+		log.fine((readOnly ? "readOnly" : "readWrite") + " control field '" + field.getName() + "' - type " + ((type == null) ? "NULL" : type.toString()));
+		if (type == null || type == FieldType.CUSTOM) {
+			log.fine("custom field '" + field.getClass().getName() + "'");
+			if (field.getClass() == PoundField.class)
+				return PoundEditBox.createInstance(readOnly);
+		}
+		ControlTypes ctype = fromClassName(field.getAttribute(/*readOnly ? "readOnlyEditorType" :*/ "editorType"));
+		if (ctype == null)
+			ctype = valueOf(type, false);
+		final FormItem impl = ctype.create(field);
 		JSOHelper.addProperties(impl.getJsObj(), field.getAttributeAsJavaScriptObject("editorProperties"));
 		return impl;
 	}

@@ -20,7 +20,7 @@ import com.nabla.dc.shared.command.fixed_asset.FetchAssetDisposal;
 import com.nabla.wapp.client.model.field.DateField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
-import com.nabla.wapp.client.model.field.PositiveIntegerField;
+import com.nabla.wapp.client.model.field.PoundField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
@@ -44,7 +44,7 @@ public class AssetDisposalModel extends BasicAssetModel {
 			new TextField(fields.name(), FieldAttributes.READ_ONLY),
 			new DateField(fields.disposalDate(), FieldAttributes.REQUIRED),
 			new DisposalTypeField(fields.disposalType(), FieldAttributes.REQUIRED),
-			new PositiveIntegerField(fields.proceeds(), FieldAttributes.OPTIONAL)
+			new PoundField(fields.proceeds(), FieldAttributes.OPTIONAL)
 		);
 	}
 

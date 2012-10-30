@@ -16,7 +16,6 @@
 */
 package com.nabla.wapp.client.model;
 
-import com.nabla.wapp.client.model.validator.PoundValidator;
 import com.smartgwt.client.data.SimpleType;
 import com.smartgwt.client.types.FieldType;
 
@@ -34,7 +33,6 @@ public class PoundType extends SimpleType {
 
 		createEditor(EDITOR_CLASSNAME);
 		setAttribute("editorType", EDITOR_CLASSNAME, false);
-		setValidators(new PoundValidator(true));
 		final PoundFormatter defaultFormat = new PoundFormatter();
 		setNormalDisplayFormatter(defaultFormat);
 		setShortDisplayFormatter(defaultFormat);
