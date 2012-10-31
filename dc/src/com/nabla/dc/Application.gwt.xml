@@ -22,7 +22,7 @@
   	
   	<inherits name="com.nabla.wapp.client.Client" />
 	<inherits name="com.nabla.wapp.shared.Shared" />
-<!--	<inherits name="com.nabla.wapp.report.Report" /> -->
+	<inherits name="com.nabla.wapp.report.Report" />
   
 	<source path='client'/>
 	<source path='shared'/>

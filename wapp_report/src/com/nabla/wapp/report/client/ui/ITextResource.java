@@ -14,24 +14,18 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.client.model;
+package com.nabla.wapp.report.client.ui;
 
-import com.nabla.wapp.client.model.data.BasicListGridRecord;
-import com.nabla.wapp.report.shared.IReport;
-import com.smartgwt.client.data.Record;
+import com.google.gwt.i18n.client.Constants;
+
 
 /**
  * @author nabla
  *
  */
-public class ReportRecord extends BasicListGridRecord implements IReport {
+public interface ITextResource extends Constants {
 
-	public ReportRecord(Record impl) {
-		super(impl);
-	}
-
-	public String getName() {
-		return getAttributeAsString(NAME);
-	}
+	@DefaultStringValue("No report selected!")
+	String noReportSelected();
 
 }

@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -19,31 +19,22 @@ package com.nabla.wapp.report.client.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import com.nabla.wapp.client.model.AbstractBasicModel;
+import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.report.client.IReportParameterBinder;
-import com.nabla.wapp.shared.model.AbstractOperationAction;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.types.DSOperationType;
+import com.smartgwt.client.data.Record;
 
 /**
  * The <code></code> object is used to
  *
  */
-public class ReportParameterModel extends AbstractBasicModel {
+public class ReportParameterModel extends CModel<Record> {
 
-	@Inject
-	public ReportParameterModel(@Assisted final List<IReportParameterBinder> parameters) {
+	public ReportParameterModel(final List<IReportParameterBinder> parameters) {
 		final List<DataSourceField> fields = new LinkedList<DataSourceField>();
 		for (IReportParameterBinder parameter : parameters)
 			parameter.createModelField(fields);
 		setFields(fields.toArray(new DataSourceField[0]));
-	}
-
-	@Override
-	public AbstractOperationAction getCommand(@SuppressWarnings("unused") DSOperationType op) {
-		return null;
 	}
 
 }

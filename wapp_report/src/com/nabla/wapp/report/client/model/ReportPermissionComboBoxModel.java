@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -16,26 +16,22 @@
 */
 package com.nabla.wapp.report.client.model;
 
-import com.google.inject.Singleton;
-import com.nabla.wapp.client.general.Assert;
-import com.nabla.wapp.client.model.AbstractBasicModel;
+import com.nabla.wapp.client.model.CModel;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.report.shared.command.FetchReportPermissionsComboBox;
-import com.nabla.wapp.shared.model.AbstractOperationAction;
-import com.smartgwt.client.types.DSOperationType;
+import com.nabla.wapp.shared.command.AbstractFetch;
+import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.Record;
 
 /**
  * The <code>RoleComboBoxModel</code> object is used to display
  * list of roles in a ComboBox
  *
  */
-@Singleton
-public class ReportPermissionComboBoxModel extends AbstractBasicModel {
+public class ReportPermissionComboBoxModel extends CModel<Record> {
 
 	public ReportPermissionComboBoxModel() {
-		Assert.unique(ReportPermissionComboBoxModel.class);
-
 		setFields(
 			new IdField(),
 			new TextField("name")
@@ -43,8 +39,8 @@ public class ReportPermissionComboBoxModel extends AbstractBasicModel {
 	}
 
 	@Override
-	public AbstractOperationAction getCommand(final DSOperationType op) {
-		return (op == DSOperationType.FETCH) ? new FetchReportPermissionsComboBox() : null;
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchReportPermissionsComboBox();
 	}
 
 }

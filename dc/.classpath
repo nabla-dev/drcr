@@ -28,5 +28,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/supercsv-1.52.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/simple-xml-2.6.6.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_basicserver-1.0.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_report-1.0.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/wapp_report"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

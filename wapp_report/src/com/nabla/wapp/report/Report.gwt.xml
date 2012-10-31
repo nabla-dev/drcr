@@ -16,9 +16,9 @@
 -->
 <module>
 	<inherits name="com.google.gwt.user.User" />
-	<inherits name="com.google.gwt.inject.Inject" />
+	<inherits name="com.google.gwt.logging.Logging"/>
 	<inherits name="com.google.gwt.uibinder.UiBinder"/>
-	<inherits name="com.smartgwt.SmartGwt"/>
+	<inherits name="com.smartgwt.SmartGwtNoTheme"/>
 
 	<inherits name="com.nabla.wapp.client.Client" />
 	<inherits name="com.nabla.wapp.shared.Shared" />

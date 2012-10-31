@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -17,30 +17,27 @@
 package com.nabla.wapp.report.client.model;
 
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-import com.nabla.wapp.client.general.Assert;
-import com.nabla.wapp.client.model.AbstractBasicModel;
-import com.nabla.wapp.client.model.EnabledRecordField;
+import com.nabla.wapp.client.model.CModel;
+import com.nabla.wapp.client.model.field.EnabledRecordField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 import com.nabla.wapp.client.model.field.IdField;
 import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.client.model.field.UploadFileField;
 import com.nabla.wapp.report.shared.IReport;
-import com.nabla.wapp.report.shared.command.AddReport;
 import com.nabla.wapp.report.shared.command.FetchReportList;
 import com.nabla.wapp.report.shared.command.RemoveReport;
-import com.nabla.wapp.report.shared.command.UpdateReport;
-import com.nabla.wapp.shared.dispatch.IAction;
-import com.smartgwt.client.types.DSOperationType;
+import com.nabla.wapp.shared.command.AbstractFetch;
+import com.nabla.wapp.shared.command.AbstractRemove;
+import com.nabla.wapp.shared.dispatch.IRecordAction;
+import com.nabla.wapp.shared.dispatch.StringResult;
+import com.smartgwt.client.data.DSRequest;
 
 /**
  * @author nabla
  *
  */
-@Singleton
-public class ReportListModel extends AbstractBasicModel {
+public class ReportListModel extends CModel<ReportRecord> {
 
 	static public class Fields {
 		public String name() { return IReport.NAME; }
@@ -49,35 +46,42 @@ public class ReportListModel extends AbstractBasicModel {
 		public String reportFile() { return IReport.REPORT_FILE; }
 	}
 
-	@Inject
-	public ReportListModel(final ReportPermissionComboBoxModel permissionsModel) {
-		Assert.unique(ReportListModel.class);
+	private static final Fields	fields = new Fields();
 
+	public ReportListModel() {
 		setFields(
 			new EnabledRecordField(),
 			new IdField(),
-			new TextField(IReport.NAME, IReport.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
-			new TextField(IReport.TEMPLATE, FieldAttributes.READ_ONLY),
-			new SelectBoxField(IReport.PERMISSION, permissionsModel, IdField.NAME, "name", FieldAttributes.REQUIRED),
+			new TextField(fields.name(), IReport.NAME_CONSTRAINT, FieldAttributes.REQUIRED),
+			new TextField(fields.template(), FieldAttributes.READ_ONLY),
+			new SelectBoxField(fields.permission(), new ReportPermissionComboBoxModel(), IdField.NAME, "name", FieldAttributes.REQUIRED),
 
-			new UploadFileField(IReport.REPORT_FILE, FieldAttributes.REQUIRED)
+			new UploadFileField(fields.reportFile(), FieldAttributes.REQUIRED)
 				);
 	}
 
+	public Fields fields() {
+		return fields;
+	}
+
 	@Override
-	public IAction getCommand(final DSOperationType op) {
-		switch (op) {
-			case FETCH:
-				return new FetchReportList();
-			case REMOVE:
-				return new RemoveReport();
-			case UPDATE:
-				return new UpdateReport();
-			case ADD:
-				return new AddReport();
-			default:
-				return null;
-		}
+	public AbstractRemove getRemoveCommand() {
+		return new RemoveReport();
+	}
+
+	@Override
+	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
+		return new FetchReportList();
+	}
+
+	@Override
+	public IRecordAction<StringResult> getAddCommand(final ReportRecord record) {
+		return null;
+	}
+
+	@Override
+	public IRecordAction<StringResult> getUpdateCommand(final ReportRecord record) {
+		return null;
 	}
 
 }

@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -18,9 +18,6 @@ package com.nabla.wapp.report.client.presenter;
 
 import java.util.List;
 
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.report.client.IReportParameterBinder;
@@ -34,41 +31,32 @@ import com.nabla.wapp.shared.slot.ISlotManager1;
  */
 public class ReportParameterDialog extends AbstractTopPresenter<ReportParameterDialog.IDisplay> {
 
-	public interface IModelFactory {
-		Model get(List<IReportParameterBinder> parameters);
+	public interface IFactory {
+		ReportParameterDialog get(final List<IReportParameterBinder> parameterBinders);
 	}
 
 	public interface IDisplay extends ITopDisplay {
 		ISlotManager1<ReportParameterValueList> getSubmitSlots();
 	}
 
-	public interface IDisplayFactory {
-		IDisplay get(List<IReportParameterBinder> parameters);
-	}
-
-	public interface IFactory {
-		ReportParameterDialog get(List<IReportParameterBinder> parameters);
-	}
-
-	@Inject
-	public ReportParameterDialog(final IDisplayFactory uiFactory, @Assisted List<IReportParameterBinder> parameters) {
-		super(uiFactory.get(parameters));
+	public ReportParameterDialog(final IDisplay ui) {
+		super(ui);
 	}
 
 	public ISlotManager1<ReportParameterValueList> getSubmitSlots() {
-		return display.getSubmitSlots();
+		return getDisplay().getSubmitSlots();
 	}
 
 	@Override
-	protected void onBind() {
-		super.onBind();
-		display.getSubmitSlots().connect(onSubmit);
+	public void bind() {
+		super.bind();
+		getDisplay().getSubmitSlots().connect(onSubmit);
 	}
 
 	private final ISlot onSubmit = new ISlot() {
 		@Override
 		public void invoke() {
-			display.hide();
+			getDisplay().hide();
 		}
 	};
 

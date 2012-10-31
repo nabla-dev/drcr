@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
-
 import com.google.inject.Inject;
 import com.nabla.wapp.report.server.IReportFolder;
 import com.nabla.wapp.report.server.ReportFile;
@@ -42,6 +40,7 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.auth.AccessDeniedException;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
 /**
@@ -98,7 +97,7 @@ ctx.getUserId(), cmd.getReportIds());
 						while (rsKey.next())
 							reportIds.add(rsKey.getInt(1));
 						for (Map.Entry<String, String> parameter : cmd.getParameters().toStringMap().entrySet())
-							UserPreference.save(ctx, IReport.PRINT_REPORT_PREFERENCE_GROUP, parameter.getKey(), parameter.getValue());
+							UserPreference.save(ctx, null, IReport.PRINT_REPORT_PREFERENCE_GROUP, parameter.getKey(), parameter.getValue());
 						guard.setSuccess();
 					} finally {
 						try { stmtExport.close(); } catch (final SQLException e) {}

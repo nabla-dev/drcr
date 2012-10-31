@@ -7,6 +7,7 @@
     	<dependency org="com.nabla.wapp" name="wapp_client" rev="${wapp.version}" conf="compile;runtime" />
     	<dependency org="com.nabla.wapp" name="wapp_server" rev="${wapp.version}" conf="compile;runtime" />
     	<dependency org="com.nabla.wapp" name="wapp_basicserver" rev="${wapp.version}" conf="compile;runtime" />
+		<dependency org="com.nabla.wapp" name="wapp_report" rev="${wapp.version}" conf="compile;runtime" />
 
       	<dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime"/>
       	<dependency org="com.google.inject.extensions" name="guice-servlet" rev="${guice.version}" conf="compile->default;runtime->default"/>

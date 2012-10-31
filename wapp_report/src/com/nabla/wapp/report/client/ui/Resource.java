@@ -14,24 +14,22 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.client.model;
+package com.nabla.wapp.report.client.ui;
 
-import com.nabla.wapp.client.model.data.BasicListGridRecord;
-import com.nabla.wapp.report.shared.IReport;
-import com.smartgwt.client.data.Record;
+import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.util.I18nUtil;
 
 /**
  * @author nabla
  *
  */
-public class ReportRecord extends BasicListGridRecord implements IReport {
+public class Resource {
 
-	public ReportRecord(Record impl) {
-		super(impl);
+	public static final ITextResource	strings = GWT.create(ITextResource.class);
+
+	public static final Resource		instance = new Resource();
+
+	public Resource() {
+		I18nUtil.init();
 	}
-
-	public String getName() {
-		return getAttributeAsString(NAME);
-	}
-
 }

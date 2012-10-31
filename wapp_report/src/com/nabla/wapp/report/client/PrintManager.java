@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -28,17 +28,15 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.Assert;
-import com.nabla.wapp.client.general.BasicApplication;
+import com.nabla.wapp.client.general.IApplication;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.mvp.IPresenter;
 import com.nabla.wapp.client.print.IPrintCommandSet;
-import com.nabla.wapp.client.server.IDispatchAsync;
 import com.nabla.wapp.report.client.presenter.ReportParameterDialog;
+import com.nabla.wapp.report.client.ui.Resource;
 import com.nabla.wapp.report.shared.IReportParameterValue;
 import com.nabla.wapp.report.shared.ReportParameter;
 import com.nabla.wapp.report.shared.ReportParameterValueList;
@@ -48,6 +46,7 @@ import com.nabla.wapp.report.shared.command.GetBuiltInReport;
 import com.nabla.wapp.report.shared.command.GetReport;
 import com.nabla.wapp.report.shared.command.GetSimpleReport;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
+import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.print.ReportFormats;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
@@ -56,7 +55,6 @@ import com.nabla.wapp.shared.slot.ISlot1;
  * @author nabla
  *
  */
-@Singleton
 public class PrintManager {
 
 	public interface IParameterGetter {
@@ -67,14 +65,14 @@ public class PrintManager {
 		Set<Integer> getReportIds();
 	}
 
-	private static final Logger							logger = LoggerFactory.getLog(PrintManager.class);
-	@Inject private IDispatchAsync						server;
-	@Inject private IReportParameterBinderFactory		parameterBinderFactory;
-	@Inject private ReportParameterDialog.IFactory		parameterDialogFactory;
-	private final String								reportUrlFormat;
+	private static final Logger						log = LoggerFactory.getLog(PrintManager.class);
+	private final IReportParameterBinderFactory		parameterBinderFactory;
+	private final ReportParameterDialog.IFactory	parameterDialogFactory;
+	private final String							reportUrlFormat;
 
-	public PrintManager() {
-		Assert.unique(PrintManager.class);
+	public PrintManager(final IReportParameterBinderFactory parameterBinderFactory, final ReportParameterDialog.IFactory parameterDialogFactory) {
+		this.parameterBinderFactory = parameterBinderFactory;
+		this.parameterDialogFactory = parameterDialogFactory;
 		reportUrlFormat = GWT.getModuleBaseURL() + "export?id=";
 	}
 
@@ -84,7 +82,7 @@ public class PrintManager {
 	}
 
 	public <BuiltInReportsType extends Enum<BuiltInReportsType>>
-	void bind(final IPrintCommandSet commands, final IPresenter presenter, final BuiltInReportsType builtInReport, final IReportParameterValue parameter) {
+	void bind(final IPrintCommandSet commands, final IPresenter presenter, final BuiltInReportsType builtInReport, @Nullable final IReportParameterValue parameter) {
 		if (parameter == null)
 			bind(commands, presenter, builtInReport, (IParameterGetter)null);
 		else
@@ -98,8 +96,6 @@ public class PrintManager {
 
 	public <BuiltInReportsType extends Enum<BuiltInReportsType>>
 	void bind(final IPrintCommandSet commands, final IPresenter presenter, final BuiltInReportsType builtInReport, final IParameterGetter parameterGetter) {
-		Assert.argumentNotNull(commands);
-
 		bindBuiltIn(commands.print(), builtInReport, ReportFormats.PDF, false, parameterGetter, presenter);
 		bindBuiltIn(commands.exportAsCSV(), builtInReport, ReportFormats.CSV, true, parameterGetter, presenter);
 		bindBuiltIn(commands.exportAsTXT(), builtInReport, ReportFormats.TXT, true, parameterGetter, presenter);
@@ -109,37 +105,7 @@ public class PrintManager {
 		bindBuiltIn(commands.exportAsPDF(), builtInReport, ReportFormats.PDF, true, parameterGetter, presenter);
 	}
 
-	private	<BuiltInReportsType extends Enum<BuiltInReportsType>>
-	void bindBuiltIn(final Command command, final BuiltInReportsType builtInReport, final ReportFormats format, final Boolean outputAsFile, final IParameterGetter parameterGetter, final IPresenter presenter) {
-		Assert.argumentNotNull(presenter);
-		Assert.argumentNotNull(builtInReport);
-
-		presenter.registerSlot(command, new ISlot() {
-			@Override
-			public void invoke() {
-				server.execute(new GetBuiltInReport(builtInReport.toString(), format, outputAsFile, (parameterGetter != null) ? parameterGetter.getParameter() : null), onCreateBuiltInReport);
-			}
-		});
-	}
-
-	private final AsyncCallback<IntegerResult> onCreateBuiltInReport = new AsyncCallback<IntegerResult>() {
-		@Override
-		public void onFailure(Throwable caught) {
-			logger.log(Level.WARNING, "fail to get report ID", caught);
-			Application.getInstance().getMessageBox().error(caught);
-		}
-
-		@Override
-		public void onSuccess(IntegerResult result) {
-			Assert.argumentNotNull(result);
-
-			displayReport(result.get());
-		}
-	};
-
 	public void bind(final IPrintCommandSet commands, final IPresenter presenter, IReportGetter reportGetter) {
-		Assert.argumentNotNull(commands);
-
 		bind(commands.print(), ReportFormats.PDF, false, presenter, reportGetter);
 		bind(commands.exportAsCSV(), ReportFormats.CSV, true, presenter, reportGetter);
 		bind(commands.exportAsTXT(), ReportFormats.TXT, true, presenter, reportGetter);
@@ -149,10 +115,31 @@ public class PrintManager {
 		bind(commands.exportAsPDF(), ReportFormats.PDF, true, presenter, reportGetter);
 	}
 
-	private void bind(final Command command, final ReportFormats format, final Boolean outputAsFile, final IPresenter presenter, final IReportGetter reportGetter) {
-		Assert.argumentNotNull(reportGetter);
-		Assert.argumentNotNull(presenter);
+	private	<BuiltInReportsType extends Enum<BuiltInReportsType>>
+	void bindBuiltIn(final Command command, final BuiltInReportsType builtInReport, final ReportFormats format, final Boolean outputAsFile, final IParameterGetter parameterGetter, final IPresenter presenter) {
+		presenter.registerSlot(command, new ISlot() {
+			@Override
+			public void invoke() {
+				Application.getInstance().getDispatcher().execute(new GetBuiltInReport(builtInReport.toString(), format, outputAsFile, (parameterGetter != null) ? parameterGetter.getParameter() : null), onCreateBuiltInReport);
+			}
+		});
+	}
 
+	private final AsyncCallback<IntegerResult> onCreateBuiltInReport = new AsyncCallback<IntegerResult>() {
+		@Override
+		public void onFailure(Throwable caught) {
+			log.log(Level.WARNING, "fail to get report ID", caught);
+			Application.getInstance().getMessageBox().error(caught);
+		}
+
+		@Override
+		public void onSuccess(IntegerResult result) {
+			if (result != null)
+				displayReport(result.get());
+		}
+	};
+
+	private void bind(final Command command, final ReportFormats format, final Boolean outputAsFile, final IPresenter presenter, final IReportGetter reportGetter) {
 		presenter.registerSlot(command, new ISlot() {
 			@Override
 			public void invoke() {
@@ -161,16 +148,18 @@ public class PrintManager {
 		});
 	}
 
+	@SuppressWarnings("static-access")
 	public void print(final Set<Integer> reportIds, final IReportParameterValue defaultParameter, final ReportFormats format, final Boolean outputAsFile) {
+		final IApplication app = Application.getInstance();
 		if (reportIds.isEmpty()) {
-			Application.getInstance().getMessageBox().error("No report selected!");
+			app.getMessageBox().error(Resource.instance.strings.noReportSelected());
 			return;
 		}
-		server.execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile), new AsyncCallback<SimpleReportResult>() {
+		app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile), new AsyncCallback<SimpleReportResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
-				logger.log(Level.WARNING, "fail to get list of report IDs to display", caught);
-				BasicApplication.getInstance().getMessageBox().error(caught);
+				log.log(Level.WARNING, "fail to get list of report IDs to display", caught);
+				app.getMessageBox().error(caught);
 			}
 
 			@Override
@@ -194,7 +183,7 @@ public class PrintManager {
 
 							if (defaultParameter != null)
 								parameters.add(defaultParameter);
-							server.execute(new GetReport(reportIds, format, outputAsFile, parameters), onCreateReport);
+							app.getDispatcher().execute(new GetReport(reportIds, format, outputAsFile, parameters), onCreateReport);
 						}
 					});
 					dlg.revealDisplay();
@@ -207,15 +196,14 @@ public class PrintManager {
 	private final AsyncCallback<ReportResult> onCreateReport = new AsyncCallback<ReportResult>() {
 		@Override
 		public void onFailure(Throwable caught) {
-			logger.log(Level.WARNING, "fail to get list of report IDs to display", caught);
+			log.log(Level.WARNING, "fail to get list of report IDs to display", caught);
 			Application.getInstance().getMessageBox().error(caught);
 		}
 
 		@Override
 		public void onSuccess(ReportResult result) {
-			Assert.argumentNotNull(result);
-
-			displayReports(result.getReportIds());
+			if (result != null)
+				displayReports(result.getReportIds());
 		}
 	};
 
@@ -254,7 +242,7 @@ public class PrintManager {
 		// open window and display report
 		if (reportId != null) {
 			final String reportUrl = reportUrlFormat + reportId.toString();
-			logger.fine("report= " + reportUrl);
+			log.fine("report= " + reportUrl);
 			Window.open(reportUrl, "_blank", null);
 		}
 	}

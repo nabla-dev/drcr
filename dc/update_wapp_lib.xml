@@ -9,6 +9,7 @@
 		<copy file="../wapp_basicserver/jars/wapp_basicserver-${project.version}.jar" todir="${lib.runtime.dir}" />
 		<copy file="../wapp_server/jars/wapp_server-${project.version}.jar" todir="${lib.runtime.dir}" />
 		<copy file="../wapp_shared/jars/wapp_shared-${project.version}.jar" todir="${lib.runtime.dir}" />
+		<copy file="../wapp_report/jars/wapp_report-${project.version}.jar" todir="${lib.runtime.dir}" />
 	</target>
 	
 </project>

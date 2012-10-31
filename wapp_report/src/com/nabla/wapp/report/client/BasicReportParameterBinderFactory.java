@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.nabla.wapp.report.shared.ReportParameter;
  */
 public class BasicReportParameterBinderFactory implements IReportParameterBinderFactory {
 
-	private static final Logger		logger = LoggerFactory.getLog(BasicReportParameterBinderFactory.class);
+	private static final Logger		log = LoggerFactory.getLog(BasicReportParameterBinderFactory.class);
 
 	private final Map<String, IReportParameterBinderFactory>	factories = new HashMap<String, IReportParameterBinderFactory>();
 
@@ -37,7 +37,7 @@ public class BasicReportParameterBinderFactory implements IReportParameterBinder
 	public IReportParameterBinder create(ReportParameter parameter, Map<String, Object> defaultParameterValues) {
 		final IReportParameterBinderFactory factory = factories.get(parameter.getModel());
 		if (factory == null) {
-			logger.warning("fail to find factory for parameter model '" + parameter.getModel() + "'. Have you forgotten to register factory?");
+			log.warning("fail to find factory for parameter model '" + parameter.getModel() + "'. Have you forgotten to register factory?");
 			return null;
 		}
 		return factory.create(parameter, defaultParameterValues);
@@ -45,7 +45,7 @@ public class BasicReportParameterBinderFactory implements IReportParameterBinder
 
 	public <ModelType extends Enum<ModelType>>
 	void registerFactory(final ModelType model, IReportParameterBinderFactory factory) {
-		logger.fine("registering report parameter binder factory for model '" + model.toString() + "'");
+		log.fine("registering report parameter binder factory for model '" + model.toString() + "'");
 		factories.put(model.toString(), factory);
 	}
 
