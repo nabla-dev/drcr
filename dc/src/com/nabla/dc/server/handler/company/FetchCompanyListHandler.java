@@ -32,12 +32,12 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchCompanyListHandler extends AbstractFetchHandler<FetchCompanyList> {
 
 	private static final SqlToJson	rootSql = new SqlToJson(
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'b_deleted', id, name, active AS 'b_active'" +
+"SELECT to_bool(IF(uname IS NULL,TRUE,FALSE)) AS 'deleted', id, name, active" +
 " FROM company"
 	);
 
 	private static final SqlToJson	sql = new SqlToJson(
-"SELECT FALSE AS 'b_deleted', id, name, active AS 'b_active'" +
+"SELECT to_bool(FALSE) AS 'deleted', id, name, active" +
 " FROM company" +
 " WHERE uname IS NOT NULL"
 	);

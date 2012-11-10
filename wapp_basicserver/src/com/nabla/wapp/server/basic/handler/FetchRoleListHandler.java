@@ -32,7 +32,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchRoleListHandler extends AbstractFetchHandler<FetchRoleList> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT id, name, internal AS 'b_internal'" +
+"SELECT id, name, internal" +
 " FROM role" +
 " WHERE privilege=FALSE"
 	);

@@ -47,6 +47,7 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 	private Boolean				validateOnChange;
 	private String				text;
 	private Boolean				visible;
+	private Boolean				enabled;
 	private Boolean				shouldSaveValue;
 	private Boolean				redrawOnChange;
 
@@ -92,6 +93,8 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 			new TitleDecoder(text).apply(impl);
 		if (visible != null)
 			impl.setVisible(visible);
+		if (enabled != null)
+			impl.setDisabled(!enabled);
 		if (shouldSaveValue != null)
 			impl.setShouldSaveValue(shouldSaveValue);
 		else {
@@ -158,6 +161,14 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 	@Override
 	public void setVisible(final boolean visible) {
 		this.visible = visible;
+	}
+
+	public void setEnabled(boolean value) {
+		enabled = value;
+	}
+
+	public void setDisabled(boolean value) {
+		enabled = !value;
 	}
 
 	@Override

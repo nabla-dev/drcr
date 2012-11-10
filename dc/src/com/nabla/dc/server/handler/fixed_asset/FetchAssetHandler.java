@@ -34,11 +34,11 @@ public class FetchAssetHandler extends AbstractFetchHandler<FetchAsset> {
 	private static final SqlToJson	fetcher = new SqlToJson(
 "SELECT t.id, t.name, t.fa_company_asset_category_id AS 'category', t.reference, t.location" +
 ", t.acquisition_date, t.acquisition_type, t.purchase_invoice" +
-", (SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING') AS 'i_cost'" +
+", CONVERT((SELECT tt.amount FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type='OPENING'), UNSIGNED) AS 'cost'" +
 ", (-1 * o.amount) AS 'opening_accumulated_depreciation', o.depreciation_period AS 'opening_depreciation_period'" +
 ", t.depreciation_period" +
-", (SELECT p.end_date FROM fa_transaction AS tt INNER JOIN period_end AS p ON tt.period_end_id=p.id WHERE tt.fa_asset_id=t.id AND tt.class='DEP' AND tt.type='CHARGE' ORDER BY p.end_date LIMIT 1) AS 'dt_depreciationFromDate'" +
-", (SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id) AS 'i_residual_value'" +
+", (SELECT p.end_date FROM fa_transaction AS tt INNER JOIN period_end AS p ON tt.period_end_id=p.id WHERE tt.fa_asset_id=t.id AND tt.class='DEP' AND tt.type='CHARGE' ORDER BY p.end_date LIMIT 1) AS 'depreciationFromDate'" +
+", CONVERT((SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id), UNSIGNED) AS 'residual_value'" +
 " FROM fa_asset AS t LEFT JOIN fa_transaction AS o ON (t.id=o.fa_asset_id AND o.class='DEP' AND o.type='OPENING')" +
 " WHERE t.id=?"
 	);

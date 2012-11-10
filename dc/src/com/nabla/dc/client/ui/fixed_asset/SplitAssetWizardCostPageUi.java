@@ -20,13 +20,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.dc.client.model.fixed_asset.SplitAssetModel.Fields;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.shared.general.IHasValue;
 import com.smartgwt.client.widgets.form.ValuesManager;
-import com.smartgwt.client.widgets.form.fields.IntegerItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 
@@ -56,10 +54,9 @@ public class SplitAssetWizardCostPageUi extends BindedBasicWizardPageDisplay imp
 		valueB = form.getIntegerField(fields.costB());
 		valueB.setValue(DEFAULT_COST_B);
 
-		final IntegerItem valueA = (IntegerItem)form.getItem(fields.costA());
-		Assert.notNull(valueA);
+		final IHasValue<Integer> valueA = form.getIntegerField(fields.costA());
 		valueA.setValue(totalValue - DEFAULT_COST_B);
-		valueA.addChangeHandler(new ChangeHandler() {
+		form.getItem(fields.costA()).addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(ChangeEvent event) {
 				onValueChanged(event.getValue());

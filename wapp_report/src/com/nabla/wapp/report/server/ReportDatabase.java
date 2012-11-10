@@ -27,22 +27,33 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.report.shared.IReport;
+import com.nabla.wapp.report.shared.IReportTable;
 import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
+import com.nabla.wapp.shared.general.Nullable;
 
 /**
  * @author nabla
  *
  */
-public class ReportDatabase {
+public abstract class ReportDatabase {
+
+	public interface IReportRecord {
+		String getName();
+		@Nullable String getCategory();
+
+	}
+	public interface IReportListProvider {
+
+	}
 
 	static private final Log	log = LogFactory.getLog(ReportDatabase.class);
 
 	public static <BuiltInReports extends Enum<BuiltInReports>, DefaultReports extends Enum<DefaultReports>>
 	void initialize(final Connection conn, final String reportFolder, final Class<BuiltInReports> builtInReports, final Class<DefaultReports> defaultReports, boolean reCompileReports) throws SQLException, InternalErrorException {
-		if (Database.isTableEmpty(conn, "report")) {
+		if (Database.isTableEmpty(conn, IReportTable.TABLE)) {
 			if (log.isDebugEnabled())
 				log.debug("initializing report table");
 			final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);

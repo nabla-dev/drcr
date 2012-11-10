@@ -13,8 +13,8 @@
 		<ui:attribute name="title" description="Split asset wizard - COST page caption"/>
 		<form:Form ui:field="form" valuesManager="{model}">
 			<form:Control name="{fields.costA}" width="100"><ui:msg>*First cost (£)</ui:msg></form:Control>
-			<form:IntegerEditBox name="{fields.costB}" width="100" disabled="true"><ui:msg>Second cost (£)</ui:msg></form:IntegerEditBox>
-			<form:IntegerEditBox name="{fields.total}" width="100" disabled="true"><ui:msg>Total cost (£)</ui:msg></form:IntegerEditBox>
+			<form:Control name="{fields.costB}" width="100" readOnly="true" enabled="false"><ui:msg>Second cost (£)</ui:msg></form:Control>
+			<form:Control name="{fields.total}" width="100" readOnly="true" enabled="false"><ui:msg>Total cost (£)</ui:msg></form:Control>
 		</form:Form>
 	</wnd:WizardPage>
 </ui:UiBinder> 

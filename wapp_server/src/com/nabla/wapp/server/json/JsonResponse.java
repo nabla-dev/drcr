@@ -85,7 +85,7 @@ public class JsonResponse extends JSONArray {
 		final ResultSetMetaData header = rs.getMetaData();
 		int columnCount = header.getColumnCount();
 		for (int c = 1; c <= columnCount; ++c)
-			columns.add(new SqlColumn(header.getColumnLabel(c), header.getColumnType(c)));
+			columns.add(new SqlColumn(header.getColumnLabel(c), header.getColumnType(c), header.getColumnDisplaySize(c)));
 		return columns;
 	}
 

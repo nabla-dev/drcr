@@ -22,13 +22,9 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
  * @author nabla
  *
  */
-public interface IReport {
+public interface IReport extends IReportTable {
 
-	static final String					NAME = "name";
 	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 255, true);
-
-	static final String					TEMPLATE = "template";
-	static final String					PERMISSION = "role_id";
 
 	static final String					REPORT_FILE = "report_id";
 

@@ -65,15 +65,15 @@ public class PrintManager {
 		Set<Integer> getReportIds();
 	}
 
-	private static final Logger						log = LoggerFactory.getLog(PrintManager.class);
-	private final IReportParameterBinderFactory		parameterBinderFactory;
+	private static final Logger					log = LoggerFactory.getLog(PrintManager.class);
+	private final IReportParameterBinderFactory	parameterBinderFactory;
 	private final ReportParameterDialog.IFactory	parameterDialogFactory;
 	private final String							reportUrlFormat;
 
 	public PrintManager(final IReportParameterBinderFactory parameterBinderFactory, final ReportParameterDialog.IFactory parameterDialogFactory) {
 		this.parameterBinderFactory = parameterBinderFactory;
 		this.parameterDialogFactory = parameterDialogFactory;
-		reportUrlFormat = GWT.getModuleBaseURL() + "export?id=";
+		reportUrlFormat = GWT.getModuleBaseURL() + "exportReport?id=";
 	}
 
 	public <BuiltInReportsType extends Enum<BuiltInReportsType>>
@@ -149,7 +149,7 @@ public class PrintManager {
 	}
 
 	@SuppressWarnings("static-access")
-	public void print(final Set<Integer> reportIds, final IReportParameterValue defaultParameter, final ReportFormats format, final Boolean outputAsFile) {
+	public void print(final Set<Integer> reportIds, @Nullable final IReportParameterValue defaultParameter, final ReportFormats format, final Boolean outputAsFile) {
 		final IApplication app = Application.getInstance();
 		if (reportIds.isEmpty()) {
 			app.getMessageBox().error(Resource.instance.strings.noReportSelected());
@@ -207,7 +207,7 @@ public class PrintManager {
 		}
 	};
 
-	public void print(final Set<Integer> reportIds, final ReportParameterValueList defaultParameters) {
+	public void print(final Set<Integer> reportIds, @Nullable final ReportParameterValueList defaultParameters) {
 		print(reportIds, defaultParameters, ReportFormats.PDF, false);
 	}
 
@@ -215,7 +215,7 @@ public class PrintManager {
 		print(reportIds, null);
 	}
 
-	public void print(final Integer reportId, final ReportParameterValueList defaultParameters, final ReportFormats format, final Boolean outputAsFile) {
+	public void print(final Integer reportId, @Nullable final ReportParameterValueList defaultParameters, final ReportFormats format, final Boolean outputAsFile) {
 		final Set<Integer> reportIds = new HashSet<Integer>();
 		reportIds.add(reportId);
 		print(reportIds, defaultParameters, format, outputAsFile);
@@ -225,7 +225,7 @@ public class PrintManager {
 		print(reportId, null, format, outputAsFile);
 	}
 
-	public void print(final Integer reportId, final ReportParameterValueList defaultParameters) {
+	public void print(final Integer reportId, @Nullable final ReportParameterValueList defaultParameters) {
 		print(reportId, defaultParameters, ReportFormats.PDF, false);
 	}
 

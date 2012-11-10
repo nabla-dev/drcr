@@ -33,7 +33,7 @@ public class FetchSplitAssetHandler extends AbstractFetchHandler<FetchSplitAsset
 
 	private static final SqlToJson	sql = new SqlToJson(
 "SELECT t.id, t.name AS 'nameA', t.name AS 'nameB', t.reference AS 'referenceA', t.reference AS 'referenceB'," +
-"(SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type IN ('OPENING','REVALUATION')) AS 'i_total'" +
+"CONVERT((SELECT SUM(tt.amount) FROM fa_transaction AS tt WHERE tt.fa_asset_id=t.id AND tt.class='COST' AND tt.type IN ('OPENING','REVALUATION')), UNSIGNED) AS 'total'" +
 " FROM fa_asset AS t" +
 " WHERE t.id=?"
 	);

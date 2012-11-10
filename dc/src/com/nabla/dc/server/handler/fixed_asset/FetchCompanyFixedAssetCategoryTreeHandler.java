@@ -32,12 +32,12 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchCompanyFixedAssetCategoryTreeHandler extends AbstractFetchHandler<FetchCompanyFixedAssetCategoryTree> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(
-"SELECT b_folder, parentId, id, name, active AS 'b_active', iid FROM" +
-"(SELECT TRUE AS 'b_folder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, NULL AS 'active', NULL AS 'iid'" +
+"SELECT to_bool(folder) AS 'folder', parentId, id, name, to_bool(active) AS 'active', iid FROM" +
+"(SELECT TRUE AS 'folder', NULL AS 'parentId', CONCAT('f',t.id) AS 'id', t.name, NULL AS 'active', NULL AS 'iid'" +
 " FROM fa_fs_category AS t" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL" +
 " UNION" +
-" SELECT FALSE AS 'b_folder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active, t.id AS 'iid'" +
+" SELECT FALSE AS 'folder', CONCAT('f',r.fa_fs_category_id) AS 'parentId', CONCAT('a',t.id) AS 'id', t.name, r.active, t.id AS 'iid'" +
 " FROM fa_asset_category AS t INNER JOIN fa_company_asset_category AS r ON t.id=r.fa_asset_category_id AND r.company_id=?" +
 " WHERE t.active=TRUE AND t.uname IS NOT NULL AND r.fa_fs_category_id IS NOT NULL" +
 ") dt"

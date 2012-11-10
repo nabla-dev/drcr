@@ -34,7 +34,7 @@ public class FetchReportPermissionsComboBoxHandler extends AbstractFetchHandler<
 	private static final SqlToJson sql = new SqlToJson(
 "SELECT id, name" +
 " FROM role" +
-" WHERE type != 'USER'" +
+" WHERE uname IS NOT NULL" +
 " ORDER BY name"
 	);
 

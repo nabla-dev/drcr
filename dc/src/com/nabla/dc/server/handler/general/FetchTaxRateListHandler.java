@@ -32,12 +32,12 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchTaxRateListHandler extends AbstractFetchHandler<FetchTaxRateList> {
 
 	private static final SqlToJson	rootSql = new SqlToJson(
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'b_deleted', id, name, rate, active AS 'b_active'" +
+"SELECT to_bool(IF(uname IS NULL,TRUE,FALSE)) AS 'deleted', id, name, rate, active" +
 " FROM tax_rate"
 	);
 
 	private static final SqlToJson	sql = new SqlToJson(
-"SELECT FALSE AS 'b_deleted', id, name, rate, active AS 'b_active'" +
+"SELECT to_bool(FALSE) AS 'deleted', id, name, rate, active" +
 " FROM tax_rate" +
 " WHERE uname IS NOT NULL"
 			);

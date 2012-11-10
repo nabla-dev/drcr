@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nabla.wapp.shared.dispatch.DispatchException;
 import net.sf.jasperreports.engine.JRParameter;
 
 import org.apache.commons.logging.Log;
@@ -48,6 +47,7 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.auth.AccessDeniedException;
+import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
 /**
@@ -148,5 +148,25 @@ ctx.getUserId(), cmd.getReportIds());
 			try { stmtReport.close(); } catch (final SQLException e) {}
 		}
 	}
+/*
+ * JasperReport jreport2 = JasperCompileManager.compileReport(input2);
+            JasperPrint jprint2 = JasperFillManager.fillReport(jreport2, new HashMap(), new JREmptyDataSource());
 
+            JasperReport jreport3 = JasperCompileManager.compileReport(input3);
+            JasperPrint jprint3 = JasperFillManager.fillReport(jreport3, new HashMap(), new JREmptyDataSource());
+
+            List<JasperPrint> jprintlist = new ArrayList<JasperPrint>();
+
+            jprintlist.add(jprint1);
+            jprintlist.add(jprint2);
+            jprintlist.add(jprint3);
+
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRPdfExporterParameter.JASPER_PRINT_LIST, jprintlist);
+
+            OutputStream output = new FileOutputStream(new File("/home/ashutosh/Desktop/desktop/nikunj/JasperTestApp/output/mytestbatch.pdf"));
+
+            exporter.setParameter(JRPdfExporterParameter.OUTPUT_STREAM, output);
+            exporter.exportReport();
+ */
 }

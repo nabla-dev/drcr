@@ -63,7 +63,7 @@ public class CloneUserHandler extends AbstractAddHandler<CloneUser> {
 	protected void generateResponse(final JsonResponse json, @SuppressWarnings("unused") final CloneUser record, int recordId, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active AS 'b_active', created FROM user WHERE id=?;", recordId);
+"SELECT id, active, created FROM user WHERE id=?;", recordId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {

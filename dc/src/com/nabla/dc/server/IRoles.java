@@ -17,13 +17,14 @@
 package com.nabla.dc.server;
 
 import com.nabla.dc.shared.IPrivileges;
+import com.nabla.wapp.report.shared.IReportPrivileges;
 import com.nabla.wapp.server.auth.IRole;
 
 /**
  * @author nabla
  *
  */
-public interface IRoles extends IPrivileges {
+public interface IRoles extends IPrivileges, IReportPrivileges {
 
 	@IRole({USER_ADD, USER_REMOVE, USER_EDIT, USER_VIEW})
 	static String USER_RW = "user_rw";
@@ -35,12 +36,12 @@ public interface IRoles extends IPrivileges {
 	static String ROLE_RO = "role_ro";
 	@IRole({USER_RW, ROLE_RW})
 	static String USER_MANAGER = "user_manager";
-/*
+
 	@IRole({REPORT_ADD, REPORT_REMOVE, REPORT_EDIT, REPORT_VIEW})
 	static String REPORT_RW = "report_rw";
 	@IRole(REPORT_VIEW)
 	static String REPORT_RO = "report_ro";
-*/
+
 	@IRole({COMPANY_TAX_RATE_EDIT, COMPANY_TAX_RATE_VIEW})
 	static String COMPANY_TAX_RATE_RW = "company_tax_rate_rw";
 	@IRole(COMPANY_TAX_RATE_VIEW)
@@ -81,9 +82,9 @@ public interface IRoles extends IPrivileges {
 	@IRole({COMPANY_RO, TAX_RATE_RO})
 	static String SETTINGS_RO = "settings_ro";
 
-	@IRole({USER_MANAGER/*, REPORT_RW*/, SETTINGS_RW})
+	@IRole({USER_MANAGER, REPORT_RW, SETTINGS_RW})
 	static String ADMINISTRATOR = "administrator";
 
-	@IRole({USER_RO, ROLE_RO/*, REPORT_RO*/, SETTINGS_RO})
+	@IRole({USER_RO, ROLE_RO, REPORT_RO, SETTINGS_RO})
 	static String GUEST = "guest";
 }

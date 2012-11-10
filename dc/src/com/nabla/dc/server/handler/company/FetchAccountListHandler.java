@@ -32,13 +32,13 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchAccountListHandler extends AbstractFetchHandler<FetchAccountList> {
 
 	private static final SqlToJson	rootSql = new SqlToJson(
-"SELECT IF(uname IS NULL,TRUE,FALSE) AS 'b_deleted', id, code, name, cost_centre, department, balance_sheet AS 'b_balance_sheet', active AS 'b_active'" +
+"SELECT to_bool(IF(uname IS NULL,TRUE,FALSE)) AS 'deleted', id, code, name, cost_centre, department, balance_sheet, active" +
 " FROM account" +
 " WHERE company_id=?"
 	);
 
 	private static final SqlToJson	sql = new SqlToJson(
-"SELECT FALSE AS 'b_deleted', id, code, name, cost_centre, department, balance_sheet AS 'b_balance_sheet', active AS 'b_active'" +
+"SELECT to_bool(FALSE) AS 'deleted', id, code, name, cost_centre, department, balance_sheet, active" +
 " FROM account" +
 " WHERE company_id=? AND uname IS NOT NULL"
 	);

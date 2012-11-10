@@ -18,7 +18,6 @@ package com.nabla.dc.server;
 
 import com.google.inject.servlet.ServletModule;
 import com.nabla.wapp.server.auth.LoginUserService;
-import com.nabla.wapp.server.basic.general.ExportService;
 import com.nabla.wapp.server.basic.general.ImportService;
 import com.nabla.wapp.server.dispatch.DispatchService;
 
@@ -32,9 +31,10 @@ public class ServiceModule extends ServletModule {
 	public void configureServlets() {
 		serve("/dc/login").with(LoginUserService.class);
 		serve("/dc/dispatch").with(DispatchService.class);
-		serve("/dc/export").with(ExportService.class);
+		serve("/dc/export").with(com.nabla.wapp.server.basic.general.ExportService.class);
 		serve("/dc/image").with(ImageService.class);
 		serve("*.gupld").with(ImportService.class);
+		serve("/dc/exportReport").with(com.nabla.wapp.report.server.handler.ExportService.class);
 	}
 
 }

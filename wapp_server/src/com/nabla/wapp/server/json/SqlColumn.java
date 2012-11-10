@@ -40,29 +40,9 @@ public class SqlColumn {
 	private final String	label;
 	private final int		type;
 
-	public SqlColumn(String label, int type) {
-		if (label.startsWith("b_")) {
-			this.label = label.substring(2);
-			this.type = Types.BOOLEAN;
-		} else if (label.startsWith("i_")) {
-			this.label = label.substring(2);
-			this.type = Types.INTEGER;
-		} else if (label.startsWith("dt_")) {
-			this.label = label.substring(3);
-			this.type = Types.DATE;
-		} else if (label.startsWith("s_")) {
-			this.label = label.substring(2);
-			this.type = Types.VARCHAR;
-		} else if (label.startsWith("d_")) {
-			this.label = label.substring(2);
-			this.type = Types.DOUBLE;
-		} else if (label.startsWith("f_")) {
-			this.label = label.substring(2);
-			this.type = Types.FLOAT;
-		} else {
-			this.label = label;
-			this.type = type;
-		}
+	public SqlColumn(String label, int type, int length) {
+		this.label = label;
+		this.type = (type == Types.TINYINT) ? (length == 1 ? Types.BOOLEAN : type) : type;
 		if (log.isDebugEnabled()) {
 			String s;
 			switch (this.type) {

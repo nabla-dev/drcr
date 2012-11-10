@@ -87,7 +87,7 @@ companyId, record.getFinancialYear());
 	protected void generateResponse(final JsonResponse json, @SuppressWarnings("unused") final AddCompany record, int recordId, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		// return more info than just ID
 		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT id, active AS 'b_active' FROM company WHERE id=?;", recordId);
+"SELECT id, active FROM company WHERE id=?;", recordId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
