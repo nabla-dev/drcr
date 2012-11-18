@@ -414,58 +414,73 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
     </data-sets>
     <styles>
         <style name="report" id="110">
-            <property name="fontFamily">sans-serif</property>
+            <property name="fontFamily">Arial</property>
             <property name="fontSize">10pt</property>
         </style>
-        <style name="crosstab-cell" id="246">
-            <property name="borderBottomColor">#CCCCCC</property>
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">1pt</property>
-            <property name="borderLeftColor">#CCCCCC</property>
-            <property name="borderLeftStyle">solid</property>
-            <property name="borderLeftWidth">1pt</property>
-            <property name="borderRightColor">#CCCCCC</property>
-            <property name="borderRightStyle">solid</property>
-            <property name="borderRightWidth">1pt</property>
-            <property name="borderTopColor">#CCCCCC</property>
-            <property name="borderTopStyle">solid</property>
-            <property name="borderTopWidth">1pt</property>
+        <style name="ReportTitle" id="254">
+            <property name="fontSize">16pt</property>
+            <property name="fontWeight">bold</property>
+            <property name="marginBottom">16pt</property>
+            <property name="textAlign">left</property>
         </style>
-        <style name="crosstab" id="247">
-            <property name="borderBottomColor">#CCCCCC</property>
+        <style name="ReportHeader" id="255">
+            <property name="fontWeight">bold</property>
             <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">1pt</property>
-            <property name="borderLeftColor">#CCCCCC</property>
-            <property name="borderLeftStyle">solid</property>
-            <property name="borderLeftWidth">1pt</property>
-            <property name="borderRightColor">#CCCCCC</property>
-            <property name="borderRightStyle">solid</property>
-            <property name="borderRightWidth">1pt</property>
-            <property name="borderTopColor">#CCCCCC</property>
-            <property name="borderTopStyle">solid</property>
-            <property name="borderTopWidth">1pt</property>
+            <property name="textAlign">left</property>
+        </style>
+        <style name="ReportData" id="256">
+            <property name="textAlign">left</property>
         </style>
     </styles>
     <page-setup>
-        <simple-master-page name="Simple MasterPage" id="2">
+        <simple-master-page name="NewSimpleMasterPage" id="257">
+            <method name="onPageStart"><![CDATA[var pageNumber = reportContext.getPageVariable("CURRENT_PAGE_NUMBER");
+reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
+]]></method>
+            <property name="footerHeight">20mm</property>
             <page-footer>
-                <text id="3">
-                    <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
-                </text>
+                <grid id="259">
+                    <property name="width">7.864583333333333in</property>
+                    <column id="260">
+                        <property name="width">3.9270833333333335in</property>
+                    </column>
+                    <column id="261">
+                        <property name="width">3.9375in</property>
+                    </column>
+                    <row id="262">
+                        <cell id="263"/>
+                        <cell id="264">
+                            <text id="268">
+                                <property name="textAlign">right</property>
+                                <property name="contentType">html</property>
+                                <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                    <row id="265">
+                        <cell id="266"/>
+                        <cell id="267">
+                            <text id="284">
+                                <property name="textAlign">right</property>
+                                <method name="onRender"><![CDATA[var pageNumber = reportContext.getPageVariable("CURRENT_PAGE_NUMBER");
+reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
+]]></method>
+                                <property name="contentType">html</property>
+                                <text-property name="content"><![CDATA[Page <VALUE-OF>reportContext.getPageVariable("CURRENT_PAGE_NUMBER")</VALUE-OF>]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                </grid>
             </page-footer>
         </simple-master-page>
     </page-setup>
     <body>
         <label id="245">
-            <property name="fontFamily">sans-serif</property>
-            <property name="fontSize">x-large</property>
-            <property name="fontWeight">bold</property>
-            <property name="textAlign">center</property>
+            <property name="style">ReportTitle</property>
             <text-property name="text">User List</text-property>
         </label>
         <table id="163">
-            <property name="width">100%</property>
+            <property name="width">7.947916666666667in</property>
             <property name="dataSet">dsUserList</property>
             <property name="refTemplateParameter">NewTemplateParameterDefinition2</property>
             <list-property name="boundDataColumns">
@@ -495,60 +510,68 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
                 </structure>
             </list-property>
             <property name="pageBreakInterval">50</property>
-            <column id="187"/>
-            <column id="188"/>
-            <column id="189"/>
-            <column id="190"/>
+            <column id="187">
+                <property name="width">3.1041666666666665in</property>
+            </column>
+            <column id="188">
+                <property name="width">0.875in</property>
+            </column>
+            <column id="189">
+                <property name="width">1.9895833333333333in</property>
+            </column>
+            <column id="190">
+                <property name="width">1.9791666666666667in</property>
+            </column>
             <header>
                 <row id="164">
+                    <property name="style">ReportHeader</property>
                     <cell id="165">
                         <label id="166">
-                            <property name="fontFamily">sans-serif</property>
-                            <property name="fontWeight">bold</property>
-                            <text-property name="text">Customer</text-property>
+                            <text-property name="text">Name</text-property>
                         </label>
                     </cell>
                     <cell id="167">
+                        <property name="textAlign">center</property>
                         <label id="168">
-                            <property name="fontFamily">sans-serif</property>
-                            <property name="fontWeight">bold</property>
-                            <text-property name="text">First</text-property>
+                            <text-property name="text">Active</text-property>
                         </label>
                     </cell>
                     <cell id="169">
+                        <property name="textAlign">center</property>
                         <label id="170">
-                            <property name="fontFamily">sans-serif</property>
-                            <property name="fontWeight">bold</property>
-                            <text-property name="text">Last</text-property>
+                            <text-property name="text">Created</text-property>
                         </label>
                     </cell>
                     <cell id="171">
+                        <property name="textAlign">center</property>
                         <label id="172">
-                            <property name="fontFamily">sans-serif</property>
-                            <property name="fontWeight">bold</property>
-                            <text-property name="text">Phone</text-property>
+                            <text-property name="text">Last Login</text-property>
                         </label>
                     </cell>
                 </row>
             </header>
             <detail>
                 <row id="173">
+                    <property name="style">ReportData</property>
                     <cell id="174">
                         <data id="250">
                             <property name="resultSetColumn">name</property>
                         </data>
                     </cell>
                     <cell id="176">
+                        <property name="textAlign">center</property>
                         <data id="251">
                             <property name="resultSetColumn">active</property>
                         </data>
                     </cell>
                     <cell id="178">
+                        <property name="textAlign">center</property>
                         <data id="252">
                             <property name="resultSetColumn">created</property>
                         </data>
                     </cell>
                     <cell id="180">
+                        <property name="textAlign">center</property>
                         <data id="253">
                             <property name="resultSetColumn">last_login</property>
                         </data>
@@ -566,8 +589,12 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
         </table>
     </body>
     <property name="pageVariables">
-        <variable-element name="vROOT_NAME">
-            <expression name="value" type="javascript">root</expression>
+        <variable-element name="REPORT_TIMESTAMP">
+            <expression name="value" type="javascript">new Date()</expression>
+            <property name="type">report</property>
+        </variable-element>
+        <variable-element name="CURRENT_PAGE_NUMBER">
+            <expression name="value" type="javascript">1</expression>
             <property name="type">report</property>
         </variable-element>
     </property>

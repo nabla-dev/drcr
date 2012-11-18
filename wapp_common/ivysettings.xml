@@ -1,6 +1,6 @@
 <ivysettings>
 	<property name="wapp.version" value="1.0.0" />
-	<property name="GWT.version" value="2.4.0" />
+	<property name="GWT.version" value="2.5.0" />
     <property name="guice.version" value="3.0" />
     <property name="smartgwt.version" value="3.0" />
     <property name="jasypt.version" value="latest.release" />
@@ -10,6 +10,8 @@
     <property name="commons-logging.version" value="latest.release" />
     <property name="gwtupload.version" value="latest.release" />
     <property name="jasperreports.version" value="latest.release" />
+    <property name="supercsv.version" value="latest.release" />
+    <property name="simple-xml.version" value="latest.release" />
     
     <settings defaultResolver="chain"/>
     <resolvers>

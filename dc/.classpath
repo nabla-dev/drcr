@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=dc&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;ivySettingsPath=%24%7Bworkspace_loc%3Awapp_common%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;propertyFiles="/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=dc&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;ivySettingsPath=%24%7Bworkspace_loc%3Adc%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;propertyFiles="/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_basicserver"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_client"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_server"/>
@@ -26,11 +26,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/smartgwt-skins-3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/guice-servlet-3.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/supercsv-1.52.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/simple-xml-2.6.6.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_basicserver-1.0.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/wapp_report-1.0.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/jasperreports-4.7.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mysql-connector-java-5.1.21.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_report"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
