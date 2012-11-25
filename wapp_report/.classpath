@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_shared"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_basicserver"/>
+	<classpathentry kind="lib" path="/home/nabla64/MyProjects/dev/libraries/birt-runtime-4_2_1/ReportEngine/lib/org.eclipse.birt.runtime_4.2.1.v20120918-1113.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

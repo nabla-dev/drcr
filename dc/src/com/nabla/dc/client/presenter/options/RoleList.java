@@ -16,9 +16,11 @@
 */
 package com.nabla.dc.client.presenter.options;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.options.RoleDefinitionFormModel;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.RoleListUi;
+import com.nabla.dc.shared.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -63,8 +65,6 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		ICurrentListGridRecordProvider getCurrentRecordProvider();
 	}
 
-//	@Inject private PrintManager					printerManager;
-
 	public RoleList(final IDisplay display) {
 		super(display);
 	}
@@ -85,7 +85,7 @@ public class RoleList extends AbstractTabPresenter<RoleList.IDisplay> {
 		cmd.editDefinition().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
-	//	printerManager.bind(cmd, this, BuiltInReports.ROLE_LIST);
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ROLE_LIST);
 	}
 
 	private final ISlot onRemoveSelectedRecords = new ISlot() {

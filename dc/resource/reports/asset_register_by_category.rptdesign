@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.2.1.v201209101448 Build &lt;4.2.1.v20120912-1721></property>
+    <list-property name="includeScripts">
+        <property>resource/reports/custom_functions.js</property>
+    </list-property>
     <property name="units">mm</property>
+    <method name="initialize"><![CDATA[noData=true;]]></method>
+    <property name="theme">common_styles.landscape</property>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="layoutPreference">auto layout</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">resource/reports/common_styles.rptlibrary</property>
+            <property name="namespace">common_styles</property>
+        </structure>
+    </list-property>
     <parameters>
         <scalar-parameter name="PeriodEndId" id="252">
             <text-property name="promptText">PeriodEnd</text-property>
@@ -227,57 +238,57 @@ where period_end.id=?]]></xml-property>
                     <structure>
                         <property name="position">8</property>
                         <property name="name">opening_cost</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">9</property>
                         <property name="name">addition</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">10</property>
                         <property name="name">transfer_cost</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">11</property>
                         <property name="name">disposal_cost</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">12</property>
                         <property name="name">opening_dep</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">13</property>
                         <property name="name">transfer_dep</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">14</property>
                         <property name="name">disposal_dep</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">15</property>
                         <property name="name">dep</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
                         <property name="name">closing_cost</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">17</property>
                         <property name="name">closing_dep</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">18</property>
                         <property name="name">nbv</property>
-                        <property name="dataType">decimal</property>
+                        <property name="dataType">integer</property>
                     </structure>
                 </list-property>
             </structure>
@@ -329,13 +340,13 @@ where period_end.id=?]]></xml-property>
                     <property name="position">8</property>
                     <property name="name">opening_cost</property>
                     <property name="nativeName">opening_cost</property>
-                    <property name="dataType">decimal</property>
+                    <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="position">9</property>
                     <property name="name">addition</property>
                     <property name="nativeName">addition</property>
-                    <property name="dataType">decimal</property>
+                    <property name="dataType">integer</property>
                 </structure>
                 <structure>
                     <property name="position">10</property>
@@ -454,51 +465,34 @@ GROUP BY asset_class, category, asset) dta
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
     </data-sets>
-    <styles>
-        <style name="report" id="4">
-            <property name="fontFamily">"Arial", sans-serif</property>
-            <property name="fontSize">7pt</property>
-        </style>
-        <style name="my_data" id="476">
-            <structure name="numberFormat">
-                <property name="category">Currency</property>
-                <property name="pattern">#,##0;(#,##0){RoundingMode=HALF_UP}</property>
-            </structure>
-            <property name="textAlign">right</property>
-        </style>
-        <style name="report_title" id="477">
-            <property name="fontSize">130%</property>
-            <property name="fontWeight">bold</property>
-        </style>
-        <style name="report_subtitle" id="478">
-            <property name="fontSize">120%</property>
-            <property name="fontWeight">bold</property>
-        </style>
-        <style name="data_header" id="479">
-            <property name="backgroundColor">#E6E6FA</property>
-            <property name="fontWeight">bold</property>
-        </style>
-        <style name="data_label" id="480">
-            <property name="fontWeight">bold</property>
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">thick</property>
-        </style>
-        <style name="data_group" id="481">
-            <property name="backgroundColor">#E6E6FA</property>
-            <property name="fontWeight">bold</property>
-            <property name="fontStyle">normal</property>
-        </style>
-    </styles>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
             <property name="type">a4</property>
             <property name="orientation">landscape</property>
             <property name="rightMargin">0mm</property>
             <page-footer>
-                <text id="3">
-                    <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
-                </text>
+                <grid id="482">
+                    <property name="style">footer</property>
+                    <property name="marginTop">5mm</property>
+                    <column id="483"/>
+                    <row id="484">
+                        <cell id="485">
+                            <text id="489">
+                                <property name="textAlign">right</property>
+                                <property name="contentType">html</property>
+                                <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                    <row id="486">
+                        <cell id="487">
+                            <auto-text id="490">
+                                <property name="textAlign">right</property>
+                                <property name="type">page-number</property>
+                            </auto-text>
+                        </cell>
+                    </row>
+                </grid>
             </page-footer>
         </simple-master-page>
     </page-setup>
@@ -525,5 +519,950 @@ GROUP BY asset_class, category, asset) dta
             </list-property>
             <property name="resultSetColumn">name</property>
         </data>
+        <table id="491">
+            <property name="dataSet">dsReport</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">asset_class</property>
+                    <text-property name="displayName">asset_class</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["asset_class"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">category</property>
+                    <text-property name="displayName">category</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["category"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">asset</property>
+                    <text-property name="displayName">Asset</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["asset"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reference</property>
+                    <text-property name="displayName">Reference</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reference"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">acquisition_date</property>
+                    <text-property name="displayName">Acquisition date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["acquisition_date"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">disposal_type</property>
+                    <text-property name="displayName">Disposal type</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["disposal_type"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">disposal_date</property>
+                    <text-property name="displayName">Disposal date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["disposal_date"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">opening_cost</property>
+                    <text-property name="displayName">At Beginning of period</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["opening_cost"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">addition</property>
+                    <text-property name="displayName">Additions</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["addition"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">transfer_cost</property>
+                    <text-property name="displayName">Transfer IN</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["transfer_cost"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">disposal_cost</property>
+                    <text-property name="displayName">Disposal</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["disposal_cost"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">opening_dep</property>
+                    <text-property name="displayName">At Beginning of period</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["opening_dep"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">transfer_dep</property>
+                    <text-property name="displayName">Transfer IN</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["transfer_dep"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">disposal_dep</property>
+                    <text-property name="displayName">Disposal</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["disposal_dep"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">dep</property>
+                    <text-property name="displayName">P/L charge</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["dep"])</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">closing_cost</property>
+                    <text-property name="displayName">At end of period</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["closing_cost"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">closing_dep</property>
+                    <text-property name="displayName">At end of period</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["closing_dep"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">nbv</property>
+                    <text-property name="displayName">NBV</text-property>
+                    <expression name="expression" type="javascript">currencyWithoutZero(dataSetRow["nbv"])</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <text-property name="displayName">opening_cost_subtotal</text-property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["opening_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_1</property>
+                    <property name="dataType">integer</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["addition"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_2</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["transfer_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_3</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["disposal_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_4</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["closing_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_5</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["nbv"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_6</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["nbv"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_7</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["closing_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_8</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["closing_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_9</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_10</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_11</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["disposal_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_12</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["disposal_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_13</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["transfer_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_14</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>AssetCategory</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["opening_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_15</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["transfer_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_16</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["opening_dep"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_17</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["closing_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_18</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["disposal_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_19</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["transfer_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_20</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["addition"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_21</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["opening_cost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="587"/>
+            <column id="588"/>
+            <column id="589"/>
+            <column id="590"/>
+            <column id="591"/>
+            <column id="592"/>
+            <column id="593"/>
+            <column id="594"/>
+            <column id="595"/>
+            <column id="596"/>
+            <column id="597"/>
+            <column id="598"/>
+            <column id="599"/>
+            <column id="600"/>
+            <column id="601"/>
+            <column id="602"/>
+            <header>
+                <row id="603">
+                    <cell id="606"/>
+                    <cell id="607"/>
+                    <cell id="608"/>
+                    <cell id="609"/>
+                    <cell id="610"/>
+                    <cell id="611">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <label id="623">
+                            <property name="style">table_header_span</property>
+                            <text-property name="text">COST</text-property>
+                        </label>
+                    </cell>
+                    <cell id="616">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <label id="624">
+                            <property name="style">table_header_span</property>
+                            <text-property name="text">ACCUMULATED DEPRECIATION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="621"/>
+                </row>
+                <row id="492">
+                    <property name="style">table_column_label</property>
+                    <cell id="497">
+                        <label id="498">
+                            <text-property name="text">Asset</text-property>
+                        </label>
+                    </cell>
+                    <cell id="499">
+                        <label id="500">
+                            <text-property name="text">Reference</text-property>
+                        </label>
+                    </cell>
+                    <cell id="501">
+                        <label id="502">
+                            <text-property name="text">Acquisition date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="503">
+                        <label id="504">
+                            <text-property name="text">Disposal type</text-property>
+                        </label>
+                    </cell>
+                    <cell id="505">
+                        <label id="506">
+                            <text-property name="text">Disposal date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="507">
+                        <label id="508">
+                            <text-property name="text">At Beginning of period</text-property>
+                        </label>
+                    </cell>
+                    <cell id="509">
+                        <label id="510">
+                            <text-property name="text">Additions</text-property>
+                        </label>
+                    </cell>
+                    <cell id="511">
+                        <label id="512">
+                            <text-property name="text">Transfer IN</text-property>
+                        </label>
+                    </cell>
+                    <cell id="513">
+                        <label id="514">
+                            <text-property name="text">Disposal</text-property>
+                        </label>
+                    </cell>
+                    <cell id="515">
+                        <label id="524">
+                            <text-property name="text">At end of period</text-property>
+                        </label>
+                    </cell>
+                    <cell id="517">
+                        <label id="516">
+                            <text-property name="text">At Beginning of period</text-property>
+                        </label>
+                    </cell>
+                    <cell id="519">
+                        <label id="518">
+                            <text-property name="text">Transfer IN</text-property>
+                        </label>
+                    </cell>
+                    <cell id="521">
+                        <label id="520">
+                            <text-property name="text">Disposal</text-property>
+                        </label>
+                    </cell>
+                    <cell id="523">
+                        <label id="522">
+                            <text-property name="text">P/L charge</text-property>
+                        </label>
+                    </cell>
+                    <cell id="525">
+                        <label id="526">
+                            <text-property name="text">At end of period</text-property>
+                        </label>
+                    </cell>
+                    <cell id="527">
+                        <label id="528">
+                            <text-property name="text">NBV</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="625">
+                <property name="groupName">AssetCategory</property>
+                <expression name="keyExpr" type="javascript">row["category"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["category"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <header>
+                    <row id="626">
+                        <cell id="627">
+                            <data id="660">
+                                <property name="resultSetColumn">category</property>
+                            </data>
+                        </cell>
+                        <cell id="628"/>
+                        <cell id="629"/>
+                        <cell id="630"/>
+                        <cell id="631"/>
+                        <cell id="632"/>
+                        <cell id="633"/>
+                        <cell id="634"/>
+                        <cell id="635"/>
+                        <cell id="636"/>
+                        <cell id="637"/>
+                        <cell id="638"/>
+                        <cell id="639"/>
+                        <cell id="640"/>
+                        <cell id="641"/>
+                        <cell id="642"/>
+                    </row>
+                </header>
+                <footer>
+                    <row id="643">
+                        <cell id="644">
+                            <property name="colSpan">5</property>
+                            <property name="rowSpan">1</property>
+                            <text-data id="688">
+                                <expression name="valueExpr">"Total for " + row["category"]</expression>
+                                <property name="contentType">html</property>
+                            </text-data>
+                        </cell>
+                        <cell id="649">
+                            <data id="664">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation</property>
+                            </data>
+                        </cell>
+                        <cell id="650">
+                            <data id="669">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_1</property>
+                            </data>
+                        </cell>
+                        <cell id="651">
+                            <data id="671">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_2</property>
+                            </data>
+                        </cell>
+                        <cell id="652">
+                            <data id="672">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_3</property>
+                            </data>
+                        </cell>
+                        <cell id="653">
+                            <data id="673">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_4</property>
+                            </data>
+                        </cell>
+                        <cell id="654">
+                            <data id="687">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_14</property>
+                            </data>
+                        </cell>
+                        <cell id="655">
+                            <data id="686">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_13</property>
+                            </data>
+                        </cell>
+                        <cell id="656">
+                            <data id="683">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_11</property>
+                            </data>
+                        </cell>
+                        <cell id="657">
+                            <data id="679">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_10</property>
+                            </data>
+                        </cell>
+                        <cell id="658">
+                            <data id="677">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_8</property>
+                            </data>
+                        </cell>
+                        <cell id="659">
+                            <data id="674">
+                                <property name="style">report_group_footer_total</property>
+                                <property name="resultSetColumn">Aggregation_5</property>
+                            </data>
+                        </cell>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="529">
+                    <method name="onCreate"><![CDATA[noData=false;]]></method>
+                    <list-property name="highlightRules">
+                        <structure>
+                            <property name="operator">eq</property>
+                            <property name="backgroundColor">#EEECEC</property>
+                            <expression name="testExpr" type="javascript">row.__rownum % 2</expression>
+                            <simple-property-list name="value1">
+                                <value type="javascript">1</value>
+                            </simple-property-list>
+                        </structure>
+                    </list-property>
+                    <cell id="534">
+                        <data id="535">
+                            <property name="resultSetColumn">asset</property>
+                        </data>
+                    </cell>
+                    <cell id="536">
+                        <data id="537">
+                            <property name="resultSetColumn">reference</property>
+                        </data>
+                    </cell>
+                    <cell id="538">
+                        <data id="539">
+                            <property name="resultSetColumn">acquisition_date</property>
+                        </data>
+                    </cell>
+                    <cell id="540">
+                        <data id="541">
+                            <property name="resultSetColumn">disposal_type</property>
+                        </data>
+                    </cell>
+                    <cell id="542">
+                        <data id="543">
+                            <property name="resultSetColumn">disposal_date</property>
+                        </data>
+                    </cell>
+                    <cell id="544">
+                        <data id="545">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["opening_cost"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">opening_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="546">
+                        <data id="547">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["addition"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">addition</property>
+                        </data>
+                    </cell>
+                    <cell id="548">
+                        <data id="549">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["transfer_cost"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">transfer_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="550">
+                        <data id="551">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["disposal_cost"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">disposal_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="552">
+                        <data id="561">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["closing_cost"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">closing_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="554">
+                        <data id="553">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["opening_dep"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">opening_dep</property>
+                        </data>
+                    </cell>
+                    <cell id="556">
+                        <data id="555">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["transfer_dep"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">transfer_dep</property>
+                        </data>
+                    </cell>
+                    <cell id="558">
+                        <data id="557">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["disposal_dep"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">disposal_dep</property>
+                        </data>
+                    </cell>
+                    <cell id="560">
+                        <data id="559">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["dep"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">dep</property>
+                        </data>
+                    </cell>
+                    <cell id="562">
+                        <data id="563">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["closing_dep"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">closing_dep</property>
+                        </data>
+                    </cell>
+                    <cell id="564">
+                        <data id="565">
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <expression name="testExpr" type="javascript">row["nbv"]</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                    <property name="style">currency_negative_value</property>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">nbv</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="566">
+                    <list-property name="visibility">
+                        <structure>
+                            <property name="format">all</property>
+                            <expression name="valueExpr" type="javascript">(noData)</expression>
+                        </structure>
+                    </list-property>
+                    <cell id="569">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <label id="689">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">GRAND TOTAL</text-property>
+                        </label>
+                    </cell>
+                    <cell id="574">
+                        <data id="696">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_21</property>
+                        </data>
+                    </cell>
+                    <cell id="575">
+                        <data id="695">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_20</property>
+                        </data>
+                    </cell>
+                    <cell id="576">
+                        <data id="694">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_19</property>
+                        </data>
+                    </cell>
+                    <cell id="577">
+                        <data id="693">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_18</property>
+                        </data>
+                    </cell>
+                    <cell id="578">
+                        <data id="692">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_17</property>
+                        </data>
+                    </cell>
+                    <cell id="579">
+                        <data id="691">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_16</property>
+                        </data>
+                    </cell>
+                    <cell id="580">
+                        <data id="690">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_15</property>
+                        </data>
+                    </cell>
+                    <cell id="581">
+                        <data id="684">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_12</property>
+                        </data>
+                    </cell>
+                    <cell id="582">
+                        <data id="678">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_9</property>
+                        </data>
+                    </cell>
+                    <cell id="583">
+                        <data id="676">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_7</property>
+                        </data>
+                    </cell>
+                    <cell id="584">
+                        <data id="675">
+                            <property name="style">table_footer_total</property>
+                            <property name="resultSetColumn">Aggregation_6</property>
+                        </data>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+        <label id="666">
+            <property name="style">no_data</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">(!noData)</expression>
+                </structure>
+            </list-property>
+            <text-property name="text">*** no data ***</text-property>
+        </label>
     </body>
 </report>

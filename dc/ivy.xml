@@ -26,6 +26,5 @@
         
         <dependency org="org.simpleframework" name="simple-xml" rev="${simple-xml.version}" conf="compile->default;runtime->default" />
         
-        <dependency org="net.sf.jasperreports" name="jasperreports" rev="${jasperreports.version}" conf="compile->default;runtime->default" />
     </dependencies>
 </ivy-module>

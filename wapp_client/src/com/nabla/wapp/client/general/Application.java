@@ -33,8 +33,8 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
  */
 public abstract class Application implements IApplication, GWT.UncaughtExceptionHandler {
 
-	private static final Logger			logger = LoggerFactory.getLog(Application.class);
-	private static IApplication			application;
+	private static final Logger		log = LoggerFactory.getLog(Application.class);
+	private static IApplication		application;
 	private final IMessageBox			msgBox;
 	private final ConstantsWithLookup	serverErrors;
 	private final IServer				server;
@@ -90,13 +90,13 @@ public abstract class Application implements IApplication, GWT.UncaughtException
 	@Override
 	public String getLocalizedError(final String errorCode) {
 		if (errorCode == null || errorCode.isEmpty() || errorCode.length() >= 256) {
-			logger.log(Level.SEVERE,"no exception error message! Show internal error message instead");
+			log.log(Level.SEVERE,"no exception error message! Show internal error message instead");
 			return serverErrors.getString(CommonServerErrors.INTERNAL_ERROR.toString());
 		}
 		try {
 			return serverErrors.getString(errorCode);
 		} catch (final Throwable e) {
-			logger.log(Level.SEVERE,"'" + errorCode + "' is not a valid server error code");
+			log.log(Level.SEVERE,"'" + errorCode + "' is not a valid server error code");
 			return serverErrors.getString(CommonServerErrors.INTERNAL_ERROR.toString());
 		}
 	}
@@ -125,7 +125,7 @@ public abstract class Application implements IApplication, GWT.UncaughtException
 	 */
 	@Override
 	public void onUncaughtException(Throwable e) {
-		logger.log(Level.SEVERE, "uncaught exception", e);
+		log.log(Level.SEVERE, "uncaught exception", e);
 	}
 
 }

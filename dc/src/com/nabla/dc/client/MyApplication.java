@@ -19,18 +19,23 @@ package com.nabla.dc.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.nabla.dc.client.model.report.ReportParameterBinderFactory;
 import com.nabla.dc.client.presenter.MainWindow;
+import com.nabla.dc.client.presenter.report.ReportParameterDialogFactory;
 import com.nabla.dc.client.ui.MyMessageBox;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.mvp.ITopPresenter;
+import com.nabla.wapp.report.client.PrintManager;
 
 /**
  * The <code></code> object is used to
  *
  */
 public class MyApplication extends Application {
+
+	private PrintManager	printManager;
 
 	public MyApplication() {
 		super(new MyMessageBox(), new MyServer(), Resource.serverErrors);
@@ -55,6 +60,20 @@ public class MyApplication extends Application {
 			}
 
 		});
+	}
+
+	/**
+	 * Get global application instance
+	 * @return
+	 */
+	public static MyApplication getInstance() {
+		return (MyApplication)Application.getInstance();
+	}
+
+	public PrintManager getPrintManager() {
+		if (printManager == null)
+			printManager = new PrintManager(new ReportParameterBinderFactory(), new ReportParameterDialogFactory());
+		return printManager;
 	}
 
 }

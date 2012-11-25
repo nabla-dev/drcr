@@ -76,7 +76,6 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		ISlotManager1<UserCompanyRecord> getSelectedSlots();
 	}
 
-//	@Inject private PrintManager	printerManager;
 	private final ITabManager		tabs;
 
 	public UserCompanyList(final IDisplay display, final ITabManager tabs) {
@@ -107,7 +106,8 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
-//		printerManager.bind(cmd, this, BuiltInReports.ACCOUNT_LIST);
+
+cmd.userList().fire();
 	}
 
 	private final ISlot onReload = new ISlot() {

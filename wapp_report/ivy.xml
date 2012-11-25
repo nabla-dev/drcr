@@ -11,7 +11,9 @@
     -->
       <dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default" />
       <dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime->default" /> 
-	  <dependency org="net.sf.jasperreports" name="jasperreports" rev="3.7.0" conf="compile->default" />
+	  <dependency org="net.sf.jasperreports" name="jasperreports" rev="${jasperreports.version}" conf="compile->default">
+  	  	<exclude org="com.lowagie"/>
+  	  </dependency>
 	  
     </dependencies>
 </ivy-module>

@@ -69,9 +69,6 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 				addTab(new UserCompanyList(Workspace.this));
 			}
 		});
-/*
-		printManager.bind(getDisplay().getPrintCommands(), this, this);*/
-
 	}
 
 	@Override

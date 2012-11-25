@@ -75,12 +75,12 @@ public class ReportListModel extends CModel<ReportRecord> {
 	}
 
 	@Override
-	public IRecordAction<StringResult> getAddCommand(final ReportRecord record) {
+	public IRecordAction<StringResult> getAddCommand(@SuppressWarnings("unused") final ReportRecord record) {
 		return null;
 	}
 
 	@Override
-	public IRecordAction<StringResult> getUpdateCommand(final ReportRecord record) {
+	public IRecordAction<StringResult> getUpdateCommand(@SuppressWarnings("unused") final ReportRecord record) {
 		return null;
 	}
 

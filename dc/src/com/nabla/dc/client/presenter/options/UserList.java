@@ -16,11 +16,13 @@
 */
 package com.nabla.dc.client.presenter.options;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.options.UserDefinitionFormModel;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.company.UserCompanyList;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.UserListUi;
+import com.nabla.dc.shared.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -73,9 +75,6 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 	}
 
 	private final ITabManager 	tabs;
-/*
-	@Inject private PrintManager						printerManager;
-*/
 
 	public UserList(final IDisplay display, final ITabManager tabs) {
 		super(display);
@@ -105,7 +104,7 @@ public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 		cmd.cloneRecord().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
-//		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.USER_LIST);
 	}
 
 	private final ISlot onAddRecord = new ISlot() {
