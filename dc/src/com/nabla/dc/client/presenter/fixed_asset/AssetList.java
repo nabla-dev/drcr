@@ -17,12 +17,15 @@
 package com.nabla.dc.client.presenter.fixed_asset;
 
 import com.google.gwt.core.client.GWT;
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.fixed_asset.AssetListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.fixed_asset.RevertAssetDisposal;
+import com.nabla.dc.shared.report.BuiltInReports;
+import com.nabla.dc.shared.report.ReportParameterTypes;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
@@ -35,6 +38,7 @@ import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
+import com.nabla.wapp.report.shared.IntegerReportParameterValue;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
@@ -75,9 +79,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 
 	private final Integer		companyId;
 	private final ITabManager	tabs;
-/*
-	@Inject private PrintManager	printerManager;
-*/
+
 	public AssetList(final Integer companyId, final IDisplay display, final ITabManager tabs) {
 		super(display);
 		this.companyId = companyId;
@@ -115,7 +117,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	*/
 		cmd.updateUi();
 
-//		printerManager.bind(cmd, this, BuiltInReports.ASSET_LIST, new IntegerSetReportParameterValue(ReportParameterTypes.RegisterIdListField.getDefaultParameterName(), assetRegisterId));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new IntegerReportParameterValue(ReportParameterTypes.PeriodEndIdField.getDefaultParameterName(), 292/*companyId*/));
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

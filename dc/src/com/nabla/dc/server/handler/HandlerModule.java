@@ -40,8 +40,6 @@ import com.nabla.wapp.server.dispatch.AbstractHandlerModule;
  */
 public class HandlerModule extends AbstractHandlerModule {
 
-//	private static final boolean		RECOMPILE_REPORTS = false;
-
 	@Override
 	protected void configure() {
 		super.configure();
@@ -49,8 +47,7 @@ public class HandlerModule extends AbstractHandlerModule {
 		install(new GeneralHandlerModule());
 		install(new CompanyHandlerModule());
 		install(new FixedAssetHandlerModule());
-
-//		bindConstant().annotatedWith(IReCompileReports.class).to(RECOMPILE_REPORTS);
+		install(new com.nabla.wapp.report.server.handler.HandlerModule());
 
 		bind(IDatabase.class).annotatedWith(IReadWriteDatabase.class).to(MyReadWriteDatabase.class).in(Singleton.class);
 		bind(IDatabase.class).annotatedWith(IReadOnlyDatabase.class).to(MyReadOnlyDatabase.class).in(Singleton.class);
@@ -75,24 +72,7 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdateListGridFilterHandler.class);
 		bindHandler(RemoveListGridFilterHandler.class);
 
-		bindHandler(LoadUserPreferenceHandler.class);
-		bindHandler(SaveUserPreferenceHandler.class);
-
-		bindHandler(FetchReportListHandler.class);
-		bindHandler(FetchUserReportListHandler.class);
-		bindHandler(FetchReportPermissionsComboBoxHandler.class);
-		bindHandler(RemoveReportHandler.class);
-		bindHandler(AddReportHandler.class);
-		bindHandler(UpdateReportHandler.class);
-
-		bind(String.class).annotatedWith(IReportFolder.class).toProvider(ReportFolderProvider.class).in(Singleton.class);
-		bind(IReportParameterTypeValidator.class).to(ReportParameterTypeValidator.class).in(Singleton.class);
-
-		bindHandler(GetBuiltInReportHandler.class);
-		bindHandler(GetSimpleReportHandler.class);
-		bindHandler(GetReportHandler.class);
-		bindHandler(GetReportParameterDefaultValuesHandler.class);
-		bindHandler(FetchReportParameterAccountListHandler.class);
+bind(IReportParameterTypeValidator.class).to(ReportParameterTypeValidator.class).in(Singleton.class);
 		*/
 	}
 

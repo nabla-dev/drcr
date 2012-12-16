@@ -53,6 +53,8 @@
                 <style name="report" id="668">
                     <property name="fontFamily">"Trebuchet MS", "Helvetica", sans-serif</property>
                     <property name="fontSize">7pt</property>
+                    <property name="pageBreakAfter">avoid</property>
+                    <property name="pageBreakBefore">avoid</property>
                 </style>
                 <style name="report_group_footer_total" id="685">
                     <property name="borderBottomStyle">solid</property>
@@ -61,11 +63,11 @@
                     <property name="borderTopWidth">thin</property>
                 </style>
                 <style name="report_subtitle" id="478">
-                    <property name="fontSize">120%</property>
+                    <property name="fontSize">160%</property>
                     <property name="fontWeight">bold</property>
                 </style>
                 <style name="report_title" id="477">
-                    <property name="fontSize">130%</property>
+                    <property name="fontSize">200%</property>
                     <property name="fontWeight">bold</property>
                 </style>
                 <style name="table" id="476">
@@ -94,11 +96,9 @@
                     <property name="borderBottomStyle">solid</property>
                 </style>
                 <style name="table-group-footer-cell" id="665">
-                    <property name="backgroundColor">#E6E6FA</property>
                     <property name="fontWeight">bold</property>
                 </style>
                 <style name="table-group-header-cell" id="481">
-                    <property name="backgroundColor">#E6E6FA</property>
                     <property name="fontWeight">bold</property>
                     <property name="fontStyle">normal</property>
                 </style>
@@ -107,8 +107,98 @@
                 </style>
             </styles>
         </theme>
+        <theme name="portrait" id="699">
+            <styles>
+                <style name="currency_negative_value" id="700">
+                    <property name="color">#FF0000</property>
+                </style>
+                <style name="date" id="701">
+                    <property name="textAlign">center</property>
+                </style>
+                <style name="footer" id="702">
+                    <property name="fontSize">90%</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                    <property name="marginTop">5mm</property>
+                    <property name="paddingTop">1mm</property>
+                    <structure name="dateTimeFormat">
+                        <property name="category">Custom</property>
+                        <property name="pattern">d MMMM y HH:mm:ss</property>
+                    </structure>
+                </style>
+                <style name="no_data" id="703">
+                    <property name="fontStyle">italic</property>
+                    <property name="textAlign">center</property>
+                </style>
+                <style name="report" id="704">
+                    <property name="fontFamily">"Trebuchet MS", "Helvetica", sans-serif</property>
+                    <property name="fontSize">10pt</property>
+                    <property name="pageBreakAfter">avoid</property>
+                    <property name="pageBreakBefore">avoid</property>
+                </style>
+                <style name="report_group_footer_total" id="705">
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">thin</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </style>
+                <style name="report_subtitle" id="706">
+                    <property name="fontSize">160%</property>
+                    <property name="fontWeight">bold</property>
+                </style>
+                <style name="report_title" id="707">
+                    <property name="fontSize">200%</property>
+                    <property name="fontWeight">bold</property>
+                </style>
+                <style name="table" id="708">
+                    <property name="numberAlign">right</property>
+                    <structure name="dateTimeFormat">
+                        <property name="category">Short Date</property>
+                        <property name="pattern">Short Date</property>
+                    </structure>
+                    <structure name="numberFormat">
+                        <property name="category">Currency</property>
+                        <property name="pattern">#,##0;(#,##0){RoundingMode=HALF_UP}</property>
+                    </structure>
+                </style>
+                <style name="table_footer_total" id="709">
+                    <property name="fontWeight">bold</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">medium</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">thin</property>
+                </style>
+                <style name="table_header_span" id="710">
+                    <property name="backgroundColor">#E6E6FA</property>
+                    <property name="fontWeight">bold</property>
+                </style>
+                <style name="table_column_label" id="711">
+                    <property name="borderBottomStyle">solid</property>
+                </style>
+                <style name="table-group-footer-cell" id="712">
+                    <property name="fontWeight">bold</property>
+                </style>
+                <style name="table-group-header-cell" id="713">
+                    <property name="fontWeight">bold</property>
+                    <property name="fontStyle">normal</property>
+                </style>
+                <style name="table-header" id="714">
+                    <property name="fontWeight">bold</property>
+                </style>
+            </styles>
+        </theme>
     </themes>
     <page-setup>
-        <simple-master-page name="NewSimpleMasterPage" id="3"/>
+        <simple-master-page name="NewSimpleMasterPage" id="3">
+            <property name="type">a4</property>
+            <property name="topMargin">10mm</property>
+            <property name="leftMargin">10mm</property>
+            <property name="bottomMargin">10mm</property>
+            <property name="rightMargin">10mm</property>
+            <property name="showHeaderOnFirst">false</property>
+            <property name="showFooterOnLast">false</property>
+            <property name="headerHeight">0mm</property>
+            <property name="footerHeight">10mm</property>
+        </simple-master-page>
     </page-setup>
 </library>

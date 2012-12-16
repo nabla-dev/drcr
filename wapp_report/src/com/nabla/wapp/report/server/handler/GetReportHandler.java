@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.inject.Inject;
-import com.nabla.wapp.report.server.IReportFolder;
 import com.nabla.wapp.report.server.ReportFile;
 import com.nabla.wapp.report.shared.IReport;
 import com.nabla.wapp.report.shared.ReportResult;
@@ -49,12 +47,8 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
  */
 public class GetReportHandler extends AbstractHandler<GetReport, ReportResult> {
 
-	private final String	reportFolder;
-
-	@Inject
-	public GetReportHandler(@IReportFolder final String reportFolder) {
+	public GetReportHandler() {
 		super(true);
-		this.reportFolder = reportFolder;
 	}
 
 	@Override
@@ -82,7 +76,7 @@ ctx.getUserId(), cmd.getReportIds());
 						stmtExport.setString(2, cmd.getFormat().toString());
 						stmtExport.setBoolean(3, cmd.getOutputAsFile());
 						rsReport.beforeFirst();
-						final ReportFile report = new ReportFile(reportFolder);
+						final ReportFile report = new ReportFile(""/*reportFolder*/);
 						while (rsReport.next()) {
 							report.setFileName(rsReport.getString("template"));
 							final File file = report.generate(cmd.getParameters().toMap(), ctx.getReadConnection());

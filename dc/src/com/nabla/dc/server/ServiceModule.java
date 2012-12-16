@@ -34,7 +34,6 @@ public class ServiceModule extends ServletModule {
 		serve("/dc/export").with(com.nabla.wapp.server.basic.general.ExportService.class);
 		serve("/dc/image").with(ImageService.class);
 		serve("*.gupld").with(ImportService.class);
-		serve("/dc/exportReport").with(com.nabla.wapp.report.server.handler.ExportService.class);
 	}
 
 }

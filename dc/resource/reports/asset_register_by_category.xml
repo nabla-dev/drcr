@@ -1,0 +1,7 @@
+<report>
+	<file_name>asset_register_by_category.rptdesign</file_name>
+	<internal_name>ASSET_REGISTER_BY_CATEGORY</internal_name>
+	<ledger>ASSET</ledger>
+	<name locale="en">Asset Register by Category</name>
+	<name locale="fr">Asset Registre par Categorie</name>
+</report>

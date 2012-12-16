@@ -73,7 +73,7 @@ public class PrintManager {
 	public PrintManager(final IReportParameterBinderFactory parameterBinderFactory, final ReportParameterDialog.IFactory parameterDialogFactory) {
 		this.parameterBinderFactory = parameterBinderFactory;
 		this.parameterDialogFactory = parameterDialogFactory;
-		reportUrlFormat = GWT.getModuleBaseURL() + "exportReport?id=";
+		reportUrlFormat = GWT.getModuleBaseURL() + "export?id=";
 	}
 
 	public <BuiltInReportsType extends Enum<BuiltInReportsType>>

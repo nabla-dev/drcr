@@ -2,7 +2,7 @@
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.2.1.v201209101448 Build &lt;4.2.1.v20120912-1721></property>
     <list-property name="includeScripts">
-        <property>resource/reports/custom_functions.js</property>
+        <property>custom_functions.js</property>
     </list-property>
     <property name="units">mm</property>
     <method name="initialize"><![CDATA[noData=true;]]></method>
@@ -13,7 +13,7 @@
     <property name="imageDPI">96</property>
     <list-property name="libraries">
         <structure>
-            <property name="fileName">resource/reports/common_styles.rptlibrary</property>
+            <property name="fileName">common_styles.rptlibrary</property>
             <property name="namespace">common_styles</property>
         </structure>
     </list-property>
@@ -464,16 +464,371 @@ GROUP BY asset_class, category, asset) dta
   </DataSetParameters>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsCsv" id="697">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">asset</property>
+                    <text-property name="displayName">Asset</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">reference</property>
+                    <text-property name="displayName">Reference</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">acquisition_date</property>
+                    <text-property name="displayName">Acquisition date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">disposal_type</property>
+                    <text-property name="displayName">Disposal type</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">disposal_date</property>
+                    <text-property name="displayName">Disposal date</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">opening_cost</property>
+                    <text-property name="displayName">At Beginning of period</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">addition</property>
+                    <text-property name="displayName">Additions</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">transfer_cost</property>
+                    <text-property name="displayName">Transfer IN</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">disposal_cost</property>
+                    <text-property name="displayName">Disposal</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">opening_dep</property>
+                    <text-property name="displayName">At Beginning of period</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">transfer_dep</property>
+                    <text-property name="displayName">Transfer IN</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">disposal_dep</property>
+                    <text-property name="displayName">Disposal</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">dep</property>
+                    <text-property name="displayName">P/L charge</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">closing_cost</property>
+                    <text-property name="displayName">At end of period</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">closing_dep</property>
+                    <text-property name="displayName">At end of period</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">nbv</property>
+                    <text-property name="displayName">NBV</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_1</property>
+                    <property name="paramName">PeriodEndId</property>
+                    <property name="nativeName"></property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">-1</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">asset_class</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">category</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">asset</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">reference</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">acquisition_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">disposal_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">disposal_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">opening_cost</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">addition</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">transfer_cost</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">disposal_cost</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">opening_dep</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">transfer_dep</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">disposal_dep</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">dep</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">closing_cost</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">closing_dep</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">nbv</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Local MySQL</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">asset_class</property>
+                    <property name="nativeName">asset_class</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">category</property>
+                    <property name="nativeName">category</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">asset</property>
+                    <property name="nativeName">asset</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">reference</property>
+                    <property name="nativeName">reference</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">acquisition_date</property>
+                    <property name="nativeName">acquisition_date</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">disposal_type</property>
+                    <property name="nativeName">disposal_type</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">disposal_date</property>
+                    <property name="nativeName">disposal_date</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">opening_cost</property>
+                    <property name="nativeName">opening_cost</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">addition</property>
+                    <property name="nativeName">addition</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">transfer_cost</property>
+                    <property name="nativeName">transfer_cost</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">disposal_cost</property>
+                    <property name="nativeName">disposal_cost</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">opening_dep</property>
+                    <property name="nativeName">opening_dep</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">transfer_dep</property>
+                    <property name="nativeName">transfer_dep</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">disposal_dep</property>
+                    <property name="nativeName">disposal_dep</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">dep</property>
+                    <property name="nativeName">dep</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">closing_cost</property>
+                    <property name="nativeName">closing_cost</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">closing_dep</property>
+                    <property name="nativeName">closing_dep</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">nbv</property>
+                    <property name="nativeName">nbv</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select *, (closing_cost - closing_dep) AS nbv FROM (select *,
+(opening_cost+addition+transfer_cost+disposal_cost) AS closing_cost,(opening_dep+transfer_dep+disposal_dep+dep) AS closing_dep
+FROM (
+
+SELECT c.type AS asset_class, c.name AS category, a.name AS asset, a.reference, a.acquisition_date, a.disposal_type, a.disposal_date,
+
+SUM(IF(t.class='COST' AND tp.end_date < p.from_period, t.amount,0)) AS opening_cost,
+SUM(IF(t.class='COST' AND t.type='OPENING' AND a.acquisition_type!='TRANSFER' AND tp.end_date >= p.from_period,t.amount,0)) AS addition,
+SUM(IF(t.class='COST' AND t.type='OPENING' AND a.acquisition_type='TRANSFER' AND tp.end_date >= p.from_period,t.amount,0)) AS transfer_cost,
+SUM(IF(t.class='COST' AND t.type='CLOSING' AND tp.end_date >= p.from_period,t.amount,0)) as disposal_cost,
+
+SUM(IF(t.class='DEP' AND tp.end_date < p.from_period,-t.amount,0)) AS opening_dep,
+SUM(IF(t.class='DEP' AND t.type='OPENING' AND a.acquisition_type='TRANSFER' AND tp.end_date >= p.from_period,-t.amount,0)) AS transfer_dep,
+SUM(IF(t.class='DEP' AND t.type='CLOSING' AND tp.end_date >= p.from_period,-t.amount,0)) AS disposal_dep,
+SUM(IF(t.class='DEP' AND t.type='CHARGE' AND tp.end_date >= p.from_period,-t.amount,0)) AS dep
+
+FROM
+(SELECT fy.company_id AS company_id, CONCAT(YEAR(pa.end_date),'-',MONTH(pa.end_date),'-',1) AS financial_year_start, pa.end_date AS from_period, pb.end_date AS to_period
+FROM period_end AS pa INNER JOIN (
+	period_end AS pb INNER JOIN financial_year AS fy ON pb.financial_year_id=fy.id
+) ON pa.financial_year_id=pb.financial_year_id
+WHERE pb.id=?
+ORDER BY pa.end_date ASC LIMIT 1) AS p,
+fa_asset_category AS c INNER JOIN (
+	fa_company_asset_category AS cc INNER JOIN (
+		fa_asset AS a INNER JOIN (
+			fa_transaction AS t INNER JOIN period_end AS tp ON t.period_end_id=tp.id
+		) ON a.id=t.fa_asset_id
+	) ON cc.id=a.fa_company_asset_category_id
+) ON c.id=cc.fa_asset_category_id
+
+WHERE cc.company_id=p.company_id AND
+	tp.end_date <= p.to_period AND
+	a.acquisition_date <= p.to_period AND
+	(a.disposal_date IS NULL OR a.disposal_date >= p.financial_year_start)
+
+GROUP BY asset_class, category, asset) dta
+) dtb ORDER BY asset_class DESC, category ASC, acquisition_date DESC, asset ASC;
+]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <DataSetParameters>
+    <parameter>
+      <design:ParameterDefinition>
+        <design:inOutMode>In</design:inOutMode>
+        <design:attributes>
+          <design:identifier>
+            <design:name></design:name>
+            <design:position>1</design:position>
+          </design:identifier>
+          <design:nativeDataTypeCode>-1</design:nativeDataTypeCode>
+          <design:precision>0</design:precision>
+          <design:scale>0</design:scale>
+          <design:nullability>Unknown</design:nullability>
+        </design:attributes>
+      </design:ParameterDefinition>
+    </parameter>
+  </DataSetParameters>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
             <property name="type">a4</property>
             <property name="orientation">landscape</property>
-            <property name="rightMargin">0mm</property>
+            <property name="topMargin">5mm</property>
+            <property name="leftMargin">10mm</property>
+            <property name="bottomMargin">5mm</property>
+            <property name="rightMargin">10mm</property>
+            <property name="showHeaderOnFirst">true</property>
+            <property name="showFooterOnLast">true</property>
+            <property name="headerHeight">0mm</property>
+            <property name="footerHeight">0mm</property>
             <page-footer>
                 <grid id="482">
                     <property name="style">footer</property>
                     <property name="marginTop">5mm</property>
+                    <property name="overflow">visible</property>
+                    <property name="height">100%</property>
+                    <property name="pushDown">false</property>
                     <column id="483"/>
                     <row id="484">
                         <cell id="485">
@@ -503,7 +858,7 @@ GROUP BY asset_class, category, asset) dta
         </label>
         <data id="254">
             <property name="style">report_subtitle</property>
-            <property name="marginBottom">10mm</property>
+            <property name="marginBottom">5mm</property>
             <structure name="numberFormat">
                 <property name="category">Currency</property>
                 <property name="pattern">#,##0;(#,##0){RoundingMode=HALF_UP}</property>
@@ -929,6 +1284,10 @@ GROUP BY asset_class, category, asset) dta
                     <property name="allowExport">true</property>
                 </structure>
             </list-property>
+            <structure name="toc">
+                <expression name="expressionValue" type="javascript">null</expression>
+            </structure>
+            <property name="pageBreakInterval">0</property>
             <column id="587"/>
             <column id="588"/>
             <column id="589"/>
@@ -1058,31 +1417,18 @@ GROUP BY asset_class, category, asset) dta
                 <property name="groupName">AssetCategory</property>
                 <expression name="keyExpr" type="javascript">row["category"]</expression>
                 <structure name="toc">
-                    <expression name="expressionValue" type="javascript">row["category"]</expression>
+                    <expression name="expressionValue" type="javascript">null</expression>
                 </structure>
                 <property name="hideDetail">false</property>
                 <header>
                     <row id="626">
                         <cell id="627">
+                            <property name="colSpan">16</property>
+                            <property name="rowSpan">1</property>
                             <data id="660">
                                 <property name="resultSetColumn">category</property>
                             </data>
                         </cell>
-                        <cell id="628"/>
-                        <cell id="629"/>
-                        <cell id="630"/>
-                        <cell id="631"/>
-                        <cell id="632"/>
-                        <cell id="633"/>
-                        <cell id="634"/>
-                        <cell id="635"/>
-                        <cell id="636"/>
-                        <cell id="637"/>
-                        <cell id="638"/>
-                        <cell id="639"/>
-                        <cell id="640"/>
-                        <cell id="641"/>
-                        <cell id="642"/>
                     </row>
                 </header>
                 <footer>
@@ -1170,7 +1516,7 @@ GROUP BY asset_class, category, asset) dta
                     <list-property name="highlightRules">
                         <structure>
                             <property name="operator">eq</property>
-                            <property name="backgroundColor">#EEECEC</property>
+                            <property name="backgroundColor">#F7F7F7</property>
                             <expression name="testExpr" type="javascript">row.__rownum % 2</expression>
                             <simple-property-list name="value1">
                                 <value type="javascript">1</value>

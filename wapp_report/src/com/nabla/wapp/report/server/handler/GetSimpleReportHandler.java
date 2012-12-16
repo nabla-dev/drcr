@@ -28,16 +28,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sf.jasperreports.engine.JRParameter;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.Inject;
-import com.nabla.wapp.report.server.IReportFolder;
 import com.nabla.wapp.report.server.IReportParameterTypeValidator;
 import com.nabla.wapp.report.server.ReportFile;
-import com.nabla.wapp.report.shared.IReport;
 import com.nabla.wapp.report.shared.ReportParameter;
 import com.nabla.wapp.report.shared.SimpleReportResult;
 import com.nabla.wapp.report.shared.command.GetSimpleReport;
@@ -57,13 +53,11 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
 public class GetSimpleReportHandler extends AbstractHandler<GetSimpleReport, SimpleReportResult> {
 
 	private static final Log					log = LogFactory.getLog(GetSimpleReportHandler.class);
-	private final String						reportFolder;
 	private final IReportParameterTypeValidator	parameterTypeValidator;
 
 	@Inject
-	public GetSimpleReportHandler(@IReportFolder final String reportFolder, final IReportParameterTypeValidator parameterTypeValidator) {
+	public GetSimpleReportHandler(final IReportParameterTypeValidator parameterTypeValidator) {
 		super(true);
-		this.reportFolder = reportFolder;
 		this.parameterTypeValidator = parameterTypeValidator;
 	}
 
@@ -78,13 +72,13 @@ ctx.getUserId(), cmd.getReportIds());
 			int reportFound = 0;
 			final Map<String, Object> parameters = cmd.getParameters();
 			final Map<String, ReportParameter> reportParameters = new HashMap<String, ReportParameter>();
-			final ReportFile report = new ReportFile(reportFolder);
+			final ReportFile report = new ReportFile(""/*reportFolder*/);
 			while (rsReport.next()) {
 				if (log.isDebugEnabled())
 					log.debug("report to generate: '" + rsReport.getString("name") + "'");
 				++reportFound;
 				report.setFileName(rsReport.getString("template"));
-				for (JRParameter parameter : report.getHeader().getParameters()) {
+			/*	for (JRParameter parameter : report.getHeader().getParameters()) {
 					if (!parameter.isForPrompting() || parameter.isSystemDefined())
 						continue;
 					final String name = parameter.getName();
@@ -97,7 +91,7 @@ ctx.getUserId(), cmd.getReportIds());
 						}
 						reportParameters.put(name, new ReportParameter(name, parameter.getDescription(), model));
 					}
-				}
+				}*/
 			}
 			if (reportFound != cmd.getReportIds().size())
 				throw new AccessDeniedException();

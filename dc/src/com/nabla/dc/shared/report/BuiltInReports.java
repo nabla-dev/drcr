@@ -1,5 +1,5 @@
 /**
-* Copyright 2010 nabla
+* Copyright 2012 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,16 +14,15 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.server;
+package com.nabla.dc.shared.report;
 
-import net.sf.jasperreports.engine.export.JRRtfExporter;
 
 /**
- * The <code>ExportReportToRtf</code> object is used to export Jasper report to RTF
+ * The <code>BuiltInReports</code> object is used to
  *
  */
-public class ExportReportToRtf extends JRRtfExporter {
-
-	public ExportReportToRtf() {}
-
+public enum BuiltInReports {
+	ROLE_LIST,
+	USER_LIST,
+	ASSET_REGISTER_BY_CATEGORY
 }

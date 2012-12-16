@@ -45,7 +45,7 @@ public class DispatchService extends RemoteServiceServlet implements IDispatchRe
 	private static final long	serialVersionUID = 1L;
 	private static final Log	log = LogFactory.getLog(DispatchService.class);
 
-	private final ActionHandlerRegister			handlers;
+	private final ActionHandlerRegister		handlers;
 	private final IUserSessionContextProvider	ctxFactory;
 
 	@Inject

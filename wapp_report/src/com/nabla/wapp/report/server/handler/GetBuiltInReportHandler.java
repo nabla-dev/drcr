@@ -16,23 +16,20 @@
 */
 package com.nabla.wapp.report.server.handler;
 
-import java.io.File;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 
+import org.eclipse.birt.report.engine.api.IReportRunnable;
+
 import com.google.inject.Inject;
-import com.nabla.wapp.report.server.IReportFolder;
-import com.nabla.wapp.report.server.ReportFile;
+import com.nabla.wapp.report.server.ReportManager;
 import com.nabla.wapp.report.shared.command.GetBuiltInReport;
 import com.nabla.wapp.server.auth.IUserSessionContext;
-import com.nabla.wapp.server.database.Database;
-import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
-import com.nabla.wapp.shared.auth.AccessDeniedException;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
-import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
 /**
  * @author nabla
@@ -40,41 +37,26 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
  */
 public class GetBuiltInReportHandler extends AbstractHandler<GetBuiltInReport, IntegerResult> {
 
-	private final String	reportFolder;
+	private final ReportManager	reportManager;
 
 	@Inject
-	public GetBuiltInReportHandler(@IReportFolder final String reportFolder) {
+	public GetBuiltInReportHandler(final ReportManager reportManager) {
 		super(true);
-		this.reportFolder = reportFolder;
+		this.reportManager = reportManager;
 	}
 
 	@Override
 	public IntegerResult execute(final GetBuiltInReport cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final PreparedStatement stmt = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT *" +
-" FROM report INNER JOIN user_role ON report.role_id=user_role.role_id" +
-" WHERE user_role.user_id=? AND report.internal_name=?;",
-ctx.getUserId(), cmd.getName());
+		final IReportRunnable template = reportManager.openReportTemplate(cmd.getName(), ctx);
+		final InputStream report = reportManager.createReport(template, ctx.getReadConnection(), cmd.getParameters(), cmd.getFormat());
 		try {
-			final ResultSet rs = stmt.executeQuery();
-			if (!rs.next())
-				throw new AccessDeniedException();
-			final File reportFile = new ReportFile(reportFolder, rs.getString("template")).generate(cmd.getParameters(), ctx.getReadConnection());
-			try {
-				final Integer id = Database.addRecord(ctx.getWriteConnection(),
-"INSERT INTO export (name,format,output_as_file,report) VALUES(?,?,?,?);",
-rs.getString("name"), cmd.getFormat().toString(), cmd.getOutputAsFile(), reportFile.getAbsolutePath());
-				if (id == null) {
-					reportFile.delete();
-					throw new InternalErrorException("failed to save report to database");
-				}
-				return new IntegerResult(id);
-			} catch (SQLException e) {
-				reportFile.delete();
-				throw e;
-			}
+			return new IntegerResult(reportManager.saveReport(ctx.getWriteConnection(), template.getReportName(), report, cmd.getFormat(), cmd.getOutputAsFile()));
 		} finally {
-			try { stmt.close(); } catch (final SQLException e) {}
+			try {
+				report.close();
+			} catch (IOException e) {
+				Util.throwInternalErrorException(e);
+			}
 		}
 	}
 

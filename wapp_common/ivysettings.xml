@@ -9,7 +9,6 @@
     <property name="commons-dbcp.version" value="1.4" />
     <property name="commons-logging.version" value="latest.release" />
     <property name="gwtupload.version" value="latest.release" />
-    <property name="jasperreports.version" value="latest.release" />
     <property name="supercsv.version" value="latest.release" />
     <property name="simple-xml.version" value="latest.release" />
     <property name="birt.version" value="latest.release" />

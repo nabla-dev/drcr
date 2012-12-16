@@ -16,6 +16,8 @@
 */
 package com.nabla.wapp.report.server.handler;
 
+import com.google.inject.Singleton;
+import com.nabla.wapp.report.server.ReportManager;
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
 /**
@@ -26,9 +28,25 @@ public class HandlerModule extends AbstractHandlerSubModule {
 
 	@Override
 	protected void configure() {
+		bind(ReportManager.class).in(Singleton.class);
+
 		bindHandler(FetchReportListHandler.class);
 		bindHandler(FetchUserReportListHandler.class);
 		bindHandler(FetchReportPermissionsComboBoxHandler.class);
+
+		bindHandler(GetBuiltInReportHandler.class);
+		/*
+		 *
+		bindHandler(RemoveReportHandler.class);
+		bindHandler(AddReportHandler.class);
+		bindHandler(UpdateReportHandler.class);
+
+		bindHandler(GetSimpleReportHandler.class);
+		bindHandler(GetReportHandler.class);
+		bindHandler(GetReportParameterDefaultValuesHandler.class);
+		bindHandler(FetchReportParameterAccountListHandler.class);
+
+		 */
 	}
 
 }

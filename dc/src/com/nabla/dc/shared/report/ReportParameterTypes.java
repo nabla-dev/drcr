@@ -1,5 +1,5 @@
 /**
-* Copyright 2011 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,20 +14,29 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.server;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import com.google.inject.BindingAnnotation;
+package com.nabla.dc.shared.report;
 
 /**
- * @author nabla
+ * The <code>ReportParameterTypes</code> object is used to
  *
  */
-@BindingAnnotation
-@Target({ElementType.FIELD, ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface IReportFolder {}
+public enum ReportParameterTypes {
+	TextField(null),
+	IntegerField(null),
+	PositiveIntegerField(null),
+	CurrencyField(null),
+	CompanyId("CompanyId"),
+	DateField("AsAt"),
+	PeriodEndIdField("PeriodEndId");
+
+	private final String	defaultParameterName;
+
+	ReportParameterTypes(final String defaultParameterName) {
+		this.defaultParameterName = defaultParameterName;
+	}
+
+	public String getDefaultParameterName() {
+		return defaultParameterName;
+	}
+
+}

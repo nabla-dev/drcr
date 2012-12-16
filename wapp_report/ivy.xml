@@ -11,9 +11,8 @@
     -->
       <dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default" />
       <dependency org="com.google.inject" name="guice" rev="${guice.version}" conf="compile->default;runtime->default" /> 
-	  <dependency org="net.sf.jasperreports" name="jasperreports" rev="${jasperreports.version}" conf="compile->default">
-  	  	<exclude org="com.lowagie"/>
-  	  </dependency>
-	  
+<!--  	  <dependency org="org.eclipse.birt.runtime" name="org.eclipse.birt.runtime" rev="${birt.version}"/>
+-->
+	  <dependency org="org.simpleframework" name="simple-xml" rev="${simple-xml.version}" conf="compile->default;runtime->default" />
     </dependencies>
 </ivy-module>

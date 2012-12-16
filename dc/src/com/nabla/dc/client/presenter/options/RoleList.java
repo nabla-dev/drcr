@@ -20,7 +20,7 @@ import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.options.RoleDefinitionFormModel;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.RoleListUi;
-import com.nabla.dc.shared.BuiltInReports;
+import com.nabla.dc.shared.report.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;

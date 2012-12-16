@@ -22,7 +22,7 @@ import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.company.UserCompanyList;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.options.UserListUi;
-import com.nabla.dc.shared.BuiltInReports;
+import com.nabla.dc.shared.report.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
