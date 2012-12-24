@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: BIRT XML Emitter
+Bundle-SymbolicName: birt_emitter_xml;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.eclipse.birt.report.engine.emitter.xml.Activator
+Require-Bundle: org.eclipse.birt.report.engine;bundle-version="4.2.1",
+ org.apache.commons.logging;bundle-version="1.0.4"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.eclipse.birt.report.engine.emitter.xml

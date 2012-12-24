@@ -240,189 +240,7 @@
         </oda-data-source>
     </data-sources>
     <data-sets>
-        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsUserList" id="249">
-            <list-property name="columnHints">
-                <structure>
-                    <property name="columnName">name</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">Name</text-property>
-                    <text-property name="heading">name</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">created</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">Created</text-property>
-                    <text-property name="heading">created</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">last_login</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">Last Login</text-property>
-                    <text-property name="heading">last_login</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">active</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">active</text-property>
-                    <text-property name="heading">active</text-property>
-                </structure>
-            </list-property>
-            <list-property name="parameters"/>
-            <structure name="cachedMetaData">
-                <list-property name="resultSet">
-                    <structure>
-                        <property name="position">1</property>
-                        <property name="name">name</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">2</property>
-                        <property name="name">created</property>
-                        <property name="dataType">date-time</property>
-                    </structure>
-                    <structure>
-                        <property name="position">3</property>
-                        <property name="name">last_login</property>
-                        <property name="dataType">date-time</property>
-                    </structure>
-                    <structure>
-                        <property name="position">4</property>
-                        <property name="name">active</property>
-                        <property name="dataType">integer</property>
-                    </structure>
-                </list-property>
-            </structure>
-            <property name="dataSource">Local MySQL</property>
-            <list-property name="resultSet">
-                <structure>
-                    <property name="position">1</property>
-                    <property name="name">name</property>
-                    <property name="nativeName">name</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">2</property>
-                    <property name="name">created</property>
-                    <property name="nativeName">created</property>
-                    <property name="dataType">date-time</property>
-                    <property name="nativeDataType">93</property>
-                </structure>
-                <structure>
-                    <property name="position">3</property>
-                    <property name="name">last_login</property>
-                    <property name="nativeName">last_login</property>
-                    <property name="dataType">date-time</property>
-                    <property name="nativeDataType">93</property>
-                </structure>
-                <structure>
-                    <property name="position">4</property>
-                    <property name="name">active</property>
-                    <property name="nativeName">active</property>
-                    <property name="dataType">integer</property>
-                    <property name="nativeDataType">-7</property>
-                </structure>
-            </list-property>
-            <xml-property name="queryText"><![CDATA[select user.name, user.created, user.last_login, user.active
-from user
-where user.uname is not null and user.name not like 'root']]></xml-property>
-            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
-  <Version>2.0</Version>
-  <design:ResultSets derivedMetaData="true">
-    <design:resultSetDefinitions>
-      <design:resultSetColumns>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:identifier>
-              <design:name>name</design:name>
-              <design:position>1</design:position>
-            </design:identifier>
-            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
-            <design:precision>64</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-            <design:uiHints>
-              <design:displayName>name</design:displayName>
-            </design:uiHints>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>name</design:label>
-            <design:formattingHints>
-              <design:displaySize>64</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:identifier>
-              <design:name>created</design:name>
-              <design:position>2</design:position>
-            </design:identifier>
-            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
-            <design:precision>19</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-            <design:uiHints>
-              <design:displayName>created</design:displayName>
-            </design:uiHints>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>created</design:label>
-            <design:formattingHints>
-              <design:displaySize>19</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:identifier>
-              <design:name>last_login</design:name>
-              <design:position>3</design:position>
-            </design:identifier>
-            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
-            <design:precision>19</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>Nullable</design:nullability>
-            <design:uiHints>
-              <design:displayName>last_login</design:displayName>
-            </design:uiHints>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>last_login</design:label>
-            <design:formattingHints>
-              <design:displaySize>19</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-        <design:resultColumnDefinitions>
-          <design:attributes>
-            <design:identifier>
-              <design:name>active</design:name>
-              <design:position>4</design:position>
-            </design:identifier>
-            <design:nativeDataTypeCode>-7</design:nativeDataTypeCode>
-            <design:precision>1</design:precision>
-            <design:scale>0</design:scale>
-            <design:nullability>NotNullable</design:nullability>
-            <design:uiHints>
-              <design:displayName>active</design:displayName>
-            </design:uiHints>
-          </design:attributes>
-          <design:usageHints>
-            <design:label>active</design:label>
-            <design:formattingHints>
-              <design:displaySize>1</design:displaySize>
-            </design:formattingHints>
-          </design:usageHints>
-        </design:resultColumnDefinitions>
-      </design:resultSetColumns>
-      <design:criteria/>
-    </design:resultSetDefinitions>
-  </design:ResultSets>
-</model:DesignValues>]]></xml-property>
-        </oda-data-set>
-        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsCSV" id="667">
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsReport" id="249">
             <list-property name="columnHints">
                 <structure>
                     <property name="columnName">name</property>
@@ -645,24 +463,36 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
         </simple-master-page>
     </page-setup>
     <body>
-        <label id="245">
-            <property name="style">report_title</property>
-            <text-property name="text">Dr | (Cr)</text-property>
-        </label>
-        <label id="491">
-            <property name="style">report_subtitle</property>
-            <property name="marginBottom">5mm</property>
-            <text-property name="text">User List</text-property>
-        </label>
+        <grid id="698">
+            <property name="style">title_grid</property>
+            <column id="699"/>
+            <row id="700">
+                <cell id="701">
+                    <label id="245">
+                        <property name="style">title</property>
+                        <text-property name="text">Dr | (Cr)</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="702">
+                <cell id="703">
+                    <label id="491">
+                        <property name="style">subtitle</property>
+                        <property name="marginBottom">0mm</property>
+                        <text-property name="text">User List</text-property>
+                    </label>
+                </cell>
+            </row>
+        </grid>
         <table name="report" id="163">
             <property name="canShrink">false</property>
             <property name="width">100%</property>
-            <property name="dataSet">dsUserList</property>
+            <property name="dataSet">dsReport</property>
             <property name="refTemplateParameter">NewTemplateParameterDefinition2</property>
             <list-property name="visibility">
                 <structure>
                     <property name="format">all</property>
-                    <expression name="valueExpr" type="javascript">((reportContext.getOutputFormat( ) == "csv") || (reportContext.getOutputFormat( ) == "xml"))</expression>
+                    <expression name="valueExpr" type="javascript">(exportCurrentOutput())</expression>
                 </structure>
             </list-property>
             <list-property name="boundDataColumns">
@@ -708,6 +538,7 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
                     <property name="style">table_column_label</property>
                     <cell id="165">
                         <label id="166">
+                            <property name="textAlign">left</property>
                             <text-property name="text">Name</text-property>
                         </label>
                     </cell>
@@ -782,15 +613,15 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
             </list-property>
             <text-property name="text">*** no data ***</text-property>
         </label>
-        <table name="csv" id="670">
-            <property name="pageBreakAfter">avoid</property>
-            <property name="pageBreakBefore">avoid</property>
-            <property name="pageBreakInside">avoid</property>
-            <property name="dataSet">dsCSV</property>
+        <table name="export" id="727">
+            <property name="canShrink">false</property>
+            <property name="width">100%</property>
+            <property name="dataSet">dsReport</property>
+            <property name="refTemplateParameter">NewTemplateParameterDefinition2</property>
             <list-property name="visibility">
                 <structure>
                     <property name="format">all</property>
-                    <expression name="valueExpr" type="javascript">((reportContext.getOutputFormat( ) != "csv") &amp;&amp; (reportContext.getOutputFormat( ) != "xml"))</expression>
+                    <expression name="valueExpr" type="javascript">(!exportCurrentOutput())</expression>
                 </structure>
             </list-property>
             <list-property name="boundDataColumns">
@@ -808,76 +639,94 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
                 </structure>
                 <structure>
                     <property name="name">last_login</property>
-                    <text-property name="displayName">last_login</text-property>
+                    <text-property name="displayName">last_Login</text-property>
                     <expression name="expression" type="javascript">dataSetRow["last_login"]</expression>
                     <property name="dataType">date-time</property>
                 </structure>
                 <structure>
                     <property name="name">active</property>
                     <text-property name="displayName">active</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["active"]</expression>
-                    <property name="dataType">integer</property>
+                    <expression name="expression" type="javascript">booleanAsString(dataSetRow["active"])</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
                 </structure>
             </list-property>
-            <structure name="toc"/>
-            <property name="repeatHeader">false</property>
-            <property name="pageBreakInterval">0</property>
-            <column id="694"/>
-            <column id="695"/>
-            <column id="696"/>
-            <column id="697"/>
+            <property name="pageBreakInterval">50</property>
+            <column id="746"/>
+            <column id="747">
+                <property name="width">30mm</property>
+            </column>
+            <column id="748">
+                <property name="width">45mm</property>
+            </column>
+            <column id="749">
+                <property name="width">45mm</property>
+            </column>
             <header>
-                <row id="671">
-                    <cell id="672">
-                        <label id="673">
+                <row id="728">
+                    <property name="style">table_column_label</property>
+                    <cell id="729">
+                        <label id="730">
+                            <property name="textAlign">left</property>
                             <text-property name="text">name</text-property>
                         </label>
                     </cell>
-                    <cell id="674">
-                        <label id="675">
+                    <cell id="731">
+                        <property name="textAlign">center</property>
+                        <label id="732">
+                            <text-property name="text">active</text-property>
+                        </label>
+                    </cell>
+                    <cell id="733">
+                        <property name="textAlign">center</property>
+                        <label id="734">
                             <text-property name="text">created</text-property>
                         </label>
                     </cell>
-                    <cell id="676">
-                        <label id="677">
+                    <cell id="735">
+                        <property name="textAlign">center</property>
+                        <label id="736">
                             <text-property name="text">last_login</text-property>
-                        </label>
-                    </cell>
-                    <cell id="678">
-                        <label id="679">
-                            <text-property name="text">active</text-property>
                         </label>
                     </cell>
                 </row>
             </header>
             <detail>
-                <row id="680">
-                    <cell id="681">
-                        <data id="682">
+                <row id="737">
+                    <method name="onCreate"><![CDATA[noData=false;]]></method>
+                    <list-property name="highlightRules">
+                        <structure>
+                            <property name="operator">eq</property>
+                            <property name="backgroundColor">#F7F7F7</property>
+                            <expression name="testExpr" type="javascript">row.__rownum % 2</expression>
+                            <simple-property-list name="value1">
+                                <value type="javascript">1</value>
+                            </simple-property-list>
+                        </structure>
+                    </list-property>
+                    <cell id="738">
+                        <data id="739">
                             <property name="resultSetColumn">name</property>
                         </data>
                     </cell>
-                    <cell id="683">
-                        <data id="684">
-                            <structure name="dateTimeFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
-                            </structure>
+                    <cell id="740">
+                        <property name="textAlign">center</property>
+                        <data id="741">
+                            <property name="resultSetColumn">active</property>
+                        </data>
+                    </cell>
+                    <cell id="742">
+                        <property name="style">date_time</property>
+                        <property name="textAlign">center</property>
+                        <data id="743">
                             <property name="resultSetColumn">created</property>
                         </data>
                     </cell>
-                    <cell id="685">
-                        <data id="686">
-                            <structure name="dateTimeFormat">
-                                <property name="category">Custom</property>
-                                <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
-                            </structure>
+                    <cell id="744">
+                        <property name="style">date_time</property>
+                        <property name="textAlign">center</property>
+                        <data id="745">
                             <property name="resultSetColumn">last_login</property>
-                        </data>
-                    </cell>
-                    <cell id="687">
-                        <data id="688">
-                            <property name="resultSetColumn">active</property>
                         </data>
                     </cell>
                 </row>

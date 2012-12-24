@@ -148,11 +148,11 @@
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
                 </style>
-                <style name="report_subtitle" id="706">
+                <style name="subtitle" id="706">
                     <property name="fontSize">160%</property>
                     <property name="fontWeight">bold</property>
                 </style>
-                <style name="report_title" id="707">
+                <style name="title" id="707">
                     <property name="fontSize">200%</property>
                     <property name="fontWeight">bold</property>
                 </style>
@@ -196,6 +196,9 @@
                         <property name="category">Custom</property>
                         <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
                     </structure>
+                </style>
+                <style name="title_grid" id="717">
+                    <property name="marginBottom">5mm</property>
                 </style>
             </styles>
         </theme>
