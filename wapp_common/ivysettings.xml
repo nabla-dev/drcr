@@ -1,7 +1,7 @@
 <ivysettings>
 	<property name="wapp.version" value="1.0.0" />
 	<property name="GWT.version" value="latest.release" />
-    <property name="guice.version" value="latest.release" />
+    <property name="guice.version" value="3.0" />
     <property name="smartgwt.version" value="latest.release" />
     <property name="jasypt.version" value="latest.release" />
     <property name="icu4j.version" value="3.4.4" />

@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nabla.wapp.client.command.Command;
@@ -98,8 +99,7 @@ public class PrintManager {
 	void bind(final IPrintCommandSet commands, final IPresenter presenter, final BuiltInReportsType builtInReport, final IParameterGetter parameterGetter) {
 		bindBuiltIn(commands.print(), builtInReport, ReportFormats.PDF, false, parameterGetter, presenter);
 		bindBuiltIn(commands.exportAsCSV(), builtInReport, ReportFormats.CSV, true, parameterGetter, presenter);
-		bindBuiltIn(commands.exportAsTXT(), builtInReport, ReportFormats.TXT, true, parameterGetter, presenter);
-		bindBuiltIn(commands.exportAsRTF(), builtInReport, ReportFormats.RTF, true, parameterGetter, presenter);
+		bindBuiltIn(commands.exportAsWORD(), builtInReport, ReportFormats.DOC, true, parameterGetter, presenter);
 		bindBuiltIn(commands.exportAsXML(), builtInReport, ReportFormats.XML, true, parameterGetter, presenter);
 		bindBuiltIn(commands.exportAsXLS(), builtInReport, ReportFormats.XLS, true, parameterGetter, presenter);
 		bindBuiltIn(commands.exportAsPDF(), builtInReport, ReportFormats.PDF, true, parameterGetter, presenter);
@@ -108,8 +108,7 @@ public class PrintManager {
 	public void bind(final IPrintCommandSet commands, final IPresenter presenter, IReportGetter reportGetter) {
 		bind(commands.print(), ReportFormats.PDF, false, presenter, reportGetter);
 		bind(commands.exportAsCSV(), ReportFormats.CSV, true, presenter, reportGetter);
-		bind(commands.exportAsTXT(), ReportFormats.TXT, true, presenter, reportGetter);
-		bind(commands.exportAsRTF(), ReportFormats.RTF, true, presenter, reportGetter);
+		bind(commands.exportAsWORD(), ReportFormats.DOC, true, presenter, reportGetter);
 		bind(commands.exportAsXML(), ReportFormats.XML, true, presenter, reportGetter);
 		bind(commands.exportAsXLS(), ReportFormats.XLS, true, presenter, reportGetter);
 		bind(commands.exportAsPDF(), ReportFormats.PDF, true, presenter, reportGetter);
@@ -120,7 +119,7 @@ public class PrintManager {
 		presenter.registerSlot(command, new ISlot() {
 			@Override
 			public void invoke() {
-				Application.getInstance().getDispatcher().execute(new GetBuiltInReport(builtInReport.toString(), format, outputAsFile, (parameterGetter != null) ? parameterGetter.getParameter() : null), onCreateBuiltInReport);
+				Application.getInstance().getDispatcher().execute(new GetBuiltInReport(builtInReport.toString(), format, outputAsFile, (parameterGetter != null) ? parameterGetter.getParameter() : null, LocaleInfo.getCurrentLocale().getLocaleName()), onCreateBuiltInReport);
 			}
 		});
 	}
@@ -155,7 +154,7 @@ public class PrintManager {
 			app.getMessageBox().error(Resource.instance.strings.noReportSelected());
 			return;
 		}
-		app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile), new AsyncCallback<SimpleReportResult>() {
+		app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile, LocaleInfo.getCurrentLocale().getLocaleName()), new AsyncCallback<SimpleReportResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(Level.WARNING, "fail to get list of report IDs to display", caught);

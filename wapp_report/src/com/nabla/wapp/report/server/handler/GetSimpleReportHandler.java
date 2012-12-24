@@ -33,7 +33,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.Inject;
 import com.nabla.wapp.report.server.IReportParameterTypeValidator;
-import com.nabla.wapp.report.server.ReportFile;
 import com.nabla.wapp.report.shared.ReportParameter;
 import com.nabla.wapp.report.shared.SimpleReportResult;
 import com.nabla.wapp.report.shared.command.GetSimpleReport;
@@ -52,7 +51,7 @@ import com.nabla.wapp.shared.dispatch.InternalErrorException;
  */
 public class GetSimpleReportHandler extends AbstractHandler<GetSimpleReport, SimpleReportResult> {
 
-	private static final Log					log = LogFactory.getLog(GetSimpleReportHandler.class);
+	private static final Log						log = LogFactory.getLog(GetSimpleReportHandler.class);
 	private final IReportParameterTypeValidator	parameterTypeValidator;
 
 	@Inject
@@ -72,12 +71,12 @@ ctx.getUserId(), cmd.getReportIds());
 			int reportFound = 0;
 			final Map<String, Object> parameters = cmd.getParameters();
 			final Map<String, ReportParameter> reportParameters = new HashMap<String, ReportParameter>();
-			final ReportFile report = new ReportFile(""/*reportFolder*/);
+		//	final ReportFile report = new ReportFile(""/*reportFolder*/);
 			while (rsReport.next()) {
 				if (log.isDebugEnabled())
 					log.debug("report to generate: '" + rsReport.getString("name") + "'");
 				++reportFound;
-				report.setFileName(rsReport.getString("template"));
+			//	report.setFileName(rsReport.getString("template"));
 			/*	for (JRParameter parameter : report.getHeader().getParameters()) {
 					if (!parameter.isForPrompting() || parameter.isSystemDefined())
 						continue;
@@ -113,11 +112,11 @@ ctx.getUserId(), cmd.getReportIds());
 						stmtExport.setBoolean(3, cmd.getOutputAsFile());
 						rsReport.beforeFirst();
 						while (rsReport.next()) {
-							report.setFileName(rsReport.getString("template"));
+					/*		report.setFileName(rsReport.getString("template"));
 							final File file = report.generate(parameters, ctx.getReadConnection());
-							files.add(file);
+							files.add(file);*/
 							stmtExport.setString(1, rsReport.getString("name"));
-							stmtExport.setString(4, file.getAbsolutePath());
+						//	stmtExport.setString(4, file.getAbsolutePath());
 							stmtExport.addBatch();
 						}
 						if (!Database.isBatchCompleted(stmtExport.executeBatch()))
@@ -142,25 +141,5 @@ ctx.getUserId(), cmd.getReportIds());
 			try { stmtReport.close(); } catch (final SQLException e) {}
 		}
 	}
-/*
- * JasperReport jreport2 = JasperCompileManager.compileReport(input2);
-            JasperPrint jprint2 = JasperFillManager.fillReport(jreport2, new HashMap(), new JREmptyDataSource());
 
-            JasperReport jreport3 = JasperCompileManager.compileReport(input3);
-            JasperPrint jprint3 = JasperFillManager.fillReport(jreport3, new HashMap(), new JREmptyDataSource());
-
-            List<JasperPrint> jprintlist = new ArrayList<JasperPrint>();
-
-            jprintlist.add(jprint1);
-            jprintlist.add(jprint2);
-            jprintlist.add(jprint3);
-
-            JRExporter exporter = new JRPdfExporter();
-            exporter.setParameter(JRPdfExporterParameter.JASPER_PRINT_LIST, jprintlist);
-
-            OutputStream output = new FileOutputStream(new File("/home/ashutosh/Desktop/desktop/nikunj/JasperTestApp/output/mytestbatch.pdf"));
-
-            exporter.setParameter(JRPdfExporterParameter.OUTPUT_STREAM, output);
-            exporter.exportReport();
- */
 }

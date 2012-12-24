@@ -28,17 +28,8 @@ public interface IReport extends IReportTable {
 
 	static final String					REPORT_FILE = "report_id";
 
-	static final String					REPORT_FOLDER = "reports_folder";
-	static final String					REPORT_DOCUMENT_PREFIX = "report";
-	static final String					REPORT_DOCUMENT_EXT = ".jprint";
-
 	static final String					NEW_REPORT_PREFERENCE_GROUP = "new_report";
 	static final String					PRINT_REPORT_PREFERENCE_GROUP = "report_parameter";
-
-	static final String					EXTENSION_COMPILED_REPORT = "jasper";
-	static final String					EXTENSION_SOURCE_REPORT = "jrxml";
-	static final String					EXTENSION_STYLE_LIBRARY = "jrtx";
-	static final String					EXTENSION_SCRIPT = "jar";
 
 	static final String					HEADER_PERMISSION = "auth";
 	static final String					HEADER_PARAMETER_TYPE = "model";

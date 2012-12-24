@@ -38,7 +38,11 @@ public class XmlReport {
 	@Element
 	Ledgers					ledger;
 	@Element
+	String					role;
+	@Element
 	BuiltInReports			internal_name;
+	@Element
+	String					default_locale;
 	@ElementMap(entry="name", key="locale", attribute=true, inline=true)
 	Map<String, String>		names;
 
@@ -50,6 +54,10 @@ public class XmlReport {
 		return ledger;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
 	public BuiltInReports getInternalName() {
 		return internal_name;
 	}
@@ -58,7 +66,11 @@ public class XmlReport {
 		return names;
 	}
 
+	public boolean isDefaultName() {
+		return names.get(default_locale) != null;
+	}
+
 	public String getDefaultName() {
-		return names.values().iterator().next();
+		return names.get(default_locale);
 	}
 }

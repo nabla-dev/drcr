@@ -59,7 +59,6 @@ public class Database implements IDatabase {
 		return pool.get();
 	}
 
-
 	public static void close(final Connection conn) {
 		try { conn.close(); } catch (final SQLException e) {}
 	}

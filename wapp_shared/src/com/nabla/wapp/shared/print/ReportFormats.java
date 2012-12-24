@@ -22,14 +22,12 @@ package com.nabla.wapp.shared.print;
  */
 public enum ReportFormats {
 	CSV("text/csv"),
-	TXT("text/plain"),
-	RTF("text/richtext"),
 	XML("text/xml"),
-//	HTML("text/html"),
 	XLS("application/vnd.ms-excel"),
+	DOC("application/vnd.ms-word"),
 	PDF("application/pdf");
 
-	private final String mimeType;
+	private final String	mimeType;
 
 	ReportFormats(final String mimeType) {
 		this.mimeType = mimeType;
@@ -37,5 +35,9 @@ public enum ReportFormats {
 
 	public String getMimeType() {
 		return mimeType;
+	}
+
+	public String getFileExtension() {
+		return this.toString().toLowerCase();
 	}
 }

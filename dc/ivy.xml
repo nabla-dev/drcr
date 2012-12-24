@@ -22,7 +22,7 @@
        
         <dependency org="mysql" name="mysql-connector-java" rev="${mysql.version}"/>
         
-        <dependency org="net.sourceforge.supercsv" name="supercsv" rev="${supercsv.version}" conf="compile->default;runtime->default" />
+        <dependency org="net.sf.supercsv" name="super-csv" rev="${supercsv.version}" conf="compile->default;runtime->default" />
         
         <dependency org="org.simpleframework" name="simple-xml" rev="${simple-xml.version}" conf="compile->default;runtime->default" />
         

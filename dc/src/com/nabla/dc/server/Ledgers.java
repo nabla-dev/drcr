@@ -21,5 +21,5 @@ package com.nabla.dc.server;
  *
  */
 public enum Ledgers {
-	SL, PL, NL, BANK, ASSET, STOCK
+	SL, PL, NL, BANK, ASSET, STOCK, SETTINGS
 }

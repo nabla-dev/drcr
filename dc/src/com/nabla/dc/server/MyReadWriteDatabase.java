@@ -106,9 +106,10 @@ public class MyReadWriteDatabase extends AuthDatabase {
 
 	private void loadInternalReports(final Connection conn, final File reportFolder) throws SQLException, InternalErrorException {
 		final Map<String, Integer> locales = getSupportedLocales(conn);
+		final Map<String, Integer> roles = getRoles(conn);
 		Database.executeUpdate(conn, "DELETE FROM report WHERE internal_name IS NOT NULL;");
 		final PreparedStatement stmtReport = conn.prepareStatement(
-"INSERT INTO report (internal_name,ledger,content) VALUES(?,?,?);", Statement.RETURN_GENERATED_KEYS);
+"INSERT INTO report (internal_name,ledger,role_id,content) VALUES(?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
 		final PreparedStatement stmtName = conn.prepareStatement(
 "INSERT INTO report_name_localized (report_id,locale_id,text) VALUES(?,?,?);");
 		final Persister serializer = new Persister();
@@ -128,12 +129,24 @@ public class MyReadWriteDatabase extends AuthDatabase {
 					log.error("no name defined for report '" + report.getFileName() + "'");
 				continue;
 			}
+			if (!report.isDefaultName()) {
+				if (log.isErrorEnabled())
+					log.error("no default name defined for report '" + report.getFileName() + "'");
+				continue;
+			}
+			final Integer roleId = roles.get(report.getRole());
+			if (roleId == null) {
+	        	if (log.isErrorEnabled())
+	        		log.error("invalid role '" + report.getRole() + "' defined for internal report '" + report.getFileName() + "'");
+				continue;
+			}
         	if (log.isDebugEnabled())
-        		log.debug("uploading internal report " + report.getFileName());
+        		log.debug("uploading internal report '" + report.getFileName() + "'");
         	stmtReport.setString(1, report.getInternalName().toString());
         	stmtReport.setString(2, report.getLedger().toString());
+        	stmtReport.setInt(3, roleId);
         	try {
-				stmtReport.setBinaryStream(3, new FileInputStream(new File(reportFolder, report.getFileName())));
+				stmtReport.setBinaryStream(4, new FileInputStream(new File(reportFolder, report.getFileName())));
 			} catch (FileNotFoundException e) {
 				if (log.isErrorEnabled())
 					log.error("fail to find report design '" + report.getFileName() + "'", e);
@@ -187,4 +200,22 @@ public class MyReadWriteDatabase extends AuthDatabase {
 		}
 		return locales;
 	}
+
+	private Map<String, Integer> getRoles(final Connection conn) throws SQLException {
+		final Map<String, Integer> locales = new HashMap<String, Integer>();
+		final PreparedStatement stmt = conn.prepareStatement("SELECT id, name FROM role WHERE uname IS NOT NULL;");
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				while (rs.next())
+					locales.put(rs.getString(2), rs.getInt(1));
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
+		}
+		return locales;
+	}
+
 }

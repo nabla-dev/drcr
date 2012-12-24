@@ -86,7 +86,7 @@ public class CsvReader<T> implements ICsvReader<T> {
 		try {
 			String[] labels;
 			try {
-				labels = impl.getCSVHeader(true);
+				labels = impl.getHeader(true);
 			} catch (IOException e) {
 				if (log.isErrorEnabled())
 					log.error("error while reading csv header", e);

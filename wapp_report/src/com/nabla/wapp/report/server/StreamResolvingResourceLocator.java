@@ -67,51 +67,39 @@ public class StreamResolvingResourceLocator implements IResourceLocator {
 "SELECT content" +
 " FROM report_resource" +
 " WHERE name=? AND (report_id=? OR report_id IS NULL);", fileName, reportId);
-	    	try {
-	    		final ResultSet rs = stmt.executeQuery();
-	    		try {
-	    			if (!rs.next()) {
-	    				if (log.isDebugEnabled())
-							log.debug("failed to find report resource '" + fileName + "'");
-	    				return null;
-	    			}
-	    			try {
-						return new URL(null, "birtres://" + reportId + "//" + fileName, getURLStreamHandler(rs.getBinaryStream(1)));
-					} catch (MalformedURLException e) {
-						if (log.isDebugEnabled())
-							log.debug("wrong URL created for report resource '" + fileName + "'", e);
-					}
-	    		} finally {
-	    			rs.close();
-	    		}
-	    	} finally {
-	    		stmt.close();
-	    	}
+    		try {
+    			final ResultSet rs = stmt.executeQuery();
+    			try {
+    				if (!rs.next()) {
+    					if (log.isErrorEnabled())
+    						log.error("fail to find report resource '" + fileName + "'");
+    					return null;
+    				}
+    		    	try {
+    					return new URL(null, "birtres://" + reportId + "//" + fileName, getURLStreamHandler(rs.getBinaryStream(1)));
+    				} catch (MalformedURLException e) {
+    			    	if (log.isDebugEnabled())
+    			    		log.debug("error generating URL to report resource '" + fileName + "'", e);
+    				}
+				} finally {
+    				rs.close();
+    			}
+    		} finally {
+    			stmt.close();
+    		}
 		} catch (SQLException e) {
 			if (log.isErrorEnabled())
 				log.error("fail to find report resource '" + fileName + "'", e);
 		}
-		return null;
+    	return null;
     }
 
     private static URLStreamHandler getURLStreamHandler(final InputStream resource) {
     	return new URLStreamHandler() {
 			@Override
 			protected URLConnection openConnection(URL url) throws IOException {
-				return getURLConnection(url, resource);
+				return new ResourceConnection(url, resource);
 			}
-    	};
-    }
-
-    private static URLConnection getURLConnection(URL url, final InputStream resource) {
-    	return new URLConnection(url) {
-            @Override
-            public void connect() throws IOException {}
-
-            @Override
-            public InputStream getInputStream() throws IOException {
-            	return resource;
-            }
     	};
     }
 

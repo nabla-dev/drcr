@@ -16,18 +16,15 @@
 */
 package com.nabla.wapp.report.server.handler;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 
-import org.eclipse.birt.report.engine.api.IReportRunnable;
-
 import com.google.inject.Inject;
+import com.nabla.wapp.report.server.Report;
 import com.nabla.wapp.report.server.ReportManager;
+import com.nabla.wapp.report.server.ReportTemplate;
 import com.nabla.wapp.report.shared.command.GetBuiltInReport;
 import com.nabla.wapp.server.auth.IUserSessionContext;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
-import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 
@@ -47,16 +44,12 @@ public class GetBuiltInReportHandler extends AbstractHandler<GetBuiltInReport, I
 
 	@Override
 	public IntegerResult execute(final GetBuiltInReport cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final IReportRunnable template = reportManager.openReportTemplate(cmd.getName(), ctx);
-		final InputStream report = reportManager.createReport(template, ctx.getReadConnection(), cmd.getParameters(), cmd.getFormat());
+		final ReportTemplate template = reportManager.open(cmd.getName(), ctx, cmd.getLocale());
+		final Report report = template.generate(ctx.getReadConnection(), cmd.getParameters(), cmd.getFormat());
 		try {
-			return new IntegerResult(reportManager.saveReport(ctx.getWriteConnection(), template.getReportName(), report, cmd.getFormat(), cmd.getOutputAsFile()));
+			return new IntegerResult(report.save(ctx.getWriteConnection(), cmd.getOutputAsFile()));
 		} finally {
-			try {
-				report.close();
-			} catch (IOException e) {
-				Util.throwInternalErrorException(e);
-			}
+			report.close();
 		}
 	}
 

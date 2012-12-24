@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nabla.wapp.report.server.ReportFile;
 import com.nabla.wapp.report.shared.IReport;
 import com.nabla.wapp.report.shared.ReportResult;
 import com.nabla.wapp.report.shared.command.GetReport;
@@ -76,13 +75,13 @@ ctx.getUserId(), cmd.getReportIds());
 						stmtExport.setString(2, cmd.getFormat().toString());
 						stmtExport.setBoolean(3, cmd.getOutputAsFile());
 						rsReport.beforeFirst();
-						final ReportFile report = new ReportFile(""/*reportFolder*/);
+					//	final ReportFile report = new ReportFile(""/*reportFolder*/);
 						while (rsReport.next()) {
-							report.setFileName(rsReport.getString("template"));
+						/*	report.setFileName(rsReport.getString("template"));
 							final File file = report.generate(cmd.getParameters().toMap(), ctx.getReadConnection());
-							files.add(file);
+							files.add(file);*/
 							stmtExport.setString(1, rsReport.getString("name"));
-							stmtExport.setString(4, file.getAbsolutePath());
+						//	stmtExport.setString(4, file.getAbsolutePath());
 							stmtExport.addBatch();
 						}
 						if (!Database.isBatchCompleted(stmtExport.executeBatch()))

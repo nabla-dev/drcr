@@ -11,6 +11,9 @@
 		<copy todir="${war.dir}/public">
 			<fileset dir="${resource.dir}/public" includes="**"/> 
 		</copy>
+		<copy todir="${war.dir}/WEB-INF/reports">
+			<fileset dir="${resource.dir}/reports" includes="**"/> 
+		</copy>
 	</target>
 	
 </project>

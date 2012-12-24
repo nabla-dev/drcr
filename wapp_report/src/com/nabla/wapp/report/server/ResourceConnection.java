@@ -14,19 +14,32 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.print;
+package com.nabla.wapp.report.server;
 
-import com.nabla.wapp.client.command.Command;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
- * @author nabla
+ * @author nabla64
  *
  */
-public interface IPrintCommandSet {
-	Command print();
-	Command exportAsCSV();
-	Command exportAsXML();
-	Command exportAsPDF();
-	Command exportAsXLS();
-	Command exportAsWORD();
+public class ResourceConnection extends URLConnection {
+
+	private final InputStream	resource;
+
+	public ResourceConnection(URL url, final InputStream resource) {
+		super(url);
+		this.resource = resource;
+	}
+
+	@Override
+    public void connect() throws IOException {}
+
+    @Override
+    public InputStream getInputStream() throws IOException {
+		return resource;
+    }
+
 }

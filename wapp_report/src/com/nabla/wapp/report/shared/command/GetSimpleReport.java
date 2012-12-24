@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nabla.wapp.report.shared.IReportParameterValue;
+import com.nabla.wapp.report.shared.ReportOptions;
 import com.nabla.wapp.report.shared.SimpleReportResult;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.general.IntegerSet;
@@ -30,32 +31,21 @@ import com.nabla.wapp.shared.print.ReportFormats;
  * The <code></code> object is used to
  *
  */
-public class GetSimpleReport implements IAction<SimpleReportResult> {
+public class GetSimpleReport extends ReportOptions implements IAction<SimpleReportResult> {
 
 	private IntegerSet				reportIds;
-	private ReportFormats			format;
-	private Boolean					outputAsFile;
 	private IReportParameterValue	parameter;
 
 	GetSimpleReport() {}	// for serialization only
 
-	public GetSimpleReport(final Set<Integer> reportIds, final IReportParameterValue parameter, final ReportFormats format, final Boolean outputAsFile) {
+	public GetSimpleReport(final Set<Integer> reportIds, final IReportParameterValue parameter, final ReportFormats format, final Boolean outputAsFile, final String locale) {
+		super(format, outputAsFile, locale);
 		this.reportIds = new IntegerSet(reportIds);
-		this.format = format;
-		this.outputAsFile = outputAsFile;
 		this.parameter = parameter;
 	}
 
 	public IntegerSet getReportIds() {
 		return reportIds;
-	}
-
-	public ReportFormats getFormat() {
-		return format;
-	}
-
-	public Boolean getOutputAsFile() {
-		return outputAsFile;
 	}
 
 	public Map<String, Object> getParameters() {

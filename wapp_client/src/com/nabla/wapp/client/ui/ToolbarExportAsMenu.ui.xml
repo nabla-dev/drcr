@@ -10,13 +10,11 @@
 	<wnd:ToolbarMenu title="Export as..." icon="download.png">
 		<ui:attribute name="title" description="Export as menu title"/>
 		<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg description="Export as CSV command">Comma separated file (CSV)</ui:msg></wnd:MenuItem>
-		<wnd:MenuItem command="{cmd.exportAsTXT}" icon="text.png"><ui:msg description="Export as TXT command">Text file (TXT)</ui:msg></wnd:MenuItem>
-	<!-- <wnd:MenuItem command="{cmd.exportAsXML}" icon="xml.png"><ui:msg description="Export as XML command">XML</ui:msg></wnd:MenuItem> -->
+		<wnd:MenuItem command="{cmd.exportAsXML}" icon="xml.png"><ui:msg description="Export as XML command">XML</ui:msg></wnd:MenuItem>
 		<wnd:MenuItemSeparator/>
-		<wnd:MenuItem command="{cmd.exportAsRTF}" icon="rtf.png"><ui:msg description="Export as RTF command">Rich text file (RTF)</ui:msg></wnd:MenuItem>
-	<!--	<wnd:MenuItem command="{cmd.exportAsHTML}" icon="html.png"><ui:msg description="Export as HTML command">Web page (HTML)</ui:msg></wnd:MenuItem> -->
+		<wnd:MenuItem command="{cmd.exportAsXLS}" icon="xls.png"><ui:msg description="Export as XLS command">Excel file (XLS)</ui:msg></wnd:MenuItem>
+		<wnd:MenuItem command="{cmd.exportAsWORD}" icon="word.png"><ui:msg description="Export as WORD command">Word file (DOC)</ui:msg></wnd:MenuItem>
 		<wnd:MenuItemSeparator/>
 		<wnd:MenuItem command="{cmd.exportAsPDF}" icon="pdf.png"><ui:msg description="Export as PDF command">Portable document file (PDF)</ui:msg></wnd:MenuItem>
-		<wnd:MenuItem command="{cmd.exportAsXLS}" icon="xls.png"><ui:msg description="Export as XLS command">Excel file (XLS)</ui:msg></wnd:MenuItem>
 	</wnd:ToolbarMenu>
 </ui:UiBinder> 

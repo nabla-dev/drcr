@@ -105,6 +105,12 @@
                 <style name="table-header" id="480">
                     <property name="fontWeight">bold</property>
                 </style>
+                <style name="date_time" id="716">
+                    <structure name="dateTimeFormat">
+                        <property name="category">Custom</property>
+                        <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
+                    </structure>
+                </style>
             </styles>
         </theme>
         <theme name="portrait" id="699">
@@ -184,6 +190,12 @@
                 </style>
                 <style name="table-header" id="714">
                     <property name="fontWeight">bold</property>
+                </style>
+                <style name="date_time" id="715">
+                    <structure name="dateTimeFormat">
+                        <property name="category">Custom</property>
+                        <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
+                    </structure>
                 </style>
             </styles>
         </theme>

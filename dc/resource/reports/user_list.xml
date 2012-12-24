@@ -1,0 +1,9 @@
+<report>
+	<file_name>user_list.rptdesign</file_name>
+	<internal_name>USER_LIST</internal_name>
+	<ledger>SETTINGS</ledger>
+	<role>user_view</role>
+	<default_locale>en_GB</default_locale>
+	<name locale="en_GB">User List</name>
+	<name locale="fr">List d'utilisateurs</name>
+</report>

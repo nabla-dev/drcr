@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.2.1.v201209101448 Build &lt;4.2.1.v20120912-1721></property>
+    <list-property name="includeScripts">
+        <property>custom_functions.js</property>
+    </list-property>
     <property name="units">in</property>
-    <property name="iconFile">/templates/first_report.gif</property>
+    <method name="initialize"><![CDATA[noData=true;]]></method>
+    <property name="theme">common_styles.portrait</property>
     <property name="cheatSheet">org.eclipse.birt.report.designer.ui.cheatsheet.firstreport</property>
+    <property name="layoutPreference">auto layout</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">common_styles.rptlibrary</property>
+            <property name="namespace">common_styles</property>
+        </structure>
+    </list-property>
     <template-parameter-definitions>
         <template-parameter-definition name="NewTemplateParameterDefinition" id="28">
             <property name="allowedType">Table</property>
@@ -251,8 +262,8 @@
                 </structure>
                 <structure>
                     <property name="columnName">active</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">Active</text-property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">active</text-property>
                     <text-property name="heading">active</text-property>
                 </structure>
             </list-property>
@@ -277,7 +288,7 @@
                     <structure>
                         <property name="position">4</property>
                         <property name="name">active</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                 </list-property>
             </structure>
@@ -308,11 +319,193 @@
                     <property name="position">4</property>
                     <property name="name">active</property>
                     <property name="nativeName">active</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select user.name, user.created, user.last_login, user.active
+from user
+where user.uname is not null and user.name not like 'root']]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>name</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>12</design:nativeDataTypeCode>
+            <design:precision>64</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>name</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>name</design:label>
+            <design:formattingHints>
+              <design:displaySize>64</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>created</design:name>
+              <design:position>2</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>created</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>created</design:label>
+            <design:formattingHints>
+              <design:displaySize>19</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>last_login</design:name>
+              <design:position>3</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>93</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>Nullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>last_login</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>last_login</design:label>
+            <design:formattingHints>
+              <design:displaySize>19</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>active</design:name>
+              <design:position>4</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-7</design:nativeDataTypeCode>
+            <design:precision>1</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>active</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>active</design:label>
+            <design:formattingHints>
+              <design:displaySize>1</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="dsCSV" id="667">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">name</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">name</text-property>
+                    <text-property name="heading">name</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">created</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">created</text-property>
+                    <text-property name="heading">created</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_login</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">last_login</text-property>
+                    <text-property name="heading">last_login</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">active</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">active</text-property>
+                    <text-property name="heading">active</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">created</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">last_login</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">active</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Local MySQL</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">name</property>
+                    <property name="nativeName">name</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">created</property>
+                    <property name="nativeName">created</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">last_login</property>
+                    <property name="nativeName">last_login</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">active</property>
+                    <property name="nativeName">active</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
+                </structure>
             </list-property>
-            <xml-property name="queryText"><![CDATA[select user.name, user.created, user.last_login, IF(user.active, 'true', 'false') AS 'active'
+            <xml-property name="queryText"><![CDATA[select user.name, user.created, user.last_login, user.active
 from user
 where user.uname is not null and user.name not like 'root']]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -412,62 +605,39 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
 </model:DesignValues>]]></xml-property>
         </oda-data-set>
     </data-sets>
-    <styles>
-        <style name="report" id="110">
-            <property name="fontFamily">Arial</property>
-            <property name="fontSize">10pt</property>
-        </style>
-        <style name="ReportTitle" id="254">
-            <property name="fontSize">16pt</property>
-            <property name="fontWeight">bold</property>
-            <property name="marginBottom">16pt</property>
-            <property name="textAlign">left</property>
-        </style>
-        <style name="ReportHeader" id="255">
-            <property name="fontWeight">bold</property>
-            <property name="borderBottomStyle">solid</property>
-            <property name="textAlign">left</property>
-        </style>
-        <style name="ReportData" id="256">
-            <property name="textAlign">left</property>
-        </style>
-    </styles>
     <page-setup>
         <simple-master-page name="NewSimpleMasterPage" id="257">
-            <method name="onPageStart"><![CDATA[var pageNumber = reportContext.getPageVariable("CURRENT_PAGE_NUMBER");
-reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
-]]></method>
-            <property name="footerHeight">20mm</property>
+            <property name="type">a4</property>
+            <property name="orientation">portrait</property>
+            <property name="topMargin">5mm</property>
+            <property name="leftMargin">10mm</property>
+            <property name="bottomMargin">5mm</property>
+            <property name="rightMargin">10mm</property>
+            <property name="headerHeight">0mm</property>
+            <property name="footerHeight">0mm</property>
             <page-footer>
-                <grid id="259">
-                    <property name="width">7.864583333333333in</property>
-                    <column id="260">
-                        <property name="width">3.9270833333333335in</property>
-                    </column>
-                    <column id="261">
-                        <property name="width">3.9375in</property>
-                    </column>
-                    <row id="262">
-                        <cell id="263"/>
-                        <cell id="264">
-                            <text id="268">
+                <grid id="482">
+                    <property name="style">footer</property>
+                    <property name="marginTop">5mm</property>
+                    <property name="overflow">visible</property>
+                    <property name="height">100%</property>
+                    <property name="pushDown">false</property>
+                    <column id="483"/>
+                    <row id="484">
+                        <cell id="485">
+                            <text id="489">
                                 <property name="textAlign">right</property>
                                 <property name="contentType">html</property>
                                 <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
                             </text>
                         </cell>
                     </row>
-                    <row id="265">
-                        <cell id="266"/>
-                        <cell id="267">
-                            <text id="284">
+                    <row id="486">
+                        <cell id="487">
+                            <auto-text id="490">
                                 <property name="textAlign">right</property>
-                                <method name="onRender"><![CDATA[var pageNumber = reportContext.getPageVariable("CURRENT_PAGE_NUMBER");
-reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
-]]></method>
-                                <property name="contentType">html</property>
-                                <text-property name="content"><![CDATA[Page <VALUE-OF>reportContext.getPageVariable("CURRENT_PAGE_NUMBER")</VALUE-OF>]]></text-property>
-                            </text>
+                                <property name="type">page-number</property>
+                            </auto-text>
                         </cell>
                     </row>
                 </grid>
@@ -476,13 +646,25 @@ reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
     </page-setup>
     <body>
         <label id="245">
-            <property name="style">ReportTitle</property>
+            <property name="style">report_title</property>
+            <text-property name="text">Dr | (Cr)</text-property>
+        </label>
+        <label id="491">
+            <property name="style">report_subtitle</property>
+            <property name="marginBottom">5mm</property>
             <text-property name="text">User List</text-property>
         </label>
-        <table id="163">
-            <property name="width">7.947916666666667in</property>
+        <table name="report" id="163">
+            <property name="canShrink">false</property>
+            <property name="width">100%</property>
             <property name="dataSet">dsUserList</property>
             <property name="refTemplateParameter">NewTemplateParameterDefinition2</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">((reportContext.getOutputFormat( ) == "csv") || (reportContext.getOutputFormat( ) == "xml"))</expression>
+                </structure>
+            </list-property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">name</property>
@@ -505,26 +687,25 @@ reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
                 <structure>
                     <property name="name">active</property>
                     <text-property name="displayName">Active</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["active"]</expression>
+                    <expression name="expression" type="javascript">booleanAsString(dataSetRow["active"])</expression>
                     <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
                 </structure>
             </list-property>
             <property name="pageBreakInterval">50</property>
-            <column id="187">
-                <property name="width">3.1041666666666665in</property>
-            </column>
+            <column id="187"/>
             <column id="188">
-                <property name="width">0.875in</property>
+                <property name="width">30mm</property>
             </column>
             <column id="189">
-                <property name="width">1.9895833333333333in</property>
+                <property name="width">45mm</property>
             </column>
             <column id="190">
-                <property name="width">1.9791666666666667in</property>
+                <property name="width">45mm</property>
             </column>
             <header>
                 <row id="164">
-                    <property name="style">ReportHeader</property>
+                    <property name="style">table_column_label</property>
                     <cell id="165">
                         <label id="166">
                             <text-property name="text">Name</text-property>
@@ -552,7 +733,17 @@ reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
             </header>
             <detail>
                 <row id="173">
-                    <property name="style">ReportData</property>
+                    <method name="onCreate"><![CDATA[noData=false;]]></method>
+                    <list-property name="highlightRules">
+                        <structure>
+                            <property name="operator">eq</property>
+                            <property name="backgroundColor">#F7F7F7</property>
+                            <expression name="testExpr" type="javascript">row.__rownum % 2</expression>
+                            <simple-property-list name="value1">
+                                <value type="javascript">1</value>
+                            </simple-property-list>
+                        </structure>
+                    </list-property>
                     <cell id="174">
                         <data id="250">
                             <property name="resultSetColumn">name</property>
@@ -565,12 +756,14 @@ reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
                         </data>
                     </cell>
                     <cell id="178">
+                        <property name="style">date_time</property>
                         <property name="textAlign">center</property>
                         <data id="252">
                             <property name="resultSetColumn">created</property>
                         </data>
                     </cell>
                     <cell id="180">
+                        <property name="style">date_time</property>
                         <property name="textAlign">center</property>
                         <data id="253">
                             <property name="resultSetColumn">last_login</property>
@@ -578,14 +771,117 @@ reportContext.setPageVariable("CURRENT_PAGE_NUMBER", parseInt(pageNumber) + 1);
                     </cell>
                 </row>
             </detail>
-            <footer>
-                <row id="182">
-                    <cell id="183"/>
-                    <cell id="184"/>
-                    <cell id="185"/>
-                    <cell id="186"/>
+        </table>
+        <label id="666">
+            <property name="style">no_data</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">(!noData)</expression>
+                </structure>
+            </list-property>
+            <text-property name="text">*** no data ***</text-property>
+        </label>
+        <table name="csv" id="670">
+            <property name="pageBreakAfter">avoid</property>
+            <property name="pageBreakBefore">avoid</property>
+            <property name="pageBreakInside">avoid</property>
+            <property name="dataSet">dsCSV</property>
+            <list-property name="visibility">
+                <structure>
+                    <property name="format">all</property>
+                    <expression name="valueExpr" type="javascript">((reportContext.getOutputFormat( ) != "csv") &amp;&amp; (reportContext.getOutputFormat( ) != "xml"))</expression>
+                </structure>
+            </list-property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">name</property>
+                    <text-property name="displayName">name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">created</property>
+                    <text-property name="displayName">created</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["created"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">last_login</property>
+                    <text-property name="displayName">last_login</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["last_login"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">active</property>
+                    <text-property name="displayName">active</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["active"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <structure name="toc"/>
+            <property name="repeatHeader">false</property>
+            <property name="pageBreakInterval">0</property>
+            <column id="694"/>
+            <column id="695"/>
+            <column id="696"/>
+            <column id="697"/>
+            <header>
+                <row id="671">
+                    <cell id="672">
+                        <label id="673">
+                            <text-property name="text">name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="674">
+                        <label id="675">
+                            <text-property name="text">created</text-property>
+                        </label>
+                    </cell>
+                    <cell id="676">
+                        <label id="677">
+                            <text-property name="text">last_login</text-property>
+                        </label>
+                    </cell>
+                    <cell id="678">
+                        <label id="679">
+                            <text-property name="text">active</text-property>
+                        </label>
+                    </cell>
                 </row>
-            </footer>
+            </header>
+            <detail>
+                <row id="680">
+                    <cell id="681">
+                        <data id="682">
+                            <property name="resultSetColumn">name</property>
+                        </data>
+                    </cell>
+                    <cell id="683">
+                        <data id="684">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Custom</property>
+                                <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
+                            </structure>
+                            <property name="resultSetColumn">created</property>
+                        </data>
+                    </cell>
+                    <cell id="685">
+                        <data id="686">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Custom</property>
+                                <property name="pattern">dd/MM/yyyy HH:mm:ss</property>
+                            </structure>
+                            <property name="resultSetColumn">last_login</property>
+                        </data>
+                    </cell>
+                    <cell id="687">
+                        <data id="688">
+                            <property name="resultSetColumn">active</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
         </table>
     </body>
     <property name="pageVariables">
