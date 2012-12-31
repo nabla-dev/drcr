@@ -325,7 +325,9 @@
             </list-property>
             <xml-property name="queryText"><![CDATA[select user.name, user.created, user.last_login, user.active
 from user
-where user.uname is not null and user.name not like 'root']]></xml-property>
+where user.uname is not null and user.name not like 'root'
+ORDER BY user.name
+]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
@@ -489,12 +491,6 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
             <property name="width">100%</property>
             <property name="dataSet">dsReport</property>
             <property name="refTemplateParameter">NewTemplateParameterDefinition2</property>
-            <list-property name="visibility">
-                <structure>
-                    <property name="format">all</property>
-                    <expression name="valueExpr" type="javascript">(exportCurrentOutput())</expression>
-                </structure>
-            </list-property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">name</property>
@@ -535,9 +531,9 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
             </column>
             <header>
                 <row id="164">
-                    <property name="style">table_column_label</property>
                     <cell id="165">
                         <label id="166">
+                            <property name="style">table_column_label</property>
                             <property name="textAlign">left</property>
                             <text-property name="text">Name</text-property>
                         </label>
@@ -545,18 +541,21 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
                     <cell id="167">
                         <property name="textAlign">center</property>
                         <label id="168">
+                            <property name="style">table_column_label</property>
                             <text-property name="text">Active</text-property>
                         </label>
                     </cell>
                     <cell id="169">
                         <property name="textAlign">center</property>
                         <label id="170">
+                            <property name="style">table_column_label</property>
                             <text-property name="text">Created</text-property>
                         </label>
                     </cell>
                     <cell id="171">
                         <property name="textAlign">center</property>
                         <label id="172">
+                            <property name="style">table_column_label</property>
                             <text-property name="text">Last Login</text-property>
                         </label>
                     </cell>
@@ -613,125 +612,6 @@ where user.uname is not null and user.name not like 'root']]></xml-property>
             </list-property>
             <text-property name="text">*** no data ***</text-property>
         </label>
-        <table name="export" id="727">
-            <property name="canShrink">false</property>
-            <property name="width">100%</property>
-            <property name="dataSet">dsReport</property>
-            <property name="refTemplateParameter">NewTemplateParameterDefinition2</property>
-            <list-property name="visibility">
-                <structure>
-                    <property name="format">all</property>
-                    <expression name="valueExpr" type="javascript">(!exportCurrentOutput())</expression>
-                </structure>
-            </list-property>
-            <list-property name="boundDataColumns">
-                <structure>
-                    <property name="name">name</property>
-                    <text-property name="displayName">name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["name"]</expression>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
-                    <property name="name">created</property>
-                    <text-property name="displayName">created</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["created"]</expression>
-                    <property name="dataType">date-time</property>
-                </structure>
-                <structure>
-                    <property name="name">last_login</property>
-                    <text-property name="displayName">last_Login</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["last_login"]</expression>
-                    <property name="dataType">date-time</property>
-                </structure>
-                <structure>
-                    <property name="name">active</property>
-                    <text-property name="displayName">active</text-property>
-                    <expression name="expression" type="javascript">booleanAsString(dataSetRow["active"])</expression>
-                    <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
-                </structure>
-            </list-property>
-            <property name="pageBreakInterval">50</property>
-            <column id="746"/>
-            <column id="747">
-                <property name="width">30mm</property>
-            </column>
-            <column id="748">
-                <property name="width">45mm</property>
-            </column>
-            <column id="749">
-                <property name="width">45mm</property>
-            </column>
-            <header>
-                <row id="728">
-                    <property name="style">table_column_label</property>
-                    <cell id="729">
-                        <label id="730">
-                            <property name="textAlign">left</property>
-                            <text-property name="text">name</text-property>
-                        </label>
-                    </cell>
-                    <cell id="731">
-                        <property name="textAlign">center</property>
-                        <label id="732">
-                            <text-property name="text">active</text-property>
-                        </label>
-                    </cell>
-                    <cell id="733">
-                        <property name="textAlign">center</property>
-                        <label id="734">
-                            <text-property name="text">created</text-property>
-                        </label>
-                    </cell>
-                    <cell id="735">
-                        <property name="textAlign">center</property>
-                        <label id="736">
-                            <text-property name="text">last_login</text-property>
-                        </label>
-                    </cell>
-                </row>
-            </header>
-            <detail>
-                <row id="737">
-                    <method name="onCreate"><![CDATA[noData=false;]]></method>
-                    <list-property name="highlightRules">
-                        <structure>
-                            <property name="operator">eq</property>
-                            <property name="backgroundColor">#F7F7F7</property>
-                            <expression name="testExpr" type="javascript">row.__rownum % 2</expression>
-                            <simple-property-list name="value1">
-                                <value type="javascript">1</value>
-                            </simple-property-list>
-                        </structure>
-                    </list-property>
-                    <cell id="738">
-                        <data id="739">
-                            <property name="resultSetColumn">name</property>
-                        </data>
-                    </cell>
-                    <cell id="740">
-                        <property name="textAlign">center</property>
-                        <data id="741">
-                            <property name="resultSetColumn">active</property>
-                        </data>
-                    </cell>
-                    <cell id="742">
-                        <property name="style">date_time</property>
-                        <property name="textAlign">center</property>
-                        <data id="743">
-                            <property name="resultSetColumn">created</property>
-                        </data>
-                    </cell>
-                    <cell id="744">
-                        <property name="style">date_time</property>
-                        <property name="textAlign">center</property>
-                        <data id="745">
-                            <property name="resultSetColumn">last_login</property>
-                        </data>
-                    </cell>
-                </row>
-            </detail>
-        </table>
     </body>
     <property name="pageVariables">
         <variable-element name="REPORT_TIMESTAMP">

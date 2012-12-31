@@ -1,0 +1,9 @@
+<report>
+	<file_name>financial_statement_category_list.rptdesign</file_name>
+	<internal_name>FINANCIAL_STATEMENT_CATEGORY_LIST</internal_name>
+	<ledger>SETTINGS</ledger>
+	<role>fa_financial_statement_category_view</role>
+	<default_locale>en_GB</default_locale>
+	<name locale="en_GB">Financial Statement Category List</name>
+	<name locale="fr">List</name>
+</report>

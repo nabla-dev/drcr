@@ -25,9 +25,10 @@ public enum ReportParameterTypes {
 	IntegerField(null),
 	PositiveIntegerField(null),
 	CurrencyField(null),
+	UserId("UserId"),
 	CompanyId("CompanyId"),
 	DateField("AsAt"),
-	PeriodEndIdField("PeriodEndId");
+	PeriodEndId("PeriodEndId");
 
 	private final String	defaultParameterName;
 

@@ -1,0 +1,9 @@
+<report>
+	<file_name>fixed_asset_category_list.rptdesign</file_name>
+	<internal_name>FIXED_ASSET_CATEGORY_LIST</internal_name>
+	<ledger>SETTINGS</ledger>
+	<role>fa_asset_category_view</role>
+	<default_locale>en_GB</default_locale>
+	<name locale="en_GB">Fixed Asset Category List</name>
+	<name locale="fr">List</name>
+</report>

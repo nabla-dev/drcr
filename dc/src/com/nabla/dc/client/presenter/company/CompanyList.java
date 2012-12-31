@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.client.presenter.company;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.company.AddCompanyRecord;
 import com.nabla.dc.client.model.company.CompanyRecord;
 import com.nabla.dc.client.presenter.ITabManager;
@@ -24,6 +25,7 @@ import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.company.CompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.company.RestoreCompany;
+import com.nabla.dc.shared.report.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -74,9 +76,6 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 	}
 
 	private final ITabManager 	tabs;
-/*
-	@Inject private PrintManager						printerManager;
-*/
 
 	public CompanyList(final IDisplay display, final ITabManager tabs) {
 		super(display);
@@ -109,7 +108,8 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 		registerSlot(cmd.editAssetCategories(), onEditAssetCategories);
 		cmd.editAssetCategories().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
-//		printerManager.bind(cmd, this, BuiltInReports.USER_LIST);
+
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.COMPANY_LIST);
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

@@ -117,7 +117,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	*/
 		cmd.updateUi();
 
-		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new IntegerReportParameterValue(ReportParameterTypes.PeriodEndIdField.getDefaultParameterName(), 292/*companyId*/));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new IntegerReportParameterValue(ReportParameterTypes.PeriodEndId.getDefaultParameterName(), 292/*companyId*/));
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

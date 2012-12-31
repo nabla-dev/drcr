@@ -10,8 +10,8 @@
 		<copy file="../wapp_server/jars/wapp_server-${project.version}.jar" todir="${lib.runtime.dir}" />
 		<copy file="../wapp_shared/jars/wapp_shared-${project.version}.jar" todir="${lib.runtime.dir}" />
 		<copy file="../wapp_report/jars/wapp_report-${project.version}.jar" todir="${lib.runtime.dir}" />
-		<copy file="../../birt_emitter_csv/plugins/birt_emitter_csv_1.0.0.jar" todir="${lib.runtime.dir}" />
-		<copy file="../../birt_emitter_xml/plugins/birt_emitter_xml_1.0.0.jar" todir="${lib.runtime.dir}" />
+		<copy file="../birt_emitter_csv/plugins/birt_emitter_csv_1.0.0.jar" todir="${lib.runtime.dir}" />
+		<copy file="../birt_emitter_xml/plugins/birt_emitter_xml_1.0.0.jar" todir="${lib.runtime.dir}" />
 		<copy todir="${lib.runtime.dir}">
 			<fileset dir="/home/nabla64/MyProjects/dev/libraries/birt-runtime-4_2_1/ReportEngine/lib" includes="**"/> 
 		</copy>

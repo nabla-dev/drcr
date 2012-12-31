@@ -1,0 +1,9 @@
+<report>
+	<file_name>account_list.rptdesign</file_name>
+	<internal_name>ACCOUNT_LIST</internal_name>
+	<ledger>SETTINGS</ledger>
+	<role>account_view</role>
+	<default_locale>en_GB</default_locale>
+	<name locale="en_GB">Account List</name>
+	<name locale="fr">List</name>
+</report>

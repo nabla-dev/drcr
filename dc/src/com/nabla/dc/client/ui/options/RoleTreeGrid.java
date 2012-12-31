@@ -36,7 +36,7 @@ import com.smartgwt.client.widgets.grid.events.CellSavedHandler;
  */
 public class RoleTreeGrid extends TreeGridItem {
 
-	private static final Logger		logger = LoggerFactory.getLog(RoleTreeGrid.class);
+	private static final Logger	log = LoggerFactory.getLog(RoleTreeGrid.class);
 	private final SelectionDelta	delta = new SelectionDelta();
 
 	public RoleTreeGrid() {
@@ -49,11 +49,11 @@ public class RoleTreeGrid extends TreeGridItem {
 	private final CellSavedHandler onAllocationChanged = new CellSavedHandler() {
 		@Override
 		public void onCellSaved(CellSavedEvent event) {
-			logger.fine("status change at column " + event.getColNum() + " = " + getFieldName(event.getColNum()));
+			log.fine("status change at column " + event.getColNum() + " = " + getFieldName(event.getColNum()));
            	final RoleDefinitionTreeRecord record = new RoleDefinitionTreeRecord(event.getRecord());
 			final Integer roleId = record.getId();
 			final Boolean isIncluded = (Boolean) event.getNewValue();
-logger.fine("status changed for role " + roleId + " = " + isIncluded);
+			log.fine("status changed for role " + roleId + " = " + isIncluded);
 			if (isIncluded)
 				delta.add(roleId);
 			else

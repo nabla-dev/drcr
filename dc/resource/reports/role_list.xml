@@ -1,0 +1,9 @@
+<report>
+	<file_name>role_list.rptdesign</file_name>
+	<internal_name>ROLE_LIST</internal_name>
+	<ledger>SETTINGS</ledger>
+	<role>role_view</role>
+	<default_locale>en_GB</default_locale>
+	<name locale="en_GB">Role List</name>
+	<name locale="fr">List de permissions</name>
+</report>

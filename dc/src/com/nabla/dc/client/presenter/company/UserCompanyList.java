@@ -16,10 +16,13 @@
 */
 package com.nabla.dc.client.presenter.company;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.options.UserDefinitionFormModel;
 import com.nabla.dc.client.presenter.options.RoleDefinitionDialog;
 import com.nabla.dc.client.ui.company.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
+import com.nabla.dc.shared.report.BuiltInReports;
+import com.nabla.dc.shared.report.ReportParameterTypes;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableListGridCommand;
@@ -30,6 +33,7 @@ import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
+import com.nabla.wapp.report.shared.IntegerReportParameterValue;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
@@ -74,6 +78,8 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.editRoles(), onEditUserRoles);
 		cmd.editRoles().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
+
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.USER_COMPANY_LIST, new IntegerReportParameterValue(ReportParameterTypes.UserId.getDefaultParameterName(), userId));
 	}
 
 	private final ISlot onReload = new ISlot() {

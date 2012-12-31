@@ -124,11 +124,11 @@ public class XmlReportEmitter extends ContentEmitterAdapter {
     @Override
 	public void startText(final ITextContent text) {
 		if (getWriteRecord()) {
-			final String textValue = text.getText( );
+			final String value = text.getText( );
 			if (getProcessingHeader())
-				columns[currentColumn] = textValue;
+				columns[currentColumn] = (value == null) ? ("column_" + currentColumn) : value.toLowerCase().replace(' ', '_');
 			else
-				writer.text(textValue);
+				writer.text(value);
 		}
 	}
 

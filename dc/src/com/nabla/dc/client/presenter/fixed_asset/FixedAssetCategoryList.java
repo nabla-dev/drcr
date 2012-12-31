@@ -16,12 +16,14 @@
 */
 package com.nabla.dc.client.presenter.fixed_asset;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryListModel;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.fixed_asset.FixedAssetCategoryListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.fixed_asset.RestoreFixedAssetCategory;
+import com.nabla.dc.shared.report.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -80,6 +82,8 @@ public class FixedAssetCategoryList extends AbstractTabPresenter<FixedAssetCateg
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.restoreRecord(), onRestoreRecord);
 		cmd.updateUi();
+
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.FIXED_ASSET_CATEGORY_LIST);
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

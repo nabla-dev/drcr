@@ -103,25 +103,26 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 	}
 
 	public void setModelType(final TreeModelType type) {
-		Tree tree = getTree();
-		if (tree == null) {
+		if (isData())
+			getTree().setModelType(type);
+		else {
 			if (defaultProperties == null)
 				defaultProperties = new Tree();
 			defaultProperties.setModelType(type);
 			setDataProperties(defaultProperties);
-		} else
-			tree.setModelType(type);
+		}
+
 	}
 
 	public void setIsFolderProperty(final String name) {
-		Tree tree = getTree();
-		if (tree == null) {
+		if (isData())
+			getTree().setIsFolderProperty(name);
+		else {
 			if (defaultProperties == null)
 				defaultProperties = new Tree();
 			defaultProperties.setIsFolderProperty(name);
 			setDataProperties(defaultProperties);
-		} else
-			tree.setIsFolderProperty(name);
+		}
 	}
 
 	@Override
@@ -192,4 +193,7 @@ public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implemen
 		return ids;
 	}
 
+	private boolean isData() {
+		return getAttributeAsJavaScriptObject("data") != null;
+	}
 }

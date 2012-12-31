@@ -58,7 +58,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.COMPANY_VIEW) HideableCommand companyList();
 		@IRequiredRole(IPrivileges.TAX_RATE_VIEW) HideableCommand taxCodeList();
 		@IRequiredRole(IPrivileges.FA_ASSET_CATEGORY_VIEW) HideableCommand fixedAssetCategoryList();
-		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_VIEW) HideableCommand financialStatementCategoryList();
+		@IRequiredRole(IPrivileges.FA_FINANCIAL_STATEMENT_CATEGORY_VIEW) HideableCommand financialStatementCategoryList();
 		@IRequiredRole(IPrivileges.IMPORT_SETTINGS) HideableCommand importSettings();
 		@IRequiredRole(IPrivileges.FA_ASSET_ADD) HideableCommand importAssets();
 		Command exportSettings();
@@ -106,8 +106,6 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
-
-cmd.userList().fire();
 	}
 
 	private final ISlot onReload = new ISlot() {

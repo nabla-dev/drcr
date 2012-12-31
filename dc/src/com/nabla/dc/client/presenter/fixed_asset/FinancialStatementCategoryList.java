@@ -16,11 +16,13 @@
 */
 package com.nabla.dc.client.presenter.fixed_asset;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.fixed_asset.FinancialStatementCategoryRecord;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.fixed_asset.FinancialStatementCategoryListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.fixed_asset.RestoreFinancialStatementCategory;
+import com.nabla.dc.shared.report.BuiltInReports;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -43,13 +45,13 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 public class FinancialStatementCategoryList extends AbstractTabPresenter<FinancialStatementCategoryList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {
-		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_ADD) HideableCommand addRecord();
-		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_REMOVE) HideableCommand removeRecord();
+		@IRequiredRole(IPrivileges.FA_FINANCIAL_STATEMENT_CATEGORY_ADD) HideableCommand addRecord();
+		@IRequiredRole(IPrivileges.FA_FINANCIAL_STATEMENT_CATEGORY_REMOVE) HideableCommand removeRecord();
 		@IRequireRootRole HideableCommand restoreRecord();
 		Command reload();
 		Command savePreferences();
-		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_EDIT) CommandUiManager edit();
-		@IRequiredRole(IPrivileges.FA_BS_CATEGORY_ADD) CommandUiManager add();
+		@IRequiredRole(IPrivileges.FA_FINANCIAL_STATEMENT_CATEGORY_EDIT) CommandUiManager edit();
+		@IRequiredRole(IPrivileges.FA_FINANCIAL_STATEMENT_CATEGORY_ADD) CommandUiManager add();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -79,6 +81,8 @@ public class FinancialStatementCategoryList extends AbstractTabPresenter<Financi
 		registerSlot(cmd.savePreferences(), onSavePreferences);
 		registerSlot(cmd.restoreRecord(), onRestoreRecord);
 		cmd.updateUi();
+
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.FINANCIAL_STATEMENT_CATEGORY_LIST);
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

@@ -121,10 +121,8 @@ public class CsvReportEmitter extends ContentEmitterAdapter {
 
     @Override
 	public void startText(final ITextContent text) {
-		if (getWriteRecord()) {
-			final String value = text.getText( );
-			record[currentColumn] = (value == null) ? "" : value;
-		}
+		if (getWriteRecord())
+			record[currentColumn] = formatValue(text.getText());
 	}
 
     @Override
@@ -151,5 +149,10 @@ public class CsvReportEmitter extends ContentEmitterAdapter {
 
     protected boolean getWriteRecord() {
     	return currentColumn != null && currentColumn < columnCount;
+    }
+
+    protected String formatValue(final String value) {
+    	final String ret = (value == null) ? "" : value;
+    	return getProcessingHeader() ? ret.toLowerCase().replace(' ', '_') : ret;
     }
 }

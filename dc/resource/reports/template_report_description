@@ -1,0 +1,9 @@
+<report>
+	<file_name>?.rptdesign</file_name>
+	<internal_name>?</internal_name>
+	<ledger>SETTINGS</ledger>
+	<role>?_view</role>
+	<default_locale>en_GB</default_locale>
+	<name locale="en_GB">?</name>
+	<name locale="fr">?</name>
+</report>
