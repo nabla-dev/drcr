@@ -18,6 +18,7 @@ package com.nabla.wapp.report.server;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.birt.report.data.oda.jdbc.IConnectionFactory;
@@ -51,9 +52,10 @@ public class ReportTemplate {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Report generate(final Connection conn, final Map<String, Object> parameters, final ReportFormats format) throws InternalErrorException {
+	public Report generate(final Connection conn, final Map<String, Object> parameters, final ReportFormats format, final Locale locale) throws InternalErrorException {
 		final IRunAndRenderTask t = getReportEngine().createRunAndRenderTask(impl);
 		try {
+			t.setLocale(locale);
 			t.getAppContext().put("OdaJDBCDriverPassInConnection", conn);
 			t.getAppContext().put(IConnectionFactory.CLOSE_PASS_IN_CONNECTION, new Boolean(false));
 			if (!parameters.isEmpty()) {

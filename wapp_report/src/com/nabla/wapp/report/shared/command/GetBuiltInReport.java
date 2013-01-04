@@ -37,8 +37,8 @@ public class GetBuiltInReport extends ReportOptions implements IAction<IntegerRe
 
 	GetBuiltInReport() {}	// for serialization only
 
-	public GetBuiltInReport(final String internalName, final ReportFormats format, final Boolean outputAsFile, final IReportParameterValue parameter, final String locale) {
-		super(format, outputAsFile, locale);
+	public GetBuiltInReport(final String internalName, final ReportFormats format, final Boolean outputAsFile, final IReportParameterValue parameter) {
+		super(format, outputAsFile);
 		this.internalName = internalName;
 		this.parameter = parameter;
 	}

@@ -19,12 +19,18 @@ package com.nabla.dc.client.presenter.fixed_asset;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryRecord;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.ui.fixed_asset.CompanyFixedAssetCategoryDialogUi;
+import com.nabla.dc.shared.report.BuiltInReports;
+import com.nabla.dc.shared.report.ReportParameterTypes;
+import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
+import com.nabla.wapp.client.print.IPrintCommandSet;
+import com.nabla.wapp.report.shared.IntegerReportParameterValue;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlot2;
 import com.nabla.wapp.shared.slot.ISlotManager1;
@@ -38,10 +44,13 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 
 	private static final Logger	log = LoggerFactory.getLog(CompanyFixedAssetCategoryDialog.class);
 
+	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {}
+
 	public interface IDisplay extends ITopDisplay {
 		ISlotManager2<CompanyFixedAssetCategoryRecord, List<FixedAssetCategoryRecord>> getCategoryDropSlots();
 		ISlotManager2<CompanyFixedAssetCategoryRecord, List<CompanyFixedAssetCategoryRecord>> getCategoryReparentSlots();
 		ISlotManager1<List<CompanyFixedAssetCategoryRecord>> getAvailableCategoryDropSlots();
+		ICommandSet getCommands();
 
 		void removeCategory(final CompanyFixedAssetCategoryRecord record);
 		void removeCategory(final FixedAssetCategoryRecord record);
@@ -53,12 +62,11 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 	interface CategoryReparentSlot extends ISlot2<CompanyFixedAssetCategoryRecord, List<CompanyFixedAssetCategoryRecord>> {}
 	interface AvailableCategoryDropSlot extends ISlot1<List<CompanyFixedAssetCategoryRecord>> {}
 
-	public CompanyFixedAssetCategoryDialog(final IDisplay ui) {
-		super(ui);
-	}
+	private final Integer	companyId;
 
 	public CompanyFixedAssetCategoryDialog(final Integer companyId) {
 		super(new CompanyFixedAssetCategoryDialogUi(companyId));
+		this.companyId = companyId;
 	}
 
 	@Override
@@ -67,6 +75,8 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 		registerSlot(getDisplay().getCategoryDropSlots(), onCategoryDrop);
 		registerSlot(getDisplay().getCategoryReparentSlots(), onCategoryReparent);
 		registerSlot(getDisplay().getAvailableCategoryDropSlots(), onAvailableCategoryDrop);
+
+		MyApplication.getInstance().getPrintManager().bind(getDisplay().getCommands(), this, BuiltInReports.COMPANY_FIXED_ASSET_CATEGORY_LIST, new IntegerReportParameterValue(ReportParameterTypes.CompanyId.getDefaultParameterName(), companyId));
 	}
 
 	private AvailableCategoryDropSlot onAvailableCategoryDrop = new AvailableCategoryDropSlot() {

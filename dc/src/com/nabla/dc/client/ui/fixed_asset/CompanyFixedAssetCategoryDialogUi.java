@@ -28,6 +28,7 @@ import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryRecord;
 import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryTreeModel;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
+import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog.ICommandSet;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.UpdateModelCacheOperations;
@@ -80,6 +81,8 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedModalDialog impleme
 	TransferImgButton							addButton;
 	@UiField
 	TransferImgButton							removeButton;
+	@UiField
+	ICommandSet									cmd;
 
 	private final CategoryDropSignal			sigCategoryDrop = new CategoryDropSignal();
 	private final CategoryReparentSignal		sigCategoryReparent = new CategoryReparentSignal();
@@ -201,5 +204,10 @@ public class CompanyFixedAssetCategoryDialogUi extends BindedModalDialog impleme
 		for (N record : records)
 			list.add(factory.get(record.getJsObj()));
 		return list;
+	}
+
+	@Override
+	public ICommandSet getCommands() {
+		return cmd;
 	}
 }

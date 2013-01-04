@@ -66,7 +66,7 @@ public class StreamResolvingResourceLocator implements IResourceLocator {
     		final PreparedStatement stmt = StatementFormat.prepare(conn,
 "SELECT content" +
 " FROM report_resource" +
-" WHERE name=? AND (report_id=? OR report_id IS NULL);", fileName, reportId);
+" WHERE name=? AND report_id=?;", fileName, reportId);
     		try {
     			final ResultSet rs = stmt.executeQuery();
     			try {

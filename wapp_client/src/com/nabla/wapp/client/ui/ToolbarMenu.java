@@ -35,11 +35,11 @@ import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
  */
 public class ToolbarMenu extends ToolStripMenuButton implements HasWidgets {
 
-	private static final Logger	logger = LoggerFactory.getLog(ToolbarMenu.class);
-	private final Menu			menu = new Menu();
+	private static final Logger	log = LoggerFactory.getLog(ToolbarMenu.class);
+	private final Menu				menu = new Menu();
 	// NOTE until SmartGWT corrects bugs about icon
-	private String				title;
-	private String				icon;
+	private String					title;
+	private String					icon;
 
 	public ToolbarMenu() {
 		menu.setShowShadow(true);
@@ -61,7 +61,7 @@ public class ToolbarMenu extends ToolStripMenuButton implements HasWidgets {
 		else if (w instanceof MenuItemSeparator)
 			menu.addItem(((MenuItemSeparator) w).getImpl());
 		else {
-			logger.log(Level.SEVERE,"adding a widget of type '" + w.getClass().toString() + "' to a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
+			log.log(Level.SEVERE,"adding a widget of type '" + w.getClass().toString() + "' to a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
 		}
 	}
 
@@ -76,7 +76,7 @@ public class ToolbarMenu extends ToolStripMenuButton implements HasWidgets {
 
 	@Override
 	public boolean remove(@SuppressWarnings("unused") Widget w) {
-		logger.log(Level.SEVERE,"removing children widget from a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
+		log.log(Level.SEVERE,"removing children widget from a " + Util.getClassSimpleName(this.getClass()) + " is not supported");
         return false;
 	}
 

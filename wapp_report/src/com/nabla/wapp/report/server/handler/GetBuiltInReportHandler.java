@@ -44,8 +44,8 @@ public class GetBuiltInReportHandler extends AbstractHandler<GetBuiltInReport, I
 
 	@Override
 	public IntegerResult execute(final GetBuiltInReport cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		final ReportTemplate template = reportManager.open(cmd.getName(), ctx, cmd.getLocale());
-		final Report report = template.generate(ctx.getReadConnection(), cmd.getParameters(), cmd.getFormat());
+		final ReportTemplate template = reportManager.open(cmd.getName(), ctx);
+		final Report report = template.generate(ctx.getReadConnection(), cmd.getParameters(), cmd.getFormat(), ctx.getLocale());
 		try {
 			return new IntegerResult(report.save(ctx.getWriteConnection(), cmd.getOutputAsFile()));
 		} finally {

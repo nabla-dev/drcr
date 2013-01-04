@@ -17,8 +17,6 @@
 package com.nabla.dc.client.presenter.company;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.fixed_asset.AssetList;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
@@ -81,12 +79,6 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		registerSlot(cmd.editAssetCategories(), onEditAssetCategories);
 		registerSlot(cmd.editFixedAssets(), onEditFixedAssets);
 		cmd.updateUi();
-Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-	@Override
-	public void execute() {
-		cmd.editFixedAssets().fire();
-	}
-});
 	}
 
 	@Override

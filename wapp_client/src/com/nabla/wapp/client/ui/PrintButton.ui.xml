@@ -1,0 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+
+	<ui:with field="cmd" type="com.nabla.wapp.client.print.IPrintCommandSet"/>
+
+	<wnd:Button command="{cmd.print}" icon="print.png"><ui:msg description="Print preview command">Print</ui:msg></wnd:Button>
+</ui:UiBinder> 

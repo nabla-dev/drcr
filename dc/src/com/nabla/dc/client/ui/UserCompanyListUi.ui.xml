@@ -36,7 +36,7 @@
 					<wnd:MenuItem command="{cmd.userList}" icon="user_small.png"><ui:msg description="Edit users command">Manage users</ui:msg></wnd:MenuItem>
 					<wnd:MenuItem command="{cmd.roleList}" icon="privilege_small.png"><ui:msg description="Edit user permissions command">User permissions</ui:msg></wnd:MenuItem>
 					<wnd:MenuItemSeparator />
-					<wnd:MenuItem icon="report_small.png"><ui:msg description="Edit reports command">Reports</ui:msg></wnd:MenuItem>
+					<wnd:MenuItem command="{cmd.reportList}" icon="report_small.png"><ui:msg description="Edit reports command">Reports</ui:msg></wnd:MenuItem>
 				</wnd:ToolbarMenu>
 			</wnd:Toolbar>
 			<wnd:TileGrid ui:field="list" model="{model}" selectionType="NONE" tileWidth="150" tileHeight="165" >

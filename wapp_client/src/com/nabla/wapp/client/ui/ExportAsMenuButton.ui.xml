@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	xmlns:wnd="urn:import:com.nabla.wapp.client.ui">
+
+	<ui:with field="cmd" type="com.nabla.wapp.client.print.IPrintCommandSet"/>
+
+	<wnd:MenuButton title="Export as..." icon="download.png">
+		<ui:attribute name="title" description="Export as menu title"/>
+		<wnd:MenuItem command="{cmd.exportAsCSV}" icon="csv.png"><ui:msg description="Export as CSV command">Comma separated file (CSV)</ui:msg></wnd:MenuItem>
+		<wnd:MenuItem command="{cmd.exportAsXML}" icon="xml.png"><ui:msg description="Export as XML command">Extensible markup language (XML)</ui:msg></wnd:MenuItem>
+		<wnd:MenuItemSeparator/>
+		<wnd:MenuItem command="{cmd.exportAsXLS}" icon="xls.png"><ui:msg description="Export as XLS command">Excel document (XLS)</ui:msg></wnd:MenuItem>
+		<wnd:MenuItem command="{cmd.exportAsWORD}" icon="word.png"><ui:msg description="Export as WORD command">Word document (DOC)</ui:msg></wnd:MenuItem>
+		<wnd:MenuItemSeparator/>
+		<wnd:MenuItem command="{cmd.exportAsPDF}" icon="pdf.png"><ui:msg description="Export as PDF command">Portable document file (PDF)</ui:msg></wnd:MenuItem>
+	</wnd:MenuButton>
+</ui:UiBinder> 

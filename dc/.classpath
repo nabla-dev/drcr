@@ -24,6 +24,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/smartgwt-skins-3.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/super-csv-2.0.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwtupload-0.6.6.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.6.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wapp_report"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

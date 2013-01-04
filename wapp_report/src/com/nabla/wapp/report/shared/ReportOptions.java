@@ -27,14 +27,12 @@ public class ReportOptions implements IsSerializable {
 
 	private ReportFormats		format;
 	private Boolean				outputAsFile;
-	private String				locale;
 
 	public ReportOptions() {}	// for serialization only
 
-	public ReportOptions(final ReportFormats format, final Boolean outputAsFile, final String locale) {
+	public ReportOptions(final ReportFormats format, final Boolean outputAsFile) {
 		this.format = format;
 		this.outputAsFile = outputAsFile;
-		this.locale = locale;
 	}
 
 	public ReportFormats getFormat() {
@@ -43,10 +41,6 @@ public class ReportOptions implements IsSerializable {
 
 	public Boolean getOutputAsFile() {
 		return outputAsFile;
-	}
-
-	public String getLocale() {
-		return locale;
 	}
 
 }

@@ -38,8 +38,8 @@ public class GetSimpleReport extends ReportOptions implements IAction<SimpleRepo
 
 	GetSimpleReport() {}	// for serialization only
 
-	public GetSimpleReport(final Set<Integer> reportIds, final IReportParameterValue parameter, final ReportFormats format, final Boolean outputAsFile, final String locale) {
-		super(format, outputAsFile, locale);
+	public GetSimpleReport(final Set<Integer> reportIds, final IReportParameterValue parameter, final ReportFormats format, final Boolean outputAsFile) {
+		super(format, outputAsFile);
 		this.reportIds = new IntegerSet(reportIds);
 		this.parameter = parameter;
 	}

@@ -16,15 +16,9 @@
 */
 package com.nabla.wapp.report.shared;
 
-/**
- * @author nabla
- *
- */
 public interface IReportPrivileges {
 	static final String REPORT_VIEW = "report_view";
 	static final String REPORT_ADD = "report_add";
 	static final String REPORT_REMOVE = "report_remove";
 	static final String REPORT_EDIT = "report_edit";
-
-	static final String REPORT_RUN = "report_print";
 }

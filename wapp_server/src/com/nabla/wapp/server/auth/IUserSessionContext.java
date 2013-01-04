@@ -17,17 +17,15 @@
 package com.nabla.wapp.server.auth;
 
 import java.sql.Connection;
+import java.util.Locale;
 
 
-/**
- * @author nabla
- *
- */
 public interface IUserSessionContext {
 	void close();
 
 	Integer getUserId();
 	boolean isRoot();
+	Locale getLocale();
 
 	Connection getWriteConnection();
 	Connection getReadConnection();

@@ -35,10 +35,6 @@ import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.ValidationException;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
 @Singleton
 public class LoginUserService extends RemoteServiceServlet implements ILoginUserRemoteService {
 
@@ -53,7 +49,7 @@ public class LoginUserService extends RemoteServiceServlet implements ILoginUser
 	}
 
 	@Override
-	public String execute(String userName, String password) {
+	public String execute(String userName, String password, String locale) {
 		final ValidationException errors = new ValidationException();
 		try {
 			IUser.NAME_CONSTRAINT.validate(IUser.NAME, userName, errors, ValidatorContext.ADD);
@@ -67,7 +63,7 @@ public class LoginUserService extends RemoteServiceServlet implements ILoginUser
 					final Integer userId = userManager.isValidSession(userName, password);
 					if (userId != null) {
 						userManager.onUserLogged(userId);
-						return UserSession.save(this.getThreadLocalRequest(), userId, userName);
+						return UserSession.save(this.getThreadLocalRequest(), userId, userName, locale);
 					}
 				} finally {
 					Database.close(conn);

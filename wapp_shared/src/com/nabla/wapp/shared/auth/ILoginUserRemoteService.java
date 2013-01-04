@@ -26,7 +26,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("login")
 public interface ILoginUserRemoteService extends RemoteService {
 
-	String execute(String userName, String password);
+	String execute(String userName, String password, String locale);
 	Void reset();
 
 }

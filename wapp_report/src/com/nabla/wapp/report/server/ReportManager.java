@@ -16,7 +16,6 @@
 */
 package com.nabla.wapp.report.server;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +36,6 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.auth.AccessDeniedException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
-import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
 /**
  * @author nabla64
@@ -64,21 +62,23 @@ public class ReportManager {
 		*/
 	}
 
-	public ReportTemplate open(final String internalName, final IUserSessionContext ctx, final String locale) throws SQLException, DispatchException {
+	public ReportTemplate open(final String internalName, final IUserSessionContext ctx) throws SQLException, DispatchException {
 		final PreparedStatement stmt = ctx.isRoot() ?
 				StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT r.id, r.content" +
-" FROM report AS r" +
-" WHERE r.internal_name=?;", internalName)
+"SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
+" FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+" WHERE r.internal_name LIKE ?;", ctx.getLocale().toString(), internalName)
 				:
 				StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT r.id, r.content" +
-" FROM report AS r INNER JOIN user_role ON r.role_id=user_role.role_id" +
-" WHERE r.internal_name=? AND user_role.user_id=?;", internalName, ctx.getUserId());
+"SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
+" FROM user_role AS p INNER JOIN (" +
+"report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+") ON r.role_id=p.role_id" +
+" WHERE r.internal_name LIKE ? AND p.user_id=?;", ctx.getLocale().toString(), internalName, ctx.getUserId());
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
-				return openDesign(ctx.getReadConnection(), rs, locale);
+				return openDesign(rs, ctx);
 			} finally {
 				rs.close();
 			}
@@ -87,21 +87,23 @@ public class ReportManager {
 		}
 	}
 
-	public ReportTemplate open(final Integer id, final IUserSessionContext ctx, final String locale) throws SQLException, DispatchException {
+	public ReportTemplate open(final Integer id, final IUserSessionContext ctx) throws SQLException, DispatchException {
 		final PreparedStatement stmt = ctx.isRoot() ?
 				StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT r.id, r.content" +
-" FROM report AS r" +
-" WHERE r.id=?;", id)
+"SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
+" FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+" WHERE r.id=?;", ctx.getLocale().toString(), id)
 				:
 				StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT r.id, r.content" +
-" FROM report AS r INNER JOIN user_role ON r.role_id=user_role.role_id" +
-" WHERE r.id=? AND user_role.user_id=?;", id, ctx.getUserId());
+"SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
+" FROM user_role AS p INNER JOIN (" +
+"report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+") ON r.role_id=p.role_id" +
+" WHERE r.id=? AND p.user_id=?;", ctx.getLocale().toString(), id, ctx.getUserId());
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
-				return openDesign(ctx.getReadConnection(), rs, locale);
+				return openDesign(rs, ctx);
 			} finally {
 				rs.close();
 			}
@@ -110,42 +112,15 @@ public class ReportManager {
 		}
 	}
 
-	protected ReportTemplate openDesign(final Connection conn, final ResultSet rs, final String locale) throws DispatchException, SQLException {
+	protected ReportTemplate openDesign(final ResultSet rs, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (!rs.next())
 			throw new AccessDeniedException();
 		final Integer id = rs.getInt(1);
 		try {
-			return new ReportTemplate(engine.openReportDesign(getLocalizedReportName(conn, id, locale), rs.getBinaryStream(2), new StreamResolvingResourceLocator(conn, id)));
+			return new ReportTemplate(engine.openReportDesign(rs.getString(3), rs.getBinaryStream(2), new StreamResolvingResourceLocator(ctx.getReadConnection(), id)));
 		} catch (EngineException e) {
 			Util.throwInternalErrorException(e);
 			return null;
-		}
-	}
-
-	protected String getLocalizedReportName(final Connection conn, final Integer reportId, final String locale) throws SQLException, InternalErrorException {
-		final PreparedStatement stmt = 	StatementFormat.prepare(conn,
-"SELECT COALESCE((" +
-"SELECT n.text" +
-" FROM report_name_localized AS n INNER JOIN locale AS l ON n.locale_id=l.id" +
-" WHERE n.report_id=? AND l.name LIKE ?" +
-"),(" +
-"SELECT n.text" +
-" FROM report_name_localized AS n" +
-" WHERE n.report_id=? AND n.locale_id IS NULL" +
-"));", reportId, locale, reportId);
-		try {
-			final ResultSet rs = stmt.executeQuery();
-			try {
-				if (!rs.next())
-					throw new InternalErrorException("no name defined for report " + reportId);
-				if (log.isDebugEnabled())
-					log.debug("report name for locale '" + locale + "': '" + rs.getString(1) + "'");
-				return rs.getString(1);
-			} finally {
-				rs.close();
-			}
-		} finally {
-			stmt.close();
 		}
 	}
 

@@ -1,9 +1,0 @@
-<report>
-	<file_name>company_user_list.rptdesign</file_name>
-	<internal_name>COMPANY_USER_LIST</internal_name>
-	<ledger>SETTINGS</ledger>
-	<role>company_user_view</role>
-	<default_locale>en_GB</default_locale>
-	<name locale="en_GB">User List For Company</name>
-	<name locale="fr">List</name>
-</report>

@@ -16,9 +16,14 @@
 */
 package com.nabla.wapp.server.general;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.LocaleUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.shared.auth.IRootUser;
 
@@ -28,16 +33,26 @@ import com.nabla.wapp.shared.auth.IRootUser;
  */
 public class UserSession {
 
-	public static final String		SESSION_PARAMETER_NAME = "user_session";
+	private static final Log		log = LogFactory.getLog(UserSession.class);
+	public static final String	SESSION_PARAMETER_NAME = "user_session";
 
 	private final Integer	userId;
 	private final boolean	isRoot;
+	private Locale			locale;
 	private final String	sessionId;
 
-	public UserSession(final Integer userId, boolean isRoot) {
+	public UserSession(final Integer userId, boolean isRoot, final String locale) {
 		this.userId = userId;
 		this.isRoot = isRoot;
+		try {
+			this.locale = LocaleUtils.toLocale(locale);
+		} catch (IllegalArgumentException __) {
+			if (log.isErrorEnabled())
+				log.error("unsupported locale '" + locale + "'");
+			this.locale = Locale.UK;
+		}
 		this.sessionId = UUID.randomUUID().toString();
+
 	}
 
 	public Integer getUserId() {
@@ -52,8 +67,12 @@ public class UserSession {
 		return isRoot;
 	}
 
-	public static String save(final HttpServletRequest request, final Integer userId, final String userName) {
-		final UserSession session = new UserSession(userId, IRootUser.NAME.equalsIgnoreCase(userName));
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public static String save(final HttpServletRequest request, final Integer userId, final String userName, final String locale) {
+		final UserSession session = new UserSession(userId, IRootUser.NAME.equalsIgnoreCase(userName), locale);
 		request.getSession().setAttribute(SESSION_PARAMETER_NAME, session);
 		return session.getSessionId();
 	}

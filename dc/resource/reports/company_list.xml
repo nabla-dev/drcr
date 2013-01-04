@@ -1,9 +1,0 @@
-<report>
-	<file_name>company_list.rptdesign</file_name>
-	<internal_name>COMPANY_LIST</internal_name>
-	<ledger>SETTINGS</ledger>
-	<role>company_view</role>
-	<default_locale>en_GB</default_locale>
-	<name locale="en_GB">Company List</name>
-	<name locale="fr">List d'entreprises</name>
-</report>

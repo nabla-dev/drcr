@@ -17,6 +17,7 @@
 package com.nabla.wapp.server.auth;
 
 import java.sql.Connection;
+import java.util.Locale;
 
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.general.UserSession;
@@ -67,6 +68,11 @@ public class UserSessionContext implements IUserSessionContext {
 	@Override
 	public Connection getConnection() {
 		return (writeConn == null) ? readConn : writeConn;
+	}
+
+	@Override
+	public Locale getLocale() {
+		return userSession.getLocale();
 	}
 
 }

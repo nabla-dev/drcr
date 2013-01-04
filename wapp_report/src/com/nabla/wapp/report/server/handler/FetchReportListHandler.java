@@ -32,13 +32,13 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 public class FetchReportListHandler extends AbstractFetchHandler<FetchReportList> {
 
 	private static final SqlToJson	sql = new SqlToJson(
-"SELECT (internal_name IS NULL) AS 'b_enabled', id, name, template, role_id" +
-" FROM report"
+"SELECT to_bool(IF(r.internal_name IS NULL,TRUE,FALSE)) AS 'enabled', r.id, r.role_id, COALESCE(n.text, r.name) AS 'name'" +
+" FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?"
 	);
 
 	@Override
 	public FetchResult execute(final FetchReportList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return sql.fetch(cmd, ctx.getConnection());
+		return sql.fetch(cmd, ctx.getConnection(), cmd.getLocale());
 	}
 
 }

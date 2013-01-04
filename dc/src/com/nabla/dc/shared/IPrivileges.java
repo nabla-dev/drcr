@@ -16,6 +16,7 @@
 */
 package com.nabla.dc.shared;
 
+import com.nabla.wapp.report.shared.IReportPrivileges;
 import com.nabla.wapp.shared.auth.IRolePrivileges;
 
 
@@ -23,7 +24,7 @@ import com.nabla.wapp.shared.auth.IRolePrivileges;
  * @author nabla
  *
  */
-public interface IPrivileges extends IRolePrivileges {
+public interface IPrivileges extends IRolePrivileges, IReportPrivileges {
 
 	static final String EC_TERMS_VIEW = "ec_terms_view";
 	static final String EC_TERMS_ADD = "ec_terms_add";

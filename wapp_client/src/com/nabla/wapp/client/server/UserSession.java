@@ -25,8 +25,8 @@ import com.nabla.wapp.shared.model.IUser;
  */
 public class UserSession implements IUser {
 
-	private String	name;
-	private String	sessionId;
+	private String		name;
+	private String		sessionId;
 	private boolean	root;
 
 	public UserSession(final String name, final String sessionId) {

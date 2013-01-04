@@ -26,12 +26,12 @@ public interface IReport extends IReportTable {
 
 	static final TextLengthConstraint		NAME_CONSTRAINT = new TextLengthConstraint(1, 255, true);
 
-	static final String					REPORT_FILE = "report_id";
+//	static final String					REPORT_FILE = "report_id";
 
-	static final String					NEW_REPORT_PREFERENCE_GROUP = "new_report";
+//	static final String					NEW_REPORT_PREFERENCE_GROUP = "new_report";
 	static final String					PRINT_REPORT_PREFERENCE_GROUP = "report_parameter";
 
-	static final String					HEADER_PERMISSION = "auth";
-	static final String					HEADER_PARAMETER_TYPE = "model";
+//	static final String					HEADER_PERMISSION = "auth";
+//	static final String					HEADER_PARAMETER_TYPE = "model";
 
 }

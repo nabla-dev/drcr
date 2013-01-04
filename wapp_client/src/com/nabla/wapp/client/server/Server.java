@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.AsyncProvider;
 import com.google.gwt.core.client.Callback;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nabla.wapp.client.auth.SecureRequestBuilder;
@@ -93,7 +94,7 @@ public class Server implements IServer {
 	public void createSession(final String userName, final String password, final AsyncCallback<UserSession> callback) {
 		Assert.argumentNotNull(callback);
 
-		login.execute(userName, password, new AsyncCallback<String> () {
+		login.execute(userName, password, LocaleInfo.getCurrentLocale().getLocaleName(), new AsyncCallback<String> () {
 
 			@Override
 			public void onFailure(Throwable caught) {

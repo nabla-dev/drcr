@@ -26,7 +26,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nabla.wapp.client.command.Command;
@@ -114,12 +113,12 @@ public class PrintManager {
 		bind(commands.exportAsPDF(), ReportFormats.PDF, true, presenter, reportGetter);
 	}
 
-	private	<BuiltInReportsType extends Enum<BuiltInReportsType>>
+	public 	<BuiltInReportsType extends Enum<BuiltInReportsType>>
 	void bindBuiltIn(final Command command, final BuiltInReportsType builtInReport, final ReportFormats format, final Boolean outputAsFile, final IParameterGetter parameterGetter, final IPresenter presenter) {
 		presenter.registerSlot(command, new ISlot() {
 			@Override
 			public void invoke() {
-				Application.getInstance().getDispatcher().execute(new GetBuiltInReport(builtInReport.toString(), format, outputAsFile, (parameterGetter != null) ? parameterGetter.getParameter() : null, LocaleInfo.getCurrentLocale().getLocaleName()), onCreateBuiltInReport);
+				Application.getInstance().getDispatcher().execute(new GetBuiltInReport(builtInReport.toString(), format, outputAsFile, (parameterGetter != null) ? parameterGetter.getParameter() : null), onCreateBuiltInReport);
 			}
 		});
 	}
@@ -154,7 +153,7 @@ public class PrintManager {
 			app.getMessageBox().error(Resource.instance.strings.noReportSelected());
 			return;
 		}
-		app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile, LocaleInfo.getCurrentLocale().getLocaleName()), new AsyncCallback<SimpleReportResult>() {
+		app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile), new AsyncCallback<SimpleReportResult>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				log.log(Level.WARNING, "fail to get list of report IDs to display", caught);

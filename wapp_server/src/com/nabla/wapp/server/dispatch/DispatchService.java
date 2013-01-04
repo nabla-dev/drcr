@@ -35,10 +35,6 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IResult;
 import com.nabla.wapp.shared.dispatch.UnsupportedActionException;
 
-/**
- * @author nabla
- *
- */
 @Singleton
 public class DispatchService extends RemoteServiceServlet implements IDispatchRemoteService {
 

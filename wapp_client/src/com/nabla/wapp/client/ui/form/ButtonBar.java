@@ -18,6 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.Assert;
+import com.nabla.wapp.client.ui.AbstractUiBinderWidgetFactory;
 import com.nabla.wapp.client.ui.HLayout;
 import com.nabla.wapp.client.ui.HLayoutSpacer;
 import com.nabla.wapp.client.ui.IHasWidgets;
@@ -25,6 +26,7 @@ import com.nabla.wapp.client.ui.Resource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
+import com.smartgwt.client.widgets.menu.IMenuButton;
 
 /**
  * @author nabla
@@ -52,10 +54,12 @@ public class ButtonBar extends UiBinderFormItemSpeudoWidgetList<CanvasItem> impl
 	}
 
 	@Override
-	public void add(final Widget w) {
+	public void add(Widget w) {
 		Assert.argumentNotNull(w);
 
-		if (w instanceof IButton || w instanceof HLayoutSpacer)
+		if (w instanceof AbstractUiBinderWidgetFactory)
+			w = ((AbstractUiBinderWidgetFactory)w).create();
+		if (w instanceof IButton || w instanceof IMenuButton || w instanceof HLayoutSpacer)
 			buttons.add(w);
 		else
 			super.add(w);
@@ -66,4 +70,7 @@ public class ButtonBar extends UiBinderFormItemSpeudoWidgetList<CanvasItem> impl
 		return IHasWidgets.Helper.findChild(buttons.getMembers(), type, recursive);
 	}
 
+	public void setAlign(final Alignment value) {
+		impl.setAlign(value);
+	}
 }

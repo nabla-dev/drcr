@@ -67,6 +67,7 @@ public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> imple
 			@Override
 			public void execute() {
 				addTab(new UserCompanyList(Workspace.this));
+			//	addTab(new ReportList());
 			}
 		});
 	}

@@ -10,6 +10,7 @@
 	<ui:with field="formModel" type="com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryFormModel"/>
 	<ui:with field="availableModel" type="com.nabla.dc.client.model.fixed_asset.AvailableFixedAssetCategoryListModel"/>
 	<ui:with field="model" type="com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryTreeModel"/>
+	<ui:with field="cmd" type="com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog.ICommandSet"/>
 	
 	<wnd:ModalDialog caption="Fixed Asset Categories" icon="fixed_asset/asset_category_small.png" autoClose="true">
 		<ui:attribute name="caption" description="Edit company fixed asset categories dialog caption"/>
@@ -30,7 +31,11 @@
 				<wnd:TreeGridField name="{model.fields.name}" canSort="false"><ui:msg>Category</ui:msg></wnd:TreeGridField>
 				<wnd:TreeGridField name="{model.fields.active}" canSort="false" width="24"><ui:msg>_</ui:msg></wnd:TreeGridField>
 			</ctrl:CompanyFixedAssetCategoryTreeGrid>
-			<form:ButtonBar colSpan="4">
+			<form:ButtonBar colSpan="2" align="LEFT" endRow="false">
+				<wnd:PrintButton commandSet="{cmd}"/>
+				<wnd:ExportAsMenuButton commandSet="{cmd}"/>
+			</form:ButtonBar>
+			<form:ButtonBar colSpan="2">
 				<wnd:SubmitButton><ui:msg description="OK button">*OK</ui:msg></wnd:SubmitButton>
 				<wnd:CancelButton><ui:msg description="Cancel button">*Cancel</ui:msg></wnd:CancelButton>
 			</form:ButtonBar>

@@ -24,7 +24,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface ILoginUserRemoteServiceAsync {
 
-	void execute(String userName, String password, AsyncCallback<String> callback);
+	void execute(String userName, String password, String locale, AsyncCallback<String> callback);
 	void reset(AsyncCallback<Void> callback);
 
 }
