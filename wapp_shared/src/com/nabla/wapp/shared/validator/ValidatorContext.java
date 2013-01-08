@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.shared.validator;
 
-/**
- * @author nabla64
- *
- */
 public enum ValidatorContext {
 	ADD, UPDATE
 }

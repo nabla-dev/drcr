@@ -19,10 +19,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 import com.nabla.wapp.shared.command.AbstractRemove;
 
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveAsset extends AbstractRemove {
 
 	private static final long serialVersionUID = 1L;

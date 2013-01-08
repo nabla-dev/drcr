@@ -25,10 +25,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.ui.Dialog;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla
- *
- */
+
 public class Resource {
 
 	private static final Logger					logger = LoggerFactory.getLog(Resource.class);

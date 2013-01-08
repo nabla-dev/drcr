@@ -23,10 +23,7 @@ import java.util.logging.Logger;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 
-/**
- * @author nabla
- *
- */
+
 public class ModalDialog extends Dialog {
 
 	private static final Logger						log = LoggerFactory.getLog(ModalDialog.class);

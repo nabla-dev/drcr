@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.command.RemoveRole;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveRoleHandler extends AbstractHandler<RemoveRole, VoidResult> {
 
 	public RemoveRoleHandler() {

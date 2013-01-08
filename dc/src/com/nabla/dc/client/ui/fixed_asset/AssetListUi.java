@@ -32,10 +32,6 @@ import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
 public class AssetListUi extends BindedTabDisplay<Tab> implements AssetList.IDisplay, ICurrentRecordProvider<AssetRecord> {
 
 	interface Binder extends UiBinder<Tab, AssetListUi> {}

@@ -25,10 +25,7 @@ import com.nabla.wapp.client.ui.TitleDecoder;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 
-/**
- * @author nabla
- *
- */
+
 public class RadioGroup extends UiBinderFormItemSpeudoWidgetList<RadioGroupItem> {
 
 	private final LinkedHashMap<String, String>	values = new LinkedHashMap<String, String>();

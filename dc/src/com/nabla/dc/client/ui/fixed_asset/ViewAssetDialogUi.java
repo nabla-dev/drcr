@@ -27,10 +27,7 @@ import com.nabla.wapp.client.ui.TabSet;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ViewAssetDialogUi extends BindedModalDialog implements ViewAssetDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ViewAssetDialogUi> {}

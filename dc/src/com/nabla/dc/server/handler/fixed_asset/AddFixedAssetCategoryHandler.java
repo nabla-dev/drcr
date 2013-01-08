@@ -29,10 +29,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class AddFixedAssetCategoryHandler extends AbstractAddHandler<AddFixedAssetCategory> {
 
 	private static final InsertStatement<AddFixedAssetCategory>	sql = new InsertStatement<AddFixedAssetCategory>(AddFixedAssetCategory.class);

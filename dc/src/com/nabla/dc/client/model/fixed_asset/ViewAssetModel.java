@@ -26,10 +26,7 @@ import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class ViewAssetModel extends BasicAssetModel {
 
 	private final int	assetId;

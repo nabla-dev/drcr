@@ -22,10 +22,7 @@ import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.client.model.field.IdField;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class BasicRecordWrapper {
 
 	protected final Record	impl;

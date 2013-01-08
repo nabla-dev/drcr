@@ -21,10 +21,7 @@ import java.util.LinkedList;
 
 import com.smartgwt.client.widgets.form.validator.Validator;
 
-/**
- * @author nabla
- *
- */
+
 public class ValidatorList extends LinkedList<Validator> {
 
 	private static final long serialVersionUID = 1L;

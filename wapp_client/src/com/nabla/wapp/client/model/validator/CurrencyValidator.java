@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.validator;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla64
- *
- */
 public class CurrencyValidator extends RegexValidator {
 
 	public static final String	REGEX = "^(-)?\\d+(\\.[\\d]{0,2})?$";

@@ -18,10 +18,7 @@ package com.nabla.wapp.client.print;
 
 import com.nabla.wapp.client.command.Command;
 
-/**
- * @author nabla
- *
- */
+
 public interface IPrintCommandSet {
 	Command print();
 	Command exportAsCSV();

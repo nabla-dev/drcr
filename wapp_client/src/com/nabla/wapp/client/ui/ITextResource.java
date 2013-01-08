@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.i18n.client.Constants;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface ITextResource extends Constants {
 
 	@DefaultStringValue("* required information")

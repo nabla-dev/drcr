@@ -30,10 +30,7 @@ import com.nabla.wapp.shared.slot.ISlotManager1;
 import com.smartgwt.client.widgets.tile.events.RecordDoubleClickEvent;
 import com.smartgwt.client.widgets.tile.events.RecordDoubleClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserCompanyList.IDisplay {
 
 	interface Binder extends UiBinder<Tab, UserCompanyListUi> {}

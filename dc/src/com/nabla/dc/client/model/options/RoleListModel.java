@@ -34,10 +34,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleListModel extends CModel<RoleRecord> {
 
 	static public class Fields {

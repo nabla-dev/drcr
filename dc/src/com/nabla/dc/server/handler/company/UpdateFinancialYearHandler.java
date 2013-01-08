@@ -24,10 +24,7 @@ import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateFinancialYearHandler extends AbstractUpdateHandler<UpdateFinancialYear> {
 
 	private static final UpdateStatement<UpdateFinancialYear>	sql = new UpdateStatement<UpdateFinancialYear>(UpdateFinancialYear.class);

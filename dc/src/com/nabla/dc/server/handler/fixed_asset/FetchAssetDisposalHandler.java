@@ -26,10 +26,7 @@ import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchAssetDisposalHandler extends AbstractFetchHandler<FetchAssetDisposal> {
 
 	private static final SqlToJson	sql = new SqlToJson(

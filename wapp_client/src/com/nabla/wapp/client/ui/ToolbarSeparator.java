@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.user.client.ui.HasText;
 import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
 
-/**
- * @author nabla
- *
- */
+
 public class ToolbarSeparator extends ToolStripSeparator implements HasText {
 
 	@Override

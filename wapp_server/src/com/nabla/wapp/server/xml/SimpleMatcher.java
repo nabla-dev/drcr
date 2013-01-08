@@ -21,10 +21,7 @@ import java.sql.Timestamp;
 import org.simpleframework.xml.transform.Matcher;
 import org.simpleframework.xml.transform.Transform;
 
-/**
- * @author nabla
- *
- */
+
 public class SimpleMatcher implements Matcher  {
 
 	@Override

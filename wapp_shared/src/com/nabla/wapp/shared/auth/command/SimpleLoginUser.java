@@ -19,8 +19,5 @@ package com.nabla.wapp.shared.auth.command;
 import com.nabla.wapp.shared.dispatch.BooleanResult;
 import com.nabla.wapp.shared.dispatch.IAction;
 
-/**
- * @author nabla
- *
- */
+
 public class SimpleLoginUser implements IAction<BooleanResult> {}

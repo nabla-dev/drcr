@@ -19,10 +19,6 @@ package org.eclipse.birt.report.engine.emitter.csv;
 import org.eclipse.birt.report.engine.api.IRenderOption;
 import org.eclipse.birt.report.engine.api.RenderOption;
 
-/**
- * @author nabla64
- *
- */
 public class CsvRenderOption extends RenderOption implements ICsvRenderOption {
 
 	private static final String	WRITE_HEADER = "CsvRenderOption.WriteHeader";

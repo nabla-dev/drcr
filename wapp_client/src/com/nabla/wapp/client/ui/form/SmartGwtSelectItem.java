@@ -26,10 +26,7 @@ import com.smartgwt.client.widgets.form.fields.FormItemFunctionContext;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class SmartGwtSelectItem extends SelectItem implements FormItemCriteriaFunction/*FilterCriteriaFunction*/ {
 
 	private final Criteria						staticCriterias = new Criteria();

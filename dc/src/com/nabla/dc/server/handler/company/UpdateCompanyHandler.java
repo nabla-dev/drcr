@@ -24,10 +24,7 @@ import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateCompanyHandler extends AbstractUpdateHandler<UpdateCompany> {
 
 	private static final UpdateStatement<UpdateCompany>	sql = new UpdateStatement<UpdateCompany>(UpdateCompany.class);

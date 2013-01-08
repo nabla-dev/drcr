@@ -31,10 +31,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class SplitAssetModel extends CModel<SplitAssetRecord> {
 
 	static public class Fields implements ISplitAsset {

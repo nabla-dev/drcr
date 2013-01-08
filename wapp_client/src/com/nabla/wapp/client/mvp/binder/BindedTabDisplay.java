@@ -20,10 +20,7 @@ import com.nabla.wapp.client.ui.IPostCreateProcessing;
 import com.nabla.wapp.client.ui.Tab;
 
 
-/**
- * @author nabla
- *
- */
+
 public class BindedTabDisplay<U extends Tab & IPostCreateProcessing> extends BindedDisplay<U> {
 
 	public Tab getImpl() {

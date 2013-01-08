@@ -23,10 +23,7 @@ import com.nabla.wapp.client.model.Model;
 import com.nabla.wapp.client.mvp.binder.BindedModalDialog;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 class ListGridFilterListDialogUi extends BindedModalDialog implements ListGridFilterListDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ListGridFilterListDialogUi> {}

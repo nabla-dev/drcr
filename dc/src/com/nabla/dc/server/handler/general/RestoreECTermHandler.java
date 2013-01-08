@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.general.RestoreECTerm;
 import com.nabla.dc.shared.model.IECTerm;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreECTermHandler extends AbstractRestoreHandler<RestoreECTerm> {
 
 	public RestoreECTermHandler() {

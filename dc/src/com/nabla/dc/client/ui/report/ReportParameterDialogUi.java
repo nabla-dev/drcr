@@ -32,10 +32,7 @@ import com.nabla.wapp.report.shared.ReportParameterValueList;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class ReportParameterDialogUi extends BindedModalDialog implements ReportParameterDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ReportParameterDialogUi> {}

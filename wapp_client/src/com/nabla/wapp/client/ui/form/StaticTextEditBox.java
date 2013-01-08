@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 
 
-/**
- * @author nabla
- *
- */
+
 public class StaticTextEditBox extends UiBinderFormTextItemSpeudoWidget<StaticTextItem> {
 
 	public StaticTextEditBox() {

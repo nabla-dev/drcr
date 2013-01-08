@@ -19,10 +19,7 @@ package com.nabla.wapp.client.mvp.binder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.wapp.client.ui.IPostCreateProcessing;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedDisplay<U extends IPostCreateProcessing> {
 
 	protected U		impl;

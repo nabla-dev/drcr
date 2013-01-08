@@ -20,10 +20,7 @@ import com.nabla.wapp.client.ui.ListGrid.ICellCSSTextFormatter;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class DeletedRecordGridFormatter implements ICellCSSTextFormatter {
 
 	@Override

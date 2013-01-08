@@ -23,10 +23,7 @@ import com.nabla.wapp.shared.general.SelectionDelta;
 import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleDefinitionRecord extends BasicRecord {
 
 	public static final IRecordFactory<RoleDefinitionRecord>	factory = new IRecordFactory<RoleDefinitionRecord>() {

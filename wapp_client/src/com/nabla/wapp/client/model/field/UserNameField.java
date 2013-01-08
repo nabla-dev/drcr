@@ -18,10 +18,6 @@ package com.nabla.wapp.client.model.field;
 
 import com.nabla.wapp.shared.model.IUser;
 
-/**
- * @author nabla64
- *
- */
 public class UserNameField extends TextField {
 
 	public UserNameField() {

@@ -32,10 +32,7 @@ import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class WizardValuesManager<T extends Record & IWizardRecord> extends ValuesManager {
 
 	private static final Logger	log = LoggerFactory.getLog(WizardValuesManager.class);

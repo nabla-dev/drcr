@@ -16,10 +16,7 @@
 */
 package com.nabla.dc.shared;
 
-/**
- * @author nabla
- *
- */
+
 public enum ServerErrors {
 
 	TOO_MANY_ERRORS,

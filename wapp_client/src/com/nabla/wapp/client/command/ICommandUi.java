@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.client.command;
 
-/**
- * @author nabla64
- *
- */
 public interface ICommandUi {
 	boolean getEnabled();
 	void setEnabled(boolean value);

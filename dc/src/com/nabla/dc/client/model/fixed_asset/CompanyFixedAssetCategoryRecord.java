@@ -24,10 +24,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.HeterogeneousTreeGridRecord;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyFixedAssetCategoryRecord extends HeterogeneousTreeGridRecord {
 
 	public static final IRecordFactory<CompanyFixedAssetCategoryRecord>	factory = new IRecordFactory<CompanyFixedAssetCategoryRecord>() {

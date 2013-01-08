@@ -31,10 +31,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IUser;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyUserListModel extends CModel<UserRecord> {
 
 	static public class Fields {

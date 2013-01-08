@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.general;
 
 import com.nabla.wapp.shared.command.AbstractRemove;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveECTerm extends AbstractRemove {
 
 	private static final long serialVersionUID = 1L;

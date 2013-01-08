@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.smartgwt.client.widgets.form.fields.BlurbItem;
 
-/**
- * @author nabla
- *
- */
+
 public class MessageItem extends UiBinderFormItemSpeudoWidget<BlurbItem> implements HasHTML {
 
 	private String	html = "";

@@ -21,10 +21,7 @@ import com.nabla.dc.client.ui.options.RoleDefinitionDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleDefinitionDialog extends AbstractTopPresenter<RoleDefinitionDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {}

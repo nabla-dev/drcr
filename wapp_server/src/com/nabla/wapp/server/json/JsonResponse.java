@@ -28,10 +28,7 @@ import net.minidev.json.JSONObject;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class JsonResponse extends JSONArray {
 
 	private static final long 	serialVersionUID = 1L;

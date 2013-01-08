@@ -22,10 +22,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateRoleDefinition implements IRecordAction<StringResult> {
 
 	Integer			roleId;

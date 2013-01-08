@@ -19,10 +19,7 @@ package com.nabla.wapp.server.database;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * @author nabla
- *
- */
+
 public class ConnectionTransactionGuard {
 
 	private final boolean		autoCommit;

@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command;
 
 import com.nabla.wapp.shared.command.AbstractFetch;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchImportErrorList extends AbstractFetch {
 
 	private Integer		batchId;

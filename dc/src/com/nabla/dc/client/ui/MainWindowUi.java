@@ -27,10 +27,7 @@ import com.nabla.wapp.client.ui.VLayout;
 import com.smartgwt.client.widgets.Canvas;
 
 
-/**
- * @author nabla
- *
- */
+
 public class MainWindowUi extends BindedDisplay<VLayout> implements MainWindow.IDisplay {
 
 	interface Binder extends UiBinder<VLayout, MainWindowUi> {}

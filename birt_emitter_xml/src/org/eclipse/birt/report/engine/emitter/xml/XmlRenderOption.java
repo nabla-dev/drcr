@@ -19,10 +19,6 @@ package org.eclipse.birt.report.engine.emitter.xml;
 import org.eclipse.birt.report.engine.api.IRenderOption;
 import org.eclipse.birt.report.engine.api.RenderOption;
 
-/**
- * @author nabla64
- *
- */
 public class XmlRenderOption extends RenderOption implements IXmlRenderOption {
 
 	public static final String	ROOT_NODE = "XmlRenderOption.rootNode";

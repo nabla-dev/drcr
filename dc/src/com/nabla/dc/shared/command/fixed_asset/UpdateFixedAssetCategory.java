@@ -23,10 +23,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateFixedAssetCategory extends AddFixedAssetCategory {
 
 	@IRecordField(id=true)

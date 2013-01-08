@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.mvp;
 
-/**
- * @author nabla
- *
- */
+
 public interface IMainDisplay extends IDisplay {
 	void show();
 }

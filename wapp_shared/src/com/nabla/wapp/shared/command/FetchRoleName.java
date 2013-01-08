@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.command;
 import java.util.Collection;
 
 
-/**
- * @author nabla
- *
- */
+
 public class FetchRoleName extends AbstractFetchRecord {
 
 	protected FetchRoleName() {}	// for serialization only

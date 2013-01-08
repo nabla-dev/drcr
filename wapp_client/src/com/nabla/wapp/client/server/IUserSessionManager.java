@@ -20,10 +20,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nabla.wapp.client.auth.IAuthSessionManager;
 import com.nabla.wapp.shared.slot.ISlotManager2;
 
-/**
- * @author nabla
- *
- */
+
 public interface IUserSessionManager extends IAuthSessionManager {
 
 	void clearSession();

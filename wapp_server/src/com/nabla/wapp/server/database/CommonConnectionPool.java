@@ -29,10 +29,6 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 
 import com.nabla.wapp.server.general.Assert;
 
-/**
- * @author nabla64
- * use JOCL file to get database pool
- */
 public class CommonConnectionPool implements IConnectionPool {
 
 	public static final String			DATABASE_DRIVER_NAME = "database_driver_name";

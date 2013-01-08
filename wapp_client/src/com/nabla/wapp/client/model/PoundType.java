@@ -19,10 +19,7 @@ package com.nabla.wapp.client.model;
 import com.smartgwt.client.data.SimpleType;
 import com.smartgwt.client.types.FieldType;
 
-/**
- * @author nabla
- *
- */
+
 public class PoundType extends SimpleType {
 
 	public static final String		EDITOR_CLASSNAME = "PoundItem";

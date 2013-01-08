@@ -33,10 +33,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class AccountListModel extends CModel<AccountRecord> {
 
 	static public class Fields {

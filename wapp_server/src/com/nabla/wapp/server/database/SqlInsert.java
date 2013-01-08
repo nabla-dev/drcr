@@ -34,10 +34,7 @@ import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.general.ArgumentList;
 
-/**
- * @author nabla
- *
- */
+
 public class SqlInsert<T> {
 
 	private static final Log					log = LogFactory.getLog(SqlInsert.class);

@@ -18,10 +18,6 @@ package org.eclipse.birt.report.engine.emitter.xml;
 
 import org.eclipse.birt.report.engine.api.IRenderOption;
 
-/**
- * @author nabla64
- *
- */
 public interface IXmlRenderOption extends IRenderOption {
 
 	static final String 	OUTPUT_FORMAT_XML = "xml";

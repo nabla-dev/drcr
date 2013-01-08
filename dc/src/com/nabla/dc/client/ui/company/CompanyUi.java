@@ -27,10 +27,7 @@ import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.client.ui.TabDisplaySet;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyUi extends BindedTabDisplay<Tab> implements Company.IDisplay {
 
 	interface Binder extends UiBinder<Tab, CompanyUi> {}

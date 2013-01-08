@@ -38,10 +38,7 @@ import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.tree.Tree;
 
-/**
- * @author nabla
- *
- */
+
 public class TreeGrid extends com.smartgwt.client.widgets.tree.TreeGrid implements HasWidgets, IPostCreateProcessing {
 
 	private static final Logger	logger = LoggerFactory.getLog(TreeGrid.class);

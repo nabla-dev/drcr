@@ -26,10 +26,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.smartgwt.client.util.Page;
 
-/**
- * @author nabla
- *
- */
+
 abstract public class AbstractEntryPoint implements EntryPoint {
 
 	private static final Logger	logger = LoggerFactory.getLog(AbstractEntryPoint.class);

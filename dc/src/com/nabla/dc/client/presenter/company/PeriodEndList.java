@@ -26,10 +26,7 @@ import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 
-/**
- * @author nabla
- *
- */
+
 public class PeriodEndList extends AbstractTabPresenter<PeriodEndList.IDisplay> {
 
 	public interface ICommandSet extends IBasicCommandSet {

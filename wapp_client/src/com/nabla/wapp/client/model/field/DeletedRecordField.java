@@ -18,10 +18,7 @@ package com.nabla.wapp.client.model.field;
 
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 
-/**
- * @author nabla
- *
- */
+
 public class DeletedRecordField extends BooleanField {
 
 	public DeletedRecordField() {

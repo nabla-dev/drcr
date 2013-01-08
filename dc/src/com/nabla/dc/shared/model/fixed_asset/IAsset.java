@@ -20,10 +20,7 @@ import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface IAsset extends IAssetTable {
 
 	static final String					COMPANY_ID = "company_id";

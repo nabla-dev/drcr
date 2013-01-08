@@ -33,10 +33,6 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 public class AccountCsvReader extends CsvReader<AddAccount> {
 
 	private final Set<String>	codes = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);

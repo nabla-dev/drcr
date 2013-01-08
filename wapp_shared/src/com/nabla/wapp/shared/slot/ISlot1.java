@@ -17,10 +17,7 @@
 
 package com.nabla.wapp.shared.slot;
 
-/**
- * @author nabla
- *
- */
+
 public interface ISlot1<T0> extends IBasicSlot {
 	void invoke(T0 a0);
 }

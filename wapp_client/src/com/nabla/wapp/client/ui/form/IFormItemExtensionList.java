@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public interface IFormItemExtensionList {
 
 	String getBuddy();

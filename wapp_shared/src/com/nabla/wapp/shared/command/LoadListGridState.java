@@ -20,10 +20,6 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
 
-/**
- * @author nabla64
- *
- */
 public class LoadListGridState implements IAction<StringResult> {
 
 	private String		listGridName;

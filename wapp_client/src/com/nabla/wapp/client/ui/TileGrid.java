@@ -33,10 +33,7 @@ import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.SelectionStyle;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 
-/**
- * @author nabla
- *
- */
+
 public class TileGrid extends com.smartgwt.client.widgets.tile.TileGrid implements HasWidgets, IPostCreateProcessing {
 
 	private static final Logger		logger = LoggerFactory.getLog(TileGrid.class);

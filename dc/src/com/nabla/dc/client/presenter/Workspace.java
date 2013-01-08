@@ -30,10 +30,7 @@ import com.nabla.wapp.shared.slot.ISlot2;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class Workspace extends AbstractCanvasPresenter<Workspace.IDisplay> implements ITabManager {
 
 	public interface IDisplay extends ICanvasDisplay {

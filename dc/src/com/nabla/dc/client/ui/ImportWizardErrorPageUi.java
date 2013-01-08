@@ -24,10 +24,7 @@ import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportWizardErrorPageUi extends BindedWizardPageDisplay<WizardPage> implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, ImportWizardErrorPageUi> {}

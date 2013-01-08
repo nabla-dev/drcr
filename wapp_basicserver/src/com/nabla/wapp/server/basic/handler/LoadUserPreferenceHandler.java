@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.command.LoadUserPreference;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class LoadUserPreferenceHandler extends AbstractHandler<LoadUserPreference, StringResult> {
 
 	@Override

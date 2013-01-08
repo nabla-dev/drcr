@@ -20,10 +20,7 @@ import com.nabla.dc.shared.IPrivileges;
 import com.nabla.wapp.report.shared.IReportPrivileges;
 import com.nabla.wapp.server.auth.IRole;
 
-/**
- * @author nabla
- *
- */
+
 public interface IRoles extends IPrivileges, IReportPrivileges {
 
 	@IRole({USER_ADD, USER_REMOVE, USER_EDIT, USER_VIEW})

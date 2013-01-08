@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui;
 
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractUiBinderWidgetFactory extends Widget {
 	public abstract Widget create();
 }

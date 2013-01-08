@@ -32,10 +32,7 @@ import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.util.ValueCallback;
 
-/**
- * @author nabla
- *
- */
+
 public class MessageBox implements IMessageBox {
 
 	public interface IDetailedMessageBoxProvider extends AsyncProvider<IDetailedMessageBox, Throwable> {}

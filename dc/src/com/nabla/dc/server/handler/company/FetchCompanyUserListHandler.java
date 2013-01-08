@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchCompanyUserListHandler extends AbstractFetchHandler<FetchCompanyUserList> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(

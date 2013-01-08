@@ -67,8 +67,6 @@ public class DispatchService extends RemoteServiceServlet implements IDispatchRe
 		try {
 			final IUserSessionContext ctx = ctxFactory.get(session, handler.requireWriteContext());
 			try {
-			/*	if (!handler.isAuthorized(action, ctx))
-					throw new AccessDeniedException();*/
 				return handler.execute(action, ctx);
 			} finally {
 				ctx.close();

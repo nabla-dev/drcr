@@ -33,10 +33,7 @@ import com.nabla.wapp.shared.general.IHasValue;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class LoginWindowUi extends BindedCanvasDisplay<VLayout> implements LoginWindow.IDisplay {
 
 	interface Binder extends UiBinder<VLayout, LoginWindowUi> {}

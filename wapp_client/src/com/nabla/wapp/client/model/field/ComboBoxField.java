@@ -22,10 +22,6 @@ import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.FilterCriteriaFunction;
 
-/**
- * @author nabla64
- *
- */
 public class ComboBoxField extends TextField implements FilterCriteriaFunction {
 
 	private static final String		RESET_TAG_NAME = "reset";

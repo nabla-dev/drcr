@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 
-/**
- * @author nabla
- *
- */
+
 public class CheckBox extends UiBinderFormTextItemSpeudoWidget<CheckboxItem> {
 
 	public CheckBox() {

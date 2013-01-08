@@ -24,10 +24,7 @@ import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class SelectBox extends UiBinderFormTextItemSpeudoWidget<SmartGwtSelectItem> {
 
 	private static final Logger	logger = LoggerFactory.getLog(SelectBox.class);

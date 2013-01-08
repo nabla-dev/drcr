@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.ui;
 
-/**
- * @author nabla
- *
- */
+
 public enum WizardPageNavigations {
 	PREVIOUS, NEXT, FINISH
 }

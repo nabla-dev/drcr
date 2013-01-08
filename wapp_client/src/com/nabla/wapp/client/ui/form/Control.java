@@ -30,10 +30,7 @@ import com.nabla.wapp.client.ui.TitleDecoder;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 
 	private static final Logger	logger = LoggerFactory.getLog(Control.class);

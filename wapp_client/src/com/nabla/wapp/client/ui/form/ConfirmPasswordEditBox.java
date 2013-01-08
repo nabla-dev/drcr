@@ -26,10 +26,7 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.validator.MatchesFieldValidator;
 
-/**
- * @author nabla
- *
- */
+
 public class ConfirmPasswordEditBox extends PasswordEditBox {
 
 	private static final Logger	logger = LoggerFactory.getLog(ConfirmPasswordEditBox.class);

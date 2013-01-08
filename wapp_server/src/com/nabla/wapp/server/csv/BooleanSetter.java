@@ -21,10 +21,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author nabla64
- *
- */
 public class BooleanSetter implements ICsvSetter {
 	
 	private static final String[]		DEFAULT_TRUE_VALUES = new String[] { "1", "true", "t", "yes", "y" };

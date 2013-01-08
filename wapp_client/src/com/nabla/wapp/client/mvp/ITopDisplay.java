@@ -18,10 +18,7 @@ package com.nabla.wapp.client.mvp;
 
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public interface ITopDisplay extends IDisplay {
 	void show();
 	void hide();

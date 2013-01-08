@@ -22,10 +22,7 @@ import com.nabla.wapp.client.ui.TitleDecoder;
 import com.smartgwt.client.widgets.form.FormItemValueFormatter;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class UiBinderFormTextItemSpeudoWidget<C extends FormItem> extends UiBinderFormItemSpeudoWidget<C> implements HasText {
 
 	private FormItemValueFormatter	defaultValueFormatter = null;

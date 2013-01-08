@@ -20,10 +20,6 @@ import java.io.OutputStream;
 
 import org.eclipse.birt.report.engine.emitter.XMLWriter;
 
-/**
- * @author nabla64
- *
- */
 public class XmlWriter extends XMLWriter {
 
 	public XmlWriter(final OutputStream out) {

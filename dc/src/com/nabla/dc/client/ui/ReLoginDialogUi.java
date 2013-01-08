@@ -33,10 +33,7 @@ import com.nabla.wapp.shared.general.IHasValue;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ReLoginDialogUi extends BindedModalDialog implements ILoginDialogUi {
 
 	interface Binder extends UiBinder<ModalDialog, ReLoginDialogUi> {}

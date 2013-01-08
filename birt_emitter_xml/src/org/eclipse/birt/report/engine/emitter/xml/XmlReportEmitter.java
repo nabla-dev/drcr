@@ -31,10 +31,6 @@ import org.eclipse.birt.report.engine.emitter.IEmitterServices;
 import org.eclipse.birt.report.engine.ir.TableItemDesign;
 
 
-/**
- * @author nabla64
- *
- */
 public class XmlReportEmitter extends ContentEmitterAdapter {
 
 	private static final Log		log = LogFactory.getLog(XmlReportEmitter.class);

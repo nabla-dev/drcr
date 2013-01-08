@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 
-/**
- * @author nabla
- *
- */
+
 public class DetailedMessageBox extends AbstractTopPresenter<DetailedMessageBox.IDisplay> implements IDetailedMessageBox {
 
 	public interface IDisplay extends ITopDisplay {

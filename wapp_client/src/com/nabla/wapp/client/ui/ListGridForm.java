@@ -25,10 +25,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
 import com.nabla.wapp.client.ui.form.Form;
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridForm extends UiBinderSpeudoWidgetList {
 
 	private static final Logger	logger = LoggerFactory.getLog(ListGridForm.class);

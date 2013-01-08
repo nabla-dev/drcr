@@ -22,10 +22,7 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 
-/**
- * @author nabla
- *
- */
+
 public class ConnectionList<Slot extends IBasicSlot> {
 
 	public static final int AT_BACK = -1;

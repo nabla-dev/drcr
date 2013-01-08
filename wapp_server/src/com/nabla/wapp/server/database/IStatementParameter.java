@@ -19,10 +19,7 @@ package com.nabla.wapp.server.database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * @author nabla
- *
- */
+
 public interface IStatementParameter {
 	String getName();
 	boolean include(Object record);

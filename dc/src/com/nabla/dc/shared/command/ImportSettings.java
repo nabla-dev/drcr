@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 
 
 
-/**
- * @author nabla
- *
- */
+
 public class ImportSettings implements IRecordAction<StringResult> {
 
 	Integer				batchId;

@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IUser;
 
-/**
- * @author nabla
- *
- */
+
 public class ChangeUserPasswordModel extends CModel<UserRecord> {
 
 	static public class Fields {

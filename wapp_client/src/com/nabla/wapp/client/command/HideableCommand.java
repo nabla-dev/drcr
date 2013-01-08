@@ -17,10 +17,6 @@
 package com.nabla.wapp.client.command;
 
 
-/**
- * @author nabla64
- *
- */
 public class HideableCommand extends Command {
 
 	@Override

@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.AlwaysNull;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateUserDefinitionHandler extends AbstractHandler<UpdateUserDefinition, StringResult> {
 
 	public UpdateUserDefinitionHandler() {

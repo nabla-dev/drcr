@@ -21,10 +21,7 @@ import java.util.List;
 
 import com.nabla.wapp.client.general.Assert;
 
-/**
- * @author nabla
- *
- */
+
 public class WizardPageStack {
 
 	private final List<IWizardPage>		pages = new LinkedList<IWizardPage>();

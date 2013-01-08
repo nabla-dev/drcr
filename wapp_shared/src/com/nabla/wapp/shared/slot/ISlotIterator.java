@@ -17,10 +17,7 @@
 
 package com.nabla.wapp.shared.slot;
 
-/**
- * @author nabla
- *
- */
+
 public interface ISlotIterator<Slot extends IBasicSlot> {
 	boolean hasNext();
 	Slot next();

@@ -52,10 +52,7 @@ import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.FolderDropEvent;
 import com.smartgwt.client.widgets.tree.events.FolderDropHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyFixedAssetCategoryDialogUi extends BindedModalDialog implements CompanyFixedAssetCategoryDialog.IDisplay, RecordDropHandler, FolderDropHandler {
 
 	interface Binder extends UiBinder<ModalDialog, CompanyFixedAssetCategoryDialogUi> {}

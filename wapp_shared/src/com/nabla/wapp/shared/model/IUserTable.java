@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.model;
 
-/**
- * @author nabla
- *
- */
+
 public interface IUserTable {
 	static final String		TABLE="user";
 

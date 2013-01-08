@@ -24,10 +24,6 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
-/**
- * @author nabla64
- *
- */
 public class TextField extends DataSourceTextField {
 
 	public TextField(final String name, final FieldAttributes... attributes) {

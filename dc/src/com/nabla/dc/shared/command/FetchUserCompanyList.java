@@ -18,8 +18,5 @@ package com.nabla.dc.shared.command;
 
 import com.nabla.wapp.shared.command.AbstractFetch;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchUserCompanyList extends AbstractFetch {}

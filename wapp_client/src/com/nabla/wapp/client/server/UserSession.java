@@ -19,10 +19,7 @@ package com.nabla.wapp.client.server;
 import com.nabla.wapp.shared.auth.IRootUser;
 import com.nabla.wapp.shared.model.IUser;
 
-/**
- * @author nabla
- *
- */
+
 public class UserSession implements IUser {
 
 	private String		name;

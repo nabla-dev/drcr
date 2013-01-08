@@ -22,10 +22,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.logging.client.LogConfiguration;
 
-/**
- * @author nabla
- *
- */
+
 public final class Assert {
 
 	private static final Logger				logger = LoggerFactory.getLog(Assert.class);

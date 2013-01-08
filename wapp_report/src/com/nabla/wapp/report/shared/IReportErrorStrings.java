@@ -18,11 +18,20 @@ package com.nabla.wapp.report.shared;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 
-/**
- * The <code></code> object is used to
- *
- */
 public interface IReportErrorStrings extends ConstantsWithLookup {
-	@DefaultStringValue("Invalid report parameter model")
+
+	@DefaultStringValue("no title defined for report")
+	String REPORT_DESIGN_NO_TITLE_DEFINED();
+
+	@DefaultStringValue("invalid role defined for report")
+	String REPORT_DESIGN_INVALID_ROLE();
+
+	@DefaultStringValue("invalid category defined for report")
+	String REPORT_DESIGN_INVALID();
+
+	@DefaultStringValue("no report design found in zip file")
+	String ADD_REPORT_NO_REPORT_DESIGN_FOUND();
+
+	@DefaultStringValue("invalid report parameter model")
 	String INVALID_REPORT_PARAMETER_MODEL();
 }

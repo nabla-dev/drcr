@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.command.LoadListGridState;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class LoadListGridStateHandler extends AbstractHandler<LoadListGridState, StringResult> {
 
 	@Override

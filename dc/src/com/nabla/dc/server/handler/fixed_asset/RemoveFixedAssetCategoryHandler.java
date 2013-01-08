@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.fixed_asset.RemoveFixedAssetCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveFixedAssetCategoryHandler extends AbstractSoftRemoveHandler<RemoveFixedAssetCategory> {
 
 	public RemoveFixedAssetCategoryHandler() {

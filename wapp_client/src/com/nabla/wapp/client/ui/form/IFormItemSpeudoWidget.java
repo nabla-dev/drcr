@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.nabla.wapp.client.model.Model;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public interface IFormItemSpeudoWidget {
 
 	boolean isInputField();

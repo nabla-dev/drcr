@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.command.FetchRoleDefinition;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchRoleDefinitionHandler extends AbstractFetchHandler<FetchRoleDefinition> {
 
 	private static final SqlToJson	parentSql = new SqlToJson(

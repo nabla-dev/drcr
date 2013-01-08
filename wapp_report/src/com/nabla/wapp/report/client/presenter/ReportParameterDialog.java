@@ -25,10 +25,7 @@ import com.nabla.wapp.report.shared.ReportParameterValueList;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class ReportParameterDialog extends AbstractTopPresenter<ReportParameterDialog.IDisplay> {
 
 	public interface IFactory {

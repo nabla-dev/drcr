@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class AddAccountHandler extends AbstractAddHandler<AddAccount> {
 
 	private static final InsertStatement<AddAccount>	sql = new InsertStatement<AddAccount>(AddAccount.class);

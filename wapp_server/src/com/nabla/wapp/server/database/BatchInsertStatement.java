@@ -28,10 +28,7 @@ import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla
- *
- */
+
 public class BatchInsertStatement<T> extends SqlStatement {
 
 	private final SqlInsert<T>			sql;

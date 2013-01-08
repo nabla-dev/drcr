@@ -33,10 +33,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateFixedAssetCategoryHandler extends AbstractUpdateHandler<UpdateFixedAssetCategory> {
 
 	private static final UpdateStatement<UpdateFixedAssetCategory>	sql = new UpdateStatement<UpdateFixedAssetCategory>(UpdateFixedAssetCategory.class);

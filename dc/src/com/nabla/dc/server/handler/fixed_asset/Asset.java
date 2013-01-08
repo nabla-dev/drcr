@@ -44,10 +44,6 @@ import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 public abstract class Asset {
 
 	private static final Log		log = LogFactory.getLog(Asset.class);

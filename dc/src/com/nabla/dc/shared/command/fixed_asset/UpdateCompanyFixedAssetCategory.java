@@ -22,10 +22,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateCompanyFixedAssetCategory implements IRecordAction<StringResult> {
 
 	Integer							company_id;

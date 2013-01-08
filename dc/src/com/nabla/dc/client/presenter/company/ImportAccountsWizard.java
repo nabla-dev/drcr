@@ -26,10 +26,7 @@ import com.nabla.wapp.client.mvp.AbstractWizardPresenter;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAccountsWizard extends AbstractWizardPresenter<IWizardDisplay> {
 
 	private final ISlot						onSuccessHandler;

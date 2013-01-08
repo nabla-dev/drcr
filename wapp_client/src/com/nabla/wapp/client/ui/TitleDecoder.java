@@ -22,10 +22,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class TitleDecoder {
 
 	private static final Logger	logger = LoggerFactory.getLog(TitleDecoder.class);

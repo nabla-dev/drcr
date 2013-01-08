@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.shared.slot;
 
-/**
- * @author nabla64
- *
- */
 public interface ISlotManager3<T0, T1, T2> extends IBasicSlotManager<ISlot3<T0, T1, T2>> {
 
 	@Override

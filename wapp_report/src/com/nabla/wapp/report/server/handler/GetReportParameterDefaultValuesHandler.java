@@ -26,10 +26,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class GetReportParameterDefaultValuesHandler extends AbstractGetDefaultValuesHandler<GetReportParameterDefaultValues> {
 
 	@Override

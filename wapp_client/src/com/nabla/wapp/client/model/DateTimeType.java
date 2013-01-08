@@ -29,10 +29,7 @@ import com.smartgwt.client.data.SimpleTypeFormatter;
 import com.smartgwt.client.types.FieldType;
 import com.smartgwt.client.widgets.DataBoundComponent;
 
-/**
- * @author nabla
- *
- */
+
 public class DateTimeType extends SimpleType implements SimpleTypeFormatter {
 
 	private static final Logger			logger = LoggerFactory.getLog(DateTimeType.class);

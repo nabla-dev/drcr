@@ -30,10 +30,7 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateCompanyFixedAssetCategoryHandler extends AbstractHandler<UpdateCompanyFixedAssetCategory, StringResult> {
 
 	public UpdateCompanyFixedAssetCategoryHandler() {

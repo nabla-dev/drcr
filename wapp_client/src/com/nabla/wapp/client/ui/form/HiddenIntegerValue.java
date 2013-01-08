@@ -16,10 +16,7 @@
  */
 package com.nabla.wapp.client.ui.form;
 
-/**
- * @author nabla
- *
- */
+
 public class HiddenIntegerValue extends HiddenValue {
 
 	public HiddenIntegerValue() {

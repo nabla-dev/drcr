@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.shared.database;
 
-/**
- * @author nabla64
- *
- */
 public enum SqlInsertOptions {
 	INSERT, REPLACE, OVERWRITE, APPEND;
 }

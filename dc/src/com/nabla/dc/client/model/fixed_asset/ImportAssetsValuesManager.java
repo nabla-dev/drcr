@@ -18,10 +18,7 @@ package com.nabla.dc.client.model.fixed_asset;
 
 import com.nabla.wapp.client.model.WizardValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAssetsValuesManager extends WizardValuesManager<ImportAssetsRecord> {
 
 	public ImportAssetsValuesManager(final Integer companyId) {

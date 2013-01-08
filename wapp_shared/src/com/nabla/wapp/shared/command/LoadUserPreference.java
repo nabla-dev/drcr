@@ -20,10 +20,7 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla
- *
- */
+
 public class LoadUserPreference implements IAction<StringResult> {
 
 	private @Nullable Integer	objectId;

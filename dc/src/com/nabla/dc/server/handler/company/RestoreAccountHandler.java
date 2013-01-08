@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.company.RestoreAccount;
 import com.nabla.dc.shared.model.company.IAccount;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreAccountHandler extends AbstractRestoreHandler<RestoreAccount> {
 
 	public RestoreAccountHandler() {

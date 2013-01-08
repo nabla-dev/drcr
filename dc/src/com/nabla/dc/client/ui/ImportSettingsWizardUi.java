@@ -21,10 +21,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.ui.ModalDialog;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportSettingsWizardUi extends WizardDialog implements IWizardDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ImportSettingsWizardUi> {}

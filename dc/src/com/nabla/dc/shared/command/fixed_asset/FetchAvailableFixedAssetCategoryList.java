@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.dc.shared.command.company.AbstractCompanyFetch;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchAvailableFixedAssetCategoryList extends AbstractCompanyFetch {
 
 	protected FetchAvailableFixedAssetCategoryList() {}

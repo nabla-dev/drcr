@@ -22,10 +22,7 @@ import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.Nullable;
 
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractFetchRecord extends AbstractFetch {
 
 	private IntegerSet	ids;

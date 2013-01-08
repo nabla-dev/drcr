@@ -22,10 +22,6 @@ import com.nabla.wapp.client.server.IDispatchAsync;
 import com.nabla.wapp.client.server.IUserSessionManager;
 import com.nabla.wapp.client.ui.IMessageBox;
 
-/**
- * @author nabla64
- *
- */
 public interface IApplication {
 
 	/**

@@ -26,10 +26,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
 import com.smartgwt.client.widgets.IButton;
 
-/**
- * @author nabla
- *
- */
+
 public class WizardNavigationBar extends HLayout implements IHasWidgets {
 
 	private static final Logger	logger = LoggerFactory.getLog(WizardNavigationBar.class);

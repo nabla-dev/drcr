@@ -25,10 +25,6 @@ import com.nabla.wapp.shared.signal.Signal1;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla64
- *
- */
 public class TabDisplaySet extends TabSet {
 
 	private final Map<Tab, ITabDisplay>	displays = new HashMap<Tab, ITabDisplay>();

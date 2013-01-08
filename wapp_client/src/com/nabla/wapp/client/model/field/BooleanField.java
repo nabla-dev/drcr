@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.field;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.fields.DataSourceBooleanField;
 
-/**
- * @author nabla64
- *
- */
 public class BooleanField extends DataSourceBooleanField {
 
 	public BooleanField(final String name, final FieldAttributes... attributes) {

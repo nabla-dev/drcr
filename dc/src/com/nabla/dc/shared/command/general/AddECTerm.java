@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IECTerm.TABLE)
 public class AddECTerm implements IRecordAction<StringResult>, IECTerm {
 

@@ -17,10 +17,7 @@
 package com.nabla.dc.shared.model.fixed_asset;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface ITransactionTable {
 	static final String	TABLE = "fa_transaction";
 

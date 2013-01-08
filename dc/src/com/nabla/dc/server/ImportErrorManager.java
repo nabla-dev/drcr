@@ -34,10 +34,7 @@ import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportErrorManager implements IErrorList<Integer> {
 
 	private static final int		MAX_ERROR_MESSAGE = 255;

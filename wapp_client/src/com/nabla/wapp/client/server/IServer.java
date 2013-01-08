@@ -16,8 +16,5 @@
 */
 package com.nabla.wapp.client.server;
 
-/**
- * @author nabla
- *
- */
+
 public interface IServer extends IUserSessionManager, IDispatchAsync {}

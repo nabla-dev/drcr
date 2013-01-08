@@ -21,10 +21,7 @@ import com.nabla.dc.shared.model.fixed_asset.FixedAssetCategoryTypes;
 import com.nabla.wapp.client.model.field.EnumField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetCategoryTypeField extends EnumField {
 
 	public AssetCategoryTypeField(final String name) {

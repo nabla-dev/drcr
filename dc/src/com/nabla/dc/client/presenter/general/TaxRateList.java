@@ -36,10 +36,7 @@ import com.nabla.wapp.shared.command.AbstractRestore;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class TaxRateList extends AbstractTabPresenter<TaxRateList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {

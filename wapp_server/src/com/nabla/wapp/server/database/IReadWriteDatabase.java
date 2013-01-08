@@ -23,10 +23,7 @@ import java.lang.annotation.Target;
 
 import com.google.inject.BindingAnnotation;
 
-/**
- * @author nabla
- *
- */
+
 @BindingAnnotation
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

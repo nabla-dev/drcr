@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.auth;
 
-/**
- * @author nabla
- *
- */
+
 public interface IRootUser {
 	static final String		NAME = "root";
 }

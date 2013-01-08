@@ -21,10 +21,7 @@ import com.nabla.wapp.server.auth.LoginUserService;
 import com.nabla.wapp.server.basic.general.ImportService;
 import com.nabla.wapp.server.dispatch.DispatchService;
 
-/**
- * @author nabla
- *
- */
+
 public class ServiceModule extends ServletModule {
 
 	@Override

@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.mvp;
 
-/**
- * @author nabla
- *
- */
+
 public interface IBasicDisplay<T> extends IDisplay {
 	T getImpl();
 }

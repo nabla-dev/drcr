@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui;
 
 import com.google.gwt.user.client.ui.HasHTML;
 
-/**
- * @author nabla
- *
- */
+
 public class Label extends com.smartgwt.client.widgets.Label implements HasHTML {
 
 	@Override

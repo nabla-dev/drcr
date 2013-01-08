@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.smartgwt.client.widgets.HTMLFlow;
 
-/**
- * @author nabla
- *
- */
+
 public class Html extends HTMLFlow implements HasHTML, IPostCreateProcessing {
 
 	@Override

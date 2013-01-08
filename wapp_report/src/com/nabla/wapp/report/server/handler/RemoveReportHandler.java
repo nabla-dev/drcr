@@ -20,11 +20,6 @@ import com.nabla.wapp.report.shared.IReportTable;
 import com.nabla.wapp.report.shared.command.RemoveReport;
 import com.nabla.wapp.server.model.AbstractRemoveHandler;
 
-
-/**
- * @author nabla
- *
- */
 public class RemoveReportHandler extends AbstractRemoveHandler<RemoveReport> {
 
 	public RemoveReportHandler() {

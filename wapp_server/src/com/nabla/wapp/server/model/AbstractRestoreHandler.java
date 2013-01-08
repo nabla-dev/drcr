@@ -30,10 +30,7 @@ import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.AlwaysNull;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractRestoreHandler<A extends AbstractRestore> extends AbstractHandler<A, VoidResult> {
 
 	private final String	sql;

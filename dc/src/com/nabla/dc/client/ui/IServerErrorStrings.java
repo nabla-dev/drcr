@@ -16,14 +16,10 @@
 */
 package com.nabla.dc.client.ui;
 
+import com.nabla.wapp.report.shared.IReportErrorStrings;
 import com.nabla.wapp.shared.general.ICommonServerErrorStrings;
 
-
-/**
- * @author nabla
- *
- */
-public interface IServerErrorStrings extends ICommonServerErrorStrings {
+public interface IServerErrorStrings extends ICommonServerErrorStrings, IReportErrorStrings {
 
 	@DefaultStringValue("*** too many errors ***")
 	String TOO_MANY_ERRORS();

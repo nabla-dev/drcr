@@ -20,10 +20,7 @@ import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.TreeModelType;
 import com.smartgwt.client.widgets.tree.Tree;
 
-/**
- * @author nabla
- *
- */
+
 public class ColumnTree extends com.smartgwt.client.widgets.grid.ColumnTree implements /*HasWidgets,*/ IPostCreateProcessing {
 
 //	private List<TreeGridColumn>	children = new LinkedList<TreeGridColumn>();

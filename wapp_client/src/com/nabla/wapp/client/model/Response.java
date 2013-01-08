@@ -28,10 +28,7 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 class Response extends DSResponse {
 
 	private static final Logger	logger = LoggerFactory.getLog(Response.class);

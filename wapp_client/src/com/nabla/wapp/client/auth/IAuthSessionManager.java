@@ -22,10 +22,7 @@ import com.google.gwt.user.client.Command;
 import com.nabla.wapp.shared.general.StringSet;
 import com.nabla.wapp.shared.slot.ISlot1;
 
-/**
- * @author nabla
- *
- */
+
 public interface IAuthSessionManager {
 
 	boolean isValidSession();

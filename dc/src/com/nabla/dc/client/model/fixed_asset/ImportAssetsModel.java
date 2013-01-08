@@ -25,10 +25,7 @@ import com.nabla.wapp.client.model.field.UploadFileField;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAssetsModel extends CModel<ImportAssetsRecord> {
 
 	static public class Fields implements IImportAssets {

@@ -20,10 +20,7 @@ import com.nabla.wapp.client.ui.TitleDecoder;
 import com.smartgwt.client.types.TitleOrientation;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
 
-/**
- * @author nabla
- *
- */
+
 class ColumnTreeWrapper extends UiBinderFormItemSpeudoWidget<CanvasItem> {
 
 	public ColumnTreeWrapper(final ColumnTreeItem item) {

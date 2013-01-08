@@ -23,6 +23,8 @@ import com.nabla.dc.server.handler.company.CompanyHandlerModule;
 import com.nabla.dc.server.handler.fixed_asset.FixedAssetHandlerModule;
 import com.nabla.dc.server.handler.general.GeneralHandlerModule;
 import com.nabla.dc.server.handler.options.OptionsHandlerModule;
+import com.nabla.dc.server.report.ReportCategoryValidator;
+import com.nabla.wapp.report.server.IReportCategoryValidator;
 import com.nabla.wapp.server.auth.IUserSessionContextProvider;
 import com.nabla.wapp.server.basic.general.UserSessionContextProvider;
 import com.nabla.wapp.server.basic.handler.GetFormDefaultValuesHandler;
@@ -34,10 +36,7 @@ import com.nabla.wapp.server.database.IReadOnlyDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.dispatch.AbstractHandlerModule;
 
-/**
- * @author nabla
- *
- */
+
 public class HandlerModule extends AbstractHandlerModule {
 
 	@Override
@@ -66,6 +65,8 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(ExportSettingsHandler.class);
 
 		bindHandler(ImportAssetsHandler.class);
+
+		bind(IReportCategoryValidator.class).to(ReportCategoryValidator.class).in(Singleton.class);
 /*
 		bindHandler(AddListGridFilterHandler.class);
 		bindHandler(FetchListGridFilterListHandler.class);

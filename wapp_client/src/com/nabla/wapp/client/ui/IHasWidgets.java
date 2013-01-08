@@ -28,10 +28,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public interface IHasWidgets extends HasWidgets {
 
 	class Helper {

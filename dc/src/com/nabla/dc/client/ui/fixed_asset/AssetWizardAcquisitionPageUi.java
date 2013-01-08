@@ -23,10 +23,7 @@ import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetWizardAcquisitionPageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, AssetWizardAcquisitionPageUi> {}

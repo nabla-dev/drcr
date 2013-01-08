@@ -36,10 +36,7 @@ import com.smartgwt.client.widgets.form.fields.CanvasItem;
 import com.smartgwt.client.widgets.form.validator.CustomValidator;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
-/**
- * @author nabla
- *
- */
+
 class UploadItemImpl extends CanvasItem implements OnStatusChangedHandler, OnFinishUploaderHandler {
 
 	private static final Logger			logger = LoggerFactory.getLog(UploadItemImpl.class);

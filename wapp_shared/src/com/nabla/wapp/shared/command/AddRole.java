@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.model.IRole;
 import com.nabla.wapp.shared.model.IRoleTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 public class AddRole implements IRecordAction<StringResult>, IRole {
 
 	@IRecordField(name=IRoleTable.NAME,unique=true)

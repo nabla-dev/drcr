@@ -18,10 +18,7 @@ package com.nabla.wapp.client.model;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 
-/**
- * @author nabla
- *
- */
+
 public interface IFilterOperatorResource extends ConstantsWithLookup {
 
 	@DefaultStringValue("{0} = {1}")

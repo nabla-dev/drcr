@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.slot;
 
 
 
-/**
- * @author nabla
- *
- */
+
 public class SlotManager2<T0, T1> extends ConnectionList<ISlot2<T0, T1>> implements ISlotManager2<T0, T1> {
 
 	@Override

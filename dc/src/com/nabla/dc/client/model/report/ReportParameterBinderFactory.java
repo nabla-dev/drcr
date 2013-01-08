@@ -18,10 +18,6 @@ package com.nabla.dc.client.model.report;
 
 import com.nabla.wapp.report.client.BasicReportParameterBinderFactory;
 
-/**
- * @author nabla64
- *
- */
 public class ReportParameterBinderFactory extends BasicReportParameterBinderFactory {
 
 	public ReportParameterBinderFactory() {

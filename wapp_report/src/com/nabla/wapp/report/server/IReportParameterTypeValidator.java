@@ -16,11 +16,6 @@
 */
 package com.nabla.wapp.report.server;
 
-
-/**
- * @author nabla
- *
- */
 public interface IReportParameterTypeValidator {
 	boolean isValid(final String model);
 }

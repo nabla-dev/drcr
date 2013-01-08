@@ -41,10 +41,7 @@ import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.SelectionDelta;
 import com.nabla.wapp.shared.model.IRoleTable;
 
-/**
- * @author nabla
- *
- */
+
 public class UserManager {
 
 	public interface IRoleListProvider {

@@ -44,10 +44,7 @@ import com.nabla.wapp.shared.slot.ISlot1;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {
@@ -121,8 +118,8 @@ public class CompanyList extends AbstractTabPresenter<CompanyList.IDisplay> {
 
 	private final ISlot1<AddCompanyRecord> onRecordAdded = new ISlot1<AddCompanyRecord>() {
 		@Override
-		public void invoke(final AddCompanyRecord user) {
-			getDisplay().addRecord(user);
+		public void invoke(final AddCompanyRecord record) {
+			getDisplay().addRecord(record);
 		}
 	};
 

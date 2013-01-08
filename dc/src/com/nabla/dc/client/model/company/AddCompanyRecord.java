@@ -22,10 +22,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.model.IRecordFactory;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class AddCompanyRecord extends CompanyRecord {
 
 	public static final IRecordFactory<AddCompanyRecord>	factory = new IRecordFactory<AddCompanyRecord>() {

@@ -21,10 +21,7 @@ import com.nabla.wapp.client.model.CurrencyType;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
-/**
- * @author nabla
- *
- */
+
 public class CurrencyEditBox extends UiBinderFormTextItemSpeudoWidget<TextItem> {
 
 	public CurrencyEditBox() {

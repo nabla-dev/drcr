@@ -45,10 +45,7 @@ import com.smartgwt.client.widgets.menu.IMenuButton;
 import com.smartgwt.client.widgets.menu.events.ItemClickEvent;
 import com.smartgwt.client.widgets.menu.events.ItemClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridFilter extends VLayout {
 
 	class FilterList extends Menu {

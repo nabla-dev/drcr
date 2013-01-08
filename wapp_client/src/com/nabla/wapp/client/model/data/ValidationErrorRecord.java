@@ -19,10 +19,7 @@ package com.nabla.wapp.client.model.data;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class ValidationErrorRecord extends Record {
 
 	public static final String		ERROR_ROW = "errorRow";

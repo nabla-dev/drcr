@@ -36,10 +36,7 @@ import com.google.gwt.uibinder.rebind.IndentedWriter;
 import com.nabla.wapp.client.command.IRequireRootRole;
 import com.nabla.wapp.client.command.IRequiredRole;
 
-/**
- * @author nabla
- *
- */
+
 public class GenericCommandSetGenerator extends Generator {
 
 	private static final String		PACKAGE = "package %1$s;";

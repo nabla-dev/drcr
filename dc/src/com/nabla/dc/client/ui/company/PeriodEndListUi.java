@@ -27,10 +27,7 @@ import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.client.ui.TreeGrid;
 
-/**
- * @author nabla
- *
- */
+
 public class PeriodEndListUi extends BindedTabDisplay<Tab> implements PeriodEndList.IDisplay {
 
 	interface Binder extends UiBinder<Tab, PeriodEndListUi> {}

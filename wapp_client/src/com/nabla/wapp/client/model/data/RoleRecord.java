@@ -21,10 +21,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleRecord extends BasicListGridRecord implements IRole {
 
 	public static final IRecordFactory<RoleRecord>	factory = new IRecordFactory<RoleRecord>() {

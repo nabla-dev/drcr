@@ -24,10 +24,7 @@ import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdatePeriodEndHandler extends AbstractUpdateHandler<UpdatePeriodEnd> {
 
 	private static final UpdateStatement<UpdatePeriodEnd>	sql = new UpdateStatement<UpdatePeriodEnd>(UpdatePeriodEnd.class);

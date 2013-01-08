@@ -18,8 +18,4 @@ package com.nabla.dc.server.xml.settings;
 
 import com.nabla.wapp.server.xml.XmlElement;
 
-/**
- * @author nabla64
- *
- */
 public abstract class Node extends XmlElement<ImportContext> {}

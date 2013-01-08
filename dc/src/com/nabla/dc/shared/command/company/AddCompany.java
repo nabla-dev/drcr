@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 public class AddCompany implements IRecordAction<StringResult> {
 
 	String	name;

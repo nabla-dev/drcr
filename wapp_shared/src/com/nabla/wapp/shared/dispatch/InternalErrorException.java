@@ -20,10 +20,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 
 
 
-/**
- * @author nabla
- *
- */
+
 public class InternalErrorException extends ActionException {
 
 	private static final long		serialVersionUID = 1L;

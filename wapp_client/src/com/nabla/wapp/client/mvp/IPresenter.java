@@ -20,10 +20,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.nabla.wapp.shared.slot.IBasicSlot;
 import com.nabla.wapp.shared.slot.IBasicSlotManager;
 
-/**
- * @author nabla64
- *
- */
 public interface IPresenter {
 
 	/**

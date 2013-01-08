@@ -20,10 +20,6 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 
 
-/**
- * @author nabla64
- *
- */
 public class AddListGridFilter implements IAction<IntegerResult> {
 
 	private String	filter;

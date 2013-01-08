@@ -42,10 +42,7 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager2;
 
-/**
- * @author nabla
- *
- */
+
 public class Server implements IServer {
 
 	public interface ILoginDialogUiProvider extends AsyncProvider<ILoginDialogUi, Throwable> {}

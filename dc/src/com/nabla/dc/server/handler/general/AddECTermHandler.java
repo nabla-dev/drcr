@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class AddECTermHandler extends AbstractAddHandler<AddECTerm> {
 
 	private static final InsertStatement<AddECTerm>	sql = new InsertStatement<AddECTerm>(AddECTerm.class);

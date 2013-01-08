@@ -18,10 +18,6 @@ package com.nabla.wapp.shared.general;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 
-/**
- * @author nabla64
- *
- */
 public interface ICommonServerErrorStrings extends ConstantsWithLookup {
 
 	@DefaultStringValue("Internal error. Please notify your administor if it happens again")

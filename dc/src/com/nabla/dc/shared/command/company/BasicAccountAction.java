@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IAccount.TABLE)
 public class BasicAccountAction implements IAccount {
 

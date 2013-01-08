@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.command;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchUserDefinition extends AbstractFetchTree {
 
 	private Integer	objectId;

@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui;
 
 import com.google.gwt.user.client.ui.HasText;
 
-/**
- * @author nabla
- *
- */
+
 public class LayoutSpacer extends com.smartgwt.client.widgets.layout.LayoutSpacer implements HasText {
 
 	@Override

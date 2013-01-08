@@ -16,10 +16,7 @@
 */
 package com.nabla.dc.shared.model.fixed_asset;
 
-/**
- * @author nabla
- *
- */
+
 public enum FixedAssetCategoryTypes {
 	TANGIBLE, INTANGIBLE
 }

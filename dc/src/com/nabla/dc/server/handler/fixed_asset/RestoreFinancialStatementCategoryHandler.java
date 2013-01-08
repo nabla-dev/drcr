@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.fixed_asset.RestoreFinancialStatementCategory
 import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreFinancialStatementCategoryHandler extends AbstractRestoreHandler<RestoreFinancialStatementCategory> {
 
 	public RestoreFinancialStatementCategoryHandler() {

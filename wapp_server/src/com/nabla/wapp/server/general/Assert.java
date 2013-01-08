@@ -19,10 +19,7 @@ package com.nabla.wapp.server.general;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * @author nabla
- *
- */
+
 public final class Assert {
 
 	private static final Log	log = LogFactory.getLog(Assert.class);

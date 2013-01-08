@@ -19,10 +19,7 @@ package com.nabla.dc.shared.model.fixed_asset;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface IFinancialStatementCategory {
 
 	static final String				TABLE = "fa_fs_category";

@@ -21,10 +21,6 @@ import java.util.HashMap;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.shared.slot.ISlot1;
 
-/**
- * @author nabla64
- *
- */
 public class TabManager extends HashMap<ITabDisplay, IPresenter> {
 
 	private static final long serialVersionUID = 1L;

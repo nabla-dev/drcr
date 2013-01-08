@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.client.mvp;
 
-/**
- * @author nabla64
- *
- */
 public interface ITopPresenter extends IPresenter {
 	void revealDisplay();
 }

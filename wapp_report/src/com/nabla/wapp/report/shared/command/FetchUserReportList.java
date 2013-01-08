@@ -18,8 +18,5 @@ package com.nabla.wapp.report.shared.command;
 
 import com.nabla.wapp.shared.command.AbstractFetch;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchUserReportList extends AbstractFetch {}

@@ -18,10 +18,7 @@ package com.nabla.dc.server.handler.fixed_asset;
 
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
-/**
- * @author nabla
- *
- */
+
 public class FixedAssetHandlerModule extends AbstractHandlerSubModule {
 
 	@Override

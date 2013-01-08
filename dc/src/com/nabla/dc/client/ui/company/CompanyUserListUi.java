@@ -31,10 +31,7 @@ import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyUserListUi extends BindedTabDisplay<Tab> implements CompanyUserList.IDisplay, ICurrentRecordProvider<UserRecord> {
 
 	interface Binder extends UiBinder<Tab, CompanyUserListUi> {}

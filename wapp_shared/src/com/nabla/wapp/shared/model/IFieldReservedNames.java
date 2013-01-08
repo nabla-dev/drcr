@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.model;
 
-/**
- * @author nabla
- *
- */
+
 public interface IFieldReservedNames {
 
 	public static final String	TREEGRID_PARENT_ID = "parentId";	// == Tree.getParentIdField

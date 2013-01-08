@@ -14,6 +14,7 @@
       
       	<dependency org="commons-logging" name="commons-logging" rev="${commons-logging.version}" conf="compile->default;runtime->default" />
       	<dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" conf="compile->default;runtime->default" />
+      	<dependency org="org.apache.commons" name="commons-compress" rev="${commons-compress.version}" conf="compile->default;runtime->default" />
       	<dependency org="log4j" name="log4j" rev="${log4j.version}" />
       
       	<dependency org="com.smartgwt" name="smartgwt" rev="${smartgwt.version}" conf="compile->default;runtime->default"/>

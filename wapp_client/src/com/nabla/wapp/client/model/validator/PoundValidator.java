@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.validator;
 import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla64
- *
- */
 public class PoundValidator extends RegexValidator {
 
 	public static final String	REGEX = "^(-)?\\d+$";

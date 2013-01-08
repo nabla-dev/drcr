@@ -22,10 +22,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.HeterogeneousTreeGridRecord;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class PeriodEndTreeRecord extends HeterogeneousTreeGridRecord {
 
 	public static final IRecordFactory<PeriodEndTreeRecord>	factory = new IRecordFactory<PeriodEndTreeRecord>() {

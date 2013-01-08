@@ -28,10 +28,7 @@ import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.TreeGridItem;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleDefinitionDialogUi extends BindedModalDialog implements RoleDefinitionDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, RoleDefinitionDialogUi> {}

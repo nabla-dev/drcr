@@ -25,10 +25,7 @@ import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.client.ui.form.UploadEditBox;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAccountsWizardFilePageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, ImportAccountsWizardFilePageUi> {}

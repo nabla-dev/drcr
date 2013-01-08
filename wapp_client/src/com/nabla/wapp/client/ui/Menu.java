@@ -26,10 +26,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
 
-/**
- * @author nabla
- *
- */
+
 public class Menu extends com.smartgwt.client.widgets.menu.Menu implements HasWidgets, IPostCreateProcessing {
 
 	private static final Logger	logger = LoggerFactory.getLog(Menu.class);

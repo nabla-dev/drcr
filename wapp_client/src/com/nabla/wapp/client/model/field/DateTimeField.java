@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.field;
 import com.nabla.wapp.client.model.DateTimeType;
 import com.smartgwt.client.data.fields.DataSourceSimpleTypeField;
 
-/**
- * @author nabla64
- *
- */
 public class DateTimeField extends DataSourceSimpleTypeField {
 
 	public DateTimeField(final String name, final FieldAttributes... attributes) {

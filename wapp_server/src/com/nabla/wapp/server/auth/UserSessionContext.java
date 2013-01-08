@@ -75,4 +75,9 @@ public class UserSessionContext implements IUserSessionContext {
 		return userSession.getLocale();
 	}
 
+	@Override
+	public String getSessionId() {
+		return userSession.getSessionId();
+	}
+
 }

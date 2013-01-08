@@ -26,10 +26,7 @@ import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class ComboBox extends UiBinderFormTextItemSpeudoWidget<ComboBoxItem> {
 
 	private static final Logger	logger = LoggerFactory.getLog(ComboBox.class);

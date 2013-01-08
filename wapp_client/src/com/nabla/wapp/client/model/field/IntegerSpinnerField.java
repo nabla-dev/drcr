@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.field;
 import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 
-/**
- * @author nabla64
- *
- */
 public class IntegerSpinnerField extends IntegerField {
 
 	private final SpinnerItem	editor = new SpinnerItem();

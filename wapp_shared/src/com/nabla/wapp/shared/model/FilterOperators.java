@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.model;
 
-/**
- * @author nabla
- *
- */
+
 public enum FilterOperators {
 
 	equals("{0} = {1}"),

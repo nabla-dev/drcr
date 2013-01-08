@@ -19,10 +19,7 @@ package com.nabla.wapp.client.mvp.binder;
 import com.nabla.wapp.client.ui.IPostCreateProcessing;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedCanvasDisplay<U extends Canvas & IPostCreateProcessing> extends BindedDisplay<U> {
 
 	public Canvas getImpl() {

@@ -25,10 +25,6 @@ import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.widgets.form.fields.FilterCriteriaFunction;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 
-/**
- * @author nabla64
- *
- */
 public class SelectBoxField extends TextField implements FilterCriteriaFunction {
 
 	private static final Logger		logger = LoggerFactory.getLog(SelectBoxField.class);

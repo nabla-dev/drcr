@@ -21,10 +21,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateCompanyUser implements IRecordAction<StringResult> {
 
 	Integer		companyId;

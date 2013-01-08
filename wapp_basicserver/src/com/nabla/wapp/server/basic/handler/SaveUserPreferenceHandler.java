@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.command.SaveUserPreference;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
-/**
- * @author nabla
- *
- */
+
 public class SaveUserPreferenceHandler extends AbstractHandler<SaveUserPreference, VoidResult> {
 
 	public SaveUserPreferenceHandler() {

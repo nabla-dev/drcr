@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.client.model;
 
-/**
- * @author nabla64
- *
- */
 public interface IWizardRecord {
 	boolean getSuccess();
 }

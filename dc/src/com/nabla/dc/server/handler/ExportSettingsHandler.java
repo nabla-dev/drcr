@@ -37,10 +37,6 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla64
- *
- */
 public class ExportSettingsHandler extends AbstractHandler<ExportSettings, IntegerResult> {
 
 	public ExportSettingsHandler() {
@@ -51,7 +47,7 @@ public class ExportSettingsHandler extends AbstractHandler<ExportSettings, Integ
 	public IntegerResult execute(@SuppressWarnings("unused") final ExportSettings cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
 		writeSettings(ctx.getReadConnection(), out);
-		return new IntegerResult(exportSettings(ctx.getWriteConnection(), new ByteArrayInputStream(out.toByteArray())));
+		return new IntegerResult(exportSettings(ctx.getWriteConnection(), new ByteArrayInputStream(out.toByteArray()), ctx.getSessionId()));
 	}
 
 	private void writeSettings(final Connection conn, final OutputStream out) throws SQLException, DispatchException {
@@ -64,9 +60,9 @@ public class ExportSettingsHandler extends AbstractHandler<ExportSettings, Integ
 		}
 	}
 
-	private Integer exportSettings(final Connection conn, final InputStream in) throws SQLException, InternalErrorException {
+	private Integer exportSettings(final Connection conn, final InputStream in, final String userSessionId) throws SQLException, InternalErrorException {
 		final Integer id = Database.addRecord(conn,
-"INSERT INTO export (name,content_type,output_as_file,content) VALUES('settings.xml','text/xml',TRUE,?);", in);
+"INSERT INTO export (name,content_type,output_as_file,content, userSessionId) VALUES('settings.xml','text/xml',TRUE,?,?);", in, userSessionId);
 		if (id == null)
 			Util.throwInternalErrorException("fail to save settings to be exported");
 		return id;

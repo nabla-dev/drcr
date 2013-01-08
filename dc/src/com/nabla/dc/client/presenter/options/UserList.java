@@ -44,10 +44,7 @@ import com.nabla.wapp.shared.slot.ISlot1;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class UserList extends AbstractTabPresenter<UserList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {

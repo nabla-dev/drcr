@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.company;
 
 import com.nabla.wapp.shared.command.AbstractRemove;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveAccount extends AbstractRemove {
 	private static final long serialVersionUID = 1L;
 }

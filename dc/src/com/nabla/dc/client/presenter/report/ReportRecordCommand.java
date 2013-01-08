@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,12 +14,10 @@
 * the License.
 *
 */
-package com.nabla.dc.server;
+package com.nabla.dc.client.presenter.report;
 
-/**
- * @author nabla64
- *
- */
-public enum Ledgers {
-	SL, PL, NL, BANK, ASSET, STOCK, SETTINGS
-}
+import com.nabla.wapp.client.command.HideableRecordCommand;
+import com.nabla.wapp.report.client.model.ReportRecord;
+
+public class ReportRecordCommand extends HideableRecordCommand<ReportRecord> {}
+

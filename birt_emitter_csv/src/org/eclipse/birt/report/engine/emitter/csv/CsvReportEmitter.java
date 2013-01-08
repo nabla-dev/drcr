@@ -33,10 +33,6 @@ import org.eclipse.birt.report.engine.emitter.EmitterUtil;
 import org.eclipse.birt.report.engine.emitter.IEmitterServices;
 import org.eclipse.birt.report.engine.ir.TableItemDesign;
 
-/**
- * @author nabla64
- *
- */
 public class CsvReportEmitter extends ContentEmitterAdapter {
 
 	private static final Log		log = LogFactory.getLog(CsvReportEmitter.class);

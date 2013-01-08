@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.wapp.shared.command.AbstractFetchRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchSplitAsset extends AbstractFetchRecord {
 
 	FetchSplitAsset() {}

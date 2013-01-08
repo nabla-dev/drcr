@@ -18,10 +18,7 @@ package com.nabla.dc.client.model;
 
 import com.nabla.wapp.client.model.WizardValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportSettingsValuesManager extends WizardValuesManager<ImportSettingsRecord> {
 
 	public ImportSettingsValuesManager() {

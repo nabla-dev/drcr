@@ -19,10 +19,7 @@ package com.nabla.wapp.server.dispatch;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IResult;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractHandler<A extends IAction<R>, R extends IResult> implements IActionHandler<A, R> {
 
 	private final boolean		writeContext;

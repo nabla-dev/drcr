@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.model.IErrorList;
 
 
 
-/**
- * @author nabla
- *
- */
+
 public class ImportCompanyAssets implements IRecordAction<StringResult> {
 
 	private int				companyId;

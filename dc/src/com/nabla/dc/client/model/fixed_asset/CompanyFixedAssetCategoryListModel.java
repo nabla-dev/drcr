@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyFixedAssetCategoryListModel extends CModel<Record> {
 
 	private final Integer	companyId;

@@ -37,10 +37,7 @@ import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla
- *
- */
+
 public class SplitAssetHandler extends AbstractAddHandler<SplitAsset> {
 
 	@Override

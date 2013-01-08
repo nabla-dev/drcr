@@ -24,10 +24,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.nabla.wapp.server.database.Database;
 
-/**
- * @author nabla
- *
- */
+
 @Singleton
 public class MyReadOnlyDatabase extends Database {
 

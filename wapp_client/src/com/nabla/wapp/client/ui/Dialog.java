@@ -34,10 +34,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing {
 
 	private static final Logger	logger = LoggerFactory.getLog(Dialog.class);

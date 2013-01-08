@@ -17,10 +17,6 @@
 package com.nabla.wapp.client.ui;
 
 
-/**
- * @author nabla64
- *
- */
 public enum TransferImgButtons {
 	LEFT { @Override public com.smartgwt.client.widgets.TransferImgButton.TransferImg convert() { return com.smartgwt.client.widgets.TransferImgButton.LEFT; } },
 	LEFT_ALL { @Override public com.smartgwt.client.widgets.TransferImgButton.TransferImg convert() { return com.smartgwt.client.widgets.TransferImgButton.LEFT_ALL; } },

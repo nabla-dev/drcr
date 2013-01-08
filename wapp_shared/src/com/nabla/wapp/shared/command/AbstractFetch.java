@@ -20,10 +20,7 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractFetch implements IAction<FetchResult> {
 
 	private @Nullable Integer	startRow;

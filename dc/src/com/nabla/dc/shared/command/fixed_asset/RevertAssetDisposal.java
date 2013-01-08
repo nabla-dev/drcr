@@ -19,10 +19,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
-/**
- * @author nabla
- *
- */
+
 public class RevertAssetDisposal implements IAction<VoidResult> {
 
 	private Integer	id;

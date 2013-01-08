@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @author nabla
- *
- */
+
 public class RadioItem extends Widget implements HasText {
 
 	private String	key;

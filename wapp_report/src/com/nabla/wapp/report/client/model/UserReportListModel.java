@@ -25,10 +25,7 @@ import com.nabla.wapp.report.shared.command.FetchUserReportList;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class UserReportListModel extends CModel<ReportRecord> {
 
 	static public class Fields {

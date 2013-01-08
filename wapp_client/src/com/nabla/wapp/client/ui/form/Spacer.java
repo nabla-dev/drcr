@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.smartgwt.client.widgets.form.fields.SpacerItem;
 
-/**
- * @author nabla
- *
- */
+
 public class Spacer extends UiBinderFormItemSpeudoWidget<SpacerItem> {
 
 	public Spacer() {

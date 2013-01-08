@@ -18,11 +18,6 @@ package com.nabla.wapp.report.client.ui;
 
 import com.google.gwt.i18n.client.Constants;
 
-
-/**
- * @author nabla
- *
- */
 public interface ITextResource extends Constants {
 
 	@DefaultStringValue("No report selected!")

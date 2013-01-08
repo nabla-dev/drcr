@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.company.RestoreCompany;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreCompanyHandler extends AbstractRestoreHandler<RestoreCompany> {
 
 	public RestoreCompanyHandler() {

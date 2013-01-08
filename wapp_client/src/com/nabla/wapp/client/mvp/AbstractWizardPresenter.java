@@ -25,10 +25,6 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
 
-/**
- * @author nabla64
- *
- */
 public abstract class AbstractWizardPresenter<D extends IWizardDisplay> extends AbstractTopPresenter<D> {
 
 	public class SaveValuesHandler implements ISaveWizardValuesCallback {

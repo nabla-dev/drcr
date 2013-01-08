@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.command.FetchUserName;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchUserNameHandler extends AbstractFetchHandler<FetchUserName> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(

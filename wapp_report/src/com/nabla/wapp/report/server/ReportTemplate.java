@@ -35,10 +35,6 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.print.ReportFormats;
 
-/**
- * @author nabla64
- *
- */
 public class ReportTemplate {
 
 	private final IReportRunnable	impl;

@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.util.I18nUtil;
 
-/**
- * @author nabla
- *
- */
+
 public class Resource {
 
 	public static final ITextResource		strings = GWT.create(ITextResource.class);

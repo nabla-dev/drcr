@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.IUserTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 public class AddUser implements IRecordAction<StringResult>, IUser {
 
 	@IRecordField(name=IUserTable.NAME,unique=true)

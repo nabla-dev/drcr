@@ -23,10 +23,6 @@ import com.nabla.wapp.shared.validator.TextLengthConstraint;
 import com.smartgwt.client.data.fields.DataSourcePasswordField;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
-/**
- * @author nabla64
- *
- */
 public class PasswordField extends DataSourcePasswordField {
 
 	public PasswordField(final String name, final FieldAttributes... attributes) {

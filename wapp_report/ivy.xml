@@ -17,5 +17,6 @@
 	  <dependency org="net.sf.supercsv" name="super-csv" rev="${supercsv.version}" conf="compile->default;runtime->default" />
 	  
 	  <dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" conf="compile->default;runtime->default" />
+	  <dependency org="org.apache.commons" name="commons-compress" rev="${commons-compress.version}" conf="compile->default;runtime->default" />
     </dependencies>
 </ivy-module>

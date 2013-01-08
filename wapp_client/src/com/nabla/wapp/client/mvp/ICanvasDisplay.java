@@ -18,8 +18,5 @@ package com.nabla.wapp.client.mvp;
 
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public interface ICanvasDisplay extends IBasicDisplay<Canvas> {}

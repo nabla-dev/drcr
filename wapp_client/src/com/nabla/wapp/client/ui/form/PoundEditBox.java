@@ -22,10 +22,7 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
-/**
- * @author nabla
- *
- */
+
 public class PoundEditBox extends UiBinderFormTextItemSpeudoWidget<TextItem> {
 
 	public PoundEditBox() {

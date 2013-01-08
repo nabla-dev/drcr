@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.print;
 
-/**
- * @author nabla
- *
- */
+
 public enum ReportFormats {
 	CSV("text/csv"),
 	XML("text/xml"),

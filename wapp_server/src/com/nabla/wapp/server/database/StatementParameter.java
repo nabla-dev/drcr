@@ -22,10 +22,7 @@ import java.sql.SQLException;
 
 import com.nabla.wapp.shared.database.IRecordField;
 
-/**
- * @author nabla
- *
- */
+
 public class StatementParameter implements IStatementParameter {
 
 	private final Field			field;

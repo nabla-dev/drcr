@@ -29,10 +29,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.menu.IMenuButton;
 import com.smartgwt.client.widgets.menu.Menu;
 
-/**
- * @author nabla
- *
- */
+
 public class MenuButton extends IMenuButton implements HasWidgets {
 
 	private static final Logger	log = LoggerFactory.getLog(MenuButton.class);

@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.command.GetFormDefaultValues;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class GetFormDefaultValuesHandler extends AbstractGetDefaultValuesHandler<GetFormDefaultValues> {
 
 	@Override

@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IPeriodEnd.TABLE)
 public class UpdatePeriodEnd implements IRecordAction<StringResult>, IPeriodEnd {
 

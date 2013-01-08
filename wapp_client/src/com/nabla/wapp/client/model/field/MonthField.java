@@ -22,10 +22,7 @@ import java.util.Map;
 import com.google.gwt.i18n.client.DefaultDateTimeFormatInfo;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 
-/**
- * @author nabla
- *
- */
+
 public class MonthField extends EnumField {
 
 	public MonthField(final String name, final FieldAttributes... attributes) {

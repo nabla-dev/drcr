@@ -28,10 +28,6 @@ import com.smartgwt.client.util.DateDisplayFormatter;
 import com.smartgwt.client.util.DateParser;
 import com.smartgwt.client.util.DateUtil;
 
-/**
- * @author nabla64
- *
- */
 public class DateField extends DataSourceDateField {
 
 	private static final Logger	log = LoggerFactory.getLog(DateField.class);

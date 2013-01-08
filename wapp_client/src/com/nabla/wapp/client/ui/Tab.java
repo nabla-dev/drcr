@@ -24,10 +24,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public class Tab extends Canvas implements IHasWidgets, IPostCreateProcessing {
 
 	private static final Logger						logger = LoggerFactory.getLog(Tab.class);

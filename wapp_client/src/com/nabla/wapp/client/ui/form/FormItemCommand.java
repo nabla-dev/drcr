@@ -22,10 +22,7 @@ import com.smartgwt.client.widgets.form.fields.PickerIcon;
 import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.FormItemIconClickEvent;
 
-/**
- * @author nabla
- *
- */
+
 public class FormItemCommand extends AbstractFormItemIcon implements IFormItemIcon {
 
 	public enum Types {

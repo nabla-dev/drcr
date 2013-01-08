@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 
-/**
- * @author nabla
- *
- */
+
 public interface IWizardNavigationCommandSet extends IBasicCommandSet {
 
 	Command previous();

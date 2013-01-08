@@ -19,10 +19,6 @@ package com.nabla.dc.shared.model.fixed_asset;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author nabla64
- * Map<FinancialStatementCategoryId, Map<AssetCategoryId, Active> >
- */
 public class CompanyFixedAssetCategoryTree extends HashMap<Integer, Map<Integer, Boolean>> {
 
 	private static final long serialVersionUID = 1L;

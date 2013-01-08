@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.validator;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 import com.smartgwt.client.widgets.form.validator.LengthRangeValidator;
 
-/**
- * @author nabla64
- *
- */
 public class TextLengthValidator extends LengthRangeValidator {
 
 	public TextLengthValidator(int min, int max, boolean stopIfFalse) {

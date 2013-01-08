@@ -19,10 +19,7 @@ package com.nabla.wapp.client.mvp.binder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.nabla.wapp.client.ui.ModalDialog;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedModalDialog extends BindedTopDisplay<ModalDialog> {
 
 	@Override

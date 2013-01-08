@@ -16,16 +16,11 @@
 */
 package com.nabla.wapp.report.shared;
 
-
-/**
- * @author nabla64
- *
- */
 public interface IReportTable {
 	static final String	TABLE = "report";
 
 	static final String	NAME = "name";
 	static final String	CONTENT = "content";
 	static final String	PERMISSION = "role_id";
-	static final String	LEDGER = "ledger";
+	static final String	CATEGORY = "category";
 }

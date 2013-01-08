@@ -21,10 +21,6 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.validator.RegexConstraint;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 
-/**
- * @author nabla64
- *
- */
 public class RegexValidator extends RegExpValidator {
 
 	public RegexValidator(final String expression, boolean stopIfFalse, final String errorMessage) {

@@ -32,10 +32,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetWizardModel extends BasicAssetModel {
 
 	private final Integer	companyId;

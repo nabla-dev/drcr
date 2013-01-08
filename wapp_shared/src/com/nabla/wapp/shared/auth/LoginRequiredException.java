@@ -18,10 +18,7 @@ package com.nabla.wapp.shared.auth;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla
- *
- */
+
 public class LoginRequiredException extends DispatchException {
 
 	private static final long serialVersionUID = 1L;

@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=ICompany.TABLE)
 public class ChangeCompanyLogo implements IRecordAction<StringResult> {
 

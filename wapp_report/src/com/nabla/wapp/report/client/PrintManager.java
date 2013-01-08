@@ -51,10 +51,7 @@ import com.nabla.wapp.shared.print.ReportFormats;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
-/**
- * @author nabla
- *
- */
+
 public class PrintManager {
 
 	public interface IParameterGetter {

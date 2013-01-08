@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.smartgwt.client.widgets.form.fields.HiddenItem;
 
-/**
- * @author nabla
- *
- */
+
 public class HiddenValue extends UiBinderFormItemSpeudoWidget<HiddenItem> {
 
 	private String	value;

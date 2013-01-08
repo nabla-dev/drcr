@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedWizardDialog extends BindedModalDialog {
 
 	@UiField

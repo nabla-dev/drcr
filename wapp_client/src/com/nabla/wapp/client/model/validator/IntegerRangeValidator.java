@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.validator;
 import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 
 
-/**
- * @author nabla64
- *
- */
 public class IntegerRangeValidator extends com.smartgwt.client.widgets.form.validator.IntegerRangeValidator {
 
 	public IntegerRangeValidator(Integer min, Integer max, boolean stopIfFalse) {

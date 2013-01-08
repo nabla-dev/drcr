@@ -18,10 +18,6 @@ package com.nabla.wapp.server.csv;
 
 import com.nabla.wapp.shared.model.FullErrorListException;
 
-/**
- * @author nabla64
- *
- */
 public interface ICsvReader<T> {
 	enum Status { SUCCESS, ERROR, EOF };
 

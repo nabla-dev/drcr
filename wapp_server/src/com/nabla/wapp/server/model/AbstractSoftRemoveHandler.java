@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.AlwaysNull;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractSoftRemoveHandler<A extends AbstractRemove> extends AbstractHandler<A, VoidResult> {
 
 	private final String	sql;

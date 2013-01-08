@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.slot.Connection;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class WizardClientArea extends VLayout {
 
 	private IWizardNavigationCommandSet		navigation;

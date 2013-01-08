@@ -34,10 +34,7 @@ import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.nabla.wapp.shared.general.Nullable;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetRecord extends BasicListGridRecord implements IAsset, IWizardRecord {
 
 	public static final IRecordFactory<AssetRecord>	factory = new IRecordFactory<AssetRecord>() {

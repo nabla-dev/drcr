@@ -23,10 +23,7 @@ import java.sql.Types;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.general.StringSet;
 
-/**
- * @author nabla
- *
- */
+
 public class StringSetSetter implements IStatementSetter {
 
 	@Override

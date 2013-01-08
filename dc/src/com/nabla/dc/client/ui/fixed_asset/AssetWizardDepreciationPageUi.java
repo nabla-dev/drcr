@@ -34,10 +34,7 @@ import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetWizardDepreciationPageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, AssetWizardDepreciationPageUi> {}

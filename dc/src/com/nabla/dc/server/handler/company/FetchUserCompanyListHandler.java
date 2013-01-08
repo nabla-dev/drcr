@@ -25,10 +25,7 @@ import com.nabla.wapp.server.model.AbstractFetchHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.FetchResult;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchUserCompanyListHandler extends AbstractFetchHandler<FetchUserCompanyList> {
 
 	private static final SqlToJson	fetcher = new SqlToJson(

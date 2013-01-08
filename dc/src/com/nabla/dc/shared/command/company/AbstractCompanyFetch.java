@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.company;
 
 import com.nabla.wapp.shared.command.AbstractFetch;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractCompanyFetch extends AbstractFetch {
 
 	private Integer		companyId;

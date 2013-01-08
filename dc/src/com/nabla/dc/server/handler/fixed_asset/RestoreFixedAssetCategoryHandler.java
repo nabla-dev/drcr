@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.fixed_asset.RestoreFixedAssetCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFixedAssetCategory;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreFixedAssetCategoryHandler extends AbstractRestoreHandler<RestoreFixedAssetCategory> {
 
 	public RestoreFixedAssetCategoryHandler() {

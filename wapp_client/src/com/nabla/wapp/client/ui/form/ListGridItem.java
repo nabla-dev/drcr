@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.nabla.wapp.client.ui.ListGrid;
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridItem extends ListGrid {
 
 	private int		colSpan = 2;

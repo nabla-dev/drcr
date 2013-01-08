@@ -24,10 +24,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 
-/**
- * @author nabla
- *
- */
+
 public class FormItemIconList extends FormItemExtensionList implements IFormItemExtensionList {
 
 	private final List<FormItemIcon>	children = new LinkedList<FormItemIcon>();

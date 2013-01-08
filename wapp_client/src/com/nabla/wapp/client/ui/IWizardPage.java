@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.nabla.wapp.shared.signal.Signal1;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public interface IWizardPage {
 
 	Canvas getImpl();

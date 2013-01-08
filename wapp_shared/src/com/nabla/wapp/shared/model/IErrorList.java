@@ -19,10 +19,6 @@ package com.nabla.wapp.shared.model;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla64
- *
- */
 public interface IErrorList<P> {
 	boolean isEmpty();
 	int size();

@@ -22,10 +22,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 
-/**
- * @author nabla
- *
- */
+
 public class SmartGwtDateItem extends DateItem {
 
 	private static final Logger	log = LoggerFactory.getLog(SmartGwtDateItem.class);

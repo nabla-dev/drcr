@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.smartgwt.client.widgets.form.fields.BlurbItem;
 
 
-/**
- * @author nabla
- *
- */
+
 public class StaticText extends UiBinderFormTextItemSpeudoWidget<BlurbItem> {
 
 	public StaticText() {

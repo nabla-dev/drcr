@@ -18,10 +18,6 @@ package com.nabla.wapp.server.csv;
 
 import java.lang.reflect.Field;
 
-/**
- * @author nabla64
- *
- */
 public interface ICsvSetter {
 	void setValue(final Object record, final Field field, final String value) throws Exception;
 }

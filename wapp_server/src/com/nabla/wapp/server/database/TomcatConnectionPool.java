@@ -29,10 +29,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.server.general.Assert;
 
-/**
- * @author nabla64
- * use TOMCAT to get database pool
- */
 public class TomcatConnectionPool implements IConnectionPool {
 
 	private static final Log				log = LogFactory.getLog(Database.class);

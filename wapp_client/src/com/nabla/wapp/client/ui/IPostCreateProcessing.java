@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.ui;
 
-/**
- * @author nabla
- *
- */
+
 public interface IPostCreateProcessing {
 	
 	void onCreate();

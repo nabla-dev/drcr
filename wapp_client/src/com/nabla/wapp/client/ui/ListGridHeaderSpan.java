@@ -24,10 +24,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.smartgwt.client.widgets.grid.HeaderSpan;
 
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridHeaderSpan extends UiBinderSpeudoWidgetList {
 
 	private final HeaderSpan		impl = new HeaderSpan();

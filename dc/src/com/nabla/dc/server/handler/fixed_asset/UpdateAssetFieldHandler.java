@@ -31,10 +31,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateAssetFieldHandler extends AbstractUpdateHandler<UpdateAssetField> {
 
 	public static final UpdateStatement<UpdateAssetField>	sql = new UpdateStatement<UpdateAssetField>(UpdateAssetField.class);

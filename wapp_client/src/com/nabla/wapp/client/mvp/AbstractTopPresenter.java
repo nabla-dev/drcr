@@ -19,10 +19,6 @@ package com.nabla.wapp.client.mvp;
 import com.nabla.wapp.shared.slot.ISlot;
 
 
-/**
- * @author nabla64
- *
- */
 public abstract class AbstractTopPresenter<D extends ITopDisplay> extends AbstractPresenter<D> implements ITopPresenter {
 
 	protected AbstractTopPresenter(D display) {

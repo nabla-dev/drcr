@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.company.RemoveCompany;
 import com.nabla.dc.shared.model.company.ICompany;
 import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveCompanyHandler extends AbstractSoftRemoveHandler<RemoveCompany> {
 
 	public RemoveCompanyHandler() {

@@ -29,10 +29,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.server.database.Database;
 
-/**
- * @author nabla
- *
- */
+
 public class AuthDatabase extends Database {
 
 	private static final Log	log = LogFactory.getLog(AuthDatabase.class);

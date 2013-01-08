@@ -30,10 +30,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IAssetTable.TABLE)
 public class UpdateAssetDisposal implements IRecordAction<StringResult>, IDisposal {
 

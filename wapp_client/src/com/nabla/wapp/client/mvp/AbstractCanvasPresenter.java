@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.mvp;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractCanvasPresenter<D extends ICanvasDisplay> extends AbstractPresenter<D> {
 
 	protected AbstractCanvasPresenter(D display) {

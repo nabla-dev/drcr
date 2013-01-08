@@ -19,10 +19,7 @@ package com.nabla.wapp.server.database;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * @author nabla
- *
- */
+
 public interface IStatementSetter {
 	int prepare(StringBuilder sql, int parameterIndex, Object value);
 	int setValue(final PreparedStatement stmt, int parameterIndex, Object value) throws SQLException;

@@ -20,10 +20,7 @@ import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 class ListGridFilterListDialog extends AbstractTopPresenter<ListGridFilterListDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {}

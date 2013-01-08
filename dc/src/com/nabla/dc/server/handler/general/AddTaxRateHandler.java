@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class AddTaxRateHandler extends AbstractAddHandler<AddTaxRate> {
 
 	private static final InsertStatement<AddTaxRate>	sql = new InsertStatement<AddTaxRate>(AddTaxRate.class);

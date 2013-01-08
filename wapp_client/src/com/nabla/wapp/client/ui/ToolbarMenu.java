@@ -29,10 +29,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
 
-/**
- * @author nabla
- *
- */
+
 public class ToolbarMenu extends ToolStripMenuButton implements HasWidgets {
 
 	private static final Logger	log = LoggerFactory.getLog(ToolbarMenu.class);

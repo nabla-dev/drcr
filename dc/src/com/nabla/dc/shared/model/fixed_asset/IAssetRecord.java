@@ -23,10 +23,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public interface IAssetRecord {
 	static class Validator {
 		public static <P> boolean execute(final IAssetRecord t, final P pos, final IErrorList<P> errors) throws DispatchException {

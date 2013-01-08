@@ -18,10 +18,6 @@ package com.nabla.wapp.client.model.data;
 
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla64
- *
- */
 public class ValueStoreWrapper<T> extends Record {
 
 	static final String	DATA = "data";

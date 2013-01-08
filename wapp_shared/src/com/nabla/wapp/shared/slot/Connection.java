@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.slot;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
-/**
- * @author nabla
- *
- */
+
 public class Connection<Slot extends IBasicSlot> implements HandlerRegistration {
 
 	private Slot		slot;

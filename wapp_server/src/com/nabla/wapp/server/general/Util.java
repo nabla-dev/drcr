@@ -30,10 +30,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class Util {
 
 	private static final Log	log = LogFactory.getLog(Util.class);

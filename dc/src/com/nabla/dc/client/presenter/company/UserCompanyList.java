@@ -37,10 +37,7 @@ import com.nabla.wapp.report.shared.IntegerReportParameterValue;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
-/**
- * @author nabla
- *
- */
+
 public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDisplay> {
 
 	public interface ICommandSet extends IPrintCommandSet, IBasicCommandSet {

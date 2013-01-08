@@ -40,10 +40,7 @@ import com.nabla.wapp.shared.auth.AccessDeniedException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla
- *
- */
+
 public class GetReportHandler extends AbstractHandler<GetReport, ReportResult> {
 
 	public GetReportHandler() {

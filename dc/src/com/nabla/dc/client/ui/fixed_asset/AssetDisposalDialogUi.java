@@ -34,10 +34,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.FormItemIfFunction;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetDisposalDialogUi extends BindedModalDialog implements AssetDisposalDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, AssetDisposalDialogUi> {}

@@ -20,10 +20,7 @@ import com.nabla.wapp.client.general.JSHelper;
 import com.nabla.wapp.shared.general.Nullable;
 import com.smartgwt.client.data.DataSourceField;
 
-/**
- * @author nabla
- *
- */
+
 public enum FieldAttributes {
 
 	HIDDEN { @Override void apply(final DataSourceField field) { field.setHidden(true); } },

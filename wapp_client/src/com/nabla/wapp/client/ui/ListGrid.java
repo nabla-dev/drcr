@@ -70,10 +70,7 @@ import com.smartgwt.client.widgets.grid.events.GroupByHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class ListGrid extends com.smartgwt.client.widgets.grid.ListGrid implements HasWidgets, IPostCreateProcessing, ICurrentListGridRecordProvider {
 
 	public interface IListGridConfirmAction {

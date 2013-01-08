@@ -17,10 +17,6 @@
 package com.nabla.wapp.shared.slot;
 
 
-/**
- * @author nabla64
- *
- */
 public interface IBasicSlotManager<Slot extends IBasicSlot> {
 	boolean isBlocked();
 	void setBlocked(boolean b);

@@ -16,8 +16,5 @@
 */
 package com.nabla.wapp.shared.command;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchRoleList extends AbstractFetch {}

@@ -24,10 +24,7 @@ import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.command.UpdateRole;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateRoleHandler extends AbstractUpdateHandler<UpdateRole> {
 
 	private static final UpdateStatement<UpdateRole>	sql = new UpdateStatement<UpdateRole>(UpdateRole.class);

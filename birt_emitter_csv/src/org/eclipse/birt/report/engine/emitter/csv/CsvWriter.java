@@ -22,10 +22,6 @@ import java.io.OutputStreamWriter;
 import org.supercsv.io.CsvListWriter;
 import org.supercsv.prefs.CsvPreference;
 
-/**
- * @author nabla64
- *
- */
 public class CsvWriter extends CsvListWriter {
 
 	public CsvWriter(final OutputStream out, final ICsvRenderOption options){

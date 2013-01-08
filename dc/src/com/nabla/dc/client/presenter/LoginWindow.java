@@ -35,10 +35,7 @@ import com.nabla.wapp.shared.signal.Signal;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 
 	public interface IDisplay extends ICanvasDisplay, ILoginUi {}

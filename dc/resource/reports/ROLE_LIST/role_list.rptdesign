@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.2.1.v201209101448 Build &lt;4.2.1.v20120912-1721></property>
+    <text-property name="title">Role List</text-property>
+    <simple-property-list name="includeResource">
+        <value>resource</value>
+    </simple-property-list>
     <list-property name="includeScripts">
         <property>custom_functions.js</property>
     </list-property>
-	<simple-property-list name="includeResource">
-        <value>resource</value>
-    </simple-property-list>
     <list-property name="propertyBindings">
         <structure>
             <property name="name">queryText</property>
@@ -28,7 +29,7 @@
     <property name="layoutPreference">auto layout</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
-	<property name="ledger">SETTINGS</property>
+	<property name="report_category">SETTINGS</property>
     <property name="role">role_view</property>
     <list-property name="libraries">
         <structure>

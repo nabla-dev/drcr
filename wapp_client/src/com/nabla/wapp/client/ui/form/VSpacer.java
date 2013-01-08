@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.nabla.wapp.client.ui.Resource;
 
-/**
- * @author nabla
- *
- */
+
 public class VSpacer extends Spacer {
 
 	public VSpacer() {

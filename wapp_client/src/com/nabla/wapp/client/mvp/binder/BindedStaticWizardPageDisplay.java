@@ -19,10 +19,7 @@ package com.nabla.wapp.client.mvp.binder;
 import com.nabla.wapp.client.ui.Html;
 import com.nabla.wapp.client.ui.WizardPageNavigations;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedStaticWizardPageDisplay extends BindedWizardPageDisplay<Html> {
 
 	protected BindedStaticWizardPageDisplay(final WizardPageNavigations... buttons) {

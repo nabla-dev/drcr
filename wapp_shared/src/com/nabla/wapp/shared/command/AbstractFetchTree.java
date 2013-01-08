@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.command;
 import com.nabla.wapp.shared.general.Nullable;
 
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractFetchTree extends AbstractFetch {
 
 	private @Nullable Integer	parentId;

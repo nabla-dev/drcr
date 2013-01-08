@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.general.RemoveTaxRate;
 import com.nabla.dc.shared.model.ITaxRate;
 import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveTaxRateHandler extends AbstractSoftRemoveHandler<RemoveTaxRate> {
 
 	public RemoveTaxRateHandler() {

@@ -25,10 +25,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateCompanyTaxRateHandler extends AbstractHandler<UpdateCompanyTaxRate, StringResult> {
 
 	public UpdateCompanyTaxRateHandler() {

@@ -46,10 +46,7 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDisplay> {
 
 	public interface ICommandSet extends IBasicCommandSet {

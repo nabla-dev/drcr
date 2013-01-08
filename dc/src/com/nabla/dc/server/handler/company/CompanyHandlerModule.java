@@ -18,10 +18,7 @@ package com.nabla.dc.server.handler.company;
 
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyHandlerModule extends AbstractHandlerSubModule {
 
 	@Override

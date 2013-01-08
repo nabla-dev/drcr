@@ -29,10 +29,7 @@ import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.IFormItemSpeudoWidget;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
-/**
- * @author nabla
- *
- */
+
 public class Toolbar extends ToolStrip implements HasWidgets {
 
 	private static final Logger	logger = LoggerFactory.getLog(Toolbar.class);

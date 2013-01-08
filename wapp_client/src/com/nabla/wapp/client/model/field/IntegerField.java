@@ -21,10 +21,6 @@ import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
-/**
- * @author nabla64
- *
- */
 public class IntegerField extends DataSourceIntegerField {
 
 	public IntegerField(final String name, final FieldAttributes... attributes) {

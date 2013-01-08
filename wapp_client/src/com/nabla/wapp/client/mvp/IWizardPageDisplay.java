@@ -19,10 +19,7 @@ package com.nabla.wapp.client.mvp;
 import com.nabla.wapp.client.ui.IWizardPage;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface IWizardPageDisplay extends IDisplay, IWizardPage {
 
 }

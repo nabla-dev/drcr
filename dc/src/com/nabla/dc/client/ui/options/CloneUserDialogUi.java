@@ -30,10 +30,7 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class CloneUserDialogUi extends BindedModalDialog implements CloneUserDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, CloneUserDialogUi> {}

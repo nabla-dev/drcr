@@ -20,10 +20,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.core.PersistenceException;
 
-/**
- * @author nabla64
- *
- */
 public abstract class Util {
 
 	private static final String	ROW_COL = "[row,col]:[";

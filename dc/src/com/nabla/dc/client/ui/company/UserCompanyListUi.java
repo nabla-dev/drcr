@@ -28,10 +28,7 @@ import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.Tab;
 
-/**
- * @author nabla
- *
- */
+
 public class UserCompanyListUi extends BindedTabDisplay<Tab> implements UserCompanyList.IDisplay {
 
 	interface Binder extends UiBinder<Tab, UserCompanyListUi> {}

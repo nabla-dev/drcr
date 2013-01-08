@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.shared.signal;
 
-/**
- * @author nabla64
- *
- */
 public interface ISignal1<T0> {
 	void fire(T0 a0);
 }

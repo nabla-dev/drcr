@@ -19,10 +19,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 import com.nabla.dc.shared.model.fixed_asset.DepreciationPeriodRange;
 import com.nabla.wapp.shared.dispatch.IAction;
 
-/**
- * @author nabla
- *
- */
+
 public class GetFixedAssetCategoryDepreciationPeriodRange implements IAction<DepreciationPeriodRange> {
 
 	private Integer		id;

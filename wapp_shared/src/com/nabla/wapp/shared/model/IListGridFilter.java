@@ -18,10 +18,7 @@ package com.nabla.wapp.shared.model;
 
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
-/**
- * @author nabla
- *
- */
+
 public interface IListGridFilter {
 
 	static final String					NAME = "name";

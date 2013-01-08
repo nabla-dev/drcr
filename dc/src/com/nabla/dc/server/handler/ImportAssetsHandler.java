@@ -42,10 +42,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAssetsHandler extends AbstractHandler<ImportAssets, StringResult> {
 
 	private static final Log	log = LogFactory.getLog(ImportAssetsHandler.class);
@@ -76,7 +73,7 @@ public class ImportAssetsHandler extends AbstractHandler<ImportAssets, StringRes
 
 	private boolean add(final ImportAssets cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, null, IImportAssets.PREFERENCE_GROUP, IImportAssets.OVERWRITE, cmd.getOverwrite());
-		final XmlAssets assets = new Importer<ImportContext>(ctx.getReadConnection(), new ImportContext(ctx.getReadConnection(), errors)).read(XmlAssets.class, cmd.getFileId());
+		final XmlAssets assets = new Importer<ImportContext>(ctx.getReadConnection(), new ImportContext(ctx.getReadConnection(), errors)).read(XmlAssets.class, cmd.getFileId(), ctx.getSessionId());
 		if (assets == null || !errors.isEmpty())
 			return false;
 		final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(ctx.getWriteConnection());

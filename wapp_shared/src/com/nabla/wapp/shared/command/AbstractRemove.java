@@ -20,9 +20,6 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.IntegerSet;
 
-/**
- * @author nabla
- *
- */
+
 @SuppressWarnings("serial")
 public abstract class AbstractRemove extends IntegerSet implements IAction<VoidResult> {}

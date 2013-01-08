@@ -25,10 +25,7 @@ import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.Tab;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ViewAssetDepreciationTabUi extends BindedTabDisplay<Tab> implements ITabDisplay {
 
 	interface Binder extends UiBinder<Tab, ViewAssetDepreciationTabUi> {}

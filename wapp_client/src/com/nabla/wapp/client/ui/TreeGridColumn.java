@@ -21,10 +21,7 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.tree.TreeGridField;
 
-/**
- * @author nabla
- *
- */
+
 public class TreeGridColumn extends Widget {
 
 	protected final TreeGridField	impl = new TreeGridField();

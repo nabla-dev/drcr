@@ -19,13 +19,13 @@ package com.nabla.wapp.server.auth;
 import java.sql.Connection;
 import java.util.Locale;
 
-
 public interface IUserSessionContext {
 	void close();
 
 	Integer getUserId();
 	boolean isRoot();
 	Locale getLocale();
+	String getSessionId();
 
 	Connection getWriteConnection();
 	Connection getReadConnection();

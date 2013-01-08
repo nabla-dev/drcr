@@ -21,10 +21,7 @@ import com.nabla.dc.client.ui.fixed_asset.AddFixedAssetCategoryDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 
-/**
- * @author nabla
- *
- */
+
 public class AddFixedAssetCategoryDialog extends AbstractTopPresenter<AddFixedAssetCategoryDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {}

@@ -34,10 +34,7 @@ import com.nabla.wapp.server.basic.handler.UpdateUserDefinitionHandler;
 import com.nabla.wapp.server.basic.handler.UpdateUserHandler;
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
-/**
- * @author nabla
- *
- */
+
 public class OptionsHandlerModule extends AbstractHandlerSubModule {
 
 	@Override

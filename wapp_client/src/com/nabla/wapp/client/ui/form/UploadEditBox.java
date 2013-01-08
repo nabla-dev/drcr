@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.google.gwt.user.client.ui.HasText;
 import com.nabla.wapp.client.ui.TitleDecoder;
 
-/**
- * @author nabla
- *
- */
+
 public class UploadEditBox extends UiBinderFormItemSpeudoWidget<UploadItemImpl> implements HasText {
 
 	public UploadEditBox() {

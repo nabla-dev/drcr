@@ -19,14 +19,19 @@ package com.nabla.dc.client.ui.report;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.nabla.dc.client.model.report.ReportListModel;
 import com.nabla.dc.client.presenter.report.ReportList;
 import com.nabla.dc.client.presenter.report.ReportList.ICommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
+import com.nabla.wapp.client.model.UpdateModelCacheOperations;
 import com.nabla.wapp.client.mvp.binder.BindedTabDisplay;
 import com.nabla.wapp.client.ui.ListGrid;
+import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
-import com.nabla.wapp.report.client.model.ReportListModel;
+import com.nabla.wapp.report.client.model.ReportRecord;
+import com.smartgwt.client.data.Record;
 
-public class ReportListUi extends BindedTabDisplay<Tab> implements ReportList.IDisplay/*, ICurrentRecordProvider<UserRecord>*/ {
+public class ReportListUi extends BindedTabDisplay<Tab> implements ReportList.IDisplay, ICurrentRecordProvider<ReportRecord> {
 
 	interface Binder extends UiBinder<Tab, ReportListUi> {}
 	private static Binder	uiBinder = GWT.create(Binder.class);
@@ -41,17 +46,17 @@ public class ReportListUi extends BindedTabDisplay<Tab> implements ReportList.ID
 	public ReportListUi() {
 		this.create(uiBinder, this);
 	}
-/*
+
 	@Override
-	public void addRecord(final Record record) {
-		model.updateCache(record, UpdateModelCacheOperations.ADD);
+	public void addRecord(Integer recordId) {
+		model.updateCache(recordId, UpdateModelCacheOperations.ADD);
 	}
 
 	@Override
 	public void removeSelectedRecords(final IListGridConfirmAction confirmUi) {
 		list.removeSelectedRecords(confirmUi);
 	}
-*/
+
 	@Override
 	public void reload() {
 		list.reload();
@@ -66,16 +71,21 @@ public class ReportListUi extends BindedTabDisplay<Tab> implements ReportList.ID
 	public void savePreferences() {
 		list.saveViewState();
 	}
-/*
+
 	@Override
-	public ICurrentRecordProvider<UserRecord> getCurrentRecordProvider() {
+	public ICurrentRecordProvider<ReportRecord> getCurrentRecordProvider() {
 		return this;
 	}
 
 	@Override
-	public UserRecord getCurrentRecord() {
+	public ReportRecord getCurrentRecord() {
 		final Record record = list.getCurrentRecord();
-		return (record == null) ? null : new UserRecord(record);
+		return (record == null) ? null : new ReportRecord(record);
 	}
-*/
+
+	@Override
+	public void updateRecord(Integer recordId) {
+		model.updateCache(recordId, UpdateModelCacheOperations.UPDATE);
+	}
+
 }

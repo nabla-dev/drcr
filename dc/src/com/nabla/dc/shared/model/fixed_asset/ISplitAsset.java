@@ -19,10 +19,7 @@ package com.nabla.dc.shared.model.fixed_asset;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface ISplitAsset {
 
 	static final String					NAME_A = "nameA";

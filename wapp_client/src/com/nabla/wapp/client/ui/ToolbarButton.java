@@ -30,10 +30,7 @@ import com.smartgwt.client.widgets.events.IconClickEvent;
 import com.smartgwt.client.widgets.events.IconClickHandler;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
-/**
- * @author nabla
- *
- */
+
 public class ToolbarButton extends ToolStripButton implements HasText, ICommandUi {
 
 	ICommand	command = null;

@@ -29,10 +29,7 @@ import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class AddAssetHandler extends AbstractAddHandler<AddAsset> {
 
 	public static final InsertStatement<AddAsset>	sql = new InsertStatement<AddAsset>(AddAsset.class);

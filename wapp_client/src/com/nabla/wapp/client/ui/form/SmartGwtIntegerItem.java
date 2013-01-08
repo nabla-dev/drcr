@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.smartgwt.client.widgets.form.fields.IntegerItem;
 
-/**
- * @author nabla
- *
- */
+
 public class SmartGwtIntegerItem extends IntegerItem {
 
 //	private String	keyPressFilter;

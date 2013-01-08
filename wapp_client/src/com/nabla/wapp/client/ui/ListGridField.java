@@ -26,10 +26,7 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.types.FieldType;
 import com.smartgwt.client.widgets.grid.CellFormatter;
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridField extends ListGridColumn implements HasText {
 
 	@Override

@@ -18,10 +18,6 @@ package com.nabla.wapp.client.model;
 
 import com.smartgwt.client.types.DSOperationType;
 
-/**
- * @author nabla64
- *
- */
 public enum UpdateModelCacheOperations {
 
 	ADD(DSOperationType.ADD), UPDATE(DSOperationType.UPDATE), REMOVE(DSOperationType.REMOVE);

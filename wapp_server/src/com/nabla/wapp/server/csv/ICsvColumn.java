@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.server.csv;
 
-/**
- * @author nabla64
- *
- */
 public interface ICsvColumn {
 	String getName();
 	void setValue(final Object record, final String value) throws Exception;

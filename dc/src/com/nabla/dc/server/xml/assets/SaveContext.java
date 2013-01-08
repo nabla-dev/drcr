@@ -18,10 +18,6 @@ package com.nabla.dc.server.xml.assets;
 
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 
-/**
- * @author nabla64
- *
- */
 public class SaveContext {
 
 	private final SqlInsertOptions			option;

@@ -28,10 +28,7 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
 import com.smartgwt.client.widgets.menu.IMenuButton;
 
-/**
- * @author nabla
- *
- */
+
 public class ButtonBar extends UiBinderFormItemSpeudoWidgetList<CanvasItem> implements IHasWidgets {
 
 	protected final HLayout	buttons = new HLayout();

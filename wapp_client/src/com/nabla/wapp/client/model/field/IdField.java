@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.field;
 import com.smartgwt.client.data.fields.DataSourceIntegerField;
 
 
-/**
- * @author nabla64
- *
- */
 public class IdField extends DataSourceIntegerField {
 
 	public static final String	NAME = "id";

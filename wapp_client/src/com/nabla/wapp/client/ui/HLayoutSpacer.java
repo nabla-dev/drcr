@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.ui;
 
-/**
- * @author nabla
- *
- */
+
 public class HLayoutSpacer extends LayoutSpacer {
 
 	public HLayoutSpacer() {

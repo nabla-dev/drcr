@@ -21,10 +21,7 @@ import java.util.Iterator;
 import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public class VLayout extends com.smartgwt.client.widgets.layout.VLayout implements IHasWidgets, IPostCreateProcessing {
 
 	@Override

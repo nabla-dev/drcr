@@ -16,19 +16,21 @@
 */
 package com.nabla.wapp.server.basic.general;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,13 +40,10 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.database.StatementFormat;
+import com.nabla.wapp.server.general.UserSession;
+import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-
-/**
- * @author nabla
- *
- */
 @Singleton
 public class ExportService extends HttpServlet {
 
@@ -66,25 +65,32 @@ public class ExportService extends HttpServlet {
 			if (log.isTraceEnabled())
 				log.trace("missing file ID");
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} else {
-			try {
-				if (exportFile(id, response)) {
+			return;
+		}
+		final UserSession userSession = UserSession.load(request);
+		if (userSession == null) {
+			if (log.isTraceEnabled())
+				log.trace("missing user session");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return;
+		}
+		try {
+			if (exportFile(id, userSession, response)) {
 				//	response.setStatus(HttpServletResponse.SC_OK);
-				} else
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			} catch (final SQLException e) {
-				if (log.isErrorEnabled())
-					log.error("SQL error " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
+			} else
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			} catch (final Throwable e) {
-				if (log.isErrorEnabled())
-					log.error("unexpected error", e);
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			}
+		} catch (final SQLException e) {
+			if (log.isErrorEnabled())
+				log.error("SQL error " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		} catch (final Throwable e) {
+			if (log.isErrorEnabled())
+				log.error("unexpected error", e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	private boolean exportFile(final String id, final HttpServletResponse response) throws IOException, SQLException, InternalErrorException {
+	private boolean exportFile(final String id, final UserSession userSession, final HttpServletResponse response) throws IOException, SQLException, InternalErrorException {
 		final Connection conn = db.getConnection();
 		try {
 			final PreparedStatement stmt = StatementFormat.prepare(conn,
@@ -95,6 +101,11 @@ public class ExportService extends HttpServlet {
 					if (!rs.next()) {
 						if (log.isDebugEnabled())
 							log.debug("failed to find file ID= " + id);
+						return false;
+					}
+					if (!userSession.getSessionId().equals(rs.getString("userSessionId"))) {
+						if (log.isTraceEnabled())
+							log.trace("invalid user session ID");
 						return false;
 					}
 					if (log.isTraceEnabled())
@@ -108,7 +119,8 @@ public class ExportService extends HttpServlet {
 						response.setHeader("Content-Disposition", MessageFormat.format(
 "attachment; filename=\"{0}\"", rs.getString("name")));
 					}
-					final BufferedInputStream input = new BufferedInputStream(rs.getBinaryStream("content"), DEFAULT_BUFFER_SIZE);
+					IOUtils.copy(rs.getBinaryStream("content"), response.getOutputStream());
+				/*	final BufferedInputStream input = new BufferedInputStream(rs.getBinaryStream("content"), DEFAULT_BUFFER_SIZE);
 					try {
 						final BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
 						try {
@@ -121,20 +133,26 @@ public class ExportService extends HttpServlet {
 						}
 					} finally {
 						input.close();
-					}
+					}*/
 				} finally {
 					rs.close();
+					try {
+						Database.executeUpdate(conn, "DELETE FROM export WHERE id=?;", id);
+					} catch (final SQLException e) {
+						if (log.isErrorEnabled())
+							log.error("failed to delete export record: " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
+					}
 				}
 			} finally {
-				Database.close(stmt);
-				try {
-					Database.executeUpdate(conn, "DELETE FROM export WHERE id=?;", id);
-				} catch (final SQLException e) {
-					if (log.isErrorEnabled())
-						log.error("failed to delete export record: " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
-				}
+				stmt.close();
 			}
 		} finally {
+			// remove any orphan export records i.e. older than 48h (beware of timezone!)
+			final Calendar dt = Util.dateToCalendar(new Date());
+			dt.add(GregorianCalendar.DATE, -2);
+			try {
+				Database.executeUpdate(conn, "DELETE FROM export WHERE created < ?;", Util.calendarToSqlDate(dt));
+			} catch (final SQLException __) {}
 			conn.close();
 		}
 		return true;

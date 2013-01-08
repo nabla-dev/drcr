@@ -17,10 +17,7 @@
 package com.nabla.wapp.client.ui;
 
 
-/**
- * @author nabla
- *
- */
+
 public class TileGridImageField extends TileGridField {
 
 	public TileGridImageField() {

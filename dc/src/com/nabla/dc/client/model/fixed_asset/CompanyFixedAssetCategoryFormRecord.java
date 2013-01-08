@@ -22,10 +22,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.ValueStoreWrapper;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyFixedAssetCategoryFormRecord extends Record {
 
 	public static final IRecordFactory<CompanyFixedAssetCategoryFormRecord>	factory = new IRecordFactory<CompanyFixedAssetCategoryFormRecord>() {

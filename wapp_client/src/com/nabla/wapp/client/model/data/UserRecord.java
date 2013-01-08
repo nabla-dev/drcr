@@ -21,10 +21,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.shared.model.IUser;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class UserRecord extends BasicListGridRecord implements IUser {
 
 	public static final IRecordFactory<UserRecord>	factory = new IRecordFactory<UserRecord>() {

@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.general.RestoreTaxRate;
 import com.nabla.dc.shared.model.ITaxRate;
 import com.nabla.wapp.server.model.AbstractRestoreHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreTaxRateHandler extends AbstractRestoreHandler<RestoreTaxRate> {
 
 	public RestoreTaxRateHandler() {

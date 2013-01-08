@@ -21,10 +21,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author nabla
- *
- */
+
 class Role extends HashMap<Integer, Role> {
 
 	private static final long	serialVersionUID = 1L;

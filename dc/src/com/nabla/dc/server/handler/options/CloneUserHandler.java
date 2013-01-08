@@ -33,10 +33,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class CloneUserHandler extends AbstractAddHandler<CloneUser> {
 
 	@Override

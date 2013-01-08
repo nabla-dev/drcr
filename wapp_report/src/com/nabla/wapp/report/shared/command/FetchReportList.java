@@ -18,17 +18,4 @@ package com.nabla.wapp.report.shared.command;
 
 import com.nabla.wapp.shared.command.AbstractFetch;
 
-public class FetchReportList extends AbstractFetch {
-
-	private String		locale;
-
-	public FetchReportList() {}	// for serialization only
-
-	public FetchReportList(final String locale) {
-		this.locale = locale;
-	}
-
-	public String getLocale() {
-		return locale;
-	}
-}
+public class FetchReportList extends AbstractFetch {}

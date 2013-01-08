@@ -23,10 +23,6 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 public class StraightlineDepreciation implements IsSerializable, IStraightLineDepreciation{
 
 	Integer			openingAccumulatedDepreciation;

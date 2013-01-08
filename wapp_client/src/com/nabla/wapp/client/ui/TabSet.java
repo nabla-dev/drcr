@@ -35,10 +35,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.tab.events.CloseClickHandler;
 import com.smartgwt.client.widgets.tab.events.TabCloseClickEvent;
 
-/**
- * @author nabla
- *
- */
+
 public class TabSet extends com.smartgwt.client.widgets.tab.TabSet implements IHasWidgets, IPostCreateProcessing {
 
 	private static final Logger									logger = LoggerFactory.getLog(TabSet.class);

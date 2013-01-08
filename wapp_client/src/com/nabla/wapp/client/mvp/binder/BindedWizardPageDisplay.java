@@ -25,10 +25,7 @@ import com.nabla.wapp.client.ui.WizardPageNavigations;
 import com.nabla.wapp.shared.signal.Signal1;
 import com.smartgwt.client.widgets.Canvas;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedWizardPageDisplay<U extends Canvas & IPostCreateProcessing> extends BindedCanvasDisplay<U> {
 
 	private final Map<WizardPageNavigations, Signal1<IWizardPage>>	buttons = new HashMap<WizardPageNavigations, Signal1<IWizardPage>>();

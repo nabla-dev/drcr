@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.model.IUserTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IUserTable.TABLE)
 public class UpdateUser implements IRecordAction<StringResult>, IUser {
 

@@ -29,10 +29,7 @@ import com.nabla.wapp.client.model.field.TreeStringParentIdField;
 import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyFixedAssetCategoryTreeModel extends HeterogeneousTreeModel<CompanyFixedAssetCategoryRecord> {
 
 	static public class Fields {

@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.fixed_asset.RemoveAsset;
 import com.nabla.dc.shared.model.fixed_asset.IAsset;
 import com.nabla.wapp.server.model.AbstractRemoveHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveAssetHandler extends AbstractRemoveHandler<RemoveAsset> {
 
 	public RemoveAssetHandler() {

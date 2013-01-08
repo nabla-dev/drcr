@@ -20,10 +20,7 @@ import java.sql.Timestamp;
 
 import org.simpleframework.xml.transform.Transform;
 
-/**
- * @author nabla
- *
- */
+
 public class SimpleTimestampTransform implements Transform<Timestamp> {
 
 	@Override

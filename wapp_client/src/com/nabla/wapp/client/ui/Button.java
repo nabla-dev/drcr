@@ -26,10 +26,7 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class Button extends IButton implements HasText, ICommandUi {
 
 	ICommand	cmd = null;

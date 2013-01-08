@@ -27,10 +27,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class UiBinderFormItemSpeudoWidgetList<C extends FormItem> extends UiBinderFormItemSpeudoWidget<C> implements HasWidgets {
 
 	private static final Logger	logger = LoggerFactory.getLog(UiBinderFormItemSpeudoWidgetList.class);

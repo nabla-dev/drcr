@@ -26,10 +26,7 @@ import com.nabla.wapp.client.ui.ModalDialog;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class AddFixedAssetCategoryDialogUi extends BindedModalDialog implements AddFixedAssetCategoryDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, AddFixedAssetCategoryDialogUi> {}

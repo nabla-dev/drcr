@@ -28,10 +28,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla
- *
- */
+
 public class UserPreference {
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -21,10 +21,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IResult;
 
-/**
- * @author nabla
- *
- */
+
 public interface IDispatchRemoteServiceAsync {
 
 	RequestBuilder execute(String sessionId, IAction<?> cmd, AsyncCallback<IResult> callback);

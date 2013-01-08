@@ -21,10 +21,7 @@ import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface IFixedAssetCategory {
 
 	static final String					TABLE = "fa_asset_category";

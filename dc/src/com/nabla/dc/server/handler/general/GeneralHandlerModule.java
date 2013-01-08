@@ -18,10 +18,7 @@ package com.nabla.dc.server.handler.general;
 
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
-/**
- * @author nabla
- *
- */
+
 public class GeneralHandlerModule extends AbstractHandlerSubModule {
 
 	@Override

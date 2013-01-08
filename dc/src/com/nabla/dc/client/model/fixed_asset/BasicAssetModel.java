@@ -18,10 +18,7 @@ package com.nabla.dc.client.model.fixed_asset;
 
 import com.nabla.wapp.client.model.CModel;
 
-/**
- * @author nabla
- *
- */
+
 public class BasicAssetModel extends CModel<AssetRecord> {
 
 	protected static final AssetFields	fields = new AssetFields();

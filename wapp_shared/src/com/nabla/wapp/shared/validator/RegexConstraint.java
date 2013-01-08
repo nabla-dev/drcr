@@ -21,10 +21,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class RegexConstraint extends TextLengthConstraint {
 
 	private final String	expression;

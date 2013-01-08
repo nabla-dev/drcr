@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IFixedAssetCategory.TABLE)
 public class AddFixedAssetCategory implements IRecordAction<StringResult>, IFixedAssetCategory {
 

@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 
 
-/**
- * @author nabla
- *
- */
+
 public class IntegerSpinnerBox extends UiBinderFormTextItemSpeudoWidget<SpinnerItem> {
 
 	public IntegerSpinnerBox() {

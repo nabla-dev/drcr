@@ -28,10 +28,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 
-/**
- * @author nabla
- *
- */
+
 public class GetBuiltInReportHandler extends AbstractHandler<GetBuiltInReport, IntegerResult> {
 
 	private final ReportManager	reportManager;
@@ -47,7 +44,7 @@ public class GetBuiltInReportHandler extends AbstractHandler<GetBuiltInReport, I
 		final ReportTemplate template = reportManager.open(cmd.getName(), ctx);
 		final Report report = template.generate(ctx.getReadConnection(), cmd.getParameters(), cmd.getFormat(), ctx.getLocale());
 		try {
-			return new IntegerResult(report.save(ctx.getWriteConnection(), cmd.getOutputAsFile()));
+			return new IntegerResult(report.save(ctx.getWriteConnection(), cmd.getOutputAsFile(), ctx.getSessionId()));
 		} finally {
 			report.close();
 		}

@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.nabla.wapp.client.ui.form.SmartGwtDateItem;
 
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridDateField extends ListGridField {
 
 	public ListGridDateField() {

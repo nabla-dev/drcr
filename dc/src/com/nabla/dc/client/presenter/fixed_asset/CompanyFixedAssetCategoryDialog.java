@@ -36,10 +36,7 @@ import com.nabla.wapp.shared.slot.ISlot2;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 import com.nabla.wapp.shared.slot.ISlotManager2;
 
-/**
- * @author nabla
- *
- */
+
 public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<CompanyFixedAssetCategoryDialog.IDisplay> {
 
 	private static final Logger	log = LoggerFactory.getLog(CompanyFixedAssetCategoryDialog.class);

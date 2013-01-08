@@ -21,10 +21,7 @@ import com.nabla.dc.shared.model.fixed_asset.DisposalTypes;
 import com.nabla.wapp.client.model.field.EnumField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
 
-/**
- * @author nabla
- *
- */
+
 public class DisposalTypeField extends EnumField {
 
 	public DisposalTypeField(final String name, final FieldAttributes... attributes) {

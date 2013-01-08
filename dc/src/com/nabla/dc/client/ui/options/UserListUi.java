@@ -35,10 +35,7 @@ import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class UserListUi extends BindedTabDisplay<Tab> implements UserList.IDisplay, ICurrentRecordProvider<UserRecord> {
 
 	interface Binder extends UiBinder<Tab, UserListUi> {}

@@ -28,10 +28,7 @@ import com.nabla.wapp.shared.command.FetchRoleDefinition;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleDefinitionTreeModel extends HomogeneousTreeModel<TreeNode> {
 
 	static public final String	INCLUDE = "included";

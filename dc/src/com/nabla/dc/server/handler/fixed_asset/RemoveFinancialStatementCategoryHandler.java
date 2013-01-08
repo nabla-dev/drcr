@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.fixed_asset.RemoveFinancialStatementCategory;
 import com.nabla.dc.shared.model.fixed_asset.IFinancialStatementCategory;
 import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveFinancialStatementCategoryHandler extends AbstractSoftRemoveHandler<RemoveFinancialStatementCategory> {
 
 	public RemoveFinancialStatementCategoryHandler() {

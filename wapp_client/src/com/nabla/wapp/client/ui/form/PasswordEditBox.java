@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 
 
-/**
- * @author nabla
- *
- */
+
 public class PasswordEditBox extends UiBinderFormTextItemSpeudoWidget<PasswordItem> {
 
 	public PasswordEditBox() {

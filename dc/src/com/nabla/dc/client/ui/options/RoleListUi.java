@@ -27,10 +27,7 @@ import com.nabla.wapp.client.ui.ListGrid;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleListUi extends BindedTabDisplay<Tab> implements RoleList.IDisplay {
 
 	interface Binder extends UiBinder<Tab, RoleListUi> {}

@@ -22,10 +22,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class TaxRateRecord extends BasicListGridRecord implements ITaxRate {
 
 	public static final IRecordFactory<TaxRateRecord>	factory = new IRecordFactory<TaxRateRecord>() {

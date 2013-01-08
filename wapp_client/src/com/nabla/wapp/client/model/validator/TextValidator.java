@@ -19,10 +19,7 @@ package com.nabla.wapp.client.model.validator;
 import com.nabla.wapp.shared.validator.RegexConstraint;
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
-/**
- * @author nabla
- *
- */
+
 public class TextValidator extends ValidatorList {
 
 	private static final long serialVersionUID = 1L;

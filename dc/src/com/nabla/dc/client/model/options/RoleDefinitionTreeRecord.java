@@ -20,10 +20,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.nabla.wapp.client.model.data.BasicRecord;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleDefinitionTreeRecord extends BasicRecord {
 
 	public RoleDefinitionTreeRecord(JavaScriptObject js) {

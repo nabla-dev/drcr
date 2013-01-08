@@ -17,10 +17,6 @@
 package com.nabla.wapp.client.model.data;
 
 
-/**
- * @author nabla64
- *
- */
 public interface IValueStore<T> {
 	T get();
 }

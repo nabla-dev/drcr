@@ -26,6 +26,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,12 +43,11 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.IDatabase;
 import com.nabla.wapp.server.database.IReadWriteDatabase;
 import com.nabla.wapp.server.general.Assert;
+import com.nabla.wapp.server.general.UserSession;
+import com.nabla.wapp.server.general.Util;
 
 
-/**
- * @author nabla
- *
- */
+
 @Singleton
 public class ImportService extends UploadAction {
 
@@ -60,6 +62,12 @@ public class ImportService extends UploadAction {
 
 	@Override
 	public String executeAction(final HttpServletRequest request, final List<FileItem> sessionFiles) throws UploadActionException {
+		final UserSession userSession = UserSession.load(request);
+		if (userSession == null) {
+			if (log.isTraceEnabled())
+				log.trace("missing user session");
+			throw new UploadActionException("permission denied");
+		}
 		Assert.state(sessionFiles.size() == 1);
 		try {
 			for (FileItem file : sessionFiles) {
@@ -75,12 +83,13 @@ public class ImportService extends UploadAction {
 				final Connection conn = db.getConnection();
 				try {
 					final PreparedStatement stmt = conn.prepareStatement(
-"INSERT INTO import_data (field_name, file_name, content_type, length, content) VALUES(?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
+"INSERT INTO import_data (field_name, file_name, content_type, length, content, userSessionId) VALUES(?,?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
 					try {
 						stmt.setString(1, file.getFieldName());
 						stmt.setString(2, file.getName());
 						stmt.setString(3, file.getContentType());
 						stmt.setLong(4, file.getSize());
+						stmt.setString(6, userSession.getSessionId());
 						final InputStream fs = file.getInputStream();
 						try {
 		   					stmt.setBinaryStream(5, fs);
@@ -110,6 +119,12 @@ public class ImportService extends UploadAction {
 			   			Database.close(stmt);
 			   		}
 				} finally {
+					// remove any orphan import records i.e. older than 48h (beware of timezone!)
+					final Calendar dt = Util.dateToCalendar(new Date());
+					dt.add(GregorianCalendar.DATE, -2);
+					try {
+						Database.executeUpdate(conn, "DELETE FROM import_data WHERE created < ?;", Util.calendarToSqlDate(dt));
+					} catch (final SQLException __) {}
 					Database.close(conn);
 				}
 			}

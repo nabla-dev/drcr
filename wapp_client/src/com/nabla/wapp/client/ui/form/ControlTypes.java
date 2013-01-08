@@ -34,10 +34,7 @@ import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
-/**
- * @author nabla
- *
- */
+
 public enum ControlTypes {
 
 	READ_ONLY_TEXT_EDIT_BOX { @Override FormItem create(@SuppressWarnings("unused") final DataSourceField field) { return new StaticTextItem(); } },

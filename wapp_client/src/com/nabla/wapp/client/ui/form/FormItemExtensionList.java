@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.nabla.wapp.client.ui.UiBinderSpeudoWidgetList;
 
 
-/**
- * @author nabla
- *
- */
+
 public class FormItemExtensionList extends UiBinderSpeudoWidgetList {
 
 	private String	buddyFieldName;

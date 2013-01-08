@@ -21,10 +21,7 @@ import com.nabla.wapp.shared.slot.ISlot3;
 import com.nabla.wapp.shared.slot.ISlotIterator;
 import com.nabla.wapp.shared.slot.SlotManager3;
 
-/**
- * @author nabla
- *
- */
+
 public class Signal3<T0, T1, T2> extends SlotManager3<T0, T1, T2> implements ISignal3<T0, T1, T2> {
 
 	@Override

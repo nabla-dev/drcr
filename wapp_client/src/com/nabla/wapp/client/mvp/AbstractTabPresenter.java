@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.client.mvp;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractTabPresenter<D extends ITabDisplay> extends AbstractPresenter<D> {
 
 	protected AbstractTabPresenter(D display) {

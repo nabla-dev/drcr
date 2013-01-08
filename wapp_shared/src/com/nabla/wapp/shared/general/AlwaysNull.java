@@ -20,10 +20,6 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * @author nabla64
- *
- */
 @Documented
 @Retention(value=RetentionPolicy.RUNTIME)
 public @interface AlwaysNull {}

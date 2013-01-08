@@ -18,10 +18,7 @@ package com.nabla.wapp.server.dispatch;
 
 import com.google.inject.Singleton;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractHandlerModule extends AbstractHandlerSubModule {
 
 	@Override

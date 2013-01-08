@@ -22,10 +22,7 @@ import com.nabla.wapp.shared.command.CloneUser;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class CloneUserModel extends AddUserModel {
 
 	private final Integer	fromUserId;

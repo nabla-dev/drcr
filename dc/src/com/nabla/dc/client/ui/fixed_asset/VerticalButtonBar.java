@@ -28,10 +28,7 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
 
-/**
- * @author nabla
- *
- */
+
 public class VerticalButtonBar extends UiBinderFormItemSpeudoWidgetList<CanvasItem> implements IHasWidgets {
 
 	protected final VLayout	buttons = new VLayout();

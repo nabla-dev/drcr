@@ -26,10 +26,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.general.Util;
 
-/**
- * @author nabla
- *
- */
+
 public class UiBinderSpeudoWidgetList extends Widget implements HasWidgets {
 
 	private static final Logger	logger = LoggerFactory.getLog(UiBinderSpeudoWidgetList.class);

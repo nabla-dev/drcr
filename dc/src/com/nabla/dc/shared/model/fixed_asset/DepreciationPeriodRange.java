@@ -18,10 +18,7 @@ package com.nabla.dc.shared.model.fixed_asset;
 
 import com.nabla.wapp.shared.dispatch.IResult;
 
-/**
- * @author nabla
- *
- */
+
 public class DepreciationPeriodRange implements IResult {
 
 	private int	min;

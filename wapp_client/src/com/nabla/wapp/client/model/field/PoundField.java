@@ -25,10 +25,6 @@ import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
-/**
- * @author nabla64
- *
- */
 public class PoundField extends DataSourceField {
 
 	public PoundField(final String name, final FieldAttributes... attributes) {

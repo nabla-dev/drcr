@@ -18,10 +18,6 @@ package com.nabla.wapp.server.csv;
 
 import java.lang.reflect.Field;
 
-/**
- * @author nabla64
- *
- */
 public class StringSetter implements ICsvSetter {
 	
 	@Override

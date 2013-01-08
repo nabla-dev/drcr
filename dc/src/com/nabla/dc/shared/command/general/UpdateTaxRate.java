@@ -22,10 +22,7 @@ import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 public class UpdateTaxRate extends AddTaxRate {
 
 	@IRecordField(id=true)

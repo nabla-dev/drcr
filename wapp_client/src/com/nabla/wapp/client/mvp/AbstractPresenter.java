@@ -27,10 +27,6 @@ import com.nabla.wapp.client.general.Util;
 import com.nabla.wapp.shared.slot.IBasicSlot;
 import com.nabla.wapp.shared.slot.IBasicSlotManager;
 
-/**
- * @author nabla64
- *
- */
 public abstract class AbstractPresenter<D extends IDisplay> implements IPresenter {
 
 	private static final Logger				logger = LoggerFactory.getLog(AbstractPresenter.class);

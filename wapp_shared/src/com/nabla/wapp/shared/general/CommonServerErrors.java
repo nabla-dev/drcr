@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.general;
 
-/**
- * @author nabla
- *
- */
+
 public enum CommonServerErrors {
 	INTERNAL_ERROR,
 	ACCESS_DENIED,

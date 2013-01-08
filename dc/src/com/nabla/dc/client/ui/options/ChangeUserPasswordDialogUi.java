@@ -26,10 +26,7 @@ import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.shared.model.IUser;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ChangeUserPasswordDialogUi extends BindedModalDialog implements ChangeUserPasswordDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ChangeUserPasswordDialogUi> {}

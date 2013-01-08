@@ -29,10 +29,7 @@ import com.nabla.wapp.client.model.field.TextField;
 import com.nabla.wapp.shared.dispatch.IRecordAction;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
-/**
- * @author nabla
- *
- */
+
 public class AddCompanyModel extends CModel<AddCompanyRecord> {
 
 	static public class Fields {

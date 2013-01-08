@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.client.mvp;
 
-/**
- * @author nabla64
- *
- */
 public abstract class AbstractMainPresenter<D extends IMainDisplay> extends AbstractPresenter<D> implements ITopPresenter {
 
 	protected AbstractMainPresenter(D display) {

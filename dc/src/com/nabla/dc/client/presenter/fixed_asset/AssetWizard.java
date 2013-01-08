@@ -37,10 +37,7 @@ import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetWizard extends AbstractWizardPresenter<IWizardDisplay> {
 
 	public class SaveHandler extends SaveValuesHandler {

@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.viewer.DetailViewerField;
 
-/**
- * @author nabla
- *
- */
+
 public class TileGridField extends Widget {
 
 	protected final DetailViewerField	impl = new DetailViewerField();

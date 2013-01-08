@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.command.SaveListGridState;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
-/**
- * @author nabla
- *
- */
+
 public class SaveListGridStateHandler extends AbstractHandler<SaveListGridState, VoidResult> {
 
 	public SaveListGridStateHandler() {

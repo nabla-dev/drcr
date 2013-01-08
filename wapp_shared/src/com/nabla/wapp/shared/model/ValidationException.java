@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.dispatch.ActionException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
 
-/**
- * @author nabla
- *
- */
+
 public class ValidationException extends ActionException implements IErrorList<Void> {
 
 	private static final long		serialVersionUID = 1L;

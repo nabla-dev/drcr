@@ -18,11 +18,6 @@ package com.nabla.dc.client.ui;
 
 import com.google.gwt.i18n.client.Constants;
 
-
-/**
- * @author nabla
- *
- */
 public interface ITextResource extends Constants {
 
 	@DefaultStringValue("Dr | (Cr)")
@@ -67,4 +62,6 @@ public interface ITextResource extends Constants {
 	@DefaultStringValue("This asset has already been disposed. Do you want to revert the disposal of this asset? Click 'No' to edit disposal details.")
 	String revertFixedAssetDisposal();
 
+	@DefaultStringArrayValue({"Sales Ledger","Purchase Ledger","Nominal Ledger","Bank","Asset","Stock","Settings"})
+	String[] ledgers();
 }

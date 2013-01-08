@@ -24,10 +24,7 @@ import com.smartgwt.client.types.State;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class TransferImgButton extends com.smartgwt.client.widgets.TransferImgButton implements ICommandUi {
 
 	ICommand	cmd = null;

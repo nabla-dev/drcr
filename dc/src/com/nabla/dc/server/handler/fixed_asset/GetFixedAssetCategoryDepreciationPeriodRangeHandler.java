@@ -28,10 +28,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla
- *
- */
+
 public class GetFixedAssetCategoryDepreciationPeriodRangeHandler extends AbstractHandler<GetFixedAssetCategoryDepreciationPeriodRange, DepreciationPeriodRange> {
 
 	@Override

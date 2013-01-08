@@ -23,10 +23,7 @@ import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class FixedAssetCategoryRecord extends BasicListGridRecord implements IFixedAssetCategory {
 
 	public static final IRecordFactory<FixedAssetCategoryRecord>	factory = new IRecordFactory<FixedAssetCategoryRecord>() {

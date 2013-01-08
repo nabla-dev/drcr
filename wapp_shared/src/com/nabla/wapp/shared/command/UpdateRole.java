@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.model.IRole;
 import com.nabla.wapp.shared.model.IRoleTable;
 import com.nabla.wapp.shared.validator.ValidatorContext;
 
-/**
- * @author nabla
- *
- */
+
 @IRecordTable(name=IRoleTable.TABLE)
 public class UpdateRole implements IRecordAction<StringResult>, IRole {
 

@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.nabla.wapp.client.ui.ColumnTree;
 
-/**
- * @author nabla
- *
- */
+
 public class ColumnTreeItem extends ColumnTree {
 
 	private String		name;

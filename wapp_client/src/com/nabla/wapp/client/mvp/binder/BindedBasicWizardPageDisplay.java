@@ -21,10 +21,7 @@ import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.client.ui.form.Form;
 import com.smartgwt.client.widgets.form.ValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class BindedBasicWizardPageDisplay extends BindedWizardPageDisplay<WizardPage> {
 
 	@UiField(provided=true)

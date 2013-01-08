@@ -32,10 +32,7 @@ import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.StringSet;
 
-/**
- * @author nabla
- *
- */
+
 public class StatementFormat {
 
 	private static final Log							log = LogFactory.getLog(StatementFormat.class);

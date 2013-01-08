@@ -28,10 +28,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.shared.auth.LoginRequiredException;
 
-/**
- * @author nabla
- *
- */
+
 public class SecureRequestBuilder implements RequestCallback {
 
 	private static final Logger			logger = LoggerFactory.getLog(SecureRequestBuilder.class);

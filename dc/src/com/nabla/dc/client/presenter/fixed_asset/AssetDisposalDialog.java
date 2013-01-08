@@ -21,10 +21,7 @@ import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlot1;
 
-/**
- * @author nabla
- *
- */
+
 public class AssetDisposalDialog extends AbstractTopPresenter<AssetDisposalDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {}

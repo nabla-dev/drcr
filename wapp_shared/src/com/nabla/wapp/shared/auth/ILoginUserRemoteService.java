@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.auth;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-/**
- * @author nabla
- *
- */
+
 @RemoteServiceRelativePath("login")
 public interface ILoginUserRemoteService extends RemoteService {
 

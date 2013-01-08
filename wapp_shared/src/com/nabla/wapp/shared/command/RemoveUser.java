@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.shared.command;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveUser extends AbstractRemove {
 
 	private static final long serialVersionUID = 1L;

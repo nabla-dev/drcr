@@ -18,10 +18,7 @@ package com.nabla.wapp.client.mvp;
 
 import com.nabla.wapp.client.ui.IWizardPage;
 
-/**
- * @author nabla
- *
- */
+
 public interface IWizardDisplay extends ITopDisplay {
 	void displayNextPage(final IWizardPage page);
 	void displayErroneousPage();

@@ -22,10 +22,7 @@ import com.nabla.wapp.client.mvp.IWizardDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
 import com.nabla.wapp.client.ui.ModalDialog;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAssetsWizardUi extends BindedWizardDialog implements IWizardDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ImportAssetsWizardUi> {}

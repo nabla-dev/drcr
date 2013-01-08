@@ -21,10 +21,7 @@ import com.google.inject.internal.UniqueAnnotations;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IResult;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractHandlerSubModule extends AbstractModule {
 
 	protected <A extends IAction<R>, R extends IResult> void bindHandler(Class<? extends IActionHandler<A, R>> handlerClass ) {

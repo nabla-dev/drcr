@@ -20,10 +20,6 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 
 
-/**
- * @author nabla64
- *
- */
 public class TreeStringIdField extends DataSourceTextField {
 
 	public static final String	NAME = IdField.NAME;

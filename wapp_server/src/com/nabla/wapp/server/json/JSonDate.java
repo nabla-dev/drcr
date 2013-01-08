@@ -21,10 +21,6 @@ import java.sql.Date;
 
 import net.minidev.json.JSONStreamAware;
 
-/**
- * @author nabla64
- *
- */
 public class JSonDate implements JSONStreamAware {
 
 	private final Date		value;

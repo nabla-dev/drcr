@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.print.ReportFormats;
 
 
-/**
- * @author nabla
- *
- */
+
 public class GetBuiltInReport extends ReportOptions implements IAction<IntegerResult> {
 
 	private String					internalName;

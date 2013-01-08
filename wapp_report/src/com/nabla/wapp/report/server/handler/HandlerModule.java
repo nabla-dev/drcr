@@ -20,10 +20,7 @@ import com.google.inject.Singleton;
 import com.nabla.wapp.report.server.ReportManager;
 import com.nabla.wapp.server.dispatch.AbstractHandlerSubModule;
 
-/**
- * @author nabla
- *
- */
+
 public class HandlerModule extends AbstractHandlerSubModule {
 
 	@Override
@@ -31,15 +28,17 @@ public class HandlerModule extends AbstractHandlerSubModule {
 		bind(ReportManager.class).in(Singleton.class);
 
 		bindHandler(FetchReportListHandler.class);
+		bindHandler(FetchReportRecordHandler.class);
 		bindHandler(FetchUserReportListHandler.class);
 		bindHandler(FetchReportPermissionsComboBoxHandler.class);
 
 		bindHandler(GetBuiltInReportHandler.class);
-		/*
-		 *
-		bindHandler(RemoveReportHandler.class);
+
 		bindHandler(AddReportHandler.class);
 		bindHandler(UpdateReportHandler.class);
+		bindHandler(RemoveReportHandler.class);
+		bindHandler(UpgradeReportHandler.class);
+		/*
 
 		bindHandler(GetSimpleReportHandler.class);
 		bindHandler(GetReportHandler.class);

@@ -27,10 +27,7 @@ import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.client.ui.form.UploadEditBox;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ChangeLogoDialogUi extends BindedModalDialog implements ChangeLogoDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, ChangeLogoDialogUi> {}

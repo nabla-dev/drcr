@@ -18,10 +18,7 @@ package com.nabla.dc.client.model.company;
 
 import com.nabla.wapp.client.model.WizardValuesManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAccountsValuesManager extends WizardValuesManager<ImportAccountsRecord> {
 
 	public ImportAccountsValuesManager(final Integer companyId) {

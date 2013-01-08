@@ -29,10 +29,7 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class AddCompanyDialogUi extends BindedModalDialog implements AddCompanyDialog.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, AddCompanyDialogUi> {}

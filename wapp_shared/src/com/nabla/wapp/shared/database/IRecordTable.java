@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.database;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * @author nabla
- *
- */
+
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IRecordTable {
 	String name();

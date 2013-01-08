@@ -31,10 +31,7 @@ import com.nabla.wapp.shared.slot.ISlotManager1;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class WorkspaceUi extends BindedCanvasDisplay<VLayout> implements Workspace.IDisplay {
 
 	interface Binder extends UiBinder<VLayout, WorkspaceUi> {}

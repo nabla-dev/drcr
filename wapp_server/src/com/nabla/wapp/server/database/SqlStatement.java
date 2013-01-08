@@ -18,10 +18,7 @@ package com.nabla.wapp.server.database;
 
 import java.lang.reflect.Field;
 
-/**
- * @author nabla
- *
- */
+
 public class SqlStatement extends StatementFormat {
 
 	public static IStatementParameter createParameter(final Field field) {

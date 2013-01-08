@@ -28,10 +28,6 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.print.ReportFormats;
 
-/**
- * @author nabla64
- *
- */
 public class Report {
 
 	private final String			name;
@@ -50,10 +46,10 @@ public class Report {
 		} catch (IOException __) {}
 	}
 
-	public Integer save(final Connection conn, final Boolean outputAsFile) throws SQLException, InternalErrorException {
+	public Integer save(final Connection conn, final Boolean outputAsFile, final String userSessionId) throws SQLException, InternalErrorException {
 		final Integer id = Database.addRecord(conn,
-"INSERT INTO export (name,content_type,output_as_file,content) VALUES(?,?,?,?);",
-name, format.getMimeType(), outputAsFile, impl);
+"INSERT INTO export (name,content_type,output_as_file,content,userSessionId) VALUES(?,?,?,?,?);",
+name, format.getMimeType(), outputAsFile, impl, userSessionId);
 		if (id == null)
 			Util.throwInternalErrorException("fail to save report to be exported '" + name + "'");
 		return id;

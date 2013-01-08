@@ -16,10 +16,6 @@
 */
 package com.nabla.wapp.client.general;
 
-/**
- * @author nabla64
- *
- */
 public abstract class Util {
 
 	/**

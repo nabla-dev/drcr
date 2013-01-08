@@ -19,10 +19,7 @@ package com.nabla.wapp.shared.auth;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla
- *
- */
+
 public class AccessDeniedException extends DispatchException {
 
 	private static final long		serialVersionUID = 1L;

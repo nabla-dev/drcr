@@ -19,10 +19,7 @@ package com.nabla.dc.client.ui;
 import com.google.gwt.uibinder.client.UiField;
 import com.nabla.wapp.client.mvp.binder.BindedWizardDialog;
 
-/**
- * @author nabla
- *
- */
+
 public class WizardDialog extends BindedWizardDialog {
 
 	@UiField(provided=true)

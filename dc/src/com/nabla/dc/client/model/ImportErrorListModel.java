@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportErrorListModel extends CModel<Record> {
 
 	static public class Fields implements IImportError {

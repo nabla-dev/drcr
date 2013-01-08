@@ -24,10 +24,7 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.SummaryFunctionType;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
-/**
- * @author nabla
- *
- */
+
 public class ListGridColumn extends Widget {
 
 	protected final ListGridField	impl = new ListGridField();

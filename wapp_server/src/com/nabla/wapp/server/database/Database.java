@@ -29,10 +29,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.nabla.wapp.server.general.Assert;
 
-/**
- * @author nabla
- *
- */
+
 public class Database implements IDatabase {
 
 	public static final String		PRODUCTION_MODE = "production_mode";

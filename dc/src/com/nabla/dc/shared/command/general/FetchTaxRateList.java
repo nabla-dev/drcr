@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.general;
 
 import com.nabla.wapp.shared.command.AbstractFetch;
 
-/**
- * @author nabla
- *
- */
+
 public class FetchTaxRateList extends AbstractFetch {
 
 }

@@ -37,10 +37,6 @@ import org.eclipse.birt.report.model.api.ModuleHandle;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla64
- *
- */
 public class StreamResolvingResourceLocator implements IResourceLocator {
 
 	private static final Log	log = LogFactory.getLog(StreamResolvingResourceLocator.class);

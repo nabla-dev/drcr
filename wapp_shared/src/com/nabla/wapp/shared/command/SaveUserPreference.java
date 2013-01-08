@@ -20,10 +20,7 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla
- *
- */
+
 public class SaveUserPreference implements IAction<VoidResult> {
 
 	private @Nullable Integer	objectId;

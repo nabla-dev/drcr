@@ -18,10 +18,6 @@ package org.eclipse.birt.report.engine.emitter.csv;
 
 import org.eclipse.birt.report.engine.api.IRenderOption;
 
-/**
- * @author nabla64
- *
- */
 public interface ICsvRenderOption extends IRenderOption {
 
 	static final String 	OUTPUT_FORMAT_CSV = "csv";

@@ -26,10 +26,6 @@ import java.util.TreeMap;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 public class SaveContext {
 
 	private final Map<String, Integer>		privilegeIds;

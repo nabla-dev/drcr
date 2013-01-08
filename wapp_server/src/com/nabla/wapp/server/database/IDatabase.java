@@ -19,10 +19,7 @@ package com.nabla.wapp.server.database;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * @author nabla
- *
- */
+
 public interface IDatabase {
 
 	Connection getConnection() throws SQLException;

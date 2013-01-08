@@ -23,10 +23,7 @@ import com.nabla.wapp.client.model.IWizardRecord;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class SplitAssetRecord extends BasicListGridRecord implements ISplitAsset, IWizardRecord {
 
 	public static final IRecordFactory<SplitAssetRecord>	factory = new IRecordFactory<SplitAssetRecord>() {

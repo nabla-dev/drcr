@@ -18,11 +18,6 @@ package com.nabla.wapp.report.shared.command;
 
 import com.nabla.wapp.shared.command.AbstractRemove;
 
-
-/**
- * @author nabla
- *
- */
 public class RemoveReport extends AbstractRemove {
 
 	private static final long serialVersionUID = 1L;

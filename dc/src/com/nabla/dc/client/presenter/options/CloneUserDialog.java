@@ -24,10 +24,7 @@ import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class CloneUserDialog extends AbstractTopPresenter<CloneUserDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {

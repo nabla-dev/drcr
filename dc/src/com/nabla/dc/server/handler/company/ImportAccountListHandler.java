@@ -47,10 +47,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAccountListHandler extends AbstractHandler<ImportAccountList, StringResult> {
 
 	private static final Log		log = LogFactory.getLog(ImportAccountListHandler.class);
@@ -81,12 +78,18 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 
 	private boolean add(final ImportAccountList cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		final PreparedStatement stmtFile = StatementFormat.prepare(ctx.getReadConnection(),
-"SELECT content FROM import_data WHERE id=?;", cmd.getBatchId());
+"SELECT content, userSessionId FROM import_data WHERE id=?;", cmd.getBatchId());
 		try {
 			final ResultSet rs = stmtFile.executeQuery();
 			try {
 				if (!rs.next()) {
 					errors.add(CommonServerErrors.NO_DATA);
+					return false;
+				}
+				if (!ctx.getSessionId().equals(rs.getString("userSessionId"))) {
+					if (log.isTraceEnabled())
+						log.trace("invalid user session ID");
+					errors.add(CommonServerErrors.ACCESS_DENIED);
 					return false;
 				}
 				final Connection conn = ctx.getWriteConnection();

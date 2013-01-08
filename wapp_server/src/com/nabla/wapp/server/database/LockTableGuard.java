@@ -20,10 +20,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * @author nabla64
- *
- */
 public class LockTableGuard {
 
 	private final Statement lockStmt;

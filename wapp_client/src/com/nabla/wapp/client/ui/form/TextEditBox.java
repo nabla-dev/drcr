@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui.form;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 
 
-/**
- * @author nabla
- *
- */
+
 public class TextEditBox extends UiBinderFormTextItemSpeudoWidget<TextItem> {
 
 	public TextEditBox() {

@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.toolbar.ToolStripSpacer;
 
-/**
- * @author nabla
- *
- */
+
 public class ToolbarSpacer extends Widget {
 
 	private final ToolStripSpacer	impl = new ToolStripSpacer(Resource.bundle.style().DIALOG_DEFAULT_SPACING());

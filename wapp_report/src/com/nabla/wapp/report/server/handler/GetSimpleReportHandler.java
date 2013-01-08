@@ -45,10 +45,7 @@ import com.nabla.wapp.shared.auth.AccessDeniedException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
-/**
- * @author nabla
- *
- */
+
 public class GetSimpleReportHandler extends AbstractHandler<GetSimpleReport, SimpleReportResult> {
 
 	private static final Log						log = LogFactory.getLog(GetSimpleReportHandler.class);

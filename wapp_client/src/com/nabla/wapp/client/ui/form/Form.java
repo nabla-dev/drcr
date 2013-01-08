@@ -53,10 +53,7 @@ import com.smartgwt.client.widgets.form.events.SubmitValuesEvent;
 import com.smartgwt.client.widgets.form.events.SubmitValuesHandler;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class Form extends com.smartgwt.client.widgets.form.DynamicForm implements IHasWidgets, IPostCreateProcessing {
 
 	public enum Operations {

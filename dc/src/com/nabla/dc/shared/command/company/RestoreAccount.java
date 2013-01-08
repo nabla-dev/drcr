@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.company;
 
 import com.nabla.wapp.shared.command.AbstractRestore;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreAccount extends AbstractRestore {
 	private static final long serialVersionUID = 1L;
 }

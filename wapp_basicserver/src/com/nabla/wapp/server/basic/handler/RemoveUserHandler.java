@@ -26,10 +26,7 @@ import com.nabla.wapp.shared.command.RemoveUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveUserHandler extends AbstractHandler<RemoveUser, VoidResult> {
 
 	public RemoveUserHandler() {

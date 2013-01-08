@@ -18,10 +18,6 @@ package com.nabla.wapp.client.model.field;
 
 import com.smartgwt.client.data.fields.DataSourceImageField;
 
-/**
- * @author nabla64
- *
- */
 public class ImageField extends DataSourceImageField {
 
 	public ImageField(final String name, final FieldAttributes... attributes) {

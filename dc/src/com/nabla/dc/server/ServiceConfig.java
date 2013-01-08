@@ -23,10 +23,7 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.nabla.dc.server.handler.HandlerModule;
 
-/**
- * @author nabla
- *
- */
+
 public class ServiceConfig extends GuiceServletContextListener {
 
 	@Override

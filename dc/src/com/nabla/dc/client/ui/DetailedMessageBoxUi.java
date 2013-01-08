@@ -29,10 +29,7 @@ import com.smartgwt.client.widgets.HTMLPane;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class DetailedMessageBoxUi extends BindedModalDialog implements DetailedMessageBox.IDisplay {
 
 	interface Binder extends UiBinder<ModalDialog, DetailedMessageBoxUi> {}

@@ -19,10 +19,7 @@ package com.nabla.dc.client.ui;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
-/**
- * @author nabla
- *
- */
+
 public interface IResource extends ClientBundle {
 
 	public interface IApplicationStyle extends CssResource {

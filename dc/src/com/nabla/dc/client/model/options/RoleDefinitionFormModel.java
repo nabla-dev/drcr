@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.general.SelectionDelta;
 import com.nabla.wapp.shared.model.IRole;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class RoleDefinitionFormModel extends CModel<RoleDefinitionRecord> {
 
 	static public class Fields {

@@ -38,10 +38,7 @@ import com.nabla.wapp.shared.general.ArgumentList;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class InsertStatement<T> extends SqlStatement {
 
 	private static final Log	log = LogFactory.getLog(InsertStatement.class);

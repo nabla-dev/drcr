@@ -18,10 +18,7 @@ package com.nabla.wapp.shared.auth;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-/**
- * @author nabla
- *
- */
+
 public interface ILoginUserRemoteServiceAsync {
 
 	void execute(String userName, String password, String locale, AsyncCallback<String> callback);

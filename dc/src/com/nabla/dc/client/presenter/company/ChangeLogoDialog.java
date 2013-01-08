@@ -20,10 +20,7 @@ import com.nabla.dc.client.ui.company.ChangeLogoDialogUi;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 
-/**
- * @author nabla
- *
- */
+
 public class ChangeLogoDialog extends AbstractTopPresenter<ChangeLogoDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {

@@ -20,10 +20,6 @@ import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
 
-/**
- * @author nabla64
- *
- */
 public class SaveListGridState implements IAction<VoidResult> {
 
 	private String		listGridName;

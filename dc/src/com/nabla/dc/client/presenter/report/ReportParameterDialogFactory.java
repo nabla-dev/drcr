@@ -22,10 +22,6 @@ import com.nabla.dc.client.ui.report.ReportParameterDialogUi;
 import com.nabla.wapp.report.client.IReportParameterBinder;
 import com.nabla.wapp.report.client.presenter.ReportParameterDialog;
 
-/**
- * @author nabla64
- *
- */
 public class ReportParameterDialogFactory implements ReportParameterDialog.IFactory {
 
 	@Override

@@ -28,10 +28,6 @@ import net.minidev.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * @author nabla64
- *
- */
 public class SqlColumn {
 
 	private static final Log					log = LogFactory.getLog(JsonResponse.class);

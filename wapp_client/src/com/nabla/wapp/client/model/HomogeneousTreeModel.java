@@ -21,10 +21,6 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.util.JSOHelper;
 import com.smartgwt.client.widgets.tree.TreeNode;
 
-/**
- * @author nabla64
- *
- */
 public abstract class HomogeneousTreeModel<R extends TreeNode> extends CModel<R> {
 
 	protected HomogeneousTreeModel(final IRecordFactory<R> recordFactory) {

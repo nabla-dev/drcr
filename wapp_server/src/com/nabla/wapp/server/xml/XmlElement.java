@@ -22,10 +22,6 @@ import org.simpleframework.xml.core.Validate;
 
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla64
- *
- */
 public abstract class XmlElement<C extends IImportContext> {
 
 	@Validate

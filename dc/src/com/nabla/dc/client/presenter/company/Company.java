@@ -32,10 +32,7 @@ import com.nabla.wapp.client.mvp.TabManager;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class Company extends AbstractTabPresenter<Company.IDisplay> implements ITabManager {
 
 	public interface ICommandSet extends IBasicCommandSet {

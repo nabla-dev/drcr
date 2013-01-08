@@ -24,10 +24,7 @@ import com.nabla.wapp.client.model.data.BasicRecord;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportAccountsRecord extends BasicRecord implements IImportAccounts, IWizardRecord {
 
 	public static final IRecordFactory<ImportAccountsRecord>	factory = new IRecordFactory<ImportAccountsRecord>() {

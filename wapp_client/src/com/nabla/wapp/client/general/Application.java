@@ -27,10 +27,7 @@ import com.nabla.wapp.client.server.IUserSessionManager;
 import com.nabla.wapp.client.ui.IMessageBox;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class Application implements IApplication, GWT.UncaughtExceptionHandler {
 
 	private static final Logger		log = LoggerFactory.getLog(Application.class);

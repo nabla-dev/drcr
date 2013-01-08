@@ -174,7 +174,7 @@ log.fine(request.getRequestId() + " response = \n" + result.getRecords());
 
 	private void onUpdate(final DSRequest request) {
 		if (recordFactory == null) {
-			log.warning("unimplemented data source operation '" + request.getOperationType().toString() + "'");
+			log.warning("no record factory provided for data source operation '" + request.getOperationType().toString() + "'");
 			onResponse(request, new Response(request, Response.STATUS_SUCCESS));
 		} else {
 			final IRecordAction<StringResult> cmd = getUpdateCommand(recordFactory.get(request.getData()));

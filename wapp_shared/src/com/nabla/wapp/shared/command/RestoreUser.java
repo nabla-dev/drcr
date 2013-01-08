@@ -17,10 +17,7 @@
 package com.nabla.wapp.shared.command;
 
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreUser extends AbstractRestore {
 
 	private static final long serialVersionUID = 1L;

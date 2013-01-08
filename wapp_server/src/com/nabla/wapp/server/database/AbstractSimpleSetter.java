@@ -17,10 +17,7 @@
 package com.nabla.wapp.server.database;
 
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractSimpleSetter implements IStatementSetter {
 
 	@Override

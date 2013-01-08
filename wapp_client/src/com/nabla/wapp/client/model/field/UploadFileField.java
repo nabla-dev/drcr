@@ -19,10 +19,6 @@ package com.nabla.wapp.client.model.field;
 
 import com.smartgwt.client.data.fields.DataSourceBinaryField;
 
-/**
- * @author nabla64
- *
- */
 public class UploadFileField extends DataSourceBinaryField {
 
 	public UploadFileField(final String name, final FieldAttributes... attributes) {

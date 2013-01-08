@@ -23,10 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 
-/**
- * @author nabla
- *
- */
+
 public class ExportAsMenuButton extends AbstractUiBinderWidgetFactory {
 
 	interface Binder extends UiBinder<MenuButton, ExportAsMenuButton> {}

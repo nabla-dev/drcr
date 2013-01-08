@@ -16,16 +16,23 @@
 */
 package com.nabla.dc.client.presenter.report;
 
+import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.report.ReportListUi;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
+import com.nabla.wapp.client.command.ICurrentRecordProvider;
 import com.nabla.wapp.client.command.IRequiredRole;
+import com.nabla.wapp.client.general.Application;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
+import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
+import com.nabla.wapp.report.client.model.ReportRecord;
 import com.nabla.wapp.report.shared.IReportPrivileges;
 import com.nabla.wapp.shared.slot.ISlot;
+import com.nabla.wapp.shared.slot.ISlot1;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class ReportList extends AbstractTabPresenter<ReportList.IDisplay> {
 
@@ -34,18 +41,18 @@ public class ReportList extends AbstractTabPresenter<ReportList.IDisplay> {
 		@IRequiredRole(IReportPrivileges.REPORT_REMOVE) HideableCommand removeRecord();
 		Command reload();
 		Command savePreferences();
-
 		@IRequiredRole(IReportPrivileges.REPORT_EDIT) CommandUiManager edit();
+		@IRequiredRole(IReportPrivileges.REPORT_EDIT) ReportRecordCommand upgradeReport();
 	}
 
 	public interface IDisplay extends ITabDisplay {
-/*		void addRecord(final Record record);
+		void addRecord(final Integer recordId);
+		void updateRecord(final Integer recordId);
 		void removeSelectedRecords(IListGridConfirmAction confirmUi);
-		*/
 		void reload();
 		void savePreferences();
 		ICommandSet getCommands();
-//		ICurrentRecordProvider<UserRecord> getCurrentRecordProvider();
+		ICurrentRecordProvider<ReportRecord> getCurrentRecordProvider();
 	}
 
 	public ReportList(final IDisplay display) {
@@ -62,9 +69,10 @@ public class ReportList extends AbstractTabPresenter<ReportList.IDisplay> {
 		final ICommandSet cmd = getDisplay().getCommands();
 		registerSlot(cmd.addRecord(), onAddRecord);
 		registerSlot(cmd.removeRecord(), onRemoveRecord);
-
 		registerSlot(cmd.reload(), onReload);
 		registerSlot(cmd.savePreferences(), onSavePreferences);
+		registerSlot(cmd.upgradeReport(), onUpgradeReport);
+		cmd.upgradeReport().setRecordProvider(getDisplay().getCurrentRecordProvider());
 
 		cmd.updateUi();
 	}
@@ -72,33 +80,33 @@ public class ReportList extends AbstractTabPresenter<ReportList.IDisplay> {
 	private final ISlot onAddRecord = new ISlot() {
 		@Override
 		public void invoke() {
+			new AddReportDialog(onRecordAdded).revealDisplay();
 		}
 	};
-/*
-	private final ISlot1<UserRecord> onRecordAdded = new ISlot1<UserRecord>() {
+
+	private final ISlot1<Integer> onRecordAdded = new ISlot1<Integer>() {
 		@Override
-		public void invoke(final UserRecord user) {
-			getDisplay().addRecord(user);
+		public void invoke(final Integer recordId) {
+			getDisplay().addRecord(recordId);
 		}
 	};
-*/
+
 	private final ISlot onRemoveRecord = new ISlot() {
 		@Override
 		public void invoke() {
-//			getDisplay().removeSelectedRecords(onConfirmRemoveRecord);
+			getDisplay().removeSelectedRecords(onConfirmRemoveRecord);
 		}
 	};
-/*
+
 	private final IListGridConfirmAction onConfirmRemoveRecord = new IListGridConfirmAction() {
 		@Override
 		public void confirmRemoveRecords(final ListGridRecord[] records, final com.google.gwt.user.client.Command onSuccess) {
-			final UserRecord user = new UserRecord(records[0]);
+			final ReportRecord record = new ReportRecord(records[0]);
 			Application.getInstance().getMessageBox().ask(
-					Resource.messages.confirmRemoveUsers(records.length, user.getName()),
+					Resource.messages.confirmRemoveReports(records.length, record.getName()),
 					onSuccess);
 		}
 	};
-*/
 
 	private final ISlot onReload = new ISlot() {
 		@Override
@@ -114,4 +122,17 @@ public class ReportList extends AbstractTabPresenter<ReportList.IDisplay> {
 		}
 	};
 
+	private final ISlot1<ReportRecord> onUpgradeReport = new ISlot1<ReportRecord>() {
+		@Override
+		public void invoke(final ReportRecord record) {
+			new UpgradeReportDialog(record.getId(), onRecordUpgraded).revealDisplay();
+		}
+	};
+
+	private final ISlot1<Integer> onRecordUpgraded = new ISlot1<Integer>() {
+		@Override
+		public void invoke(final Integer recordId) {
+			getDisplay().updateRecord(recordId);
+		}
+	};
 }

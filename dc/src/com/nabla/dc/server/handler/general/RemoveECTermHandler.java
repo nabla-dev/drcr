@@ -20,10 +20,7 @@ import com.nabla.dc.shared.command.general.RemoveECTerm;
 import com.nabla.dc.shared.model.IECTerm;
 import com.nabla.wapp.server.model.AbstractSoftRemoveHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class RemoveECTermHandler extends AbstractSoftRemoveHandler<RemoveECTerm> {
 
 	public RemoveECTermHandler() {

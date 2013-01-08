@@ -22,10 +22,7 @@ import com.nabla.wapp.client.mvp.IWizardPageDisplay;
 import com.nabla.wapp.client.mvp.binder.BindedStaticWizardPageDisplay;
 import com.nabla.wapp.client.ui.Html;
 
-/**
- * @author nabla
- *
- */
+
 public class SplitAssetWizardCompletedPageUi extends BindedStaticWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<Html, SplitAssetWizardCompletedPageUi> {}

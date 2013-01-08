@@ -43,10 +43,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla
- *
- */
+
 public class ImportSettingsHandler extends AbstractHandler<ImportSettings, StringResult> {
 
 	private static final Log	log = LogFactory.getLog(ImportSettingsHandler.class);
@@ -77,7 +74,7 @@ public class ImportSettingsHandler extends AbstractHandler<ImportSettings, Strin
 
 	private boolean add(final ImportSettings cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		UserPreference.save(ctx, null, IImportSettings.PREFERENCE_GROUP, IImportSettings.OVERWRITE, cmd.getOverwrite());
-		final XmlSettings settings = new Importer<ImportContext>(ctx.getReadConnection(), new ImportContext(errors)).read(XmlSettings.class, cmd.getBatchId());
+		final XmlSettings settings = new Importer<ImportContext>(ctx.getReadConnection(), new ImportContext(errors)).read(XmlSettings.class, cmd.getBatchId(), ctx.getSessionId());
 		if (settings == null || !errors.isEmpty())
 			return false;
 		final Connection conn = ctx.getWriteConnection();

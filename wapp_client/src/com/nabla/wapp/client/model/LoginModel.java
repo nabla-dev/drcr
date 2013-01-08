@@ -20,10 +20,7 @@ import com.nabla.wapp.client.model.field.UserNameField;
 import com.nabla.wapp.client.model.field.UserPasswordField;
 import com.nabla.wapp.shared.model.IUser;
 
-/**
- * @author nabla
- *
- */
+
 public class LoginModel extends Model {
 
 	static public class Fields {

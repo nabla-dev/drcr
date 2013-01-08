@@ -18,10 +18,6 @@ package com.nabla.wapp.client.command;
 
 import com.nabla.wapp.shared.signal.Signal;
 
-/**
- * @author nabla64
- *
- */
 public class Command extends Signal implements ICommand {
 
 	private final CommandUiManager	manager = new CommandUiManager();

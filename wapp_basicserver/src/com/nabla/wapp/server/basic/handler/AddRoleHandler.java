@@ -27,10 +27,7 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IRole;
 import com.nabla.wapp.shared.model.ValidationException;
 
-/**
- * @author nabla
- *
- */
+
 public class AddRoleHandler extends AbstractAddHandler<AddRole> {
 
 	@Override

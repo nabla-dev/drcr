@@ -31,10 +31,7 @@ import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
 import com.nabla.wapp.client.ui.Tab;
 import com.nabla.wapp.shared.command.AbstractRestore;
 
-/**
- * @author nabla
- *
- */
+
 public class FixedAssetCategoryListUi extends BindedTabDisplay<Tab> implements FixedAssetCategoryList.IDisplay {
 
 	interface Binder extends UiBinder<Tab, FixedAssetCategoryListUi> {}

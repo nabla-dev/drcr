@@ -21,10 +21,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.Assert;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 
-/**
- * @author nabla
- *
- */
+
 public abstract class AbstractFormItemIcon extends Widget implements HasText {
 
 	private String		name;

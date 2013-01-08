@@ -38,19 +38,15 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 public class Importer<C extends IImportContext> {
 
 	private static final Log			log = LogFactory.getLog(Importer.class);
-	public static final String			DEFAULT_SQL = "SELECT content FROM import_data WHERE id=?;";
+	public static final String		DEFAULT_SQL = "SELECT content, userSessionId FROM import_data WHERE id=?;";
 
 	private final Connection			conn;
 	private final String				sql;
 	private final IErrorList<Integer>	errors;
-	private final Persister				impl;
+	private final Persister			impl;
 
 	public <T> Importer(final Connection conn, final String sql, final C ctx) {
 		this.conn = conn;
@@ -63,13 +59,19 @@ public class Importer<C extends IImportContext> {
 		this(conn, DEFAULT_SQL, ctx);
 	}
 
-	public <T> T read(final Class<T> clazz, final Integer dataId)  throws DispatchException, SQLException {
+	public <T> T read(final Class<T> clazz, final Integer dataId, final String userSessionId)  throws DispatchException, SQLException {
 		final PreparedStatement stmt = StatementFormat.prepare(conn, sql, dataId);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
 				if (!rs.next()) {
 					errors.add(CommonServerErrors.NO_DATA);
+					return null;
+				}
+				if (!userSessionId.equals(rs.getString("userSessionId"))) {
+					if (log.isTraceEnabled())
+						log.trace("invalid user session ID");
+					errors.add(CommonServerErrors.ACCESS_DENIED);
 					return null;
 				}
 				try {

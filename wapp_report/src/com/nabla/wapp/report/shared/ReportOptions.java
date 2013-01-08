@@ -19,10 +19,6 @@ package com.nabla.wapp.report.shared;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.nabla.wapp.shared.print.ReportFormats;
 
-/**
- * @author nabla64
- *
- */
 public class ReportOptions implements IsSerializable {
 
 	private ReportFormats		format;

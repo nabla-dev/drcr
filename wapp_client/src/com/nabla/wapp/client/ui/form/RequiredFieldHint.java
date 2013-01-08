@@ -20,10 +20,7 @@ import com.nabla.wapp.client.ui.Resource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.fields.BlurbItem;
 
-/**
- * @author nabla
- *
- */
+
 public class RequiredFieldHint extends BlurbItem {
 
 	public RequiredFieldHint() {

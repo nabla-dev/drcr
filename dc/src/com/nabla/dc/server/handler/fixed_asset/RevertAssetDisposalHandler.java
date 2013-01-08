@@ -33,10 +33,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-/**
- * @author nabla
- *
- */
+
 public class RevertAssetDisposalHandler extends AbstractHandler<RevertAssetDisposal, VoidResult> {
 
 	public RevertAssetDisposalHandler() {

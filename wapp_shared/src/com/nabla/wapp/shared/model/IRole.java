@@ -18,10 +18,7 @@ package com.nabla.wapp.shared.model;
 
 import com.nabla.wapp.shared.validator.TextLengthConstraint;
 
-/**
- * @author nabla
- *
- */
+
 public interface IRole extends IRoleTable {
 	static final TextLengthConstraint	NAME_CONSTRAINT = new TextLengthConstraint(1, 64, true);
 

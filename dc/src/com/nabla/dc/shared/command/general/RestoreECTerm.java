@@ -19,10 +19,7 @@ package com.nabla.dc.shared.command.general;
 import com.nabla.wapp.shared.command.AbstractRestore;
 
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreECTerm extends AbstractRestore {
 
 	private static final long serialVersionUID = 1L;

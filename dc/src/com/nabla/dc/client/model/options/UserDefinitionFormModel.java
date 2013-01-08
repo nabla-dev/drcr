@@ -25,10 +25,7 @@ import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.SelectionDelta;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class UserDefinitionFormModel extends RoleDefinitionFormModel {
 
 	private final Integer	objectId;

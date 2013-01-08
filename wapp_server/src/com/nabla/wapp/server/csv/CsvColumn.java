@@ -21,10 +21,6 @@ import java.lang.reflect.Field;
 import com.nabla.wapp.server.general.Assert;
 import com.nabla.wapp.shared.csv.ICsvField;
 
-/**
- * @author nabla64
- *
- */
 public class CsvColumn implements ICsvColumn {
 
 	private final Field		field;

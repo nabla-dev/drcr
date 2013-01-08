@@ -28,10 +28,7 @@ import com.nabla.wapp.shared.auth.command.IsUserInRole;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.StringSet;
 
-/**
- * @author nabla
- *
- */
+
 public class IsUserInRoleHandler extends AbstractHandler<IsUserInRole, RoleSetResult> {
 
 	private static final String		userSql = "SELECT r.name" +

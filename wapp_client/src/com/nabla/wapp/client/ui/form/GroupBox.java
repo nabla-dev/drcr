@@ -20,10 +20,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
-/**
- * @author nabla
- *
- */
+
 public class GroupBox extends CanvasItem implements HasText {
 
 	private final Form	impl = new Form();

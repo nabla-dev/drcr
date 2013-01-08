@@ -29,10 +29,6 @@ import com.nabla.wapp.shared.database.IRecordField;
 import com.nabla.wapp.shared.database.IRecordTable;
 import com.nabla.wapp.shared.general.Nullable;
 
-/**
- * @author nabla64
- *
- */
 @IRecordTable(name=ITransaction.TABLE)
 public class Transaction {
 

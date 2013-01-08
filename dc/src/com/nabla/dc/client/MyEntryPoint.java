@@ -19,10 +19,7 @@ package com.nabla.dc.client;
 import com.nabla.wapp.client.general.AbstractEntryPoint;
 import com.nabla.wapp.client.general.IApplication;
 
-/**
- * @author nabla
- *
- */
+
 public class MyEntryPoint extends AbstractEntryPoint {
 
 	@Override

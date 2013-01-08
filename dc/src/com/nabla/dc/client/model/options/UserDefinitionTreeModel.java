@@ -21,10 +21,7 @@ import com.nabla.wapp.shared.command.AbstractFetch;
 import com.nabla.wapp.shared.command.FetchUserDefinition;
 import com.smartgwt.client.data.DSRequest;
 
-/**
- * @author nabla
- *
- */
+
 public class UserDefinitionTreeModel extends RoleDefinitionTreeModel {
 
 	private final Integer	objectId;

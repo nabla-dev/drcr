@@ -17,10 +17,7 @@
 package com.nabla.dc.shared.command.company;
 
 
-/**
- * @author nabla
- *
- */
+
 public class FetchAccountList extends AbstractCompanyFetch {
 
 	protected FetchAccountList() {}

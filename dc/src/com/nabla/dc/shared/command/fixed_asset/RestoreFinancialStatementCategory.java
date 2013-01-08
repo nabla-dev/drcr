@@ -18,10 +18,7 @@ package com.nabla.dc.shared.command.fixed_asset;
 
 import com.nabla.wapp.shared.command.AbstractRestore;
 
-/**
- * @author nabla
- *
- */
+
 public class RestoreFinancialStatementCategory extends AbstractRestore {
 
 	private static final long serialVersionUID = 1L;

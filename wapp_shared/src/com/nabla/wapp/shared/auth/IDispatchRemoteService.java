@@ -22,10 +22,7 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IResult;
 
-/**
- * @author nabla
- *
- */
+
 @RemoteServiceRelativePath("dispatch")
 public interface IDispatchRemoteService extends RemoteService {
 

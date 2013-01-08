@@ -38,10 +38,6 @@ import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.FullErrorListException;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 public class CsvReader<T> implements ICsvReader<T> {
 
 	private static final Log						log = LogFactory.getLog(CsvReader.class);

@@ -31,10 +31,7 @@ import com.nabla.wapp.client.server.UserSession;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot2;
 
-/**
- * @author nabla
- *
- */
+
 public class MainWindow extends AbstractMainPresenter<MainWindow.IDisplay> {
 
 	public interface IDisplay extends IMainDisplay {

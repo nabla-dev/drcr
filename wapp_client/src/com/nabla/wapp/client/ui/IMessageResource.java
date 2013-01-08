@@ -19,10 +19,7 @@ package com.nabla.wapp.client.ui;
 import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
 import com.google.gwt.i18n.client.Messages;
 
-/**
- * @author nabla
- *
- */
+
 @DefaultLocale("en")
 public interface IMessageResource extends Messages {
 

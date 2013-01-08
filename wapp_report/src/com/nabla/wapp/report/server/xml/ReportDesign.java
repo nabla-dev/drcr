@@ -17,57 +17,28 @@
 package com.nabla.wapp.report.server.xml;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang.LocaleUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
-import com.nabla.wapp.shared.general.Nullable;
-
-
 @Root(name="report",strict=false)
 public class ReportDesign {
 
-	private static final Log		log = LogFactory.getLog(ReportDesign.class);
-	private static final String	TITLE = "title";
-	private static final String	PROPERTY_LOCALE = "locale";
+	public static final String	TITLE = "title";
 
 	@ElementList(entry="text-property", required=false, inline=true, empty=false)
 	List<TextProperty>		textProperties;
 	@ElementMap(entry="property", key="name", attribute=true, inline=true, empty=false)
 	Map<String, String>		properties;
 
-	public String getDefaultTitle(final String defaultValue) {
-		final TextProperty title = getTitle();
-		return (title != null) ? title.getValue() : defaultValue;
-	}
-
-	public String getTitleKey() {
-		final TextProperty title = getTitle();
-		return (title != null) ? title.getKey(TITLE) : TITLE;
-	}
-
-	public Locale getDefaultLocale() {
-		final String locale = properties.get(PROPERTY_LOCALE);
-		if (locale != null) {
-			try {
-				return LocaleUtils.toLocale(locale);
-			} catch (IllegalArgumentException __) {
-			}
+	public String getTitle() {
+		for (TextProperty e : textProperties) {
+			if (TITLE.equalsIgnoreCase(e.getName()))
+				return e.getValue();
 		}
-		if (log.isErrorEnabled())
-			log.error("unsupported locale '" + locale + "'");
-		return Locale.UK;
-	}
-
-	public String getProperty(final String name, final String defaultValue) {
-		final String value = properties.get(name);
-		return (value != null) ? value : defaultValue;
+		return null;
 	}
 
 	public String getProperty(final String name) {
@@ -76,14 +47,6 @@ public class ReportDesign {
 
 	public boolean isProperty(final String name) {
 		return properties.containsKey(name);
-	}
-
-	protected @Nullable TextProperty getTitle() {
-		for (TextProperty e : textProperties) {
-			if (TITLE.equalsIgnoreCase(e.getName()))
-				return e;
-		}
-		return null;
 	}
 
 }

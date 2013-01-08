@@ -28,10 +28,7 @@ import com.smartgwt.client.widgets.form.ValuesManager;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 
-/**
- * @author nabla
- *
- */
+
 public class SplitAssetWizardCostPageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
 
 	interface Binder extends UiBinder<WizardPage, SplitAssetWizardCostPageUi> {}

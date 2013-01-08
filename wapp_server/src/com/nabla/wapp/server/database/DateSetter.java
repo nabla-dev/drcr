@@ -21,10 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
-/**
- * @author nabla
- *
- */
+
 public class DateSetter extends AbstractSimpleSetter {
 
 	@Override

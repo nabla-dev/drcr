@@ -18,10 +18,7 @@ package com.nabla.wapp.client.ui.form;
 
 import com.nabla.wapp.client.ui.TreeGrid;
 
-/**
- * @author nabla
- *
- */
+
 public class TreeGridItem extends TreeGrid {
 
 	private String		name;

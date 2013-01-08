@@ -21,10 +21,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * @author nabla64
- *
- */
 public class ResourceConnection extends URLConnection {
 
 	private final InputStream	resource;

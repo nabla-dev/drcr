@@ -22,10 +22,7 @@ import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager;
 
-/**
- * @author nabla
- *
- */
+
 public class ChangeUserPasswordDialog extends AbstractTopPresenter<ChangeUserPasswordDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {

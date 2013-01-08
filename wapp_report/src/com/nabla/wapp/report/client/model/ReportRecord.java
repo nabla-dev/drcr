@@ -16,22 +16,41 @@
 */
 package com.nabla.wapp.report.client.model;
 
+import com.google.gwt.core.client.JavaScriptObject;
+import com.nabla.wapp.client.model.IRecordFactory;
 import com.nabla.wapp.client.model.data.BasicListGridRecord;
 import com.nabla.wapp.report.shared.IReport;
 import com.smartgwt.client.data.Record;
 
-/**
- * @author nabla
- *
- */
+
 public class ReportRecord extends BasicListGridRecord implements IReport {
+
+	public static final IRecordFactory<ReportRecord>	factory = new IRecordFactory<ReportRecord>() {
+
+		@Override
+		public ReportRecord get(JavaScriptObject data) {
+			return new ReportRecord(data);
+		}
+
+	};
 
 	public ReportRecord(Record impl) {
 		super(impl);
+	}
+
+	public ReportRecord(JavaScriptObject js) {
+		super(js);
 	}
 
 	public String getName() {
 		return getAttributeAsString(NAME);
 	}
 
+	public String getCategory() {
+		return getAttributeAsString(CATEGORY);
+	}
+
+	public Integer getRoleId() {
+		return Integer.valueOf(getAttributeAsString(PERMISSION));
+	}
 }

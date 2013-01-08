@@ -23,10 +23,7 @@ import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.shared.model.IFieldReservedNames;
 import com.smartgwt.client.data.fields.DataSourceEnumField;
 
-/**
- * @author nabla
- *
- */
+
 public class EnumField extends DataSourceEnumField {
 
 	public EnumField(String name, final FieldAttributes... attributes) {

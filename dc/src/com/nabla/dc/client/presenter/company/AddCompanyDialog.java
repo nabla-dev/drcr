@@ -23,10 +23,7 @@ import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
-/**
- * @author nabla
- *
- */
+
 public class AddCompanyDialog extends AbstractTopPresenter<AddCompanyDialog.IDisplay> {
 
 	public interface IDisplay extends ITopDisplay {

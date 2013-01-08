@@ -29,10 +29,6 @@ import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.model.IErrorList;
 
-/**
- * @author nabla64
- *
- */
 @Root
 public class XmlStraightLineDepreciation extends Node implements IStraightLineDepreciation {
 

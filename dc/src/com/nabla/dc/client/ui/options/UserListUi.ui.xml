@@ -3,7 +3,6 @@
 	ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
     ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
     ui:generateLocales="default"
-    xmlns:my="urn:import:com.nabla.dc.client.ui.options"
 	xmlns:wnd="urn:import:com.nabla.wapp.client.ui"
 	>
 

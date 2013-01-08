@@ -29,10 +29,7 @@ import com.nabla.wapp.shared.command.AbstractFetch;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class TransactionListModel extends CModel<ListGridRecord> {
 
 	static public class Fields {

@@ -17,10 +17,7 @@
 package com.nabla.wapp.shared.auth;
 
 
-/**
- * @author nabla
- *
- */
+
 public interface IRolePrivileges {
 
 	static final String	USER_VIEW = "user_view";

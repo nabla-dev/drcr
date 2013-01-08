@@ -24,10 +24,7 @@ import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.command.ChangeUserPassword;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 
-/**
- * @author nabla
- *
- */
+
 public class ChangeUserPasswordHandler extends AbstractUpdateHandler<ChangeUserPassword> {
 
 	@Override

@@ -22,10 +22,7 @@ import com.nabla.wapp.client.model.field.IdField;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-/**
- * @author nabla
- *
- */
+
 public class BasicListGridRecord extends ListGridRecord {
 
 	public BasicListGridRecord(final Record impl) {

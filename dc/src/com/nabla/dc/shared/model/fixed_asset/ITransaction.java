@@ -18,10 +18,7 @@ package com.nabla.dc.shared.model.fixed_asset;
 
 import com.nabla.wapp.shared.validator.IntegerRangeConstraint;
 
-/**
- * @author nabla
- *
- */
+
 public interface ITransaction extends ITransactionTable {
 	static final String					PERIOD = "period";
 
