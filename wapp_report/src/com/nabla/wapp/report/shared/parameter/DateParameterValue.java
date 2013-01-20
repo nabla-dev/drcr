@@ -27,7 +27,7 @@ public class DateParameterValue extends TParameterValue<Date> {
 
 	private String	valueAsString;
 
-	DateParameterValue() {}	// for serialization only
+	public DateParameterValue() {}	// for serialization only
 
 	public DateParameterValue(String name, Date value, final String valueAsString) {
 		super(name, value);

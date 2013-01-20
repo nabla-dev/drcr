@@ -52,7 +52,7 @@ public class MyReadWriteDatabase extends AuthDatabase {
 	public MyReadWriteDatabase(final ServletContext serverContext, final ReportManager reportManager) throws SQLException, DispatchException {
 		super("dcrw", serverContext, IRoles.class, serverContext.getInitParameter("root_password"));
 
-		if ("1".equals(serverContext.getInitParameter(PRODUCTION_MODE))) {
+		if ("0".equals(serverContext.getInitParameter(PRODUCTION_MODE))) {
 			if (log.isDebugEnabled())
 				log.debug("loading internal report table");
 			final Connection conn = getConnection();

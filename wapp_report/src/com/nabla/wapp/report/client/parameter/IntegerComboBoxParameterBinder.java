@@ -52,6 +52,7 @@ public class IntegerComboBoxParameterBinder implements IParameterBinder {
 		final Control ctrl = new Control();
 		ctrl.setName(parameter.getName());
 		ctrl.setText(parameter.getPrompt());
+		ctrl.setWidth("100%");
 		form.add(ctrl);
 		return false;
 	}

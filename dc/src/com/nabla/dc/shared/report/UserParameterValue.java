@@ -14,22 +14,15 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.shared.parameter;
+package com.nabla.dc.shared.report;
 
-/**
- * The <code></code> object is used to
- *
- */
-public class StringParameterValue extends TParameterValue<String> {
+import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 
-	public StringParameterValue() {}	// for serialization only
+public class UserParameterValue extends IntegerParameterValue {
 
-	public StringParameterValue(final String name, final String value) {
-		super(name, value);
-	}
+	UserParameterValue() {}	// for serialization only
 
-	@Override
-	protected String getValueAsString() {
-		return (value == null) ? "" : value;
+	public UserParameterValue(final Integer userId) {
+		super(ReportParameterTypes.UserId.getParameterName(), userId);
 	}
 }

@@ -20,12 +20,14 @@ import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.MyApplication;
 import com.nabla.dc.client.model.fixed_asset.AssetRecord;
 import com.nabla.dc.client.presenter.ITabManager;
+import com.nabla.dc.client.presenter.report.UserReportList;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.dc.client.ui.fixed_asset.AssetListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.fixed_asset.RevertAssetDisposal;
 import com.nabla.dc.shared.report.BuiltInReports;
-import com.nabla.dc.shared.report.ReportParameterTypes;
+import com.nabla.dc.shared.report.CompanyParameterValue;
+import com.nabla.dc.shared.report.ReportCategories;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
@@ -38,7 +40,6 @@ import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
-import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
@@ -59,9 +60,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		@IRequiredRole(IPrivileges.FA_ASSET_VIEW) AssetRecordCommand transaction();
 		@IRequiredRole(IPrivileges.FA_ASSET_EDIT) AssetRecordCommand disposal();
 		@IRequiredRole(IPrivileges.FA_ASSET_EDIT) AssetRecordCommand split();
-/*
-		Command userReportList();
-*/
+		Command reportList();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -107,14 +106,10 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		registerSlot(cmd.importAssets(), onImportAsset);
 		registerSlot(cmd.transaction(), onTransactionList);
 		cmd.transaction().setRecordProvider(getDisplay().getCurrentRecordProvider());
-		/*
-	  	registerSlot(cmd.userReportList(), onUserReportList);
-
-
-	*/
+	  	registerSlot(cmd.reportList(), onReportList);
 		cmd.updateUi();
 
-		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new IntegerParameterValue(ReportParameterTypes.PeriodEndId.getParameterName(), 292/*companyId*/));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new CompanyParameterValue(companyId));
 	}
 
 	private final ISlot onAddRecord = new ISlot() {
@@ -243,13 +238,18 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 		public void invoke(final AssetRecord record) {
 			tabs.addTab(new TransactionList(record.getId(), record.getName()));
 		}
-	};	/*
-	private final ISlot onUserReportList = new ISlot() {
+	};
+
+	private final ISlot onReportList = new ISlot() {
 		@Override
 		public void invoke() {
-			workspace.addTab(userReportListFactory.get(assetRegisterId, assetRegisterName));
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					tabs.addTab(new UserReportList(ReportCategories.ASSET, new CompanyParameterValue(companyId)));
+				}
+			});
 		}
 	};
 
-*/
 }

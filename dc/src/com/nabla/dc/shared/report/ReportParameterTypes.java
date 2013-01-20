@@ -22,9 +22,7 @@ package com.nabla.dc.shared.report;
  */
 public enum ReportParameterTypes {
 	UserId("rpUserId"),
-	CompanyId("CompanyId"),
-	DateField("AsAt"),
-	PeriodEndId("PeriodEndId");
+	CompanyId("rpCompanyId");
 
 	private final String	parameterName;
 

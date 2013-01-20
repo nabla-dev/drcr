@@ -23,7 +23,7 @@ import com.nabla.dc.client.ui.company.AccountListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.company.RestoreAccount;
 import com.nabla.dc.shared.report.BuiltInReports;
-import com.nabla.dc.shared.report.ReportParameterTypes;
+import com.nabla.dc.shared.report.CompanyParameterValue;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.CommandUiManager;
 import com.nabla.wapp.client.command.HideableCommand;
@@ -35,7 +35,6 @@ import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
-import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -89,7 +88,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 		registerSlot(cmd.importRecords(), onImport);
 		cmd.updateUi();
 
-		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ACCOUNT_LIST, new IntegerParameterValue(ReportParameterTypes.CompanyId.getParameterName(), companyId));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ACCOUNT_LIST, new CompanyParameterValue(companyId));
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

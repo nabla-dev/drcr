@@ -67,7 +67,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.USER_VIEW) HideableCommand userList();
 		@IRequiredRole(IPrivileges.ROLE_VIEW) HideableCommand roleList();
 		@IRequiredRole(IPrivileges.REPORT_VIEW) Command reportList();
-		@IRequiredRole(IPrivileges.REPORT_VIEW) Command settingsReportList();
+		Command settingsReportList();
 	}
 
 	public interface IDisplay extends ITabDisplay {

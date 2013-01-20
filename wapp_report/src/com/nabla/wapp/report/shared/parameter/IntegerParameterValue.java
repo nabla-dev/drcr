@@ -23,7 +23,7 @@ package com.nabla.wapp.report.shared.parameter;
  */
 public class IntegerParameterValue extends TParameterValue<Integer> {
 
-	IntegerParameterValue() {}	// for serialization only
+	public IntegerParameterValue() {}	// for serialization only
 
 	public IntegerParameterValue(final String name, final Integer value) {
 		super(name, value);

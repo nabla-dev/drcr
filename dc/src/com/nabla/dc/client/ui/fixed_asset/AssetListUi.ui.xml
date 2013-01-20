@@ -16,6 +16,7 @@
 				<wnd:ToolbarSeparator />
 				<wnd:ToolbarPrintButton commandSet="{cmd}"/>
 				<wnd:ToolbarExportAsMenu commandSet="{cmd}"/>
+				<wnd:ToolbarButton command="{cmd.reportList}" tooltip="Display list of reports" icon="report_small.png"><ui:msg>Reports</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarSeparator />
 				<wnd:ToolbarButton command="{cmd.reload}" icon="refresh.png"><ui:msg>Reload</ui:msg></wnd:ToolbarButton>
 				<wnd:ToolbarButton command="{cmd.savePreferences}" icon="persist_view.png"><ui:msg>Persist view</ui:msg></wnd:ToolbarButton>

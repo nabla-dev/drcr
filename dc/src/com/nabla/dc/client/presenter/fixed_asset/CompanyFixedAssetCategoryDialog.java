@@ -24,13 +24,12 @@ import com.nabla.dc.client.model.fixed_asset.CompanyFixedAssetCategoryRecord;
 import com.nabla.dc.client.model.fixed_asset.FixedAssetCategoryRecord;
 import com.nabla.dc.client.ui.fixed_asset.CompanyFixedAssetCategoryDialogUi;
 import com.nabla.dc.shared.report.BuiltInReports;
-import com.nabla.dc.shared.report.ReportParameterTypes;
+import com.nabla.dc.shared.report.CompanyParameterValue;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
-import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlot2;
 import com.nabla.wapp.shared.slot.ISlotManager1;
@@ -73,7 +72,7 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 		registerSlot(getDisplay().getCategoryReparentSlots(), onCategoryReparent);
 		registerSlot(getDisplay().getAvailableCategoryDropSlots(), onAvailableCategoryDrop);
 
-		MyApplication.getInstance().getPrintManager().bind(getDisplay().getCommands(), this, BuiltInReports.COMPANY_FIXED_ASSET_CATEGORY_LIST, new IntegerParameterValue(ReportParameterTypes.CompanyId.getParameterName(), companyId));
+		MyApplication.getInstance().getPrintManager().bind(getDisplay().getCommands(), this, BuiltInReports.COMPANY_FIXED_ASSET_CATEGORY_LIST, new CompanyParameterValue(companyId));
 	}
 
 	private AvailableCategoryDropSlot onAvailableCategoryDrop = new AvailableCategoryDropSlot() {

@@ -26,20 +26,20 @@ import java.util.Map;
  * The <code></code> object is used to
  *
  */
-public class IntegerSetReportParameterValue implements IParameterValue {
+public class IntegerSetParameterValue implements IParameterValue {
 
 	private String				name;
 	private HashSet<Integer>	values;
 
-	public IntegerSetReportParameterValue() {}
+	public IntegerSetParameterValue() {}	// for serialization only
 
-	public IntegerSetReportParameterValue(String name, Integer... values) {
+	public IntegerSetParameterValue(String name, Integer... values) {
 		this.name = name;
 		if (values != null)
 			this.values = new HashSet<Integer>(Arrays.asList(values));
 	}
 
-	public IntegerSetReportParameterValue(String name, Collection<Integer> values) {
+	public IntegerSetParameterValue(String name, Collection<Integer> values) {
 		this.name = name;
 		if (values != null)
 			this.values = new HashSet<Integer>(values);

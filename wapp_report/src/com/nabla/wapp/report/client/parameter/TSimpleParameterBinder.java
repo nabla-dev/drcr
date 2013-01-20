@@ -37,6 +37,7 @@ public abstract class TSimpleParameterBinder<P extends IParameter, T> implements
 		final Control ctrl = new Control();
 		ctrl.setName(parameter.getName());
 		ctrl.setText(parameter.getPrompt());
+		ctrl.setWidth("100%");
 		form.add(ctrl);
 		return true;
 	}
