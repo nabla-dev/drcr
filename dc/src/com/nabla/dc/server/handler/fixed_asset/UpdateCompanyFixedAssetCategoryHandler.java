@@ -28,6 +28,7 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
 
@@ -59,7 +60,7 @@ public class UpdateCompanyFixedAssetCategoryHandler extends AbstractHandler<Upda
 					}
 				}
 				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException("failed to save company asset categories");
+					throw new InternalErrorException(Util.formatInternalErrorDescription("failed to save company asset categories"));
 			} finally {
 				Database.close(stmt);
 			}

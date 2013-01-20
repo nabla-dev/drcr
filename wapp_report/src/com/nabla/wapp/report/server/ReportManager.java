@@ -55,6 +55,7 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.auth.AccessDeniedException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
+import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.general.Nullable;
 
 @Singleton
@@ -68,9 +69,6 @@ public class ReportManager {
 	public static final String[]	RESOURCE_FILE_EXTENSIONS = {
 		"css","rptlibrary","js","properties"
 	};
-
-	private static final String	PROPERTY_ROLE = "role";
-	private static final String	PROPERTY_CATEGORY = "report_category";
 
 	private final String						internalReportFolder;
 	private final IReportEngine				engine;
@@ -97,10 +95,9 @@ public class ReportManager {
 		if (internalReportFolder != null) {
 			final File reportFile = new File(internalReportFolder + internalName.toUpperCase(), internalName.toLowerCase() + ".rptdesign");
 			try {
-				return new ReportTemplate(engine.openReportDesign(reportFile.getAbsolutePath()));
+				return new ReportTemplate(internalName, engine.openReportDesign(reportFile.getAbsolutePath()));
 			} catch (EngineException e) {
-				Util.throwInternalErrorException(e);
-				return null;
+				throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 			}
 		} else {
 			final PreparedStatement stmt = ctx.isRoot() ?
@@ -118,7 +115,9 @@ public class ReportManager {
 			try {
 				final ResultSet rs = stmt.executeQuery();
 				try {
-					return openDesign(rs, ctx);
+					if (!rs.next())
+						throw new AccessDeniedException();
+					return open(rs, ctx);
 				} finally {
 					rs.close();
 				}
@@ -128,60 +127,69 @@ public class ReportManager {
 		}
 	}
 
-	public ReportTemplate open(final Integer id, final IUserSessionContext ctx) throws SQLException, DispatchException {
+	public ReportTemplateList open(final IntegerSet reportIds, final IUserSessionContext ctx) throws SQLException, DispatchException {
+		final ReportTemplateList templates = new ReportTemplateList();
 		final PreparedStatement stmt = ctx.isRoot() ?
 				StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
 " FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
-" WHERE r.id=?;", ctx.getLocale().toString(), id)
+" WHERE r.id IN (?);", ctx.getLocale().toString(), reportIds)
 				:
 				StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
 " FROM user_role AS p INNER JOIN (" +
 "report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
 ") ON r.role_id=p.role_id" +
-" WHERE r.id=? AND p.user_id=?;", ctx.getLocale().toString(), id, ctx.getUserId());
+" WHERE p.user_id=? AND r.id IN (?);", ctx.getLocale().toString(), ctx.getUserId(), reportIds);
 		try {
 			final ResultSet rs = stmt.executeQuery();
 			try {
-				return openDesign(rs, ctx);
+				while (rs.next())
+					templates.add(open(rs, ctx));
 			} finally {
 				rs.close();
 			}
 		} finally {
 			stmt.close();
 		}
+		if (templates.size() != reportIds.size())
+			throw new AccessDeniedException();
+		return templates;
 	}
 
-	public int addReport(final Connection conn, final String reportName, final InputStream in) throws SQLException, DispatchException {
-		return addReport(conn, reportName, null, in);
+	public ReportTemplate open(final ResultSet rs, final IUserSessionContext ctx) throws SQLException, DispatchException {
+		try {
+			final Integer id = rs.getInt("id");
+			return new ReportTemplate(id.toString(), engine.openReportDesign(rs.getString("name"), rs.getBinaryStream("content"), new StreamResolvingResourceLocator(ctx.getReadConnection(), id)));
+		} catch (EngineException e) {
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
+		}
 	}
 
-	public int addReport(final Connection conn, final String reportName, @Nullable final String internalName, final InputStream in) throws SQLException, DispatchException {
+	public int addReport(final Connection conn, final String reportName, final InputStream design, final InputStream in) throws SQLException, DispatchException {
+		return addReport(conn, reportName, null, design, in);
+	}
+
+	public int addReport(final Connection conn, final String reportName, @Nullable final String internalName, final InputStream design, final InputStream in) throws SQLException, DispatchException {
 	// load and scan report design
+		if (log.isDebugEnabled())
+    		log.debug("scanning report " + reportName);
 		ReportDesign report;
 		try {
-			report = new Persister().read(ReportDesign.class, in);
+			report = new Persister().read(ReportDesign.class, design);
 		} catch (Exception e) {
 			if (log.isErrorEnabled())
 				log.error("fail to load report design", e);
-			Util.throwInternalErrorException(e);
-			return 0;
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 	// add report record
-		final String title = report.getTitle();
-		if (title == null) {
-			if (log.isErrorEnabled())
-				log.error("no title defined for report '" + reportName + "'");
-			throw new DispatchException(ReportErrors.REPORT_DESIGN_NO_TITLE_DEFINED);
-		}
-		final Integer roleId = getRole(conn, report.getProperty(PROPERTY_ROLE));
+		final Integer roleId = getRole(conn, report.getRole());
 		if (roleId == null) {
 			if (log.isErrorEnabled())
-				log.error("invalid role '" + report.getProperty(PROPERTY_ROLE) + "' defined for report '" + reportName + "'");
+				log.error("invalid role '" + report.getRole() + "' defined for report '" + reportName + "'");
         	throw new DispatchException(ReportErrors.REPORT_DESIGN_INVALID_ROLE);
 		}
-		final String category = report.getProperty(PROPERTY_CATEGORY);
+		final String category = report.getCategory();
 		if (!reportCategoryValidator.isValid(category)) {
 			if (log.isErrorEnabled())
 				log.error("invalid category '" + category + "' defined for report ' " + reportName + "'");
@@ -190,7 +198,7 @@ public class ReportManager {
 		final PreparedStatement stmt = conn.prepareStatement(
 "INSERT INTO report (name,internal_name,category,role_id,content) VALUES(?,?,?,?,?);", Statement.RETURN_GENERATED_KEYS);
 		try {
-			stmt.setString(1, title);
+			stmt.setString(1, report.getTitle());
 			if (internalName != null)
 				stmt.setString(2, internalName);
 			else
@@ -228,19 +236,13 @@ public class ReportManager {
 		} catch (Exception e) {
 			if (log.isErrorEnabled())
 				log.error("fail to load report design", e);
-			Util.throwInternalErrorException(e);
-			return;
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 	// update report record
-		final String title = report.getTitle();
-		if (title == null) {
-			if (log.isErrorEnabled())
-				log.error("no title defined for report '" + reportName + "'");
-			throw new DispatchException(ReportErrors.REPORT_DESIGN_NO_TITLE_DEFINED);
-		}
     	if (log.isDebugEnabled())
     		log.debug("uploading report " + reportName);
-    	if (!Database.executeUpdate(conn, "UPDATE report SET name=?,content=? WHERE id=?;", title, in, reportId)) {
+    	if (!Database.executeUpdate(conn,
+"UPDATE report SET name=?,content=? WHERE id=?;", report.getTitle(), in, reportId)) {
 			if (log.isErrorEnabled())
 				log.error("failed to upgrade internal report '" + reportName + "'");
 			throw new InternalErrorException();
@@ -294,8 +296,7 @@ public class ReportManager {
 		} catch (IOException e) {
 			if (log.isErrorEnabled())
 				log.error("fail to create temporary file to hold stream");
-			Util.throwInternalErrorException(e);
-			return null;
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 		try {
 			final FileOutputStream out = new FileOutputStream(rslt);
@@ -303,7 +304,7 @@ public class ReportManager {
 			out.close();
 		} catch (Throwable e) {
 			rslt.delete();
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 		return rslt;
 	}
@@ -325,18 +326,6 @@ public class ReportManager {
 			}
 		}
 		return null;
-	}
-
-	protected ReportTemplate openDesign(final ResultSet rs, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		if (!rs.next())
-			throw new AccessDeniedException();
-		final Integer id = rs.getInt(1);
-		try {
-			return new ReportTemplate(engine.openReportDesign(rs.getString(3), rs.getBinaryStream(2), new StreamResolvingResourceLocator(ctx.getReadConnection(), id)));
-		} catch (EngineException e) {
-			Util.throwInternalErrorException(e);
-			return null;
-		}
 	}
 
 }

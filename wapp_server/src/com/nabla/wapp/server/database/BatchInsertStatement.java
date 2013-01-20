@@ -67,7 +67,7 @@ public class BatchInsertStatement<T> extends SqlStatement {
 
 	public List<Integer> execute() throws SQLException, InternalErrorException {
 		if (!Database.isBatchCompleted(stmt.executeBatch()))
-			Util.throwInternalErrorException("failed to insert list of records");
+			throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert list of records"));
 		if (!sql.getAutoGenerateKeys())
 			return null;
 		final ResultSet rs = stmt.getGeneratedKeys();

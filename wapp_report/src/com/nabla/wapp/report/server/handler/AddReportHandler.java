@@ -70,7 +70,7 @@ public class AddReportHandler extends AbstractAddHandler<AddReport> {
 							final ZipArchiveEntry design = zip.getReportDesign();
 							if (design == null)
 								throw new DispatchException(ReportErrors.ADD_REPORT_NO_REPORT_DESIGN_FOUND);
-							id = reportManager.addReport(conn, design.getName(), zip.getInputStream(design));
+							id = reportManager.addReport(conn, design.getName(), zip.getInputStream(design), zip.getInputStream(design));
 							for (Enumeration<ZipArchiveEntry> iter = zip.getEntries(ReportManager.PROPERTIES_FILE_EXTENSION); iter.hasMoreElements();) {
 								final ZipArchiveEntry e = iter.nextElement();
 								reportManager.loadLocaleReportName(conn, id, e.getName(), zip.getInputStream(e));
@@ -83,7 +83,7 @@ public class AddReportHandler extends AbstractAddHandler<AddReport> {
 							zip.close();
 						}
 					} else {
-						id = reportManager.addReport(conn, FilenameUtils.getBaseName(rs.getString("file_name")), rs.getBinaryStream("content"));
+						id = reportManager.addReport(conn, FilenameUtils.getBaseName(rs.getString("file_name")), rs.getBinaryStream("content"), rs.getBinaryStream("content"));
 					}
 					guard.setSuccess();
 				} finally {

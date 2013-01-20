@@ -18,8 +18,6 @@ package com.nabla.wapp.report.client;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -36,15 +34,15 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.mvp.IPresenter;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.report.client.presenter.ReportParameterDialog;
+import com.nabla.wapp.report.client.ui.IParameterWizardDisplayFactory;
 import com.nabla.wapp.report.client.ui.Resource;
-import com.nabla.wapp.report.shared.IReportParameterValue;
-import com.nabla.wapp.report.shared.ReportParameter;
-import com.nabla.wapp.report.shared.ReportParameterValueList;
 import com.nabla.wapp.report.shared.ReportResult;
 import com.nabla.wapp.report.shared.SimpleReportResult;
 import com.nabla.wapp.report.shared.command.GetBuiltInReport;
 import com.nabla.wapp.report.shared.command.GetReport;
 import com.nabla.wapp.report.shared.command.GetSimpleReport;
+import com.nabla.wapp.report.shared.parameter.IParameterValue;
+import com.nabla.wapp.report.shared.parameter.ReportParameterValueList;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.print.ReportFormats;
@@ -54,22 +52,12 @@ import com.nabla.wapp.shared.slot.ISlot1;
 
 public class PrintManager {
 
-	public interface IParameterGetter {
-		IReportParameterValue getParameter();
-	}
-
-	public interface IReportGetter extends IParameterGetter {
-		Set<Integer> getReportIds();
-	}
-
 	private static final Logger					log = LoggerFactory.getLog(PrintManager.class);
-	private final IReportParameterBinderFactory	parameterBinderFactory;
-	private final ReportParameterDialog.IFactory	parameterDialogFactory;
+	private final IParameterWizardDisplayFactory	parameterDisplayFactory;
 	private final String							reportUrlFormat;
 
-	public PrintManager(final IReportParameterBinderFactory parameterBinderFactory, final ReportParameterDialog.IFactory parameterDialogFactory) {
-		this.parameterBinderFactory = parameterBinderFactory;
-		this.parameterDialogFactory = parameterDialogFactory;
+	public PrintManager(final IParameterWizardDisplayFactory parameterDisplayFactory) {
+		this.parameterDisplayFactory = parameterDisplayFactory;
 		reportUrlFormat = GWT.getModuleBaseURL() + "export?id=";
 	}
 
@@ -79,13 +67,13 @@ public class PrintManager {
 	}
 
 	public <BuiltInReportsType extends Enum<BuiltInReportsType>>
-	void bind(final IPrintCommandSet commands, final IPresenter presenter, final BuiltInReportsType builtInReport, @Nullable final IReportParameterValue parameter) {
+	void bind(final IPrintCommandSet commands, final IPresenter presenter, final BuiltInReportsType builtInReport, @Nullable final IParameterValue parameter) {
 		if (parameter == null)
 			bind(commands, presenter, builtInReport, (IParameterGetter)null);
 		else
 			bind(commands, presenter, builtInReport, new IParameterGetter() {
 				@Override
-				public IReportParameterValue getParameter() {
+				public IParameterValue getParameter() {
 					return parameter;
 				}
 			});
@@ -144,7 +132,7 @@ public class PrintManager {
 	}
 
 	@SuppressWarnings("static-access")
-	public void print(final Set<Integer> reportIds, @Nullable final IReportParameterValue defaultParameter, final ReportFormats format, final Boolean outputAsFile) {
+	public void print(final Set<Integer> reportIds, @Nullable final IParameterValue defaultParameter, final ReportFormats format, final Boolean outputAsFile) {
 		final IApplication app = Application.getInstance();
 		if (reportIds.isEmpty()) {
 			app.getMessageBox().error(Resource.instance.strings.noReportSelected());
@@ -161,29 +149,19 @@ public class PrintManager {
 			public void onSuccess(final SimpleReportResult result) {
 				Assert.argumentNotNull(result);
 				if (result.needUserInput()) {
-					final List<IReportParameterBinder> parameterBinders = new LinkedList<IReportParameterBinder>();
-					final Map<String, Object> defaultParameterValues = new HashMap<String, Object>();
+					final Map<String, Object> defaultValues = new HashMap<String, Object>();
 					if (defaultParameter != null)
-						defaultParameter.addToMap(defaultParameterValues);
-					for (ReportParameter e : result.getParameters()) {
-						IReportParameterBinder binder = parameterBinderFactory.create(e, defaultParameterValues);
-						Assert.notNull(binder);
-						parameterBinders.add(binder);
-					}
-					ReportParameterDialog dlg = parameterDialogFactory.get(parameterBinders);
-					dlg.getSubmitSlots().connect(new ISlot1<ReportParameterValueList>() {
+						defaultParameter.addToMap(defaultValues);
+					ReportParameterDialog.run(parameterDisplayFactory.get(), result.getParameters(), defaultValues, new ISlot1<ReportParameterValueList>() {
 						@Override
 						public void invoke(ReportParameterValueList parameters) {
-							Assert.argumentNotNull(parameters);
-
 							if (defaultParameter != null)
 								parameters.add(defaultParameter);
 							app.getDispatcher().execute(new GetReport(reportIds, format, outputAsFile, parameters), onCreateReport);
 						}
 					});
-					dlg.revealDisplay();
 				} else
-					displayReports(result.getReportIds());
+					displayReports(result);
 			}
 		});
 	}
@@ -198,7 +176,7 @@ public class PrintManager {
 		@Override
 		public void onSuccess(ReportResult result) {
 			if (result != null)
-				displayReports(result.getReportIds());
+				displayReports(result);
 		}
 	};
 

@@ -33,6 +33,7 @@ import com.nabla.wapp.shared.auth.LoginRequiredException;
 import com.nabla.wapp.shared.dispatch.DispatchException;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IResult;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.UnsupportedActionException;
 
 @Singleton
@@ -74,7 +75,7 @@ public class DispatchService extends RemoteServiceServlet implements IDispatchRe
 		} catch (final SQLException e) {
 			if (log.isErrorEnabled())
 				log.error("SQL error " + e.getErrorCode() + "-"	+ e.getSQLState(), e);
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		} catch (DispatchException e) {
 			if (log.isErrorEnabled())
 				log.error("internal error", e);
@@ -82,9 +83,8 @@ public class DispatchService extends RemoteServiceServlet implements IDispatchRe
 		} catch (Throwable e) {
 			if (log.isErrorEnabled())
 				log.error("internal error", e);
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
-		return null;
     }
 
 }

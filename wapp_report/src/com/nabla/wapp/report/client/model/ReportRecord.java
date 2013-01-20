@@ -51,6 +51,7 @@ public class ReportRecord extends BasicListGridRecord implements IReport {
 	}
 
 	public Integer getRoleId() {
-		return Integer.valueOf(getAttributeAsString(PERMISSION));
+		final String value = getAttributeAsString(PERMISSION);
+		return (value == null) ? null : Integer.valueOf(value);
 	}
 }

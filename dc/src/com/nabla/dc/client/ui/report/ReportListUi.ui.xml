@@ -22,7 +22,7 @@
 			<wnd:ListGrid ui:field="list" viewStateReference="report_list" model="{model}" editByCell="true" showCheckbox="true" canSort="true" editCommand="{cmd.edit}">
 				<wnd:ListGridField name="{model.fields.name}" width="300" canGroupBy="false" canEdit="false"><ui:msg>Name</ui:msg></wnd:ListGridField>
 				<wnd:ListGridToolbar field="{model.fields.name}">
-					<wnd:ListGridToolbarButton icon="download.png" command="{cmd.upgradeReport}"><ui:msg>Upgrade report</ui:msg></wnd:ListGridToolbarButton>
+					<wnd:ListGridToolbarButton icon="upload_small.png" command="{cmd.upgradeReport}"><ui:msg>Upgrade report</ui:msg></wnd:ListGridToolbarButton>
 				</wnd:ListGridToolbar>				
 				<wnd:ListGridField name="{model.fields.category}" width="150"><ui:msg>Category</ui:msg></wnd:ListGridField>
 				<wnd:ListGridField name="{model.fields.permission}" width="300"><ui:msg>User Permission</ui:msg></wnd:ListGridField>

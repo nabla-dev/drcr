@@ -20,9 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nabla.wapp.report.shared.IReportParameterValue;
 import com.nabla.wapp.report.shared.ReportOptions;
 import com.nabla.wapp.report.shared.SimpleReportResult;
+import com.nabla.wapp.report.shared.parameter.IParameterValue;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.print.ReportFormats;
@@ -33,12 +33,12 @@ import com.nabla.wapp.shared.print.ReportFormats;
  */
 public class GetSimpleReport extends ReportOptions implements IAction<SimpleReportResult> {
 
-	private IntegerSet				reportIds;
-	private IReportParameterValue	parameter;
+	private IntegerSet			reportIds;
+	private IParameterValue		parameter;
 
 	GetSimpleReport() {}	// for serialization only
 
-	public GetSimpleReport(final Set<Integer> reportIds, final IReportParameterValue parameter, final ReportFormats format, final Boolean outputAsFile) {
+	public GetSimpleReport(final Set<Integer> reportIds, final IParameterValue parameter, final ReportFormats format, final Boolean outputAsFile) {
 		super(format, outputAsFile);
 		this.reportIds = new IntegerSet(reportIds);
 		this.parameter = parameter;
@@ -48,10 +48,17 @@ public class GetSimpleReport extends ReportOptions implements IAction<SimpleRepo
 		return reportIds;
 	}
 
-	public Map<String, Object> getParameters() {
+	public Map<String, Object> getParameterValues() {
 		final Map<String, Object> ret = new HashMap<String, Object>();
 		if (parameter != null)
 			parameter.addToMap(ret);
+		return ret;
+	}
+
+	public Map<String, String> toStringMap() {
+		final Map<String, String> ret = new HashMap<String, String>();
+		if (parameter != null)
+			parameter.addToStringMap(ret);
 		return ret;
 	}
 

@@ -20,8 +20,12 @@ import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.presenter.ITabManager;
 import com.nabla.dc.client.presenter.fixed_asset.AssetList;
 import com.nabla.dc.client.presenter.fixed_asset.CompanyFixedAssetCategoryDialog;
+import com.nabla.dc.client.presenter.report.UserReportList;
 import com.nabla.dc.client.ui.company.CompanyUi;
 import com.nabla.dc.shared.IPrivileges;
+import com.nabla.dc.shared.report.ReportCategories;
+import com.nabla.dc.shared.report.ReportParameterTypes;
+import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
 import com.nabla.wapp.client.command.IRequiredRole;
@@ -29,6 +33,7 @@ import com.nabla.wapp.client.general.AbstractRunAsyncCallback;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.mvp.TabManager;
+import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlotManager1;
 
@@ -43,6 +48,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		@IRequiredRole(IPrivileges.PERIOD_END_VIEW) HideableCommand editPeriodEnds();
 		@IRequiredRole(IPrivileges.COMPANY_ASSET_CATEGORY_EDIT) HideableCommand editAssetCategories();
 		@IRequiredRole(IPrivileges.FA_COMPANY_ASSET_VIEW) HideableCommand editFixedAssets();
+		@IRequiredRole(IPrivileges.REPORT_VIEW) Command settingsReportList();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -75,6 +81,7 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 		registerSlot(cmd.editPeriodEnds(), onEditPeriodEnds);
 		registerSlot(cmd.editAssetCategories(), onEditAssetCategories);
 		registerSlot(cmd.editFixedAssets(), onEditFixedAssets);
+		registerSlot(cmd.settingsReportList(), onSettingsReportList);
 		cmd.updateUi();
 	}
 
@@ -163,6 +170,18 @@ public class Company extends AbstractTabPresenter<Company.IDisplay> implements I
 				@Override
 				public void onSuccess() {
 					addTab(new AssetList(companyId, Company.this));
+				}
+			});
+		}
+	};
+
+	private final ISlot onSettingsReportList = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					addTab(new UserReportList(ReportCategories.SETTINGS, new IntegerParameterValue(ReportParameterTypes.CompanyId.getParameterName(), companyId)));
 				}
 			});
 		}

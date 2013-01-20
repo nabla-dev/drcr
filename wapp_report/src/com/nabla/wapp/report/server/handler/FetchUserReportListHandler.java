@@ -28,15 +28,26 @@ import com.nabla.wapp.shared.dispatch.FetchResult;
 
 public class FetchUserReportListHandler extends AbstractFetchHandler<FetchUserReportList> {
 
+	private static final SqlToJson	rootSql = new SqlToJson(
+"SELECT r.id, COALESCE(n.text, r.name) AS 'name'" +
+" FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+" WHERE r.category LIKE ?"
+	);
+
 	private static final SqlToJson	sql = new SqlToJson(
-"SELECT r.id, r.name" +
-" FROM report AS r INNER JOIN user_role ON r.role_id=user_role.role_id" +
-" WHERE user_role.user_id=?"
+"SELECT r.id, COALESCE(n.text, r.name) AS 'name'" +
+" FROM user_role AS p INNER JOIN (" +
+"report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+") ON r.role_id=p.role_id" +
+" WHERE user_role.user_id=? AND r.category LIKE ?"
 	);
 
 	@Override
 	public FetchResult execute(final FetchUserReportList cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
-		return sql.fetch(cmd, ctx.getConnection(), ctx.getUserId());
+		return	ctx.isRoot() ?
+			rootSql.fetch(cmd, ctx.getConnection(), ctx.getLocale().toString(), cmd.getCategory())
+			:
+			sql.fetch(cmd, ctx.getConnection(), ctx.getLocale().toString(), ctx.getUserId(), cmd.getCategory());
 	}
 
 }

@@ -18,5 +18,6 @@
 	  
 	  <dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" conf="compile->default;runtime->default" />
 	  <dependency org="org.apache.commons" name="commons-compress" rev="${commons-compress.version}" conf="compile->default;runtime->default" />
+	  <dependency org="com.lowagie" name="itext" rev="${itext.version}" conf="compile->default;runtime->default"/>
     </dependencies>
 </ivy-module>

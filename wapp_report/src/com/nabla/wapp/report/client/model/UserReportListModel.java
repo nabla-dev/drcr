@@ -33,8 +33,12 @@ public class UserReportListModel extends CModel<ReportRecord> {
 	}
 
 	private static final Fields	fields = new Fields();
+	private final String			category;
 
-	public UserReportListModel() {
+	public UserReportListModel(final String category) {
+		super(ReportRecord.factory);
+
+		this.category = category;
 		setFields(
 			new IdField(),
 			new TextField(fields.name(), FieldAttributes.READ_ONLY)
@@ -47,7 +51,7 @@ public class UserReportListModel extends CModel<ReportRecord> {
 
 	@Override
 	public AbstractFetch getFetchCommand(@SuppressWarnings("unused") final DSRequest request) {
-		return new FetchUserReportList();
+		return new FetchUserReportList(category);
 	}
 
 }

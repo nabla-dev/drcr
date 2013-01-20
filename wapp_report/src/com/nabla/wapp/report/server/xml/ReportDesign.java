@@ -22,31 +22,56 @@ import java.util.Map;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.core.Validate;
+import org.simpleframework.xml.core.ValueRequiredException;
 
 @Root(name="report",strict=false)
 public class ReportDesign {
 
 	public static final String	TITLE = "title";
+	public static final String	USER_PROPERTIES = "userProperties";
+	public static final String	ROLE = "role";
+	public static final String	CATEGORY = "report_category";
 
-	@ElementList(entry="text-property", required=false, inline=true, empty=false)
-	List<TextProperty>		textProperties;
-	@ElementMap(entry="property", key="name", attribute=true, inline=true, empty=false)
-	Map<String, String>		properties;
+	private String		title;
+	private String		role;
+	private String		category;
+
+	@ElementMap(entry="text-property", key="name", attribute=true, required=false, inline=true, empty=false)
+	Map<String, String>		textProperties;
+	@ElementList(entry="list-property", required=false, inline=true, empty=false)
+	List<ListProperty>		listProperties;
+
+	@Validate
+	public void validate() throws ValueRequiredException {
+		title = textProperties.get(TITLE);
+		textProperties.clear();
+		for (ListProperty e : listProperties) {
+			if (USER_PROPERTIES.equalsIgnoreCase(e.getName())) {
+				role = e.get(ROLE);
+				category = e.get(CATEGORY);
+				break;
+			}
+		}
+		listProperties.clear();
+		if (title == null)
+			throw new ValueRequiredException(TITLE);
+		if (role == null)
+			throw new ValueRequiredException(ROLE);
+		if (category == null)
+			throw new ValueRequiredException(CATEGORY);
+	}
 
 	public String getTitle() {
-		for (TextProperty e : textProperties) {
-			if (TITLE.equalsIgnoreCase(e.getName()))
-				return e.getValue();
-		}
-		return null;
+		return title;
 	}
 
-	public String getProperty(final String name) {
-		return properties.get(name);
+	public String getRole() {
+		return role;
 	}
 
-	public boolean isProperty(final String name) {
-		return properties.containsKey(name);
+	public String getCategory() {
+		return category;
 	}
 
 }

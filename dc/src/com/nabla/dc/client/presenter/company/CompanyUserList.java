@@ -33,7 +33,7 @@ import com.nabla.wapp.client.model.data.UserRecord;
 import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
-import com.nabla.wapp.report.shared.IntegerReportParameterValue;
+import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
 
@@ -80,7 +80,7 @@ public class CompanyUserList extends AbstractTabPresenter<CompanyUserList.IDispl
 		cmd.editRoles().setRecordProvider(getDisplay().getCurrentRecordProvider());
 		cmd.updateUi();
 
-		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.COMPANY_USER_LIST, new IntegerReportParameterValue(ReportParameterTypes.CompanyId.getDefaultParameterName(), companyId));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.COMPANY_USER_LIST, new IntegerParameterValue(ReportParameterTypes.CompanyId.getParameterName(), companyId));
 	}
 
 	private final ISlot onReload = new ISlot() {

@@ -87,8 +87,7 @@ public class ReportZipFile {
 		} catch (IOException e) {
 			if (log.isErrorEnabled())
 				log.error("fail to create temporary file to hold zip stream");
-			Util.throwInternalErrorException(e);
-			zipFile = null;
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 		try {
 			final FileOutputStream out = new FileOutputStream(zipFile);
@@ -96,7 +95,7 @@ public class ReportZipFile {
 			out.close();
 		} catch (Throwable e) {
 			zipFile.delete();
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 		try {
 			impl = new ZipFile(zipFile);
@@ -104,7 +103,7 @@ public class ReportZipFile {
 			if (log.isErrorEnabled())
 				log.error("fail to open temporary zip file");
 			zipFile.delete();
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 	}
 
@@ -119,11 +118,10 @@ public class ReportZipFile {
 		try {
 			return impl.getInputStream(ze);
 		} catch (ZipException e) {
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		} catch (IOException e) {
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
-		return null;
 	}
 
 	public ZipArchiveEntry getReportDesign() {

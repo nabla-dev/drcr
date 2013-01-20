@@ -56,7 +56,7 @@ public class ExportSettingsHandler extends AbstractHandler<ExportSettings, Integ
 		try {
 			serializer.write(settings, out);
 		} catch (Exception e) {
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
 	}
 
@@ -64,7 +64,7 @@ public class ExportSettingsHandler extends AbstractHandler<ExportSettings, Integ
 		final Integer id = Database.addRecord(conn,
 "INSERT INTO export (name,content_type,output_as_file,content, userSessionId) VALUES('settings.xml','text/xml',TRUE,?,?);", in, userSessionId);
 		if (id == null)
-			Util.throwInternalErrorException("fail to save settings to be exported");
+			throw new InternalErrorException(Util.formatInternalErrorDescription("fail to save settings to be exported"));
 		return id;
 	}
 

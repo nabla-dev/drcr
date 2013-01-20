@@ -34,19 +34,20 @@ import com.smartgwt.client.widgets.form.fields.FormItem;
 public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 
 	private static final Logger	logger = LoggerFactory.getLog(Control.class);
-	private Boolean				readOnly;
-	private String				width;
-	private String				height;
-	private String				name;
-	private Integer				colSpan;
-	private Boolean				required;
-	private Boolean				showTitle;
-	private Boolean				validateOnChange;
-	private String				text;
-	private Boolean				visible;
-	private Boolean				enabled;
-	private Boolean				shouldSaveValue;
-	private Boolean				redrawOnChange;
+
+	private Boolean		readOnly;
+	private String		width;
+	private String		height;
+	private String		name;
+	private Integer		colSpan;
+	private Boolean		required;
+	private Boolean		showTitle;
+	private Boolean		validateOnChange;
+	private String		text;
+	private Boolean		visible;
+	private Boolean		enabled;
+	private Boolean		shouldSaveValue;
+	private Boolean		redrawOnChange;
 
 	public Control() {}
 

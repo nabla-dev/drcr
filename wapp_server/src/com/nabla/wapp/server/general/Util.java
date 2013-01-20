@@ -28,8 +28,6 @@ import java.util.GregorianCalendar;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.nabla.wapp.shared.dispatch.InternalErrorException;
-
 
 public abstract class Util {
 
@@ -74,7 +72,7 @@ public abstract class Util {
 	    return null;
 	}
 
-	public static String extractExceptionDetails(final Throwable x) {
+	public static String formatInternalErrorDescription(final Throwable x) {
 		if (x == null)
 			return null;
 		final Writer buffer = new StringWriter();
@@ -83,12 +81,8 @@ public abstract class Util {
 	    return buffer.toString();
 	}
 
-	public static void throwInternalErrorException(final Throwable cause) throws InternalErrorException {
-		throw new InternalErrorException(extractExceptionDetails(cause));
-	}
-
-	public static void throwInternalErrorException(final String cause) throws InternalErrorException {
-		throw new InternalErrorException(Thread.currentThread().getStackTrace()[2].toString() + ": " + cause);
+	public static String formatInternalErrorDescription(final String cause) {
+		return Thread.currentThread().getStackTrace()[2].toString() + ": " + cause;
 	}
 
 	public static Calendar dateToCalendar(final Date dt) {

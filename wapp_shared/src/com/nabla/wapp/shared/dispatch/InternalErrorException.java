@@ -18,9 +18,6 @@ package com.nabla.wapp.shared.dispatch;
 
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
-
-
-
 public class InternalErrorException extends ActionException {
 
 	private static final long		serialVersionUID = 1L;

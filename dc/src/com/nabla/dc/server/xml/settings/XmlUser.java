@@ -35,6 +35,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -91,7 +92,7 @@ UserManager.getPasswordEncryptor().encryptPassword(password.getValue()), active,
 "INSERT INTO user (name,uname,active,password) VALUES(?,?,?,?);",
 getName(), getName().toUpperCase(), active, UserManager.getPasswordEncryptor().encryptPassword(password.getValue()));
 			if (userId == null)
-				Util.throwInternalErrorException("failed to insert user");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert user"));
 			ctx.getUserIds().put(getName(), userId);
 		}
 		if (roles == null || roles.isEmpty())
@@ -115,7 +116,7 @@ getName(), getName().toUpperCase(), active, UserManager.getPasswordEncryptor().e
 				}
 			}
 			if (success && !Database.isBatchCompleted(stmt.executeBatch()))
-				Util.throwInternalErrorException("failed to insert user definition");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert user definition"));
 			return success;
 		} finally {
 			Database.close(stmt);

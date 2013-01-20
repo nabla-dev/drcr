@@ -16,8 +16,12 @@
 */
 package com.nabla.wapp.report.server;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -31,15 +35,19 @@ import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
 import org.eclipse.birt.report.engine.api.PDFRenderOption;
 import org.eclipse.birt.report.engine.api.RenderOption;
 
+import com.lowagie.text.pdf.PdfReader;
+import com.nabla.wapp.report.shared.parameter.ParameterGroup;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.print.ReportFormats;
 
 public class ReportTemplate {
 
+	private final String			id;
 	private final IReportRunnable	impl;
 
-	ReportTemplate(final IReportRunnable impl) {
+	ReportTemplate(final String id, final IReportRunnable impl) {
+		this.id = id;
 		this.impl = impl;
 	}
 
@@ -47,8 +55,33 @@ public class ReportTemplate {
 		return impl.getReportName();
 	}
 
-	@SuppressWarnings("unchecked")
 	public Report generate(final Connection conn, final Map<String, Object> parameters, final ReportFormats format, final Locale locale) throws InternalErrorException {
+		return new Report(getFileName(format), render(conn, parameters, format, locale), format);
+	}
+
+	public PdfReader generatePdf(final Connection conn, final Map<String, Object> parameters, final Locale locale) throws InternalErrorException {
+		try {
+			return new PdfReader(render(conn, parameters, ReportFormats.PDF, locale));
+		} catch (IOException e) {
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
+		}
+	}
+
+	public ParameterGroup getParameters(final Map<String, Object> defaultParameterValues) throws InternalErrorException {
+		final ReportParameterListFactory task = new ReportParameterListFactory(getReportEngine().createGetParameterDefinitionTask(impl));
+		try {
+			return task.get(new ParameterGroup(id, getName()), defaultParameterValues);
+		} finally {
+			task.close();
+		}
+	}
+
+	private String getFileName(final ReportFormats format) {
+		return getName() + "." + format.getFileExtension();
+	}
+
+	@SuppressWarnings("unchecked")
+	private InputStream render(final Connection conn, final Map<String, Object> parameters, final ReportFormats format, final Locale locale) throws InternalErrorException {
 		final IRunAndRenderTask t = getReportEngine().createRunAndRenderTask(impl);
 		try {
 			t.setLocale(locale);
@@ -57,25 +90,22 @@ public class ReportTemplate {
 			if (!parameters.isEmpty()) {
 				for (Map.Entry<String, Object> parameter : parameters.entrySet())
 					t.setParameterValue(parameter.getKey(), parameter.getValue());
-				if (!t.validateParameters())
-					Util.throwInternalErrorException("invalid parameters for report '" + getName() + "'");
+				if (!t.validateParameters()) {
+					final List<EngineException> errors = t.getErrors();
+					throw new InternalErrorException(errors.isEmpty() ? ("invalid parameters for report '" + getName() + "'") : errors.get(0).getLocalizedMessage());
+				}
 			}
 			final IRenderOption options = getRenderOptions(format);
-			final ByteArrayOutputStream tmp = new ByteArrayOutputStream();
-			options.setOutputStream(tmp);
+			final ByteArrayOutputStream out = new ByteArrayOutputStream();
+			options.setOutputStream(out);
 			t.setRenderOption(options);
 			t.run();
-			return new Report(getFileName(format), tmp, format);
+			return new ByteArrayInputStream(out.toByteArray());
 		} catch (EngineException e) {
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		} finally {
 			t.close();
 		}
-		return null;
-	}
-
-	private String getFileName(final ReportFormats format) {
-		return getName() + "." + format.getFileExtension();
 	}
 
 	private IRenderOption getRenderOptions(final ReportFormats format) {
@@ -100,21 +130,7 @@ public class ReportTemplate {
 				return options;
 			}
 		}
-
 	}
-/*
-	public Set<Integer> saveReports(final Connection conn, final Map<String, InputStream> reports, final ReportFormats format, final Boolean outputAsFile) throws SQLException, InternalErrorException {
-		final Set<Integer> ids = new HashSet<Integer>();
-		if (format == ReportFormats.PDF) {
-			// merge PDFs into one
-
-		} else {
-			for (Map.Entry<String, InputStream> report : reports.entrySet())
-				ids.add(saveReport(conn, report.getKey(), report.getValue(), format, outputAsFile));
-		}
-		return ids;
-	}
-*/
 
 	private IReportEngine getReportEngine() {
 		return impl.getReportEngine();

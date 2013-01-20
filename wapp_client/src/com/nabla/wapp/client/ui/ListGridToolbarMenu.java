@@ -80,8 +80,6 @@ public class ListGridToolbarMenu extends ToolStripMenuButton implements HasWidge
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

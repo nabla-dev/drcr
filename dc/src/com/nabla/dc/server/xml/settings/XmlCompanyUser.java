@@ -31,6 +31,7 @@ import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -87,7 +88,7 @@ class XmlCompanyUser {
 				}
 			}
 			if (success && !Database.isBatchCompleted(stmt.executeBatch()))
-				Util.throwInternalErrorException("failed to insert company user definition");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert company user definition"));
 			return success;
 		} finally {
 			Database.close(stmt);

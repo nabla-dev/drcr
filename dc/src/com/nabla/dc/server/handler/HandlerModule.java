@@ -73,7 +73,6 @@ public class HandlerModule extends AbstractHandlerModule {
 		bindHandler(UpdateListGridFilterHandler.class);
 		bindHandler(RemoveListGridFilterHandler.class);
 
-bind(IReportParameterTypeValidator.class).to(ReportParameterTypeValidator.class).in(Singleton.class);
 		*/
 	}
 

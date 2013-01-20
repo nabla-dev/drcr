@@ -35,6 +35,7 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.model.AbstractAddHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
@@ -69,7 +70,7 @@ companyId, record.getFinancialYear());
 					dt.add(GregorianCalendar.MONTH, 1);
 				}
 				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException("failed to create period ends");
+					throw new InternalErrorException(Util.formatInternalErrorDescription("failed to create period ends"));
 			} finally {
 				Database.close(stmt);
 			}

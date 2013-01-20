@@ -24,6 +24,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.command.RemoveUser;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
 
@@ -36,7 +37,7 @@ public class RemoveUserHandler extends AbstractHandler<RemoveUser, VoidResult> {
 	@Override
 	public VoidResult execute(final RemoveUser cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (!new UserManager(ctx.getWriteConnection()).removeUsers(cmd))
-			Util.throwInternalErrorException("failed to remove users");
+			throw new InternalErrorException(Util.formatInternalErrorDescription("failed to remove users"));
 		return null;
 	}
 

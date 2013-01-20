@@ -19,9 +19,8 @@ package com.nabla.dc.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.nabla.dc.client.model.report.ReportParameterBinderFactory;
 import com.nabla.dc.client.presenter.MainWindow;
-import com.nabla.dc.client.presenter.report.ReportParameterDialogFactory;
+import com.nabla.dc.client.presenter.report.ParameterWizardDisplayFactory;
 import com.nabla.dc.client.ui.MyMessageBox;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.general.Application;
@@ -72,7 +71,7 @@ public class MyApplication extends Application {
 
 	public PrintManager getPrintManager() {
 		if (printManager == null)
-			printManager = new PrintManager(new ReportParameterBinderFactory(), new ReportParameterDialogFactory());
+			printManager = new PrintManager(new ParameterWizardDisplayFactory());
 		return printManager;
 	}
 

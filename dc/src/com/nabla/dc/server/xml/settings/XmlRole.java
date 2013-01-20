@@ -33,6 +33,7 @@ import com.nabla.wapp.server.database.StatementFormat;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -90,7 +91,7 @@ class XmlRole extends Node {
 			roleId = Database.addRecord(conn,
 "INSERT INTO role (name,uname) VALUES(?,?);", getName(), getName().toUpperCase());
 			if (roleId == null)
-				Util.throwInternalErrorException("failed to insert role '" + getName() + "'");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert role '" + getName() + "'"));
 			ctx.getRoleIds().put(getName(), roleId);
 		}
 		if (definition == null || definition.isEmpty())
@@ -113,7 +114,7 @@ class XmlRole extends Node {
 				}
 			}
 			if (success && !Database.isBatchCompleted(stmt.executeBatch()))
-				Util.throwInternalErrorException("failed to insert role definition");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert role definition"));
 			return success;
 		} finally {
 			Database.close(stmt);

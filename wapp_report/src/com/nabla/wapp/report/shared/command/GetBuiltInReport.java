@@ -19,8 +19,8 @@ package com.nabla.wapp.report.shared.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.nabla.wapp.report.shared.IReportParameterValue;
 import com.nabla.wapp.report.shared.ReportOptions;
+import com.nabla.wapp.report.shared.parameter.IParameterValue;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.print.ReportFormats;
@@ -30,11 +30,11 @@ import com.nabla.wapp.shared.print.ReportFormats;
 public class GetBuiltInReport extends ReportOptions implements IAction<IntegerResult> {
 
 	private String					internalName;
-	private IReportParameterValue	parameter;
+	private IParameterValue	parameter;
 
 	GetBuiltInReport() {}	// for serialization only
 
-	public GetBuiltInReport(final String internalName, final ReportFormats format, final Boolean outputAsFile, final IReportParameterValue parameter) {
+	public GetBuiltInReport(final String internalName, final ReportFormats format, final Boolean outputAsFile, final IParameterValue parameter) {
 		super(format, outputAsFile);
 		this.internalName = internalName;
 		this.parameter = parameter;

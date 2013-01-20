@@ -16,7 +16,7 @@
 */
 package com.nabla.wapp.report.shared;
 
-import java.util.Set;
+import java.util.HashSet;
 
 import com.nabla.wapp.shared.dispatch.IResult;
 
@@ -24,18 +24,10 @@ import com.nabla.wapp.shared.dispatch.IResult;
  * The <code></code> object is used to
  *
  */
-public class ReportResult implements IResult {
+public class ReportResult extends HashSet<Integer> implements IResult {
 
-	private Set<Integer>	reportIds;
+	private static final long serialVersionUID = 1L;
 
-	ReportResult() {}	// for serialization only
-
-	public ReportResult(final Set<Integer> reportIds) {
-		this.reportIds = reportIds;
-	}
-
-	public Set<Integer> getReportIds() {
-		return reportIds;
-	}
+	public ReportResult() {}
 
 }

@@ -92,7 +92,7 @@ public class InsertStatement<T> extends SqlStatement {
 		if (parametersToInsert.isEmpty()) {
 			if (log.isErrorEnabled())
 				log.error("no values to insert!!!!");
-			Util.throwInternalErrorException("no parameter values given for SQL statement");
+			throw new InternalErrorException(Util.formatInternalErrorDescription("no parameter values given for SQL statement"));
 		}
 		final String sql = MessageFormat.format(sqlTemplate, names.toString(), values.toString());
 		if (log.isDebugEnabled())
@@ -105,7 +105,7 @@ public class InsertStatement<T> extends SqlStatement {
 			if (stmt.executeUpdate() != 1) {
 				if (log.isErrorEnabled())
 					log.error("failed to add record");
-				Util.throwInternalErrorException("failed to execute SQL statement");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to execute SQL statement"));
 			}
 			final ResultSet rsKey = stmt.getGeneratedKeys();
 			try {

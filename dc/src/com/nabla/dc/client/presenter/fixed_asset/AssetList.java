@@ -38,7 +38,7 @@ import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
-import com.nabla.wapp.report.shared.IntegerReportParameterValue;
+import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.nabla.wapp.shared.slot.ISlot1;
@@ -114,7 +114,7 @@ public class AssetList extends AbstractTabPresenter<AssetList.IDisplay> {
 	*/
 		cmd.updateUi();
 
-		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new IntegerReportParameterValue(ReportParameterTypes.PeriodEndId.getDefaultParameterName(), 292/*companyId*/));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ASSET_REGISTER_BY_CATEGORY, new IntegerParameterValue(ReportParameterTypes.PeriodEndId.getParameterName(), 292/*companyId*/));
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

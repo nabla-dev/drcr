@@ -19,4 +19,17 @@ package com.nabla.wapp.report.shared.command;
 import com.nabla.wapp.shared.command.AbstractFetch;
 
 
-public class FetchUserReportList extends AbstractFetch {}
+public class FetchUserReportList extends AbstractFetch {
+
+	private String		category;
+
+	FetchUserReportList() {}
+
+	public FetchUserReportList(final String category) {
+		this.category = category;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+}

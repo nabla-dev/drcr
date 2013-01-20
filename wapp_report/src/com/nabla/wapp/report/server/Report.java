@@ -16,8 +16,6 @@
 */
 package com.nabla.wapp.report.server;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -34,9 +32,9 @@ public class Report {
 	private final InputStream		impl;
 	private final ReportFormats 	format;
 
-	Report(final String name, final ByteArrayOutputStream impl, final ReportFormats format) {
+	Report(final String name, final InputStream impl, final ReportFormats format) {
 		this.name = name;
-		this.impl = new ByteArrayInputStream(impl.toByteArray());
+		this.impl = impl;
 		this.format = format;
 	}
 
@@ -51,7 +49,7 @@ public class Report {
 "INSERT INTO export (name,content_type,output_as_file,content,userSessionId) VALUES(?,?,?,?,?);",
 name, format.getMimeType(), outputAsFile, impl, userSessionId);
 		if (id == null)
-			Util.throwInternalErrorException("fail to save report to be exported '" + name + "'");
+			throw new InternalErrorException(Util.formatInternalErrorDescription("fail to save report to be exported '" + name + "'"));
 		return id;
 	}
 }

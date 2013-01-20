@@ -35,7 +35,7 @@ import com.nabla.wapp.client.mvp.AbstractTabPresenter;
 import com.nabla.wapp.client.mvp.ITabDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
 import com.nabla.wapp.client.ui.ListGrid.IListGridConfirmAction;
-import com.nabla.wapp.report.shared.IntegerReportParameterValue;
+import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.command.AbstractRestore;
 import com.nabla.wapp.shared.slot.ISlot;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -89,7 +89,7 @@ public class AccountList extends AbstractTabPresenter<AccountList.IDisplay> {
 		registerSlot(cmd.importRecords(), onImport);
 		cmd.updateUi();
 
-		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ACCOUNT_LIST, new IntegerReportParameterValue(ReportParameterTypes.CompanyId.getDefaultParameterName(), companyId));
+		MyApplication.getInstance().getPrintManager().bind(cmd, this, BuiltInReports.ACCOUNT_LIST, new IntegerParameterValue(ReportParameterTypes.CompanyId.getParameterName(), companyId));
 	}
 
 	private final ISlot onAddRecord = new ISlot() {

@@ -30,7 +30,7 @@ import com.nabla.wapp.client.general.LoggerFactory;
 import com.nabla.wapp.client.mvp.AbstractTopPresenter;
 import com.nabla.wapp.client.mvp.ITopDisplay;
 import com.nabla.wapp.client.print.IPrintCommandSet;
-import com.nabla.wapp.report.shared.IntegerReportParameterValue;
+import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
 import com.nabla.wapp.shared.slot.ISlot1;
 import com.nabla.wapp.shared.slot.ISlot2;
 import com.nabla.wapp.shared.slot.ISlotManager1;
@@ -73,7 +73,7 @@ public class CompanyFixedAssetCategoryDialog extends AbstractTopPresenter<Compan
 		registerSlot(getDisplay().getCategoryReparentSlots(), onCategoryReparent);
 		registerSlot(getDisplay().getAvailableCategoryDropSlots(), onAvailableCategoryDrop);
 
-		MyApplication.getInstance().getPrintManager().bind(getDisplay().getCommands(), this, BuiltInReports.COMPANY_FIXED_ASSET_CATEGORY_LIST, new IntegerReportParameterValue(ReportParameterTypes.CompanyId.getDefaultParameterName(), companyId));
+		MyApplication.getInstance().getPrintManager().bind(getDisplay().getCommands(), this, BuiltInReports.COMPANY_FIXED_ASSET_CATEGORY_LIST, new IntegerParameterValue(ReportParameterTypes.CompanyId.getParameterName(), companyId));
 	}
 
 	private AvailableCategoryDropSlot onAvailableCategoryDrop = new AvailableCategoryDropSlot() {

@@ -44,6 +44,7 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 
@@ -69,11 +70,10 @@ public class ImportAccountListHandler extends AbstractHandler<ImportAccountList,
 		} catch (Throwable e) {
 			if (log.isErrorEnabled())
 				log.error("failed to parse accounts from CSV data", e);
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		} finally {
 			errors.close();
 		}
-		return null;
 	}
 
 	private boolean add(final ImportAccountList cmd, final ImportErrorManager errors, final IUserSessionContext ctx) throws DispatchException, SQLException {

@@ -63,9 +63,9 @@ public class UpgradeReportHandler extends AbstractUpdateHandler<UpgradeReport> {
 				final ConnectionTransactionGuard guard = new ConnectionTransactionGuard(conn);
 				try {
 					Database.executeUpdate(conn,
-"DELETE report_resource WHERE report_id=?;", record.getReportId());
+"DELETE FROM report_resource WHERE report_id=?;", record.getReportId());
 					Database.executeUpdate(conn,
-"DELETE report_name_localized WHERE report_id=?;", record.getReportId());
+"DELETE FROM report_name_localized WHERE report_id=?;", record.getReportId());
 					if (ReportZipFile.acceptContentType(rs.getString("content_type"))) {
 						final ReportZipFile zip = new ReportZipFile(rs.getBinaryStream("content"));
 						try {

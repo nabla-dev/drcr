@@ -29,9 +29,11 @@ import com.nabla.dc.client.presenter.options.ChangeUserPasswordDialog;
 import com.nabla.dc.client.presenter.options.RoleList;
 import com.nabla.dc.client.presenter.options.UserList;
 import com.nabla.dc.client.presenter.report.ReportList;
+import com.nabla.dc.client.presenter.report.UserReportList;
 import com.nabla.dc.client.ui.UserCompanyListUi;
 import com.nabla.dc.shared.IPrivileges;
 import com.nabla.dc.shared.command.ExportSettings;
+import com.nabla.dc.shared.report.ReportCategories;
 import com.nabla.wapp.client.command.Command;
 import com.nabla.wapp.client.command.HideableCommand;
 import com.nabla.wapp.client.command.IBasicCommandSet;
@@ -65,6 +67,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		@IRequiredRole(IPrivileges.USER_VIEW) HideableCommand userList();
 		@IRequiredRole(IPrivileges.ROLE_VIEW) HideableCommand roleList();
 		@IRequiredRole(IPrivileges.REPORT_VIEW) Command reportList();
+		@IRequiredRole(IPrivileges.REPORT_VIEW) Command settingsReportList();
 	}
 
 	public interface IDisplay extends ITabDisplay {
@@ -102,7 +105,7 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 		registerSlot(cmd.exportSettings(), onExportSettings);
 		registerSlot(cmd.importAssets(), onImportAssets);
 		registerSlot(cmd.reportList(), onReportList);
-
+		registerSlot(cmd.settingsReportList(), onSettingsReportList);
 		cmd.updateUi();
 		getDisplay().getSelectedSlots().connect(onOpenCompany);
 	}
@@ -263,4 +266,17 @@ public class UserCompanyList extends AbstractTabPresenter<UserCompanyList.IDispl
 			});
 		}
 	};
+
+	private final ISlot onSettingsReportList = new ISlot() {
+		@Override
+		public void invoke() {
+			GWT.runAsync(new AbstractRunAsyncCallback() {
+				@Override
+				public void onSuccess() {
+					tabs.addTab(new UserReportList(ReportCategories.SETTINGS));
+				}
+			});
+		}
+	};
+
 }

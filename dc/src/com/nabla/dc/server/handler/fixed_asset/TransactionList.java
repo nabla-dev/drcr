@@ -159,7 +159,7 @@ public class TransactionList extends LinkedList<Transaction> {
 				final ResultSet rs = stmt.executeQuery();
 				try {
 					if (!rs.next())
-						Util.throwInternalErrorException("company definition has not been finalised");
+						throw new InternalErrorException(Util.formatInternalErrorDescription("company definition has not been finalised"));
 					dt.setTime(rs.getDate(1));
 				} finally {
 					rs.close();
@@ -183,7 +183,7 @@ public class TransactionList extends LinkedList<Transaction> {
 "INSERT INTO financial_year (company_id, name) VALUES(?,?);",
 companyId, financialYearNameFormat.format(new Date(dt.getTime().getTime())));
 					if (financialYearId == null)
-						Util.throwInternalErrorException("cannot create previous financial year: name duplicate");
+						throw new InternalErrorException(Util.formatInternalErrorDescription("cannot create previous financial year: name duplicate"));
 					stmt.setInt(1, financialYearId);
 					for (int m = 0; m < 12; ++m) {
 						final Date end = new Date(dt.getTime().getTime());
@@ -195,7 +195,7 @@ companyId, financialYearNameFormat.format(new Date(dt.getTime().getTime())));
 					}
 				} while (first.before(dt));
 				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException("fail to add period ends");
+					throw new InternalErrorException(Util.formatInternalErrorDescription("fail to add period ends"));
 			} finally {
 				stmt.close();
 			}
@@ -212,7 +212,7 @@ companyId, financialYearNameFormat.format(new Date(dt.getTime().getTime())));
 				final ResultSet rs = stmt.executeQuery();
 				try {
 					if (!rs.next())
-						Util.throwInternalErrorException("company definition has not been finalised");
+						throw new InternalErrorException(Util.formatInternalErrorDescription("company definition has not been finalised"));
 					dt.setTime(rs.getDate(1));
 					financialYearId = rs.getInt(2);
 				} finally {
@@ -237,7 +237,7 @@ companyId, financialYearNameFormat.format(new Date(dt.getTime().getTime())));
 					stmt.addBatch();
 				} while (dt.before(last));
 				if (!Database.isBatchCompleted(stmt.executeBatch()))
-					Util.throwInternalErrorException("fail to add period ends");
+					throw new InternalErrorException(Util.formatInternalErrorDescription("fail to add period ends"));
 			} finally {
 				stmt.close();
 			}
@@ -253,7 +253,7 @@ companyId, financialYearNameFormat.format(new Date(dt.getTime().getTime())));
 			final ResultSet rs = stmt.executeQuery();
 			try {
 				if (!rs.next())
-					Util.throwInternalErrorException("asset has been removed");
+					throw new InternalErrorException(Util.formatInternalErrorDescription("asset has been removed"));
 				return rs.getInt(1);
 			} finally {
 				rs.close();

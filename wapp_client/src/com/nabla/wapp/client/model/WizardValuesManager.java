@@ -56,7 +56,7 @@ public abstract class WizardValuesManager<T extends Record & IWizardRecord> exte
 				if (values != null)
 					editNewRecord(values);
 				else {
-					log.log(Level.FINE, "no asset default values");
+					log.log(Level.FINE, "no default values for '" + defaultValuesGroup + "'");
 					editNewRecord();
 				}
 				callback.invoke();

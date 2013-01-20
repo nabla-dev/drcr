@@ -16,10 +16,7 @@
 */
 package com.nabla.wapp.report.shared;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import com.nabla.wapp.report.shared.parameter.ParameterList;
 
 
 /**
@@ -28,20 +25,18 @@ import java.util.Set;
  */
 public class SimpleReportResult extends ReportResult {
 
-	private List<ReportParameter>	parameters;
+	private static final long serialVersionUID = 1L;
 
-	SimpleReportResult() {}	// for serialization only
+	private ParameterList		parameters;
 
-	public SimpleReportResult(final Set<Integer> reportIds) {
-		super(reportIds);
-	}
+	public SimpleReportResult() {}
 
-	public SimpleReportResult(final Collection<ReportParameter> parameters) {
+	public SimpleReportResult(final ParameterList parameters) {
 		super();
-		this.parameters = new LinkedList<ReportParameter>(parameters);
+		this.parameters = parameters;
 	}
 
-	public List<ReportParameter> getParameters() {
+	public ParameterList getParameters() {
 		return parameters;
 	}
 

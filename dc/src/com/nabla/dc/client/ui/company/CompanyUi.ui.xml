@@ -26,6 +26,8 @@
 					<wnd:MenuItem icon="user_small.png" command="{cmd.editUsers}">Users</wnd:MenuItem>
 					<wnd:MenuItemSeparator/>
 					<wnd:MenuItem icon="logo_small.png" command="{cmd.changeLogo}">Change logo</wnd:MenuItem>
+					<wnd:MenuItemSeparator />
+					<wnd:MenuItem command="{cmd.settingsReportList}" icon="report_small.png"><ui:msg>Reports</ui:msg></wnd:MenuItem>					
 				</wnd:ToolbarMenu>
 			</wnd:Toolbar>
 			<wnd:TabDisplaySet ui:field="tabs" width="100%" height="100%">

@@ -39,6 +39,7 @@ import com.nabla.wapp.server.json.JsonResponse;
 import com.nabla.wapp.server.xml.Importer;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 import com.nabla.wapp.shared.model.IErrorList;
 
@@ -64,11 +65,10 @@ public class ImportAssetsHandler extends AbstractHandler<ImportAssets, StringRes
 		} catch (DispatchException e) {
 			throw e;
 		} catch (Throwable e) {
-			Util.throwInternalErrorException(e);
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		} finally {
 			errors.close();
 		}
-		return null;
 	}
 
 	private boolean add(final ImportAssets cmd, final IErrorList<Integer> errors, final IUserSessionContext ctx) throws DispatchException, SQLException {

@@ -21,23 +21,19 @@ package com.nabla.dc.shared.report;
  *
  */
 public enum ReportParameterTypes {
-	TextField(null),
-	IntegerField(null),
-	PositiveIntegerField(null),
-	CurrencyField(null),
-	UserId("UserId"),
+	UserId("rpUserId"),
 	CompanyId("CompanyId"),
 	DateField("AsAt"),
 	PeriodEndId("PeriodEndId");
 
-	private final String	defaultParameterName;
+	private final String	parameterName;
 
-	ReportParameterTypes(final String defaultParameterName) {
-		this.defaultParameterName = defaultParameterName;
+	ReportParameterTypes(final String parameterName) {
+		this.parameterName = parameterName;
 	}
 
-	public String getDefaultParameterName() {
-		return defaultParameterName;
+	public String getParameterName() {
+		return parameterName;
 	}
 
 }

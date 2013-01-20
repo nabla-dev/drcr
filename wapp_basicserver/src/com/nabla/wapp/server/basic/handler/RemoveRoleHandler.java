@@ -24,6 +24,7 @@ import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.command.RemoveRole;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.VoidResult;
 
 
@@ -36,7 +37,7 @@ public class RemoveRoleHandler extends AbstractHandler<RemoveRole, VoidResult> {
 	@Override
 	public VoidResult execute(final RemoveRole cmd, final IUserSessionContext ctx) throws DispatchException, SQLException {
 		if (!new UserManager(ctx.getWriteConnection()).removeRoles(cmd))
-			Util.throwInternalErrorException("failed to remove roles");
+			throw new InternalErrorException(Util.formatInternalErrorDescription("failed to remove roles"));
 		return null;
 	}
 

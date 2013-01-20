@@ -65,8 +65,6 @@ public class Menu extends com.smartgwt.client.widgets.menu.Menu implements HasWi
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

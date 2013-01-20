@@ -18,42 +18,28 @@ package com.nabla.wapp.report.shared.command;
 
 import java.util.Set;
 
-import com.nabla.wapp.report.shared.ReportParameterValueList;
+import com.nabla.wapp.report.shared.ReportOptions;
 import com.nabla.wapp.report.shared.ReportResult;
+import com.nabla.wapp.report.shared.parameter.ReportParameterValueList;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.print.ReportFormats;
 
-/**
- * The <code></code> object is used to
- *
- */
-public class GetReport implements IAction<ReportResult> {
+public class GetReport extends ReportOptions implements IAction<ReportResult> {
 
 	private IntegerSet						reportIds;
-	private ReportFormats					format;
-	private Boolean							outputAsFile;
 	private ReportParameterValueList		parameters;
 
 	GetReport() {}	// for serialization only
 
 	public GetReport(final Set<Integer> reportIds, final ReportFormats format, final Boolean outputAsFile, final ReportParameterValueList parameters) {
+		super(format, outputAsFile);
 		this.reportIds = new IntegerSet(reportIds);
-		this.format = format;
-		this.outputAsFile = outputAsFile;
 		this.parameters = parameters;
 	}
 
 	public IntegerSet getReportIds() {
 		return reportIds;
-	}
-
-	public ReportFormats getFormat() {
-		return format;
-	}
-
-	public Boolean getOutputAsFile() {
-		return outputAsFile;
 	}
 
 	public ReportParameterValueList getParameters() {

@@ -40,6 +40,7 @@ import com.nabla.wapp.server.database.ConnectionTransactionGuard;
 import com.nabla.wapp.server.database.Database;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
 
 @Singleton
@@ -81,25 +82,26 @@ public class MyReadWriteDatabase extends AuthDatabase {
         }
         final File reportFile = files[0];
         InputStream in;
+        InputStream design;
 		try {
 			in = new FileInputStream(reportFile);
+			design = new FileInputStream(reportFile);
 		} catch (FileNotFoundException e) {
-			Util.throwInternalErrorException(e);
-			return false;
+			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}
-		int reportId = reportManager.addReport(conn, FilenameUtils.getBaseName(reportFile.getName()), folder.getName(), in);
+		int reportId = reportManager.addReport(conn, FilenameUtils.getBaseName(reportFile.getName()), folder.getName(), design, in);
 		for (File file : folder.listFiles((FileFilter)new SuffixFileFilter(ReportManager.RESOURCE_FILE_EXTENSIONS))) {
         	try {
 				reportManager.loadReportResource(conn, reportId, file.getName(), new FileInputStream(file));
 			} catch (FileNotFoundException e) {
-				Util.throwInternalErrorException(e);
+				throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 			}
 		}
 		for (File file : folder.listFiles((FileFilter)new SuffixFileFilter(ReportManager.PROPERTIES_FILE_EXTENSION))) {
 			try {
 				reportManager.loadLocaleReportName(conn, reportId, file.getName(), new FileInputStream(file));
 			} catch (FileNotFoundException e) {
-				Util.throwInternalErrorException(e);
+				throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 			}
 		}
 		return true;

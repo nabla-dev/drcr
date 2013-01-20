@@ -29,6 +29,7 @@ import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.dispatch.AbstractHandler;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.dispatch.StringResult;
 
 
@@ -47,7 +48,7 @@ public class ChangeCompanyLogoHandler extends AbstractHandler<ChangeCompanyLogo,
 " SELECT file_name AS 'name',content_type,length,content FROM import_data WHERE id=? AND userSessionId=?;", record.getFileId(), ctx.getSessionId());
 		try {
 			if (stmt.executeUpdate() != 1)
-				Util.throwInternalErrorException("failed to copy image from imported data to logo table");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to copy image from imported data to logo table"));
 			final ResultSet rsKey = stmt.getGeneratedKeys();
 			try {
 				rsKey.next();

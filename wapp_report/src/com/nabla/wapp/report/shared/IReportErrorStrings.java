@@ -20,9 +20,6 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
 
 public interface IReportErrorStrings extends ConstantsWithLookup {
 
-	@DefaultStringValue("no title defined for report")
-	String REPORT_DESIGN_NO_TITLE_DEFINED();
-
 	@DefaultStringValue("invalid role defined for report")
 	String REPORT_DESIGN_INVALID_ROLE();
 

@@ -28,6 +28,7 @@ import com.nabla.wapp.server.database.UpdateStatement;
 import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.model.AbstractUpdateHandler;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.ValidationException;
 
@@ -60,7 +61,7 @@ public class UpdateAssetFieldHandler extends AbstractUpdateHandler<UpdateAssetFi
 					stmt.close();
 				}
 			} catch (SQLException e) {
-				Util.throwInternalErrorException(e);
+				throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 			}
 		}
 		sql.execute(ctx.getConnection(), record);

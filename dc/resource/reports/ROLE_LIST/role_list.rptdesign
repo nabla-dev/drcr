@@ -2,6 +2,18 @@
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.2.1.v201209101448 Build &lt;4.2.1.v20120912-1721></property>
     <text-property name="title">Role List</text-property>
+	<list-property name="userProperties">
+        <structure>
+            <property name="name">role</property>
+            <property name="type">expression</property>
+            <expression name="default" type="javascript">role_view</expression>
+        </structure>
+        <structure>
+            <property name="name">report_category</property>
+            <property name="type">expression</property>
+            <expression name="default" type="javascript">SETTINGS</expression>
+        </structure>
+    </list-property>
     <simple-property-list name="includeResource">
         <value>resource</value>
     </simple-property-list>

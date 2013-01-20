@@ -40,6 +40,7 @@ import com.nabla.wapp.server.general.Util;
 import com.nabla.wapp.server.xml.IRowMap;
 import com.nabla.wapp.shared.database.SqlInsertOptions;
 import com.nabla.wapp.shared.dispatch.DispatchException;
+import com.nabla.wapp.shared.dispatch.InternalErrorException;
 import com.nabla.wapp.shared.general.CommonServerErrors;
 import com.nabla.wapp.shared.model.IErrorList;
 import com.nabla.wapp.shared.validator.ValidatorContext;
@@ -117,7 +118,7 @@ class XmlCompany extends Node {
 "INSERT INTO company (name,uname,active) VALUES(?,?,?);",
 getName(), getName().toUpperCase(), active);
 			if (companyId == null)
-				Util.throwInternalErrorException("failed to insert company");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("failed to insert company"));
 			companyIds.put(getName(), companyId);
 		}
 		final Integer financialYearId = Database.addRecord(conn,
@@ -138,7 +139,7 @@ getName(), getName().toUpperCase(), active);
 				dt.add(GregorianCalendar.MONTH, 1);
 			}
 			if (!Database.isBatchCompleted(stmt.executeBatch()))
-				Util.throwInternalErrorException("fail to insert periods for company '" + getName() + "'");
+				throw new InternalErrorException(Util.formatInternalErrorDescription("fail to insert periods for company '" + getName() + "'"));
 		} finally {
 			stmt.close();
 		}
