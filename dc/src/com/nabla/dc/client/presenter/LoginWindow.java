@@ -31,30 +31,20 @@ import com.nabla.wapp.client.mvp.ICanvasDisplay;
 import com.nabla.wapp.client.server.UserSession;
 import com.nabla.wapp.client.ui.ILoginUi;
 import com.nabla.wapp.shared.general.CommonServerErrors;
-import com.nabla.wapp.shared.signal.Signal;
 import com.nabla.wapp.shared.slot.ISlot;
-import com.nabla.wapp.shared.slot.ISlotManager;
 
 
 public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 
 	public interface IDisplay extends ICanvasDisplay, ILoginUi {}
 
-	private static final Logger		logger = LoggerFactory.getLog(LoginWindow.class);
+	private static final Logger		log = LoggerFactory.getLog(LoginWindow.class);
 	private static final AutoLogin	autoLogin = new AutoLogin();
-	private final Signal				sigLogin = new Signal();
+	private final ISlot				onSuccess;
 
-	public LoginWindow(final IDisplay display) {
-		super(display);
-
-	}
-
-	public LoginWindow() {
-		this(new LoginWindowUi());
-	}
-
-	public ISlotManager getLoginSlots() {
-		return sigLogin;
+	public LoginWindow(final ISlot onSuccess) {
+		super(new LoginWindowUi());
+		this.onSuccess = onSuccess;
 	}
 
 	@Override
@@ -83,14 +73,14 @@ public class LoginWindow extends AbstractCanvasPresenter<LoginWindow.IDisplay> {
 
 			@Override
 			public void onFailure(final Throwable caught) {
-				logger.log(Level.WARNING, "login failed", caught);
+				log.log(Level.WARNING, "login failed", caught);
 				getDisplay().showError(CommonServerErrors.INVALID_USER_PASSWORD);
 				getDisplay().setSaving(false);
 			}
 
 			@Override
 			public void onSuccess(@SuppressWarnings("unused") final UserSession result) {
-				sigLogin.fire();
+				onSuccess.invoke();
 			}
 
 		});

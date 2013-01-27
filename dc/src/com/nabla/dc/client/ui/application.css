@@ -12,4 +12,7 @@
 	padding-left: 40px;
 	background: transparent url("public/images/password_normal.png") no-repeat center left;
 	min-height: 32px;
+	font-family:Verdana,Bitstream Vera Sans,sans-serif;
+    font-size:11px;
 }
+

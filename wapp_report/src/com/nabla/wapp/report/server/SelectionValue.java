@@ -14,13 +14,30 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.shared.parameter;
+package com.nabla.wapp.report.server;
 
-import java.util.Date;
+import org.eclipse.birt.report.engine.api.IParameterSelectionChoice;
 
+public class SelectionValue {
 
-public class DateParameterValueMap extends TParameterValueMap<Date> {
+	private Object		value;
+	private String		prompt;
 
-	public DateParameterValueMap() {}
+	public SelectionValue(Object value, String prompt) {
+		this.value = value;
+		this.prompt = prompt;
+	}
+
+	public SelectionValue(final IParameterSelectionChoice e) {
+		this(e.getValue(), e.getLabel());
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public String getPrompt() {
+		return prompt;
+	}
 
 }

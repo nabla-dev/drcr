@@ -27,14 +27,13 @@ import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 
-public class SmartGwtSelectItem extends SelectItem implements FormItemCriteriaFunction/*FilterCriteriaFunction*/ {
+public class SmartGwtSelectItem extends SelectItem implements FormItemCriteriaFunction {
 
-	private final Criteria						staticCriterias = new Criteria();
-	private final List<FilterCriteriaFunction>	dynamicCriterias = new LinkedList<FilterCriteriaFunction>();
+	private final Criteria							staticCriterias = new Criteria();
+	private final List<FilterCriteriaFunction>		dynamicCriterias = new LinkedList<FilterCriteriaFunction>();
 
 	public SmartGwtSelectItem() {
 		setPickListFilterCriteriaFunction(this);
-	//	setPickListFilterCriteriaFunction(this);
 	}
 
 	@Override
@@ -68,17 +67,5 @@ public class SmartGwtSelectItem extends SelectItem implements FormItemCriteriaFu
 		}
 		return ret;
 	}
-	/*
-	@Override
-	public Criteria getCriteria() {
-		final Criteria ret = new Criteria();
-		ret.addCriteria(staticCriterias);
-		for (FilterCriteriaFunction fn : dynamicCriterias) {
-			Criteria criteria = fn.getCriteria();
-			if (criteria != null)
-				ret.addCriteria(criteria);
-		}
-		return ret;
-	}*/
 
 }

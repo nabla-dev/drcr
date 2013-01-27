@@ -16,20 +16,20 @@
 */
 package com.nabla.wapp.report.shared.parameter;
 
-import java.util.Map;
 
 public class IntegerComboBoxParameter extends BasicParameter {
 
-	private IntegerParameterValueMap		valueMap;
+	private Integer		reportId;
 
 	IntegerComboBoxParameter() {}	// for serialization only
 
-	public IntegerComboBoxParameter(final String name, final String prompt, final IntegerParameterValueMap valueMap) {
+	public IntegerComboBoxParameter(final Integer reportId, final String name, final String prompt) {
 		super(name, prompt);
-		this.valueMap = valueMap;
+		this.reportId = reportId;
 	}
 
-	public Map getValueMap() {
-		return valueMap.get();
+	public Integer getReportId() {
+		return reportId;
 	}
+
 }

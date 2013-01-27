@@ -37,7 +37,7 @@ import com.smartgwt.client.widgets.events.CloseClickHandler;
 
 public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing {
 
-	private static final Logger	logger = LoggerFactory.getLog(Dialog.class);
+	private static final Logger	log = LoggerFactory.getLog(Dialog.class);
 	private static int			margin = Resource.bundle.style().DIALOG_DEFAULT_MARGIN();
 	private static int			spacing = Resource.bundle.style().DIALOG_DEFAULT_SPACING();
 	private final Signal			sigClose = new Signal();
@@ -50,8 +50,11 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 		this.setShowCloseButton(false);	// will be set to true if CancelButton is found in children
 		this.setDismissOnEscape(false);	// will be set to true if CancelButton is found in children
 		this.setAutoSize(true);
-		layout.setMargin(margin);
-		layout.setMembersMargin(spacing);
+		layout.setMargin(2);
+		layout.setLayoutMargin(margin);
+		layout.setMembersMargin(0/*spacing*/);
+		layout.setBorder("solid medium lightblue");
+		layout.setShowEdges(true);
 		layout.setWidth("100%");
 		layout.setHeight("100%");
 		addItem(layout);
@@ -83,17 +86,17 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 
 	@Override
 	public void clear() {
-		IHasWidgets.Helper.clear(this);
+//		IHasWidgets.Helper.clear(this);
 	}
 
 	@Override
 	public Iterator<Widget> iterator() {
-        return layout.iterator();
+        return null/*layout.iterator()*/;
 	}
 
 	@Override
-	public boolean remove(final Widget w) {
-		return layout.remove(w);
+	public boolean remove(@SuppressWarnings("unused") final Widget w) {
+		return false/*layout.remove(w)*/;
 	}
 
 	@Override
@@ -114,7 +117,7 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 	}
 
 	public void setIcon(final String imgSrc) {
-		logger.fine("setting dialog icon to '" + imgSrc + "'");
+		log.fine("setting dialog icon to '" + imgSrc + "'");
 		setHeaderIcon(imgSrc);
 	}
 
@@ -126,7 +129,7 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 	public void onCreate() {
 		final CancelButton button = findChild(CancelButton.class, true);
 		if (button != null) {
-			logger.info("found CancelButton. installing handlers to close Dialog");
+			log.info("found CancelButton. installing handlers to close Dialog");
 			this.setShowCloseButton(true);
 			this.setDismissOnEscape(true);
 			button.addClickHandler(new ClickHandler() {
@@ -142,7 +145,7 @@ public class Dialog extends Window implements IHasWidgets, IPostCreateProcessing
 				}
 			});
 		} else {
-			logger.warning("no CancelButton found");
+			log.warning("no CancelButton found");
 		}
 	}
 

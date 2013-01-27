@@ -25,6 +25,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  *
  */
 public interface IParameterValue extends IsSerializable {
+	String getParameterName();
 	void addToMap(final Map<String, Object> parameters);
 	void addToStringMap(final Map<String, String> parameters);
 }

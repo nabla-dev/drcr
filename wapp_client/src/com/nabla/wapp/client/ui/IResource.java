@@ -28,12 +28,6 @@ public interface IResource extends ClientBundle {
 		int DIALOG_DEFAULT_SPACING();
 		int DIALOG_DEFAULT_BUTTONS_TOP_MARGIN();
 
-		@ClassName("form-required-info-message")
-		String formRequiredInfoMessage();
-
-		@ClassName("form-required-info-tag")
-		String formRequiredInfoTag();
-
 		@ClassName("wizard-navigation-bar")
 		String wizardNavigationBar();
 	}

@@ -20,7 +20,6 @@ import com.google.gwt.core.client.GWT;
 import com.nabla.dc.client.ui.MainWindowUi;
 import com.nabla.wapp.client.general.AbstractRunAsyncCallback;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.mvp.AbstractMainPresenter;
 import com.nabla.wapp.client.mvp.AbstractPresenter;
 import com.nabla.wapp.client.mvp.ICanvasDisplay;
@@ -41,46 +40,37 @@ public class MainWindow extends AbstractMainPresenter<MainWindow.IDisplay> {
 	private final IUserSessionManager	sessionManager;
 	private IPresenter					client = null;
 
-	public MainWindow(final IDisplay ui) {
-		super(ui);
-		sessionManager = Application.getInstance().getUserSessionManager();
-		Assert.unique(MainWindow.class);
-	}
-
 	public MainWindow() {
-		this(new MainWindowUi());
+		super(new MainWindowUi());
+		sessionManager = Application.getInstance().getUserSessionManager();
+		sessionManager.getUserSessionChangedSlots().connect(onUserSessionChanged);
 	}
 
 	@Override
 	public void bind() {
 		super.bind();
-		sessionManager.getUserSessionChangedSlots().connect(onUserSessionChanged);
 		login();
 	}
 
 	@Override
 	public void unbind() {
-		if (this.client != null)
-			this.client.unbind();
+		if (client != null)
+			client.unbind();
 		super.unbind();
 	}
 
 	private void login() {
 		sessionManager.clearSession();
 		GWT.runAsync(new AbstractRunAsyncCallback() {
-
 			@Override
 			public void onSuccess() {
-				final LoginWindow wnd = new LoginWindow();
-				wnd.getLoginSlots().connect(new ISlot() {
+				setClientArea(new LoginWindow(new ISlot() {
 					@Override
 					public void invoke() {
 						loadWorkspace();
 					}
-				});
-				setClientArea(wnd);
+				}));
 			}
-
 		});
 	}
 
@@ -103,8 +93,6 @@ public class MainWindow extends AbstractMainPresenter<MainWindow.IDisplay> {
 	}
 
 	private <D extends ICanvasDisplay> void setClientArea(final AbstractPresenter<D> client) {
-		Assert.argumentNotNull(client);
-
 		client.bind();
 		getDisplay().setClientArea(client.getDisplay());
 		if (this.client != null)

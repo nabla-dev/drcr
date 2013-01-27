@@ -22,6 +22,7 @@ import java.util.Map;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.Util;
 import com.nabla.wapp.report.shared.parameter.IParameter;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 
 /**
  * The <code></code> object is used to
@@ -32,23 +33,25 @@ public class ParameterBinderFactoryRegister {
 	private final Map<Class, IParameterBinderFactory<? extends IParameter>>	factories = new HashMap<Class, IParameterBinderFactory<? extends IParameter>>();
 
 	public ParameterBinderFactoryRegister() {
-		register(new StringEditBoxParameterBinderFactory());
-		register(new DateEditBoxParameterBinderFactory());
+//		register(new StringEditBoxParameterBinderFactory());
+//		register(new DateEditBoxParameterBinderFactory());
 		register(new IntegerComboBoxParameterBinderFactory());
+		register(new ParameterGroupBinderFactory());
+		register(new CascadingParameterGroupBinderFactory());
 	}
 
-	public IParameterBinder create(final IParameter parameter, final Map<String, Object> defaultValues) {
-		return doCreate(parameter, defaultValues);
+	public IParameterBinder create(final IParameter parameter, final ParameterValueList parameterValues) {
+		return doCreate(parameter, parameterValues);
 	}
 
 	private <P extends IParameter> void register(final IParameterBinderFactory<P> factory) {
 		factories.put(factory.getParameterClass(), factory);
 	}
 
-	private <P extends IParameter> IParameterBinder doCreate(final P parameter, final Map<String, Object> defaultValues) {
+	private <P extends IParameter> IParameterBinder doCreate(final P parameter, final ParameterValueList parameterValues) {
 		final IParameterBinderFactory<P> factory = getFactory(parameter);
 		Assert.notNull(factory, "fail to find factory for parameter '" + Util.getClassSimpleName(parameter.getClass()) + "'. Have you forgotten to register factory?");
-		return factory.create(parameter, defaultValues);
+		return factory.create(parameter, parameterValues);
 	}
 
 	@SuppressWarnings("unchecked")

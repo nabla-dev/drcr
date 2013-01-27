@@ -24,8 +24,6 @@ import com.nabla.dc.client.presenter.report.ParameterWizardDisplayFactory;
 import com.nabla.dc.client.ui.MyMessageBox;
 import com.nabla.dc.client.ui.Resource;
 import com.nabla.wapp.client.general.Application;
-import com.nabla.wapp.client.general.Assert;
-import com.nabla.wapp.client.mvp.ITopPresenter;
 import com.nabla.wapp.report.client.PrintManager;
 
 /**
@@ -42,15 +40,12 @@ public class MyApplication extends Application {
 
 	@Override
 	public void execute(HasWidgets container) {
-		Assert.argumentNotNull(container);
-
 		container.clear();
 		GWT.runAsync(new RunAsyncCallback() {
 
 			@Override
 			public void onSuccess() {
-				ITopPresenter wnd = new MainWindow();
-				wnd.revealDisplay();
+				new MainWindow().revealDisplay();
 			}
 
 			@Override
@@ -63,12 +58,16 @@ public class MyApplication extends Application {
 
 	/**
 	 * Get global application instance
-	 * @return
+	 * @return MyApplication instance
 	 */
 	public static MyApplication getInstance() {
 		return (MyApplication)Application.getInstance();
 	}
 
+	/**
+	 * Get global printer manager instance
+	 * @return PrintManager instance
+	 */
 	public PrintManager getPrintManager() {
 		if (printManager == null)
 			printManager = new PrintManager(new ParameterWizardDisplayFactory());

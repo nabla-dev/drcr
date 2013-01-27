@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
-import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
 import com.smartgwt.client.widgets.Canvas;
 
@@ -35,15 +34,11 @@ public interface IHasWidgets extends HasWidgets {
 		private static final Logger	logger = LoggerFactory.getLog(Helper.class);
 
 		static public void clear(final Canvas parent) {
-			Assert.argumentNotNull(parent);
-
 			for(Canvas w: parent.getChildren())
 				parent.removeChild(w);
 		}
 
 		static public Iterator<Widget> iterator(final Canvas parent){
-			Assert.argumentNotNull(parent);
-
 			return iterator(parent.getChildren());
 		}
 
@@ -57,8 +52,6 @@ public interface IHasWidgets extends HasWidgets {
 		}
 
 		static public boolean remove(final Widget parent, final Widget w){
-			Assert.argumentNotNull(w);
-
 			if (w.getParent() != parent)
 				return false;
 			w.removeFromParent();
@@ -114,8 +107,6 @@ public interface IHasWidgets extends HasWidgets {
 		}
 
 		static public void onCreate(final Widget w) {
-			Assert.argumentNotNull(w);
-
 			if (w instanceof IPostCreateProcessing) {
 				logger.finer("onCreate: " + w.getClass().getName());
 				((IPostCreateProcessing)w).onCreate();

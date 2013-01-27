@@ -50,4 +50,9 @@ public class TParameterValue<T> implements IParameterValue {
 		return (value == null) ? "" : value.toString();
 	}
 
+	@Override
+	public String getParameterName() {
+		return name;
+	}
+
 }

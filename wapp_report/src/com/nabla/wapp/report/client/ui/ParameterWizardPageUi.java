@@ -17,24 +17,44 @@
 package com.nabla.wapp.report.client.ui;
 
 import com.nabla.wapp.client.mvp.IWizardPageDisplay;
-import com.nabla.wapp.client.mvp.binder.BindedBasicWizardPageDisplay;
+import com.nabla.wapp.client.mvp.binder.BindedWizardPageDisplay;
 import com.nabla.wapp.client.ui.WizardPage;
 import com.nabla.wapp.client.ui.form.Form;
+import com.nabla.wapp.report.client.model.ParameterModel;
 import com.nabla.wapp.report.client.parameter.ParameterBinderList;
 import com.nabla.wapp.report.shared.parameter.ParameterGroup;
-import com.smartgwt.client.widgets.form.ValuesManager;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 
 
-public class ParameterWizardPageUi extends BindedBasicWizardPageDisplay implements IWizardPageDisplay {
+public class ParameterWizardPageUi extends BindedWizardPageDisplay<WizardPage> implements IWizardPageDisplay {
 
-	public ParameterWizardPageUi(final ValuesManager model, final ParameterBinderList binders, final ParameterGroup reportParameters) {
-		super(model);
+	private final Form 					form = new Form();
+	private final ParameterBinderList		binders;
+
+	public ParameterWizardPageUi(final ParameterGroup reportParameters, final ParameterValueList values) {
+		super();
+		binders = new ParameterBinderList(reportParameters, values);
+		form.setModel(new ParameterModel(binders));
+		binders.createFormItem(form);
 		impl = new WizardPage();
 		impl.setTitle(reportParameters.getPrompt());
-		form = new Form();
-		form.setValuesManager(model);
-		binders.createFormItem(form, reportParameters);
 		impl.add(form);
+/*
+		final Integer reportId = 1;
+		form.editNewRecordWithDefault(new GetFormDefaultValues(reportId, IReport.PRINT_REPORT_PREFERENCE_GROUP));*/
 	}
 
+	@Override
+	public boolean validate() {
+		return form.validate();
+	}
+
+	@Override
+	public boolean hasErrors() {
+		return form.hasErrors();
+	}
+
+	public void getValues(final ParameterValueList parameterValues) {
+		binders.getValue(form, parameterValues);
+	}
 }

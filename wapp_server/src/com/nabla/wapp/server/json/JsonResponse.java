@@ -65,6 +65,12 @@ public class JsonResponse extends JSONArray {
 		put("id", value);
 	}
 
+	public void put(final String field, final String value) {
+		final JSONObject record = new JSONObject();
+		record.put(field, value);
+		add(record);
+	}
+
 	public void put(final String field, final Integer value) {
 		final JSONObject record = new JSONObject();
 		record.put(field, value);

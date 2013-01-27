@@ -43,10 +43,10 @@ import com.nabla.wapp.shared.print.ReportFormats;
 
 public class ReportTemplate {
 
-	private final String			id;
+	private final Integer			id;
 	private final IReportRunnable	impl;
 
-	ReportTemplate(final String id, final IReportRunnable impl) {
+	ReportTemplate(final Integer id, final IReportRunnable impl) {
 		this.id = id;
 		this.impl = impl;
 	}
@@ -68,9 +68,21 @@ public class ReportTemplate {
 	}
 
 	public ParameterGroup getParameters(final Map<String, Object> defaultParameterValues) throws InternalErrorException {
-		final ReportParameterListFactory task = new ReportParameterListFactory(getReportEngine().createGetParameterDefinitionTask(impl));
+		final ParameterGroup parameters = new ParameterGroup(id.toString(), getName());
+		final ReportParameterListFactory task = new ReportParameterListFactory(id, getReportEngine().createGetParameterDefinitionTask(impl));
 		try {
-			return task.get(new ParameterGroup(id, getName()), defaultParameterValues);
+			task.generate(parameters, defaultParameterValues);
+		} finally {
+			task.close();
+		}
+		return parameters;
+	}
+
+	public List<SelectionValue> getParameterValueMap(final String parameterName, final Map<String, Object> otherParameterValues) {
+		final ReportParameterListFactory task = new ReportParameterListFactory(id, getReportEngine().createGetParameterDefinitionTask(impl));
+		try {
+			task.setParameterValues(otherParameterValues);
+			return task.getParameterValueMap(parameterName);
 		} finally {
 			task.close();
 		}

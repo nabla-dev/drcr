@@ -23,18 +23,18 @@
 	
 	<wnd:VLayout membersMargin="20">
 		<wnd:HLayout styleName="{style.welcome-panel}" height="30">
-			<wnd:Label styleName="{style.welcome-message}" width="100%"><ui:msg description="Welcome message">Welcome to Dr | (Cr)</ui:msg></wnd:Label>
+			<wnd:Label styleName="{style.welcome-message}" width="100%"><ui:msg>Welcome to Dr | (Cr)</ui:msg></wnd:Label>
 		</wnd:HLayout>
 		<wnd:HLayout>
 			<wnd:HLayoutSpacer/>
 			<wnd:VLayout>
 				<wnd:Dialog modal="false" caption="Authentication Required" icon="password_small.png" canDragResize="false">
 					<ui:attribute name="caption" description="Login caption"/>
-					<form:Form ui:field="form" model="{model}">
-						<form:MessageItem styleName="{res.style.loginMessage}"><ui:msg description="Login message">Please enter your username and password.</ui:msg></form:MessageItem>		
-			 			<form:TextEditBox name="{fields.userName}"><ui:msg description="Username field">*Username</ui:msg></form:TextEditBox>
-						<form:PasswordEditBox name="{fields.password}"><ui:msg description="Password field">*Password</ui:msg></form:PasswordEditBox>
-						<form:ButtonBar>
+					<wnd:Label styleName="{res.style.loginMessage}" width="300" height="42"><ui:msg>Please enter your username and password.</ui:msg></wnd:Label>
+					<form:Form ui:field="form" model="{model}" width="300">	
+			 			<form:TextEditBox name="{fields.userName}" width="100%"><ui:msg description="Username field">*Username</ui:msg></form:TextEditBox>
+						<form:PasswordEditBox name="{fields.password}" width="100%"><ui:msg description="Password field">*Password</ui:msg></form:PasswordEditBox>
+						<form:ButtonBar colSpan="2">
 							<wnd:SubmitButton><ui:msg description="Login button">*Login</ui:msg></wnd:SubmitButton>
 						</form:ButtonBar>
 					</form:Form>

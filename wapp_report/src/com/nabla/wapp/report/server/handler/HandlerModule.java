@@ -35,16 +35,12 @@ public class HandlerModule extends AbstractHandlerSubModule {
 		bindHandler(GetBuiltInReportHandler.class);
 		bindHandler(GetSimpleReportHandler.class);
 		bindHandler(GetReportHandler.class);
+		bindHandler(FetchParameterValueMapHandler.class);
 
 		bindHandler(AddReportHandler.class);
 		bindHandler(UpdateReportHandler.class);
 		bindHandler(RemoveReportHandler.class);
 		bindHandler(UpgradeReportHandler.class);
-
-		/*
-		bindHandler(GetReportParameterDefaultValuesHandler.class);
-		bindHandler(FetchReportParameterAccountListHandler.class);
-		 */
 	}
 
 }

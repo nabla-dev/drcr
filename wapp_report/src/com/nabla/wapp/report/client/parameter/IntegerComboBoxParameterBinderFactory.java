@@ -16,9 +16,8 @@
 */
 package com.nabla.wapp.report.client.parameter;
 
-import java.util.Map;
-
 import com.nabla.wapp.report.shared.parameter.IntegerComboBoxParameter;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 
 /**
  * The <code></code> object is used to
@@ -27,8 +26,8 @@ import com.nabla.wapp.report.shared.parameter.IntegerComboBoxParameter;
 public class IntegerComboBoxParameterBinderFactory implements IParameterBinderFactory<IntegerComboBoxParameter> {
 
 	@Override
-	public IParameterBinder create(IntegerComboBoxParameter parameter, @SuppressWarnings("unused") Map<String, Object> defaultParameterValues) {
-		return new IntegerComboBoxParameterBinder(parameter);
+	public IParameterBinder create(IntegerComboBoxParameter parameter, final ParameterValueList parameterValues) {
+		return new IntegerComboBoxParameterBinder(parameter, parameterValues);
 	}
 
 	@Override

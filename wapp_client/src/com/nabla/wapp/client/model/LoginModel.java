@@ -28,8 +28,14 @@ public class LoginModel extends Model {
 		public String password() { return IUser.PASSWORD; }
 	}
 
+	private final Fields	fields = new Fields();
+
 	public LoginModel() {
 		this.setFields(new UserNameField(), new UserPasswordField());
+	}
+
+	public Fields fields() {
+		return fields;
 	}
 
 }

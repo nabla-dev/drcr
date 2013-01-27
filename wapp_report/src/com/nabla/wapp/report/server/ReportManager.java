@@ -29,8 +29,6 @@ import java.sql.Types;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import javax.servlet.ServletContext;
-
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.LocaleUtils;
@@ -70,14 +68,12 @@ public class ReportManager {
 		"css","rptlibrary","js","properties"
 	};
 
-	private final String						internalReportFolder;
 	private final IReportEngine				engine;
 	private final IReportCategoryValidator		reportCategoryValidator;
 
 	@Inject
-	public ReportManager(final ServletContext serverContext, final IReportCategoryValidator reportCategoryValidator) throws BirtException {
+	public ReportManager(final IReportCategoryValidator reportCategoryValidator) throws BirtException {
 		this.reportCategoryValidator = reportCategoryValidator;
-		internalReportFolder = "1".equals(serverContext.getInitParameter(Database.PRODUCTION_MODE)) ? null : serverContext.getRealPath(INTERNAL_REPORT_FOLDER);
 		if (log.isDebugEnabled())
 			log.debug("initializing BIRT report engine");
 		final EngineConfig config = new EngineConfig( );
@@ -92,38 +88,56 @@ public class ReportManager {
 	}
 
 	public ReportTemplate open(final String internalName, final IUserSessionContext ctx) throws SQLException, DispatchException {
-		if (internalReportFolder != null) {
-			final File reportFile = new File(internalReportFolder + internalName.toUpperCase(), internalName.toLowerCase() + ".rptdesign");
-			try {
-				return new ReportTemplate(internalName, engine.openReportDesign(reportFile.getAbsolutePath()));
-			} catch (EngineException e) {
-				throw new InternalErrorException(Util.formatInternalErrorDescription(e));
-			}
-		} else {
-			final PreparedStatement stmt = ctx.isRoot() ?
-					StatementFormat.prepare(ctx.getReadConnection(),
+		final PreparedStatement stmt = ctx.isRoot() ?
+				StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
 " FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
 " WHERE r.internal_name LIKE ?;", ctx.getLocale().toString(), internalName)
-					:
-					StatementFormat.prepare(ctx.getReadConnection(),
+				:
+				StatementFormat.prepare(ctx.getReadConnection(),
 "SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
 " FROM user_role AS p INNER JOIN (" +
 "report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
 ") ON r.role_id=p.role_id" +
 " WHERE r.internal_name LIKE ? AND p.user_id=?;", ctx.getLocale().toString(), internalName, ctx.getUserId());
+		try {
+			final ResultSet rs = stmt.executeQuery();
 			try {
-				final ResultSet rs = stmt.executeQuery();
-				try {
-					if (!rs.next())
-						throw new AccessDeniedException();
-					return open(rs, ctx);
-				} finally {
-					rs.close();
-				}
+				if (!rs.next())
+					throw new AccessDeniedException();
+				return open(rs, ctx);
 			} finally {
-				stmt.close();
+				rs.close();
 			}
+		} finally {
+			stmt.close();
+		}
+	}
+
+	public ReportTemplate open(final Integer reportId, final IUserSessionContext ctx) throws SQLException, DispatchException {
+		final PreparedStatement stmt = ctx.isRoot() ?
+				StatementFormat.prepare(ctx.getReadConnection(),
+"SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
+" FROM report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+" WHERE r.id=?;", ctx.getLocale().toString(), reportId)
+				:
+				StatementFormat.prepare(ctx.getReadConnection(),
+"SELECT r.id, r.content, COALESCE(n.text, r.name) AS 'name'" +
+" FROM user_role AS p INNER JOIN (" +
+"report AS r LEFT JOIN report_name_localized AS n ON r.id=n.report_id AND n.locale LIKE ?" +
+") ON r.role_id=p.role_id" +
+" WHERE p.user_id=? AND r.id=?;", ctx.getLocale().toString(), ctx.getUserId(), reportId);
+		try {
+			final ResultSet rs = stmt.executeQuery();
+			try {
+				if (!rs.next())
+					throw new AccessDeniedException();
+				return open(rs, ctx);
+			} finally {
+				rs.close();
+			}
+		} finally {
+			stmt.close();
 		}
 	}
 
@@ -160,7 +174,7 @@ public class ReportManager {
 	public ReportTemplate open(final ResultSet rs, final IUserSessionContext ctx) throws SQLException, DispatchException {
 		try {
 			final Integer id = rs.getInt("id");
-			return new ReportTemplate(id.toString(), engine.openReportDesign(rs.getString("name"), rs.getBinaryStream("content"), new StreamResolvingResourceLocator(ctx.getReadConnection(), id)));
+			return new ReportTemplate(id, engine.openReportDesign(rs.getString("name"), rs.getBinaryStream("content"), new StreamResolvingResourceLocator(ctx.getReadConnection(), id)));
 		} catch (EngineException e) {
 			throw new InternalErrorException(Util.formatInternalErrorDescription(e));
 		}

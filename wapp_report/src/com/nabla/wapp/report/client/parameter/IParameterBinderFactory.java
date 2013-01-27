@@ -16,11 +16,10 @@
 */
 package com.nabla.wapp.report.client.parameter;
 
-import java.util.Map;
-
 import com.nabla.wapp.report.shared.parameter.IParameter;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 
 public interface IParameterBinderFactory<P extends IParameter> {
 	Class getParameterClass();
-	IParameterBinder create(P parameter, Map<String, Object> defaultValues);
+	IParameterBinder create(P parameter, ParameterValueList parameterValues);
 }

@@ -17,26 +17,20 @@
 package com.nabla.wapp.report.client.parameter;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.nabla.wapp.client.ui.form.Form;
-import com.nabla.wapp.report.shared.parameter.IParameterValue;
-import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.widgets.form.ValuesManager;
 
 /**
  * The <code></code> object is used to
  *
  */
 public interface IParameterBinder {
-	boolean createModelField(List<DataSourceField> fields);
-
-	boolean createFormItem(Form form, ParameterBinderList binders);
-
-	void getNeedDefaultValue(Set<String> parameterNames);
-
-	// return: errors if any
-	@Nullable Map<String, String> getValue(ValuesManager manager, List<IParameterValue> values);
+//	boolean isReadOnly();
+	void createModelField(List<DataSourceField> fields);
+	void createFormItem(Form form);
+//	void onCreate(Form form);
+//	void getNeedDefaultValue(Set<String> parameterNames);
+	void getValue(Form form, ParameterValueList parameterValues);
 }

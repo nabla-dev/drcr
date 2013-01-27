@@ -17,56 +17,95 @@
 package com.nabla.wapp.report.client.parameter;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import com.nabla.wapp.client.model.field.EnumField;
 import com.nabla.wapp.client.model.field.FieldAttributes;
+import com.nabla.wapp.client.model.field.IdField;
+import com.nabla.wapp.client.model.field.SelectBoxField;
 import com.nabla.wapp.client.ui.form.Control;
 import com.nabla.wapp.client.ui.form.Form;
-import com.nabla.wapp.report.shared.parameter.IParameterValue;
+import com.nabla.wapp.report.client.model.ParameterValueMapModel;
 import com.nabla.wapp.report.shared.parameter.IntegerComboBoxParameter;
 import com.nabla.wapp.report.shared.parameter.IntegerParameterValue;
-import com.nabla.wapp.shared.general.Nullable;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.widgets.form.ValuesManager;
 
 public class IntegerComboBoxParameterBinder implements IParameterBinder {
 
 	private final IntegerComboBoxParameter		parameter;
+	private final boolean						readOnly;
+	private final ParameterValueList			values;
+	private SelectBoxField						field;
 
-	public IntegerComboBoxParameterBinder(final IntegerComboBoxParameter parameter) {
+	public IntegerComboBoxParameterBinder(final IntegerComboBoxParameter parameter, final ParameterValueList values) {
 		this.parameter = parameter;
+		readOnly = values.containsKey(parameter.getName());
+		this.values = values;
+	}
+
+//	@Override
+	public boolean isReadOnly() {
+		return readOnly;
 	}
 
 	@Override
-	public boolean createModelField(List<DataSourceField> fields) {
-		final EnumField field = new EnumField(parameter.getName(), FieldAttributes.REQUIRED);
-		field.setValueMap(parameter.getValueMap());
+	public void createModelField(final List<DataSourceField> fields) {
+		field = new SelectBoxField(parameter.getName(),
+							new ParameterValueMapModel(parameter.getReportId(), parameter.getName(), values),
+							IdField.NAME, "name", FieldAttributes.REQUIRED);
 		fields.add(field);
-		return true;
 	}
 
 	@Override
-	public boolean createFormItem(Form form, @SuppressWarnings("unused") ParameterBinderList binders) {
+	public void createFormItem(final Form form) {
 		final Control ctrl = new Control();
 		ctrl.setName(parameter.getName());
 		ctrl.setText(parameter.getPrompt());
 		ctrl.setWidth("100%");
 		form.add(ctrl);
-		return false;
+	}
+/*
+	@Override
+	public void onCreate(final Form form) {
+		if (!isReadOnly()) {
+			form.getItem(parameter.getName()).addChangedHandler(new ChangedHandler() {
+	            @Override
+				public void onChanged(ChangedEvent event) {
+	            	updateValue((String) event.getValue());
+
+	            }
+	        });
+		}
+	}
+
+	public void onPreviousCascadingFieldChanged(final Form form) {
+		if (!isReadOnly()) {
+           	form.clearValue(parameter.getName());
+           	field.invalidatePickListCache();
+		}
 	}
 
 	@Override
-	public void getNeedDefaultValue(Set<String> parameterNames) {
+	public void getNeedDefaultValue(final Set<String> parameterNames) {
 		parameterNames.add(parameter.getName());
 	}
 
 	@Override
-	@Nullable
-	public Map<String, String> getValue(ValuesManager manager, 	List<IParameterValue> values) {
-		final String value = (String) manager.getValue(parameter.getName());
-		values.add(new IntegerParameterValue(parameter.getName(), Integer.valueOf(value)));
-		return null;
+	public void storeValue(final ValuesManager data) {
+		if (!isReadOnly())
+			updateValue((String) data.getValue(parameter.getName()));
 	}
+*/
+	@Override
+	public void getValue(Form form, ParameterValueList parameterValues) {
+		if (!isReadOnly())
+			storeValue((String) form.getValue(parameter.getName()), parameterValues);
+	}
+
+	private void storeValue(final String value, ParameterValueList parameterValues) {
+		if (value == null)
+			parameterValues.remove(parameter.getName());
+		else
+			parameterValues.add(new IntegerParameterValue(parameter.getName(), Integer.valueOf(value)));
+	}
+
 }

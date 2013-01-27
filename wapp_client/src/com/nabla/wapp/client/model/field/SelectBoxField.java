@@ -54,9 +54,6 @@ public class SelectBoxField extends TextField implements FilterCriteriaFunction 
 	}
 
 	public void setModel(final Model model, final String valueField, final String displayField) {
-		Assert.argumentNotNull(model);
-		Assert.argumentNotNull(valueField);
-		Assert.argumentNotNull(displayField);
 		Assert.notNull(model.getField(valueField));
 		Assert.notNull(model.getField(displayField));
 
@@ -69,8 +66,6 @@ public class SelectBoxField extends TextField implements FilterCriteriaFunction 
 	}
 
 	public void setModel(final Model model) {
-		Assert.argumentNotNull(model);
-
 		this.model = model;
 		editor.setOptionDataSource(model);
 		setEditorType(editor);

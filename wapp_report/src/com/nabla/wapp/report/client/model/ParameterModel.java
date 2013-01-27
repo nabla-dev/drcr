@@ -18,10 +18,9 @@ package com.nabla.wapp.report.client.model;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import com.nabla.wapp.client.model.CModel;
-import com.nabla.wapp.report.client.parameter.IParameterBinder;
+import com.nabla.wapp.report.client.parameter.ParameterBinderList;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.Record;
 
@@ -31,10 +30,9 @@ import com.smartgwt.client.data.Record;
  */
 public class ParameterModel extends CModel<Record> {
 
-	public ParameterModel(final Map<String, IParameterBinder> parameterBinders) {
+	public ParameterModel(final ParameterBinderList parameterBinders) {
 		final List<DataSourceField> fields = new LinkedList<DataSourceField>();
-		for (Map.Entry<String, IParameterBinder> binder : parameterBinders.entrySet())
-			binder.getValue().createModelField(fields);
+		parameterBinders.createModelField(fields);
 		setFields(fields.toArray(new DataSourceField[0]));
 	}
 

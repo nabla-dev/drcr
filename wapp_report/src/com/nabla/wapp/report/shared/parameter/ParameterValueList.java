@@ -17,28 +17,24 @@
 package com.nabla.wapp.report.shared.parameter;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-
-import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * The <code></code> object is used to
  *
  */
-public class ReportParameterValueList extends LinkedList<IParameterValue> implements IsSerializable, IParameterValue {
+public class ParameterValueList extends HashMap<String, IParameterValue> implements IParameterValue {
 
 	private static final long serialVersionUID = 1L;
 
-	public ReportParameterValueList() {}
+	public ParameterValueList() {}
 
-	public ReportParameterValueList(final List<IParameterValue> values) {
-		super(values);
+	public ParameterValueList(final IParameterValue value) {
+		add(value);
 	}
 
-	public ReportParameterValueList(final IParameterValue value) {
-		add(value);
+	public void add(final IParameterValue value) {
+		put(value.getParameterName(), value);
 	}
 
 	public Map<String, Object> toMap() {
@@ -55,14 +51,19 @@ public class ReportParameterValueList extends LinkedList<IParameterValue> implem
 
 	@Override
 	public void addToMap(Map<String, Object> parameters) {
-		for (IParameterValue e : this)
+		for (IParameterValue e : this.values())
 			e.addToMap(parameters);
 	}
 
 	@Override
 	public void addToStringMap(Map<String, String> parameters) {
-		for (IParameterValue e : this)
+		for (IParameterValue e : this.values())
 			e.addToStringMap(parameters);
+	}
+
+	@Override
+	public String getParameterName() {
+		return "";
 	}
 
 }

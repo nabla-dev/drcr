@@ -17,6 +17,8 @@
 package com.nabla.wapp.report.server;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -28,9 +30,9 @@ import org.eclipse.birt.report.engine.api.IParameterGroupDefn;
 import org.eclipse.birt.report.engine.api.IParameterSelectionChoice;
 import org.eclipse.birt.report.engine.api.IScalarParameterDefn;
 
+import com.nabla.wapp.report.shared.parameter.CascadingParameterGroup;
 import com.nabla.wapp.report.shared.parameter.IParameter;
 import com.nabla.wapp.report.shared.parameter.IntegerComboBoxParameter;
-import com.nabla.wapp.report.shared.parameter.IntegerParameterValueMap;
 import com.nabla.wapp.report.shared.parameter.ParameterGroup;
 import com.nabla.wapp.shared.dispatch.InternalErrorException;
 
@@ -45,9 +47,11 @@ public class ReportParameterListFactory {
 	}
 
 	private static final Log					log = LogFactory.getLog(ReportParameterListFactory.class);
+	private final Integer						reportId;
 	private final IGetParameterDefinitionTask	impl;
 
-	ReportParameterListFactory(final IGetParameterDefinitionTask impl) {
+	ReportParameterListFactory(final Integer reportId, final IGetParameterDefinitionTask impl) {
+		this.reportId = reportId;
 		this.impl = impl;
 	}
 
@@ -55,45 +59,69 @@ public class ReportParameterListFactory {
 		impl.close();
 	}
 
-	public ParameterGroup get(final ParameterGroup parameters, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
-		return addAll(parameters, impl.getParameterDefns(true).iterator(), defaultParameterValues);
+	public void generate(final ParameterGroup parent, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
+		addAll(parent, impl.getParameterDefns(true).iterator(), defaultParameterValues);
 	}
 
-	protected ParameterGroup addAll(final ParameterGroup parameters, final Iterator iter, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
+	public void setParameterValues(final Map<String, Object> values) {
+		impl.setParameterValues(values);
+	}
+
+	public List<SelectionValue> getParameterValueMap(final String parameterName) {
+		final List<SelectionValue> values = new LinkedList<SelectionValue>();
+		for (Iterator iter = impl.getSelectionList(parameterName).iterator(); iter.hasNext(); )
+			values.add(new SelectionValue((IParameterSelectionChoice) iter.next()));
+		return values;
+	}
+
+	protected void addAll(final ParameterGroup parent, final Iterator iter, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
 		while (iter.hasNext()) {
 			final IParameterDefnBase parameter = (IParameterDefnBase) iter.next();
 			if (log.isDebugEnabled())
 				log.debug("parameter " + parameter.getName() + " type=" + parameter.getParameterType());
 			switch (parameter.getParameterType()) {
 				case IParameterDefnBase.CASCADING_PARAMETER_GROUP:
-					addGroup(parameters, (IParameterGroupDefn) parameter, true, defaultParameterValues);
+					if (!parent.getCascading())
+						addCascadingGroup(parent, (IParameterGroupDefn) parameter, defaultParameterValues);
+					else if (log.isInfoEnabled())
+						log.info("Cascading group cannot include other group");
 					break;
 				case IParameterDefnBase.PARAMETER_GROUP:
-					addGroup(parameters, (IParameterGroupDefn) parameter, false, defaultParameterValues);
+					if (!parent.getCascading())
+						addGroup(parent, (IParameterGroupDefn) parameter, defaultParameterValues);
+					else if (log.isInfoEnabled())
+						log.info("Cascading group cannot include other group");
 					break;
 				case IParameterDefnBase.SCALAR_PARAMETER:
-					addScalar(parameters, (IScalarParameterDefn) parameter, defaultParameterValues);
+					addScalar(parent, (IScalarParameterDefn) parameter, defaultParameterValues);
 					break;
 				default:
 					break;
 			}
 		}
-		return parameters;
 	}
 
-	protected void addGroup(final ParameterGroup parameters, final IParameterGroupDefn p, boolean cascading, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
-		final ParameterGroup group = addAll(new ParameterGroup(p.getName(), p.getPromptText(), cascading), p.getContents().iterator(), defaultParameterValues);
-		if (parameters.getCascading() || group.needUserInput())
-			parameters.add(group);
+	protected void addGroup(final ParameterGroup parent, final IParameterGroupDefn p, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
+		final ParameterGroup group = new ParameterGroup(p.getName(), p.getPromptText());
+		addAll(group, p.getContents().iterator(), defaultParameterValues);
+		if (group.needUserInput())
+			parent.add(group);
 	}
 
-	protected boolean addScalar(final ParameterGroup parameters, final IScalarParameterDefn p, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
+	protected void addCascadingGroup(final ParameterGroup parent, final IParameterGroupDefn p, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
+		final ParameterGroup group = new CascadingParameterGroup(p.getName(), p.getPromptText());
+		addAll(group, p.getContents().iterator(), defaultParameterValues);
+		if (group.needUserInput())
+			parent.add(group);
+	}
+
+	protected boolean addScalar(final ParameterGroup parent, final IScalarParameterDefn p, final Map<String, Object> defaultParameterValues) throws InternalErrorException {
 		if (p.isHidden() || !p.isRequired())
 			return false;
 		final ControlType control = getParameterControlType(p);
 		final DataType dataType = getParameterDataType(p);
 		if (defaultParameterValues.containsKey(p.getName())) {
-			if (!parameters.getCascading())
+			if (!parent.getCascading())
 				return false;
 
 		} else {
@@ -111,7 +139,7 @@ public class ReportParameterListFactory {
 					case FLOAT:
 						break;
 					case INTEGER:
-						parameters.add(createIntegerComboBoxParameter(p));
+						parent.add(createIntegerComboBoxParameter(p));
 						return true;
 					case STRING:
 						break;
@@ -165,12 +193,7 @@ public class ReportParameterListFactory {
 	}
 
 	private IParameter createIntegerComboBoxParameter(final IScalarParameterDefn p) {
-		final IntegerParameterValueMap valueMap = new IntegerParameterValueMap();
-		for (Iterator iter = impl.getSelectionList(p.getName()).iterator(); iter.hasNext(); ) {
-			final IParameterSelectionChoice e = (IParameterSelectionChoice) iter.next();
-			valueMap.put((Integer)e.getValue(), e.getLabel());
-		}
-		return new IntegerComboBoxParameter(p.getName(), p.getPromptText(), valueMap);
+		return new IntegerComboBoxParameter(reportId, p.getName(), p.getPromptText());
 	}
 
 }

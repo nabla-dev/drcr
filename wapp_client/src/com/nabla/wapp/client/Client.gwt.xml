@@ -66,7 +66,7 @@
 <!--	<set-property name="user.agent" value="gecko1_8,safari">   
 		<when-property-is name="nabla.wapp.client.dev_mode" value="true" />
 	</set-property> -->
-	<set-property name="user.agent" value="gecko1_8">   
+	<set-property name="user.agent" value="gecko1_8,safari">   
 		<when-property-is name="nabla.wapp.client.dev_mode" value="true" />
 	</set-property>
 	 

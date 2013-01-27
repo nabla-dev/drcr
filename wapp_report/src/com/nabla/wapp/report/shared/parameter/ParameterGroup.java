@@ -25,22 +25,16 @@ public class ParameterGroup extends LinkedList<IParameter> implements IParameter
 
 	private String		name;
 	private String		prompt;
-	private Boolean		cascading;
 
 	public ParameterGroup() {}	// for serialization only
 
-	public ParameterGroup(final String name, final String prompt, final Boolean cascading) {
+	public ParameterGroup(final String name, final String prompt) {
 		this.name = name;
 		this.prompt = prompt;
-		this.cascading = cascading;
 	}
 
-	public ParameterGroup(final String name, final String prompt) {
-		this(name, prompt, false);
-	}
-
-	public Boolean getCascading() {
-		return cascading;
+	public boolean getCascading() {
+		return false;
 	}
 
 	@Override

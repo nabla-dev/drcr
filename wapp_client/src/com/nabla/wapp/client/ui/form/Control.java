@@ -70,9 +70,9 @@ public class Control extends Widget implements IFormItemSpeudoWidget, HasText {
 		impl.setRequired(required);
 		impl.setWrapTitle(false);
 		if (required) {
-			logger.fine("add required hint to " + impl.getType() + " '" + impl.getName() + "'");
+		/*	logger.fine("add required hint to " + impl.getType() + " '" + impl.getName() + "'");
 			impl.setHint(Resource.strings.requiredHintTag());
-			impl.setHintStyle(Resource.bundle.style().formRequiredInfoTag());
+			impl.setHintStyle(Resource.bundle.style().formRequiredInfoTag());*/
 			impl.setRequiredMessage(Resource.strings.requiredFieldErrorMessage());
 		}
 		if (width != null)

@@ -18,15 +18,7 @@ package com.nabla.wapp.client.ui;
 
 import com.google.gwt.i18n.client.Constants;
 
-
-
 public interface ITextResource extends Constants {
-
-	@DefaultStringValue("* required information")
-	String formRequiredInfoMessage();
-
-	@DefaultStringValue("*")
-	String requiredHintTag();
 
 	@DefaultStringValue("Required field")
 	String requiredFieldErrorMessage();

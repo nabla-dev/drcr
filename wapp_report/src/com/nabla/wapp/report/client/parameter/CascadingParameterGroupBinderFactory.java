@@ -16,25 +16,23 @@
 */
 package com.nabla.wapp.report.client.parameter;
 
-import java.util.Date;
-import java.util.Map;
-
-import com.nabla.wapp.report.shared.parameter.DateEditBoxParameter;
+import com.nabla.wapp.report.shared.parameter.CascadingParameterGroup;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 
 /**
  * The <code></code> object is used to
  *
  */
-public class DateEditBoxParameterBinderFactory implements IParameterBinderFactory<DateEditBoxParameter> {
+public class CascadingParameterGroupBinderFactory implements IParameterBinderFactory<CascadingParameterGroup> {
 
 	@Override
-	public IParameterBinder create(DateEditBoxParameter parameter, Map<String, Object> defaultParameterValues) {
-		return new DateEditBoxParameterBinder(parameter, (Date) defaultParameterValues.get(parameter.getName()));
+	public IParameterBinder create(final CascadingParameterGroup parameter, final ParameterValueList parameterValues) {
+		return new CascadingParameterGroupBinder(parameter, parameterValues);
 	}
 
 	@Override
 	public Class getParameterClass() {
-		return DateEditBoxParameter.class;
+		return CascadingParameterGroup.class;
 	}
 
 }

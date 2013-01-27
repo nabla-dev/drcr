@@ -15,6 +15,7 @@
 -->
 	  <dependency org="org.simpleframework" name="simple-xml" rev="${simple-xml.version}" conf="compile->default;runtime->default" />
 	  <dependency org="net.sf.supercsv" name="super-csv" rev="${supercsv.version}" conf="compile->default;runtime->default" />
+	  <dependency org="net.minidev" name="json-smart" rev="${json-smart.version}" conf="compile->default;runtime->default" />
 	  
 	  <dependency org="commons-lang" name="commons-lang" rev="${commons-lang.version}" conf="compile->default;runtime->default" />
 	  <dependency org="org.apache.commons" name="commons-compress" rev="${commons-compress.version}" conf="compile->default;runtime->default" />

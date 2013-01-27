@@ -58,4 +58,9 @@ public class IntegerSetParameterValue implements IParameterValue {
 	private String getValueAsString() {
 		return (values == null) ? "" : values.toString();
 	}
+
+	@Override
+	public String getParameterName() {
+		return name;
+	}
 }

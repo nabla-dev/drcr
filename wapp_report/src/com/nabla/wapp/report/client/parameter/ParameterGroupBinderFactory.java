@@ -14,14 +14,25 @@
 * the License.
 *
 */
-package com.nabla.wapp.report.shared.parameter;
+package com.nabla.wapp.report.client.parameter;
 
-import java.util.Map;
+import com.nabla.wapp.report.shared.parameter.ParameterGroup;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+/**
+ * The <code></code> object is used to
+ *
+ */
+public class ParameterGroupBinderFactory implements IParameterBinderFactory<ParameterGroup> {
 
-public interface IParameterValueMap extends IsSerializable {
-	boolean containsKey(final Object key);
-	String get(final Object key);
-	Map<String, String> get();
+	@Override
+	public IParameterBinder create(ParameterGroup parameter, ParameterValueList parameterValues) {
+		return new ParameterGroupBinder(parameter, parameterValues);
+	}
+
+	@Override
+	public Class getParameterClass() {
+		return ParameterGroup.class;
+	}
+
 }

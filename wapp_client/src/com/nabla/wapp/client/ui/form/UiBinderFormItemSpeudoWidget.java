@@ -30,8 +30,8 @@ import com.smartgwt.client.widgets.form.fields.FormItem;
 public class UiBinderFormItemSpeudoWidget<C extends FormItem> extends Widget implements IFormItemSpeudoWidget {
 
 	private static final Logger	logger = LoggerFactory.getLog(UiBinderFormItemSpeudoWidget.class);
-	protected final C			impl;
-	private final boolean		inputField;
+	protected final C				impl;
+	private final boolean			inputField;
 
 	protected UiBinderFormItemSpeudoWidget(final C impl, final boolean inputField) {
 		Assert.argumentNotNull(impl);
@@ -61,8 +61,8 @@ public class UiBinderFormItemSpeudoWidget<C extends FormItem> extends Widget imp
 		}
 		if (impl.getRequired() && !impl.getDisabled()) {
 			logger.fine("add required hint to '" + impl.getName() + "'");
-			impl.setHint(Resource.strings.requiredHintTag());
-			impl.setHintStyle(Resource.bundle.style().formRequiredInfoTag());
+		/*	impl.setHint(Resource.strings.requiredHintTag());
+			impl.setHintStyle(Resource.bundle.style().formRequiredInfoTag());*/
 			impl.setRequiredMessage(Resource.strings.requiredFieldErrorMessage());
 		}
 		return impl;

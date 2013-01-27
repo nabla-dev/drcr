@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.user.client.ui.Widget;
 import com.nabla.wapp.client.general.Assert;
 import com.nabla.wapp.client.general.LoggerFactory;
@@ -86,7 +85,7 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 	private boolean								saving = false;
 
 	public Form() {
-		this.setHiliteRequiredFields(false);
+	//	this.setHiliteRequiredFields(false);
 		this.setSelectOnFocus(true);
 	}
 
@@ -292,14 +291,14 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 			fields.add(item);
 		}
 		extensions = null;
-		if (hasRequiredField(fields)) {
+	/*	if (hasRequiredField(fields)) {
 			final int i = getFirstInputFieldIndex();
 			if (LogConfiguration.loggingIsEnabled()) {
 				final FormItem field = fields.get(i);
 				logger.fine("insert 'required information' hint field before " + field.getType() + " '" + field.getName() + "'");
 			}
 			fields.add(i, new RequiredFieldHint());
-		}
+		}*/
 		setFields(fields.toArray(new FormItem[0]));
 
 		this.setAutoFocus(true);
@@ -346,7 +345,7 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 			}
 		});
 	}
-
+/*
 	private static boolean hasRequiredField(final List<FormItem> fields) {
 		Assert.argumentNotNull(fields);
 
@@ -366,7 +365,7 @@ public class Form extends com.smartgwt.client.widgets.form.DynamicForm implement
 		}
 		return i;
 	}
-
+*/
 	protected void sendNotification(final Map<Operations, Signal> sigMap, final Operations type) {
 		Assert.argumentNotNull(sigMap);
 

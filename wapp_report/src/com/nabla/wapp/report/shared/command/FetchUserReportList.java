@@ -23,7 +23,7 @@ public class FetchUserReportList extends AbstractFetch {
 
 	private String		category;
 
-	FetchUserReportList() {}
+	FetchUserReportList() {}	// for serialization only
 
 	public FetchUserReportList(final String category) {
 		this.category = category;

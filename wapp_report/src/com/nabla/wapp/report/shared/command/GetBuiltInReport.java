@@ -26,11 +26,10 @@ import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.print.ReportFormats;
 
 
-
 public class GetBuiltInReport extends ReportOptions implements IAction<IntegerResult> {
 
-	private String					internalName;
-	private IParameterValue	parameter;
+	private String				internalName;
+	private IParameterValue		parameter;
 
 	GetBuiltInReport() {}	// for serialization only
 

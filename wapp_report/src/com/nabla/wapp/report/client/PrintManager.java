@@ -16,9 +16,7 @@
 */
 package com.nabla.wapp.report.client;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,12 +40,11 @@ import com.nabla.wapp.report.shared.command.GetBuiltInReport;
 import com.nabla.wapp.report.shared.command.GetReport;
 import com.nabla.wapp.report.shared.command.GetSimpleReport;
 import com.nabla.wapp.report.shared.parameter.IParameterValue;
-import com.nabla.wapp.report.shared.parameter.ReportParameterValueList;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 import com.nabla.wapp.shared.dispatch.IntegerResult;
 import com.nabla.wapp.shared.general.Nullable;
 import com.nabla.wapp.shared.print.ReportFormats;
 import com.nabla.wapp.shared.slot.ISlot;
-import com.nabla.wapp.shared.slot.ISlot1;
 
 
 public class PrintManager {
@@ -136,34 +133,32 @@ public class PrintManager {
 		final IApplication app = Application.getInstance();
 		if (reportIds.isEmpty()) {
 			app.getMessageBox().error(Resource.instance.strings.noReportSelected());
-			return;
-		}
-		app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile), new AsyncCallback<SimpleReportResult>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				log.log(Level.WARNING, "fail to get list of report IDs to display", caught);
-				app.getMessageBox().error(caught);
-			}
+		} else {
+			app.getDispatcher().execute(new GetSimpleReport(reportIds, defaultParameter, format, outputAsFile), new AsyncCallback<SimpleReportResult>() {
+				@Override
+				public void onFailure(Throwable caught) {
+					log.log(Level.WARNING, "fail to get list of report IDs to display", caught);
+					app.getMessageBox().error(caught);
+				}
 
-			@Override
-			public void onSuccess(final SimpleReportResult result) {
-				Assert.argumentNotNull(result);
-				if (result.needUserInput()) {
-					final Map<String, Object> defaultValues = new HashMap<String, Object>();
-					if (defaultParameter != null)
-						defaultParameter.addToMap(defaultValues);
-					ReportParameterDialog.run(parameterDisplayFactory.get(), result.getParameters(), defaultValues, new ISlot1<ReportParameterValueList>() {
-						@Override
-						public void invoke(ReportParameterValueList parameters) {
-							if (defaultParameter != null)
-								parameters.add(defaultParameter);
-							app.getDispatcher().execute(new GetReport(reportIds, format, outputAsFile, parameters), onCreateReport);
-						}
-					});
-				} else
-					displayReports(result);
-			}
-		});
+				@Override
+				public void onSuccess(final SimpleReportResult result) {
+					Assert.argumentNotNull(result);
+					if (result.needUserInput()) {
+						final ParameterValueList parameterValues = new ParameterValueList();
+						if (defaultParameter != null)
+							parameterValues.add(defaultParameter);
+						new ReportParameterDialog(parameterDisplayFactory.get(), result.getParameters(), parameterValues, new ISlot() {
+							@Override
+							public void invoke() {
+								app.getDispatcher().execute(new GetReport(reportIds, format, outputAsFile, parameterValues), onCreateReport);
+							}
+						}).revealDisplay();
+					} else
+						displayReports(result);
+				}
+			});
+		}
 	}
 
 	private final AsyncCallback<ReportResult> onCreateReport = new AsyncCallback<ReportResult>() {
@@ -180,7 +175,7 @@ public class PrintManager {
 		}
 	};
 
-	public void print(final Set<Integer> reportIds, @Nullable final ReportParameterValueList defaultParameters) {
+	public void print(final Set<Integer> reportIds, @Nullable final ParameterValueList defaultParameters) {
 		print(reportIds, defaultParameters, ReportFormats.PDF, false);
 	}
 
@@ -188,7 +183,7 @@ public class PrintManager {
 		print(reportIds, null);
 	}
 
-	public void print(final Integer reportId, @Nullable final ReportParameterValueList defaultParameters, final ReportFormats format, final Boolean outputAsFile) {
+	public void print(final Integer reportId, @Nullable final ParameterValueList defaultParameters, final ReportFormats format, final Boolean outputAsFile) {
 		final Set<Integer> reportIds = new HashSet<Integer>();
 		reportIds.add(reportId);
 		print(reportIds, defaultParameters, format, outputAsFile);
@@ -198,7 +193,7 @@ public class PrintManager {
 		print(reportId, null, format, outputAsFile);
 	}
 
-	public void print(final Integer reportId, @Nullable final ReportParameterValueList defaultParameters) {
+	public void print(final Integer reportId, @Nullable final ParameterValueList defaultParameters) {
 		print(reportId, defaultParameters, ReportFormats.PDF, false);
 	}
 

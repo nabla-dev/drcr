@@ -1,5 +1,5 @@
 /**
-* Copyright 2012 nabla
+* Copyright 2013 nabla
 *
 * Licensed under the Apache License, Version 2.0 (the "License"); you may not
 * use this file except in compliance with the License. You may obtain a copy of
@@ -14,18 +14,21 @@
 * the License.
 *
 */
-package com.nabla.wapp.client.ui.form;
-
-import com.nabla.wapp.client.ui.Resource;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.widgets.form.fields.BlurbItem;
+package com.nabla.wapp.report.shared.parameter;
 
 
-public class RequiredFieldHint extends BlurbItem {
+public class CascadingParameterGroup extends ParameterGroup {
 
-	public RequiredFieldHint() {
-		setDefaultValue(Resource.strings.formRequiredInfoMessage());
-		setTextBoxStyle(Resource.bundle.style().formRequiredInfoMessage());
-		setAlign(Alignment.RIGHT);
+	private static final long serialVersionUID = 1L;
+
+	public CascadingParameterGroup() {}	// for serialization only
+
+	public CascadingParameterGroup(final String name, final String prompt) {
+		super(name, prompt);
+	}
+
+	@Override
+	public boolean getCascading() {
+		return true;
 	}
 }

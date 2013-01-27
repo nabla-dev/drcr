@@ -16,35 +16,45 @@
 */
 package com.nabla.wapp.report.client.parameter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.report.shared.parameter.IParameter;
 import com.nabla.wapp.report.shared.parameter.ParameterGroup;
-import com.nabla.wapp.report.shared.parameter.ParameterList;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
+import com.smartgwt.client.data.DataSourceField;
 
-public class ParameterBinderList extends HashMap<String, IParameterBinder> {
+public class ParameterBinderList extends LinkedList<IParameterBinder> {
 
 	private static final ParameterBinderFactoryRegister	factories = new ParameterBinderFactoryRegister();
 
 	private static final long serialVersionUID = 1L;
 
-	public ParameterBinderList(final ParameterList parameters, final Map<String, Object> defaultValues) {
-		for (ParameterGroup report : parameters)
-			constructor(report, defaultValues);
+	public ParameterBinderList(final ParameterGroup parameter, final ParameterValueList parameterValues) {
+		for (IParameter e : parameter)
+			add(factories.create(e, parameterValues));
 	}
 
-	public void createFormItem(final Form form, final ParameterGroup reportParameters) {
-		for (IParameter parameter : reportParameters)
-			get(parameter.getName()).createFormItem(form, this);
+	public void createModelField(final List<DataSourceField> fields) {
+		for (IParameterBinder e : this)
+			e.createModelField(fields);
 	}
 
-	private void constructor(final ParameterGroup parameters, final Map<String, Object> defaultValues) {
-		for (IParameter parameter : parameters) {
-			put(parameter.getName(), factories.create(parameter, defaultValues));
-			if (parameter instanceof ParameterGroup)
-				constructor((ParameterGroup) parameter, defaultValues);
-		}
+	public void createFormItem(final Form form) {
+		for (IParameterBinder e : this)
+			e.createFormItem(form);
 	}
+/*
+	@Override
+	public void getNeedDefaultValue(Set<String> parameterNames) {
+		for (IParameterBinder e : this)
+			e.getNeedDefaultValue(parameterNames);
+	}*/
+
+	public void getValue(final Form form, final ParameterValueList parameterValues) {
+		for (IParameterBinder e : this)
+			e.getValue(form, parameterValues);
+	}
+
 }

@@ -20,7 +20,7 @@ import java.util.Set;
 
 import com.nabla.wapp.report.shared.ReportOptions;
 import com.nabla.wapp.report.shared.ReportResult;
-import com.nabla.wapp.report.shared.parameter.ReportParameterValueList;
+import com.nabla.wapp.report.shared.parameter.ParameterValueList;
 import com.nabla.wapp.shared.dispatch.IAction;
 import com.nabla.wapp.shared.general.IntegerSet;
 import com.nabla.wapp.shared.print.ReportFormats;
@@ -28,11 +28,11 @@ import com.nabla.wapp.shared.print.ReportFormats;
 public class GetReport extends ReportOptions implements IAction<ReportResult> {
 
 	private IntegerSet						reportIds;
-	private ReportParameterValueList		parameters;
+	private ParameterValueList		parameters;
 
 	GetReport() {}	// for serialization only
 
-	public GetReport(final Set<Integer> reportIds, final ReportFormats format, final Boolean outputAsFile, final ReportParameterValueList parameters) {
+	public GetReport(final Set<Integer> reportIds, final ReportFormats format, final Boolean outputAsFile, final ParameterValueList parameters) {
 		super(format, outputAsFile);
 		this.reportIds = new IntegerSet(reportIds);
 		this.parameters = parameters;
@@ -42,7 +42,7 @@ public class GetReport extends ReportOptions implements IAction<ReportResult> {
 		return reportIds;
 	}
 
-	public ReportParameterValueList getParameters() {
+	public ParameterValueList getParameters() {
 		return parameters;
 	}
 

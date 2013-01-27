@@ -16,8 +16,6 @@
 */
 package com.nabla.wapp.report.client.parameter;
 
-import java.util.Set;
-
 import com.nabla.wapp.client.ui.form.Control;
 import com.nabla.wapp.client.ui.form.Form;
 import com.nabla.wapp.report.shared.parameter.IParameter;
@@ -33,13 +31,22 @@ public abstract class TSimpleParameterBinder<P extends IParameter, T> implements
 	}
 
 	@Override
-	public boolean createFormItem(Form form, @SuppressWarnings("unused") ParameterBinderList binders) {
+	public void createFormItem(Form form) {
 		final Control ctrl = new Control();
 		ctrl.setName(parameter.getName());
 		ctrl.setText(parameter.getPrompt());
 		ctrl.setWidth("100%");
 		form.add(ctrl);
-		return true;
+	}
+/*
+	@Override
+	public void onCreate(final Form form) {
+		form.getItem(parameter.getName()).addChangedHandler(new ChangedHandler() {
+            @Override
+			public void onChanged(@SuppressWarnings("unused") ChangedEvent event) {
+
+            }
+        });
 	}
 
 	@Override
@@ -50,5 +57,5 @@ public abstract class TSimpleParameterBinder<P extends IParameter, T> implements
 
 	public boolean isReadOnly() {
 		return value != null;
-	}
+	}*/
 }
